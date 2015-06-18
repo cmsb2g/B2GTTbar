@@ -118,6 +118,12 @@ parser.add_option('--BkgEst', action='store_true',
                   dest='BkgEst',
                   help='QCD Background Estimation process')
 
+parser.add_option('--FlatSample', action='store_true',
+                  default=False,
+                  dest='deweightFlat',
+                  help='unweights flat samples')
+
+
 (options, args) = parser.parse_args()
 argv = []
 
@@ -313,6 +319,8 @@ l_jetsAK8minmass = ("jetsAK8", "jetAK8minmass" )
 h_jetsAK8Area = Handle("std::vector<float>")
 l_jetsAK8Area = ( "jetsAK8" , "jetAK8jetArea" )
 
+h_generator = Handle("GenEventInfoProduct")
+l_generator = ("generator" , "" )
 
 h_jetsAK8VSubjetIndex0 = Handle("std::vector<float>")
 l_jetsAK8VSubjetIndex0 = ("jetsAK8", "jetAK8vSubjetIndex0")
@@ -1107,7 +1115,12 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_subjetsAK8Eta, h_subjetsAK8Eta)
             event.getByLabel ( l_subjetsAK8Phi, h_subjetsAK8Phi)
 
-
+            if options.deweightFlat : 
+                # Event weights
+                gotGenerator = event.getByLabel( l_generator, h_generator )
+            
+            evWeight = -1
+                
             ak8JetsGood = []
             ak8JetsGoodTrimMass = []
             ak8JetsGoodPrunMass = []
@@ -1157,7 +1170,13 @@ for ifile in files : #{ Loop over root files
                 AK8TopSubjetIndex1 = h_jetsAK8TopSubjetIndex1.product()
                 AK8TopSubjetIndex2 = h_jetsAK8TopSubjetIndex2.product()
                 AK8TopSubjetIndex3 = h_jetsAK8TopSubjetIndex3.product()
-
+                if options.deweightFlat :
+                    pthat = 0.0
+                    if h_generator.product().hasBinningValues() :
+                        pthat = h_generator.product().binningValues()[0]
+                        evWeight = 1/pow(pthat/15.,4.5)
+ 
+                
                 AK8Keys = h_jetsAK8Keys.product()
 
                 if options.verbose :
@@ -1273,6 +1292,11 @@ for ifile in files : #{ Loop over root files
             for i in range(0,len(ak8JetsGood)):#{ Loop over Fat jets that passed cuts for t tagging
                 if ak8JetsGood[i].Perp() < options.minAK8Pt : #$ Pt cut for passed jets
                     continue
+                
+                if evWeight != -1 :
+                    FlatWeight = evWeight
+                else :
+                    FlatWeight = 1
 
                 mAK8Pruned = AK8PrunedM[i] 
                 mAK8Filtered = AK8FilteredM[i] 
@@ -1287,26 +1311,26 @@ for ifile in files : #{ Loop over root files
                 #^ Plot Taus
                 if tau1 > 0.0001 :
                     tau21 = tau2 / tau1
-                    h_tau21AK8.Fill( tau21 )
+                    h_tau21AK8.Fill( tau21, FlatWeight )
                 else :
-                    h_tau21AK8.Fill( -1.0 )
+                    h_tau21AK8.Fill( -1.0, FlatWeight )
                 if tau2 > 0.0001 :
                     tau32 = tau3 / tau2
-                    h_tau32AK8.Fill( tau32 )
+                    h_tau32AK8.Fill( tau32, FlatWeight )
                 else :
-                    h_tau32AK8.Fill( -1.0 )
+                    h_tau32AK8.Fill( -1.0, FlatWeight )
                 
                 #^ Plot Kinematics for AK8 Jets
-                h_ptAK8.Fill( ak8JetsGood[i].Perp() )
-                h_etaAK8.Fill( ak8JetsGood[i].Eta() )
-                h_yAK8.Fill( ak8JetsGood[i].Rapidity() )
-                h_mAK8.Fill( ak8JetsGood[i].M() )
-                h_mprunedAK8.Fill( ak8JetsGoodPrunMass[i] )
-                h_mfilteredAK8.Fill( ak8JetsGoodFiltMass[i] )
-                h_mtrimmedAK8.Fill( ak8JetsGoodTrimMass[i] )
-                h_mSDropAK8.Fill( ak8JetsGoodSDropMass[i] )
-                h_minmassAK8.Fill( ak8JetsGoodMinMass[i] )
-                h_nsjAK8.Fill( ak8JetsGoodNSubJets[i] )
+                h_ptAK8.Fill( ak8JetsGood[i].Perp(), FlatWeight )
+                h_etaAK8.Fill( ak8JetsGood[i].Eta(), FlatWeight )
+                h_yAK8.Fill( ak8JetsGood[i].Rapidity(), FlatWeight )
+                h_mAK8.Fill( ak8JetsGood[i].M(), FlatWeight )
+                h_mprunedAK8.Fill( ak8JetsGoodPrunMass[i], FlatWeight )
+                h_mfilteredAK8.Fill( ak8JetsGoodFiltMass[i], FlatWeight )
+                h_mtrimmedAK8.Fill( ak8JetsGoodTrimMass[i], FlatWeight )
+                h_mSDropAK8.Fill( ak8JetsGoodSDropMass[i], FlatWeight )
+                h_minmassAK8.Fill( ak8JetsGoodMinMass[i], FlatWeight )
+                h_nsjAK8.Fill( ak8JetsGoodNSubJets[i], FlatWeight )
 
 
                 if options.verbose : 

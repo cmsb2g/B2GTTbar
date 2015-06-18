@@ -180,7 +180,9 @@ h_topProbePtSDT      = ROOT.TH1F("topProbePtSDT", "Top Probe Pt", 400,  0,  2000
 h_topTagPtFJT        = ROOT.TH1F("topTagPtFJT", "Top Tag Pt", 400,  0,  2000 )
 h_topProbePtFJT      = ROOT.TH1F("topProbePtFJT", "Top Probe Pt", 400,  0,  2000 )
 h_topTagPtNMT        = ROOT.TH1F("topTagPtNMT", "Top Tag Pt", 400,  0,  2000 )
-h_topProbePtNMT      = ROOT.TH1F("topProbePtNMT", "Top Probe Pt", 400,  0,  2000 )
+h_topProbePtNMT      = ROOT.TH1F("topProbePtNMT", "Top Probe Pt", 400,  0,  2000)
+h_topTagPtFree        = ROOT.TH1F("topTagPtFree", "Top Tag Pt", 400,  0,  2000 )
+h_topProbePtFree      = ROOT.TH1F("topProbePtFree", "Top Probe Pt", 400,  0,  2000 )
 h_testTagPt       = ROOT.TH1F("testTagPt", "Top Tag Pt", 400,  0,  2000 )
 h_testProbePt     = ROOT.TH1F("testProbePt", "Top Probe Pt", 400,  0,  2000 )
 h_lowmMinTagPt    = ROOT.TH1F("lowmMinTagPt", "Top Tag Pt", 400,  0,  2000 )
@@ -196,6 +198,8 @@ h_lowmMin2BTagPt  = ROOT.TH1F("lowmMin2BTagPt", "Top Tag Pt", 400,  0,  2000 )
 h_lowmMin2BProbePt= ROOT.TH1F("lowmMin2BProbePt", "Top Probe Pt", 400,  0,  2000 )
 h_antiBTagPt      = ROOT.TH1F("antiBTagPt", "Top Tag Pt", 400,  0,  2000 ) 
 h_antiBProbePt    = ROOT.TH1F("antiBProbePt", "Top Probe Pt", 400,  0,  2000 ) 
+h_pt    = ROOT.TH1F("Pt", "AK8 Pt", 400,  0,  2000 )
+
 
 
 #JET CORRECTIONS
@@ -247,6 +251,7 @@ NGoodAntiTaggedEventsFJT = 0
 NGoodAntiTagTopTagPairsFJT = 0
 NGoodAntiTaggedEventsNMT = 0
 NGoodAntiTagTopTagPairsNMT = 0
+NGoodAntiTagTopTagPairsFree = 0
 NPassDiJetCut = 0
 NPassptCut = 0
 NPassetaCut = 0
@@ -355,8 +360,13 @@ for ifile in files : #{ Loop over root files
         ak8JetsGoodTopSubjetIndex2 = []
         ak8JetsGoodTopSubjetIndex3 = []
 
+        AK8SubJetsBDisc = []
+        AK8SubJetsPt = []
+        AK8SubJetsEta = []
+        AK8SubJetsPhi = []
 
-        if len( h_jetsAK8Pt.product()) > 0 :
+
+        if len( h_jetsAK8Pt.product()) > 0 and len( h_subjetsAK8BDisc.product() ) > 0:
 
             AK8Pt = h_jetsAK8Pt.product()
             AK8Eta = h_jetsAK8Eta.product()
@@ -389,26 +399,18 @@ for ifile in files : #{ Loop over root files
             AK8TopSubjetIndex1 = h_jetsAK8TopSubjetIndex1.product()
             AK8TopSubjetIndex2 = h_jetsAK8TopSubjetIndex2.product()
             AK8TopSubjetIndex3 = h_jetsAK8TopSubjetIndex3.product()
+            AK8SubJetsBDisc = h_subjetsAK8BDisc.product()
+            AK8SubJetsPt = h_subjetsAK8Pt.product()
+            AK8SubJetsEta = h_subjetsAK8Eta.product()
+            AK8SubJetsPhi = h_subjetsAK8Phi.product()
             if options.deweightFlat :
                 pthat = 0.0
                 if h_generator.product().hasBinningValues() :
                     pthat = h_generator.product().binningValues()[0]
                     evWeight = 1/pow(pthat/15.,4.5)
-
-
-        AK8SubJetsBDisc = []
-        AK8SubJetsPt = []
-        AK8SubJetsEta = []
-        AK8SubJetsPhi = []
-        
-        if len( h_subjetsAK8BDisc.product() ) > 0 : 
-            AK8SubJetsBDisc = h_subjetsAK8BDisc.product()
-            AK8SubJetsPt = h_subjetsAK8Pt.product()
-            AK8SubJetsEta = h_subjetsAK8Eta.product()
-            AK8SubJetsPhi = h_subjetsAK8Phi.product()
-            
         
         for ak8Jet in range(0,len(AK8Pt)):
+            BadStuff = False
             AK8JECFromB2GAnaFW = AK8JEC[ak8Jet]
             AK8P4Raw = ROOT.TLorentzVector()
             AK8P4Raw.SetPtEtaPhiM( AK8Pt[ak8Jet] , AK8Eta[ak8Jet], AK8Phi[ak8Jet], AK8Mass[ak8Jet])
@@ -436,7 +438,7 @@ for ifile in files : #{ Loop over root files
                     print '   bad jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                             AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
                             )
-                    continue
+                continue
             if options.verbose :
                   print '   raw jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                         AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
@@ -464,14 +466,17 @@ for ifile in files : #{ Loop over root files
                     print '===================='
                     print ' Catastrophic failure. Index is out of range. Setup is completely wrong.'
                     print '===================='
-                    exit(1)
+                    BadStuff = True
+                    break
+            if BadStuff :
+                break
 
             if options.verbose :
                 print '    ak8TopSubjetIndex0[ak8Jet] '+str(AK8TopSubjetIndex0[ak8Jet])
                 print '    ak8TopSubjetIndex1[ak8Jet] '+str(AK8TopSubjetIndex1[ak8Jet])
                 print '    ak8TopSubjetIndex2[ak8Jet] '+str(AK8TopSubjetIndex2[ak8Jet])
                 print '    ak8TopSubjetIndex3[ak8Jet] '+str(AK8TopSubjetIndex3[ak8Jet])
-
+            h_pt.Fill(AK8P4Raw.Perp(), evWeight)
 
             #$ Cuts based on pt and rapidity
             if AK8P4Raw.Perp() < options.minAK8Pt or abs(AK8P4Raw.Rapidity()) > options.maxAK8Rapidity :
@@ -517,7 +522,9 @@ for ifile in files : #{ Loop over root files
             if ak8JetsGood[goodAK8].Perp() < options.minAK8Pt :
                 continue
             #subJetBDiscs.append([])
-
+            if BadStuff : 
+                break
+            BadStuff = False
             sbdisc0 = -1.
             sbdisc1 = -1.
             sbdisc2 = -1.
@@ -546,7 +553,10 @@ for ifile in files : #{ Loop over root files
                     print '===================='
                     print ' Catastrophic failure. Index is out of range. Setup is completely wrong.'
                     print '===================='
-                    exit(1)
+                    BadStuff = True
+                    break
+            if BadStuff :
+                break
             if options.verbose :
                 print 'ak8JetsGoodTopSubjetIndex0[goodAK8] '+str(ak8JetsGoodTopSubjetIndex0[goodAK8])
                 print 'ak8JetsGoodTopSubjetIndex1[goodAK8] '+str(ak8JetsGoodTopSubjetIndex1[goodAK8])
@@ -679,15 +689,17 @@ for ifile in files : #{ Loop over root files
         bTag0 = jet0_maxB
         bTag1 = jet1_maxB
             
-        topTag0        = ak8JetsGoodSDropMass[0] > 140 and ak8JetsGoodSDropMass[0] < 200 and ak8JetsGoodMinMass[0] > 50 and ak8JetsGoodNSubJets[0] > 2 and jet1tau32Val < 0.7
-        topTag1        = ak8JetsGoodSDropMass[1] > 140 and ak8JetsGoodSDropMass[1] < 200 and ak8JetsGoodMinMass[1] > 50 and ak8JetsGoodNSubJets[1] > 2 and jet2tau32Val < 0.7
+        topTag0        = ak8JetsGoodSDropMass[0] > 140 and ak8JetsGoodSDropMass[0] < 200# and ak8JetsGoodMinMass[0] > 50 and ak8JetsGoodNSubJets[0] > 2 and jet1tau32Val < 0.7
+        topTag1        = ak8JetsGoodSDropMass[1] > 140 and ak8JetsGoodSDropMass[1] < 200# and ak8JetsGoodMinMass[1] > 50 and ak8JetsGoodNSubJets[1] > 2 and jet2tau32Val < 0.7
 
-        AntiTag0SD = ak8JetsGoodSDropMass[0] > 140 and ak8JetsGoodSDropMass[0] < 200 and ak8JetsGoodMinMass[0] < 50 
-        AntiTag1SD = ak8JetsGoodSDropMass[1] > 140 and ak8JetsGoodSDropMass[1] < 200 and ak8JetsGoodMinMass[1] < 50
+        AntiTag0SD = ak8JetsGoodSDropMass[0] > 140 and ak8JetsGoodSDropMass[0] < 200# and ak8JetsGoodMinMass[0] < 50 
+        AntiTag1SD = ak8JetsGoodSDropMass[1] > 140 and ak8JetsGoodSDropMass[1] < 200# and ak8JetsGoodMinMass[1] < 50
         AntiTag0NM = ak8JetsGoodMinMass[0] < 50 
         AntiTag1NM = ak8JetsGoodMinMass[1] < 50
-        AntiTag0FJ = ak8JetsGoodMass[0] > 140 and ak8JetsGoodMass[0] < 250 and ak8JetsGoodMinMass[0] < 50 
-        AntiTag1FJ = ak8JetsGoodMass[1] > 140 and ak8JetsGoodMass[1] < 250 and ak8JetsGoodMinMass[1] < 5
+        AntiTag0FJ = ak8JetsGoodMass[0] > 140 and ak8JetsGoodMass[0] < 250# and ak8JetsGoodMinMass[0] < 50 
+        AntiTag1FJ = ak8JetsGoodMass[1] > 140 and ak8JetsGoodMass[1] < 250# and ak8JetsGoodMinMass[1] < 50
+        MinMass0 = ak8JetsGoodMinMass[0] < 50
+        MinMass1 = ak8JetsGoodMinMass[1] < 50
         Tau32Cut0 = jet1tau32Val > .7
         Tau32Cut1 = jet2tau32Val > .7
         topTag0WP1        = jet1tau32Val < 0.7 and bTag0 > 0.244 and ak8JetsGoodMass[0] > 140 and ak8JetsGoodMass[0] < 250 and ak8JetsGoodMinMass[0] > 50 and ak8JetsGoodNSubJets[0] > 2
@@ -712,7 +724,11 @@ for ifile in files : #{ Loop over root files
             NPassAllCuts = NPassAllCuts + 1
             x = ROOT.gRandom.Uniform(1.0)
             if x < 0.5 :
-                if AntiTag0SD :
+                h_topProbePtFree.Fill( ak8JetsGoodPt[1], Weight )
+                if topTag1 :
+                    NGoodAntiTagTopTagPairsFree = NGoodAntiTagTopTagPairsFree + 1
+                    h_topTagPtFree.Fill( ak8JetsGoodPt[1], Weight )
+                if AntiTag0SD and MinMass0 :
                     NGoodAntiTaggedEventsSD = NGoodAntiTaggedEventsSD + 1
                     h_topProbePtSD.Fill ( ak8JetsGoodPt[1], Weight )
                     if topTag1 :
@@ -724,7 +740,7 @@ for ifile in files : #{ Loop over root files
                     if topTag1 :
                         NGoodAntiTagTopTagPairsNM = NGoodAntiTagTopTagPairsNM + 1
                         h_topTagPtNM.Fill( ak8JetsGoodPt[1], Weight )
-                if AntiTag0FJ :
+                if AntiTag0FJ and MinMass0 :
                     NGoodAntiTaggedEventsFJ = NGoodAntiTaggedEventsFJ + 1
                     h_topProbePtFJ.Fill ( ak8JetsGoodPt[1], Weight )
                     if topTag1 :
@@ -736,7 +752,7 @@ for ifile in files : #{ Loop over root files
                     if topTag1 :
                         NGoodAntiTagTopTagPairsSDT = NGoodAntiTagTopTagPairsSDT + 1
                         h_topTagPtSDT.Fill( ak8JetsGoodPt[1], Weight )
-                if AntiTag0NM  and Tau32Cut0 :
+                if Tau32Cut0 :
                     NGoodAntiTaggedEventsNMT = NGoodAntiTaggedEventsNMT + 1
                     h_topProbePtNMT.Fill ( ak8JetsGoodPt[1], Weight )
                     if topTag1 :
@@ -782,19 +798,23 @@ for ifile in files : #{ Loop over root files
 
 
             if x >= 0.5 :
-                if AntiTag1SD :
+                h_topProbePtFree.Fill( ak8JetsGoodPt[0], Weight)
+                if topTag0 :
+                    NGoodAntiTagTopTagPairsFree = NGoodAntiTagTopTagPairsFree + 1
+                    h_topTagPtFree.Fill(ak8JetsGoodPt[0], Weight )
+                if AntiTag1SD and MinMass1 :
                     NGoodAntiTaggedEventsSD = NGoodAntiTaggedEventsSD + 1
                     h_topProbePtSD.Fill( ak8JetsGoodPt[0], Weight )
                     if topTag0 :
                         NGoodAntiTagTopTagPairsSD = NGoodAntiTagTopTagPairsSD + 1
                         h_topTagPtSD.Fill( ak8JetsGoodPt[0], Weight )
-                if AntiTag1NM :
+                if AntiTag1NM:
                     NGoodAntiTaggedEventsNM = NGoodAntiTaggedEventsNM + 1
                     h_topProbePtNM.Fill( ak8JetsGoodPt[0], Weight )
                     if topTag0 :
                         NGoodAntiTagTopTagPairsNM = NGoodAntiTagTopTagPairsNM + 1
                         h_topTagPtNM.Fill( ak8JetsGoodPt[0], Weight )
-                if AntiTag1FJ :
+                if AntiTag1FJ and MinMass1 :
                     NGoodAntiTaggedEventsFJ = NGoodAntiTaggedEventsFJ + 1
                     h_topProbePtFJ.Fill( ak8JetsGoodPt[0], Weight )
                     if topTag0 :
@@ -806,7 +826,7 @@ for ifile in files : #{ Loop over root files
                     if topTag0 :
                         NGoodAntiTagTopTagPairsSDT = NGoodAntiTagTopTagPairsSDT + 1
                         h_topTagPtSDT.Fill( ak8JetsGoodPt[0], Weight )
-                if AntiTag1NM and Tau32Cut1 :
+                if Tau32Cut1 :
                     NGoodAntiTaggedEventsNMT = NGoodAntiTaggedEventsNMT + 1
                     h_topProbePtNMT.Fill( ak8JetsGoodPt[0], Weight )
                     if topTag0 :
@@ -881,6 +901,9 @@ print "Good AntiTag TopTag Jet Pairs: " + str(NGoodAntiTagTopTagPairsFJT)
 print "~~~~~~~~ No Mass req ~~~~~~~"
 print "Good AntiTagged Jets: " + str(NGoodAntiTaggedEventsNMT)
 print "Good AntiTag TopTag Jet Pairs: " + str(NGoodAntiTagTopTagPairsNMT)
+print " "
+print "~~~~~~~~ No Anti-tag ~~~~~~~"
+print "TopTag Jet Pairs: " + str(NGoodAntiTagTopTagPairsFree)
 f.cd()
 f.Write()
 f.Close()
