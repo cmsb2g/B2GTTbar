@@ -158,8 +158,8 @@ l_muDz = ("muons", "muDz")
 h_muCharge = Handle("std::vector<float>")
 l_muCharge = ("muons", "muCharge")
 
-h_muKey = Handle("std::vector<float>")
-l_muKey = ("muons", "muKey")
+h_muKey = Handle("std::vector<std::vector<int> >")
+l_muKey = ("muonKeys")
 
 #electron label and handles
 h_elPt = Handle("std::vector<float>")
@@ -201,8 +201,8 @@ l_elscEta = ( "electrons" , "elscEta" )
 h_elCharge = Handle("std::vector<float>")
 l_elCharge = ( "electrons" , "elCharge" )
 
-h_elKey = Handle("std::vector<float>")
-l_elKey = ( "electrons" , "elKey" )
+h_elKey = Handle("std::vector<std::vector<int> >")
+l_elKey = ( "electronKeys" )
 
 #AK4 Jet Label and Handles
 h_jetsAK4Pt = Handle("std::vector<float>")
@@ -535,9 +535,13 @@ for ifile in files : #{ Loop over root files
                     goodmuonMass.append(muonMass[imuon])
                     goodmuonKey.append(muKey[imuon])
                     goodmuonCharge.append(muCharge[imuon])
-                    if options.verbose :
-                        print "muon %2d: key %4d, pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
-                        ( imuon, muKey[imuon], muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
+                    if options.verbose : 
+                            print "muon %2d: keys " %(imuon)
+                            for ikey in muKey[imuon] : 
+                                print   " %4d" % ( ikey ),
+                            print "     ---> pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
+                                ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
+
                 #} End Muon loop
                         
         event.getByLabel ( l_elPt, h_elPt )
@@ -601,7 +605,7 @@ for ifile in files : #{ Loop over root files
                     ieCharge = electronCharge[ielectron]
                     if iePt < iePt and abs(ieEta) < options.maxElectronEta : #$ Electron eta cut (based on options)
                         continue                     
-                    goodElectron = electronTight[ ielectron ]
+                    goodElectron = electronLoose[ ielectron ]
                     if goodElectron == True :
                         goodelectronPt.append( iePt )
                         goodelectronEta.append( ieEta )
@@ -610,7 +614,10 @@ for ifile in files : #{ Loop over root files
                         goodelectronKey.append( elKey[ielectron] )
                         goodelectronCharge.append( ieCharge )
                         if options.verbose : #!!! Need to add this back in 
-                            print "elec %2d: key %4d, pt %4.1f, eta %4.1f, phi %+5.3f " % ( ielectron, elKey[ielectron], electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
+                            print "elec %2d: keys " %(ielectron)
+                            for ikey in elKey[ielectron] : 
+                                print   " %4d" % ( ikey ),
+                            print "     ---> , pt %4.1f, eta %4.1f, phi %+5.3f " % ( electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
                     
                     #} End Electron Loop
 
@@ -660,12 +667,12 @@ for ifile in files : #{ Loop over root files
                                       goodmuonEta[0],
                                       goodmuonPhi[0],
                                       goodmuonMass[0] )
-                Lepton1ObjKey = int(goodmuonKey[0])
+                Lepton1ObjKey = goodmuonKey[0]
                 Lepton2.SetPtEtaPhiM( goodmuonPt[1],
                                       goodmuonEta[1],
                                       goodmuonPhi[1],
                                       goodmuonMass[1] )
-                Lepton2ObjKey = int(goodmuonKey[1])
+                Lepton2ObjKey = goodmuonKey[1]
             elif dielectronCandidate :
                 Lepton1 = ROOT.TLorentzVector()
                 Lepton2 = ROOT.TLorentzVector()
@@ -673,12 +680,12 @@ for ifile in files : #{ Loop over root files
                                       goodelectronEta[0],
                                       goodelectronPhi[0],
                                       goodelectronMass[0] )
-                Lepton1ObjKey = int(goodelectronKey[0])
+                Lepton1ObjKey = goodelectronKey[0]
                 Lepton2.SetPtEtaPhiM( goodelectronPt[1],
                                       goodelectronEta[1],
                                       goodelectronPhi[1],
                                       goodelectronMass[1] )
-                Lepton2ObjKey = int(goodelectronKey[1])
+                Lepton2ObjKey = goodelectronKey[1]
             elif mixedCandidate :
                 Lepton1 = ROOT.TLorentzVector()
                 Lepton2 = ROOT.TLorentzVector()
@@ -686,12 +693,12 @@ for ifile in files : #{ Loop over root files
                                     goodmuonEta[0],
                                     goodmuonPhi[0],
                                     goodmuonMass[0] )
-                Lepton1ObjKey = int(goodmuonKey[0])
+                Lepton1ObjKey = goodmuonKey[0]
                 Lepton2.SetPtEtaPhiM( goodelectronPt[0],
                                         goodelectronEta[0],
                                         goodelectronPhi[0],
                                         goodelectronMass[0] )
-                Lepton2ObjKey = int(goodelectronKey[0])
+                Lepton2ObjKey = goodelectronKey[0]
         
         #@ Semileptonic
         muJets = False
@@ -705,7 +712,7 @@ for ifile in files : #{ Loop over root files
                                         goodmuonEta[0],
                                         goodmuonPhi[0],
                                         goodmuonMass[0] )
-                theLeptonObjKey = int(goodmuonKey[0])
+                theLeptonObjKey = goodmuonKey[0]
 
             else :
                 eleJets = True
@@ -714,7 +721,7 @@ for ifile in files : #{ Loop over root files
                                         goodelectronEta[0],
                                         goodelectronPhi[0],
                                         goodelectronMass[0] )
-                theLeptonObjKey = int(goodelectronKey[0])
+                theLeptonObjKey = goodelectronKey[0]
                                    
         # EVENT AK4 JET HANDLES
         event.getByLabel ( l_jetsAK4Pt, h_jetsAK4Pt )
@@ -842,7 +849,7 @@ for ifile in files : #{ Loop over root files
                     pfcands = int(AK4NumDaughters[i])
                     for j in range(0,pfcands) : #{ Loop over keys                
                         # If any of the jet daughters matches the good lepton, remove the lepton p4 from the jet p4
-                        if AK4Keys[i][j] == theLeptonObjKey : 
+                        if AK4Keys[i][j] in theLeptonObjKey : 
                             if options.verbose :
                                 print '     -----> removing lepton, pt/eta/phi = {0:6.2f},{1:6.2f},{2:6.2f}'.format(
                                     theLepton.Perp(), theLepton.Eta(), theLepton.Phi()
@@ -858,7 +865,7 @@ for ifile in files : #{ Loop over root files
                     pfcands = int(AK4NumDaughters[i])
                     for j in range(0,pfcands) : #{ Loop over jet keys            
                         # If any of the jet daughters matches the good lepton, remove the lepton p4 from the jet p4
-                        if AK4Keys[i][j] == Lepton1ObjKey : 
+                        if AK4Keys[i][j] in Lepton1ObjKey : 
                             if options.verbose :
                                 print '     -----> removing lepton, pt/eta/phi = {0:6.2f},{1:6.2f},{2:6.2f}'.format(
                                     Lepton1.Perp(), Lepton1.Eta(), Lepton1.Phi()
@@ -872,7 +879,7 @@ for ifile in files : #{ Loop over root files
                     pfcands = int(AK4NumDaughters[i])
                     for j in range(0,pfcands) : #{ Loop over Jet Keys            
                         # If any of the jet daughters matches the good lepton, remove the lepton p4 from the jet p4
-                        if AK4Keys[i][j] == Lepton2ObjKey : 
+                        if AK4Keys[i][j] in Lepton2ObjKey : 
                             if options.verbose :
                                 print '     -----> removing lepton, pt/eta/phi = {0:6.2f},{1:6.2f},{2:6.2f}'.format(
                                     Lepton2.Perp(), Lepton2.Eta(), Lepton2.Phi()
