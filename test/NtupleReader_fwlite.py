@@ -52,7 +52,7 @@ parser.add_option('--bdisc', type='string', action='store',
 
 
 parser.add_option('--bDiscMin', type='float', action='store',
-                  default=0.679,
+                  default=0.423,
                   dest='bDiscMin',
                   help='Minimum b discriminator')
 
@@ -458,6 +458,52 @@ muoneleEvents = 0
 muonJetsEvents = 0
 eleJetsEvents = 0
 AllHadronicEvents = 0
+NMu = 0
+NEl = 0
+NAK4Jets = 0
+NAK8Jets = 0
+NPassMuonPtCut = 0
+NPassMuonEtaCut = 0 
+NPassMuonDzCut = 0
+NPassMuonTightCut = 0
+NPassElPtCut = 0
+NPassElEtaCut = 0
+NPassGoodElCut = 0
+NPassEldEtaIn = 0
+NPassEldPhiIn= 0
+NPassEl5x5= 0
+NPassElHoE = 0
+NPassElD0 = 0
+NPassElDz = 0
+NPassElEmooP = 0
+NPassElKeyCut = 0
+NPassGoodJetAK4Cut = 0
+NPassMinAK4PtCut = 0
+NPassMaxAK4RapidityCut = 0
+NPass2DCut = 0
+NPass2D2Cut = 0
+NPassGoodJetAK8Cut = 0
+NPassMinRawAK8PtCut = 0
+NPassMaxAK8RapidityCut = 0 
+NPassSemiLeptonicDRjlCut = 0
+NPassAK8nSubJetsCut = 0
+NPassAK8MinMassCut = 0
+NPassAK8CorrMassCut = 0 
+NPassminAK8PtCut = 0
+NPasstMinMassCut = 0 
+NPasstMAK8GroomedCut = 0 
+NPasstau23Cut = 0 
+NPassBDiscMinCut = 0 
+NPassBDisc2MinCut = 0 
+NPassMuonBCut = 0
+NPassElBCut = 0
+NPassNearJCut = 0
+NPassNearJ2Cut = 0
+NPassMuon2DCut = 0
+NPassEl2DCut = 0
+NPassMuonTot = 0
+NPassAK4KinTot = 0
+NPassWbEvent= 0
 
 genSemiMuEvents = 0
 genSemiEEvents = 0
@@ -465,6 +511,7 @@ genMuMuEvents = 0
 genMuEEvents = 0
 genEEEvents = 0
 genHadEvents = 0
+
 
 filelist = file( options.files )
 filesraw = filelist.readlines()
@@ -604,19 +651,36 @@ for ifile in files : #{ Loop over root files
             muKey = h_muKey.product()
             muCharge = h_muCharge.product()
             for imuon, muon in enumerate(muonPt): #{ Loop over all muons in event
-                if muonPt[imuon] > options.minMuonPt and abs(muonEta[imuon]) < options.maxMuonEta and muonDz[imuon] < 5.0 and muonTight[imuon] : #$ Muon Cuts
-                    goodmuonPt.append(muonPt[imuon])
-                    goodmuonEta.append(muonEta[imuon])
-                    goodmuonPhi.append(muonPhi[imuon])
-                    goodmuonMass.append(muonMass[imuon])
-                    goodmuonKey.append(muKey[imuon])
-                    goodmuonCharge.append(muCharge[imuon])
-                    if options.verbose : 
-                            print "muon %2d: keys " %(imuon)
-                            for ikey in muKey[imuon] : 
-                                print   " %4d" % ( ikey ),
-                            print "     ---> pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
-                                ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
+                NMu = NMu + 1
+                if muonPt[imuon] < options.minMuonPt :  #$ Muon cuts
+                    continue
+                else: 
+                    NPassMuonPtCut = NPassMuonPtCut + 1
+                if abs(muonEta[imuon]) > options.maxMuonEta :
+                    continue
+                else:
+                    NPassMuonEtaCut = NPassMuonEtaCut + 1
+                if muonDz[imuon] > 5.0:
+                    continue
+                else:
+                    NPassMuonDzCut = NPassMuonDzCut + 1
+                if muonTight[imuon] == 0 :
+                    continue
+                else:
+                    NPassMuonTightCut = NPassMuonTightCut + 1
+                NPassMuonTot += 1 
+                goodmuonPt.append(muonPt[imuon])
+                goodmuonEta.append(muonEta[imuon])
+                goodmuonPhi.append(muonPhi[imuon])
+                goodmuonMass.append(muonMass[imuon])
+                goodmuonKey.append(muKey[imuon])
+                goodmuonCharge.append(muCharge[imuon])
+                if options.verbose : 
+                    print "muon %2d: keys " %(imuon)
+                    for ikey in muKey[imuon] : 
+                        print   " %4d" % ( ikey ),
+                    print "     ---> pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
+                        ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
 
                 #} End Muon loop
                         
@@ -674,22 +738,100 @@ for ifile in files : #{ Loop over root files
             #for i in xrange( len(electronPt.size() ) ) :
             if len(electronPt) > 0 :
                 for ielectron, electron in enumerate(electronPt): #{ Loop over all electrons in event
+                    NEl = NEl + 1
                     iePt = electronPt[ielectron]   
                     ieEta = electronEta[ielectron]
                     iePhi = electronPhi[ielectron]
                     ieMass = electronMass[ielectron]
                     ieCharge = electronCharge[ielectron]
-                    if iePt < iePt and abs(ieEta) < options.maxElectronEta : #$ Electron eta cut (based on options)
-                        continue                     
-                    goodElectron = electronLoose[ ielectron ]
-                    if goodElectron == True :
+                    iedEtaIn = electrondEtaIn[ielectron]
+                    iedPhiIn = electrondPhiIn[ielectron]
+                    ieHoE = electronHoE[ielectron]
+                    ieD0 = electronD0[ielectron]
+                    ieDz = electronDz[ielectron]
+                    ieEmooP = electronooEmooP[ielectron]
+                    ie5x5sigma = electronfullsiee[ielectron]
+
+                    if iePt > options.minElectronPt:
+                        NPassElPtCut = NPassElPtCut + 1
+                    else:
+                        continue
+                    if abs(ieEta) < options.maxElectronEta : #$ Electron eta cut (based on options)
+                        NPassElEtaCut = NPassElEtaCut + 1
+                    else:
+                        continue
+                    goodElectron = False #$ Electron ID Cut (current WP Loose : https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedElectronIdentificationRun2 )
+                    if abs( ieEta ) <= 1.479 :
+                        if abs(iedEtaIn) < 0.009277 :
+                            NPassEldEtaIn+=1
+                        else :
+                            continue
+                        if abs(iedPhiIn ) < 0.094739 :
+                            NPassEldPhiIn+=1
+                        else :
+                            continue
+                        if ie5x5sigma < 0.010331 :
+                            NPassEl5x5+= 1
+                        else :
+                            continue
+                        if ieHoE <  0.093068 :
+                            NPassElHoE+= 1
+                        else :
+                            continue
+                        if abs(ieD0) <  0.035904 :
+                            NPassElD0+=1
+                        else :
+                            continue
+                        if abs(ieDz) <  0.075496 :
+                            NPassElDz+=1
+                        else :
+                            continue
+                        if ieEmooP <  0.189968 :
+                            NPassElEmooP+=1
+                            goodElectron = True
+                        else :
+                            continue
+                    else :
+                        if abs(iedEtaIn) < 0.009833 :
+                            NPassEldEtaIn+=1
+                        else :
+                            continue
+                        if abs(iedPhiIn ) < 0.149934 :
+                            NPassEldPhiIn+=1
+                        else :
+                            continue 
+                        if ie5x5sigma < 0.031838 :
+                            NPassEl5x5+= 1
+                        else :
+                            continue
+                        if ieHoE <  0.115754 :
+                            NPassElHoE+= 1
+                        else :
+                            continue
+                        if abs(ieD0) <  0.099266 :
+                            NPassElD0+=1
+                        else :
+                            continue
+                        if abs(ieDz) <  0.197897 :
+                            NPassElDz+=1
+                        else :
+                            continue
+                        if ieEmooP <  0.140662 :
+                            NPassElEmooP+=1
+                            goodElectron = True
+                        else :
+                            continue                       
+                    if goodElectron == True : 
+                        NPassGoodElCut = NPassGoodElCut + 1 
+                    #if elKey[ielectron] != 0 and elKey[ielectron] != 18446744073709551616 :
+                        NPassElKeyCut+=1
                         goodelectronPt.append( iePt )
                         goodelectronEta.append( ieEta )
                         goodelectronPhi.append( iePhi )
                         goodelectronMass.append( ieMass )
                         goodelectronKey.append( elKey[ielectron] )
                         goodelectronCharge.append( ieCharge )
-                        if options.verbose : #!!! Need to add this back in 
+                        if options.verbose : 
                             print "elec %2d: keys " %(ielectron)
                             for ikey in elKey[ielectron] : 
                                 print   " %4d" % ( ikey ),
@@ -712,23 +854,23 @@ for ifile in files : #{ Loop over root files
             print 'Number of good electrons = ' + str( len(goodelectronPt) )
 
 
-        if ngenE > 0 and len(goodelectronPt) == 0 :
-            print '--------------------'
-            print 'Electron not found : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
-              (  genPartID[genEIndex[0]], genPartStatus[genEIndex[0]], \
-                 genPartPt[genEIndex[0]], genPartEta[genEIndex[0]], genPartPhi[genEIndex[0]], genPartMass[genEIndex[0]] )
-            print 'Electrons : ' 
-            for ielectron in xrange(0, len(electronPt) ) :
-                print "      pt %4.1f, eta %4.1f, phi %+5.3f " % ( electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
-        if ngenMu > 0 and len(goodmuonPt) == 0 :
-            print '--------------------'
-            print 'Muon not found     : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
-              (  genPartID[genMuIndex[0]], genPartStatus[genMuIndex[0]], \
-                 genPartPt[genMuIndex[0]], genPartEta[genMuIndex[0]], genPartPhi[genMuIndex[0]], genPartMass[genMuIndex[0]] )
-            print 'Muons : '
-            for imuon in xrange(0, len(muonPt) ) :
-                print "     pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
-                    ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
+            if ngenE > 0 and len(goodelectronPt) == 0 :
+                print '--------------------'
+                print 'Electron not found : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
+                    (  genPartID[genEIndex[0]], genPartStatus[genEIndex[0]], \
+                           genPartPt[genEIndex[0]], genPartEta[genEIndex[0]], genPartPhi[genEIndex[0]], genPartMass[genEIndex[0]] )
+                print 'Electrons : ' 
+                for ielectron in xrange(0, len(electronPt) ) :
+                    print "      pt %4.1f, eta %4.1f, phi %+5.3f " % ( electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
+            if ngenMu > 0 and len(goodmuonPt) == 0 :
+                print '--------------------'
+                print 'Muon not found     : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
+                    (  genPartID[genMuIndex[0]], genPartStatus[genMuIndex[0]], \
+                           genPartPt[genMuIndex[0]], genPartEta[genMuIndex[0]], genPartPhi[genMuIndex[0]], genPartMass[genMuIndex[0]] )
+                print 'Muons : '
+                for imuon in xrange(0, len(muonPt) ) :
+                    print "     pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
+                        ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
         if options.selection == 0 and not Leptonic :
             continue
         elif options.selection == 1 and not SemiLeptonic :
@@ -848,6 +990,7 @@ for ifile in files : #{ Loop over root files
         
         # This array stores all of our favorite jets , those that meet the selection criteria
         ak4JetsGood = []
+        ak4JetsGoodbDiscrim = []
         # For selecting leptons, look at 2-d cut of dRMin, ptRel of
         # lepton and nearest jet that has pt > 30 GeV
         dRMin = 9999.0
@@ -894,6 +1037,7 @@ for ifile in files : #{ Loop over root files
             length = len(AK4Pt)
 
         for i in range(0,length): #{ Loop over AK4 Jets
+            NAK4Jets = NAK4Jets + 1
             #get the jets transverse momentum, Eta, Phi and Mass ( gives same information as the 4 vector)
             #v = TLorentzVector()
             jetP4Raw = ROOT.TLorentzVector()
@@ -927,13 +1071,13 @@ for ifile in files : #{ Loop over root files
                 for j in range( 0, len(AK4Keys[i]) ) :
                     print ' %d' % ( AK4Keys[i][j] ),
                 print ''
-
             if not goodJet :
                 if options.verbose : 
                     print '   bad jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                         jetP4Raw.Perp(), jetP4Raw.Rapidity(), jetP4Raw.Phi(), jetP4Raw.M()
                         )
                 continue
+            NPassGoodJetAK4Cut = NPassGoodJetAK4Cut + 1
             if options.verbose :
                 print '   raw jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                     jetP4Raw.Perp(), jetP4Raw.Rapidity(), jetP4Raw.Phi(), jetP4Raw.M()
@@ -995,17 +1139,27 @@ for ifile in files : #{ Loop over root files
             ak4JetCorrector.setNPV   ( NPV )
             newJEC = ak4JetCorrector.getCorrection()
             jetP4 = jetP4Raw*newJEC
-
-            if jetP4.Perp() < options.minAK4Pt or abs(jetP4.Rapidity()) > options.maxAK4Rapidity : #$ Cuts for Pt and Rapidity
-                if options.verbose : 
-                    print '   jet failed kinematic cuts'
+            if jetP4.Perp() > options.minAK4Pt:   #$ Cuts for Pt and Rapidity
+                NPassMinAK4PtCut = NPassMinAK4PtCut + 1
+            else:
+                if options.verbose :
+                   print '   jet failed kinematic cuts'
                 continue
+            if abs(jetP4.Rapidity()) < options.maxAK4Rapidity:                  
+                NPassMaxAK4RapidityCut = NPassMaxAK4RapidityCut + 1
+            else:
+                if options.verbose :
+                   print '   jet failed kinematic cuts'
+                continue
+
+           # NPassAK4KinTot += 1
             if SemiLeptonic :
                 dR = jetP4.DeltaR(theLepton )
             if Leptonic :
                 dR1 = jetP4.DeltaR(Lepton1 )
                 dR2 = jetP4.DeltaR(Lepton2 )
             ak4JetsGood.append(jetP4)
+            ak4JetsGoodbDiscrim.append(AK4CSV[i])
             if options.verbose :
                 print '   corrjet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}, bdisc = {4:6.2f}'.format (
                     jetP4.Perp(), jetP4.Rapidity(), jetP4.Phi(), jetP4.M(), AK4CSV[i] )
@@ -1017,7 +1171,7 @@ for ifile in files : #{ Loop over root files
                     dRMin = dR
                     nearestJetbDiscrim = AK4CSV[i]
             elif Leptonic :
-                if dR1 < dRMin :
+                if abs(dR1) < dRMin :
                     #Save in case duplicate bjets
                     inearestJetsave = inearestJet
                     nearestJetP4save = nearestJetP4
@@ -1028,12 +1182,12 @@ for ifile in files : #{ Loop over root files
                     nearestJetP4 = jetP4
                     dRMin = dR1
                     nearestJetbDiscrim = AK4CSV[i]
-                if dR2 < dR2Min :
+                if abs(dR2) < dR2Min :
                     if i == inearestJet :
-                        if dR2 < dR1 :
+                        if abs(dR2) < abs(dR1) :
                             i2nearestJet = i
                             nearest2JetP4 = jetP4
-                            dR2Min = dR2
+                            dR2Min = abs(dR2)
                             nearest2JetbDiscrim = AK4CSV[i]
 
                             inearestJet = inearestJetsave
@@ -1043,24 +1197,42 @@ for ifile in files : #{ Loop over root files
                     else :
                         i2nearestJet = i
                         nearest2JetP4 = jetP4
-                        dR2Min = dR2
+                        dR2Min = abs(dR2)
                         nearest2JetbDiscrim = AK4CSV[i]
                 
             #} End AK4Jet Loop
-
+        if Leptonic and inearestJet < 0 :
+            if options.verbose :
+                print "Oops missed a nearest jet, going back through AK4 Loop for it"
+            for i in xrange( len(ak4JetsGood) ) : 
+                dR1 = ak4JetsGood[i].DeltaR( Lepton1 )
+                if dR1 < dRMin and i != i2nearestJet:
+                    inearestJet = i
+                    nearestJetP4 = ak4JetsGood[i]
+                    dRMin = dR1
+                    nearestJetbDiscrim = ak4JetsGoodbDiscrim[i] 
         #$ Here, we have the AK4 jets and the leptons, and skip if we do not find a jet near the lepton(s)
         if SemiLeptonic :
+            NPassWbEvent+= 1 
             if inearestJet < 0 :
                 if options.verbose :
                     print '   no nearest jet found, skipping'
                 continue
             else :
+                NPassNearJCut = NPassNearJCut + 1
                 if options.verbose :
                     print '>>>>>>>> nearest jet to lepton is ' + str( inearestJet )
                     print '   corrjet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}, bdisc = {4:6.2f}'.format (
                         nearestJetP4.Perp(), nearestJetP4.Rapidity(), nearestJetP4.Phi(), nearestJetP4.M(), nearestJetbDiscrim )   
 
         if Leptonic :
+            NPassWbEvent += 1
+
+            if inearestJet >= 0 :
+                NPassNearJCut += 1
+            if i2nearestJet >= 0:
+                NPassNearJ2Cut += 1        
+
             if inearestJet < 0 or i2nearestJet < 0:
                 if options.verbose :
                     print '   no nearest jet found for both leptons, skipping'
@@ -1113,8 +1285,12 @@ for ifile in files : #{ Loop over root files
                 print '>>>>>>>>>>>>>>'
             if pass2D == False :
                 continue
-
-
+            else:
+                NPass2DCut += 1
+                if muJets :
+                   NPassMuon2DCut += 1
+                elif eleJets :
+                   NPassEl2DCut += 1
         #^ Plotting for DiLeptonic Channel pre 2D cuts
         elif Leptonic :
             theLepJet = nearestJetP4
@@ -1135,14 +1311,19 @@ for ifile in files : #{ Loop over root files
             h_2DCut.Fill( dRMin, ptRel )
             
             #@ First Lepton 2D Cuts
-            pass2D = ptRel > 20.0 or dRMin > 0.4
-
+            pass2D1 = ptRel > 20.0 or dRMin > 0.4
             if options.verbose :
                 print '>>>>>>>>>>>>>>'
                 print '2d cut 1 : dRMin = {0:6.2f}, ptRel = {1:6.2f}'.format( dRMin, ptRel )
                 print '>>>>>>>>>>>>>>'
-            if pass2D == False :
-                continue
+            if pass2D1 :
+                NPass2DCut += 1
+                if dimuonCandidate :
+                    NPassMuon2DCut += 1
+                elif dielectronCandidate :
+                    NPassEl2DCut += 1
+                elif mixedCandidate :
+                    NPassMuon2DCut += 1
 
             theLepJet2 = nearest2JetP4
             theLepJetBDisc2 = nearest2JetbDiscrim
@@ -1162,14 +1343,24 @@ for ifile in files : #{ Loop over root files
             h_2DCut.Fill( dR2Min, ptRel )
             
             #@ Second Lepton 2D Cuts
-            pass2D = ptRel2 > 20.0 or dR2Min > 0.4
+            pass2D2 = ptRel2 > 20.0 or dR2Min > 0.4
             if options.verbose :
                 print '>>>>>>>>>>>>>>'
                 print '2d cut 2 : dRMin = {0:6.2f}, ptRel = {1:6.2f}'.format( dR2Min, ptRel2 )
                 print '>>>>>>>>>>>>>>'
-            if pass2D == False :
-                continue
+            if pass2D2 :
+                NPass2D2Cut += 1
+                if dimuonCandidate :
+                    NPassMuon2DCut += 1
+                elif dielectronCandidate :
+                    NPassEl2DCut += 1
+                elif mixedCandidate :
+                    NPassEl2DCut += 1
 
+            if pass2D1 == False :
+                continue
+            if pass2D2 == False :
+                continue
         #@ AK8 selection
         #channels:
         # Hadronic - get 2 AK8 jets with no leptons
@@ -1290,7 +1481,7 @@ for ifile in files : #{ Loop over root files
 
 
                 for i in range(0,len(AK8Pt)):#{ Loop over AK8 Jets
-
+                    NAK8Jets = NAK8Jets + 1
                     AK8JECFromB2GAnaFW = AK8JEC[i]   
                     AK8P4Raw = ROOT.TLorentzVector()
                     AK8P4Raw.SetPtEtaPhiM( AK8Pt[i] , AK8Eta[i], AK8Phi[i], AK8Mass[i])
@@ -1318,6 +1509,7 @@ for ifile in files : #{ Loop over root files
                                 AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
                                 )
                         continue
+                    NPassGoodJetAK8Cut = NPassGoodJetAK8Cut + 1
                     if options.verbose :
                         print '   raw jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                             AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
@@ -1338,7 +1530,10 @@ for ifile in files : #{ Loop over root files
                     #$ Cuts based on pt and rapidity
                     if AK8P4Raw.Perp() < options.minAK8Pt or abs(AK8P4Raw.Rapidity()) > options.maxAK8Rapidity :
                         continue
-
+                    if AK8P4Raw.Perp() > options.minAK8Pt:
+                        NPassMinRawAK8PtCut = NPassMinRawAK8PtCut + 1
+                    if abs(AK8P4Raw.Rapidity()) < options.maxAK8Rapidity :
+                        NPassMaxAK8RapidityCut = NPassMaxAK8RapidityCut + 1
                     # SemiLeptonic- Only keep AK8 jets "away" from the lepton, so we do not need lepton-jet cleaning here. There's no double counting. 
                     # Leptonic - No fat jets                                                                          
                     # Hadronic - 2 AK8's, no massy leptons to clean up after
@@ -1347,6 +1542,7 @@ for ifile in files : #{ Loop over root files
                     if SemiLeptonic == True:
                         dR = jetP4.DeltaR(theLepton ) 
                         if dR > ROOT.TMath.Pi()/2.0 :
+                            NPassSemiLeptonicDRjlCut = NPassSemiLeptonicDRjlCut + 1
                             ak8JetsGood.append(AK8P4Corr)
                             ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
                             ak8JetsGoodPrunMass.append( AK8PrunedM[i])
@@ -1368,21 +1564,32 @@ for ifile in files : #{ Loop over root files
                         # - minimum mass pairing > 50 GeV
                         # - number of Subjets >= 3
                         # - Jet Mass > 100 GeV
-                        if AK8nSubJets[i] >= 3 and AK8minmass[i] > 50 and AK8P4Corr.M() > 100 :
-                            ak8JetsGood.append(AK8P4Corr)
-                            ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
-                            ak8JetsGoodPrunMass.append( AK8PrunedM[i])
-                            ak8JetsGoodFiltMass.append( AK8FilteredM[i])
-                            ak8JetsGoodSDropMass.append( AK8SDropM[i])
-                            ak8JetsGoodTau1.append( AK8Tau1[i])
-                            ak8JetsGoodTau2.append( AK8Tau2[i])
-                            ak8JetsGoodTau3.append( AK8Tau3[i])
-                            ak8JetsGoodNSubJets.append( AK8nSubJets[i])
-                            ak8JetsGoodMinMass.append( AK8minmass[i] )
-                            ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
-                            ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
-                            ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
-                            ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )                        
+                        if AK8nSubJets[i] >= 3:
+                            NPassAK8nSubJetsCut = NPassAK8nSubJetsCut + 1
+                        else:
+                            continue
+                        if AK8minmass[i] > 50:
+                            NPassAK8MinMassCut = NPassAK8MinMassCut + 1
+                        else:
+                            continue
+                        if AK8P4Corr.M() > 100:
+                            NPassAK8CorrMassCut = NPassAK8CorrMassCut + 1
+                        else:
+                            continue
+                        ak8JetsGood.append(AK8P4Corr)
+                        ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
+                        ak8JetsGoodPrunMass.append( AK8PrunedM[i])
+                        ak8JetsGoodFiltMass.append( AK8FilteredM[i])
+                        ak8JetsGoodSDropMass.append( AK8SDropM[i])
+                        ak8JetsGoodTau1.append( AK8Tau1[i])
+                        ak8JetsGoodTau2.append( AK8Tau2[i])
+                        ak8JetsGoodTau3.append( AK8Tau3[i])
+                        ak8JetsGoodNSubJets.append( AK8nSubJets[i])
+                        ak8JetsGoodMinMass.append( AK8minmass[i] )
+                        ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
+                        ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
+                        ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
+                        ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )                        
                         #} End AK8 Loop
 
             #@ Tagging
@@ -1397,7 +1604,7 @@ for ifile in files : #{ Loop over root files
             for i in range(0,len(ak8JetsGood)):#{ Loop over Fat jets that passed cuts for t tagging
                 if ak8JetsGood[i].Perp() < options.minAK8Pt : #$ Pt cut for passed jets
                     continue
-                
+                NPassminAK8PtCut = NPassminAK8PtCut + 1
                 if evWeight != -1 :
                     FlatWeight = evWeight
                 else :
@@ -1441,13 +1648,24 @@ for ifile in files : #{ Loop over root files
                 if options.verbose : 
                     print 'minMass = {0:6.2f}, Groomed mass = {1:6.2f}, tau32 = {2:6.2f}'.format(
                         minMass, mAK8SDrop, tau32
-                        ), 
-                if minMass > options.minMassCut and mAK8SDrop > options.mAK8GroomedCut and tau32 < options.tau32Cut :#$ Selection for t jets
-                    nttags += 1
-                    tJets.append( ak8JetsGood[i] )
+                        ),
+                if minMass > options.minMassCut:
+                    NPasstMinMassCut = NPasstMinMassCut + 1
+                else:
+                    continue
+                if mAK8SDrop > options.mAK8GroomedCut:
+                    NPasstMAK8GroomedCut = NPasstMAK8GroomedCut + 1
+                else: 
+                    continue
+                if tau32 < options.tau32Cut:
+                    NPasstau23Cut = NPasstau23Cut + 1
+                else: 
+                    continue
+                nttags += 1
+                tJets.append( ak8JetsGood[i] )
 
-                    if options.verbose : 
-                        print ' --->Tagged jet!'
+                if options.verbose : 
+                    print ' --->Tagged jet!'
                 else :
                     if options.verbose : 
                         print ''
@@ -1463,6 +1681,22 @@ for ifile in files : #{ Loop over root files
             ttbarCandP4 = None
 
             #$ Check if the nearest jets to the leptons are b-tagged
+            if theLepJetBDisc > options.bDiscMin:
+                NPassBDiscMinCut = NPassBDiscMinCut + 1
+                if dimuonCandidate :
+                    NPassMuonBCut += 1
+                elif dielectronCandidate :
+                    NPassElBCut += 1
+                elif mixedCandidate :
+                    NPassMuonBCut += 1
+            if theLepJetBDisc2 > options.bDiscMin:
+                NPassBDisc2MinCut = NPassBDisc2MinCut + 1
+                if dimuonCandidate :
+                    NPassMuonBCut += 1
+                elif dielectronCandidate :
+                    NPassElBCut += 1
+                elif mixedCandidate :
+                    NPassElBCut += 1
             if theLepJetBDisc < options.bDiscMin and theLepJetBDisc2 < options.bDiscMin :
 
                 if options.verbose : 
@@ -1522,6 +1756,8 @@ for ifile in files : #{ Loop over root files
             lepTopCandP4 = None
             
             #$ Check if the nearest jet to the lepton is b-tagged
+            if theLepJetBDisc > options.bDiscMin:
+                NPassBDiscMinCut = NPassBDiscMinCut + 1
             if theLepJetBDisc < options.bDiscMin :
                 if options.verbose : 
                     print 'closest jet to lepton is not b-tagged'
@@ -1539,12 +1775,7 @@ for ifile in files : #{ Loop over root files
                 nuCandP4 = ROOT.TLorentzVector()#(metPx, metPy ,0.0, metPt)
                 nuCandP4.SetPxPyPzE(metPx, metPy, 0.0, metPt)
                 solution, nuz1, nuz2 = solve_nu( vlep=theLepton, vnu=nuCandP4 )
-                # If there is at least one real solution, pick it up
-
-
-                
-
-                
+                # If there is at least one real solution, pick it up                              
                 if solution :
                     if options.verbose : 
                         print '--- Have a solution --- '
@@ -1560,8 +1791,6 @@ for ifile in files : #{ Loop over root files
                     eleJetsEvents += 1
 
                 lepTopCandP4 = nuCandP4 + theLepton + bJetCandP4
-
-
 
                 
                 #if ttbarCandP4.M() < 1000.0 :
@@ -1620,15 +1849,90 @@ for ifile in files : #{ Loop over root files
 
         #} End event loop
     #} End root file loop
+#
+print '========================================='
+print ' Awesome Cut Flow Table'
+print '========================================='
+print 'Number of Muons: ' +str(NMu) 
+print ' Pass Pt Cut: ' +str(NPassMuonPtCut)
+print ' Pass Eta Cut: ' +str(NPassMuonEtaCut)
+print ' Pass Dz Cut: ' +str(NPassMuonDzCut)
+print ' Pass Tight Cut: ' +str(NPassMuonTightCut)
+print '========================================='
+print 'Number of Electrons: ' +str(NEl)       
+print ' Pass Pt Cut: ' +str(NPassElPtCut)
+print ' Pass Eta Cut: ' +str(NPassElEtaCut)
+print ' ~~~~~~~~ Electron ID Loose WP ~~~~~~~~~~'
+print ' Pass dEtaIn Cut: ' +str(NPassEldEtaIn)
+print ' Pass dPhiIn Cut: ' +str(NPassEldPhiIn)
+print ' Pass 5x5 Sigma eta^{2} Cut: ' + str(NPassEl5x5)
+print ' Pass H over E Cut: ' + str(NPassElHoE)
+print ' Pass D0 Cut: ' + str(NPassElD0)
+print ' Pass Dz Cut: ' + str(NPassElDz)
+print ' Pass ooEmooP Cut: ' + str(NPassElEmooP)
+print ' Pass Good Cut: ' +str(NPassGoodElCut)
+print ' Pass Electron Key Cut: ' + str(NPassElKeyCut)
+if options.selection == 1 or options.selection == 0 :
+    print '========================================='
+    print 'Number of AK4 Jets: ' +str(NAK4Jets)
+    print ' Pass Good Cut: ' +str(NPassGoodJetAK4Cut)
+    print ' Pass Pt Cut: ' +str(NPassMinAK4PtCut)
+    print ' Pass Rapidity Cut: ' +str(NPassMaxAK4RapidityCut)
+    print '========================================='
+    print '~~~~~~~~~  W + b jet Selection  ~~~~~~~~~'
+    print ' Passed events with nearest jet: ' +str(NPassWbEvent)
+    print ' Pass Found Near Jet 1 Cut:  ' +str(NPassNearJCut)
+    if options.selection == 0:
+        print ' Pass Found Near Jet 2 Cut: ' +str(NPassNearJ2Cut)
+    print ' Pass 2D Cut: ' +str(NPass2DCut)
+    if options.selection == 0:
+        print ' Pass 2D Lepton 2 Cut: ' +str(NPass2D2Cut)
+    print ' Muon Pass 2D Cut: ' +str(NPassMuon2DCut)
+    print ' Electron Pass 2D Cut: ' +str(NPassEl2DCut)
+    print ' Pass b Disc Min Cut: ' +str(NPassBDiscMinCut)
+    if options.selection == 0:
+        print ' Pass b Disc Lepton 2 Min Cut: ' +str(NPassBDisc2MinCut)
+    print ' Muon Pass b Disc: ' +str(NPassMuonBCut)
+    print ' Electron Pass b Disc Cut: ' +str(NPassElBCut)
+if options.selection == 1 or options.selection == 2 :
+    print '========================================='
+    print 'Number of AK8 Jets: ' +str(NAK8Jets)
+    print ' Pass Good Cut: ' +str(NPassGoodJetAK8Cut)
+    print ' Pass Pt Cut: ' +str(NPassMinRawAK8PtCut)
+    print ' Pass Rapidity Cut: ' +str(NPassMaxAK8RapidityCut)
+    print ' Pass Semi Leptonic DR Cut: ' + str(NPassSemiLeptonicDRjlCut)
+    if options.selection == 2:
+        print ' Pass n Sub Jets Cut: ' +str(NPassAK8nSubJetsCut)
+        print ' Pass Min Mass Cut: ' +str(NPassAK8MinMassCut) 
+        print ' Pass Corrected Mass Cut: ' +str(NPassAK8CorrMassCut)
+    print ' Pass Good  Min Pt Cut: ' +str(NPassminAK8PtCut)
+    print ' Pass Min Mass2 Cut: ' +str(NPasstMinMassCut)
+    print ' Pass Groomed Cut: ' +str(NPasstMAK8GroomedCut)
+    print ' Pass tau32 Cut: ' +str(NPasstau23Cut)
+print '========================================='
+print 'End Awesome Cut Flow Table'
+print '========================================='
+
 
 if options.selection == 0 :
-    print ' Number of Dimuon Events: ' + str(DimuonEvents) + ' Number of Dielectron Events: ' + str(DieleEvents) + ' Number of muon + electron events: ' + str(muoneleEvents)
+    print ' Number of Dimuon Events: ' + str(DimuonEvents) 
+    print ' Number of Dielectron Events: ' + str(DieleEvents) 
+    print ' Number of muon + electron events: ' + str(muoneleEvents)
 elif options.selection == 1 :
-    print ' Number of muon + Jets events: ' + str(muonJetsEvents) + ' Number of electron + Jets events: ' + str(eleJetsEvents)
+    print ' Number of muon + Jets events: ' + str(muonJetsEvents) 
+    print ' Number of electron + Jets events: ' + str(eleJetsEvents)
 elif options.selection == 2 :
     print ' Number of All Hadronic Events: ' + str(AllHadronicEvents) 
 else :
-    print ' Number of Dimuon Events: ' + str(DimuonEvents) + ' Number of Dielectron Events: ' + str(DieleEvents) + ' Number of muon + electron events: ' + str(muoneleEvents) + ' Number of muon + Jets events: ' + str(muonJetsEvents) + ' Number of electron + Jets events: ' + str(eleJetsEvents) + ' Number of All Hadronic Events: ' + str(AllHadronicEvents)
+    print ' Number of Dimuon Events: ' + str(DimuonEvents) 
+    print ' Number of Dielectron Events: ' + str(DieleEvents)
+    print ' Number of muon + electron events: ' + str(muoneleEvents) 
+    print ' Number of muon + Jets events: ' + str(muonJetsEvents)
+    print ' Number of electron + Jets events: ' + str(eleJetsEvents)
+    print ' Number of All Hadronic Events: ' + str(AllHadronicEvents)
+if DimuonEvents / 1.5 < DieleEvents and DieleEvents / 1.5 < DimuonEvents :
+    print ':) '
+
 
 print ''
 print 'Gen events : '
