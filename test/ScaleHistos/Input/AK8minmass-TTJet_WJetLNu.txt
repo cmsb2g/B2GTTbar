@@ -1,0 +1,4 @@
+h_minmassAK8
+TTJetpyth850nsSel1ALL-NoNtuple_70
+WJetsToLNupyth850nsSel1ALL
+AK8\0Minimum\0Mass\0Pairing\0(GeV)

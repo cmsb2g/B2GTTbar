@@ -139,6 +139,20 @@ import copy
 
 
 #@ Labels and Handles
+h_genPartPt = Handle("std::vector<float>")
+l_genPartPt = ("genPart" , "genPartPt")
+h_genPartEta = Handle("std::vector<float>")
+l_genPartEta = ("genPart" , "genPartEta")
+h_genPartPhi = Handle("std::vector<float>")
+l_genPartPhi = ("genPart" , "genPartPhi")
+h_genPartMass = Handle("std::vector<float>")
+l_genPartMass = ("genPart" , "genPartMass")
+h_genPartID = Handle("std::vector<float>")
+l_genPartID = ("genPart" , "genPartID")
+h_genPartStatus = Handle("std::vector<float>")
+l_genPartStatus = ("genPart" , "genPartStatus")
+h_genPartMomID = Handle("std::vector<float>")
+l_genPartMomID = ("genPart" , "genPartMomID")
 
 #muon labels and handles
 h_muPt = Handle("std::vector<float>")
@@ -158,8 +172,8 @@ l_muDz = ("muons", "muDz")
 h_muCharge = Handle("std::vector<float>")
 l_muCharge = ("muons", "muCharge")
 
-h_muKey = Handle("std::vector<float>")
-l_muKey = ("muons", "muKey")
+h_muKey = Handle("std::vector<std::vector<int> >")
+l_muKey = ("muonKeys")
 
 #electron label and handles
 h_elPt = Handle("std::vector<float>")
@@ -201,8 +215,8 @@ l_elscEta = ( "electrons" , "elscEta" )
 h_elCharge = Handle("std::vector<float>")
 l_elCharge = ( "electrons" , "elCharge" )
 
-h_elKey = Handle("std::vector<float>")
-l_elKey = ( "electrons" , "elKey" )
+h_elKey = Handle("std::vector<std::vector<int> >")
+l_elKey = ( "electronKeys" )
 
 #AK4 Jet Label and Handles
 h_jetsAK4Pt = Handle("std::vector<float>")
@@ -444,7 +458,6 @@ muoneleEvents = 0
 muonJetsEvents = 0
 eleJetsEvents = 0
 AllHadronicEvents = 0
-
 NMu = 0
 NEl = 0
 NAK4Jets = 0
@@ -491,6 +504,15 @@ NPassEl2DCut = 0
 NPassMuonTot = 0
 NPassAK4KinTot = 0
 NPassWbEvent= 0
+
+genSemiMuEvents = 0
+genSemiEEvents = 0
+genMuMuEvents = 0
+genMuEEvents = 0
+genEEEvents = 0
+genHadEvents = 0
+
+
 filelist = file( options.files )
 filesraw = filelist.readlines()
 files = []
@@ -522,7 +544,62 @@ for ifile in files : #{ Loop over root files
             print '==============================================='
             print '    ---> Event ' + str(nevents)
 
-        
+
+
+        #@ Generator information
+        genEIndex = []
+        genMuIndex = []
+        gotGen = event.getByLabel( l_genPartPt, h_genPartPt )
+        if gotGen :
+            event.getByLabel( l_genPartEta, h_genPartEta )
+            event.getByLabel( l_genPartPhi, h_genPartPhi )
+            event.getByLabel( l_genPartMass, h_genPartMass )
+            event.getByLabel( l_genPartID, h_genPartID )
+            event.getByLabel( l_genPartStatus, h_genPartStatus )
+            event.getByLabel( l_genPartMomID, h_genPartMomID )
+            genPartPt = h_genPartPt.product()
+            genPartEta = h_genPartEta.product()
+            genPartPhi = h_genPartPhi.product()
+            genPartMass = h_genPartMass.product()
+            genPartID = h_genPartID.product()
+            genPartStatus = h_genPartStatus.product()
+            genPartMomID = h_genPartMomID.product()
+            ngenE = 0
+            ngenMu = 0
+            for igen in xrange(0, len( genPartPt ) ) :
+                genName = None
+                if genPartStatus[igen] < 20 or genPartStatus[igen] > 24 :
+                    continue
+                if abs(genPartID[igen]) == 6 :
+                    genName = 'Top quark'
+                elif abs(genPartID[igen]) == 24 :
+                    genName = 'W boson'
+                elif abs(genPartID[igen]) == 11 and abs(genPartMomID[igen]) == 24 :
+                    genName = 'Electron'
+                    genEIndex.append( igen )
+                    ngenE += 1
+                elif abs(genPartID[igen]) == 13 and abs(genPartMomID[igen]) == 24 :
+                    genName = 'Muon'
+                    genMuIndex.append( igen )
+                    ngenMu += 1
+                elif abs(genPartID[igen]) == 15 and abs(genPartMomID[igen]) == 24 :
+                    genName = 'Tau'
+                if options.verbose  and genName != None:
+                    print '%10s : %6d %6d %7.2f %6.3f %6.3f %6.3f' % ( genName, genPartID[igen], genPartStatus[igen], genPartPt[igen], genPartEta[igen], genPartPhi[igen], genPartMass[igen] )
+
+        if ngenE == 0 and ngenMu == 0 :
+            genHadEvents += 1
+        elif ngenE == 1 and ngenMu == 0 :
+            genSemiEEvents += 1
+        elif ngenE == 0 and ngenMu == 1 :
+            genSemiMuEvents += 1
+        elif ngenMu == 1 and ngenE == 1 :
+            genMuEEvents += 1            
+        elif ngenE == 2 :
+            genEEEvents += 1
+        elif ngenMu == 2 :
+            genMuMuEvents += 1
+
         #@ VERTEX SETS
         event.getByLabel( l_NPV, h_NPV )
         NPV = h_NPV.product()[0]
@@ -598,9 +675,13 @@ for ifile in files : #{ Loop over root files
                 goodmuonMass.append(muonMass[imuon])
                 goodmuonKey.append(muKey[imuon])
                 goodmuonCharge.append(muCharge[imuon])
-                if options.verbose :
-                    print "muon %2d: key %4d, pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
-                    ( imuon, muKey[imuon], muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
+                if options.verbose : 
+                    print "muon %2d: keys " %(imuon)
+                    for ikey in muKey[imuon] : 
+                        print   " %4d" % ( ikey ),
+                    print "     ---> pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
+                        ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
+
                 #} End Muon loop
                         
         event.getByLabel ( l_elPt, h_elPt )
@@ -750,8 +831,11 @@ for ifile in files : #{ Loop over root files
                         goodelectronMass.append( ieMass )
                         goodelectronKey.append( elKey[ielectron] )
                         goodelectronCharge.append( ieCharge )
-                        if options.verbose : #!!! Need to add this back in 
-                            print "elec %2d: key %4d, pt %4.1f, eta %4.1f, phi %+5.3f " % ( ielectron, elKey[ielectron], electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
+                        if options.verbose : 
+                            print "elec %2d: keys " %(ielectron)
+                            for ikey in elKey[ielectron] : 
+                                print   " %4d" % ( ikey ),
+                            print "     ---> , pt %4.1f, eta %4.1f, phi %+5.3f " % ( electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
                     
                     #} End Electron Loop
 
@@ -765,6 +849,28 @@ for ifile in files : #{ Loop over root files
         Leptonic = (len(goodmuonPt) + len(goodelectronPt)) == 2 
         SemiLeptonic = (len(goodmuonPt) + len(goodelectronPt)) == 1         
 
+        if options.verbose :
+            print 'Number of good muons = ' + str( len(goodmuonPt) )
+            print 'Number of good electrons = ' + str( len(goodelectronPt) )
+
+
+            if ngenE > 0 and len(goodelectronPt) == 0 :
+                print '--------------------'
+                print 'Electron not found : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
+                    (  genPartID[genEIndex[0]], genPartStatus[genEIndex[0]], \
+                           genPartPt[genEIndex[0]], genPartEta[genEIndex[0]], genPartPhi[genEIndex[0]], genPartMass[genEIndex[0]] )
+                print 'Electrons : ' 
+                for ielectron in xrange(0, len(electronPt) ) :
+                    print "      pt %4.1f, eta %4.1f, phi %+5.3f " % ( electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
+            if ngenMu > 0 and len(goodmuonPt) == 0 :
+                print '--------------------'
+                print 'Muon not found     : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
+                    (  genPartID[genMuIndex[0]], genPartStatus[genMuIndex[0]], \
+                           genPartPt[genMuIndex[0]], genPartEta[genMuIndex[0]], genPartPhi[genMuIndex[0]], genPartMass[genMuIndex[0]] )
+                print 'Muons : '
+                for imuon in xrange(0, len(muonPt) ) :
+                    print "     pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
+                        ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
         if options.selection == 0 and not Leptonic :
             continue
         elif options.selection == 1 and not SemiLeptonic :
@@ -801,12 +907,12 @@ for ifile in files : #{ Loop over root files
                                       goodmuonEta[0],
                                       goodmuonPhi[0],
                                       goodmuonMass[0] )
-                Lepton1ObjKey = int(goodmuonKey[0])
+                Lepton1ObjKey = goodmuonKey[0]
                 Lepton2.SetPtEtaPhiM( goodmuonPt[1],
                                       goodmuonEta[1],
                                       goodmuonPhi[1],
                                       goodmuonMass[1] )
-                Lepton2ObjKey = int(goodmuonKey[1])
+                Lepton2ObjKey = goodmuonKey[1]
             elif dielectronCandidate :
                 Lepton1 = ROOT.TLorentzVector()
                 Lepton2 = ROOT.TLorentzVector()
@@ -814,12 +920,12 @@ for ifile in files : #{ Loop over root files
                                       goodelectronEta[0],
                                       goodelectronPhi[0],
                                       goodelectronMass[0] )
-                Lepton1ObjKey = int(goodelectronKey[0])
+                Lepton1ObjKey = goodelectronKey[0]
                 Lepton2.SetPtEtaPhiM( goodelectronPt[1],
                                       goodelectronEta[1],
                                       goodelectronPhi[1],
                                       goodelectronMass[1] )
-                Lepton2ObjKey = int(goodelectronKey[1])
+                Lepton2ObjKey = goodelectronKey[1]
             elif mixedCandidate :
                 Lepton1 = ROOT.TLorentzVector()
                 Lepton2 = ROOT.TLorentzVector()
@@ -827,12 +933,12 @@ for ifile in files : #{ Loop over root files
                                     goodmuonEta[0],
                                     goodmuonPhi[0],
                                     goodmuonMass[0] )
-                Lepton1ObjKey = int(goodmuonKey[0])
+                Lepton1ObjKey = goodmuonKey[0]
                 Lepton2.SetPtEtaPhiM( goodelectronPt[0],
                                         goodelectronEta[0],
                                         goodelectronPhi[0],
                                         goodelectronMass[0] )
-                Lepton2ObjKey = int(goodelectronKey[0])
+                Lepton2ObjKey = goodelectronKey[0]
         
         #@ Semileptonic
         muJets = False
@@ -846,7 +952,7 @@ for ifile in files : #{ Loop over root files
                                         goodmuonEta[0],
                                         goodmuonPhi[0],
                                         goodmuonMass[0] )
-                theLeptonObjKey = int(goodmuonKey[0])
+                theLeptonObjKey = goodmuonKey[0]
 
             else :
                 eleJets = True
@@ -855,7 +961,7 @@ for ifile in files : #{ Loop over root files
                                         goodelectronEta[0],
                                         goodelectronPhi[0],
                                         goodelectronMass[0] )
-                theLeptonObjKey = int(goodelectronKey[0])
+                theLeptonObjKey = goodelectronKey[0]
                                    
         # EVENT AK4 JET HANDLES
         event.getByLabel ( l_jetsAK4Pt, h_jetsAK4Pt )
@@ -985,7 +1091,7 @@ for ifile in files : #{ Loop over root files
                     pfcands = int(AK4NumDaughters[i])
                     for j in range(0,pfcands) : #{ Loop over keys                
                         # If any of the jet daughters matches the good lepton, remove the lepton p4 from the jet p4
-                        if AK4Keys[i][j] == theLeptonObjKey : 
+                        if AK4Keys[i][j] in theLeptonObjKey : 
                             if options.verbose :
                                 print '     -----> removing lepton, pt/eta/phi = {0:6.2f},{1:6.2f},{2:6.2f}'.format(
                                     theLepton.Perp(), theLepton.Eta(), theLepton.Phi()
@@ -1001,7 +1107,7 @@ for ifile in files : #{ Loop over root files
                     pfcands = int(AK4NumDaughters[i])
                     for j in range(0,pfcands) : #{ Loop over jet keys            
                         # If any of the jet daughters matches the good lepton, remove the lepton p4 from the jet p4
-                        if AK4Keys[i][j] == Lepton1ObjKey : 
+                        if AK4Keys[i][j] in Lepton1ObjKey : 
                             if options.verbose :
                                 print '     -----> removing lepton, pt/eta/phi = {0:6.2f},{1:6.2f},{2:6.2f}'.format(
                                     Lepton1.Perp(), Lepton1.Eta(), Lepton1.Phi()
@@ -1015,7 +1121,7 @@ for ifile in files : #{ Loop over root files
                     pfcands = int(AK4NumDaughters[i])
                     for j in range(0,pfcands) : #{ Loop over Jet Keys            
                         # If any of the jet daughters matches the good lepton, remove the lepton p4 from the jet p4
-                        if AK4Keys[i][j] == Lepton2ObjKey : 
+                        if AK4Keys[i][j] in Lepton2ObjKey : 
                             if options.verbose :
                                 print '     -----> removing lepton, pt/eta/phi = {0:6.2f},{1:6.2f},{2:6.2f}'.format(
                                     Lepton2.Perp(), Lepton2.Eta(), Lepton2.Phi()
@@ -1686,8 +1792,6 @@ for ifile in files : #{ Loop over root files
 
                 lepTopCandP4 = nuCandP4 + theLepton + bJetCandP4
 
-
-
                 
                 #if ttbarCandP4.M() < 1000.0 :
                 #    print 'Weird event : ' + str(event.object().id().luminosityBlock()) + ', ' + str(event.object().id().event())
@@ -1830,6 +1934,15 @@ if DimuonEvents / 1.5 < DieleEvents and DieleEvents / 1.5 < DimuonEvents :
     print ':) '
 
 
+print ''
+print 'Gen events : '
+print 'hadronic : ' + str(genHadEvents )
+print 'e+jets   : ' + str(genSemiEEvents )
+print 'mu+jets  : ' + str(genSemiMuEvents )
+print 'ee       : ' + str(genEEEvents )
+print 'emu      : ' + str(genMuEEvents)
+print 'mumu     : ' + str(genMuMuEvents)
+    
 #@ CLEANUP
 
 f.cd()
