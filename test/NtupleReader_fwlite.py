@@ -52,7 +52,7 @@ parser.add_option('--bdisc', type='string', action='store',
 
 
 parser.add_option('--bDiscMin', type='float', action='store',
-                  default=0.423,
+                  default=0.605, ##  using loose OP- CSVv2L from  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation74X50ns - medium OP is 0.890 , previously this was 0.423
                   dest='bDiscMin',
                   help='Minimum b discriminator')
 
