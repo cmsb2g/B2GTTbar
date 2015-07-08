@@ -109,7 +109,7 @@ parser.add_option('--mAK8GroomedMinCut', type='float', action='store',
                   help='Groomed minimum mass Cut for CMS Combined Tagger: Defaulted for Soft Drop Mass')
 
 parser.add_option('--mAK8GroomedMaxCut', type='float', action='store',
-                  default=100.,
+                  default=10000000.,
                   dest='mAK8GroomedMaxCut',
                   help='Groomed maximum mass Cut for CMS Combined Tagger: Defaulted for Soft Drop Mass')
 
