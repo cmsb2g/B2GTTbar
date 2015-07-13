@@ -36,6 +36,7 @@ void callHistos();
 void StackedHistoMachineAK8_50ns();
 void plotter( TString Histo );
 
+TString xxx;
 TString CalledHisto;
 
 void StackedHistoMachineAK8_50ns(){
@@ -43,8 +44,9 @@ void StackedHistoMachineAK8_50ns(){
 }
 
 void callHistos ( ){  
-    cout << "Histogram to plot:h_mAK8, h_mSDropAK8, h_mprunedAK8, h_mfilteredAK8, h_mtrimmedAK8,h_minmassAK8, h_ptAK8, h_nsjAK8, h_tau21AK8, h_tau32AK8 " << endl;  
-    cin >> CalledHisto ;
+    cout << "Histogram to plot: 'h_'+X+'AK8' where options are: h_mAK8, h_mSDropAK8, h_mprunedAK8, h_mfilteredAK8, h_mtrimmedAK8,h_minmassAK8, h_ptAK8, h_nsjAK8, h_tau21AK8, h_tau32AK8. (e.g. I want h_mAK8 so I enter m etc...) " << endl;  
+    cin >> xxx ;
+    CalledHisto = "h_"+xxx+"AK8";
     cout << CalledHisto << endl;
     //TString CalledHisto = "h_mAK8";
     plotter( CalledHisto );
