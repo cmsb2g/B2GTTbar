@@ -7,6 +7,7 @@
 # #^ Plotting
 # #@ New section (muons, electrons, AK4 jets etc.)
 # #$ Cuts
+# @@@ Incomplete
 ##################
 
 
@@ -40,21 +41,31 @@ parser.add_option('--maxevents', type='int', action='store',
                   help='Number of events to run. -1 is all events')
 
 parser.add_option('--maxjets', type='int', action='store',
-                  default=999,
+                  default=1,
                   dest='maxjets',
                   help='Number of jets to plot. To plot all jets, set to a big number like 999')
 
-
 parser.add_option('--bdisc', type='string', action='store',
-                  default='combinedInclusiveSecondaryVertexV2BJetTags',
+                  default=0.605,
                   dest='bdisc',
-                  help='Name of output file')
-
+                  help='combinedInclusiveSecondaryVertexV2BJetTags')
 
 parser.add_option('--bDiscMin', type='float', action='store',
-                  default=0.605, ##  using loose OP- CSVv2L from  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation74X50ns - medium OP is 0.890 , previously this was 0.423
+                  default=0.605,
+                  ##  using loose OP- CSVv2L from  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation74X50ns  
+                  ##previously this was 0.423
                   dest='bDiscMin',
-                  help='Minimum b discriminator')
+                  help='Minimum b discriminator - loose')
+
+#parser.add_option('--bDiscMinM', type='float', action='store',
+#                  default=0.890, ##  using medium OP 0.890 from  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation74X50ns 
+#                  dest='bDiscMinM',
+#                  help='Minimum b discriminator - Medium')
+
+#parser.add_option('--bDiscMinT', type='float', action='store',
+#                  default=0.970, ##  using tight OP 0.970 from  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation74X50ns 
+#                  dest='bDiscMinT',
+#                  help='Minimum b discriminator - Tight')
 
 parser.add_option('--minMuonPt', type='float', action='store',
                   default=30.,
@@ -103,15 +114,25 @@ parser.add_option('--minMassCut', type='float', action='store',
                   dest='minMassCut',
                   help='Minimum Mass Pairing Cut for CMS Combined Tagger')
 
-parser.add_option('--mAK8GroomedCut', type='float', action='store',
-                  default=100.,
-                  dest='mAK8GroomedCut',
-                  help='Groomed mass Cut for CMS Combined Tagger: Defauled for Soft Drop Mass')
+parser.add_option('--mAK8GroomedMinCut', type='float', action='store',
+                  default=110.,
+                  dest='mAK8GroomedMinCut',
+                  help='Groomed minimum mass Cut for CMS Combined Tagger: Defaulted for Soft Drop Mass')
+
+parser.add_option('--mAK8GroomedMaxCut', type='float', action='store',
+                  default=210.,
+                  dest='mAK8GroomedMaxCut',
+                  help='Groomed maximum mass Cut for CMS Combined Tagger: Defaulted for Soft Drop Mass')
 
 parser.add_option('--tau32Cut', type='float', action='store',
-                  default=0.6,
+                  default=0.62,
                   dest='tau32Cut',
                   help='Tau3 / Tau2 n-subjettiness cut for CMS Combined Tagger')
+
+parser.add_option('--tau21Cut', type='float', action='store',
+                  default=0.5,
+                  dest='tau21Cut',
+                  help='Tau2 / Tau1 n-subjettiness cut for CMS Combined Tagger')
 
 parser.add_option('--BkgEst', action='store_true',
                   default=False,
@@ -351,6 +372,9 @@ h_jetsAK8TopSubjetIndex3 = Handle("std::vector<float>")
 l_jetsAK8TopSubjetIndex3 = ("jetsAK8", "jetAK8topSubjetIndex3")
 
 
+# @@@ add to cut-flow table NPassAK8SubjetBDiscCut = 0
+
+# @@@ add label and handle for subjet pairwise masses m12, m13, and m23 then histos and cut-flow
 
 h_subjetsAK8BDisc = Handle( "std::vector<float>")
 l_subjetsAK8BDisc = ("subjetsCmsTopTag", "subjetCmsTopTagCSV")
@@ -363,16 +387,21 @@ l_subjetsAK8Phi = ("subjetsCmsTopTag", "subjetCmsTopTagPhi")
 h_subjetsAK8Mass = Handle( "std::vector<float>")
 l_subjetsAK8Mass = ("subjetsCmsTopTag", "subjetCmsTopTagMass")
 
-
+# @@@ create histos for h_subjetsAK8Mass then fill them - then add to cut-flow table NPassAK8SubjetMassCut = 0
 
 f = ROOT.TFile(options.outname, "RECREATE")
 f.cd()
 
 #^ Plot initialization
+
+#$ Below histos with only quality cuts (see default in options above) : only plotted jets with mSD > 10 GeV as Sal suggested
 h_mttbar = ROOT.TH1F("h_mttbar", ";m_{t#bar{t}} (GeV)", 200, 0, 6000)
 h_mttbar_true = ROOT.TH1F("h_mttbar_true", "True m_{t#bar{t}};m_{t#bar{t}} (GeV)", 200, 0, 6000)
 
-h_ptLep = ROOT.TH1F("h_ptLep", "Lepton p_{T};p_{T} (GeV)", 100, 0, 1000)
+h_ptLep = ROOT.TH1F("h_ptLep", "Lepton p_{T};p_{T} (GeV)", 100, 0, 1000) 
+h_ptEl = ROOT.TH1F("h_ptEl", "Electron p_{T};p_{T} (GeV)", 100, 0, 1000)
+h_ptMu = ROOT.TH1F("h_ptMu", "Muon p_{T};p_{T} (GeV)", 100, 0, 1000)
+
 h_etaLep = ROOT.TH1F("h_etaLep", "Lepton #eta;p_{T} (GeV)#eta", 100, 0, ROOT.TMath.TwoPi() )
 h_met = ROOT.TH1F("h_met", "Missing p_{T};p_{T} (GeV)", 100, 0, 1000)
 h_ptRel = ROOT.TH1F("h_ptRel", "p_{T}^{REL};p_{T}^{REL} (GeV)", 100, 0, 100)
@@ -396,10 +425,261 @@ h_mfilteredAK8 = ROOT.TH1F("h_mfilteredAK8", "AK8 Filtered Jet Mass;Mass (GeV)",
 h_mtrimmedAK8 = ROOT.TH1F("h_mtrimmedAK8", "AK8 Trimmed Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_mSDropAK8 = ROOT.TH1F("h_mSDropAK8", "AK8 Soft Drop Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_minmassAK8 = ROOT.TH1F("h_minmassAK8", "AK8 CMS Top Tagger Min Mass Paring;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8 = ROOT.TH1F("h_subjetBdiscAK8", "AK8 subjet b discriminator;b discriminator", 100, 0, 1.0)
 h_nsjAK8 = ROOT.TH1F("h_nsjAK8", "AK8 CMS Top Tagger N_{subjets};N_{subjets}", 5, 0, 5)
 h_tau21AK8 = ROOT.TH1F("h_tau21AK8", "AK8 Jet #tau_{2} / #tau_{1};Mass#tau_{21}", 100, 0, 1.0)
 h_tau32AK8 = ROOT.TH1F("h_tau32AK8", "AK8 Jet #tau_{3} / #tau_{2};Mass#tau_{32}", 100, 0, 1.0)
 
+#$ below plots with M_{Soft Drop} cut : 110 GeV < M_{SD} < 210 GeV
+
+h_ptLep_mSDcut = ROOT.TH1F("h_ptLep_mSDcut", "Lepton p_{T} for 110<M_{Soft Drop}(GeV)<210;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_mSDcut = ROOT.TH1F("h_ptEl_mSDcut", "Electron p_{T} for 110<M_{Soft Drop}(GeV)<210;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_mSDcut = ROOT.TH1F("h_ptMu_mSDcut", "Muon p_{T} for 110<M_{Soft Drop}(GeV)<210;p_{T} (GeV)", 100, 0, 1000)
+
+h_ptAK4_mSDcut = ROOT.TH1F("h_ptAK4_mSDcut", "AK4 Jet p_{T} for 110<M_{Soft Drop}(GeV)<210;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_mSDcut = ROOT.TH1F("h_mAK4_mSDcut", "AK4 Jet Massfor 110<M_{Soft Drop}(GeV)<210;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_mSDcut = ROOT.TH1F("h_bdiscAK4_mSDcut", "AK4 b discriminatorfor 110<M_{Soft Drop}(GeV)<210;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_mSDcut = ROOT.TH1F("h_ptAK8_mSDcut", "AK8 Jet p_{T}for 110<M_{Soft Drop}(GeV)<210;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_mSDcut = ROOT.TH1F("h_etaAK8_mSDcut", "AK8 Jet #etafor 110<M_{Soft Drop}(GeV)<210;#eta", 120, -6, 6)
+h_yAK8_mSDcut = ROOT.TH1F("h_yAK8_mSDcut", "AK8 Jet Rapidity for 110<M_{Soft Drop}(GeV)<210;y", 120, -6, 6)
+h_phiAK8_mSDcut = ROOT.TH1F("h_phiAK8_mSDcut", "AK8 Jet #phi for 110<M_{Soft Drop}(GeV)<210;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_mSDcut = ROOT.TH1F("h_mAK8_mSDcut", "AK8 Jet Mass for 110<M_{Soft Drop}(GeV)<210;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_mSDcut = ROOT.TH1F("h_mprunedAK8_mSDcut", "AK8 Pruned Jet Mass for 110<M_{Soft Drop}(GeV)<210;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_mSDcut = ROOT.TH1F("h_mfilteredAK8_mSDcut", "AK8 Filtered Jet Mass for 110<M_{Soft Drop}(GeV)<210;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_mSDcut = ROOT.TH1F("h_mtrimmedAK8_mSDcut", "AK8 Trimmed Jet Mass for 110<M_{Soft Drop}(GeV)<210;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_mSDcut = ROOT.TH1F("h_mSDropAK8_mSDcut", "AK8 Soft Drop Jet Mass for 110<M_{Soft Drop}(GeV)<210;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_mSDcut = ROOT.TH1F("h_minmassAK8_mSDcut", "AK8 CMS Top Tagger Min Mass Paring for 110<M_{Soft Drop}(GeV)<210;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_mSDcut = ROOT.TH1F("h_subjetBdiscAK8_mSDcut", "AK8 subjet b discriminator for 110<M_{Soft Drop}(GeV)<210;b discriminator", 100, 0, 1.0)
+h_nsjAK8_mSDcut = ROOT.TH1F("h_nsjAK8_mSDcut", "AK8 CMS Top Tagger N_{subjets}for 110<M_{Soft Drop}(GeV)<210;N_{subjets}", 5, 0, 5)
+h_tau21AK8_mSDcut = ROOT.TH1F("h_tau21AK8_mSDcut", "AK8 Jet #tau_{2} / #tau_{1} for 110<M_{Soft Drop}(GeV)<210;Mass#tau_{21}", 100, 0, 1.0)
+h_tau32AK8_mSDcut = ROOT.TH1F("h_tau32AK8_mSDcut", "AK8 Jet #tau_{3} / #tau_{2} for 110<M_{Soft Drop}(GeV)<210;Mass#tau_{32}", 100, 0, 1.0)
+
+#$ below plots with tau32 cut
+
+h_ptLep_tau32cut = ROOT.TH1F("h_ptLep_tau32cut", "Lepton p_{T} for tau32 cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_tau32cut = ROOT.TH1F("h_ptEl_tau32cut", "Electron p_{T} for tau32 cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_tau32cut = ROOT.TH1F("h_ptMu_tau32cut", "Muon p_{T} for tau32 cut;p_{T} (GeV)", 100, 0, 1000)
+
+h_ptAK4_tau32cut = ROOT.TH1F("h_ptAK4_tau32cut", "AK4 Jet p_{T} for tau32 cut;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_tau32cut = ROOT.TH1F("h_mAK4_tau32cut", "AK4 Jet Massfor tau32 cut;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_tau32cut = ROOT.TH1F("h_bdiscAK4_tau32cut", "AK4 b discriminatorfor tau32 cut;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_tau32cut = ROOT.TH1F("h_ptAK8_tau32cut", "AK8 Jet p_{T}for tau32 cut;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_tau32cut = ROOT.TH1F("h_etaAK8_tau32cut", "AK8 Jet #etafor tau32 cut;#eta", 120, -6, 6)
+h_yAK8_tau32cut = ROOT.TH1F("h_yAK8_tau32cut", "AK8 Jet Rapidity for tau32 cut;y", 120, -6, 6)
+h_phiAK8_tau32cut = ROOT.TH1F("h_phiAK8_tau32cut", "AK8 Jet #phi for tau32 cut;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_tau32cut = ROOT.TH1F("h_mAK8_tau32cut", "AK8 Jet Mass for tau32 cut;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_tau32cut = ROOT.TH1F("h_mprunedAK8_tau32cut", "AK8 Pruned Jet Mass for tau32 cut;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_tau32cut = ROOT.TH1F("h_mfilteredAK8_tau32cut", "AK8 Filtered Jet Mass for tau32 cut;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_tau32cut = ROOT.TH1F("h_mtrimmedAK8_tau32cut", "AK8 Trimmed Jet Mass for tau32 cut;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_tau32cut = ROOT.TH1F("h_mSDropAK8_tau32cut", "AK8 Soft Drop Jet Mass for tau32 cut;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_tau32cut = ROOT.TH1F("h_minmassAK8_tau32cut", "AK8 CMS Top Tagger Min Mass Paring for tau32 cut;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_tau32cut = ROOT.TH1F("h_subjetBdiscAK8_tau32cut", "AK8 subjet b discriminator for tau32 cut;b discriminator", 100, 0, 1.0)
+h_nsjAK8_tau32cut = ROOT.TH1F("h_nsjAK8_tau32cut", "AK8 CMS Top Tagger N_{subjets}for tau32 cut;N_{subjets}", 5, 0, 5)
+h_tau21AK8_tau32cut = ROOT.TH1F("h_tau21AK8_tau32cut", "AK8 Jet #tau_{2} / #tau_{1} for tau32 cut;Mass#tau_{21}", 100, 0, 1.0)
+h_tau32AK8_tau32cut = ROOT.TH1F("h_tau32AK8_tau32cut", "AK8 Jet #tau_{3} / #tau_{2} for tau32 cut;Mass#tau_{32}", 100, 0, 1.0)
+#$ plots with tau21 cut
+
+h_ptLep_tau21cut = ROOT.TH1F("h_ptLep_tau21cut", "Lepton p_{T} for tau21 cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_tau21cut = ROOT.TH1F("h_ptEl_tau21cut", "Electron p_{T} for tau21 cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_tau21cut = ROOT.TH1F("h_ptMu_tau21cut", "Muon p_{T} for tau21 cut;p_{T} (GeV)", 100, 0, 1000)
+
+h_ptAK4_tau21cut = ROOT.TH1F("h_ptAK4_tau21cut", "AK4 Jet p_{T} for tau21 cut;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_tau21cut = ROOT.TH1F("h_mAK4_tau21cut", "AK4 Jet Massfor tau21 cut;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_tau21cut = ROOT.TH1F("h_bdiscAK4_tau21cut", "AK4 b discriminatorfor tau21 cut;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_tau21cut = ROOT.TH1F("h_ptAK8_tau21cut", "AK8 Jet p_{T}for tau21 cut;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_tau21cut = ROOT.TH1F("h_etaAK8_tau21cut", "AK8 Jet #etafor tau21 cut;#eta", 120, -6, 6)
+h_yAK8_tau21cut = ROOT.TH1F("h_yAK8_tau21cut", "AK8 Jet Rapidity for tau21 cut;y", 120, -6, 6)
+h_phiAK8_tau21cut = ROOT.TH1F("h_phiAK8_tau21cut", "AK8 Jet #phi for tau21 cut;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_tau21cut = ROOT.TH1F("h_mAK8_tau21cut", "AK8 Jet Mass for tau21 cut;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_tau21cut = ROOT.TH1F("h_mprunedAK8_tau21cut", "AK8 Pruned Jet Mass for tau21 cut;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_tau21cut = ROOT.TH1F("h_mfilteredAK8_tau21cut", "AK8 Filtered Jet Mass for tau21 cut;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_tau21cut = ROOT.TH1F("h_mtrimmedAK8_tau21cut", "AK8 Trimmed Jet Mass for tau21 cut;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_tau21cut = ROOT.TH1F("h_mSDropAK8_tau21cut", "AK8 Soft Drop Jet Mass for tau21 cut;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_tau21cut = ROOT.TH1F("h_minmassAK8_tau21cut", "AK8 CMS Top Tagger Min Mass Paring for tau21 cut;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_tau21cut = ROOT.TH1F("h_subjetBdiscAK8_tau21cut", "AK8 subjet b discriminator for tau21 cut;b discriminator", 100, 0, 1.0)
+h_nsjAK8_tau21cut = ROOT.TH1F("h_nsjAK8_tau21cut", "AK8 CMS Top Tagger N_{subjets}for tau21 cut;N_{subjets}", 5, 0, 5)
+h_tau32AK8_tau21cut = ROOT.TH1F("h_tau21AK8_tau21cut", "AK8 Jet #tau_{3} / #tau_{2} for tau21 cut;Mass#tau_{32}", 100, 0, 1.0)
+h_tau21AK8_tau21cut = ROOT.TH1F("h_tau21AK8_tau21cut", "AK8 Jet #tau_{2} / #tau_{1} for tau32 cut;Mass#tau_{21}", 100, 0, 1.0)
+
+#$ plots with both mass and tau32 cut - SD tagged
+
+h_ptLep_mSDcut_tau32cut = ROOT.TH1F("h_ptLep_mSDcut_tau32cut", "Lepton p_{T} for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_mSDcut_tau32cut = ROOT.TH1F("h_ptEl_mSDcut_tau32cut", "Electron p_{T} for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_mSDcut_tau32cut = ROOT.TH1F("h_ptMu_mSDcut_tau32cut", "Muon p_{T} for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;p_{T} (GeV)", 100, 0, 1000)
+h_ptAK4_mSDcut_tau32cut = ROOT.TH1F("h_ptAK4_mSDcut_tau32cut", "AK4 Jet p_{T} for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_mSDcut_tau32cut = ROOT.TH1F("h_mAK4_mSDcut_tau32cut", "AK4 Jet Massfor 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_mSDcut_tau32cut = ROOT.TH1F("h_bdiscAK4_mSDcut_tau32cut", "AK4 b discriminatorfor 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_mSDcut_tau32cut = ROOT.TH1F("h_ptAK8_mSDcut_tau32cut", "AK8 Jet p_{T}for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_mSDcut_tau32cut = ROOT.TH1F("h_etaAK8_mSDcut_tau32cut", "AK8 Jet #etafor 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;#eta", 120, -6, 6)
+h_yAK8_mSDcut_tau32cut = ROOT.TH1F("h_yAK8_mSDcut_tau32cut", "AK8 Jet Rapidity for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;y", 120, -6, 6)
+h_phiAK8_mSDcut_tau32cut = ROOT.TH1F("h_phiAK8_mSDcut_tau32cut", "AK8 Jet #phi for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_mSDcut_tau32cut = ROOT.TH1F("h_mAK8_mSDcut_tau32cut", "AK8 Jet Mass for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_mSDcut_tau32cut = ROOT.TH1F("h_mprunedAK8_mSDcut_tau32cut", "AK8 Pruned Jet Mass for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_mSDcut_tau32cut = ROOT.TH1F("h_mfilteredAK8_mSDcut_tau32cut", "AK8 Filtered Jet Mass for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_mSDcut_tau32cut = ROOT.TH1F("h_mtrimmedAK8_mSDcut_tau32cut", "AK8 Trimmed Jet Mass for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_mSDcut_tau32cut = ROOT.TH1F("h_mSDropAK8_mSDcut_tau32cut", "AK8 Soft Drop Jet Mass for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_mSDcut_tau32cut = ROOT.TH1F("h_minmassAK8_mSDcut_tau32cut", "AK8 CMS Top Tagger Min Mass Paring for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_mSDcut_tau32cut = ROOT.TH1F("h_subjetBdiscAK8_mSDcut_tau32cut", "AK8 subjet b discriminator for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;b discriminator", 100, 0, 1.0)
+h_nsjAK8_mSDcut_tau32cut = ROOT.TH1F("h_nsjAK8_mSDcut_tau32cut", "AK8 CMS Top Tagger N_{subjets}for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;N_{subjets}", 5, 0, 5)
+h_tau21AK8_mSDcut_tau32cut = ROOT.TH1F("h_tau21AK8_mSDcut_tau32cut", "AK8 Jet #tau_{2} / #tau_{1} for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;Mass#tau_{21}", 100, 0, 1.0)
+h_tau32AK8_mSDcut_tau32cut = ROOT.TH1F("h_tau32AK8_mSDcut_tau32cut", "AK8 Jet #tau_{3} / #tau_{2} for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;Mass#tau_{32}", 100, 0, 1.0)
+
+#$ plots with pt of the electron cut
+
+#h_mttbar_ptElcut = ROOT.TH1F("h_mttbar", ";m_{t#bar{t}} for ptEl cut (GeV)", 200, 0, 6000)
+
+h_ptLep_ptElcut = ROOT.TH1F("h_ptLep_ptElcut", "Lepton p_{T} for pt El cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_ptElcut = ROOT.TH1F("h_ptMu_ptElcut", "Electron p_{T} for pt El cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_ptElcut = ROOT.TH1F("h_ptEl_ptElcut", "Muon p_{T} for pt El cut;p_{T} (GeV)", 100, 0, 1000)
+
+h_ptAK4_ptElcut = ROOT.TH1F("h_ptAK4_ptElcut", "AK4 Jet p_{T} for ptEl cut;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_ptElcut = ROOT.TH1F("h_mAK4_ptElcut", "AK4 Jet Massfor ptEl cut;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_ptElcut = ROOT.TH1F("h_bdiscAK4_ptElcut", "AK4 b discriminator for ptEl cut;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_ptElcut = ROOT.TH1F("h_ptAK8_ptElcut", "AK8 Jet p_{T}for ptEl cut;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_ptElcut = ROOT.TH1F("h_etaAK8_ptElcut", "AK8 Jet #etafor ptEl cut;#eta", 120, -6, 6)
+h_yAK8_ptElcut = ROOT.TH1F("h_yAK8_ptElcut", "AK8 Jet Rapidity for ptEl cut;y", 120, -6, 6)
+h_phiAK8_ptElcut = ROOT.TH1F("h_phiAK8_ptElcut", "AK8 Jet #phi for ptEl cut;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_ptElcut = ROOT.TH1F("h_mAK8_ptElcut", "AK8 Jet Mass for ptEl cut;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_ptElcut = ROOT.TH1F("h_mprunedAK8_ptElcut", "AK8 Pruned Jet Mass for ptEl cut;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_ptElcut = ROOT.TH1F("h_mfilteredAK8_ptElcut", "AK8 Filtered Jet Mass for ptEl cut;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_ptElcut = ROOT.TH1F("h_mtrimmedAK8_ptElcut", "AK8 Trimmed Jet Mass for ptEl cut;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_ptElcut = ROOT.TH1F("h_mSDropAK8_ptElcut", "AK8 Soft Drop Jet Mass for ptEl cut;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_ptElcut = ROOT.TH1F("h_minmassAK8_ptElcut", "AK8 CMS Top Tagger Min Mass Paring for ptEl cut;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_ptElcut = ROOT.TH1F("h_subjetBdiscAK8_ptElcut", "AK8 subjet b discriminator for  ptEl cut;b discriminator", 100, 0, 1.0)
+h_nsjAK8_ptElcut = ROOT.TH1F("h_nsjAK8_ptElcut", "AK8 CMS Top Tagger N_{subjets}for ptEl cut;N_{subjets}", 5, 0, 5)
+h_tau32AK8_ptElcut = ROOT.TH1F("h_ptElAK8_ptElcut", "AK8 Jet #tau_{3} / #tau_{2} for ptEl cut;Mass#tau_{32}", 100, 0, 1.0)
+
+#$ plots with pt of the muon cut
+
+h_ptLep_ptMucut = ROOT.TH1F("h_ptLep_ptMucut", "Lepton p_{T} for pt Muon cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_ptMucut = ROOT.TH1F("h_ptMu_ptMucut", "Electron p_{T} for pt Muon cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_ptMucut = ROOT.TH1F("h_ptEl_ptMucut", "Muon p_{T} for pt Muon cut;p_{T} (GeV)", 100, 0, 1000)
+
+h_ptAK4_ptMucut = ROOT.TH1F("h_ptAK4_ptMucut", "AK4 Jet p_{T} for ptMuon cut;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_ptMucut = ROOT.TH1F("h_mAK4_ptMucut", "AK4 Jet Massfor ptMuon cut;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_ptMucut = ROOT.TH1F("h_bdiscAK4_ptMucut", "AK4 b discriminator for ptMuon cut;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_ptMucut = ROOT.TH1F("h_ptAK8_ptMucut", "AK8 Jet p_{T}for ptMuon cut;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_ptMucut = ROOT.TH1F("h_etaAK8_ptMucut", "AK8 Jet #etafor ptMuon cut;#eta", 120, -6, 6)
+h_yAK8_ptMucut = ROOT.TH1F("h_yAK8_ptMucut", "AK8 Jet Rapidity for ptMuon cut;y", 120, -6, 6)
+h_phiAK8_ptMucut = ROOT.TH1F("h_phiAK8_ptMucut", "AK8 Jet #phi for ptMuon cut;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_ptMucut = ROOT.TH1F("h_mAK8_ptMucut", "AK8 Jet Mass for ptMuon cut;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_ptMucut = ROOT.TH1F("h_mprunedAK8_ptMucut", "AK8 Pruned Jet Mass for ptMuon cut;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_ptMucut = ROOT.TH1F("h_mfilteredAK8_ptMucut", "AK8 Filtered Jet Mass for ptMuon cut;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_ptMucut = ROOT.TH1F("h_mtrimmedAK8_ptMucut", "AK8 Trimmed Jet Mass for ptMuon cut;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_ptMucut = ROOT.TH1F("h_mSDropAK8_ptMucut", "AK8 Soft Drop Jet Mass for ptMuon cut;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_ptMucut = ROOT.TH1F("h_minmassAK8_ptMucut", "AK8 CMS Top Tagger Min Mass Paring for ptMuon cut;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_ptMucut = ROOT.TH1F("h_subjetBdiscAK8_ptMucut", "AK8 subjet b discriminator for  ptMuon cut;b discriminator", 100, 0, 1.0)
+h_nsjAK8_ptMucut = ROOT.TH1F("h_nsjAK8_ptMucut", "AK8 CMS Top Tagger N_{subjets}for ptMuon cut;N_{subjets}", 5, 0, 5)
+h_tau32AK8_ptMucut = ROOT.TH1F("h_ptElAK8_ptMucut", "AK8 Jet #tau_{3} / #tau_{2} for ptMuon cut;Mass#tau_{32}", 100, 0, 1.0)
+
+
+#$ below plots with min Mass cut
+
+
+h_ptLep_minMasscut = ROOT.TH1F("h_ptLep_minMasscut", "Lepton p_{T} for min Mass cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_minMasscut = ROOT.TH1F("h_ptMu_minMasscut", "Muon p_{T} for min Mass cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_minMasscut = ROOT.TH1F("h_ptEl_minMasscut", "Electron p_{T} for min Mass cut;p_{T} (GeV)", 100, 0, 1000)
+
+h_ptAK4_minMasscut = ROOT.TH1F("h_ptAK4_minMasscut", "AK4 Jet p_{T} for min Mass cut;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_minMasscut = ROOT.TH1F("h_mAK4_minMasscut", "AK4 Jet Massfor min Mass cut;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_minMasscut = ROOT.TH1F("h_bdiscAK4_minMasscut", "AK4 b discriminatorfor min Mass cut;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_minMasscut = ROOT.TH1F("h_ptAK8_minMasscut", "AK8 Jet p_{T}for min Mass cut;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_minMasscut = ROOT.TH1F("h_etaAK8_minMasscut", "AK8 Jet #etafor minMass cut;#eta", 120, -6, 6)
+h_yAK8_minMasscut = ROOT.TH1F("h_yAK8_minMasscut", "AK8 Jet Rapidity for minMass cut;y", 120, -6, 6)
+h_phiAK8_minMasscut = ROOT.TH1F("h_phiAK8_minMasscut", "AK8 Jet #phi for minMass cut;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_minMasscut = ROOT.TH1F("h_mAK8_minMasscut", "AK8 Jet Mass for min Mass cut;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_minMasscut = ROOT.TH1F("h_mprunedAK8_minMasscut", "AK8 Pruned Jet Mass for min Mass cut;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_minMasscut = ROOT.TH1F("h_mfilteredAK8_minMasscut", "AK8 Filtered Jet Mass for min Mass cut;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_minMasscut = ROOT.TH1F("h_mtrimmedAK8_minMasscut", "AK8 Trimmed Jet Mass for min Mass cut;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_minMasscut = ROOT.TH1F("h_mSDropAK8_minMasscut", "AK8 Soft Drop Jet Mass for min Mass cut;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_minMasscut = ROOT.TH1F("h_minmassAK8_minMasscut", "AK8 CMS Top Tagger Min Mass Paring for min Mass cut;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_minMasscut = ROOT.TH1F("h_subjetBdiscAK8_minMasscut", "AK8 subjet b discriminator for min Mass cut;b discriminator", 100, 0, 1.0)
+h_nsjAK8_minMasscut = ROOT.TH1F("h_nsjAK8_minMasscut", "AK8 CMS Top Tagger N_{subjets}for min Mass cut;N_{subjets}", 5, 0, 5)
+h_tau21AK8_minMasscut = ROOT.TH1F("h_tau21AK8_minMasscut", "AK8 Jet #tau_{2} / #tau_{1} for min Mass cut;Mass#tau_{21}", 100, 0, 1.0)
+h_tau32AK8_minMasscut = ROOT.TH1F("h_tau32AK8_minMasscut", "AK8 Jet #tau_{3} / #tau_{2} for min Mass cut;Mass#tau_{32}", 100, 0, 1.0)
+
+
+#$ below plots with bdiscmin cut
+
+h_ptLep_bDiscMincut = ROOT.TH1F("h_ptLep_bDiscMincut", "Lepton p_{T} for bDiscMincut loose  cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_bDiscMincut = ROOT.TH1F("h_ptMu_bDiscMincut", "Muon p_{T} for bDiscMincut loose cut;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_bDiscMincut = ROOT.TH1F("h_ptEl_bDiscMincut", "Electron p_{T} for bDiscMincut loose cut;p_{T} (GeV)", 100, 0, 1000)
+
+h_ptAK4_bDiscMincut = ROOT.TH1F("h_ptAK4_bDiscMincut", "AK4 Jet p_{T} for bDiscMincut loose cut;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_bDiscMincut = ROOT.TH1F("h_mAK4_bDiscMincut", "AK4 Jet Mass for bDiscMincut loose cut;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_bDiscMincut = ROOT.TH1F("h_bdiscAK4_bDiscMincut", "AK4 b discriminator for bDiscMincut loose cut;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_bDiscMincut = ROOT.TH1F("h_ptAK8_bDiscMincut", "AK8 Jet p_{T}for bDiscMincut loose cut;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_bDiscMincut = ROOT.TH1F("h_etaAK8_bDiscMincut", "AK8 Jet #eta for bDiscMincut loose  cut;#eta", 120, -6, 6)
+h_yAK8_bDiscMincut = ROOT.TH1F("h_yAK8_bDiscMincut", "AK8 Jet Rapidity for bDiscMincut loose  cut;y", 120, -6, 6)
+h_phiAK8_bDiscMincut = ROOT.TH1F("h_phiAK8_bDiscMincut", "AK8 Jet #phi for bDiscMincut loose  cut;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_bDiscMincut = ROOT.TH1F("h_mAK8_bDiscMincut", "AK8 Jet Mass for bDiscMincut loose cut;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_bDiscMincut = ROOT.TH1F("h_mprunedAK8_bDiscMincut", "AK8 Pruned Jet Mass for bDiscMincut loose cut;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_bDiscMincut = ROOT.TH1F("h_mfilteredAK8_bDiscMincut", "AK8 Filtered Jet Mass for bDiscMincut loose cut;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_bDiscMincut = ROOT.TH1F("h_mtrimmedAK8_bDiscMincut", "AK8 Trimmed Jet Mass for bDiscMincut loose cut;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_bDiscMincut = ROOT.TH1F("h_mSDropAK8_bDiscMincut", "AK8 Soft Drop Jet Mass for bDiscMincut loose cut;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_bDiscMincut = ROOT.TH1F("h_minmassAK8_bDiscMincut", "AK8 CMS Top Tagger bDiscMincut loose Paring for bDiscMincut loose cut;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_bDiscMincut = ROOT.TH1F("h_subjetBdiscAK8_bDiscMincut", "AK8 CMS Top Tagger subjet bDisc for bDiscMincut loose cut;m_{min} (GeV)", 100, 0, 1000)
+h_nsjAK8_bDiscMincut = ROOT.TH1F("h_nsjAK8_bDiscMincut", "AK8 CMS Top Tagger N_{subjets}for bDiscMincut loose cut;N_{subjets}", 5, 0, 5)
+h_tau21AK8_bDiscMincut = ROOT.TH1F("h_tau21AK8_bDiscMincut", "AK8 Jet #tau_{2} / #tau_{1} for bDiscMincut loose cut;Mass#tau_{21}", 100, 0, 1.0)
+h_tau32AK8_bDiscMincut = ROOT.TH1F("h_tau32AK8_bDiscMincut", "AK8 Jet #tau_{3} / #tau_{2} for bDiscMincut loose  cut;Mass#tau_{32}", 100, 0, 1.0)
+
+
+#$ plots with both mass and minmass cut - CMSTT tagged
+
+h_ptLep_mSDcut_minMasscut= ROOT.TH1F("h_ptLep_mSDcut_minMasscut", "Lepton p_{T} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_mSDcut_minMasscut = ROOT.TH1F("h_ptEl_mSDcut_minMasscut", "Electron p_{T} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_mSDcut_minMasscut = ROOT.TH1F("h_ptMu_mSDcut_minMasscut", "Muon p_{T} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;p_{T} (GeV)", 100, 0, 1000)
+h_ptAK4_mSDcut_minMasscut = ROOT.TH1F("h_ptAK4_mSDcut_minMasscut", "AK4 Jet p_{T} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_mSDcut_minMasscut = ROOT.TH1F("h_mAK4_mSDcut_minMasscut", "AK4 Jet Massfor 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_mSDcut_minMasscut = ROOT.TH1F("h_bdiscAK4_mSDcut_minMasscut", "AK4 b discriminatorfor 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_mSDcut_minMasscut = ROOT.TH1F("h_ptAK8_mSDcut_minMasscut", "AK8 Jet p_{T}for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_mSDcut_minMasscut = ROOT.TH1F("h_etaAK8_mSDcut_minMasscut", "AK8 Jet #etafor 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;#eta", 120, -6, 6)
+h_yAK8_mSDcut_minMasscut = ROOT.TH1F("h_yAK8_mSDcut_minMasscut", "AK8 Jet Rapidity for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;y", 120, -6, 6)
+h_phiAK8_mSDcut_minMasscut = ROOT.TH1F("h_phiAK8_mSDcut_minMasscut", "AK8 Jet #phi for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_mSDcut_minMasscut = ROOT.TH1F("h_mAK8_mSDcut_minMasscut", "AK8 Jet Mass for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_mSDcut_minMasscut = ROOT.TH1F("h_mprunedAK8_mSDcut_minMasscut", "AK8 Pruned Jet Mass for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_mSDcut_minMasscut = ROOT.TH1F("h_mfilteredAK8_mSDcut_minMasscut", "AK8 Filtered Jet Mass for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_mSDcut_minMasscut = ROOT.TH1F("h_mtrimmedAK8_mSDcut_minMasscut", "AK8 Trimmed Jet Mass for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_mSDcut_minMasscut = ROOT.TH1F("h_mSDropAK8_mSDcut_minMasscut", "AK8 Soft Drop Jet Mass for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_mSDcut_minMasscut = ROOT.TH1F("h_minmassAK8_mSDcut_minMasscut", "AK8 CMS Top Tagger Min Mass Paring for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_mSDcut_minMasscut = ROOT.TH1F("h_subjetBdiscAK8_mSDcut_minMasscut", "AK8 subjet b discriminator for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;b discriminator", 100, 0, 1.0)
+h_nsjAK8_mSDcut_minMasscut = ROOT.TH1F("h_nsjAK8_mSDcut_minMasscut", "AK8 CMS Top Tagger N_{subjets}for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;N_{subjets}", 5, 0, 5)
+h_tau21AK8_mSDcut_minMasscut = ROOT.TH1F("h_tau21AK8_mSDcut_minMasscut", "AK8 Jet #tau_{2} / #tau_{1} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass#tau_{21}", 100, 0, 1.0)
+h_tau32AK8_mSDcut_minMasscut = ROOT.TH1F("h_tau32AK8_mSDcut_minMasscut", "AK8 Jet #tau_{3} / #tau_{2} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass#tau_{32}", 100, 0, 1.0)
+ 
+#$ plots with min pairwise mass in the W mass window - 60 GeV < minpairwise < 110
+
+h_ptLep_minMasscutWmass = ROOT.TH1F("h_ptLep_minMasscutWmass", "Lepton p_{T} for min Mass cut  60 GeV < minpairwise < 110;p_{T} (GeV)", 100, 0, 1000)
+h_ptMu_minMasscutWmass = ROOT.TH1F("h_ptMu_minMasscutWmass", "Muon p_{T} for min Mass cut  60 GeV < minpairwise < 110;p_{T} (GeV)", 100, 0, 1000)
+h_ptEl_minMasscutWmass = ROOT.TH1F("h_ptEl_minMasscutWmass", "Electron p_{T} for min Mass cut  60 GeV < minpairwise < 110;p_{T} (GeV)", 100, 0, 1000)
+
+h_ptAK4_minMasscutWmass = ROOT.TH1F("h_ptAK4_minMasscutWmass", "AK4 Jet p_{T} for min Mass cut  60 GeV < minpairwise < 110;p_{T} (GeV)", 300, 0, 3000)
+h_mAK4_minMasscutWmass = ROOT.TH1F("h_mAK4_minMasscutWmass", "AK4 Jet Massfor min Mass cut  60 GeV < minpairwise < 110;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4_minMasscutWmass = ROOT.TH1F("h_bdiscAK4_minMasscutWmass", "AK4 b discriminatorfor min Mass cut  60 GeV < minpairwise < 110;b discriminator", 100, 0, 1.0)
+
+h_ptAK8_minMasscutWmass = ROOT.TH1F("h_ptAK8_minMasscutWmass", "AK8 Jet p_{T}for min Mass cut  60 GeV < minpairwise < 110;p_{T} (GeV)", 300, 0, 3000)
+h_etaAK8_minMasscutWmass = ROOT.TH1F("h_etaAK8_minMasscutWmass", "AK8 Jet #etafor minMass cut  60 GeV < minpairwise < 110;#eta", 120, -6, 6)
+h_yAK8_minMasscutWmass = ROOT.TH1F("h_yAK8_minMasscutWmass", "AK8 Jet Rapidity for minMass cut  60 GeV < minpairwise < 110;y", 120, -6, 6)
+h_phiAK8_minMasscutWmass = ROOT.TH1F("h_phiAK8_minMasscutWmass", "AK8 Jet #phi for minMass cut  60 GeV < minpairwise < 110;#phi (radians)",100,-3.14, 3.14)
+h_mAK8_minMasscutWmass = ROOT.TH1F("h_mAK8_minMasscutWmass", "AK8 Jet Mass for min Mass cut  60 GeV < minpairwise < 110;Mass (GeV)", 100, 0, 1000)
+h_mprunedAK8_minMasscutWmass = ROOT.TH1F("h_mprunedAK8_minMasscutWmass", "AK8 Pruned Jet Mass for min Mass cut  60 GeV < minpairwise < 110;Mass (GeV)", 100, 0, 1000)
+h_mfilteredAK8_minMasscutWmass = ROOT.TH1F("h_mfilteredAK8_minMasscutWmass", "AK8 Filtered Jet Mass for min Mass cut  60 GeV < minpairwise < 110;Mass (GeV)", 100, 0, 1000)
+h_mtrimmedAK8_minMasscutWmass = ROOT.TH1F("h_mtrimmedAK8_minMasscutWmass", "AK8 Trimmed Jet Mass for min Mass cut  60 GeV < minpairwise < 110;Mass (GeV)", 100, 0, 1000)
+h_mSDropAK8_minMasscutWmass = ROOT.TH1F("h_mSDropAK8_minMasscutWmass", "AK8 Soft Drop Jet Mass for min Mass cut  60 GeV < minpairwise < 110;Mass (GeV)", 100, 0, 1000)
+h_minmassAK8_minMasscutWmass = ROOT.TH1F("h_minmassAK8_minMasscutWmass", "AK8 CMS Top Tagger Min Mass Paring for min Mass cut  60 GeV < minpairwise < 110;m_{min} (GeV)", 100, 0, 1000)
+h_subjetBdiscAK8_minMasscutWmass = ROOT.TH1F("h_subjetBdiscAK8_minMasscutWmass", "AK8 subjet b discriminator for min Mass cut  60 GeV < minpairwise < 110;b discriminator", 100, 0, 1.0)
+h_nsjAK8_minMasscutWmass = ROOT.TH1F("h_nsjAK8_minMasscutWmass", "AK8 CMS Top Tagger N_{subjets}for min Mass cut  60 GeV < minpairwise < 110;N_{subjets}", 5, 0, 5)
+h_tau21AK8_minMasscutWmass = ROOT.TH1F("h_tau21AK8_minMasscutWmass", "AK8 Jet #tau_{2} / #tau_{1} for min Mass cut  60 GeV < minpairwise < 110;Mass#tau_{21}", 100, 0, 1.0)
+h_tau32AK8_minMasscutWmass = ROOT.TH1F("h_tau32AK8_minMasscutWmass", "AK8 Jet #tau_{3} / #tau_{2} for min Mass cut  60 GeV < minpairwise < 110;Mass#tau_{32}", 100, 0, 1.0)
 
 
 #@ JET CORRECTIONS
@@ -488,12 +768,17 @@ NPassMaxAK8RapidityCut = 0
 NPassSemiLeptonicDRjlCut = 0
 NPassAK8nSubJetsCut = 0
 NPassAK8MinMassCut = 0
+NPassAK8SubjetBDiscCut = 0
 NPassAK8CorrMassCut = 0 
 NPassminAK8PtCut = 0
 NPasstMinMassCut = 0 
-NPasstMAK8GroomedCut = 0 
-NPasstau23Cut = 0 
+NPasstMAK8GroomedMinCut = 0 
+NPasstMAK8GroomedMaxCut = 0 
+NPasstau23Cut = 0
+NPasstau21Cut = 0 
 NPassBDiscMinCut = 0 
+#NPassBDiscMinMCut = 0
+#NPassBDiscMinTCut = 0
 NPassBDisc2MinCut = 0 
 NPassMuonBCut = 0
 NPassElBCut = 0
@@ -656,6 +941,9 @@ for ifile in files : #{ Loop over root files
                     continue
                 else: 
                     NPassMuonPtCut = NPassMuonPtCut + 1
+                    #$ muon pt cuts here
+                    h_ptLep_ptMucut.Fill(muonPt[imuon])
+                    h_ptMu_ptMucut.Fill(muonPt[imuon])
                 if abs(muonEta[imuon]) > options.maxMuonEta :
                     continue
                 else:
@@ -754,6 +1042,9 @@ for ifile in files : #{ Loop over root files
 
                     if iePt > options.minElectronPt:
                         NPassElPtCut = NPassElPtCut + 1
+                        #$ electron pt cuts here 
+                        h_ptLep_ptElcut.Fill(iePt)
+                        h_ptEl_ptElcut.Fill(iePt)
                     else:
                         continue
                     if abs(ieEta) < options.maxElectronEta : #$ Electron eta cut (based on options)
@@ -903,6 +1194,8 @@ for ifile in files : #{ Loop over root files
             if dimuonCandidate :
                 Lepton1 = ROOT.TLorentzVector()
                 Lepton2 = ROOT.TLorentzVector()
+                Muon1 = ROOT.TLorentzVector()
+                Muon2 = ROOT.TLorentzVector()
                 Lepton1.SetPtEtaPhiM( goodmuonPt[0],
                                       goodmuonEta[0],
                                       goodmuonPhi[0],
@@ -913,9 +1206,21 @@ for ifile in files : #{ Loop over root files
                                       goodmuonPhi[1],
                                       goodmuonMass[1] )
                 Lepton2ObjKey = goodmuonKey[1]
+                Muon1.SetPtEtaPhiM( goodmuonPt[0],
+                                      goodmuonEta[0],
+                                      goodmuonPhi[0],
+                                      goodmuonMass[0] )
+                Muon1ObjKey = goodmuonKey[0]
+                Muon2.SetPtEtaPhiM( goodmuonPt[1],
+                                      goodmuonEta[1],
+                                      goodmuonPhi[1],
+                                      goodmuonMass[1] )
+                Muon2ObjKey = goodmuonKey[1]
             elif dielectronCandidate :
                 Lepton1 = ROOT.TLorentzVector()
                 Lepton2 = ROOT.TLorentzVector()
+                Electron1 = ROOT.TLorentzVector()
+                Electron2 = ROOT.TLorentzVector()
                 Lepton1.SetPtEtaPhiM( goodelectronPt[0],
                                       goodelectronEta[0],
                                       goodelectronPhi[0],
@@ -926,9 +1231,21 @@ for ifile in files : #{ Loop over root files
                                       goodelectronPhi[1],
                                       goodelectronMass[1] )
                 Lepton2ObjKey = goodelectronKey[1]
+                Electron1.SetPtEtaPhiM( goodelectronPt[0],
+                                      goodelectronEta[0],
+                                      goodelectronPhi[0],
+                                      goodelectronMass[0] )
+                Electron1ObjKey = goodelectronKey[0]
+                Electron2.SetPtEtaPhiM( goodelectronPt[1],
+                                      goodelectronEta[1],
+                                      goodelectronPhi[1],
+                                      goodelectronMass[1] )
+                Electron2ObjKey = goodelectronKey[1]
             elif mixedCandidate :
                 Lepton1 = ROOT.TLorentzVector()
                 Lepton2 = ROOT.TLorentzVector()
+                Muon1 = ROOT.TLorentzVector()
+                Electron2 = ROOT.TLorentzVector()
                 Lepton1.SetPtEtaPhiM( goodmuonPt[0],
                                     goodmuonEta[0],
                                     goodmuonPhi[0],
@@ -939,7 +1256,17 @@ for ifile in files : #{ Loop over root files
                                         goodelectronPhi[0],
                                         goodelectronMass[0] )
                 Lepton2ObjKey = goodelectronKey[0]
-        
+                Muon1.SetPtEtaPhiM( goodmuonPt[0],
+                                    goodmuonEta[0],
+                                    goodmuonPhi[0],
+                                    goodmuonMass[0] )
+                Muon1ObjKey = goodmuonKey[0]
+                Electron2.SetPtEtaPhiM( goodelectronPt[0],
+                                        goodelectronEta[0],
+                                        goodelectronPhi[0],
+                                        goodelectronMass[0] )
+                Electron2ObjKey = goodelectronKey[0]
+                
         #@ Semileptonic
         muJets = False
         eleJets = False
@@ -953,6 +1280,12 @@ for ifile in files : #{ Loop over root files
                                         goodmuonPhi[0],
                                         goodmuonMass[0] )
                 theLeptonObjKey = goodmuonKey[0]
+                theMuon = ROOT.TLorentzVector()
+                theMuon.SetPtEtaPhiM( goodmuonPt[0],
+                                        goodmuonEta[0],
+                                        goodmuonPhi[0],
+                                        goodmuonMass[0] )
+                theMuonObjKey = goodmuonKey[0]
 
             else :
                 eleJets = True
@@ -962,6 +1295,12 @@ for ifile in files : #{ Loop over root files
                                         goodelectronPhi[0],
                                         goodelectronMass[0] )
                 theLeptonObjKey = goodelectronKey[0]
+                theElectron = ROOT.TLorentzVector()
+                theElectron.SetPtEtaPhiM( goodelectronPt[0],
+                                        goodelectronEta[0],
+                                        goodelectronPhi[0],
+                                        goodelectronMass[0] )
+                theElectronObjKey = goodelectronKey[0]
                                    
         # EVENT AK4 JET HANDLES
         event.getByLabel ( l_jetsAK4Pt, h_jetsAK4Pt )
@@ -1154,8 +1493,21 @@ for ifile in files : #{ Loop over root files
 
            # NPassAK4KinTot += 1
             if SemiLeptonic :
+                if eleJets :
+                    dR = jetP4.DeltaR(theElectron)
+                elif muJets :
+                    dR = jetP4.DeltaR(theMuon)
                 dR = jetP4.DeltaR(theLepton )
             if Leptonic :
+                if dimuonCandidate :
+                    dR1 = jetP4.DeltaR(Muon1 )
+                    dR2 = jetP4.DeltaR(Muon2 )
+                if dielectronCandidate :
+                    dR1 = jetP4.DeltaR(Electron1 )
+                    dR2 = jetP4.DeltaR(Electron2 )
+                if mixedCandidate :
+                    dR1 = jetP4.DeltaR(Muon1 )
+                    dR2 = jetP4.DeltaR(Electron2 )
                 dR1 = jetP4.DeltaR(Lepton1 )
                 dR2 = jetP4.DeltaR(Lepton2 )
             ak4JetsGood.append(jetP4)
@@ -1170,6 +1522,8 @@ for ifile in files : #{ Loop over root files
                     nearestJetP4 = jetP4
                     dRMin = dR
                     nearestJetbDiscrim = AK4CSV[i]
+# @@@ SemiLeptonic but not boosted case- here we want 2 AK4 jets one of which is b-tagged  and other which is approx the W mass 
+## and both far from the lepton 
             elif Leptonic :
                 if abs(dR1) < dRMin :
                     #Save in case duplicate bjets
@@ -1205,6 +1559,10 @@ for ifile in files : #{ Loop over root files
             if options.verbose :
                 print "Oops missed a nearest jet, going back through AK4 Loop for it"
             for i in xrange( len(ak4JetsGood) ) : 
+                if dielectronCandidate :
+                   dR1 = ak4JetsGood[i].DeltaR( Electron1 ) 
+                elif dimuonCandidate or mixedCandidate :
+                   dR1 = ak4JetsGood[i].DeltaR( Muon1 ) 
                 dR1 = ak4JetsGood[i].DeltaR( Lepton1 )
                 if dR1 < dRMin and i != i2nearestJet:
                     inearestJet = i
@@ -1261,16 +1619,30 @@ for ifile in files : #{ Loop over root files
         if SemiLeptonic : 
             theLepJet = nearestJetP4
             theLepJetBDisc = nearestJetbDiscrim
-
-            h_ptAK4.Fill( theLepJet.Perp() )
-            h_etaAK4.Fill( theLepJet.Eta() )
-            h_yAK4.Fill( theLepJet.Rapidity() )
-            h_mAK4.Fill( theLepJet.M() )
-            h_bdiscAK4.Fill( theLepJetBDisc )
-
-            ptRel = theLepJet.Perp( theLepton.Vect() )
-            h_ptLep.Fill(theLepton.Perp())
-            h_etaLep.Fill(theLepton.Eta())
+            if eleJets :
+                theElJet = nearestJetP4
+                theElJetBDisc = nearestJetbDiscrim   
+                h_ptAK4.Fill( theElJet.Perp() )
+                h_etaAK4.Fill( theElJet.Eta() )
+                h_yAK4.Fill( theElJet.Rapidity() )
+                h_mAK4.Fill( theElJet.M() )
+                h_bdiscAK4.Fill( theElJetBDisc )
+                ptRel = theElJet.Perp( theElectron.Vect() ) 
+                h_ptEl.Fill(theElectron.Perp())     
+                h_ptLep.Fill(theElectron.Perp())
+                h_etaLep.Fill(theElectron.Eta())  
+            elif muJets :
+                theMuJet = nearestJetP4
+                theMuJetBDisc = nearestJetbDiscrim
+                h_ptAK4.Fill( theMuJet.Perp() )
+                h_etaAK4.Fill( theMuJet.Eta() )
+                h_yAK4.Fill( theMuJet.Rapidity() )
+                h_mAK4.Fill( theMuJet.M() )
+                h_bdiscAK4.Fill( theMuJetBDisc )
+                ptRel = theMuJet.Perp( theMuon.Vect() )
+                h_ptMu.Fill(theMuon.Perp())
+                h_ptLep.Fill(theMuon.Perp())
+                h_etaLep.Fill(theMuon.Eta())
             h_met.Fill(metPt)
             h_ptRel.Fill( ptRel )
             h_dRMin.Fill( dRMin )
@@ -1293,18 +1665,32 @@ for ifile in files : #{ Loop over root files
                    NPassEl2DCut += 1
         #^ Plotting for DiLeptonic Channel pre 2D cuts
         elif Leptonic :
-            theLepJet = nearestJetP4
-            theLepJetBDisc = nearestJetbDiscrim
-
-            h_ptAK4.Fill( theLepJet.Perp() )
-            h_etaAK4.Fill( theLepJet.Eta() )
-            h_yAK4.Fill( theLepJet.Rapidity() )
-            h_mAK4.Fill( theLepJet.M() )
-            h_bdiscAK4.Fill( theLepJetBDisc )
-
-            ptRel = theLepJet.Perp( Lepton1.Vect() )
-            h_ptLep.Fill(Lepton1.Perp())
-            h_etaLep.Fill(Lepton1.Eta())
+            #theLepJet = nearestJetP4
+            #theLepJetBDisc = nearestJetbDiscrim
+            if dielectronCandidate:
+                theElJet = nearestJetP4
+                theElJetBDisc = nearestJetbDiscrim   
+                h_ptAK4.Fill( theElJet.Perp() )
+                h_etaAK4.Fill( theElJet.Eta() )
+                h_yAK4.Fill( theElJet.Rapidity() )
+                h_mAK4.Fill( theElJet.M() )
+                h_bdiscAK4.Fill( theElJetBDisc )
+                ptRel = theElJet.Perp( Electron1.Vect() ) 
+                h_ptEl.Fill(Electron1.Perp())     
+                h_ptLep.Fill(Electron1.Perp())
+                h_etaLep.Fill(Electron1.Eta())  
+            elif dimuonCandidate or mixedCandidate:
+                theMuJet = nearestJetP4
+                theMuJetBDisc = nearestJetbDiscrim
+                h_ptAK4.Fill( theMuJet.Perp() )
+                h_etaAK4.Fill( theMuJet.Eta() )
+                h_yAK4.Fill( theMuJet.Rapidity() )
+                h_mAK4.Fill( theMuJet.M() )
+                h_bdiscAK4.Fill( theMuJetBDisc )
+                ptRel = theMuJet.Perp( Muon1.Vect() )
+                h_ptMu.Fill(Muon1.Perp())
+                h_ptLep.Fill(Muon1.Perp())
+                h_etaLep.Fill(Muon1.Eta())
             h_met.Fill(metPt)
             h_ptRel.Fill( ptRel )
             h_dRMin.Fill( dRMin )
@@ -1325,18 +1711,32 @@ for ifile in files : #{ Loop over root files
                 elif mixedCandidate :
                     NPassMuon2DCut += 1
 
-            theLepJet2 = nearest2JetP4
-            theLepJetBDisc2 = nearest2JetbDiscrim
-
-            h_ptAK4.Fill( theLepJet2.Perp() )
-            h_etaAK4.Fill( theLepJet2.Eta() )
-            h_yAK4.Fill( theLepJet2.Rapidity() )
-            h_mAK4.Fill( theLepJet2.M() )
-            h_bdiscAK4.Fill( theLepJetBDisc2 )
-
-            ptRel2 = theLepJet2.Perp( Lepton2.Vect() )
-            h_ptLep.Fill(Lepton2.Perp())
-            h_etaLep.Fill(Lepton2.Eta())
+            #theLepJet2 = nearest2JetP4
+            #theLepJetBDisc2 = nearest2JetbDiscrim
+            if dielectronCandidate or mixedCandidate: 
+                theElJet2 = nearestJetP4
+                theElJetBDisc2 = nearestJetbDiscrim   
+                h_ptAK4.Fill( theElJet2.Perp() )
+                h_etaAK4.Fill( theElJet2.Eta() )
+                h_yAK4.Fill( theElJet2.Rapidity() )
+                h_mAK4.Fill( theElJet2.M() )
+                h_bdiscAK4.Fill( theElJetBDisc2 )
+                ptRel = theElJet.Perp( Electron2.Vect() ) 
+                h_ptEl.Fill(Electron2.Perp())     
+                h_ptLep.Fill(Electron2.Perp())
+                h_etaLep.Fill(Electron2.Eta())  
+            elif dimuonCandidate:
+                theMuJet2 = nearestJetP4
+                theMuJetBDisc2 = nearestJetbDiscrim
+                h_ptAK4.Fill( theMuJet2.Perp() )
+                h_etaAK4.Fill( theMuJet2.Eta() )
+                h_yAK4.Fill( theMuJet2.Rapidity() )
+                h_mAK4.Fill( theMuJet2.M() )
+                h_bdiscAK4.Fill( theMuJetBDisc2 )
+                ptRel2 = theMuJet.Perp( Muon2.Vect() )
+                h_ptMu.Fill(Muon2.Perp())
+                h_ptLep.Fill(Muon2.Perp())
+                h_etaLep.Fill(Muon2.Eta())
             h_met.Fill(metPt)
             h_ptRel.Fill( ptRel )
             h_dRMin.Fill( dR2Min )
@@ -1388,6 +1788,8 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_jetsAK8Tau3, h_jetsAK8Tau3 )
             event.getByLabel ( l_jetsAK8nSubJets, h_jetsAK8nSubJets )
             event.getByLabel ( l_jetsAK8minmass, h_jetsAK8minmass )
+            event.getByLabel ( l_subjetsAK8BDisc, h_subjetsAK8BDisc )
+
 
             event.getByLabel ( l_jetsAK8nHadEnergy, h_jetsAK8nHadEnergy)
             event.getByLabel ( l_jetsAK8nEMEnergy, h_jetsAK8nEMEnergy )
@@ -1427,6 +1829,7 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodTau3 = []
             ak8JetsGoodNSubJets = []
             ak8JetsGoodMinMass = []
+            ak8JetsGoodSubjetbDisc = []
             ak8JetsGoodTopSubjetIndex0 = []
             ak8JetsGoodTopSubjetIndex1 = []
             ak8JetsGoodTopSubjetIndex2 = []
@@ -1462,6 +1865,7 @@ for ifile in files : #{ Loop over root files
                 AK8Tau3 = h_jetsAK8Tau3.product()
                 AK8nSubJets = h_jetsAK8nSubJets.product()
                 AK8minmass = h_jetsAK8minmass.product()
+                AK8SubjetbDisc = subjetsAK8BDisc.product()
                 AK8TopSubjetIndex0 = h_jetsAK8TopSubjetIndex0.product()
                 AK8TopSubjetIndex1 = h_jetsAK8TopSubjetIndex1.product()
                 AK8TopSubjetIndex2 = h_jetsAK8TopSubjetIndex2.product()
@@ -1539,8 +1943,11 @@ for ifile in files : #{ Loop over root files
                     # Hadronic - 2 AK8's, no massy leptons to clean up after
 
                     #$ Cuts for fat jets that are far away from the leptons
-                    if SemiLeptonic == True:
-                        dR = jetP4.DeltaR(theLepton ) 
+                    if SemiLeptonic :
+                        if eleJets :
+                            dR = jetP4.DeltaR(theElectron ) 
+                        elif muJets :
+                            dR = jetP4.DeltaR(theMuon )  
                         if dR > ROOT.TMath.Pi()/2.0 :
                             NPassSemiLeptonicDRjlCut = NPassSemiLeptonicDRjlCut + 1
                             ak8JetsGood.append(AK8P4Corr)
@@ -1553,6 +1960,7 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodTau3.append( AK8Tau3[i])
                             ak8JetsGoodNSubJets.append( AK8nSubJets[i])
                             ak8JetsGoodMinMass.append( AK8minmass[i] )
+                            ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
                             ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
                             ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
                             ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
@@ -1586,6 +1994,7 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodTau3.append( AK8Tau3[i])
                         ak8JetsGoodNSubJets.append( AK8nSubJets[i])
                         ak8JetsGoodMinMass.append( AK8minmass[i] )
+                        ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
                         ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
                         ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
                         ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
@@ -1616,6 +2025,7 @@ for ifile in files : #{ Loop over root files
                 mAK8SDrop = AK8SDropM[i]
                 # Make sure there are top tags if we want to plot them
                 minMass = AK8minmass[i]
+                subjetBdisc = AK8SubjetbDisc[i]
                 nsubjets = AK8nSubJets[i]
                 tau1 = AK8Tau1[i]  
                 tau2 = AK8Tau2[i] 
@@ -1632,33 +2042,160 @@ for ifile in files : #{ Loop over root files
                 else :
                     h_tau32AK8.Fill( -1.0, FlatWeight )
                 
-                #^ Plot Kinematics for AK8 Jets
-                h_ptAK8.Fill( ak8JetsGood[i].Perp(), FlatWeight )
-                h_etaAK8.Fill( ak8JetsGood[i].Eta(), FlatWeight )
-                h_yAK8.Fill( ak8JetsGood[i].Rapidity(), FlatWeight )
-                h_mAK8.Fill( ak8JetsGood[i].M(), FlatWeight )
-                h_mprunedAK8.Fill( ak8JetsGoodPrunMass[i], FlatWeight )
-                h_mfilteredAK8.Fill( ak8JetsGoodFiltMass[i], FlatWeight )
-                h_mtrimmedAK8.Fill( ak8JetsGoodTrimMass[i], FlatWeight )
-                h_mSDropAK8.Fill( ak8JetsGoodSDropMass[i], FlatWeight )
-                h_minmassAK8.Fill( ak8JetsGoodMinMass[i], FlatWeight )
-                h_nsjAK8.Fill( ak8JetsGoodNSubJets[i], FlatWeight )
-
-
+                #^ Plot Kinematics for AK8 Jets, using only those with soft drop mass > 10 GeV
+                if mAK8SDrop > 10:
+                    h_ptAK8.Fill( ak8JetsGood[i].Perp(), FlatWeight )
+                    h_etaAK8.Fill( ak8JetsGood[i].Eta(), FlatWeight )
+                    h_phiAK8.Fill( ak8JetsGood[i].Phi(), FlatWeight )
+                    h_yAK8.Fill( ak8JetsGood[i].Rapidity(), FlatWeight )
+                    h_mAK8.Fill( ak8JetsGood[i].M(), FlatWeight )
+                    h_mprunedAK8.Fill( ak8JetsGoodPrunMass[i], FlatWeight )
+                    h_mfilteredAK8.Fill( ak8JetsGoodFiltMass[i], FlatWeight )
+                    h_mtrimmedAK8.Fill( ak8JetsGoodTrimMass[i], FlatWeight )
+                    h_mSDropAK8.Fill( ak8JetsGoodSDropMass[i], FlatWeight )
+                    h_minmassAK8.Fill( ak8JetsGoodMinMass[i], FlatWeight )
+                    h_subjetBdiscAK8.Fill( ak8JetsGoodSubjetbDisc[i], FlatWeight )
+                    h_nsjAK8.Fill( ak8JetsGoodNSubJets[i], FlatWeight )
                 if options.verbose : 
                     print 'minMass = {0:6.2f}, Groomed mass = {1:6.2f}, tau32 = {2:6.2f}'.format(
                         minMass, mAK8SDrop, tau32
                         ),
                 if minMass > options.minMassCut:
+                    #^ fill histos with min mass pairing greater than min mass cut 
                     NPasstMinMassCut = NPasstMinMassCut + 1
+                    h_tau32AK8_minMasscut.Fill( tau32, FlatWeight )
+                    h_tau21AK8_minMasscut.Fill( tau21, FlatWeight )
+                    h_ptAK8_minMasscut.Fill( ak8JetsGood[i].Perp(), FlatWeight )
+                    h_etaAK8_minMasscut.Fill( ak8JetsGood[i].Eta(), FlatWeight )
+                    h_phiAK8_minMasscut.Fill( ak8JetsGood[i].Phi(), FlatWeight )
+                    h_yAK8_minMasscut.Fill( ak8JetsGood[i].Rapidity(), FlatWeight )
+                    h_mAK8_minMasscut.Fill( ak8JetsGood[i].M(), FlatWeight )
+                    h_mprunedAK8_minMasscut.Fill( ak8JetsGoodPrunMass[i], FlatWeight )
+                    h_mfilteredAK8_minMasscut.Fill( ak8JetsGoodFiltMass[i], FlatWeight )
+                    h_mtrimmedAK8_minMasscut.Fill( ak8JetsGoodTrimMass[i], FlatWeight )
+                    h_mSDropAK8_minMasscut.Fill( ak8JetsGoodSDropMass[i], FlatWeight )
+                    h_minmassAK8_minMasscut.Fill( ak8JetsGoodMinMass[i], FlatWeight )
+                    h_subjetBdiscAK8_minMasscut.Fill( ak8JetsGoodSubjetbDisc[i], FlatWeight )
+                    h_nsjAK8_minMasscut.Fill( ak8JetsGoodNSubJets[i], FlatWeight )
                 else:
                     continue
-                if mAK8SDrop > options.mAK8GroomedCut:
-                    NPasstMAK8GroomedCut = NPasstMAK8GroomedCut + 1
+                if mAK8SDrop > options.mAK8GroomedMinCut:
+                    NPasstMAK8GroomedMinCut = NPasstMAK8GroomedMinCut + 1
+                else:
+                    continue
+                if mAK8SDrop < options.mAK8GroomedMaxCut:
+                    NPasstMAK8GroomedMaxCut = NPasstMAK8GroomedMaxCut + 1
+                else: 
+                    continue
+                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut: 
+ # @@@ fix this and all below fills of cut histos, more lepton and AK4 stuff to other loops
+                   #^ Fill histos between min and max soft drop mass cuts
+                    h_tau32AK8_mSDcut.Fill( tau32, FlatWeight )
+                    h_tau21AK8_mSDcut.Fill( tau21, FlatWeight )
+
+# @@@ add subjet bdisc fill to all below plots
+
+#                    h_ptLep_mSDcut.Fill(theLepton.Perp())   @@@ fix this
+# $$$               if theLepton == Mu :
+#  h_ptMu_mSDcut.Fill(theLepton.Perp())
+# $$$               if theLepton == El :
+#  h_ptEl_mSDcut.Fill(theLepton.Perp())
+#                    h_ptAK4_mSDcut.Fill( theLepJet.Perp() )
+#                    h_mAK4_mSDcut.Fill( theLepJet.M() )
+#                    h_bdiscAK4_mSDcut.Fill( theLepJetBDisc )
+
+
+                    h_ptAK8_mSDcut.Fill( ak8JetsGood[i].Perp(), FlatWeight )
+                    h_etaAK8_mSDcut.Fill( ak8JetsGood[i].Eta(), FlatWeight )
+                    h_yAK8_mSDcut.Fill( ak8JetsGood[i].Rapidity(), FlatWeight )
+                    h_mAK8_mSDcut.Fill( ak8JetsGood[i].M(), FlatWeight )
+                    h_mprunedAK8_mSDcut.Fill( ak8JetsGoodPrunMass[i], FlatWeight )
+                    h_mfilteredAK8_mSDcut.Fill( ak8JetsGoodFiltMass[i], FlatWeight )
+                    h_mtrimmedAK8_mSDcut.Fill( ak8JetsGoodTrimMass[i], FlatWeight )
+                    h_mSDropAK8_mSDcut.Fill( ak8JetsGoodSDropMass[i], FlatWeight )
+                    h_minmassAK8_mSDcut.Fill( ak8JetsGoodMinMass[i], FlatWeight )
+                    h_subjetBdiscAK8_mSDcut.Fill( ak8JetsGoodSubjetbDisc[i], FlatWeight )
+                    h_nsjAK8_mSDcut.Fill( ak8JetsGoodNSubJets[i], FlatWeight )
                 else: 
                     continue
                 if tau32 < options.tau32Cut:
                     NPasstau23Cut = NPasstau23Cut + 1
+                    #^ fill histos with tau32 < max tau32
+                    h_tau21AK8_tau32cut.Fill( tau21, FlatWeight )
+
+#                    h_ptLep_tau32cut.Fill(theLepton.Perp())  @@@ Fix this
+# $$$ if muJets :
+ #                   h_ptMu_tau32cut.Fill(theLepton.Perp())
+# $$$ if eleJets :
+ #                   h_ptEl_tau32cut.Fill(theLepton.Perp())
+#                    h_ptAK4_tau32cut.Fill( theLepJet.Perp() )
+#                    h_mAK4_tau32cut.Fill( theLepJet.M() )
+#                    h_bdiscAK4_tau32cut.Fill( theLepJetBDisc )
+
+                    h_ptAK8_tau32cut.Fill( ak8JetsGood[i].Perp(), FlatWeight )
+                    h_etaAK8_tau32cut.Fill( ak8JetsGood[i].Eta(), FlatWeight )
+                    h_yAK8_tau32cut.Fill( ak8JetsGood[i].Rapidity(), FlatWeight )
+                    h_mAK8_tau32cut.Fill( ak8JetsGood[i].M(), FlatWeight )
+                    h_mprunedAK8_tau32cut.Fill( ak8JetsGoodPrunMass[i], FlatWeight )
+                    h_mfilteredAK8_tau32cut.Fill( ak8JetsGoodFiltMass[i], FlatWeight )
+                    h_mtrimmedAK8_tau32cut.Fill( ak8JetsGoodTrimMass[i], FlatWeight )
+                    h_mSDropAK8_tau32cut.Fill( ak8JetsGoodSDropMass[i], FlatWeight )
+                    h_minmassAK8_tau32cut.Fill( ak8JetsGoodMinMass[i], FlatWeight )
+                    h_nsjAK8_tau32cut.Fill( ak8JetsGoodNSubJets[i], FlatWeight )
+
+                else: 
+                    continue
+                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and tau32 < options.tau32Cut: 
+                    #^ Fill histos with 110 < M_{jet Soft Drop} GeV < 210 (can change default min and max groomed mass cuts in options)
+                    h_tau32AK8_mSDcut_tau32cut.Fill( tau32, FlatWeight )
+                    h_tau21AK8_mSDcut_tau32cut.Fill( tau21, FlatWeight )
+
+#                    h_ptLep_mSDcut_tau32cut.Fill(theLepton.Perp())    @@@ Fix this
+#                   if muJets :
+#                    h_ptMu_mSDcut_tau32cut.Fill(theLepton.Perp())
+#                   if eleJets :
+#                    h_ptEl_mSDcut_tau32cut.Fill(theLepton.Perp())
+#                    h_ptAK4_mSDcut_tau32cut.Fill( theLepJet.Perp() )
+#                    h_mAK4_mSDcut_tau32cut.Fill( theLepJet.M() )
+#                    h_bdiscAK4_mSDcut_tau32cut.Fill( theLepJetBDisc )
+
+                    h_ptAK8_mSDcut_tau32cut.Fill( ak8JetsGood[i].Perp(), FlatWeight )
+                    h_etaAK8_mSDcut_tau32cut.Fill( ak8JetsGood[i].Eta(), FlatWeight )
+                    h_yAK8_mSDcut_tau32cut.Fill( ak8JetsGood[i].Rapidity(), FlatWeight )
+                    h_mAK8_mSDcut_tau32cut.Fill( ak8JetsGood[i].M(), FlatWeight )
+                    h_mprunedAK8_mSDcut_tau32cut.Fill( ak8JetsGoodPrunMass[i], FlatWeight )
+                    h_mfilteredAK8_mSDcut_tau32cut.Fill( ak8JetsGoodFiltMass[i], FlatWeight )
+                    h_mtrimmedAK8_mSDcut_tau32cut.Fill( ak8JetsGoodTrimMass[i], FlatWeight )
+                    h_mSDropAK8_mSDcut_tau32cut.Fill( ak8JetsGoodSDropMass[i], FlatWeight )
+                    h_minmassAK8_mSDcut_tau32cut.Fill( ak8JetsGoodMinMass[i], FlatWeight )
+                    h_nsjAK8_mSDcut_tau32cut.Fill( ak8JetsGoodNSubJets[i], FlatWeight )
+                else: 
+                    continue
+                if tau21 < options.tau21Cut:
+                    NPasstau21Cut = NPasstau21Cut + 1
+                    #^ fill histos with tau21 cuts
+                    h_tau32AK8_tau21cut.Fill( tau32, FlatWeight )
+
+#                    h_ptLep_tau21cut.Fill(theLepton.Perp())
+#                   if theLepton == Mu :                                                  @@@ Fix this
+#                    h_ptMu_tau21cut.Fill(theLepton.Perp())
+#                   if theLepton == El :
+#                    h_ptEl_tau21cut.Fill(theLepton.Perp())
+#                    h_ptAK4_tau21cut.Fill( theLepJet.Perp() )
+#                    h_mAK4_tau21cut.Fill( theLepJet.M() )
+#                    h_bdiscAK4_tau21cut.Fill( theLepJetBDisc )
+
+                    h_ptAK8_tau21cut.Fill( ak8JetsGood[i].Perp(), FlatWeight )
+                    h_etaAK8_tau21cut.Fill( ak8JetsGood[i].Eta(), FlatWeight )
+                    h_yAK8_tau21cut.Fill( ak8JetsGood[i].Rapidity(), FlatWeight )
+                    h_mAK8_tau21cut.Fill( ak8JetsGood[i].M(), FlatWeight )
+                    h_mprunedAK8_tau21cut.Fill( ak8JetsGoodPrunMass[i], FlatWeight )
+                    h_mfilteredAK8_tau21cut.Fill( ak8JetsGoodFiltMass[i], FlatWeight )
+                    h_mtrimmedAK8_tau21cut.Fill( ak8JetsGoodTrimMass[i], FlatWeight )
+                    h_mSDropAK8_tau21cut.Fill( ak8JetsGoodSDropMass[i], FlatWeight )
+                    h_minmassAK8_tau21cut.Fill( ak8JetsGoodMinMass[i], FlatWeight )
+                    h_nsjAK8_tau21cut.Fill( ak8JetsGoodNSubJets[i], FlatWeight )
+
                 else: 
                     continue
                 nttags += 1
@@ -1671,8 +2208,49 @@ for ifile in files : #{ Loop over root files
                         print ''
 
                 #} End t tagging loop
-                
-                    
+# @@@ Fix this                
+############# loop over good muons and fill histos for muon cuts
+
+
+# these need to fill in mu/el loop,  for h_minmassAK8_minMasscut >  options.minMassCut:
+#                    h_ptLep_minMasscut.Fill(theLepton.Perp())
+# $$$               if theLepton == Mu :
+#                   h_ptMu_minMasscut.Fill(theLepton.Perp())
+# $$$               if theLepton == El :
+#                   h_ptEl_minMasscut.Fill(theLepton.Perp())
+#                    h_ptAK4_minMasscut.Fill( theLepJet.Perp() )
+#                    h_mAK4_minMasscut.Fill( theLepJet.M() )
+#                    h_bdiscAK4_minMasscut.Fill( theLepJetBDisc )
+
+
+#^ fill histos with muon pt cuts
+            for imuon, muon in enumerate(goodmuonPt): #{ Loop over all Good muons to plot muon pt cut
+                if goodmuonPt[imuon] < options.minMuonPt :  #$ Muon cuts
+                    continue
+                else: 
+#   @@@ Fix this
+           #  these already filled about        h_ptLep_ptMucut.Fill(goodmuonPt[imuon])
+            #        h_ptMu_ptMucut.Fill(goodmuonPt[imuon])
+                    h_tau32AK8_ptMucut.Fill( tau32, FlatWeight )
+                    h_tau21AK8_ptMucut.Fill( tau21, FlatWeight )
+                    h_ptAK4_ptMucut.Fill( theLepJet.Perp() )
+                    h_mAK4_ptMucut.Fill( theLepJet.M() )
+                    h_bdiscAK4_ptMucut.Fill( theLepJetBDisc )
+                    h_ptAK8_ptMucut.Fill( ak8JetsGood[i].Perp(), FlatWeight )
+                    h_etaAK8_ptMucut.Fill( ak8JetsGood[i].Eta(), FlatWeight )
+                    h_yAK8_ptMucut.Fill( ak8JetsGood[i].Rapidity(), FlatWeight )
+                    h_mAK8_ptMucut.Fill( ak8JetsGood[i].M(), FlatWeight )
+                    h_mprunedAK8_ptMucut.Fill( ak8JetsGoodPrunMass[i], FlatWeight )
+                    h_mfilteredAK8_ptMucut.Fill( ak8JetsGoodFiltMass[i], FlatWeight )
+                    h_mtrimmedAK8_ptMucut.Fill( ak8JetsGoodTrimMass[i], FlatWeight )
+                    h_mSDropAK8_ptMucut.Fill( ak8JetsGoodSDropMass[i], FlatWeight )
+                    h_minmassAK8_ptMucut.Fill( ak8JetsGoodMinMass[i], FlatWeight )
+                    h_nsjAK8_ptMucut.Fill( ak8JetsGoodNSubJets[i], FlatWeight 
+
+                #} End Good Muon loop
+
+###   $$$ once this is sorted out add same for electron pt 
+
         #@ KINEMATICS for all channels
 
         #@ Leptonic Kin
@@ -1680,9 +2258,14 @@ for ifile in files : #{ Loop over root files
 
             ttbarCandP4 = None
 
+
             #$ Check if the nearest jets to the leptons are b-tagged
             if theLepJetBDisc > options.bDiscMin:
                 NPassBDiscMinCut = NPassBDiscMinCut + 1
+                #^ fill bdiscmin cut here
+                h_ptAK4_bDiscMincut.Fill(theLepJet.Perp())
+                h_mAK4_bDiscMincut.Fill(theLepJet.M() )
+                h_bdiscAK4_bDiscMincut.Fill(theLepJetBDisc)
                 if dimuonCandidate :
                     NPassMuonBCut += 1
                 elif dielectronCandidate :
@@ -1691,6 +2274,10 @@ for ifile in files : #{ Loop over root files
                     NPassMuonBCut += 1
             if theLepJetBDisc2 > options.bDiscMin:
                 NPassBDisc2MinCut = NPassBDisc2MinCut + 1
+                #^ fill bdiscmincut here
+                h_ptAK4_bDiscMincut.Fill(theLepJet.Perp())
+                h_mAK4_bDiscMincut.Fill(theLepJet.M() )
+                h_bdiscAK4_bDiscMincut.Fill(theLepJetBDisc)
                 if dimuonCandidate :
                     NPassMuonBCut += 1
                 elif dielectronCandidate :
@@ -1758,6 +2345,10 @@ for ifile in files : #{ Loop over root files
             #$ Check if the nearest jet to the lepton is b-tagged
             if theLepJetBDisc > options.bDiscMin:
                 NPassBDiscMinCut = NPassBDiscMinCut + 1
+                #^ fill bdiscmincut histos here
+                h_ptAK4_bDiscMincut.Fill(theLepJet.Perp())
+                h_mAK4_bDiscMincut.Fill(theLepJet.M() )
+                h_bdiscAK4_bDiscMincut.Fill(theLepJetBDisc)
             if theLepJetBDisc < options.bDiscMin :
                 if options.verbose : 
                     print 'closest jet to lepton is not b-tagged'
@@ -1792,7 +2383,57 @@ for ifile in files : #{ Loop over root files
 
                 lepTopCandP4 = nuCandP4 + theLepton + bJetCandP4
 
+           # @@@ Could you check this, I don't think it's fully correct
+        #@ Semileptonic- but not boosted   
+"""
+        elif SemiLeptonic == True and nttags < 1 :    
+            hadTopCandP4 = None  # ?
+            lepTopCandP4 = None
+            
+            #$ Check if the nearest jet to the lepton is b-tagged
+            if theLepJetBDisc > options.bDiscMin:
+                NPassBDiscMinCut = NPassBDiscMinCut + 1
+                #^ fill bdiscmincut histos here
+                h_ptAK4_bDiscMincut.Fill(theLepJet.Perp())
+                h_mAK4_bDiscMincut.Fill(theLepJet.M() )
+                h_bdiscAK4_bDiscMincut.Fill(theLepJetBDisc)
+            if theLepJetBDisc < options.bDiscMin :
+                if options.verbose : 
+                    print 'closest jet to lepton is not b-tagged'
+                    
+                continue
+            else  :
+
+                if options.verbose :
+                    print 'Event is fully tagged.'
+                # Get the z-component of the lepton from the W mass constraint
                 
+                bJetCandP4 = theLepJet
+                
+                #nuCandP4 = ROOT.TLorentzVector(metPx, metPy ,0.0, metPt)
+                nuCandP4 = ROOT.TLorentzVector()#(metPx, metPy ,0.0, metPt)
+                nuCandP4.SetPxPyPzE(metPx, metPy, 0.0, metPt)
+                solution, nuz1, nuz2 = solve_nu( vlep=theLepton, vnu=nuCandP4 )
+                # If there is at least one real solution, pick it up                              
+                if solution :
+                    if options.verbose : 
+                        print '--- Have a solution --- '
+                    nuCandP4.SetPz(nuz1)
+                else :
+                    if options.verbose : 
+                        print '--- No solution for neutrino z ---'
+                    nuCandP4.SetPz(nuz1.real)
+
+                if muJets :
+                    muonJetsEvents += 1
+                elif eleJets :
+                    eleJetsEvents += 1
+
+                lepTopCandP4 = nuCandP4 + theLepton + bJetCandP4
+
+
+        #@ End- Semileptonic- but not boosted 
+"""
                 #if ttbarCandP4.M() < 1000.0 :
                 #    print 'Weird event : ' + str(event.object().id().luminosityBlock()) + ', ' + str(event.object().id().event())
                 #    print ' ================'
@@ -1846,6 +2487,8 @@ for ifile in files : #{ Loop over root files
 
         if ttbarCand != None : 
             h_mttbar.Fill( ttbarCand.M() )
+            #^ Eventually fill the h_mttbar histos with cuts
+
 
         #} End event loop
     #} End root file loop
@@ -1907,8 +2550,10 @@ if options.selection == 1 or options.selection == 2 :
         print ' Pass Corrected Mass Cut: ' +str(NPassAK8CorrMassCut)
     print ' Pass Good  Min Pt Cut: ' +str(NPassminAK8PtCut)
     print ' Pass Min Mass2 Cut: ' +str(NPasstMinMassCut)
-    print ' Pass Groomed Cut: ' +str(NPasstMAK8GroomedCut)
+    print ' Pass Groomed Min Cut: ' +str(NPasstMAK8GroomedMinCut)
+    print ' Pass Groomed Max Cut: ' +str(NPasstMAK8GroomedMaxCut)
     print ' Pass tau32 Cut: ' +str(NPasstau23Cut)
+    print ' Pass tau21 Cut: ' +str(NPasstau21Cut)
 print '========================================='
 print 'End Awesome Cut Flow Table'
 print '========================================='
