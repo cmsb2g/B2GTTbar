@@ -125,9 +125,9 @@ switch (histo)
     maxX = 600; 
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.400759;
+    legendLocation[0] = 0.370759;
     legendLocation[1] = 0.320595;
-    legendLocation[2] = 0.750536;
+    legendLocation[2] = 0.650536;
     legendLocation[3] = 0.611488;
     cout << "This histo is n_mSDropAK8 " << endl;
     break;
@@ -169,16 +169,16 @@ switch (histo)
     break;
     }
     case 6 :{
-    xAxisTitle = "Minimum-Mass-Pairing-of-Subjets\0(GeV)"; 
+    xAxisTitle = "Minimum Mass Pairing of Subjets (GeV)"; 
     minX = 0;
     maxX = 200; 
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.500759;
+    legendLocation[0] = 0.470759;
     legendLocation[1] = 0.350595;
-    legendLocation[2] = 0.870536;
+    legendLocation[2] = 0.670536;
     legendLocation[3] = 0.651488;
-    cout << "This histo is n_minmassAK8 " << endl;
+    cout << "This histo is h_minmassAK8 " << endl;
     break;
     }
     case 7 :{
@@ -427,7 +427,7 @@ switch (histo)
   canvas->Update();
   canvas->Modified();
  // Name the stacked histogram
-  canvas->Print("./Stacked/QualityCuts_"+CalledHisto+"_"+day+"_"+month+"_"+year+".png");
+  canvas->Print("./Stacked/QualityCuts_50ns_"+CalledHisto+"_"+day+"_"+month+"_"+year+".png");
 
 }
 
