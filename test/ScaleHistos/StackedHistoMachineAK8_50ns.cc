@@ -305,8 +305,8 @@ switch (histo)
   Double_t n_events3 = 3900814 ; // Single top
   Double_t n_events4 = 19925500 ; // Drell Yan
 //  Double_t n_events5 =  ; // Data
-  Double_t n_events6 = 202573 ; //  Z'-> t tbar 2TeV W = 200
-  Double_t n_events7 = 103854 ; //Z'-> t tbar 2TeV W = 20
+  Double_t n_events6 = 103854 ; //  Z'-> t tbar 2TeV W = 200
+  Double_t n_events7 =  202573 ; //Z'-> t tbar 2TeV W = 20
 
 
   Double_t lum = 1000 ; // Arbitrary
