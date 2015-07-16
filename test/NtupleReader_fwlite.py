@@ -943,6 +943,9 @@ ak8JetCorrector = ROOT.FactorizedJetCorrector(vParJecAK8)
 
 #@ EVENT LOOP
 
+# Top Tag count
+nttags = 0
+
 #Tracker variables
 DimuonEvents = 0
 DieleEvents = 0
@@ -2187,7 +2190,8 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodTau3.append( AK8Tau3[i])
                             ak8JetsGoodNSubJets.append( AK8nSubJets[i])
                             ak8JetsGoodMinMass.append( AK8minmass[i] )
-                            ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
+                            if len(AK8SubjetbDisc) >= i:
+                                ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
                             ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
                             ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
                             ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
@@ -2227,16 +2231,17 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
                         ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )                        
                         #} End AK8 Loop
+    if len(ak8JetsGood) > 1 :
+        print ' Pt of leading AK8 Jet, ak8JetsGood[0] ' + str(ak8JetsGood[0].Perp())
+        print ' Pt of second AK8 Jet, ak8JetsGood[1] ' + str(ak8JetsGood[1].Perp())
+        if ak8JetsGood[0].Perp() < ak8JetsGood[1].Perp():
+            print 'WE HAVE A PROBLEM! The second AK8 Jet has higher Pt than the leading Jet'
 
     if len(ak8JetsGood) < 1 :
         if options.verbose :
             print 'Not enough AK8 jets, skipping'
         continue
 
-    print ' Pt of leading AK8 Jet, ak8JetsGood[0] ' + str(ak8JetsGood[0].Perp())
-    print ' Pt of second AK8 Jet, ak8JetsGood[1] ' + str(ak8JetsGood[1].Perp())
-    if ak8JetsGood[0].Perp() < ak8JetsGood[1].Perp():
-        print 'WE HAVE A PROBLEM! The second AK8 Jet has higher Pt than the leading Jet'
     if ak8JetsGood[0].Perp() < options.minAK8Pt : #$ Pt cut for passed jets
         continue
     NPassminAK8PtCut = NPassminAK8PtCut + 1
@@ -2692,20 +2697,15 @@ for ifile in files : #{ Loop over root files
             h_etaMu_bDiscMincut.Fill(theMuon.Eta())
 
 
-
-
-
-
-
 # @@@ Do we want to top tag all good AK8 jets or only the leading ones?
 
+         
             #@ Tagging
             if len(ak8JetsGood) < 1 :
                 if options.verbose :
                     print 'Not enough AK8 jets, skipping'
                 continue
 
-            nttags = 0
             tJets = []
 
 
