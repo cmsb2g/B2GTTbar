@@ -2180,22 +2180,22 @@ for ifile in files : #{ Loop over root files
                             dR = jetP4.DeltaR(theMuon )  
                         if dR > ROOT.TMath.Pi()/2.0 :
                             NPassSemiLeptonicDRjlCut = NPassSemiLeptonicDRjlCut + 1
-                            ak8JetsGood.append(AK8P4Corr)
-                            ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
-                            ak8JetsGoodPrunMass.append( AK8PrunedM[i])
-                            ak8JetsGoodFiltMass.append( AK8FilteredM[i])
-                            ak8JetsGoodSDropMass.append( AK8SDropM[i])
-                            ak8JetsGoodTau1.append( AK8Tau1[i])
-                            ak8JetsGoodTau2.append( AK8Tau2[i])
-                            ak8JetsGoodTau3.append( AK8Tau3[i])
-                            ak8JetsGoodNSubJets.append( AK8nSubJets[i])
-                            ak8JetsGoodMinMass.append( AK8minmass[i] )
-                            if len(AK8SubjetbDisc) >= i:
+                            if len(AK8SubjetbDisc) <= i:
+                                ak8JetsGood.append(AK8P4Corr)
+                                ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
+                                ak8JetsGoodPrunMass.append( AK8PrunedM[i])
+                                ak8JetsGoodFiltMass.append( AK8FilteredM[i])
+                                ak8JetsGoodSDropMass.append( AK8SDropM[i])
+                                ak8JetsGoodTau1.append( AK8Tau1[i])
+                                ak8JetsGoodTau2.append( AK8Tau2[i])
+                                ak8JetsGoodTau3.append( AK8Tau3[i])
+                                ak8JetsGoodNSubJets.append( AK8nSubJets[i])
+                                ak8JetsGoodMinMass.append( AK8minmass[i] )
                                 ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
-                            ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
-                            ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
-                            ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
-                            ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )
+                                ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
+                                ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
+                                ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
+                                ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )
                     #$ Cuts for Hadronic channel
                     else : 
                         ## HADRONIC CHANNEL CRITERIA 
