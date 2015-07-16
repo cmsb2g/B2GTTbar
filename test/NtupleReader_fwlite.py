@@ -426,12 +426,12 @@ h_phiAK4mu = ROOT.TH1F("h_phiAK4mu", "Muon decay, AK4 Jet #phi;#phi (radians)",1
 h_mAK4mu = ROOT.TH1F("h_mAK4mu", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu = ROOT.TH1F("h_bdiscAK4mu", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el = ROOT.TH1F("h_ptAK4", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el = ROOT.TH1F("h_etaAK4", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el = ROOT.TH1F("h_yAK4", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el = ROOT.TH1F("h_phiAK4", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el = ROOT.TH1F("h_mAK4", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el = ROOT.TH1F("h_bdiscAK4", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el = ROOT.TH1F("h_ptAK4el", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el = ROOT.TH1F("h_etaAK4el", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el = ROOT.TH1F("h_yAK4el", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el = ROOT.TH1F("h_phiAK4el", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el = ROOT.TH1F("h_mAK4el", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el = ROOT.TH1F("h_bdiscAK4el", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 h_ptAK8 = ROOT.TH1F("h_ptAK8", "AK8 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
 h_etaAK8 = ROOT.TH1F("h_etaAK8", "AK8 Jet #eta;#eta", 120, -6, 6)
@@ -471,12 +471,12 @@ h_phiAK4mu_mSDcut = ROOT.TH1F("h_phiAK4mu_mSDcut", "Muon decay, AK4 Jet #phi;#ph
 h_mAK4mu_mSDcut = ROOT.TH1F("h_mAK4mu_mSDcut", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_mSDcut = ROOT.TH1F("h_bdiscAK4mu_mSDcut", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_mSDcut = ROOT.TH1F("h_ptAK4_mSDcut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_mSDcut = ROOT.TH1F("h_etaAK4_mSDcut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_mSDcut = ROOT.TH1F("h_yAK4_mSDcut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_mSDcut = ROOT.TH1F("h_phiAK4_mSDcut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_mSDcut = ROOT.TH1F("h_mAK4_mSDcut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_mSDcut = ROOT.TH1F("h_bdiscAK4_mSDcut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_mSDcut = ROOT.TH1F("h_ptAK4el_mSDcut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_mSDcut = ROOT.TH1F("h_etaAK4el_mSDcut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_mSDcut = ROOT.TH1F("h_yAK4el_mSDcut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_mSDcut = ROOT.TH1F("h_phiAK4el_mSDcut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_mSDcut = ROOT.TH1F("h_mAK4el_mSDcut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_mSDcut = ROOT.TH1F("h_bdiscAK4el_mSDcut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 
 h_ptAK8_mSDcut = ROOT.TH1F("h_ptAK8_mSDcut", "AK8 Jet p_{T}for 110<M_{Soft Drop}(GeV)<210;p_{T} (GeV)", 300, 0, 3000)
@@ -515,12 +515,12 @@ h_phiAK4mu_tau32cut = ROOT.TH1F("h_phiAK4mu_tau32cut", "Muon decay, AK4 Jet #phi
 h_mAK4mu_tau32cut = ROOT.TH1F("h_mAK4mu_tau32cut", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_tau32cut = ROOT.TH1F("h_bdiscAK4mu_tau32cut", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_tau32cut = ROOT.TH1F("h_ptAK4_tau32cut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_tau32cut = ROOT.TH1F("h_etaAK4_tau32cut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_tau32cut = ROOT.TH1F("h_yAK4_tau32cut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_tau32cut = ROOT.TH1F("h_phiAK4_tau32cut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_tau32cut = ROOT.TH1F("h_mAK4_tau32cut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_tau32cut = ROOT.TH1F("h_bdiscAK4_tau32cut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_tau32cut = ROOT.TH1F("h_ptAK4el_tau32cut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_tau32cut = ROOT.TH1F("h_etaAK4el_tau32cut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_tau32cut = ROOT.TH1F("h_yAK4el_tau32cut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_tau32cut = ROOT.TH1F("h_phiAK4el_tau32cut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_tau32cut = ROOT.TH1F("h_mAK4el_tau32cut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_tau32cut = ROOT.TH1F("h_bdiscAK4el_tau32cut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 
 h_ptAK8_tau32cut = ROOT.TH1F("h_ptAK8_tau32cut", "AK8 Jet p_{T}for tau32 cut;p_{T} (GeV)", 300, 0, 3000)
@@ -558,12 +558,12 @@ h_phiAK4mu_tau21cut = ROOT.TH1F("h_phiAK4mu_tau21cut", "Muon decay, AK4 Jet #phi
 h_mAK4mu_tau21cut = ROOT.TH1F("h_mAK4mu_tau21cut", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_tau21cut = ROOT.TH1F("h_bdiscAK4mu_tau21cut", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_tau21cut = ROOT.TH1F("h_ptAK4_tau21cut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_tau21cut = ROOT.TH1F("h_etaAK4_tau21cut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_tau21cut = ROOT.TH1F("h_yAK4_tau21cut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_tau21cut = ROOT.TH1F("h_phiAK4_tau21cut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_tau21cut = ROOT.TH1F("h_mAK4_tau21cut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_tau21cut = ROOT.TH1F("h_bdiscAK4_tau21cut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_tau21cut = ROOT.TH1F("h_ptAK4el_tau21cut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_tau21cut = ROOT.TH1F("h_etaAK4el_tau21cut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_tau21cut = ROOT.TH1F("h_yAK4el_tau21cut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_tau21cut = ROOT.TH1F("h_phiAK4el_tau21cut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_tau21cut = ROOT.TH1F("h_mAK4el_tau21cut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_tau21cut = ROOT.TH1F("h_bdiscAK4el_tau21cut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 
 h_ptAK8_tau21cut = ROOT.TH1F("h_ptAK8_tau21cut", "AK8 Jet p_{T}for tau21 cut;p_{T} (GeV)", 300, 0, 3000)
@@ -578,7 +578,7 @@ h_mSDropAK8_tau21cut = ROOT.TH1F("h_mSDropAK8_tau21cut", "AK8 Soft Drop Jet Mass
 h_minmassAK8_tau21cut = ROOT.TH1F("h_minmassAK8_tau21cut", "AK8 CMS Top Tagger Min Mass Paring for tau21 cut;m_{min} (GeV)", 100, 0, 1000)
 h_subjetBdiscAK8_tau21cut = ROOT.TH1F("h_subjetBdiscAK8_tau21cut", "AK8 subjet b discriminator for tau21 cut;b discriminator", 100, 0, 1.0)
 h_nsjAK8_tau21cut = ROOT.TH1F("h_nsjAK8_tau21cut", "AK8 CMS Top Tagger N_{subjets}for tau21 cut;N_{subjets}", 5, 0, 5)
-h_tau32AK8_tau21cut = ROOT.TH1F("h_tau21AK8_tau21cut", "AK8 Jet #tau_{3} / #tau_{2} for tau21 cut;Mass#tau_{32}", 100, 0, 1.0)
+h_tau32AK8_tau21cut = ROOT.TH1F("h_tau32AK8_tau21cut", "AK8 Jet #tau_{3} / #tau_{2} for tau21 cut;Mass#tau_{32}", 100, 0, 1.0)
 h_tau21AK8_tau21cut = ROOT.TH1F("h_tau21AK8_tau21cut", "AK8 Jet #tau_{2} / #tau_{1} for tau32 cut;Mass#tau_{21}", 100, 0, 1.0)
 
 #$ plots with both mass and tau32 cut - SD tagged
@@ -601,12 +601,12 @@ h_phiAK4mu_mSDcut_tau32cut = ROOT.TH1F("h_phiAK4mu_mSDcut_tau32cut", "Muon decay
 h_mAK4mu_mSDcut_tau32cut = ROOT.TH1F("h_mAK4mu_mSDcut_tau32cut", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_mSDcut_tau32cut = ROOT.TH1F("h_bdiscAK4mu_mSDcut_tau32cut", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_mSDcut_tau32cut = ROOT.TH1F("h_ptAK4_mSDcut_tau32cut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_mSDcut_tau32cut = ROOT.TH1F("h_etaAK4_mSDcut_tau32cut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_mSDcut_tau32cut = ROOT.TH1F("h_yAK4_mSDcut_tau32cut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_mSDcut_tau32cut = ROOT.TH1F("h_phiAK4_mSDcut_tau32cut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_mSDcut_tau32cut = ROOT.TH1F("h_mAK4_mSDcut_tau32cut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_mSDcut_tau32cut = ROOT.TH1F("h_bdiscAK4_mSDcut_tau32cut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_mSDcut_tau32cut = ROOT.TH1F("h_ptAK4el_mSDcut_tau32cut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_mSDcut_tau32cut = ROOT.TH1F("h_etaAK4el_mSDcut_tau32cut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_mSDcut_tau32cut = ROOT.TH1F("h_yAK4el_mSDcut_tau32cut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_mSDcut_tau32cut = ROOT.TH1F("h_phiAK4el_mSDcut_tau32cut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_mSDcut_tau32cut = ROOT.TH1F("h_mAK4el_mSDcut_tau32cut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_mSDcut_tau32cut = ROOT.TH1F("h_bdiscAK4el_mSDcut_tau32cut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 h_ptAK8_mSDcut_tau32cut = ROOT.TH1F("h_ptAK8_mSDcut_tau32cut", "AK8 Jet p_{T}for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;p_{T} (GeV)", 300, 0, 3000)
 h_etaAK8_mSDcut_tau32cut = ROOT.TH1F("h_etaAK8_mSDcut_tau32cut", "AK8 Jet #etafor 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;#eta", 120, -6, 6)
@@ -647,12 +647,12 @@ h_phiAK4mu_ptElcut = ROOT.TH1F("h_phiAK4mu_ptElcut", "Muon decay, AK4 Jet #phi;#
 h_mAK4mu_ptElcut = ROOT.TH1F("h_mAK4mu_ptElcut", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_ptElcut = ROOT.TH1F("h_bdiscAK4mu_ptElcut", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_ptElcut = ROOT.TH1F("h_ptAK4_ptElcut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_ptElcut = ROOT.TH1F("h_etaAK4_ptElcut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_ptElcut = ROOT.TH1F("h_yAK4_ptElcut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_ptElcut = ROOT.TH1F("h_phiAK4_ptElcut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_ptElcut = ROOT.TH1F("h_mAK4_ptElcut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_ptElcut = ROOT.TH1F("h_bdiscAK4_ptElcut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_ptElcut = ROOT.TH1F("h_ptAK4el_ptElcut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_ptElcut = ROOT.TH1F("h_etaAK4el_ptElcut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_ptElcut = ROOT.TH1F("h_yAK4el_ptElcut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_ptElcut = ROOT.TH1F("h_phiAK4el_ptElcut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_ptElcut = ROOT.TH1F("h_mAK4el_ptElcut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_ptElcut = ROOT.TH1F("h_bdiscAK4el_ptElcut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 
 h_ptAK8_ptElcut = ROOT.TH1F("h_ptAK8_ptElcut", "AK8 Jet p_{T}for ptEl cut;p_{T} (GeV)", 300, 0, 3000)
@@ -690,12 +690,12 @@ h_phiAK4mu_ptMucut = ROOT.TH1F("h_phiAK4mu_ptMucut", "Muon decay, AK4 Jet #phi;#
 h_mAK4mu_ptMucut = ROOT.TH1F("h_mAK4mu_ptMucut", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_ptMucut = ROOT.TH1F("h_bdiscAK4mu_ptMucut", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_ptMucut = ROOT.TH1F("h_ptAK4_ptMucut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_ptMucut = ROOT.TH1F("h_etaAK4_ptMucut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_ptMucut = ROOT.TH1F("h_yAK4_ptMucut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_ptMucut = ROOT.TH1F("h_phiAK4_ptMucut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_ptMucut = ROOT.TH1F("h_mAK4_ptMucut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_ptMucut = ROOT.TH1F("h_bdiscAK4_ptMucut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_ptMucut = ROOT.TH1F("h_ptAK4el_ptMucut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_ptMucut = ROOT.TH1F("h_etaAK4el_ptMucut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_ptMucut = ROOT.TH1F("h_yAK4el_ptMucut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_ptMucut = ROOT.TH1F("h_phiAK4el_ptMucut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_ptMucut = ROOT.TH1F("h_mAK4el_ptMucut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_ptMucut = ROOT.TH1F("h_bdiscAK4el_ptMucut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 
 
@@ -737,12 +737,12 @@ h_phiAK4mu_minMasscut = ROOT.TH1F("h_phiAK4mu_minMasscut", "Muon decay, AK4 Jet 
 h_mAK4mu_minMasscut = ROOT.TH1F("h_mAK4mu_minMasscut", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_minMasscut = ROOT.TH1F("h_bdiscAK4mu_minMasscut", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_minMasscut = ROOT.TH1F("h_ptAK4_minMasscut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_minMasscut = ROOT.TH1F("h_etaAK4_minMasscut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_minMasscut = ROOT.TH1F("h_yAK4_minMasscut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_minMasscut = ROOT.TH1F("h_phiAK4_minMasscut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_minMasscut = ROOT.TH1F("h_mAK4_minMasscut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_minMasscut = ROOT.TH1F("h_bdiscAK4_minMasscut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_minMasscut = ROOT.TH1F("h_ptAK4el_minMasscut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_minMasscut = ROOT.TH1F("h_etaAK4el_minMasscut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_minMasscut = ROOT.TH1F("h_yAK4el_minMasscut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_minMasscut = ROOT.TH1F("h_phiAK4el_minMasscut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_minMasscut = ROOT.TH1F("h_mAK4el_minMasscut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_minMasscut = ROOT.TH1F("h_bdiscAK4el_minMasscut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 h_ptAK8_minMasscut = ROOT.TH1F("h_ptAK8_minMasscut", "AK8 Jet p_{T}for min Mass cut;p_{T} (GeV)", 300, 0, 3000)
 h_etaAK8_minMasscut = ROOT.TH1F("h_etaAK8_minMasscut", "AK8 Jet #etafor minMass cut;#eta", 120, -6, 6)
@@ -781,12 +781,12 @@ h_phiAK4mu_bDiscMincut = ROOT.TH1F("h_phiAK4mu_bDiscMincut", "Muon decay, AK4 Je
 h_mAK4mu_bDiscMincut = ROOT.TH1F("h_mAK4mu_bDiscMincut", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_bDiscMincut = ROOT.TH1F("h_bdiscAK4mu_bDiscMincut", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_bDiscMincut = ROOT.TH1F("h_ptAK4_bDiscMincut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_bDiscMincut = ROOT.TH1F("h_etaAK4_bDiscMincut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_bDiscMincut = ROOT.TH1F("h_yAK4_bDiscMincut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_bDiscMincut = ROOT.TH1F("h_phiAK4_bDiscMincut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_bDiscMincut = ROOT.TH1F("h_mAK4_bDiscMincut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_bDiscMincut = ROOT.TH1F("h_bdiscAK4_bDiscMincut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_bDiscMincut = ROOT.TH1F("h_ptAK4el_bDiscMincut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_bDiscMincut = ROOT.TH1F("h_etaAK4el_bDiscMincut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_bDiscMincut = ROOT.TH1F("h_yAK4el_bDiscMincut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_bDiscMincut = ROOT.TH1F("h_phiAK4el_bDiscMincut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_bDiscMincut = ROOT.TH1F("h_mAK4el_bDiscMincut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_bDiscMincut = ROOT.TH1F("h_bdiscAK4el_bDiscMincut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 
 h_ptAK8_bDiscMincut = ROOT.TH1F("h_ptAK8_bDiscMincut", "AK8 Jet p_{T}for bDiscMincut loose cut;p_{T} (GeV)", 300, 0, 3000)
@@ -826,12 +826,12 @@ h_phiAK4mu_mSDcut_minMasscut = ROOT.TH1F("h_phiAK4mu_mSDcut_minMasscut", "Muon d
 h_mAK4mu_mSDcut_minMasscut = ROOT.TH1F("h_mAK4mu_mSDcut_minMasscut", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_mSDcut_minMasscut = ROOT.TH1F("h_bdiscAK4mu_mSDcut_minMasscut", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_mSDcut_minMasscut = ROOT.TH1F("h_ptAK4_mSDcut_minMasscut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_mSDcut_minMasscut = ROOT.TH1F("h_etaAK4_mSDcut_minMasscut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_mSDcut_minMasscut = ROOT.TH1F("h_yAK4_mSDcut_minMasscut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_mSDcut_minMasscut = ROOT.TH1F("h_phiAK4_mSDcut_minMasscut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_mSDcut_minMasscut = ROOT.TH1F("h_mAK4_mSDcut_minMasscut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_mSDcut_minMasscut = ROOT.TH1F("h_bdiscAK4_mSDcut_minMasscut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_mSDcut_minMasscut = ROOT.TH1F("h_ptAK4el_mSDcut_minMasscut", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_mSDcut_minMasscut = ROOT.TH1F("h_etaAK4el_mSDcut_minMasscut", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_mSDcut_minMasscut = ROOT.TH1F("h_yAK4el_mSDcut_minMasscut", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_mSDcut_minMasscut = ROOT.TH1F("h_phiAK4el_mSDcut_minMasscut", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_mSDcut_minMasscut = ROOT.TH1F("h_mAK4el_mSDcut_minMasscut", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_mSDcut_minMasscut = ROOT.TH1F("h_bdiscAK4el_mSDcut_minMasscut", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 
 h_ptAK8_mSDcut_minMasscut = ROOT.TH1F("h_ptAK8_mSDcut_minMasscut", "AK8 Jet p_{T}for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;p_{T} (GeV)", 300, 0, 3000)
@@ -870,12 +870,12 @@ h_phiAK4mu_minMasscutWmass = ROOT.TH1F("h_phiAK4mu_minMasscutWmass", "Muon decay
 h_mAK4mu_minMasscutWmass = ROOT.TH1F("h_mAK4mu_minMasscutWmass", "Muon decay, AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
 h_bdiscAK4mu_minMasscutWmass = ROOT.TH1F("h_bdiscAK4mu_minMasscutWmass", "Muon decay, AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
-h_ptAK4el_minMasscutWmass = ROOT.TH1F("h_ptAK4_minMasscutWmass", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
-h_etaAK4el_minMasscutWmass = ROOT.TH1F("h_etaAK4_minMasscutWmass", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
-h_yAK4el_minMasscutWmass = ROOT.TH1F("h_yAK4_minMasscutWmass", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
-h_phiAK4el_minMasscutWmass = ROOT.TH1F("h_phiAK4_minMasscutWmass", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
-h_mAK4el_minMasscutWmass = ROOT.TH1F("h_mAK4_minMasscutWmass", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
-h_bdiscAK4el_minMasscutWmass = ROOT.TH1F("h_bdiscAK4_minMasscutWmass", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
+h_ptAK4el_minMasscutWmass = ROOT.TH1F("h_ptAK4el_minMasscutWmass", "Electron decay, AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000)
+h_etaAK4el_minMasscutWmass = ROOT.TH1F("h_etaAK4el_minMasscutWmass", "Electron decay,AK4 Jet #eta;#eta", 120, -6, 6)
+h_yAK4el_minMasscutWmass = ROOT.TH1F("h_yAK4el_minMasscutWmass", "Electron decay,AK4 Jet Rapidity;y", 120, -6, 6)
+h_phiAK4el_minMasscutWmass = ROOT.TH1F("h_phiAK4el_minMasscutWmass", "Electron decay,AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14)
+h_mAK4el_minMasscutWmass = ROOT.TH1F("h_mAK4el_minMasscutWmass", "Electron decay,AK4 Jet Mass;Mass (GeV)", 100, 0, 1000)
+h_bdiscAK4el_minMasscutWmass = ROOT.TH1F("h_bdiscAK4el_minMasscutWmass", "Electron decay,AK4 b discriminator;b discriminator", 100, 0, 1.0)
 
 
 h_ptAK8_minMasscutWmass = ROOT.TH1F("h_ptAK8_minMasscutWmass", "AK8 Jet p_{T}for min Mass cut  60 GeV < minpairwise < 110;p_{T} (GeV)", 300, 0, 3000)
@@ -2092,7 +2092,7 @@ for ifile in files : #{ Loop over root files
                 AK8Tau3 = h_jetsAK8Tau3.product()
                 AK8nSubJets = h_jetsAK8nSubJets.product()
                 AK8minmass = h_jetsAK8minmass.product()
-                AK8SubjetbDisc = subjetsAK8BDisc.product()
+                AK8SubjetbDisc = h_subjetsAK8BDisc.product()
                 AK8TopSubjetIndex0 = h_jetsAK8TopSubjetIndex0.product()
                 AK8TopSubjetIndex1 = h_jetsAK8TopSubjetIndex1.product()
                 AK8TopSubjetIndex2 = h_jetsAK8TopSubjetIndex2.product()
@@ -2849,53 +2849,10 @@ for ifile in files : #{ Loop over root files
 
                 lepTopCandP4 = nuCandP4 + theLepton + bJetCandP4
 
-           # @@@ Could you check this, I don't think it's fully correct
+        # @@@ Add this later
         #@ Semileptonic- but not boosted   
-"""
-        elif SemiLeptonic == True and nttags < 1 :    
-            hadTopCandP4 = None  # ?
-            lepTopCandP4 = None
-            
-            #$ Check if the nearest jet to the lepton is b-tagged
-            if theLepJetBDisc > options.bDiscMin:
-                NPassBDiscMinCut = NPassBDiscMinCut + 1
-            if theLepJetBDisc < options.bDiscMin :
-                if options.verbose : 
-                    print 'closest jet to lepton is not b-tagged'
-                    
-                continue
-            else  :
-
-                if options.verbose :
-                    print 'Event is fully tagged.'
-                # Get the z-component of the lepton from the W mass constraint
-                
-                bJetCandP4 = theLepJet
-                
-                #nuCandP4 = ROOT.TLorentzVector(metPx, metPy ,0.0, metPt)
-                nuCandP4 = ROOT.TLorentzVector()#(metPx, metPy ,0.0, metPt)
-                nuCandP4.SetPxPyPzE(metPx, metPy, 0.0, metPt)
-                solution, nuz1, nuz2 = solve_nu( vlep=theLepton, vnu=nuCandP4 )
-                # If there is at least one real solution, pick it up                              
-                if solution :
-                    if options.verbose : 
-                        print '--- Have a solution --- '
-                    nuCandP4.SetPz(nuz1)
-                else :
-                    if options.verbose : 
-                        print '--- No solution for neutrino z ---'
-                    nuCandP4.SetPz(nuz1.real)
-
-                if muJets :
-                    muonJetsEvents += 1
-                elif eleJets :
-                    eleJetsEvents += 1
-
-                lepTopCandP4 = nuCandP4 + theLepton + bJetCandP4
 
 
-        #@ End- Semileptonic- but not boosted 
-"""
                 #if ttbarCandP4.M() < 1000.0 :
                 #    print 'Weird event : ' + str(event.object().id().luminosityBlock()) + ', ' + str(event.object().id().event())
                 #    print ' ================'
