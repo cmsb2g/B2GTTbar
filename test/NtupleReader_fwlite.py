@@ -2228,6 +2228,10 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )                        
                         #} End AK8 Loop
 
+    if len(ak8JetsGood) < 1 :
+        if options.verbose :
+            print 'Not enough AK8 jets, skipping'
+        continue
 
     print ' Pt of leading AK8 Jet, ak8JetsGood[0] ' + str(ak8JetsGood[0].Perp())
     print ' Pt of second AK8 Jet, ak8JetsGood[1] ' + str(ak8JetsGood[1].Perp())
