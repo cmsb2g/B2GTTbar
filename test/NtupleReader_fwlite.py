@@ -377,7 +377,7 @@ l_jetsAK8TopSubjetIndex3 = ("jetsAK8", "jetAK8topSubjetIndex3")
 # @@@ add label and handle for subjet pairwise masses m12, m13, and m23 then histos and cut-flow
 
 h_subjetsAK8BDisc = Handle( "std::vector<float>")
-l_subjetsAK8BDisc = ("subjetsCmsTopTag", "subjetCmsTopTagCSV")
+l_subjetsAK8BDisc = ("subjetsCmsTopTag", "subjetCmsTopTagCSV") 
 h_subjetsAK8Pt = Handle( "std::vector<float>")
 l_subjetsAK8Pt = ("subjetsCmsTopTag", "subjetCmsTopTagPt")
 h_subjetsAK8Eta = Handle( "std::vector<float>")
@@ -2018,7 +2018,7 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_jetsAK8Tau3, h_jetsAK8Tau3 )
             event.getByLabel ( l_jetsAK8nSubJets, h_jetsAK8nSubJets )
             event.getByLabel ( l_jetsAK8minmass, h_jetsAK8minmass )
-            event.getByLabel ( l_subjetsAK8BDisc, h_subjetsAK8BDisc )
+
 
 
             event.getByLabel ( l_jetsAK8nHadEnergy, h_jetsAK8nHadEnergy)
@@ -2180,22 +2180,27 @@ for ifile in files : #{ Loop over root files
                             dR = jetP4.DeltaR(theMuon )  
                         if dR > ROOT.TMath.Pi()/2.0 :
                             NPassSemiLeptonicDRjlCut = NPassSemiLeptonicDRjlCut + 1
-                            if len(AK8SubjetbDisc) <= i:
-                                ak8JetsGood.append(AK8P4Corr)
-                                ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
-                                ak8JetsGoodPrunMass.append( AK8PrunedM[i])
-                                ak8JetsGoodFiltMass.append( AK8FilteredM[i])
-                                ak8JetsGoodSDropMass.append( AK8SDropM[i])
-                                ak8JetsGoodTau1.append( AK8Tau1[i])
-                                ak8JetsGoodTau2.append( AK8Tau2[i])
-                                ak8JetsGoodTau3.append( AK8Tau3[i])
-                                ak8JetsGoodNSubJets.append( AK8nSubJets[i])
-                                ak8JetsGoodMinMass.append( AK8minmass[i] )
+                           # print 'N AK8 Subjet B discriminators = ' + str( len(AK8SubjetbDisc) )
+                           # print 'N AK8 Subjets = ' + str( len(AK8nSubJets) )    
+                           # print 'N AK8 min mass pairings = ' + str( len(AK8minmass) )  
+                           # print 'N AK8 trimmed masses = ' + str( len(AK8TrimmedM) )  
+                           # print 'Next event'                    
+                            ak8JetsGood.append(AK8P4Corr)
+                            ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
+                            ak8JetsGoodPrunMass.append( AK8PrunedM[i])
+                            ak8JetsGoodFiltMass.append( AK8FilteredM[i])
+                            ak8JetsGoodSDropMass.append( AK8SDropM[i])
+                            ak8JetsGoodTau1.append( AK8Tau1[i])
+                            ak8JetsGoodTau2.append( AK8Tau2[i])
+                            ak8JetsGoodTau3.append( AK8Tau3[i])
+                            ak8JetsGoodNSubJets.append( AK8nSubJets[i])
+                            ak8JetsGoodMinMass.append( AK8minmass[i] )
+                            if len(AK8SubjetbDisc) >= len(AK8minmass):
                                 ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
-                                ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
-                                ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
-                                ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
-                                ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )
+                            ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
+                            ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
+                            ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
+                            ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )
                     #$ Cuts for Hadronic channel
                     else : 
                         ## HADRONIC CHANNEL CRITERIA 
@@ -2215,6 +2220,7 @@ for ifile in files : #{ Loop over root files
                             NPassAK8CorrMassCut = NPassAK8CorrMassCut + 1
                         else:
                             continue
+                       # print 'N AK8 Subjet B discriminators, Hadronic = ' + str( len(AK8SubjetbDisc) )
                         ak8JetsGood.append(AK8P4Corr)
                         ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
                         ak8JetsGoodPrunMass.append( AK8PrunedM[i])
@@ -2225,7 +2231,8 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodTau3.append( AK8Tau3[i])
                         ak8JetsGoodNSubJets.append( AK8nSubJets[i])
                         ak8JetsGoodMinMass.append( AK8minmass[i] )
-                        ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
+                        if len(AK8SubjetbDisc) <= len(AK8nSubJets):
+                            ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
                         ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
                         ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
                         ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
