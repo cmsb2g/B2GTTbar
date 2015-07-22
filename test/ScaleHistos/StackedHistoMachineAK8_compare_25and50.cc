@@ -108,100 +108,100 @@ switch (histo)
     case 1 :{
     xAxisTitle = "M_{jet} (GeV)"; 
     minX = 20;
-    maxX = 600; 
-    xInfo = 0.301; //  location of plot description in normalized coordinates
+    maxX = 700; 
+    xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.38058;
-    legendLocation[1] = 0.377976;
-    legendLocation[2] = 0.700893;
-    legendLocation[3] = 0.768155;
-    cout << "This histo is n_mAK8 " << endl;
+    legendLocation[0] = 0.313616;
+    legendLocation[1] = 0.4375;
+    legendLocation[2] = 0.613839;
+    legendLocation[3] = 0.877976;
+    cout << "This histo is h_mAK8 " << endl;
   //  return xAxisTitle, minX, maxX, xInfo, yInfoTop, legendLocation [4];
     break;
     }
     case 2 :{ 
     xAxisTitle = "M_{jet} Soft Drop (GeV)"; 
     minX = 20;
-    maxX = 600; 
+    maxX = 700; 
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.370759;
+    legendLocation[0] = 0.308759;
     legendLocation[1] = 0.320595;
-    legendLocation[2] = 0.650536;
-    legendLocation[3] = 0.611488;
+    legendLocation[2] = 0.587536;
+    legendLocation[3] = 0.811488;
     cout << "This histo is n_mSDropAK8 " << endl;
     break;
     }
     case 3 :{
     xAxisTitle = "M_{jet} Trimmed (GeV)";
     minX = 10;
-    maxX = 500; 
+    maxX = 700; 
     xInfo = 0.341; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.324777;
     legendLocation[1] = 0.450893;
     legendLocation[2] = 0.675223;
-    legendLocation[3] = 0.651786;
+    legendLocation[3] = 0.751786;
     break;
     }
     case 4 :{
     xAxisTitle = "M_{jet} Pruned (GeV)";
     minX = 10;
-    maxX = 500; 
+    maxX = 700; 
     xInfo = 0.341; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.324777;
     legendLocation[1] = 0.416667;
     legendLocation[2] = 0.675223;
-    legendLocation[3] = 0.61756;
+    legendLocation[3] = 0.71756;
     break;
     }
     case 5 :{
     xAxisTitle = "M_{jet} Filtered (GeV)";
     minX = 10;
-    maxX = 500; 
+    maxX = 700; 
     xInfo = 0.341; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.363839;
     legendLocation[1] = 0.434524;
     legendLocation[2] = 0.714286;
-    legendLocation[3] = 0.635417;
+    legendLocation[3] = 0.735417;
     break;
     }
     case 6 :{
     xAxisTitle = "Minimum Mass Pairing of Subjets (GeV)"; 
     minX = 0;
-    maxX = 200; 
+    maxX = 300; 
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.415179;
-    legendLocation[1] = 0.547619;
-    legendLocation[2] = 0.584821;
-    legendLocation[3] = 0.848214;
+    legendLocation[0] = 0.350446;
+    legendLocation[1] = 0.318452;
+    legendLocation[2] = 0.518973;
+    legendLocation[3] = 0.708333;
     cout << "This histo is h_minmassAK8 " << endl;
     break;
     }
     case 7 :{
     xAxisTitle = "#tau_{3}/#tau_{2}"; 
     minX = 0;
-    maxX = 1; 
+    maxX = 2; 
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.100759;
     legendLocation[1] = 0.350595;
     legendLocation[2] = 0.470536;
-    legendLocation[3] = 0.651488;
+    legendLocation[3] = 0.751488;
     cout << "This histo is n_tau32AK8 " << endl;
     break;
     }
     case 8:{
     xAxisTitle = "#tau_{2}/#tau_{1}"; 
     minX = 0;
-    maxX = 1; 
+    maxX = 2; 
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.290759;
-    legendLocation[1] = 0.700595;
+    legendLocation[1] = 0.600595;
     legendLocation[2] = 0.60036;
     legendLocation[3] = 0.891488;
     cout << "This histo is n_tau21AK8 " << endl;
@@ -210,26 +210,26 @@ switch (histo)
     case 9 :{
     xAxisTitle = "Number of Subjets"; 
     minX = 0;
-    maxX = 6; 
+    maxX = 20; 
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.290759;
-    legendLocation[1] = 0.700595;
-    legendLocation[2] = 0.60036;
-    legendLocation[3] = 0.891488;
-    cout << "This histo is n_nsjAK8 " << endl;
+    legendLocation[0] = 0.390759;
+    legendLocation[1] = 0.600595;
+    legendLocation[2] = 0.55036;
+    legendLocation[3] = 0.901488;
+    cout << "This histo is h_nsjAK8 " << endl;
     break;
     }
     case 10 :{
-    xAxisTitle = "Jet p_{T}"; 
+    xAxisTitle = "Jet p_{T} (GeV)"; 
     minX = 390;
     maxX = 1300; 
-    xInfo = 0.281; //  location of plot description in normalized coordinates
+    xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.256696;
     legendLocation[1] = 0.315476;
     legendLocation[2] = 0.607143;
-    legendLocation[3] = 0.616071;
+    legendLocation[3] = 0.716071;
     cout << "This histo is h_ptAK8 " << endl;
     break;    
     }
@@ -402,32 +402,38 @@ switch (histo)
   histo7->SetLineColor(kBlack);
 
   histo1b->Scale( xsTT * lum / n_events1b );  
-  histo1b->SetLineColor(kRed+4);
-
+  histo1b->SetLineColor(kRed+1);
+  histo1b->SetLineStyle(2);
 
   histo2b->Scale( xsW * lum / n_events2b ); 
-  histo2b->SetLineColor(kGreen+4); 
+  histo2b->SetLineColor(kGreen+1); 
+  histo2b->SetLineStyle(2);
 
   histo3b->Scale( xsST * lum / n_events3b ); 
-  histo3b->SetLineColor(kMagenta+4);  
+  histo3b->SetLineColor(kMagenta+1);  
+  histo3b->SetLineStyle(2);
 
   histo4b->Scale( xsZ * lum / n_events4b ); 
-  histo4b->SetLineColor(kBlue+4);  
+  histo4b->SetLineColor(kBlue-4);  
+  histo4b->SetLineStyle(2);
 
 //  histo5b->Scale( xsZprime * lum / n_events5b ); 
 //  histo5b->SetMarkerStyle(6); 
 //  histo5b->SetBinError();  // https://root.cern.ch/root/html/TH1.html#TH1:SetBinError
+//  histo5b->SetLineStyle(2);
 
   histo6b->Scale( xsZprime * lum / n_events6b ); 
-  histo6b->SetLineWidth(9); 
-  histo6b->SetLineColor(kGray+2);
+  histo6b->SetLineWidth(2); 
+  histo6b->SetLineColor(kGray+1);
+  histo6b->SetLineStyle(2);
 
   histo7b->Scale( xsZprime * lum / n_events7b ); 
-  histo7b->SetLineWidth(9);
-  histo7b->SetLineColor(kGray+3);
+  histo7b->SetLineWidth(2);
+  histo7b->SetLineColor(kBlack);
+  histo7b->SetLineStyle(2);
 
   hs->Add(histo3);
-
+  hs->SetMaximum(700);
 
   hs->Draw();
   hs->GetXaxis()->SetLabelSize(0.042);
@@ -442,7 +448,7 @@ switch (histo)
   hs->GetYaxis()->SetTitleOffset(1.2);
   hs->GetYaxis()->SetTitleSize(0.044);
 
-  hs->SetMaximum(1000);
+  hs->GetYaxis()->SetLimits(0,700);
   hs->GetXaxis()->SetLimits(minX, maxX); // change with histo
   canvas->Modified();
 
@@ -459,14 +465,14 @@ switch (histo)
   histo2b->Draw("same");
   histo1b->Draw("same");
   histo3b->Draw("same");
-
+  histo3b->GetYaxis()->SetRange(0,700);
   canvas->Modified();
 
   TLatex *tlx = new TLatex();
   tlx->SetNDC();
   tlx->SetTextFont(42);
   tlx->SetTextSize(0.057);
-  tlx->DrawLatex(0.241, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 1 fb^{-1}");
+  tlx->DrawLatex(0.251, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 1 fb^{-1}");
  // tlx->DrawLatex(0.77, 0.86, "#bf{CMS}");
  // tlx->DrawLatex(0.72, 0.83, "#it{very preliminary}");
   tlx->SetTextSize(0.025);
@@ -497,7 +503,7 @@ switch (histo)
   legend->AddEntry(histo1,"50ns, t#bar{t}", "l");  
   legend->AddEntry(histo2,"50ns, W + Jets", "l");
   legend->AddEntry(histo4,"50ns, Z + Jets", "l");
-  legend->AddEntry(histo3,"50ns, Single Top", "f");
+  legend->AddEntry(histo3,"50ns, Single Top", "l");
   legend->AddEntry(histo7b,"25ns, Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
   legend->AddEntry(histo6b,"25ns, Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
   legend->AddEntry(histo1b,"25ns, t#bar{t}", "l");  
