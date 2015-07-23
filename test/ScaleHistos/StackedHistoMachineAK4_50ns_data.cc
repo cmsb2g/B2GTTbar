@@ -44,6 +44,7 @@ void plotter(TString Histo){
 TString xAxisTitle;  
 double minX;
 double maxX;
+double maxY;
 double xInfo;
 double yInfoTop;
 double legendLocation [4];
@@ -75,10 +76,11 @@ switch (histo)
     case 1 :{
     xAxisTitle = "M_{jet} (GeV)"; 
     minX = 0;
-    maxX = 200; 
+    maxX = 210; 
+    maxY = 107;
     xInfo = 0.311; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.38058;
+    legendLocation[0] = 0.40058;
     legendLocation[1] = 0.377976;
     legendLocation[2] = 0.700893;
     legendLocation[3] = 0.668155;
@@ -89,38 +91,41 @@ switch (histo)
     case 2 :{ 
     xAxisTitle = "P_{T} of Jet (GeV)"; 
     minX = 0;
-    maxX = 200; 
+    maxX = 1400; 
+    maxY = 25;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.370759;
-    legendLocation[1] = 0.320595;
+    legendLocation[1] = 0.540595;
     legendLocation[2] = 0.650536;
-    legendLocation[3] = 0.611488;
+    legendLocation[3] = 0.831488;
     cout << "This histo is h_ptAK4 " << endl;
     break;
     }
     case 3 :{
     xAxisTitle = "B Discriminator";
     minX = 0;
-    maxX = 1.1; 
-    xInfo = 0.341; //  location of plot description in normalized coordinates
+    maxX = 1; 
+    maxY = 33;
+    xInfo = 0.141; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.520759;
-    legendLocation[1] = 0.650595;
-    legendLocation[2] = 0.870536;
-    legendLocation[3] = 0.851488;
+    legendLocation[0] = 0.320759;
+    legendLocation[1] = 0.620595;
+    legendLocation[2] = 0.770536;
+    legendLocation[3] = 0.881488;
     break;
     }
     case 4 :{
     xAxisTitle = "P_{T} of Lepton (GeV)";
     minX = 0;
-    maxX = 200; 
+    maxX = 730; 
+    maxY = 110;
     xInfo = 0.341; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.520759;
-    legendLocation[1] = 0.650595;
-    legendLocation[2] = 0.870536;
-    legendLocation[3] = 0.851488;
+    legendLocation[0] = 0.237723;
+    legendLocation[1] = 0.269345;
+    legendLocation[2] = 0.607143;
+    legendLocation[3] = 0.620536;
     break;
     }
     case 0 :{
@@ -205,8 +210,8 @@ switch (histo)
   Double_t xsST = 136.02 ;   // t channel top at 13 TeV https://twiki.cern.ch/twiki/bin/viewauth/CMS/SingleTopSigma
   Double_t xsZ = 3205.6 ; // inclusive Z production https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
   Double_t xsZprime = 10 ; // Arbitrary
-  Double_t xsZprimeMudata = n_events5 / lum ;  // number of events = cross section x integrated luminosity
-  Double_t xsZprimeJetdata = n_events8 / lum ; 
+//  Double_t xsZprimeMudata = n_events5 / lum ;  // number of events = cross section x integrated luminosity
+//  Double_t xsZprimeJetdata = n_events8 / lum ; 
 
   TCanvas *canvas= new TCanvas("canvas","Plots",900,700);
 
@@ -229,11 +234,12 @@ switch (histo)
   histo4->Scale( xsZ * lum / n_events4 ); 
   histo4->SetFillColor(kBlue-4);  
 
-  histo5->Scale( xsZprimeMudata * lum / n_events5 ); 
-  histo5->SetLineWidth(2); 
-  histo5->SetLineColor(kAzure+7); 
-// histo5->SetMarkerStyle(29); 
- // histo5->SetMarkerColor(kBlack);
+//  histo5->Scale( xsZprimeMudata * lum / n_events5 ); 
+//  histo5->SetLineWidth(2); 
+//  histo5->SetLineColor(kAzure+7); 
+//  histo5->SetMarkerSize(3);
+  histo5->SetMarkerStyle(20); 
+  histo5->SetMarkerColor(kBlack);
 //  histo5->SetBinError();  // https://root.cern.ch/root/html/TH1.html#TH1:SetBinError
 
   histo6->Scale( xsZprime * lum / n_events6 ); 
@@ -244,12 +250,12 @@ switch (histo)
   histo7->SetLineWidth(2);
   histo7->SetLineColor(kBlack);
 
-  histo8->Scale( xsZprimeJetdata * lum / n_events8 ); 
-  histo8->SetLineWidth(2); 
-  histo8->SetLineColor(kTeal+1); 
-
-//  histo8->SetMarkerStyle(30);
-//  histo8->SetMarkerColor(kBlack);
+ // histo8->Scale( xsZprimeJetdata * lum / n_events8 ); 
+//  histo8->SetLineWidth(2); 
+//  histo8->SetLineColor(kTeal+7); 
+  histo8->SetMarkerSize(3);
+  histo8->SetMarkerStyle(30);
+  histo8->SetMarkerColor(kBlack);
 
   hs->Add(histo3);
   hs->Add(histo4);
@@ -269,21 +275,22 @@ switch (histo)
   hs->GetYaxis()->SetTitleOffset(1.);
   hs->GetYaxis()->SetTitleSize(0.044);
 
-  hs->SetMaximum(107);
+  hs->SetMaximum(maxY);
   hs->GetXaxis()->SetLimits(minX, maxX); // change with histo
   canvas->Modified();
 
-  histo5->Draw("same");
-  histo8->Draw("same");
+
   histo6->Draw("same");
   histo7->Draw("same");
+  histo5->Draw("ep same");
+//  histo8->Draw("ep");
   canvas->Modified();
 
   TLatex *tlx = new TLatex();
   tlx->SetNDC();
   tlx->SetTextFont(42);
   tlx->SetTextSize(0.059);
-  tlx->DrawLatex(0.171, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 0.00559 fb^{-1}");
+  tlx->DrawLatex(0.151, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 0.00559 fb^{-1}");
  // tlx->DrawLatex(0.77, 0.86, "#bf{CMS}");
  // tlx->DrawLatex(0.72, 0.83, "#it{very preliminary}");
   tlx->SetTextSize(0.025);
@@ -310,7 +317,7 @@ switch (histo)
   legend->SetMargin(0.3); 
 //  legend->AddEntry(histo5,"Data", "p");
   legend->AddEntry(histo5,"Muon Data", "l");
-  legend->AddEntry(histo8,"Jet Data", "l");
+//  legend->AddEntry(histo8,"Jet Data", "l");
   legend->AddEntry(histo7,"Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
   legend->AddEntry(histo6,"Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
   legend->AddEntry(histo1," t#bar{t}", "f");  
