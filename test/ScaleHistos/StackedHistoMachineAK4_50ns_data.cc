@@ -76,7 +76,7 @@ switch (histo)
     xAxisTitle = "M_{jet} (GeV)"; 
     minX = 0;
     maxX = 200; 
-    xInfo = 0.301; //  location of plot description in normalized coordinates
+    xInfo = 0.311; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.38058;
     legendLocation[1] = 0.377976;
@@ -205,8 +205,8 @@ switch (histo)
   Double_t xsST = 136.02 ;   // t channel top at 13 TeV https://twiki.cern.ch/twiki/bin/viewauth/CMS/SingleTopSigma
   Double_t xsZ = 3205.6 ; // inclusive Z production https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
   Double_t xsZprime = 10 ; // Arbitrary
-  Double_t xsZprimeMudata = 10; //n_events5 / lum ;  // number of events = cross section x integrated luminosity
-  Double_t xsZprimeJetdata = 10 ; //n_events8 / lum ; 
+  Double_t xsZprimeMudata = n_events5 / lum ;  // number of events = cross section x integrated luminosity
+  Double_t xsZprimeJetdata = n_events8 / lum ; 
 
   TCanvas *canvas= new TCanvas("canvas","Plots",900,700);
 
@@ -269,7 +269,7 @@ switch (histo)
   hs->GetYaxis()->SetTitleOffset(1.);
   hs->GetYaxis()->SetTitleSize(0.044);
 
-  hs->SetMaximum(7.3);
+  hs->SetMaximum(107);
   hs->GetXaxis()->SetLimits(minX, maxX); // change with histo
   canvas->Modified();
 
