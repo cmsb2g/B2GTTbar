@@ -144,6 +144,10 @@ parser.add_option('--FlatSample', action='store_true',
                   dest='deweightFlat',
                   help='unweights flat samples')
 
+parser.add_option('--isData', action='store_true',
+                  default=False,
+                  dest='isData',
+                  help='is it Data?')
 
 (options, args) = parser.parse_args()
 argv = []
@@ -354,8 +358,9 @@ l_jetsAK8minmass = ("jetsAK8", "jetAK8minmass" )
 h_jetsAK8Area = Handle("std::vector<float>")
 l_jetsAK8Area = ( "jetsAK8" , "jetAK8jetArea" )
 
-h_generator = Handle("GenEventInfoProduct")
-l_generator = ("generator" , "" )
+if options.isData == False :
+    h_generator = Handle("GenEventInfoProduct")
+    l_generator = ("generator" , "" )
 
 h_jetsAK8VSubjetIndex0 = Handle("std::vector<float>")
 l_jetsAK8VSubjetIndex0 = ("jetsAK8", "jetAK8vSubjetIndex0")
@@ -1005,12 +1010,13 @@ NPassMuonTot = 0
 NPassAK4KinTot = 0
 NPassWbEvent= 0
 
-genSemiMuEvents = 0
-genSemiEEvents = 0
-genMuMuEvents = 0
-genMuEEvents = 0
-genEEEvents = 0
-genHadEvents = 0
+if options.isData == False :
+    genSemiMuEvents = 0
+    genSemiEEvents = 0
+    genMuMuEvents = 0
+    genMuEEvents = 0
+    genEEEvents = 0
+    genHadEvents = 0
 
 
 filelist = file( options.files )
@@ -1045,60 +1051,60 @@ for ifile in files : #{ Loop over root files
             print '    ---> Event ' + str(nevents)
 
 
+        if options.isData == False :
+            #@ Generator information
+            genEIndex = []
+            genMuIndex = []
+            gotGen = event.getByLabel( l_genPartPt, h_genPartPt )
+            if gotGen :
+                event.getByLabel( l_genPartEta, h_genPartEta )
+                event.getByLabel( l_genPartPhi, h_genPartPhi )
+                event.getByLabel( l_genPartMass, h_genPartMass )
+                event.getByLabel( l_genPartID, h_genPartID )
+                event.getByLabel( l_genPartStatus, h_genPartStatus )
+                event.getByLabel( l_genPartMomID, h_genPartMomID )
+                genPartPt = h_genPartPt.product()
+                genPartEta = h_genPartEta.product()
+                genPartPhi = h_genPartPhi.product()
+                genPartMass = h_genPartMass.product()
+                genPartID = h_genPartID.product()
+                genPartStatus = h_genPartStatus.product()
+                genPartMomID = h_genPartMomID.product()
+                ngenE = 0
+                ngenMu = 0
+                for igen in xrange(0, len( genPartPt ) ) :
+                    genName = None
+                    if genPartStatus[igen] < 20 or genPartStatus[igen] > 24 :
+                        continue
+                    if abs(genPartID[igen]) == 6 :
+                        genName = 'Top quark'
+                    elif abs(genPartID[igen]) == 24 :
+                        genName = 'W boson'
+                    elif abs(genPartID[igen]) == 11 and abs(genPartMomID[igen]) == 24 :
+                        genName = 'Electron'
+                        genEIndex.append( igen )
+                        ngenE += 1
+                    elif abs(genPartID[igen]) == 13 and abs(genPartMomID[igen]) == 24 :
+                        genName = 'Muon'
+                        genMuIndex.append( igen )
+                        ngenMu += 1
+                    elif abs(genPartID[igen]) == 15 and abs(genPartMomID[igen]) == 24 :
+                        genName = 'Tau'
+                    if options.verbose  and genName != None:
+                        print '%10s : %6d %6d %7.2f %6.3f %6.3f %6.3f' % ( genName, genPartID[igen], genPartStatus[igen], genPartPt[igen], genPartEta[igen], genPartPhi[igen], genPartMass[igen] )
 
-        #@ Generator information
-        genEIndex = []
-        genMuIndex = []
-        gotGen = event.getByLabel( l_genPartPt, h_genPartPt )
-        if gotGen :
-            event.getByLabel( l_genPartEta, h_genPartEta )
-            event.getByLabel( l_genPartPhi, h_genPartPhi )
-            event.getByLabel( l_genPartMass, h_genPartMass )
-            event.getByLabel( l_genPartID, h_genPartID )
-            event.getByLabel( l_genPartStatus, h_genPartStatus )
-            event.getByLabel( l_genPartMomID, h_genPartMomID )
-            genPartPt = h_genPartPt.product()
-            genPartEta = h_genPartEta.product()
-            genPartPhi = h_genPartPhi.product()
-            genPartMass = h_genPartMass.product()
-            genPartID = h_genPartID.product()
-            genPartStatus = h_genPartStatus.product()
-            genPartMomID = h_genPartMomID.product()
-            ngenE = 0
-            ngenMu = 0
-            for igen in xrange(0, len( genPartPt ) ) :
-                genName = None
-                if genPartStatus[igen] < 20 or genPartStatus[igen] > 24 :
-                    continue
-                if abs(genPartID[igen]) == 6 :
-                    genName = 'Top quark'
-                elif abs(genPartID[igen]) == 24 :
-                    genName = 'W boson'
-                elif abs(genPartID[igen]) == 11 and abs(genPartMomID[igen]) == 24 :
-                    genName = 'Electron'
-                    genEIndex.append( igen )
-                    ngenE += 1
-                elif abs(genPartID[igen]) == 13 and abs(genPartMomID[igen]) == 24 :
-                    genName = 'Muon'
-                    genMuIndex.append( igen )
-                    ngenMu += 1
-                elif abs(genPartID[igen]) == 15 and abs(genPartMomID[igen]) == 24 :
-                    genName = 'Tau'
-                if options.verbose  and genName != None:
-                    print '%10s : %6d %6d %7.2f %6.3f %6.3f %6.3f' % ( genName, genPartID[igen], genPartStatus[igen], genPartPt[igen], genPartEta[igen], genPartPhi[igen], genPartMass[igen] )
-
-        if ngenE == 0 and ngenMu == 0 :
-            genHadEvents += 1
-        elif ngenE == 1 and ngenMu == 0 :
-            genSemiEEvents += 1
-        elif ngenE == 0 and ngenMu == 1 :
-            genSemiMuEvents += 1
-        elif ngenMu == 1 and ngenE == 1 :
-            genMuEEvents += 1            
-        elif ngenE == 2 :
-            genEEEvents += 1
-        elif ngenMu == 2 :
-            genMuMuEvents += 1
+            if ngenE == 0 and ngenMu == 0 :
+                genHadEvents += 1
+            elif ngenE == 1 and ngenMu == 0 :
+                genSemiEEvents += 1
+            elif ngenE == 0 and ngenMu == 1 :
+                genSemiMuEvents += 1
+            elif ngenMu == 1 and ngenE == 1 :
+                genMuEEvents += 1            
+            elif ngenE == 2 :
+                genEEEvents += 1
+            elif ngenMu == 2 :
+                genMuMuEvents += 1
 
         #@ VERTEX SETS
         event.getByLabel( l_NPV, h_NPV )
@@ -1359,24 +1365,25 @@ for ifile in files : #{ Loop over root files
             print 'Number of good muons = ' + str( len(goodmuonPt) )
             print 'Number of good electrons = ' + str( len(goodelectronPt) )
 
+            if options.isData == False :
+                if ngenE > 0 and len(goodelectronPt) == 0 :
+                    print '--------------------'
+                    print 'Electron not found : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
+                        (  genPartID[genEIndex[0]], genPartStatus[genEIndex[0]], \
+                               genPartPt[genEIndex[0]], genPartEta[genEIndex[0]], genPartPhi[genEIndex[0]], genPartMass[genEIndex[0]] )
+                    print 'Electrons : ' 
+                    for ielectron in xrange(0, len(electronPt) ) :
+                        print "      pt %4.1f, eta %4.1f, phi %+5.3f " % ( electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
+                if ngenMu > 0 and len(goodmuonPt) == 0 :
+                    print '--------------------'
+                    print 'Muon not found     : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
+                        (  genPartID[genMuIndex[0]], genPartStatus[genMuIndex[0]], \
+                               genPartPt[genMuIndex[0]], genPartEta[genMuIndex[0]], genPartPhi[genMuIndex[0]], genPartMass[genMuIndex[0]] )
+                    print 'Muons : '
+                    for imuon in xrange(0, len(muonPt) ) :
+                        print "     pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
+                            ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
 
-            if ngenE > 0 and len(goodelectronPt) == 0 :
-                print '--------------------'
-                print 'Electron not found : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
-                    (  genPartID[genEIndex[0]], genPartStatus[genEIndex[0]], \
-                           genPartPt[genEIndex[0]], genPartEta[genEIndex[0]], genPartPhi[genEIndex[0]], genPartMass[genEIndex[0]] )
-                print 'Electrons : ' 
-                for ielectron in xrange(0, len(electronPt) ) :
-                    print "      pt %4.1f, eta %4.1f, phi %+5.3f " % ( electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
-            if ngenMu > 0 and len(goodmuonPt) == 0 :
-                print '--------------------'
-                print 'Muon not found     : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
-                    (  genPartID[genMuIndex[0]], genPartStatus[genMuIndex[0]], \
-                           genPartPt[genMuIndex[0]], genPartEta[genMuIndex[0]], genPartPhi[genMuIndex[0]], genPartMass[genMuIndex[0]] )
-                print 'Muons : '
-                for imuon in xrange(0, len(muonPt) ) :
-                    print "     pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
-                        ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
         if options.selection == 0 and not Leptonic :
             continue
         elif options.selection == 1 and not SemiLeptonic :
@@ -1964,9 +1971,10 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_subjetsAK8Eta, h_subjetsAK8Eta)
             event.getByLabel ( l_subjetsAK8Phi, h_subjetsAK8Phi)
 
-            if options.deweightFlat : 
-                # Event weights
-                gotGenerator = event.getByLabel( l_generator, h_generator )
+            if options.isData == False :
+                if options.deweightFlat : 
+                    # Event weights
+                    gotGenerator = event.getByLabel( l_generator, h_generator )
             
             evWeight = -1
                 
@@ -2021,11 +2029,12 @@ for ifile in files : #{ Loop over root files
                 AK8TopSubjetIndex1 = h_jetsAK8TopSubjetIndex1.product()
                 AK8TopSubjetIndex2 = h_jetsAK8TopSubjetIndex2.product()
                 AK8TopSubjetIndex3 = h_jetsAK8TopSubjetIndex3.product()
-                if options.deweightFlat :
-                    pthat = 0.0
-                    if h_generator.product().hasBinningValues() :
-                        pthat = h_generator.product().binningValues()[0]
-                        evWeight = 1/pow(pthat/15.,4.5)
+                if options.isData == False :
+                    if options.deweightFlat :
+                        pthat = 0.0
+                        if h_generator.product().hasBinningValues() :
+                            pthat = h_generator.product().binningValues()[0]
+                            evWeight = 1/pow(pthat/15.,4.5)
  
                 
                 AK8Keys = h_jetsAK8Keys.product()
@@ -2919,15 +2928,15 @@ else :
 if DimuonEvents / 1.5 < DieleEvents and DieleEvents / 1.5 < DimuonEvents :
     print ':) '
 
-
-print ''
-print 'Gen events : '
-print 'hadronic : ' + str(genHadEvents )
-print 'e+jets   : ' + str(genSemiEEvents )
-print 'mu+jets  : ' + str(genSemiMuEvents )
-print 'ee       : ' + str(genEEEvents )
-print 'emu      : ' + str(genMuEEvents)
-print 'mumu     : ' + str(genMuMuEvents)
+if options.isData == False :
+    print ''
+    print 'Gen events : '
+    print 'hadronic : ' + str(genHadEvents )
+    print 'e+jets   : ' + str(genSemiEEvents )
+    print 'mu+jets  : ' + str(genSemiMuEvents )
+    print 'ee       : ' + str(genEEEvents )
+    print 'emu      : ' + str(genMuEEvents)
+    print 'mumu     : ' + str(genMuMuEvents)
     
 #@ CLEANUP
 
