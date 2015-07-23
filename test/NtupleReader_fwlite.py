@@ -144,10 +144,10 @@ parser.add_option('--FlatSample', action='store_true',
                   dest='deweightFlat',
                   help='unweights flat samples')
 
-parser.add_option('--isData', action='store_true',
+parser.add_option('--isMC', action='store_true',
                   default=False,
-                  dest='isData',
-                  help='is it Data?')
+                  dest='isMC',
+                  help='is it MC?')
 
 (options, args) = parser.parse_args()
 argv = []
@@ -358,7 +358,7 @@ l_jetsAK8minmass = ("jetsAK8", "jetAK8minmass" )
 h_jetsAK8Area = Handle("std::vector<float>")
 l_jetsAK8Area = ( "jetsAK8" , "jetAK8jetArea" )
 
-if options.isData == False :
+if options.isMC :
     h_generator = Handle("GenEventInfoProduct")
     l_generator = ("generator" , "" )
 
@@ -1010,7 +1010,7 @@ NPassMuonTot = 0
 NPassAK4KinTot = 0
 NPassWbEvent= 0
 
-if options.isData == False :
+if options.isMC :
     genSemiMuEvents = 0
     genSemiEEvents = 0
     genMuMuEvents = 0
@@ -1051,7 +1051,7 @@ for ifile in files : #{ Loop over root files
             print '    ---> Event ' + str(nevents)
 
 
-        if options.isData == False :
+        if options.isMC :
             #@ Generator information
             genEIndex = []
             genMuIndex = []
@@ -1365,7 +1365,7 @@ for ifile in files : #{ Loop over root files
             print 'Number of good muons = ' + str( len(goodmuonPt) )
             print 'Number of good electrons = ' + str( len(goodelectronPt) )
 
-            if options.isData == False :
+            if options.isMC :
                 if ngenE > 0 and len(goodelectronPt) == 0 :
                     print '--------------------'
                     print 'Electron not found : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
@@ -1971,7 +1971,7 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_subjetsAK8Eta, h_subjetsAK8Eta)
             event.getByLabel ( l_subjetsAK8Phi, h_subjetsAK8Phi)
 
-            if options.isData == False :
+            if options.isMC :
                 if options.deweightFlat : 
                     # Event weights
                     gotGenerator = event.getByLabel( l_generator, h_generator )
@@ -2029,7 +2029,7 @@ for ifile in files : #{ Loop over root files
                 AK8TopSubjetIndex1 = h_jetsAK8TopSubjetIndex1.product()
                 AK8TopSubjetIndex2 = h_jetsAK8TopSubjetIndex2.product()
                 AK8TopSubjetIndex3 = h_jetsAK8TopSubjetIndex3.product()
-                if options.isData == False :
+                if options.isMC :
                     if options.deweightFlat :
                         pthat = 0.0
                         if h_generator.product().hasBinningValues() :
@@ -2928,7 +2928,7 @@ else :
 if DimuonEvents / 1.5 < DieleEvents and DieleEvents / 1.5 < DimuonEvents :
     print ':) '
 
-if options.isData == False :
+if options.isMC :
     print ''
     print 'Gen events : '
     print 'hadronic : ' + str(genHadEvents )
