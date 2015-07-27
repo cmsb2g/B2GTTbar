@@ -1035,11 +1035,18 @@ for ifile in filesraw : #{ Loop over text file and find root files linked
 for ifile in files : #{ Loop over root files
     print 'Processing file ' + ifile
     events = Events (ifile)
+    if options.verbose : 
+        print 'Opened file successfullly'
     if options.maxevents > 0 and nevents > options.maxevents :
         break
 
+    neventsInFile = events.size()
+    if neventsInFile <= 0 : 
+        continue
     # loop over events in this file
     for event in events: #{ Loop over events in root files
+        if options.verbose : 
+            print 'Checking event.'
         if options.maxevents > 0 and nevents > options.maxevents :
             break
         nevents += 1
