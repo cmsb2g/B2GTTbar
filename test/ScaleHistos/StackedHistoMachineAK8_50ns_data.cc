@@ -44,10 +44,37 @@ void StackedHistoMachineAK8_50ns_data(){
 }
 
 void callHistos ( ){  
-    cout << "Histogram to plot: 'h_'+X+'AK8' where options are: h_mAK8, h_mSDropAK8, h_mprunedAK8, h_mfilteredAK8, h_mtrimmedAK8,h_minmassAK8, h_ptAK8, h_nsjAK8, h_tau21AK8, h_tau32AK8. (e.g. I want h_mAK8 so I enter m etc...) " << endl;  
+    cout << "****************************************************" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << "****************************************************" << endl;
+    cout << "****************************************************" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << "****************************************************" << endl;
+    cout << "====================================================" << endl;
+    cout << "****************************************************" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << "****************************************************" << endl;
+    cout << "Welcome to the interactive Stacked Histogram Machine" << endl;
+    cout << "----------------------------------------------------" << endl;
+    cout << "Now featuring 13 TeV data from CMS accompanied by MC" << endl;
+    cout << "----------------------------------------------------" << endl;
+    cout << "Current optimized histograms to plot are as follows:" << endl;
+    cout << "h_mAK8, h_mSDropAK8, h_mprunedAK8, h_mfilteredAK8   " << endl;
+    cout << "h_mtrimmedAK8, h_minmassAK8, h_ptAK8, h_nsjAK8      " << endl;
+    cout << "h_tau21AK8, h_tau32AK8                              " << endl;
+    cout << "----------------------------------------------------" << endl;
+    cout << "Please enter the UNIQUE name of your desired histo  " << endl;
+    cout << "         (e.g. I want h_mAK8 so I enter m )         " << endl;  
+    cout << "****************************************************" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << "****************************************************" << endl;
     cin >> xxx ;
     CalledHisto = "h_"+xxx+"AK8";
-    cout << CalledHisto << endl;
+    cout << "Your request for "+CalledHisto+" is being processed." << endl;
+    cout << "           Your patience is appreciated.            " << endl;
+    cout << "****************************************************" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << "****************************************************" << endl;
     //TString CalledHisto = "h_mAK8";
     plotter( CalledHisto );
 }
@@ -56,8 +83,9 @@ void plotter(TString Histo){
 
 
 TString xAxisTitle;  
-int minX;
-int maxX;
+double minX;
+double maxX;
+double maxY;
 double xInfo;
 double yInfoTop;
 double legendLocation [4];
@@ -109,13 +137,14 @@ switch (histo)
     xAxisTitle = "M_{jet} (GeV)"; 
     minX = 20;
     maxX = 600; 
+    maxY = 60;
     xInfo = 0.301; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.38058;
     legendLocation[1] = 0.377976;
     legendLocation[2] = 0.700893;
     legendLocation[3] = 0.668155;
-    cout << "This histo is n_mAK8 " << endl;
+    cout << "This histo is h_mAK8 " << endl;
   //  return xAxisTitle, minX, maxX, xInfo, yInfoTop, legendLocation [4];
     break;
     }
@@ -248,14 +277,14 @@ switch (histo)
   THStack *hs = new THStack();
 
 //  @ set the Infile names (.root assumed)
-  TString InFile1 = "July10-TTJets-50ns-sel1";  // TT Jets
-  TString InFile2 = "July10-WJets-50ns-sel1";  // W + Jets                                                    
-  TString InFile3 = "July10-ST-50ns-sel1";  // Single Top
-  TString InFile4 = "July10-ZJets-50ns-sel1";  // Drell- Yan
-  TString InFile5 = "July21-MuData-50ns-sel1";  //Mu Data
-  TString InFile6 = "July10-Z-200-50ns-sel1"; // Z' W= 200
-  TString InFile7 = "July10-Z-20-50ns-sel1"; // Z' W = 20
-
+  TString InFile1 = "July23-TTJets-50ns-sel1";  // TT Jets
+  TString InFile2 = "July23-WJets-50ns-sel1";  // W + Jets                                                    
+  TString InFile3 = "July23-ST-50ns-sel1";  // Single Top
+  TString InFile4 = "July23-ZJets-50ns-sel1";  // Drell- Yan
+  TString InFile5 = "July23-MuData-50ns-sel1";  //Muon Data
+  TString InFile6 = "July23-Z-200-50ns-sel1"; // Z' W= 200
+  TString InFile7 = "July23-Z-20-50ns-sel1"; // Z' W = 20
+  TString InFile8 = "July23-ElData-50ns-sel1";  //Electron Data
 /*
   cout << "Name of t #bar{t}->Jets Semi-Leptonic root file " << endl; 
   cin >> InFile1;
@@ -280,6 +309,7 @@ switch (histo)
   TFile *PlotFile5 = TFile::Open("../"+InFile5+".root");       
   TFile *PlotFile6 = TFile::Open("../"+InFile6+".root");  
   TFile *PlotFile7 = TFile::Open("../"+InFile7+".root"); 
+  TFile *PlotFile8 = TFile::Open("../"+InFile8+".root"); 
 
   TH1F* histo1;
   TH1F* histo2;
@@ -288,6 +318,7 @@ switch (histo)
   TH1F* histo5;
   TH1F* histo6;
   TH1F* histo7;
+  TH1F* histo8;
 
 //  TString Plot = Histo;
   histo1 = (TH1F*) PlotFile1->Get(Histo);
@@ -297,14 +328,14 @@ switch (histo)
   histo5 = (TH1F*) PlotFile5->Get(Histo);
   histo6 = (TH1F*) PlotFile6->Get(Histo);
   histo7 = (TH1F*) PlotFile7->Get(Histo);
-
+  histo8 = (TH1F*) PlotFile8->Get(Histo);
 // @ set correct event numbers
 
   Double_t n_events1 = 4994250 ; // TTJets                     
   Double_t n_events2 = 24089991 ; // W->l+nu+Jets
   Double_t n_events3 = 3900814 ; // Single top
   Double_t n_events4 = 19925500 ; // Drell Yan
-  Double_t n_events5 =  2814400; // Data
+
   Double_t n_events6 = 103854 ; //  Z'-> t tbar 2TeV W = 200
   Double_t n_events7 =  202573 ; //Z'-> t tbar 2TeV W = 20
 
@@ -339,7 +370,7 @@ switch (histo)
   histo4->Scale( xsZ * lum / n_events4 ); 
   histo4->SetFillColor(kBlue-4);  
 
-//  histo5->Scale( xsZprime * lum / n_events5 ); 
+ 
   histo5->SetMarkerStyle(20); 
 //  histo5->SetBinError();  // https://root.cern.ch/root/html/TH1.html#TH1:SetBinError
 
@@ -350,6 +381,8 @@ switch (histo)
   histo7->Scale( xsZprime * lum / n_events7 ); 
   histo7->SetLineWidth(2);
   histo7->SetLineColor(kBlack);
+
+  histo8->SetMarkerStyle(22);
 
   hs->Add(histo3);
   hs->Add(histo4);
@@ -369,7 +402,7 @@ switch (histo)
   hs->GetYaxis()->SetTitleOffset(1.2);
   hs->GetYaxis()->SetTitleSize(0.044);
 
-  hs->SetMaximum(60);
+  hs->SetMaximum(maxY);
   hs->GetXaxis()->SetLimits(minX, maxX); // change with histo
   canvas->Modified();
 
@@ -377,6 +410,7 @@ switch (histo)
   histo6->Draw("same");
   histo7->Draw("same");
   histo5->Draw("ep same");
+  histo8->Draw("ep same");
   canvas->Modified();
 
   TLatex *tlx = new TLatex();
@@ -408,7 +442,8 @@ switch (histo)
   legend->SetTextSize(0.0395);
   legend->SetBorderSize(0.0);
   legend->SetMargin(0.3); 
-  legend->AddEntry(histo5,"Data", "p");
+  legend->AddEntry(histo5,"Muon Data", "p");
+  legend->AddEntry(histo8,"Electron Data", "p");
   legend->AddEntry(histo7,"Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
   legend->AddEntry(histo6,"Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
   legend->AddEntry(histo1," t#bar{t}", "f");  
