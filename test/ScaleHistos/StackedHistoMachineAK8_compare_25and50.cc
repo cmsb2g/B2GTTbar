@@ -56,8 +56,9 @@ void plotter(TString Histo){
 
 
 TString xAxisTitle;  
-int minX;
-int maxX;
+double minX;
+double maxX;
+double maxY;
 double xInfo;
 double yInfoTop;
 double legendLocation [4];
@@ -108,7 +109,8 @@ switch (histo)
     case 1 :{
     xAxisTitle = "M_{jet} (GeV)"; 
     minX = 20;
-    maxX = 700; 
+    maxX = 650; 
+    maxY = 600;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.313616;
@@ -172,6 +174,7 @@ switch (histo)
     xAxisTitle = "Minimum Mass Pairing of Subjets (GeV)"; 
     minX = 0;
     maxX = 300; 
+    maxY = 400;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.350446;
@@ -185,6 +188,7 @@ switch (histo)
     xAxisTitle = "#tau_{3}/#tau_{2}"; 
     minX = 0;
     maxX = 2; 
+    maxY = 600;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.100759;
@@ -198,6 +202,7 @@ switch (histo)
     xAxisTitle = "#tau_{2}/#tau_{1}"; 
     minX = 0;
     maxX = 2; 
+    maxY = 600;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.290759;
@@ -211,6 +216,7 @@ switch (histo)
     xAxisTitle = "Number of Subjets"; 
     minX = 0;
     maxX = 20; 
+    maxY = 600;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.390759;
@@ -224,6 +230,7 @@ switch (histo)
     xAxisTitle = "Jet p_{T} (GeV)"; 
     minX = 390;
     maxX = 1300; 
+    maxY = 400;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.256696;
@@ -348,7 +355,7 @@ switch (histo)
   Double_t n_events6 = 103854 ; //  Z'-> t tbar 2TeV W = 200
   Double_t n_events7 =  202573 ; //Z'-> t tbar 2TeV W = 20
 
-  Double_t n_events1b = 4994250 ; // TTJets                     
+  Double_t n_events1b = 11339232; // TTJets                     
   Double_t n_events2b = 24089991 ; // W->l+nu+Jets
   Double_t n_events3b = 3900814 ; // Single top
   Double_t n_events4b = 19925500 ; // Drell Yan
@@ -433,7 +440,7 @@ switch (histo)
   histo7b->SetLineStyle(2);
 
   hs->Add(histo3);
-  hs->SetMaximum(700);
+  hs->SetMaximum(maxY);
 
   hs->Draw();
   hs->GetXaxis()->SetLabelSize(0.042);
@@ -463,7 +470,7 @@ switch (histo)
   histo7b->Draw("same");
   histo4b->Draw("same");
   histo2b->Draw("same");
-  histo1b->Draw("same");
+//  histo1b->Draw("same");
   histo3b->Draw("same");
   histo3b->GetYaxis()->SetRange(0,700);
   canvas->Modified();
@@ -487,6 +494,7 @@ switch (histo)
   tlx->DrawLatex(xInfo, yInfo3, "#bf{AK R= 0.8}"); // 0.8 or 0.4 for AK8 and AK4              change with histo
   tlx->DrawLatex(xInfo, yInfo4, "#bf{|#eta| < 2.4 }");  // same for AK4 and AK8
   tlx->DrawLatex(xInfo, yInfo5, "#bf{P_{T} > 400 GeV}");// > 400 for AK8 and > 30 for AK4     change with histo
+//  tlx->DrawLatex(xInfo, yInfo6, "#bf{#tau_{3}/#tau_{2} < 0.62}");
 //  tlx->DrawLatex(xInfo, yInfo6, "#bf{50 ns}");  // change with 25 or 50 ns bunchcrossings     change with root files
   canvas->Update();
 
@@ -506,7 +514,7 @@ switch (histo)
   legend->AddEntry(histo3,"50ns, Single Top", "l");
   legend->AddEntry(histo7b,"25ns, Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
   legend->AddEntry(histo6b,"25ns, Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
-  legend->AddEntry(histo1b,"25ns, t#bar{t}", "l");  
+ // legend->AddEntry(histo1b,"25ns, t#bar{t}", "l");  
   legend->AddEntry(histo2b,"25ns, W + Jets", "l");
   legend->AddEntry(histo4b,"25ns, Z + Jets", "l");
   legend->AddEntry(histo3b,"25ns, Single Top", "l");
