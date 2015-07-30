@@ -457,7 +457,7 @@ h_tau21AK8 = ROOT.TH1F("h_tau21AK8", "AK8 Jet #tau_{2} / #tau_{1};Mass#tau_{21}"
 h_tau32AK8 = ROOT.TH1F("h_tau32AK8", "AK8 Jet #tau_{3} / #tau_{2};Mass#tau_{32}", 100, 0, 1.0)
 
 h_NtrueIntPU = ROOT.TH1F("h_NtrueIntPU", "PU number of true interactions", 1245626, 0, 1245626)
-h_NPV = ROOT.TH1F("h_npv", "number of primary vertices", 50, 0, 50)
+h_NPVert = ROOT.TH1F("h_NPVert", "number of primary vertices", 50, 0, 50)
 
 #$ below plots with M_{Soft Drop} cut : 110 GeV < M_{SD} < 210 GeV
 
@@ -507,7 +507,7 @@ h_tau21AK8_mSDcut = ROOT.TH1F("h_tau21AK8_mSDcut", "AK8 Jet #tau_{2} / #tau_{1} 
 h_tau32AK8_mSDcut = ROOT.TH1F("h_tau32AK8_mSDcut", "AK8 Jet #tau_{3} / #tau_{2} for 110<M_{Soft Drop}(GeV)<210;Mass#tau_{32}", 100, 0, 1.0)
 
 h_NtrueIntPU_mSDcut = ROOT.TH1F("h_NtrueIntPU_mSDcut", "PU number of true interactions", 1245626, 0, 1245626)
-h_NPV_mSDcut = ROOT.TH1F("h_npv_mSDcut", "number of primary vertices", 50, 0, 50)
+h_NPVert_mSDcut = ROOT.TH1F("h_NPVert_mSDcut", "number of primary vertices", 50, 0, 50)
 
 #$ below plots with tau32 cut
 
@@ -555,7 +555,7 @@ h_tau21AK8_tau32cut = ROOT.TH1F("h_tau21AK8_tau32cut", "AK8 Jet #tau_{2} / #tau_
 h_tau32AK8_tau32cut = ROOT.TH1F("h_tau32AK8_tau32cut", "AK8 Jet #tau_{3} / #tau_{2} for tau32 cut;Mass#tau_{32}", 100, 0, 1.0)
 
 h_NtrueIntPU_tau32cut = ROOT.TH1F("h_NtrueIntPU_tau32cut", "PU number of true interactions", 1245626, 0, 1245626)
-h_NPV_tau32cut = ROOT.TH1F("h_npv_tau32cut", "number of primary vertices", 50, 0, 50)
+h_NPVert_tau32cut = ROOT.TH1F("h_NPVert_tau32cut", "number of primary vertices", 50, 0, 50)
 
 #$ plots with tau21 cut
 
@@ -603,7 +603,7 @@ h_tau32AK8_tau21cut = ROOT.TH1F("h_tau32AK8_tau21cut", "AK8 Jet #tau_{3} / #tau_
 h_tau21AK8_tau21cut = ROOT.TH1F("h_tau21AK8_tau21cut", "AK8 Jet #tau_{2} / #tau_{1} for tau32 cut;Mass#tau_{21}", 100, 0, 1.0)
 
 h_NtrueIntPU_tau21cut = ROOT.TH1F("h_NtrueIntPU_tau21cut", "PU number of true interactions", 1245626, 0, 1245626)
-h_NPV_tau21cut = ROOT.TH1F("h_npv_tau21cut", "number of primary vertices", 50, 0, 50)
+h_NPVert_tau21cut = ROOT.TH1F("h_NPVert_tau21cut", "number of primary vertices", 50, 0, 50)
 #$ plots with both mass and tau32 cut - SD tagged
 
 h_ptLep_mSDcut_tau32cut = ROOT.TH1F("h_ptLep_mSDcut_tau32cut", "Lepton p_{T} for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;p_{T} (GeV)", 100, 0, 1000)
@@ -648,7 +648,7 @@ h_tau21AK8_mSDcut_tau32cut = ROOT.TH1F("h_tau21AK8_mSDcut_tau32cut", "AK8 Jet #t
 h_tau32AK8_mSDcut_tau32cut = ROOT.TH1F("h_tau32AK8_mSDcut_tau32cut", "AK8 Jet #tau_{3} / #tau_{2} for 110<M_{Soft Drop}(GeV)<210 and tau32<0.62;Mass#tau_{32}", 100, 0, 1.0)
 
 h_NtrueIntPU_mSDcut_tau32cut = ROOT.TH1F("h_NtrueIntPU_mSDcut_tau32cut", "PU number of true interactions", 1245626, 0, 1245626)
-h_NPV_mSDcut_tau32cut = ROOT.TH1F("h_npv_mSDcut_tau32cut", "number of primary vertices", 50, 0, 50)
+h_NPVert_mSDcut_tau32cut = ROOT.TH1F("h_NPVert_mSDcut_tau32cut", "number of primary vertices", 50, 0, 50)
 #$ plots with pt of the electron cut
 
 #h_mttbar_ptElcut = ROOT.TH1F("h_mttbar", ";m_{t#bar{t}} for ptEl cut (GeV)", 200, 0, 6000)
@@ -695,7 +695,7 @@ h_nsjAK8_ptElcut = ROOT.TH1F("h_nsjAK8_ptElcut", "AK8 CMS Top Tagger N_{subjets}
 h_tau32AK8_ptElcut = ROOT.TH1F("h_ptElAK8_ptElcut", "AK8 Jet #tau_{3} / #tau_{2} for ptEl cut;Mass#tau_{32}", 100, 0, 1.0)
 
 h_NtrueIntPU_ptElcut = ROOT.TH1F("h_NtrueIntPU_ptElcut", "PU number of true interactions", 1245626, 0, 1245626)
-h_NPV_ptElcut = ROOT.TH1F("h_npv_ptElcut", "number of primary vertices", 50, 0, 50)
+h_NPVert_ptElcut = ROOT.TH1F("h_NPVert_ptElcut", "number of primary vertices", 50, 0, 50)
 #$ plots with pt of the muon cut
 
 h_ptLep_ptMucut = ROOT.TH1F("h_ptLep_ptMucut", "Lepton p_{T} for pt Muon cut;p_{T} (GeV)", 100, 0, 1000)
@@ -740,7 +740,7 @@ h_nsjAK8_ptMucut = ROOT.TH1F("h_nsjAK8_ptMucut", "AK8 CMS Top Tagger N_{subjets}
 h_tau32AK8_ptMucut = ROOT.TH1F("h_ptElAK8_ptMucut", "AK8 Jet #tau_{3} / #tau_{2} for ptMuon cut;Mass#tau_{32}", 100, 0, 1.0)
 
 h_NtrueIntPU_ptMucut = ROOT.TH1F("h_NtrueIntPU_ptMucut", "PU number of true interactions",1245626, 0, 1245626)
-h_NPV_ptMucut = ROOT.TH1F("h_npv_ptMucut", "number of primary vertices", 50, 0, 50)
+h_NPVert_ptMucut = ROOT.TH1F("h_NPVert_ptMucut", "number of primary vertices", 50, 0, 50)
 #$ below plots with min Mass cut
 
 h_ptLep_minMasscut = ROOT.TH1F("h_ptLep_minMasscut", "Lepton p_{T} for min Mass cut;p_{T} (GeV)", 100, 0, 1000)
@@ -786,7 +786,7 @@ h_tau21AK8_minMasscut = ROOT.TH1F("h_tau21AK8_minMasscut", "AK8 Jet #tau_{2} / #
 h_tau32AK8_minMasscut = ROOT.TH1F("h_tau32AK8_minMasscut", "AK8 Jet #tau_{3} / #tau_{2} for min Mass cut;Mass#tau_{32}", 100, 0, 1.0)
 
 h_NtrueIntPU_minMasscut = ROOT.TH1F("h_NtrueIntPU_minMasscut", "PU number of true interactions", 1245626, 0,1245626)
-h_NPV_minMasscut = ROOT.TH1F("h_npv_minMasscut", "number of primary vertices", 50, 0, 50)
+h_NPVert_minMasscut = ROOT.TH1F("h_NPVert_minMasscut", "number of primary vertices", 50, 0, 50)
 #$ below plots with bdiscmin cut
 
 h_ptLep_bDiscMincut = ROOT.TH1F("h_ptLep_bDiscMincut", "Lepton p_{T} for bDiscMincut loose  cut;p_{T} (GeV)", 100, 0, 1000)
@@ -833,7 +833,7 @@ h_tau21AK8_bDiscMincut = ROOT.TH1F("h_tau21AK8_bDiscMincut", "AK8 Jet #tau_{2} /
 h_tau32AK8_bDiscMincut = ROOT.TH1F("h_tau32AK8_bDiscMincut", "AK8 Jet #tau_{3} / #tau_{2} for bDiscMincut loose  cut;Mass#tau_{32}", 100, 0, 1.0)
 
 h_NtrueIntPU_bDiscMincut = ROOT.TH1F("h_NtrueIntPU_bDiscMincut", "PU number of true interactions", 1245626, 0, 1245626)
-h_NPV_bDiscMincut = ROOT.TH1F("h_npv_bDiscMincut", "number of primary vertices", 50, 0, 50)
+h_NPVert_bDiscMincut = ROOT.TH1F("h_NPVert_bDiscMincut", "number of primary vertices", 50, 0, 50)
 #$ plots with both mass and minmass cut - CMSTT tagged
 
 h_ptLep_mSDcut_minMasscut= ROOT.TH1F("h_ptLep_mSDcut_minMasscut", "Lepton p_{T} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;p_{T} (GeV)", 100, 0, 1000)
@@ -880,7 +880,7 @@ h_tau21AK8_mSDcut_minMasscut = ROOT.TH1F("h_tau21AK8_mSDcut_minMasscut", "AK8 Je
 h_tau32AK8_mSDcut_minMasscut = ROOT.TH1F("h_tau32AK8_mSDcut_minMasscut", "AK8 Jet #tau_{3} / #tau_{2} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass#tau_{32}", 100, 0, 1.0)
  
 h_NtrueIntPU_mSDcut_minMasscut = ROOT.TH1F("h_NtrueIntPU_mSDcut_minMasscut", "PU number of true interactions", 1245626, 0, 1245626)
-h_NPV_mSDcut_minMasscut = ROOT.TH1F("h_npv_mSDcut_minMasscut", "number of primary vertices", 50, 0, 50)
+h_NPVert_mSDcut_minMasscut = ROOT.TH1F("h_NPVert_mSDcut_minMasscut", "number of primary vertices", 50, 0, 50)
 #$ plots with min pairwise mass in the W mass window - 60 GeV < minpairwise < 110
 
 h_ptLep_minMasscutWmass = ROOT.TH1F("h_ptLep_minMasscutWmass", "Lepton p_{T} for min Mass cut  60 GeV < minpairwise < 110;p_{T} (GeV)", 100, 0, 1000)
@@ -926,7 +926,7 @@ h_tau21AK8_minMasscutWmass = ROOT.TH1F("h_tau21AK8_minMasscutWmass", "AK8 Jet #t
 h_tau32AK8_minMasscutWmass = ROOT.TH1F("h_tau32AK8_minMasscutWmass", "AK8 Jet #tau_{3} / #tau_{2} for min Mass cut  60 GeV < minpairwise < 110;Mass#tau_{32}", 100, 0, 1.0)
 
 h_NtrueIntPU_minMasscutWmass = ROOT.TH1F("h_NtrueIntPU_minMasscutWmass", "PU number of true interactions", 1245626, 0, 1245626)
-h_NPV_minMasscutWmass = ROOT.TH1F("h_npv_minMasscutWmass", "number of primary vertices", 50, 0, 50)
+h_NPVert_minMasscutWmass = ROOT.TH1F("h_NPVert_minMasscutWmass", "number of primary vertices", 50, 0, 50)
 #@ JET CORRECTIONS
 
 ROOT.gSystem.Load('libCondFormatsJetMETObjects')
@@ -2261,7 +2261,7 @@ for ifile in files : #{ Loop over root files
             if len(ak8JetsGoodSubjetbDisc) > 0 : # questionable, maybe I'm throwing out otherwise good events by requiring a subjet b disc ?
                 if ak8JetsGoodSDropMass[0] > 10 :
                     h_NtrueIntPU.Fill( puNTrueInt )
-                    h_NPV.Fill( NPV )
+                    h_NPVert.Fill( NPV )
                     h_ptAK8.Fill( ak8JetsGood[0].Perp(), FlatWeight )
                     h_etaAK8.Fill( ak8JetsGood[0].Eta(), FlatWeight )
                     h_phiAK8.Fill( ak8JetsGood[0].Phi(), FlatWeight )
@@ -2303,7 +2303,7 @@ for ifile in files : #{ Loop over root files
                 if minMass > options.minMassCut:
                     #^ fill histos with min mass pairing greater than min mass cut 
                     h_NtrueIntPU_minMasscut.Fill ( puNTrueInt )
-                    h_NPV_minMasscut.Fill( NPV )
+                    h_NPVert_minMasscut.Fill( NPV )
                     h_tau32AK8_minMasscut.Fill( tau32, FlatWeight )
                     h_tau21AK8_minMasscut.Fill( tau21, FlatWeight )
                     h_ptAK8_minMasscut.Fill( ak8JetsGood[0].Perp(), FlatWeight )
@@ -2345,7 +2345,7 @@ for ifile in files : #{ Loop over root files
                 if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut: 
                 #^ Fill histos between min and max soft drop mass cuts
                     h_NtrueIntPU_mSDcut.Fill ( puNTrueInt )
-                    h_NPV_mSDcut.Fill( NPV )
+                    h_NPVert_mSDcut.Fill( NPV )
                     h_tau32AK8_mSDcut.Fill( tau32, FlatWeight )
                     h_tau21AK8_mSDcut.Fill( tau21, FlatWeight )
                     h_ptAK8_mSDcut.Fill( ak8JetsGood[0].Perp(), FlatWeight )
@@ -2387,7 +2387,7 @@ for ifile in files : #{ Loop over root files
                 if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and minMass > options.minMassCut: 
                 #^ Fill histos between min and max soft drop mass cuts and pass min mass pairing cuts
                     h_NtrueIntPU_mSDcut_minMasscut.Fill ( puNTrueInt )
-                    h_NPV_mSDcut_minMasscut.Fill( NPV )
+                    h_NPVert_mSDcut_minMasscut.Fill( NPV )
                     h_tau32AK8_mSDcut_minMasscut.Fill( tau32, FlatWeight )
                     h_tau21AK8_mSDcut_minMasscut.Fill( tau21, FlatWeight )
                     h_ptAK8_mSDcut_minMasscut.Fill( ak8JetsGood[0].Perp(), FlatWeight )
@@ -2429,7 +2429,7 @@ for ifile in files : #{ Loop over root files
                 if tau32 < options.tau32Cut:
                 #^ Fill histos that pass tau32 cut
                     h_NtrueIntPU_tau32cut.Fill ( puNTrueInt )
-                    h_NPV_tau32cut.Fill( NPV )
+                    h_NPVert_tau32cut.Fill( NPV )
                     h_tau32AK8_tau32cut.Fill( tau32, FlatWeight )
                     h_tau21AK8_tau32cut.Fill( tau21, FlatWeight )
                     h_ptAK8_tau32cut.Fill( ak8JetsGood[0].Perp(), FlatWeight )
@@ -2471,7 +2471,7 @@ for ifile in files : #{ Loop over root files
                 if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and tau32 < options.tau32Cut: 
                 #^ Fill histos with 110 < M_{jet Soft Drop} GeV < 210 (can change default min and max groomed mass cuts in options)
                     h_NtrueIntPU_mSDcut_tau32cut.Fill ( puNTrueInt )     
-                    h_NPV_mSDcut_tau32cut.Fill( NPV )             
+                    h_NPVert_mSDcut_tau32cut.Fill( NPV )             
                     h_tau32AK8_mSDcut_tau32cut.Fill( tau32, FlatWeight )
                     h_tau21AK8_mSDcut_tau32cut.Fill( tau21, FlatWeight )
                     h_ptAK8_mSDcut_tau32cut.Fill( ak8JetsGood[0].Perp(), FlatWeight )
@@ -2513,7 +2513,7 @@ for ifile in files : #{ Loop over root files
                 if tau21 < options.tau21Cut:
                 #^ Fill histos that pass tau21 cut
                     h_NtrueIntPU_tau21cut.Fill ( puNTrueInt )                    
-                    h_NPV_tau21cut.Fill( NPV )
+                    h_NPVert_tau21cut.Fill( NPV )
                     h_tau32AK8_tau21cut.Fill( tau32, FlatWeight )
                     h_tau21AK8_tau21cut.Fill( tau21, FlatWeight )
                     h_ptAK8_tau21cut.Fill( ak8JetsGood[0].Perp(), FlatWeight )
@@ -2555,7 +2555,7 @@ for ifile in files : #{ Loop over root files
                 if 60 < minMass < 110:
                     #^ fill histos with min mass pairing in W mass window 
                     h_NtrueIntPU_minMasscutWmass.Fill ( puNTrueInt )
-                    h_NPV_minMasscutWmass.Fill( NPV )
+                    h_NPVert_minMasscutWmass.Fill( NPV )
                     h_tau32AK8_minMasscutWmass.Fill( tau32, FlatWeight )
                     h_tau21AK8_minMasscutWmass.Fill( tau21, FlatWeight )
                     h_ptAK8_minMasscutWmass.Fill( ak8JetsGood[0].Perp(), FlatWeight )
@@ -2597,7 +2597,7 @@ for ifile in files : #{ Loop over root files
                 if theLepJetBDisc < options.bDiscMin:
                     #^ fill histos with bDiscMincut
                     h_NtrueIntPU_bDiscMincut.Fill ( puNTrueInt )
-                    h_NPV_bDiscMincut.Fill( NPV )
+                    h_NPVert_bDiscMincut.Fill( NPV )
                     h_tau32AK8_bDiscMincut.Fill( tau32, FlatWeight )
                     h_tau21AK8_bDiscMincut.Fill( tau21, FlatWeight )
                     h_ptAK8_bDiscMincut.Fill( ak8JetsGood[0].Perp(), FlatWeight )
@@ -2640,7 +2640,7 @@ for ifile in files : #{ Loop over root files
                     if theElectron.Perp() < options.minElectronPt: 
                         #^ fill histos with ptElcut
                         h_NtrueIntPU_ptElcut.Fill ( puNTrueInt )
-                        h_NPV_ptElcut.Fill( NPV )
+                        h_NPVert_ptElcut.Fill( NPV )
                         h_tau32AK8_ptElcut.Fill( tau32, FlatWeight )
                         h_tau21AK8_ptElcut.Fill( tau21, FlatWeight )
                         h_ptAK8_ptElcut.Fill( ak8JetsGood[0].Perp(), FlatWeight )
@@ -2673,7 +2673,7 @@ for ifile in files : #{ Loop over root files
                     if theMuon.Perp() < options.minMuonPt: 
                         #^ fill histos with ptMucut
                         h_NtrueIntPU_ptMucut.Fill ( puNTrueInt )
-                        h_NPV_ptMucut.Fill( NPV )
+                        h_NPVert_ptMucut.Fill( NPV )
                         h_tau32AK8_ptMucut.Fill( tau32, FlatWeight )
                         h_tau21AK8_ptMucut.Fill( tau21, FlatWeight )
                         h_ptAK8_ptMucut.Fill( ak8JetsGood[0].Perp(), FlatWeight )
