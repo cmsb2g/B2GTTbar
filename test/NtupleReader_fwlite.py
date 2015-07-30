@@ -266,7 +266,7 @@ l_jetsAK4Area = ( "jetsAK4" , "jetAK4jetArea" )
 h_NPV = Handle("std::int")
 l_NPV = ( "eventUserData" , "npv" )
 
-h_puNtrueInt = Handle("std::puNtrueInt")
+h_puNtrueInt = Handle("std::int")
 l_puNtrueInt = ( "eventUserData" , "puNtrueInt" )
 
 h_jetsAK4Keys = Handle("std::vector<std::vector<int> >")
@@ -874,7 +874,7 @@ h_nsjAK8_mSDcut_minMasscut = ROOT.TH1F("h_nsjAK8_mSDcut_minMasscut", "AK8 CMS To
 h_tau21AK8_mSDcut_minMasscut = ROOT.TH1F("h_tau21AK8_mSDcut_minMasscut", "AK8 Jet #tau_{2} / #tau_{1} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass#tau_{21}", 100, 0, 1.0)
 h_tau32AK8_mSDcut_minMasscut = ROOT.TH1F("h_tau32AK8_mSDcut_minMasscut", "AK8 Jet #tau_{3} / #tau_{2} for 110<M_{Soft Drop}(GeV)<210 and minMass > 50 GeV;Mass#tau_{32}", 100, 0, 1.0)
  
- h_NtrueIntPU_mSDcut_minMasscut = ROOT.TH1F("h_NtrueIntPU_mSDcut_minMasscut", "PU number of true interactions", 1245626, 0, 1245626)
+h_NtrueIntPU_mSDcut_minMasscut = ROOT.TH1F("h_NtrueIntPU_mSDcut_minMasscut", "PU number of true interactions", 1245626, 0, 1245626)
 #$ plots with min pairwise mass in the W mass window - 60 GeV < minpairwise < 110
 
 h_ptLep_minMasscutWmass = ROOT.TH1F("h_ptLep_minMasscutWmass", "Lepton p_{T} for min Mass cut  60 GeV < minpairwise < 110;p_{T} (GeV)", 100, 0, 1000)
