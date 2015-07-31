@@ -1,9 +1,15 @@
-In order to plot all AK8 histograms at once use
+In order to:
+
+plot all AK8 histograms at once-
 
 $root StackedHistoMachineAK8_50ns.cc+
 
-In order to iteractively plot which AK8 histo you would like do
+iteractively plot which AK8 histo you would like-
 
-$root StackedHistoMachineAK8_50ns_interactive.cc+
+$root StackedHistoMachineAK8_50ns_interactive.cc+ 
 
-and follow the instructions
+iteractively plot a given AK8 histo and compare the 25 and 50ns bunchcrossings in MC-
+
+$root Compare25and50_AK8_interactive.cc+
+
+
