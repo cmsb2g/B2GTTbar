@@ -273,7 +273,7 @@ for (int j=0; j<10; j++) {
 	  Double_t n_events7 = 202573 ; //Z'-> t tbar 2TeV W = 20
 
 
-	  Double_t lum = 40.03 ; // From JSON
+	  Double_t lum = 40.03 ; // From JSON on july 27
 	  Double_t xsTT = 831.76; // for 13 TeV from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO used top mass as 172.5, uncertainties on twiki	
 	  Double_t xsW = 20508.9;   // inclusive W  https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
 	  Double_t xsST = 136.02 ;   // t channel top at 13 TeV https://twiki.cern.ch/twiki/bin/viewauth/CMS/SingleTopSigma
@@ -316,7 +316,7 @@ for (int j=0; j<10; j++) {
 	  histo7->SetLineColor(kBlack);
           
           histo8->Sumw2();
-          histo8->Add(histo5);
+          histo8->Add(1, histo5);
 	  histo8->SetMarkerStyle(20);
 
 	  hs->Add(histo3);
@@ -352,7 +352,7 @@ for (int j=0; j<10; j++) {
 	  tlx->SetNDC();
 	  tlx->SetTextFont(42);
 	  tlx->SetTextSize(0.057);
-	  tlx->DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 1 fb^{-1}");
+	  tlx->DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 0.004003 fb^{-1}");
 	 // tlx->DrawLatex(0.77, 0.86, "#bf{CMS}");
 	 // tlx->DrawLatex(0.72, 0.83, "#it{very preliminary}");
 	  tlx->SetTextSize(0.025);

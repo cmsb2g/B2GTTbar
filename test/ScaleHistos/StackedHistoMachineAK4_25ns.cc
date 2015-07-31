@@ -15,10 +15,6 @@
 #include "TColor.h"
 using namespace std;
 
-// SEARCH
-//'change with histo' :to find differences btw each plot
-
-
 void callHistos();
 void StackedHistoMachineAK4_25ns();
 void plotter( TString Histo );
@@ -42,8 +38,9 @@ void plotter(TString Histo){
 
 
 TString xAxisTitle;  
-int minX;
-int maxX;
+double maxY;
+double minX;
+double maxX;
 double xInfo;
 double yInfoTop;
 double legendLocation [4];
@@ -74,8 +71,9 @@ switch (histo)
 {
     case 1 :{
     xAxisTitle = "M_{jet} (GeV)"; 
+    maxY = 2000;
     minX = 0;
-    maxX = 80; 
+    maxX = 200; 
     xInfo = 0.301; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.38058;
@@ -89,8 +87,8 @@ switch (histo)
     case 2 :{ 
     xAxisTitle = "P_{T} of Jet (GeV)"; 
     minX = 0;
-    maxX = 240; 
-    xInfo = 0.251; //  location of plot description in normalized coordinates
+    maxX = 200; 
+    xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.370759;
     legendLocation[1] = 0.320595;
@@ -102,7 +100,7 @@ switch (histo)
     case 3 :{
     xAxisTitle = "B Discriminator";
     minX = 0;
-    maxX = 1; 
+    maxX = 1.1; 
     xInfo = 0.341; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.520759;
@@ -132,30 +130,13 @@ switch (histo)
   THStack *hs = new THStack();
 
 //  @ set the Infile names (.root assumed)
-  TString InFile1 = "July10-TTJets-25ns-sel1";  // TT Jets
-  TString InFile2 = "July10-WJets-25ns-sel1";  // W + Jets                                                    
-  TString InFile3 = "July10-ST-25ns-sel1";  // Single Top
-  TString InFile4 = "July10-ZJets-25ns-sel1";  // Drell- Yan
+  TString InFile1 = "July23-TTJets-25ns-sel1";  // TT Jets
+  TString InFile2 = "July23-WJets-25ns-sel1";  // W + Jets                                                    
+  TString InFile3 = "July23-ST-25ns-sel1";  // Single Top
+  TString InFile4 = "July23-ZJets-25ns-sel1";  // Drell- Yan
 //  TString InFile5 = ;  //Data
-  TString InFile6 = "July10-Z-200-25ns-sel1"; // Z' W= 200
-  TString InFile7 = "July10-Z-20-25ns-sel1"; // Z' W = 20
-
-/*
-  cout << "Name of t #bar{t}->Jets Semi-Leptonic root file " << endl; 
-  cin >> InFile1;
-  cout <<"Name of W->Jets+l+nu Semi-Leptonic root file"<< endl;
-  cin >> InFile2;
-  cout <<"Name of Single Top t-channel Semi-Leptonic root file "<< endl;
-  cin >> InFile3;
-  cout <<"Name of Z->Jets+l+nu Semi-Leptonic root file"<< endl;
-  cin >> InFile4;
-//  cout <<"Name of DATA file Z'-> t #bar{t} Semi-Leptonic root file "<< endl;
-//  cin >> InFile5;
-  cout <<"Name of Signal MC, Z'-> t #bar{t} Semi-Leptonic W =200, root file "<< endl;
-  cin >> InFile6;
-  cout <<"Name of Signal MC, Z'-> t #bar{t} Semi-Leptonic W =20, root file "<< endl;
-  cin >> InFile7;
-*/
+  TString InFile6 = "July23-Z-200-25ns-sel1"; // Z' W= 200
+  TString InFile7 = "July23-Z-20-25ns-sel1"; // Z' W = 20
 
   TFile *PlotFile1 = TFile::Open("../"+InFile1+".root");       
   TFile *PlotFile2 = TFile::Open("../"+InFile2+".root");   
@@ -253,7 +234,7 @@ switch (histo)
   hs->GetYaxis()->SetTitleOffset(1.);
   hs->GetYaxis()->SetTitleSize(0.044);
 
-//  hs->SetMaximum(800);
+  hs->SetMaximum(maxY);
   hs->GetXaxis()->SetLimits(minX, maxX); // change with histo
   canvas->Modified();
 
@@ -266,7 +247,7 @@ switch (histo)
   tlx->SetNDC();
   tlx->SetTextFont(42);
   tlx->SetTextSize(0.057);
-  tlx->DrawLatex(0.231, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 1 fb^{-1}");
+  tlx->DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 1 fb^{-1}");
  // tlx->DrawLatex(0.77, 0.86, "#bf{CMS}");
  // tlx->DrawLatex(0.72, 0.83, "#it{very preliminary}");
   tlx->SetTextSize(0.025);
