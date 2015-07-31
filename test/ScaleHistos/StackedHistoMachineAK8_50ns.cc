@@ -226,18 +226,18 @@ for (int j=0; j<10; j++) {
 	  THStack *hs = new THStack();
 
 	//  @ set the Infile names (.root assumed)
-	  TString InFile1 = "July28-TTJets-50ns-sel1";  // TT Jets
-	  TString InFile2 = "July28-Wjets-50ns-sel1";  // W + Jets                                                    
-	//  TString InFile3 = "July28-ST-50ns-sel1";  // Single Top
-	  TString InFile4 = "July28-Zjets-50ns-sel1";  // Drell- Yan
-	  TString InFile5 = "July28-MuData-50ns-sel1";  //Muon Data
-	  TString InFile6 = "July28-Z-200-50ns-sel1"; // Z' W= 200
-	  TString InFile7 = "July28-Z-20-50ns-sel1"; // Z' W = 20
-	  TString InFile8 = "July28-ElData-50ns-sel1";  //Electron Data
+	  TString InFile1 = "July30n-TTJets-50ns-sel1";  // TT Jets
+	  TString InFile2 = "July30n-Wjets-50ns-sel1";  // W + Jets                                                    
+	  TString InFile3 = "July30n-ST-50ns-sel1";  // Single Top
+	  TString InFile4 = "July30n-Zjets-50ns-sel1";  // Drell- Yan
+	  TString InFile5 = "July30n-MuData-50ns-sel1";  //Muon Data
+	  TString InFile6 = "July30n-Z-200-50ns-sel1"; // Z' W= 200
+	  TString InFile7 = "July30n-Z-20-50ns-sel1"; // Z' W = 20
+	  TString InFile8 = "July30n-ElData-50ns-sel1";  //Electron Data
 
 	  TFile *PlotFile1 = TFile::Open("../"+InFile1+".root");       
 	  TFile *PlotFile2 = TFile::Open("../"+InFile2+".root");   
-	 // TFile *PlotFile3 = TFile::Open("../"+InFile3+".root");       
+	  TFile *PlotFile3 = TFile::Open("../"+InFile3+".root");       
 	  TFile *PlotFile4 = TFile::Open("../"+InFile4+".root");  
 	  TFile *PlotFile5 = TFile::Open("../"+InFile5+".root");       
 	  TFile *PlotFile6 = TFile::Open("../"+InFile6+".root");  
@@ -246,7 +246,7 @@ for (int j=0; j<10; j++) {
 
 	  TH1F* histo1;
 	  TH1F* histo2;
-	 // TH1F* histo3;
+	  TH1F* histo3;
 	  TH1F* histo4;
 	  TH1F* histo5;
 	  TH1F* histo6;
@@ -256,7 +256,7 @@ for (int j=0; j<10; j++) {
 	//  TString Plot = Histo;
 	  histo1 = (TH1F*) PlotFile1->Get(Histo);
 	  histo2 = (TH1F*) PlotFile2->Get(Histo);
-	  //histo3 = (TH1F*) PlotFile3->Get(Histo);
+	  histo3 = (TH1F*) PlotFile3->Get(Histo);
 	  histo4 = (TH1F*) PlotFile4->Get(Histo);
 	  histo5 = (TH1F*) PlotFile5->Get(Histo);
 	  histo6 = (TH1F*) PlotFile6->Get(Histo);
@@ -264,13 +264,13 @@ for (int j=0; j<10; j++) {
 	  histo8 = (TH1F*) PlotFile8->Get(Histo);
 	// @ set correct event numbers
 
-	  Double_t n_events1 = 4994250 ; // TTJets                     
+	  Double_t n_events1 = 4992231 ; // TTJets                     
 	  Double_t n_events2 = 24089991 ; // W->l+nu+Jets
-	  Double_t n_events3 = 3900814 ; // Single top
+	  Double_t n_events3 = 1273800 ; // Single top
 	  Double_t n_events4 = 19925500 ; // Drell Yan
 
 	  Double_t n_events6 = 103854 ; //  Z'-> t tbar 2TeV W = 200
-	  Double_t n_events7 =  202573 ; //Z'-> t tbar 2TeV W = 20
+	  Double_t n_events7 = 202573 ; //Z'-> t tbar 2TeV W = 20
 
 
 	  Double_t lum = 40.03 ; // From JSON
@@ -297,14 +297,14 @@ for (int j=0; j<10; j++) {
 	  histo2->Scale( xsW * lum / n_events2 ); 
 	  histo2->SetFillColor(kGreen+1); 
 
-	 // histo3->Scale( xsST * lum / n_events3 ); 
-	  //histo3->SetFillColor(kMagenta+1);  
+	  histo3->Scale( xsST * lum / n_events3 ); 
+	  histo3->SetFillColor(kMagenta+1);  
 
 	  histo4->Scale( xsZ * lum / n_events4 ); 
 	  histo4->SetFillColor(kBlue-4);  
 
 	 
-	  histo5->SetMarkerStyle(20); 
+	 // histo5->SetMarkerStyle(20); 
 	//  histo5->SetBinError();  // https://root.cern.ch/root/html/TH1.html#TH1:SetBinError
 
 	  histo6->Scale( xsZprime * lum / n_events6 ); 
@@ -314,10 +314,12 @@ for (int j=0; j<10; j++) {
 	  histo7->Scale( xsZprime * lum / n_events7 ); 
 	  histo7->SetLineWidth(2);
 	  histo7->SetLineColor(kBlack);
+          
+          histo8->Sumw2();
+          histo8->Add(histo5);
+	  histo8->SetMarkerStyle(20);
 
-	  histo8->SetMarkerStyle(22);
-
-	  //hs->Add(histo3);
+	  hs->Add(histo3);
 	  hs->Add(histo4);
 	  hs->Add(histo2);
 	  hs->Add(histo1);
@@ -342,7 +344,7 @@ for (int j=0; j<10; j++) {
 
 	  histo6->Draw("same");
 	  histo7->Draw("same");
-	  histo5->Draw("ep same");
+	  //histo5->Draw("ep same");
 	  histo8->Draw("ep same");
 	  canvas->Modified();
 
@@ -375,14 +377,14 @@ for (int j=0; j<10; j++) {
 	  legend->SetTextSize(0.0395);
 	  legend->SetBorderSize(0.0);
 	  legend->SetMargin(0.3); 
-	  legend->AddEntry(histo5,"Muon Data", "p");
-	  legend->AddEntry(histo8,"Electron Data", "p");
+	  //legend->AddEntry(histo5,"Electron Data", "p");
+	  legend->AddEntry(histo8,"Data", "p");
 	  legend->AddEntry(histo7,"Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
 	  legend->AddEntry(histo6,"Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
 	  legend->AddEntry(histo1," t#bar{t}", "f");  
 	  legend->AddEntry(histo2,"W + Jets", "f");
 	  legend->AddEntry(histo4,"Z + Jets", "f");
-	//  legend->AddEntry(histo3,"Single Top", "f");
+	  legend->AddEntry(histo3,"Single Top", "f");
 	  legend->Draw();  
 
 	  // Get date for output file naming
