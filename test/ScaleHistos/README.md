@@ -16,7 +16,7 @@ $root StackedHistoMachineAK4_50ns.cc+
 
 or
 
-$root StackedHistoMachineAK4_50ns.cc+
+$root StackedHistoMachineAK4_25ns.cc+
 
 
 
