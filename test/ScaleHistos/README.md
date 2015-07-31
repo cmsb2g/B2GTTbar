@@ -1,5 +1,7 @@
 In order to:
 
+(NOTE: 50ns scripts include data as well as MC)
+
 plot all 10 AK8 histograms at once-
 
 $root StackedHistoMachineAK8_50ns.cc+
@@ -7,6 +9,16 @@ $root StackedHistoMachineAK8_50ns.cc+
 or
 
 $root StackedHistoMachineAK8_25ns.cc+ 
+
+plot all AK4 and lepton histograms at once-
+
+$root StackedHistoMachineAK4_50ns.cc+
+
+or
+
+$root StackedHistoMachineAK4_50ns.cc+
+
+
 
 To iteractively plot:
 
