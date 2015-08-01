@@ -15,66 +15,23 @@
 #include "TColor.h"
 using namespace std;
 
-//TO-DO-
-// AK4 : h_ptAK4, h_mAK4, h_bdiscAK4, h_ptLep
-// plot these: h_dRMin, h_2DCut
-
-
-
-
-
-
-// uncomment the lines like ' cin >> InFile1;' if you want to plot different root files 
-// but be sure to changes the lines like 'Double_t n_events1'
-
-
-// SEARCH
-//'change with histo' :to find differences btw each plot
-
 
 void callHistos();
-void StackedHistoMachineAK8_50ns_data();
+void StackedHistoMachineAK8_compare_25and50();
 void plotter( TString Histo );
 
 TString xxx;
 TString CalledHisto;
 
-void StackedHistoMachineAK8_50ns_data(){
+void StackedHistoMachineAK8_compare_25and50(){
     callHistos ();
 }
 
 void callHistos ( ){  
-    cout << "****************************************************" << endl;
-    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << "****************************************************" << endl;
-    cout << "****************************************************" << endl;
-    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << "****************************************************" << endl;
-    cout << "====================================================" << endl;
-    cout << "****************************************************" << endl;
-    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << "****************************************************" << endl;
-    cout << "Welcome to the interactive Stacked Histogram Machine" << endl;
-    cout << "----------------------------------------------------" << endl;
-    cout << "Now featuring 13 TeV data from CMS accompanied by MC" << endl;
-    cout << "----------------------------------------------------" << endl;
-    cout << "Current optimized histograms to plot are as follows:" << endl;
-    cout << "h_mAK8, h_mSDropAK8, h_mprunedAK8, h_mfilteredAK8   " << endl;
-    cout << "h_mtrimmedAK8, h_minmassAK8, h_ptAK8, h_nsjAK8      " << endl;
-    cout << "h_tau21AK8, h_tau32AK8                              " << endl;
-    cout << "----------------------------------------------------" << endl;
-    cout << "Please enter the UNIQUE name of your desired histo  " << endl;
-    cout << "         (e.g. I want h_mAK8 so I enter m )         " << endl;  
-    cout << "****************************************************" << endl;
-    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << "****************************************************" << endl;
+    cout << "Histogram to plot: 'h_'+X+'AK8' where options are: h_mAK8, h_mSDropAK8, h_mprunedAK8, h_mfilteredAK8, h_mtrimmedAK8,h_minmassAK8, h_ptAK8, h_nsjAK8, h_tau21AK8, h_tau32AK8. (e.g. I want h_mAK8 so I enter m etc...) " << endl;  
     cin >> xxx ;
     CalledHisto = "h_"+xxx+"AK8";
-    cout << "Your request for "+CalledHisto+" is being processed." << endl;
-    cout << "           Your patience is appreciated.            " << endl;
-    cout << "****************************************************" << endl;
-    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << "****************************************************" << endl;
+    cout << CalledHisto << endl;
     //TString CalledHisto = "h_mAK8";
     plotter( CalledHisto );
 }
@@ -90,14 +47,6 @@ double xInfo;
 double yInfoTop;
 double legendLocation [4];
 
-/*
-    TString xAxisTitle = "M_{jet}\0(GeV)"; 
-        minX = 10;
-        maxX = 550; 
-               xInfo = 0.301; //  location of plot description in normalized coordinates
-               yInfoTop = 0.868;
-    double legendLocation [4] = {0.440759, 0.320595, 0.750536, 0.611488 }; // {x1, y1, x2, y2} location of legend in normalized coordinates
-*/
 int histo = 0;
 
 if (Histo == "h_mAK8")
@@ -136,14 +85,14 @@ switch (histo)
     case 1 :{
     xAxisTitle = "M_{jet} (GeV)"; 
     minX = 20;
-    maxX = 600; 
-    maxY = 60;
-    xInfo = 0.301; //  location of plot description in normalized coordinates
+    maxX = 650; 
+    maxY = 600;
+    xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.38058;
-    legendLocation[1] = 0.377976;
-    legendLocation[2] = 0.700893;
-    legendLocation[3] = 0.668155;
+    legendLocation[0] = 0.313616;
+    legendLocation[1] = 0.4375;
+    legendLocation[2] = 0.613839;
+    legendLocation[3] = 0.877976;
     cout << "This histo is h_mAK8 " << endl;
   //  return xAxisTitle, minX, maxX, xInfo, yInfoTop, legendLocation [4];
     break;
@@ -151,86 +100,89 @@ switch (histo)
     case 2 :{ 
     xAxisTitle = "M_{jet} Soft Drop (GeV)"; 
     minX = 20;
-    maxX = 600; 
+    maxX = 700; 
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.370759;
+    legendLocation[0] = 0.308759;
     legendLocation[1] = 0.320595;
-    legendLocation[2] = 0.650536;
-    legendLocation[3] = 0.611488;
+    legendLocation[2] = 0.587536;
+    legendLocation[3] = 0.811488;
     cout << "This histo is n_mSDropAK8 " << endl;
     break;
     }
     case 3 :{
     xAxisTitle = "M_{jet} Trimmed (GeV)";
     minX = 10;
-    maxX = 500; 
+    maxX = 700; 
     xInfo = 0.341; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.324777;
     legendLocation[1] = 0.450893;
     legendLocation[2] = 0.675223;
-    legendLocation[3] = 0.651786;
+    legendLocation[3] = 0.751786;
     break;
     }
     case 4 :{
     xAxisTitle = "M_{jet} Pruned (GeV)";
     minX = 10;
-    maxX = 500; 
+    maxX = 700; 
     xInfo = 0.341; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.324777;
     legendLocation[1] = 0.416667;
     legendLocation[2] = 0.675223;
-    legendLocation[3] = 0.61756;
+    legendLocation[3] = 0.71756;
     break;
     }
     case 5 :{
     xAxisTitle = "M_{jet} Filtered (GeV)";
     minX = 10;
-    maxX = 500; 
+    maxX = 700; 
     xInfo = 0.341; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.363839;
     legendLocation[1] = 0.434524;
     legendLocation[2] = 0.714286;
-    legendLocation[3] = 0.635417;
+    legendLocation[3] = 0.735417;
     break;
     }
     case 6 :{
     xAxisTitle = "Minimum Mass Pairing of Subjets (GeV)"; 
     minX = 0;
-    maxX = 200; 
+    maxX = 300; 
+    maxY = 400;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.415179;
-    legendLocation[1] = 0.547619;
-    legendLocation[2] = 0.584821;
-    legendLocation[3] = 0.848214;
+    legendLocation[0] = 0.350446;
+    legendLocation[1] = 0.318452;
+    legendLocation[2] = 0.518973;
+    legendLocation[3] = 0.708333;
     cout << "This histo is h_minmassAK8 " << endl;
     break;
     }
     case 7 :{
     xAxisTitle = "#tau_{3}/#tau_{2}"; 
     minX = 0;
-    maxX = 1; 
+    maxX = 2; 
+    maxY = 600;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.100759;
     legendLocation[1] = 0.350595;
     legendLocation[2] = 0.470536;
-    legendLocation[3] = 0.651488;
+    legendLocation[3] = 0.751488;
     cout << "This histo is n_tau32AK8 " << endl;
     break;
     }
     case 8:{
     xAxisTitle = "#tau_{2}/#tau_{1}"; 
     minX = 0;
-    maxX = 1; 
+    maxX = 2; 
+    maxY = 600;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.290759;
-    legendLocation[1] = 0.700595;
+    legendLocation[1] = 0.600595;
     legendLocation[2] = 0.60036;
     legendLocation[3] = 0.891488;
     cout << "This histo is n_tau21AK8 " << endl;
@@ -239,26 +191,28 @@ switch (histo)
     case 9 :{
     xAxisTitle = "Number of Subjets"; 
     minX = 0;
-    maxX = 6; 
+    maxX = 20; 
+    maxY = 600;
     xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
-    legendLocation[0] = 0.290759;
-    legendLocation[1] = 0.700595;
-    legendLocation[2] = 0.60036;
-    legendLocation[3] = 0.891488;
-    cout << "This histo is n_nsjAK8 " << endl;
+    legendLocation[0] = 0.390759;
+    legendLocation[1] = 0.600595;
+    legendLocation[2] = 0.55036;
+    legendLocation[3] = 0.901488;
+    cout << "This histo is h_nsjAK8 " << endl;
     break;
     }
     case 10 :{
-    xAxisTitle = "Jet p_{T}"; 
+    xAxisTitle = "Jet p_{T} (GeV)"; 
     minX = 390;
     maxX = 1300; 
-    xInfo = 0.281; //  location of plot description in normalized coordinates
+    maxY = 400;
+    xInfo = 0.131; //  location of plot description in normalized coordinates
     yInfoTop = 0.868;
     legendLocation[0] = 0.256696;
     legendLocation[1] = 0.315476;
     legendLocation[2] = 0.607143;
-    legendLocation[3] = 0.616071;
+    legendLocation[3] = 0.716071;
     cout << "This histo is h_ptAK8 " << endl;
     break;    
     }
@@ -281,10 +235,22 @@ switch (histo)
   TString InFile2 = "July23-WJets-50ns-sel1";  // W + Jets                                                    
   TString InFile3 = "July23-ST-50ns-sel1";  // Single Top
   TString InFile4 = "July23-ZJets-50ns-sel1";  // Drell- Yan
-  TString InFile5 = "July23-MuData-50ns-sel1";  //Muon Data
+//  TString InFile5 = ;  //Data
   TString InFile6 = "July23-Z-200-50ns-sel1"; // Z' W= 200
   TString InFile7 = "July23-Z-20-50ns-sel1"; // Z' W = 20
-  TString InFile8 = "July23-ElData-50ns-sel1";  //Electron Data
+
+  TString InFile1b = "July23-TTJets-25ns-sel1";  // TT Jets
+  TString InFile2b = "July23-WJets-25ns-sel1";  // W + Jets                                                    
+  TString InFile3b = "July23-ST-25ns-sel1";  // Single Top
+  TString InFile4b = "July23-ZJets-25ns-sel1";  // Drell- Yan
+//  TString InFile5b = ;  //Data
+  TString InFile6b = "July23-Z-200-25ns-sel1"; // Z' W= 200
+  TString InFile7b = "July23-Z-20-25ns-sel1"; // Z' W = 20
+
+
+
+
+
 /*
   cout << "Name of t #bar{t}->Jets Semi-Leptonic root file " << endl; 
   cin >> InFile1;
@@ -306,41 +272,77 @@ switch (histo)
   TFile *PlotFile2 = TFile::Open("../"+InFile2+".root");   
   TFile *PlotFile3 = TFile::Open("../"+InFile3+".root");       
   TFile *PlotFile4 = TFile::Open("../"+InFile4+".root");  
-  TFile *PlotFile5 = TFile::Open("../"+InFile5+".root");       
+//  TFile *PlotFile5 = TFile::Open("../"+InFile5+".root");       
   TFile *PlotFile6 = TFile::Open("../"+InFile6+".root");  
   TFile *PlotFile7 = TFile::Open("../"+InFile7+".root"); 
-  TFile *PlotFile8 = TFile::Open("../"+InFile8+".root"); 
+
+  TFile *PlotFile1b = TFile::Open("../"+InFile1b+".root");       
+  TFile *PlotFile2b = TFile::Open("../"+InFile2b+".root");   
+  TFile *PlotFile3b = TFile::Open("../"+InFile3b+".root");       
+  TFile *PlotFile4b = TFile::Open("../"+InFile4b+".root");  
+//  TFile *PlotFile5b = TFile::Open("../"+InFile5b+".root");       
+  TFile *PlotFile6b = TFile::Open("../"+InFile6b+".root");  
+  TFile *PlotFile7b = TFile::Open("../"+InFile7b+".root"); 
 
   TH1F* histo1;
   TH1F* histo2;
   TH1F* histo3;
   TH1F* histo4;
-  TH1F* histo5;
+//  TH1F* histo5;
   TH1F* histo6;
   TH1F* histo7;
-  TH1F* histo8;
+
+  TH1F* histo1b;
+  TH1F* histo2b;
+  TH1F* histo3b;
+  TH1F* histo4b;
+//  TH1F* histo5b;
+  TH1F* histo6b;
+  TH1F* histo7b;
+
+
+
 
 //  TString Plot = Histo;
   histo1 = (TH1F*) PlotFile1->Get(Histo);
   histo2 = (TH1F*) PlotFile2->Get(Histo);
   histo3 = (TH1F*) PlotFile3->Get(Histo);
   histo4 = (TH1F*) PlotFile4->Get(Histo);
-  histo5 = (TH1F*) PlotFile5->Get(Histo);
+//  histo5 = (TH1F*) PlotFile5->Get(Histo);
   histo6 = (TH1F*) PlotFile6->Get(Histo);
   histo7 = (TH1F*) PlotFile7->Get(Histo);
-  histo8 = (TH1F*) PlotFile8->Get(Histo);
+
+  histo1b = (TH1F*) PlotFile1b->Get(Histo);
+  histo2b = (TH1F*) PlotFile2b->Get(Histo);
+  histo3b = (TH1F*) PlotFile3b->Get(Histo);
+  histo4b = (TH1F*) PlotFile4b->Get(Histo);
+//  histo5b = (TH1F*) PlotFile5b->Get(Histo);
+  histo6b = (TH1F*) PlotFile6b->Get(Histo);
+  histo7b = (TH1F*) PlotFile7b->Get(Histo);
+
+
 // @ set correct event numbers
 
   Double_t n_events1 = 4994250 ; // TTJets                     
   Double_t n_events2 = 24089991 ; // W->l+nu+Jets
   Double_t n_events3 = 3900814 ; // Single top
   Double_t n_events4 = 19925500 ; // Drell Yan
-
+//  Double_t n_events5 =  ; // Data
   Double_t n_events6 = 103854 ; //  Z'-> t tbar 2TeV W = 200
   Double_t n_events7 =  202573 ; //Z'-> t tbar 2TeV W = 20
 
+  Double_t n_events1b = 11339232; // TTJets                     
+  Double_t n_events2b = 24089991 ; // W->l+nu+Jets
+  Double_t n_events3b = 3900814 ; // Single top
+  Double_t n_events4b = 19925500 ; // Drell Yan
+//  Double_t n_events5b =  ; // Data
+  Double_t n_events6b = 103854 ; //  Z'-> t tbar 2TeV W = 200
+  Double_t n_events7b =  202573 ; //Z'-> t tbar 2TeV W = 20
 
-  Double_t lum = 5.59 ; // From JSON
+
+
+
+  Double_t lum = 1000 ; // Arbitrary
   Double_t xsTT = 831.76; // for 13 TeV from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO used top mass as 172.5, uncertainties on twiki	
   Double_t xsW = 20508.9;   // inclusive W  https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
   Double_t xsST = 136.02 ;   // t channel top at 13 TeV https://twiki.cern.ch/twiki/bin/viewauth/CMS/SingleTopSigma
@@ -358,20 +360,20 @@ switch (histo)
 
   
   histo1->Scale( xsTT * lum / n_events1 );  
-  histo1->SetFillColor(kRed+1);
+  histo1->SetLineColor(kRed+1);
 
 
   histo2->Scale( xsW * lum / n_events2 ); 
-  histo2->SetFillColor(kGreen+1); 
+  histo2->SetLineColor(kGreen+1); 
 
   histo3->Scale( xsST * lum / n_events3 ); 
-  histo3->SetFillColor(kMagenta+1);  
+  histo3->SetLineColor(kMagenta+1);  
 
   histo4->Scale( xsZ * lum / n_events4 ); 
-  histo4->SetFillColor(kBlue-4);  
+  histo4->SetLineColor(kBlue-4);  
 
- 
-  histo5->SetMarkerStyle(20); 
+//  histo5->Scale( xsZprime * lum / n_events5 ); 
+//  histo5->SetMarkerStyle(8); 
 //  histo5->SetBinError();  // https://root.cern.ch/root/html/TH1.html#TH1:SetBinError
 
   histo6->Scale( xsZprime * lum / n_events6 ); 
@@ -382,12 +384,39 @@ switch (histo)
   histo7->SetLineWidth(2);
   histo7->SetLineColor(kBlack);
 
-  histo8->SetMarkerStyle(22);
+  histo1b->Scale( xsTT * lum / n_events1b );  
+  histo1b->SetLineColor(kRed+1);
+  histo1b->SetLineStyle(2);
+
+  histo2b->Scale( xsW * lum / n_events2b ); 
+  histo2b->SetLineColor(kGreen+1); 
+  histo2b->SetLineStyle(2);
+
+  histo3b->Scale( xsST * lum / n_events3b ); 
+  histo3b->SetLineColor(kMagenta+1);  
+  histo3b->SetLineStyle(2);
+
+  histo4b->Scale( xsZ * lum / n_events4b ); 
+  histo4b->SetLineColor(kBlue-4);  
+  histo4b->SetLineStyle(2);
+
+//  histo5b->Scale( xsZprime * lum / n_events5b ); 
+//  histo5b->SetMarkerStyle(6); 
+//  histo5b->SetBinError();  // https://root.cern.ch/root/html/TH1.html#TH1:SetBinError
+//  histo5b->SetLineStyle(2);
+
+  histo6b->Scale( xsZprime * lum / n_events6b ); 
+  histo6b->SetLineWidth(2); 
+  histo6b->SetLineColor(kGray+1);
+  histo6b->SetLineStyle(2);
+
+  histo7b->Scale( xsZprime * lum / n_events7b ); 
+  histo7b->SetLineWidth(2);
+  histo7b->SetLineColor(kBlack);
+  histo7b->SetLineStyle(2);
 
   hs->Add(histo3);
-  hs->Add(histo4);
-  hs->Add(histo2);
-  hs->Add(histo1);
+  hs->SetMaximum(maxY);
 
   hs->Draw();
   hs->GetXaxis()->SetLabelSize(0.042);
@@ -402,22 +431,31 @@ switch (histo)
   hs->GetYaxis()->SetTitleOffset(1.2);
   hs->GetYaxis()->SetTitleSize(0.044);
 
-  hs->SetMaximum(maxY);
+  hs->GetYaxis()->SetLimits(0,700);
   hs->GetXaxis()->SetLimits(minX, maxX); // change with histo
   canvas->Modified();
 
-
+//  histo5->Draw("same");
   histo6->Draw("same");
   histo7->Draw("same");
-  histo5->Draw("ep same");
-  histo8->Draw("ep same");
+  histo4->Draw("same");
+  histo2->Draw("same");
+  histo1->Draw("same");
+  
+  histo6b->Draw("same");
+  histo7b->Draw("same");
+  histo4b->Draw("same");
+  histo2b->Draw("same");
+//  histo1b->Draw("same");
+  histo3b->Draw("same");
+  histo3b->GetYaxis()->SetRange(0,700);
   canvas->Modified();
 
   TLatex *tlx = new TLatex();
   tlx->SetNDC();
   tlx->SetTextFont(42);
   tlx->SetTextSize(0.057);
-  tlx->DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 1 fb^{-1}");
+  tlx->DrawLatex(0.251, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 1 fb^{-1}");
  // tlx->DrawLatex(0.77, 0.86, "#bf{CMS}");
  // tlx->DrawLatex(0.72, 0.83, "#it{very preliminary}");
   tlx->SetTextSize(0.025);
@@ -432,7 +470,8 @@ switch (histo)
   tlx->DrawLatex(xInfo, yInfo3, "#bf{AK R= 0.8}"); // 0.8 or 0.4 for AK8 and AK4              change with histo
   tlx->DrawLatex(xInfo, yInfo4, "#bf{|#eta| < 2.4 }");  // same for AK4 and AK8
   tlx->DrawLatex(xInfo, yInfo5, "#bf{P_{T} > 400 GeV}");// > 400 for AK8 and > 30 for AK4     change with histo
-  tlx->DrawLatex(xInfo, yInfo6, "#bf{50 ns}");  // change with 25 or 50 ns bunchcrossings     change with root files
+//  tlx->DrawLatex(xInfo, yInfo6, "#bf{#tau_{3}/#tau_{2} < 0.62}");
+//  tlx->DrawLatex(xInfo, yInfo6, "#bf{50 ns}");  // change with 25 or 50 ns bunchcrossings     change with root files
   canvas->Update();
 
 
@@ -442,14 +481,19 @@ switch (histo)
   legend->SetTextSize(0.0395);
   legend->SetBorderSize(0.0);
   legend->SetMargin(0.3); 
-  legend->AddEntry(histo5,"Muon Data", "p");
-  legend->AddEntry(histo8,"Electron Data", "p");
-  legend->AddEntry(histo7,"Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
-  legend->AddEntry(histo6,"Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
-  legend->AddEntry(histo1," t#bar{t}", "f");  
-  legend->AddEntry(histo2,"W + Jets", "f");
-  legend->AddEntry(histo4,"Z + Jets", "f");
-  legend->AddEntry(histo3,"Single Top", "f");
+//  legend->AddEntry(histo5,"Data", "p");
+  legend->AddEntry(histo7,"50ns, Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
+  legend->AddEntry(histo6,"50ns, Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
+  legend->AddEntry(histo1,"50ns, t#bar{t}", "l");  
+  legend->AddEntry(histo2,"50ns, W + Jets", "l");
+  legend->AddEntry(histo4,"50ns, Z + Jets", "l");
+  legend->AddEntry(histo3,"50ns, Single Top", "l");
+  legend->AddEntry(histo7b,"25ns, Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
+  legend->AddEntry(histo6b,"25ns, Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
+ // legend->AddEntry(histo1b,"25ns, t#bar{t}", "l");  
+  legend->AddEntry(histo2b,"25ns, W + Jets", "l");
+  legend->AddEntry(histo4b,"25ns, Z + Jets", "l");
+  legend->AddEntry(histo3b,"25ns, Single Top", "l");
   legend->Draw();  
 
   // Get date for output file naming
@@ -463,7 +507,7 @@ switch (histo)
   canvas->Update();
   canvas->Modified();
  // Name the stacked histogram
-  canvas->Print("./Stacked/QualityCuts_50ns_"+CalledHisto+"_"+day+"_"+month+"_"+year+".png");
+  canvas->Print("./Stacked/QualityCuts_compare_25and50_"+CalledHisto+"_"+day+"_"+month+"_"+year+".png");
 
 }
 
