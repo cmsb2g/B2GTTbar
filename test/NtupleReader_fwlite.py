@@ -149,6 +149,19 @@ parser.add_option('--isMC', action='store_true',
                   dest='isMC',
                   help='is it MC?')
 
+
+parser.add_option('--xrootd', type='string', action='store',
+                  default=None,
+                  dest='xrootd',
+                  help='xrootd redirector. Try root://cmsxrootd.fnal.gov//')
+
+parser.add_option('--applyFilters', action='store_true',
+                  default=False,
+                  dest='applyFilters',
+                  help='Apply MET filters')
+
+
+
 (options, args) = parser.parse_args()
 argv = []
 
@@ -394,6 +407,20 @@ h_subjetsAK8Phi = Handle( "std::vector<float>")
 l_subjetsAK8Phi = ("subjetsCmsTopTag", "subjetCmsTopTagPhi")
 h_subjetsAK8Mass = Handle( "std::vector<float>")
 l_subjetsAK8Mass = ("subjetsCmsTopTag", "subjetCmsTopTagMass")
+
+
+
+
+# MET and HCAL Filter handles
+h_filterNameStrings = Handle( "std::vector<std::string>")
+l_filterNameStrings = ("METUserData", "triggerNameTree")
+h_filterBits = Handle( "std::vector<float>")
+l_filterBits = ("METUserData", "triggerBitTree")
+h_filterPrescales = Handle( "std::vector<int>")
+l_filterPrescales = ("METUserData", "triggerPrescaleTree")
+h_HBHEfilter = Handle("bool")
+l_HBHEfilter = ("HBHENoiseFilterResultProducer", "HBHENoiseFilterResultRun1")
+
 
 # @@@ add histos for subjet pairwise masses m12, m13, and m23 then histos and cut-flow
 
@@ -1413,9 +1440,11 @@ filesraw = filelist.readlines()
 files = []
 nevents = 0
 for ifile in filesraw : #{ Loop over text file and find root files linked
-    if len( ifile ) > 2 : 
-        #s = 'root://cmsxrootd.fnal.gov/' + ifile.rstrip()
-        s = ifile.rstrip()
+    if len( ifile ) > 2 :
+        if options.xrootd != None : 
+            s = options.xrootd + ifile.rstrip()
+        else : 
+            s = ifile.rstrip()
         files.append( s )
         print 'Added ' + s
         #} End loop over txt file
@@ -1429,6 +1458,15 @@ for ifile in files : #{ Loop over root files
     if options.maxevents > 0 and nevents > options.maxevents :
         break
 
+
+    # Make sure the handles we want are in the files so we can
+    # avoid leaking memory
+    readFilters = True
+    
+
+    
+
+    
     neventsInFile = events.size()
     if neventsInFile <= 0 : 
         continue
@@ -1447,6 +1485,59 @@ for ifile in files : #{ Loop over root files
             print '    ---> Event ' + str(nevents)
 
 
+
+
+
+        if options.applyFilters and readFilters :
+            cscFilt = False
+            vertexFilt = False
+            hbheFilt = False
+
+            
+            gotit1 = event.getByLabel( l_filterNameStrings, h_filterNameStrings )
+            gotit2 = event.getByLabel( l_filterBits, h_filterBits )
+            #gotit3 = event.getByLabel( l_filterPrescales, h_filterPrescales )
+            #gotit4 = event.getByLabel( l_HBHEfilter, h_HBHEfilter )
+
+
+            if options.verbose :
+                print 'Filter string names?  ' + str(gotit1)
+                print 'Filter bits?          ' + str(gotit2)
+
+            if gotit1 == False or gotit2 == False  :
+                readFilters = False
+
+            filterNameStrings = h_filterNameStrings.product()
+            filterBits = h_filterBits.product()
+            
+            for itrig in xrange(0, len(filterNameStrings) ) :
+                if options.verbose :
+                    print 'Filter name = ' + filterNameStrings[itrig]
+                    print 'Filter bit  = ' + str(filterBits[itrig])
+                if "CSC" in filterNameStrings[itrig] :
+                    if filterBits[itrig] == 1 :
+                        cscFilt = True
+                # (Apply vertex filter later)
+                #if "goodVer" in filterNameStrings[itrig] :
+                #    if filterBits[itrig] == 1 :
+                #        vertexFilt = True
+                # (For now turn off HBHE filter, needs re-miniaod)
+                #if "HBHE" in filterNameStrings[itrig] :
+                #    if filterBits[itrig] == 1 :
+                #        hbheFilt = True
+
+
+            if cscFilt == False :
+                if options.verbose :
+                    print 'Found filters, but they failed'
+                continue
+
+        if not readFilters :
+            if options.verbose :
+                print 'Did not find filters'
+            continue
+
+            
         if options.isMC :
             #@ Generator information
             genEIndex = []
