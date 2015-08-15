@@ -11,6 +11,9 @@
 ##################
 
 
+
+
+
 #@ CONFIGURATION
 
 from optparse import OptionParser
@@ -161,6 +164,20 @@ parser.add_option('--applyFilters', action='store_true',
                   help='Apply MET filters')
 
 
+parser.add_option('--quickSelect', action='store_true',
+                  default=False,
+                  dest='quickSelect',
+                  help='Require AK8 pt > min immediately to remove low-pt events')
+
+parser.add_option('--njobs', type='int', action='store',
+                  default=None,
+                  dest='njobs',
+                  help='Number of jobs in total')
+
+parser.add_option('--job', type='int', action='store',
+                  default=None,
+                  dest='job',
+                  help='This job number')
 
 (options, args) = parser.parse_args()
 argv = []
@@ -1435,8 +1452,24 @@ if options.isMC :
     genHadEvents = 0
 
 
+
+
+
 filelist = file( options.files )
-filesraw = filelist.readlines()
+filesraw1 = filelist.readlines()
+
+if options.njobs != None and options.njobs > 1 and options.job >= 0 and options.job < options.njobs : 
+    from grouptools import *
+
+    filesraw2 = groupfiles( filesraw1, options.njobs )
+
+    print 'Raw files:'
+    print filesraw2
+
+    filesraw = filesraw2[options.job]
+else :
+    filesraw = filesraw1
+
 files = []
 nevents = 0
 for ifile in filesraw : #{ Loop over text file and find root files linked
@@ -1537,6 +1570,14 @@ for ifile in files : #{ Loop over root files
                 print 'Did not find filters'
             continue
 
+
+        if options.quickSelect :
+            event.getByLabel ( l_jetsAK8Pt, h_jetsAK8Pt )
+            ak8jetpts = h_jetsAK8Pt.product()
+            if len(ak8jetpts) == 0 :
+                continue
+            if h_jetsAK8Pt.product()[0] < options.minAK8Pt :
+                continue
             
         if options.isMC :
             #@ Generator information
@@ -2419,7 +2460,8 @@ for ifile in files : #{ Loop over root files
         if not Leptonic : 
             #EVENT AK8 HANDLES
             event.getByLabel ( l_jetsAK8Eta, h_jetsAK8Eta )
-            event.getByLabel ( l_jetsAK8Pt, h_jetsAK8Pt )
+            if not options.quickSelect : 
+                event.getByLabel ( l_jetsAK8Pt, h_jetsAK8Pt )
             event.getByLabel ( l_jetsAK8Phi, h_jetsAK8Phi )
             event.getByLabel ( l_jetsAK8Mass, h_jetsAK8Mass )
             event.getByLabel ( l_jetsAK8Energy, h_jetsAK8Energy )
@@ -3705,3 +3747,7 @@ if options.isMC :
 f.cd()
 f.Write()
 f.Close()
+
+
+print 'So long, and thanks for all the fish!'
+
