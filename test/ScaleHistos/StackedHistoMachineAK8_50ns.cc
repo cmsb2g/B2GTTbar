@@ -324,7 +324,7 @@ for (int j=0; j<10; j++) {
 	  hs->Add(histo2);
 	  hs->Add(histo1);
 
-	  hs->Draw();
+	  hs->Draw("hist");
 	  hs->GetXaxis()->SetLabelSize(0.042);
 	  hs->GetYaxis()->SetLabelSize(0.042);
 

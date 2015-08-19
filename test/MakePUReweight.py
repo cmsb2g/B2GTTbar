@@ -10,6 +10,9 @@ hMC = fMC.Get("h_NPVert")
 hData.Sumw2()
 hMC.Sumw2()
 
+hData.Scale( 1.0 / hData.Integral() )
+hMC.Scale( 1.0 / hMC.Integral() )
+
 hData.Divide( hMC )
 
 hData.Draw("e")
