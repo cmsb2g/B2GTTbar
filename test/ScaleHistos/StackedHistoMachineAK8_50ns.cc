@@ -101,9 +101,9 @@ for (int j=0; j<10; j++) {
 	    maxY = 45;
 	    xInfo = 0.131; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.370759;
+	    legendLocation[0] = 0.570759;
 	    legendLocation[1] = 0.320595;
-	    legendLocation[2] = 0.650536;
+	    legendLocation[2] = 0.850536;
 	    legendLocation[3] = 0.611488;
 	    cout << "This histo is n_mSDropAK8 " << endl;
 	    break;
@@ -115,9 +115,9 @@ for (int j=0; j<10; j++) {
 	    maxY = 45;
 	    xInfo = 0.341; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.324777;
+	    legendLocation[0] = 0.524777;
 	    legendLocation[1] = 0.350893;
-	    legendLocation[2] = 0.675223;
+	    legendLocation[2] = 0.875223;
 	    legendLocation[3] = 0.651786;
 	    break;
 	    }
@@ -128,9 +128,9 @@ for (int j=0; j<10; j++) {
 	    maxY = 45;
 	    xInfo = 0.341; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.324777;
+	    legendLocation[0] = 0.524777;
 	    legendLocation[1] = 0.350893;
-	    legendLocation[2] = 0.675223;
+	    legendLocation[2] = 0.875223;
 	    legendLocation[3] = 0.651786;
 	    break;
 	    }
@@ -141,9 +141,9 @@ for (int j=0; j<10; j++) {
 	    maxY = 45;
 	    xInfo = 0.341; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.324777;
+	    legendLocation[0] = 0.524777;
 	    legendLocation[1] = 0.350893;
-	    legendLocation[2] = 0.675223;
+	    legendLocation[2] = 0.875223;
 	    legendLocation[3] = 0.651786;
 	    break;
 	    }
@@ -209,9 +209,9 @@ for (int j=0; j<10; j++) {
 	    maxX = 1300; 
 	    xInfo = 0.281; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.256696;
+	    legendLocation[0] = 0.356696;
 	    legendLocation[1] = 0.315476;
-	    legendLocation[2] = 0.607143;
+	    legendLocation[2] = 0.707143;
 	    legendLocation[3] = 0.616071;
 	    cout << "This histo is h_ptAK8 " << endl;
 	    break;    
@@ -226,14 +226,14 @@ for (int j=0; j<10; j++) {
 	  THStack *hs = new THStack();
 
 	//  @ set the Infile names (.root assumed)
-	  TString InFile1 = "July30n-TTJets-50ns-sel1";  // TT Jets
-	  TString InFile2 = "July30n-Wjets-50ns-sel1";  // W + Jets                                                    
-	  TString InFile3 = "July30n-ST-50ns-sel1";  // Single Top
-	  TString InFile4 = "July30n-Zjets-50ns-sel1";  // Drell- Yan
-	  TString InFile5 = "July30n-MuData-50ns-sel1";  //Muon Data
+	  TString InFile1 = "ttjets_b2ganafw_v4_sel1";  // TT Jets
+	  TString InFile2 = "wjets_b2ganafw_v4_sel1";  // W + Jets                                                    
+	  TString InFile3 = "singletop_v74x_v4.3_tchan_local_sel1";  // Single Top
+	  TString InFile4 = "zjets_b2ganafw_v4_sel1";  // Drell- Yan
+	  TString InFile5 = "singlemu_v74x_v4.3_sel1";  //Muon Data
 	  TString InFile6 = "July30n-Z-200-50ns-sel1"; // Z' W= 200
 	  TString InFile7 = "July30n-Z-20-50ns-sel1"; // Z' W = 20
-	  TString InFile8 = "July30n-ElData-50ns-sel1";  //Electron Data
+	  TString InFile8 = "singleel_v74x_v4.3_sel1";  //Electron Data
 
 	  TFile *PlotFile1 = TFile::Open("../"+InFile1+".root");       
 	  TFile *PlotFile2 = TFile::Open("../"+InFile2+".root");   
@@ -316,7 +316,7 @@ for (int j=0; j<10; j++) {
 	  histo7->SetLineColor(kBlack);
           
           histo8->Sumw2();
-          histo8->Add(1, histo5);
+          histo8->Add(histo5);
 	  histo8->SetMarkerStyle(20);
 
 	  hs->Add(histo3);

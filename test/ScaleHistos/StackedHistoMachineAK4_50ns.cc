@@ -124,14 +124,14 @@ for (int j=0; j<3; j++) {
 	  THStack *hs = new THStack();
 
 	//  @ set the Infile names (.root assumed)
-	  TString InFile1 = "July30n-TTJets-50ns-sel1";  // TT Jets
-	  TString InFile2 = "July30n-Wjets-50ns-sel1";  // W + Jets                                                    
-	  TString InFile3 = "July30n-ST-50ns-sel1";  // Single Top
-	  TString InFile4 = "July30n-Zjets-50ns-sel1";  // Drell- Yan
-	  TString InFile5 = "July30n-MuData-50ns-sel1";  //Muon Data
+	  TString InFile1 = "ttjets_b2ganafw_v4_sel1";  // TT Jets
+	  TString InFile2 = "wjets_b2ganafw_v4_sel1";  // W + Jets                                                    
+	  TString InFile3 = "singletop_v74x_v4.3_tchan_local_sel1";  // Single Top
+	  TString InFile4 = "zjets_b2ganafw_v4_sel1";  // Drell- Yan
+	  TString InFile5 = "singlemu_v74x_v4.3_sel1";  //Muon Data
 	  TString InFile6 = "July30n-Z-200-50ns-sel1"; // Z' W= 200
 	  TString InFile7 = "July30n-Z-20-50ns-sel1"; // Z' W = 20
-	  TString InFile8 = "July30n-ElData-50ns-sel1";  //Electron Data
+	  TString InFile8 = "singleel_v74x_v4.3_sel1";  //Electron Data
 
 	  TFile *PlotFile1 = TFile::Open("../"+InFile1+".root");       
 	  TFile *PlotFile2 = TFile::Open("../"+InFile2+".root");   
@@ -242,8 +242,8 @@ for (int j=0; j<3; j++) {
 
 	  histo6->Draw("same");
 	  histo7->Draw("same");
-	  //histo5->Draw("ep same");
-	  histo8->Draw("ep same");
+	  histo5->Draw("ep same");
+	  //histo8->Draw("ep same");
 	  canvas->Modified();
 
 	  TLatex *tlx = new TLatex();
