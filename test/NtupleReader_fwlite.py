@@ -186,6 +186,11 @@ parser.add_option('--puFile', type='string', action='store',
                   dest='puFile',
                   help='Name of Pileup File')
 
+parser.add_option('--showEvents', type='int', action='store',
+                  default=0,
+                  dest='showEvents',
+                  help='Number of events to print')
+
 (options, args) = parser.parse_args()
 argv = []
 
@@ -1410,6 +1415,10 @@ if not options.isMC :
     vParJecAK8.push_back(ResJetParAK8)
 
 ak8JetCorrector = ROOT.FactorizedJetCorrector(vParJecAK8)
+
+
+#@ Run / lumi / event numbers
+runNumbers = []
 
 
 #@ EVENT LOOP
@@ -2764,6 +2773,9 @@ for ifile in files : #{ Loop over root files
             NPassminAK8PtCut = NPassminAK8PtCut + 1
 
 
+            if options.showEvents > 0 : 
+                runNumbers.append( [event.object().id().run(), event.object().luminosityBlock(), event.object().id().event()] ) 
+
             mAK8Pruned = AK8PrunedM[0] 
             mAK8Filtered = AK8FilteredM[0] 
             mAK8Trimmed = AK8TrimmedM[0]
@@ -3788,6 +3800,13 @@ f.cd()
 f.Write()
 f.Close()
 
+if options.showEvents > 0 :
+    print '%15s %15s %15s' % ("Run", "Lumi", "Event")
+    
+    for irun, run in enumerate(runNumbers) :
+        if irun > options.showEvents :
+            break
+        print '%15d %15d %15d' % (run[0], run[1], run[2])
 
 print 'So long, and thanks for all the fish!'
 
