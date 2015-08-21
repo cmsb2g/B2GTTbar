@@ -72,7 +72,7 @@ parser.add_option('--bDiscMin', type='float', action='store',
 #                  help='Minimum b discriminator - Tight')
 
 parser.add_option('--minMuonPt', type='float', action='store',
-                  default=30.,
+                  default=45.,
                   dest='minMuonPt',
                   help='Minimum PT for muons')
 
@@ -82,7 +82,7 @@ parser.add_option('--maxMuonEta', type='float', action='store',
                   help='Maximum muon pseudorapidity')
 
 parser.add_option('--minElectronPt', type='float', action='store',
-                  default=30.,
+                  default=45.,
                   dest='minElectronPt',
                   help='Minimum PT for electrons')
 
@@ -165,6 +165,11 @@ parser.add_option('--applyFilters', action='store_true',
                   help='Apply MET filters')
 
 
+parser.add_option('--applyTriggers', action='store_true',
+                  default=False,
+                  dest='applyTriggers',
+                  help='Apply triggers')
+
 parser.add_option('--quickSelect', action='store_true',
                   default=False,
                   dest='quickSelect',
@@ -191,6 +196,19 @@ parser.add_option('--showEvents', type='int', action='store',
                   default=0,
                   dest='showEvents',
                   help='Number of events to print')
+
+
+parser.add_option('--writeTree', action='store_true',
+                  default=False,
+                  dest='writeTree',
+                  help='Write "baby tree"')
+
+
+
+parser.add_option('--reweightTopPt', action='store_true',
+                  default=False,
+                  dest='reweightTopPt',
+                  help='Reweight top pt spectrum')
 
 (options, args) = parser.parse_args()
 argv = []
@@ -452,7 +470,13 @@ h_HBHEfilter = Handle("bool")
 l_HBHEfilter = ("HBHENoiseFilterResultProducer", "HBHENoiseFilterResultRun1")
 
 
-
+# Triggers
+h_triggerNameStrings = Handle( "std::vector<std::string>")
+l_triggerNameStrings = ("TriggerUserData", "triggerNameTree")
+h_triggerBits = Handle( "std::vector<float>")
+l_triggerBits = ("TriggerUserData", "triggerBitTree")
+h_triggerPrescales = Handle( "std::vector<int>")
+l_triggerPrescales = ("TriggerUserData", "triggerPrescaleTree")
 
 #@ MODMASS
 FmodMass = ROOT.TFile("MODMASS.root")
@@ -504,6 +528,7 @@ ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassFatMinMass , False )
 
 
 
+reweightTopPt = ROOT.TF1("reweightTopPt", "6.5e-4 + 0.9", 0, 13000)
 
 # @@@ add histos for subjet pairwise masses m12, m13, and m23 then histos and cut-flow
 
@@ -513,275 +538,276 @@ f.cd()
 
 #~ Tree initializations
 
-TreeSemiLept = ROOT.TTree("TreeSemiLept", "TreeSemiLept")
-FatJetPt            = array('f', [-1.])
-FatJetEta           = array('f', [-1.])
-FatJetPhi           = array('f', [-1.])
-FatJetRap           = array('f', [-1.])
-FatJetPx            = array('f', [-1.])
-FatJetPy            = array('f', [-1.])
-FatJetPz            = array('f', [-1.])
-FatJetEnergy        = array('f', [-1.])
-FatJetRhoRatio      = array('f', [-1.])
-FatJetMass          = array('f', [-1.])
-FatJetMassSoftDrop  = array('f', [-1.])
-FatJetMassPruned    = array('f', [-1.])
-FatJetMassFiltered  = array('f', [-1.])
-FatJetMassTrimmed   = array('f', [-1.])
-FatJetTau1          = array('f', [-1.]) 
-FatJetTau2          = array('f', [-1.]) 
-FatJetTau3          = array('f', [-1.]) 
-FatJetTau32         = array('f', [-1.])
-FatJetTau21         = array('f', [-1.]) 
-FatJetSDnsubjets    = array('f', [-1.])
-FatJetSDbdisc0      = array('f', [-1.])
-FatJetSDbdisc1      = array('f', [-1.])
-FatJetSDmaxbdisc    = array('f', [-1.])
-FatJetSDsubjet0pt   = array('f', [-1.])
-FatJetSDsubjet0mass = array('f', [-1.])
-FatJetSDsubjet1pt   = array('f', [-1.])
-FatJetSDsubjet1mass = array('f', [-1.])
-FatJetCMSmaxbdisc   = array('f', [-1.])
-FatJetCMSnsubjets   = array('f', [-1.])
-FatJetCMSminMass    = array('f', [-1.])
-FatJetCMSm01        = array('f', [-1.])
-FatJetCMSm02        = array('f', [-1.])
-FatJetCMSm12        = array('f', [-1.])
+if options.writeTree : 
+    TreeSemiLept = ROOT.TTree("TreeSemiLept", "TreeSemiLept")
+    FatJetPt            = array('f', [-1.])
+    FatJetEta           = array('f', [-1.])
+    FatJetPhi           = array('f', [-1.])
+    FatJetRap           = array('f', [-1.])
+    FatJetPx            = array('f', [-1.])
+    FatJetPy            = array('f', [-1.])
+    FatJetPz            = array('f', [-1.])
+    FatJetEnergy        = array('f', [-1.])
+    FatJetRhoRatio      = array('f', [-1.])
+    FatJetMass          = array('f', [-1.])
+    FatJetMassSoftDrop  = array('f', [-1.])
+    FatJetMassPruned    = array('f', [-1.])
+    FatJetMassFiltered  = array('f', [-1.])
+    FatJetMassTrimmed   = array('f', [-1.])
+    FatJetTau1          = array('f', [-1.]) 
+    FatJetTau2          = array('f', [-1.]) 
+    FatJetTau3          = array('f', [-1.]) 
+    FatJetTau32         = array('f', [-1.])
+    FatJetTau21         = array('f', [-1.]) 
+    FatJetSDnsubjets    = array('f', [-1.])
+    FatJetSDbdisc0      = array('f', [-1.])
+    FatJetSDbdisc1      = array('f', [-1.])
+    FatJetSDmaxbdisc    = array('f', [-1.])
+    FatJetSDsubjet0pt   = array('f', [-1.])
+    FatJetSDsubjet0mass = array('f', [-1.])
+    FatJetSDsubjet1pt   = array('f', [-1.])
+    FatJetSDsubjet1mass = array('f', [-1.])
+    FatJetCMSmaxbdisc   = array('f', [-1.])
+    FatJetCMSnsubjets   = array('f', [-1.])
+    FatJetCMSminMass    = array('f', [-1.])
+    FatJetCMSm01        = array('f', [-1.])
+    FatJetCMSm02        = array('f', [-1.])
+    FatJetCMSm12        = array('f', [-1.])
 
-LeptonPt            = array('f', [-1.])
-LeptonEta           = array('f', [-1.])
-LeptonPhi           = array('f', [-1.])
-LeptonPx            = array('f', [-1.])
-LeptonPy            = array('f', [-1.])
-LeptonPz            = array('f', [-1.])
-LeptonEnergy        = array('f', [-1.])
+    LeptonPt            = array('f', [-1.])
+    LeptonEta           = array('f', [-1.])
+    LeptonPhi           = array('f', [-1.])
+    LeptonPx            = array('f', [-1.])
+    LeptonPy            = array('f', [-1.])
+    LeptonPz            = array('f', [-1.])
+    LeptonEnergy        = array('f', [-1.])
 
-SemiLepMETpx        = array('f', [-1.])
-SemiLepMETpy        = array('f', [-1.])
-SemiLepMETpt        = array('f', [-1.])
-SemiLepMETphi       = array('f', [-1.])
-SemiLepNvtx         = array('f', [-1.])
-SemiLepEventWeight  = array('f', [-1.])
+    SemiLepMETpx        = array('f', [-1.])
+    SemiLepMETpy        = array('f', [-1.])
+    SemiLepMETpt        = array('f', [-1.])
+    SemiLepMETphi       = array('f', [-1.])
+    SemiLepNvtx         = array('f', [-1.])
+    SemiLepEventWeight  = array('f', [-1.])
 
-SemilLepTTmass      = array('f', [-1.])
-DeltaPhiLepFat      = array('f', [-1.]) 
-
-
-TreeSemiLept.Branch('FatJetPt'            , FatJetPt            ,  'FatJetPt/F'            )
-TreeSemiLept.Branch('FatJetEta'           , FatJetEta           ,  'FatJetEta/F'           )
-TreeSemiLept.Branch('FatJetPhi'           , FatJetPhi           ,  'FatJetPhi/F'           )
-TreeSemiLept.Branch('FatJetRap'           , FatJetRap           ,  'FatJetRap/F'           )
-TreeSemiLept.Branch('FatJetPx'            , FatJetPx            ,  'FatJetPx/F'            )
-TreeSemiLept.Branch('FatJetPy'            , FatJetPy            ,  'FatJetPy/F'            )
-TreeSemiLept.Branch('FatJetPz'            , FatJetPz            ,  'FatJetPz/F'            )
-TreeSemiLept.Branch('FatJetEnergy'        , FatJetEnergy        ,  'FatJetEnergy/F'        )
-TreeSemiLept.Branch('FatJetRhoRatio'      , FatJetRhoRatio      ,  'FatJetRhoRatio/F'      )
-TreeSemiLept.Branch('FatJetMass'          , FatJetMass          ,  'FatJetMass/F'          )
-TreeSemiLept.Branch('FatJetMassSoftDrop'  , FatJetMassSoftDrop  ,  'FatJetMassSoftDrop/F'  )
-TreeSemiLept.Branch('FatJetMassPruned'    , FatJetMassPruned    ,  'FatJetMassPruned/F'    )
-TreeSemiLept.Branch('FatJetMassFiltered'  , FatJetMassFiltered  ,  'FatJetMassFiltered/F'  )
-TreeSemiLept.Branch('FatJetMassTrimmed'   , FatJetMassTrimmed   ,  'FatJetMassTrimmed/F'   )
-TreeSemiLept.Branch('FatJetTau1'          , FatJetTau1          ,  'FatJetTau1/F'          )
-TreeSemiLept.Branch('FatJetTau2'          , FatJetTau2          ,  'FatJetTau2/F'          )
-TreeSemiLept.Branch('FatJetTau3'          , FatJetTau3          ,  'FatJetTau3/F'          )
-TreeSemiLept.Branch('FatJetTau32'         , FatJetTau32         ,  'FatJetTau32/F'         )
-TreeSemiLept.Branch('FatJetTau21'         , FatJetTau21         ,  'FatJetTau21/F'         )
-TreeSemiLept.Branch('FatJetSDnsubjets'    , FatJetSDnsubjets    ,  'FatJetSDnsubjets/F'    )
-TreeSemiLept.Branch('FatJetSDbdisc0'      , FatJetSDbdisc0      ,  'FatJetSDbdisc0/F'      )
-TreeSemiLept.Branch('FatJetSDbdisc1'      , FatJetSDbdisc1      ,  'FatJetSDbdisc1/F'      )
-TreeSemiLept.Branch('FatJetSDmaxbdisc'    , FatJetSDmaxbdisc    ,  'FatJetSDmaxbdisc/F'    )
-TreeSemiLept.Branch('FatJetSDsubjet0pt'   , FatJetSDsubjet0pt   ,  'FatJetSDsubjet0pt/F'   )
-TreeSemiLept.Branch('FatJetSDsubjet0mass' , FatJetSDsubjet0mass ,  'FatJetSDsubjet0mass/F' )
-TreeSemiLept.Branch('FatJetSDsubjet1pt'   , FatJetSDsubjet1pt   ,  'FatJetSDsubjet1pt/F'   )
-TreeSemiLept.Branch('FatJetSDsubjet1mass' , FatJetSDsubjet1mass ,  'FatJetSDsubjet1mass/F' )
-TreeSemiLept.Branch('FatJetCMSmaxbdisc'   , FatJetCMSmaxbdisc   ,  'FatJetCMSmaxbdisc/F'   )
-TreeSemiLept.Branch('FatJetCMSnsubjets'   , FatJetCMSnsubjets   ,  'FatJetCMSnsubjets/F'   )
-TreeSemiLept.Branch('FatJetCMSminMass'    , FatJetCMSminMass    ,  'FatJetCMSminMass/F'    )
-TreeSemiLept.Branch('FatJetCMSm01'        , FatJetCMSm01        ,  'FatJetCMSm01/F'        )
-TreeSemiLept.Branch('FatJetCMSm02'        , FatJetCMSm02        ,  'FatJetCMSm02/F'        )
-TreeSemiLept.Branch('FatJetCMSm12'        , FatJetCMSm12        ,  'FatJetCMSm12/F'        )
-TreeSemiLept.Branch('LeptonPt'            , LeptonPt            ,  'LeptonPt/F'            )
-TreeSemiLept.Branch('LeptonEta'           , LeptonEta           ,  'LeptonEta/F'           )
-TreeSemiLept.Branch('LeptonPhi'           , LeptonPhi           ,  'LeptonPhi/F'           )
-TreeSemiLept.Branch('LeptonPx'            , LeptonPx            ,  'LeptonPx/F'            )
-TreeSemiLept.Branch('LeptonPy'            , LeptonPy            ,  'LeptonPy/F'            )
-TreeSemiLept.Branch('LeptonPz'            , LeptonPz            ,  'LeptonPz/F'            )
-TreeSemiLept.Branch('LeptonEnergy'        , LeptonEnergy        ,  'LeptonEnergy/F'        )
-TreeSemiLept.Branch('SemiLepMETpx'        , SemiLepMETpx        ,  'SemiLepMETpx/F'        )
-TreeSemiLept.Branch('SemiLepMETpy'        , SemiLepMETpy        ,  'SemiLepMETpy/F'        )
-TreeSemiLept.Branch('SemiLepMETpt'        , SemiLepMETpt        ,  'SemiLepMETpt/F'        )
-TreeSemiLept.Branch('SemiLepMETphi'       , SemiLepMETphi       ,  'SemiLepMETphi/F'       )
-TreeSemiLept.Branch('SemiLepNvtx'         , SemiLepNvtx         ,  'SemiLepNvtx/F'         )
-TreeSemiLept.Branch('SemiLepEventWeight'  , SemiLepEventWeight  ,  'SemiLepEventWeight/F'  )
-TreeSemiLept.Branch('SemilLepTTmass'      , SemilLepTTmass      ,  'SemilLepTTmass/F'      )
-TreeSemiLept.Branch('DeltaPhiLepFat'      , DeltaPhiLepFat      ,  'DeltaPhiLepFat/F'      )
+    SemilLepTTmass      = array('f', [-1.])
+    DeltaPhiLepFat      = array('f', [-1.]) 
 
 
-TreeAllHad = ROOT.TTree("TreeAllHad", "TreeAllHad")
-Jet0Pt            = array('f', [-1.])
-Jet0Eta           = array('f', [-1.])
-Jet0Phi           = array('f', [-1.])
-Jet0Rap           = array('f', [-1.])
-Jet0Px            = array('f', [-1.])
-Jet0Py            = array('f', [-1.])
-Jet0Pz            = array('f', [-1.])
-Jet0Energy        = array('f', [-1.])
-Jet0RhoRatio      = array('f', [-1.])
-Jet0Mass          = array('f', [-1.])
-Jet0MassSoftDrop  = array('f', [-1.])
-Jet0MassPruned    = array('f', [-1.])
-Jet0MassFiltered  = array('f', [-1.])
-Jet0MassTrimmed   = array('f', [-1.])
-Jet0Tau1          = array('f', [-1.])
-Jet0Tau2          = array('f', [-1.])
-Jet0Tau3          = array('f', [-1.])
-Jet0Tau32         = array('f', [-1.])
-Jet0Tau21         = array('f', [-1.])
-Jet0SDnsubjets    = array('f', [-1.])
-Jet0SDbdisc0      = array('f', [-1.])
-Jet0SDbdisc1      = array('f', [-1.])
-Jet0SDmaxbdisc    = array('f', [-1.])
-Jet0SDsubjet0pt   = array('f', [-1.])
-Jet0SDsubjet0mass = array('f', [-1.])
-Jet0SDsubjet1pt   = array('f', [-1.])
-Jet0SDsubjet1mass = array('f', [-1.])
-Jet0CMSmaxbdisc   = array('f', [-1.])
-Jet0CMSnsubjets   = array('f', [-1.])
-Jet0CMSminMass    = array('f', [-1.])
-Jet0CMSm01        = array('f', [-1.])
-Jet0CMSm02        = array('f', [-1.])
-Jet0CMSm12        = array('f', [-1.])
-
-Jet1Pt            = array('f', [-1.])
-Jet1Eta           = array('f', [-1.])
-Jet1Phi           = array('f', [-1.])
-Jet1Rap           = array('f', [-1.])
-Jet1Px            = array('f', [-1.])
-Jet1Py            = array('f', [-1.])
-Jet1Pz            = array('f', [-1.])
-Jet1Energy        = array('f', [-1.])
-Jet1RhoRatio      = array('f', [-1.])
-Jet1Mass          = array('f', [-1.])
-Jet1MassSoftDrop  = array('f', [-1.])
-Jet1MassPruned    = array('f', [-1.])
-Jet1MassFiltered  = array('f', [-1.])
-Jet1MassTrimmed   = array('f', [-1.])
-Jet1Tau1          = array('f', [-1.])
-Jet1Tau2          = array('f', [-1.])
-Jet1Tau3          = array('f', [-1.])
-Jet1Tau32         = array('f', [-1.])
-Jet1Tau21         = array('f', [-1.])
-Jet1SDnsubjets    = array('f', [-1.])
-Jet1SDbdisc0      = array('f', [-1.])
-Jet1SDbdisc1      = array('f', [-1.])
-Jet1SDmaxbdisc    = array('f', [-1.])
-Jet1SDsubjet0pt   = array('f', [-1.])
-Jet1SDsubjet0mass = array('f', [-1.])
-Jet1SDsubjet1pt   = array('f', [-1.])
-Jet1SDsubjet1mass = array('f', [-1.])
-Jet1CMSmaxbdisc   = array('f', [-1.])
-Jet1CMSnsubjets   = array('f', [-1.])
-Jet1CMSminMass    = array('f', [-1.])
-Jet1CMSm01        = array('f', [-1.])
-Jet1CMSm02        = array('f', [-1.])
-Jet1CMSm12        = array('f', [-1.])
-
-AllHadMETpx         = array('f', [-1.])
-AllHadMETpy         = array('f', [-1.])
-AllHadMETpt         = array('f', [-1.])
-AllHadMETphi        = array('f', [-1.])
-AllHadNvtx          = array('f', [-1.])
-AllHadEventWeight   = array('f', [-1.])
-
-DijetMass         = array('f', [-1.])
-DijetModMassJet0  = array('f', [-1.])
-DijetModMassJet1  = array('f', [-1.])
-DijetDeltaR       = array('f', [-1.])
-DijetDeltaPhi     = array('f', [-1.])
-DijetDeltaRap     = array('f', [-1.])
+    TreeSemiLept.Branch('FatJetPt'            , FatJetPt            ,  'FatJetPt/F'            )
+    TreeSemiLept.Branch('FatJetEta'           , FatJetEta           ,  'FatJetEta/F'           )
+    TreeSemiLept.Branch('FatJetPhi'           , FatJetPhi           ,  'FatJetPhi/F'           )
+    TreeSemiLept.Branch('FatJetRap'           , FatJetRap           ,  'FatJetRap/F'           )
+    TreeSemiLept.Branch('FatJetPx'            , FatJetPx            ,  'FatJetPx/F'            )
+    TreeSemiLept.Branch('FatJetPy'            , FatJetPy            ,  'FatJetPy/F'            )
+    TreeSemiLept.Branch('FatJetPz'            , FatJetPz            ,  'FatJetPz/F'            )
+    TreeSemiLept.Branch('FatJetEnergy'        , FatJetEnergy        ,  'FatJetEnergy/F'        )
+    TreeSemiLept.Branch('FatJetRhoRatio'      , FatJetRhoRatio      ,  'FatJetRhoRatio/F'      )
+    TreeSemiLept.Branch('FatJetMass'          , FatJetMass          ,  'FatJetMass/F'          )
+    TreeSemiLept.Branch('FatJetMassSoftDrop'  , FatJetMassSoftDrop  ,  'FatJetMassSoftDrop/F'  )
+    TreeSemiLept.Branch('FatJetMassPruned'    , FatJetMassPruned    ,  'FatJetMassPruned/F'    )
+    TreeSemiLept.Branch('FatJetMassFiltered'  , FatJetMassFiltered  ,  'FatJetMassFiltered/F'  )
+    TreeSemiLept.Branch('FatJetMassTrimmed'   , FatJetMassTrimmed   ,  'FatJetMassTrimmed/F'   )
+    TreeSemiLept.Branch('FatJetTau1'          , FatJetTau1          ,  'FatJetTau1/F'          )
+    TreeSemiLept.Branch('FatJetTau2'          , FatJetTau2          ,  'FatJetTau2/F'          )
+    TreeSemiLept.Branch('FatJetTau3'          , FatJetTau3          ,  'FatJetTau3/F'          )
+    TreeSemiLept.Branch('FatJetTau32'         , FatJetTau32         ,  'FatJetTau32/F'         )
+    TreeSemiLept.Branch('FatJetTau21'         , FatJetTau21         ,  'FatJetTau21/F'         )
+    TreeSemiLept.Branch('FatJetSDnsubjets'    , FatJetSDnsubjets    ,  'FatJetSDnsubjets/F'    )
+    TreeSemiLept.Branch('FatJetSDbdisc0'      , FatJetSDbdisc0      ,  'FatJetSDbdisc0/F'      )
+    TreeSemiLept.Branch('FatJetSDbdisc1'      , FatJetSDbdisc1      ,  'FatJetSDbdisc1/F'      )
+    TreeSemiLept.Branch('FatJetSDmaxbdisc'    , FatJetSDmaxbdisc    ,  'FatJetSDmaxbdisc/F'    )
+    TreeSemiLept.Branch('FatJetSDsubjet0pt'   , FatJetSDsubjet0pt   ,  'FatJetSDsubjet0pt/F'   )
+    TreeSemiLept.Branch('FatJetSDsubjet0mass' , FatJetSDsubjet0mass ,  'FatJetSDsubjet0mass/F' )
+    TreeSemiLept.Branch('FatJetSDsubjet1pt'   , FatJetSDsubjet1pt   ,  'FatJetSDsubjet1pt/F'   )
+    TreeSemiLept.Branch('FatJetSDsubjet1mass' , FatJetSDsubjet1mass ,  'FatJetSDsubjet1mass/F' )
+    TreeSemiLept.Branch('FatJetCMSmaxbdisc'   , FatJetCMSmaxbdisc   ,  'FatJetCMSmaxbdisc/F'   )
+    TreeSemiLept.Branch('FatJetCMSnsubjets'   , FatJetCMSnsubjets   ,  'FatJetCMSnsubjets/F'   )
+    TreeSemiLept.Branch('FatJetCMSminMass'    , FatJetCMSminMass    ,  'FatJetCMSminMass/F'    )
+    TreeSemiLept.Branch('FatJetCMSm01'        , FatJetCMSm01        ,  'FatJetCMSm01/F'        )
+    TreeSemiLept.Branch('FatJetCMSm02'        , FatJetCMSm02        ,  'FatJetCMSm02/F'        )
+    TreeSemiLept.Branch('FatJetCMSm12'        , FatJetCMSm12        ,  'FatJetCMSm12/F'        )
+    TreeSemiLept.Branch('LeptonPt'            , LeptonPt            ,  'LeptonPt/F'            )
+    TreeSemiLept.Branch('LeptonEta'           , LeptonEta           ,  'LeptonEta/F'           )
+    TreeSemiLept.Branch('LeptonPhi'           , LeptonPhi           ,  'LeptonPhi/F'           )
+    TreeSemiLept.Branch('LeptonPx'            , LeptonPx            ,  'LeptonPx/F'            )
+    TreeSemiLept.Branch('LeptonPy'            , LeptonPy            ,  'LeptonPy/F'            )
+    TreeSemiLept.Branch('LeptonPz'            , LeptonPz            ,  'LeptonPz/F'            )
+    TreeSemiLept.Branch('LeptonEnergy'        , LeptonEnergy        ,  'LeptonEnergy/F'        )
+    TreeSemiLept.Branch('SemiLepMETpx'        , SemiLepMETpx        ,  'SemiLepMETpx/F'        )
+    TreeSemiLept.Branch('SemiLepMETpy'        , SemiLepMETpy        ,  'SemiLepMETpy/F'        )
+    TreeSemiLept.Branch('SemiLepMETpt'        , SemiLepMETpt        ,  'SemiLepMETpt/F'        )
+    TreeSemiLept.Branch('SemiLepMETphi'       , SemiLepMETphi       ,  'SemiLepMETphi/F'       )
+    TreeSemiLept.Branch('SemiLepNvtx'         , SemiLepNvtx         ,  'SemiLepNvtx/F'         )
+    TreeSemiLept.Branch('SemiLepEventWeight'  , SemiLepEventWeight  ,  'SemiLepEventWeight/F'  )
+    TreeSemiLept.Branch('SemilLepTTmass'      , SemilLepTTmass      ,  'SemilLepTTmass/F'      )
+    TreeSemiLept.Branch('DeltaPhiLepFat'      , DeltaPhiLepFat      ,  'DeltaPhiLepFat/F'      )
 
 
-TreeAllHad.Branch('Jet0Pt'            , Jet0Pt           , 'Jet0Pt/F'            )
-TreeAllHad.Branch('Jet0Eta'           , Jet0Eta          , 'Jet0Eta/F'           )
-TreeAllHad.Branch('Jet0Phi'           , Jet0Phi          , 'Jet0Phi/F'           )
-TreeAllHad.Branch('Jet0Rap'           , Jet0Rap          , 'Jet0Rap/F'           )
-TreeAllHad.Branch('Jet0Px'            , Jet0Px           , 'Jet0Px/F'            )
-TreeAllHad.Branch('Jet0Py'            , Jet0Py           , 'Jet0Py/F'            )
-TreeAllHad.Branch('Jet0Pz'            , Jet0Pz           , 'Jet0Pz/F'            )
-TreeAllHad.Branch('Jet0Energy'        , Jet0Energy       , 'Jet0Energy/F'        )
-TreeAllHad.Branch('Jet0RhoRatio'      , Jet0RhoRatio     , 'Jet0RhoRatio/F'      )
-TreeAllHad.Branch('Jet0Mass'          , Jet0Mass         , 'Jet0Mass/F'          )
-TreeAllHad.Branch('Jet0MassSoftDrop'  , Jet0MassSoftDrop , 'Jet0MassSoftDrop/F'  )
-TreeAllHad.Branch('Jet0MassPruned'    , Jet0MassPruned   , 'Jet0MassPruned/F'    )
-TreeAllHad.Branch('Jet0MassFiltered'  , Jet0MassFiltered , 'Jet0MassFiltered/F'  )
-TreeAllHad.Branch('Jet0MassTrimmed'   , Jet0MassTrimmed  , 'Jet0MassTrimmed/F'   )
-TreeAllHad.Branch('Jet0Tau1'          , Jet0Tau1         , 'Jet0Tau1/F'          )
-TreeAllHad.Branch('Jet0Tau2'          , Jet0Tau2         , 'Jet0Tau2/F'          )
-TreeAllHad.Branch('Jet0Tau3'          , Jet0Tau3         , 'Jet0Tau3/F'          )
-TreeAllHad.Branch('Jet0Tau32'         , Jet0Tau32        , 'Jet0Tau32/F'         )
-TreeAllHad.Branch('Jet0Tau21'         , Jet0Tau21        , 'Jet0Tau21/F'         )
-TreeAllHad.Branch('Jet0SDnsubjets'    , Jet0SDnsubjets   , 'Jet0SDnsubjets/F'    )
-TreeAllHad.Branch('Jet0SDbdisc0'      , Jet0SDbdisc0     , 'Jet0SDbdisc0/F'      )
-TreeAllHad.Branch('Jet0SDbdisc1'      , Jet0SDbdisc1     , 'Jet0SDbdisc1/F'      )
-TreeAllHad.Branch('Jet0SDmaxbdisc'    , Jet0SDmaxbdisc   , 'Jet0SDmaxbdisc/F'    )
-TreeAllHad.Branch('Jet0SDsubjet0pt'   , Jet0SDsubjet0pt  , 'Jet0SDsubjet0pt/F'   )
-TreeAllHad.Branch('Jet0SDsubjet0mass' , Jet0SDsubjet0mass, 'Jet0SDsubjet0mass/F' )
-TreeAllHad.Branch('Jet0SDsubjet1pt'   , Jet0SDsubjet1pt  , 'Jet0SDsubjet1pt/F'   )
-TreeAllHad.Branch('Jet0SDsubjet1mass' , Jet0SDsubjet1mass, 'Jet0SDsubjet1mass/F' )
-TreeAllHad.Branch('Jet0CMSmaxbdisc'   , Jet0CMSmaxbdisc  , 'Jet0CMSmaxbdisc/F'   )
-TreeAllHad.Branch('Jet0CMSnsubjets'   , Jet0CMSnsubjets  , 'Jet0CMSnsubjets/F'   )
-TreeAllHad.Branch('Jet0CMSminMass'    , Jet0CMSminMass   , 'Jet0CMSminMass/F'    )
-TreeAllHad.Branch('Jet0CMSm01'        , Jet0CMSm01       , 'Jet0CMSm01/F'        )
-TreeAllHad.Branch('Jet0CMSm02'        , Jet0CMSm02       , 'Jet0CMSm02/F'        )
-TreeAllHad.Branch('Jet0CMSm12'        , Jet0CMSm12       , 'Jet0CMSm12/F'        )
+    TreeAllHad = ROOT.TTree("TreeAllHad", "TreeAllHad")
+    Jet0Pt            = array('f', [-1.])
+    Jet0Eta           = array('f', [-1.])
+    Jet0Phi           = array('f', [-1.])
+    Jet0Rap           = array('f', [-1.])
+    Jet0Px            = array('f', [-1.])
+    Jet0Py            = array('f', [-1.])
+    Jet0Pz            = array('f', [-1.])
+    Jet0Energy        = array('f', [-1.])
+    Jet0RhoRatio      = array('f', [-1.])
+    Jet0Mass          = array('f', [-1.])
+    Jet0MassSoftDrop  = array('f', [-1.])
+    Jet0MassPruned    = array('f', [-1.])
+    Jet0MassFiltered  = array('f', [-1.])
+    Jet0MassTrimmed   = array('f', [-1.])
+    Jet0Tau1          = array('f', [-1.])
+    Jet0Tau2          = array('f', [-1.])
+    Jet0Tau3          = array('f', [-1.])
+    Jet0Tau32         = array('f', [-1.])
+    Jet0Tau21         = array('f', [-1.])
+    Jet0SDnsubjets    = array('f', [-1.])
+    Jet0SDbdisc0      = array('f', [-1.])
+    Jet0SDbdisc1      = array('f', [-1.])
+    Jet0SDmaxbdisc    = array('f', [-1.])
+    Jet0SDsubjet0pt   = array('f', [-1.])
+    Jet0SDsubjet0mass = array('f', [-1.])
+    Jet0SDsubjet1pt   = array('f', [-1.])
+    Jet0SDsubjet1mass = array('f', [-1.])
+    Jet0CMSmaxbdisc   = array('f', [-1.])
+    Jet0CMSnsubjets   = array('f', [-1.])
+    Jet0CMSminMass    = array('f', [-1.])
+    Jet0CMSm01        = array('f', [-1.])
+    Jet0CMSm02        = array('f', [-1.])
+    Jet0CMSm12        = array('f', [-1.])
 
-TreeAllHad.Branch('Jet1Pt'            , Jet1Pt           , 'Jet1Pt/F'            )
-TreeAllHad.Branch('Jet1Eta'           , Jet1Eta          , 'Jet1Eta/F'           )
-TreeAllHad.Branch('Jet1Phi'           , Jet1Phi          , 'Jet1Phi/F'           )
-TreeAllHad.Branch('Jet1Rap'           , Jet1Rap          , 'Jet1Rap/F'           )
-TreeAllHad.Branch('Jet1Px'            , Jet1Px           , 'Jet1Px/F'            )
-TreeAllHad.Branch('Jet1Py'            , Jet1Py           , 'Jet1Py/F'            )
-TreeAllHad.Branch('Jet1Pz'            , Jet1Pz           , 'Jet1Pz/F'            )
-TreeAllHad.Branch('Jet1Energy'        , Jet1Energy       , 'Jet1Energy/F'        )
-TreeAllHad.Branch('Jet1RhoRatio'      , Jet1RhoRatio     , 'Jet1RhoRatio/F'      )
-TreeAllHad.Branch('Jet1Mass'          , Jet1Mass         , 'Jet1Mass/F'          )
-TreeAllHad.Branch('Jet1MassSoftDrop'  , Jet1MassSoftDrop , 'Jet1MassSoftDrop/F'  )
-TreeAllHad.Branch('Jet1MassPruned'    , Jet1MassPruned   , 'Jet1MassPruned/F'    )
-TreeAllHad.Branch('Jet1MassFiltered'  , Jet1MassFiltered , 'Jet1MassFiltered/F'  )
-TreeAllHad.Branch('Jet1MassTrimmed'   , Jet1MassTrimmed  , 'Jet1MassTrimmed/F'   )
-TreeAllHad.Branch('Jet1Tau1'          , Jet1Tau1         , 'Jet1Tau1/F'          )
-TreeAllHad.Branch('Jet1Tau2'          , Jet1Tau2         , 'Jet1Tau2/F'          )
-TreeAllHad.Branch('Jet1Tau3'          , Jet1Tau3         , 'Jet1Tau3/F'          )
-TreeAllHad.Branch('Jet1Tau32'         , Jet1Tau32        , 'Jet1Tau32/F'         )
-TreeAllHad.Branch('Jet1Tau21'         , Jet1Tau21        , 'Jet1Tau21/F'         )
-TreeAllHad.Branch('Jet1SDnsubjets'    , Jet1SDnsubjets   , 'Jet1SDnsubjets/F'    )
-TreeAllHad.Branch('Jet1SDbdisc0'      , Jet1SDbdisc0     , 'Jet1SDbdisc0/F'      )
-TreeAllHad.Branch('Jet1SDbdisc1'      , Jet1SDbdisc1     , 'Jet1SDbdisc1/F'      )
-TreeAllHad.Branch('Jet1SDmaxbdisc'    , Jet1SDmaxbdisc   , 'Jet1SDmaxbdisc/F'    )
-TreeAllHad.Branch('Jet1SDsubjet0pt'   , Jet1SDsubjet0pt  , 'Jet1SDsubjet0pt/F'   )
-TreeAllHad.Branch('Jet1SDsubjet0mass' , Jet1SDsubjet0mass, 'Jet1SDsubjet0mass/F' )
-TreeAllHad.Branch('Jet1SDsubjet1pt'   , Jet1SDsubjet1pt  , 'Jet1SDsubjet1pt/F'   )
-TreeAllHad.Branch('Jet1SDsubjet1mass' , Jet1SDsubjet1mass, 'Jet1SDsubjet1mass/F' )
-TreeAllHad.Branch('Jet1CMSmaxbdisc'   , Jet1CMSmaxbdisc  , 'Jet1CMSmaxbdisc/F'   )
-TreeAllHad.Branch('Jet1CMSnsubjets'   , Jet1CMSnsubjets  , 'Jet1CMSnsubjets/F'   )
-TreeAllHad.Branch('Jet1CMSminMass'    , Jet1CMSminMass   , 'Jet1CMSminMass/F'    )
-TreeAllHad.Branch('Jet1CMSm01'        , Jet1CMSm01       , 'Jet1CMSm01/F'        )
-TreeAllHad.Branch('Jet1CMSm02'        , Jet1CMSm02       , 'Jet1CMSm02/F'        )
-TreeAllHad.Branch('Jet1CMSm12'        , Jet1CMSm12       , 'Jet1CMSm12/F'        )
+    Jet1Pt            = array('f', [-1.])
+    Jet1Eta           = array('f', [-1.])
+    Jet1Phi           = array('f', [-1.])
+    Jet1Rap           = array('f', [-1.])
+    Jet1Px            = array('f', [-1.])
+    Jet1Py            = array('f', [-1.])
+    Jet1Pz            = array('f', [-1.])
+    Jet1Energy        = array('f', [-1.])
+    Jet1RhoRatio      = array('f', [-1.])
+    Jet1Mass          = array('f', [-1.])
+    Jet1MassSoftDrop  = array('f', [-1.])
+    Jet1MassPruned    = array('f', [-1.])
+    Jet1MassFiltered  = array('f', [-1.])
+    Jet1MassTrimmed   = array('f', [-1.])
+    Jet1Tau1          = array('f', [-1.])
+    Jet1Tau2          = array('f', [-1.])
+    Jet1Tau3          = array('f', [-1.])
+    Jet1Tau32         = array('f', [-1.])
+    Jet1Tau21         = array('f', [-1.])
+    Jet1SDnsubjets    = array('f', [-1.])
+    Jet1SDbdisc0      = array('f', [-1.])
+    Jet1SDbdisc1      = array('f', [-1.])
+    Jet1SDmaxbdisc    = array('f', [-1.])
+    Jet1SDsubjet0pt   = array('f', [-1.])
+    Jet1SDsubjet0mass = array('f', [-1.])
+    Jet1SDsubjet1pt   = array('f', [-1.])
+    Jet1SDsubjet1mass = array('f', [-1.])
+    Jet1CMSmaxbdisc   = array('f', [-1.])
+    Jet1CMSnsubjets   = array('f', [-1.])
+    Jet1CMSminMass    = array('f', [-1.])
+    Jet1CMSm01        = array('f', [-1.])
+    Jet1CMSm02        = array('f', [-1.])
+    Jet1CMSm12        = array('f', [-1.])
 
-TreeAllHad.Branch('AllHadMETpx'         , AllHadMETpx        , 'AllHadMETpx/F'           )
-TreeAllHad.Branch('AllHadMETpy'         , AllHadMETpy        , 'AllHadMETpy/F'           )
-TreeAllHad.Branch('AllHadMETpt'         , AllHadMETpt        , 'AllHadMETpt/F'           )
-TreeAllHad.Branch('AllHadMETphi'        , AllHadMETphi       , 'AllHadMETpphi/F'         )
-TreeAllHad.Branch('AllHadNvtx'          , AllHadNvtx         , 'AllHadNvtx/F'            )
-TreeAllHad.Branch('AllHadEventWeight'   , AllHadEventWeight  , 'AllHadEventWeight/F'     )
+    AllHadMETpx         = array('f', [-1.])
+    AllHadMETpy         = array('f', [-1.])
+    AllHadMETpt         = array('f', [-1.])
+    AllHadMETphi        = array('f', [-1.])
+    AllHadNvtx          = array('f', [-1.])
+    AllHadEventWeight   = array('f', [-1.])
 
-TreeAllHad.Branch('DijetMass'         , DijetMass        , 'DijetMass/F'           )
-TreeAllHad.Branch('DijetModMassJet0'  , DijetModMassJet0 , 'DijetModMassJet0/F'    )
-TreeAllHad.Branch('DijetModMassJet1'  , DijetModMassJet1 , 'DijetModMassJet1/F'    )
-TreeAllHad.Branch('DijetDeltaR'       , DijetDeltaR      , 'DijetDeltaR/F'         )
-TreeAllHad.Branch('DijetDeltaPhi'     , DijetDeltaPhi    , 'DijetDeltaPhi/F'       )
-TreeAllHad.Branch('DijetDeltaRap'     , DijetDeltaRap    , 'DijetDeltaRap/F'       )
+    DijetMass         = array('f', [-1.])
+    DijetModMassJet0  = array('f', [-1.])
+    DijetModMassJet1  = array('f', [-1.])
+    DijetDeltaR       = array('f', [-1.])
+    DijetDeltaPhi     = array('f', [-1.])
+    DijetDeltaRap     = array('f', [-1.])
+
+
+    TreeAllHad.Branch('Jet0Pt'            , Jet0Pt           , 'Jet0Pt/F'            )
+    TreeAllHad.Branch('Jet0Eta'           , Jet0Eta          , 'Jet0Eta/F'           )
+    TreeAllHad.Branch('Jet0Phi'           , Jet0Phi          , 'Jet0Phi/F'           )
+    TreeAllHad.Branch('Jet0Rap'           , Jet0Rap          , 'Jet0Rap/F'           )
+    TreeAllHad.Branch('Jet0Px'            , Jet0Px           , 'Jet0Px/F'            )
+    TreeAllHad.Branch('Jet0Py'            , Jet0Py           , 'Jet0Py/F'            )
+    TreeAllHad.Branch('Jet0Pz'            , Jet0Pz           , 'Jet0Pz/F'            )
+    TreeAllHad.Branch('Jet0Energy'        , Jet0Energy       , 'Jet0Energy/F'        )
+    TreeAllHad.Branch('Jet0RhoRatio'      , Jet0RhoRatio     , 'Jet0RhoRatio/F'      )
+    TreeAllHad.Branch('Jet0Mass'          , Jet0Mass         , 'Jet0Mass/F'          )
+    TreeAllHad.Branch('Jet0MassSoftDrop'  , Jet0MassSoftDrop , 'Jet0MassSoftDrop/F'  )
+    TreeAllHad.Branch('Jet0MassPruned'    , Jet0MassPruned   , 'Jet0MassPruned/F'    )
+    TreeAllHad.Branch('Jet0MassFiltered'  , Jet0MassFiltered , 'Jet0MassFiltered/F'  )
+    TreeAllHad.Branch('Jet0MassTrimmed'   , Jet0MassTrimmed  , 'Jet0MassTrimmed/F'   )
+    TreeAllHad.Branch('Jet0Tau1'          , Jet0Tau1         , 'Jet0Tau1/F'          )
+    TreeAllHad.Branch('Jet0Tau2'          , Jet0Tau2         , 'Jet0Tau2/F'          )
+    TreeAllHad.Branch('Jet0Tau3'          , Jet0Tau3         , 'Jet0Tau3/F'          )
+    TreeAllHad.Branch('Jet0Tau32'         , Jet0Tau32        , 'Jet0Tau32/F'         )
+    TreeAllHad.Branch('Jet0Tau21'         , Jet0Tau21        , 'Jet0Tau21/F'         )
+    TreeAllHad.Branch('Jet0SDnsubjets'    , Jet0SDnsubjets   , 'Jet0SDnsubjets/F'    )
+    TreeAllHad.Branch('Jet0SDbdisc0'      , Jet0SDbdisc0     , 'Jet0SDbdisc0/F'      )
+    TreeAllHad.Branch('Jet0SDbdisc1'      , Jet0SDbdisc1     , 'Jet0SDbdisc1/F'      )
+    TreeAllHad.Branch('Jet0SDmaxbdisc'    , Jet0SDmaxbdisc   , 'Jet0SDmaxbdisc/F'    )
+    TreeAllHad.Branch('Jet0SDsubjet0pt'   , Jet0SDsubjet0pt  , 'Jet0SDsubjet0pt/F'   )
+    TreeAllHad.Branch('Jet0SDsubjet0mass' , Jet0SDsubjet0mass, 'Jet0SDsubjet0mass/F' )
+    TreeAllHad.Branch('Jet0SDsubjet1pt'   , Jet0SDsubjet1pt  , 'Jet0SDsubjet1pt/F'   )
+    TreeAllHad.Branch('Jet0SDsubjet1mass' , Jet0SDsubjet1mass, 'Jet0SDsubjet1mass/F' )
+    TreeAllHad.Branch('Jet0CMSmaxbdisc'   , Jet0CMSmaxbdisc  , 'Jet0CMSmaxbdisc/F'   )
+    TreeAllHad.Branch('Jet0CMSnsubjets'   , Jet0CMSnsubjets  , 'Jet0CMSnsubjets/F'   )
+    TreeAllHad.Branch('Jet0CMSminMass'    , Jet0CMSminMass   , 'Jet0CMSminMass/F'    )
+    TreeAllHad.Branch('Jet0CMSm01'        , Jet0CMSm01       , 'Jet0CMSm01/F'        )
+    TreeAllHad.Branch('Jet0CMSm02'        , Jet0CMSm02       , 'Jet0CMSm02/F'        )
+    TreeAllHad.Branch('Jet0CMSm12'        , Jet0CMSm12       , 'Jet0CMSm12/F'        )
+
+    TreeAllHad.Branch('Jet1Pt'            , Jet1Pt           , 'Jet1Pt/F'            )
+    TreeAllHad.Branch('Jet1Eta'           , Jet1Eta          , 'Jet1Eta/F'           )
+    TreeAllHad.Branch('Jet1Phi'           , Jet1Phi          , 'Jet1Phi/F'           )
+    TreeAllHad.Branch('Jet1Rap'           , Jet1Rap          , 'Jet1Rap/F'           )
+    TreeAllHad.Branch('Jet1Px'            , Jet1Px           , 'Jet1Px/F'            )
+    TreeAllHad.Branch('Jet1Py'            , Jet1Py           , 'Jet1Py/F'            )
+    TreeAllHad.Branch('Jet1Pz'            , Jet1Pz           , 'Jet1Pz/F'            )
+    TreeAllHad.Branch('Jet1Energy'        , Jet1Energy       , 'Jet1Energy/F'        )
+    TreeAllHad.Branch('Jet1RhoRatio'      , Jet1RhoRatio     , 'Jet1RhoRatio/F'      )
+    TreeAllHad.Branch('Jet1Mass'          , Jet1Mass         , 'Jet1Mass/F'          )
+    TreeAllHad.Branch('Jet1MassSoftDrop'  , Jet1MassSoftDrop , 'Jet1MassSoftDrop/F'  )
+    TreeAllHad.Branch('Jet1MassPruned'    , Jet1MassPruned   , 'Jet1MassPruned/F'    )
+    TreeAllHad.Branch('Jet1MassFiltered'  , Jet1MassFiltered , 'Jet1MassFiltered/F'  )
+    TreeAllHad.Branch('Jet1MassTrimmed'   , Jet1MassTrimmed  , 'Jet1MassTrimmed/F'   )
+    TreeAllHad.Branch('Jet1Tau1'          , Jet1Tau1         , 'Jet1Tau1/F'          )
+    TreeAllHad.Branch('Jet1Tau2'          , Jet1Tau2         , 'Jet1Tau2/F'          )
+    TreeAllHad.Branch('Jet1Tau3'          , Jet1Tau3         , 'Jet1Tau3/F'          )
+    TreeAllHad.Branch('Jet1Tau32'         , Jet1Tau32        , 'Jet1Tau32/F'         )
+    TreeAllHad.Branch('Jet1Tau21'         , Jet1Tau21        , 'Jet1Tau21/F'         )
+    TreeAllHad.Branch('Jet1SDnsubjets'    , Jet1SDnsubjets   , 'Jet1SDnsubjets/F'    )
+    TreeAllHad.Branch('Jet1SDbdisc0'      , Jet1SDbdisc0     , 'Jet1SDbdisc0/F'      )
+    TreeAllHad.Branch('Jet1SDbdisc1'      , Jet1SDbdisc1     , 'Jet1SDbdisc1/F'      )
+    TreeAllHad.Branch('Jet1SDmaxbdisc'    , Jet1SDmaxbdisc   , 'Jet1SDmaxbdisc/F'    )
+    TreeAllHad.Branch('Jet1SDsubjet0pt'   , Jet1SDsubjet0pt  , 'Jet1SDsubjet0pt/F'   )
+    TreeAllHad.Branch('Jet1SDsubjet0mass' , Jet1SDsubjet0mass, 'Jet1SDsubjet0mass/F' )
+    TreeAllHad.Branch('Jet1SDsubjet1pt'   , Jet1SDsubjet1pt  , 'Jet1SDsubjet1pt/F'   )
+    TreeAllHad.Branch('Jet1SDsubjet1mass' , Jet1SDsubjet1mass, 'Jet1SDsubjet1mass/F' )
+    TreeAllHad.Branch('Jet1CMSmaxbdisc'   , Jet1CMSmaxbdisc  , 'Jet1CMSmaxbdisc/F'   )
+    TreeAllHad.Branch('Jet1CMSnsubjets'   , Jet1CMSnsubjets  , 'Jet1CMSnsubjets/F'   )
+    TreeAllHad.Branch('Jet1CMSminMass'    , Jet1CMSminMass   , 'Jet1CMSminMass/F'    )
+    TreeAllHad.Branch('Jet1CMSm01'        , Jet1CMSm01       , 'Jet1CMSm01/F'        )
+    TreeAllHad.Branch('Jet1CMSm02'        , Jet1CMSm02       , 'Jet1CMSm02/F'        )
+    TreeAllHad.Branch('Jet1CMSm12'        , Jet1CMSm12       , 'Jet1CMSm12/F'        )
+
+    TreeAllHad.Branch('AllHadMETpx'         , AllHadMETpx        , 'AllHadMETpx/F'           )
+    TreeAllHad.Branch('AllHadMETpy'         , AllHadMETpy        , 'AllHadMETpy/F'           )
+    TreeAllHad.Branch('AllHadMETpt'         , AllHadMETpt        , 'AllHadMETpt/F'           )
+    TreeAllHad.Branch('AllHadMETphi'        , AllHadMETphi       , 'AllHadMETpphi/F'         )
+    TreeAllHad.Branch('AllHadNvtx'          , AllHadNvtx         , 'AllHadNvtx/F'            )
+    TreeAllHad.Branch('AllHadEventWeight'   , AllHadEventWeight  , 'AllHadEventWeight/F'     )
+
+    TreeAllHad.Branch('DijetMass'         , DijetMass        , 'DijetMass/F'           )
+    TreeAllHad.Branch('DijetModMassJet0'  , DijetModMassJet0 , 'DijetModMassJet0/F'    )
+    TreeAllHad.Branch('DijetModMassJet1'  , DijetModMassJet1 , 'DijetModMassJet1/F'    )
+    TreeAllHad.Branch('DijetDeltaR'       , DijetDeltaR      , 'DijetDeltaR/F'         )
+    TreeAllHad.Branch('DijetDeltaPhi'     , DijetDeltaPhi    , 'DijetDeltaPhi/F'       )
+    TreeAllHad.Branch('DijetDeltaRap'     , DijetDeltaRap    , 'DijetDeltaRap/F'       )
 
 
 
@@ -1959,6 +1985,15 @@ for ifile in files : #{ Loop over root files
 
 
 
+        
+
+        if options.quickSelect :
+            event.getByLabel ( l_jetsAK8Pt, h_jetsAK8Pt )
+            ak8jetpts = h_jetsAK8Pt.product()
+            if len(ak8jetpts) == 0 :
+                continue
+            if h_jetsAK8Pt.product()[0] < options.minAK8Pt :
+                continue
 
         if options.applyFilters and readFilters :
             cscFilt = False
@@ -1969,7 +2004,7 @@ for ifile in files : #{ Loop over root files
             gotit1 = event.getByLabel( l_filterNameStrings, h_filterNameStrings )
             gotit2 = event.getByLabel( l_filterBits, h_filterBits )
             #gotit3 = event.getByLabel( l_filterPrescales, h_filterPrescales )
-            #gotit4 = event.getByLabel( l_HBHEfilter, h_HBHEfilter )
+            gotit4 = event.getByLabel( l_HBHEfilter, h_HBHEfilter )
 
 
             if options.verbose :
@@ -1981,6 +2016,8 @@ for ifile in files : #{ Loop over root files
 
             filterNameStrings = h_filterNameStrings.product()
             filterBits = h_filterBits.product()
+
+            hbheFilt = h_HBHEfilter.product()[0]
             
             for itrig in xrange(0, len(filterNameStrings) ) :
                 if options.verbose :
@@ -1999,7 +2036,7 @@ for ifile in files : #{ Loop over root files
                 #        hbheFilt = True
 
 
-            if cscFilt == False :
+            if cscFilt == False or hbheFilt == False :
                 if options.verbose :
                     print 'Found filters, but they failed'
                 continue
@@ -2010,19 +2047,49 @@ for ifile in files : #{ Loop over root files
             continue
 
 
-        if options.quickSelect :
-            event.getByLabel ( l_jetsAK8Pt, h_jetsAK8Pt )
-            ak8jetpts = h_jetsAK8Pt.product()
-            if len(ak8jetpts) == 0 :
+        if options.applyTriggers :
+
+            passTrig = False
+            prescale = 1.0
+            unprescaled = False
+            
+            event.getByLabel( l_triggerNameStrings, h_triggerNameStrings )
+            event.getByLabel( l_triggerBits, h_triggerBits )
+            event.getByLabel( l_triggerPrescales, h_triggerPrescales )
+
+            triggerNameStrings = h_triggerNameStrings.product()
+            triggerBits = h_triggerBits.product()
+            triggerPrescales = h_triggerPrescales.product()
+            if options.verbose : 
+                print '-----'
+            for itrig in xrange(0, len(triggerNameStrings) ) :
+                if options.verbose : 
+                    print "%60s : %12.0f" % ( triggerNameStrings[itrig] , triggerPrescales[itrig] )
+                
+                if "HLT_Mu45_eta2p1" in triggerNameStrings[itrig] or "HLT_AK8PFJet360_TrimMass30" in triggerNameStrings[itrig] or \
+                  "HLT_Ele105_CaloIdVT_GsfTrkIdT" in triggerNameStrings[itrig] or "HLT_Ele27_eta2p1_WPLoose_Gsf" in triggerNameStrings[itrig] :
+                    if triggerBits[itrig] == 1 :
+                        passTrig = True
+                        if triggerPrescales[itrig] == 1.0 :
+                            unprescaled = True
+                        prescale = prescale * triggerPrescales[itrig]
+                        
+
+
+            if unprescaled :
+                prescale = 1.0
+
+            evWeight = evWeight * prescale
+            if passTrig == False :
                 continue
-            if h_jetsAK8Pt.product()[0] < options.minAK8Pt :
-                continue
+
             
         if options.isMC :
             #@ Generator information
             genEIndex = []
             genMuIndex = []
             gotGen = event.getByLabel( l_genPartPt, h_genPartPt )
+            topQuarkPt = 0.0 
             if gotGen :
                 event.getByLabel( l_genPartEta, h_genPartEta )
                 event.getByLabel( l_genPartPhi, h_genPartPhi )
@@ -2045,6 +2112,7 @@ for ifile in files : #{ Loop over root files
                         continue
                     if abs(genPartID[igen]) == 6 :
                         genName = 'Top quark'
+                        topQuarkPt = genPartPt[igen] 
                     elif abs(genPartID[igen]) == 24 :
                         genName = 'W boson'
                     elif abs(genPartID[igen]) == 11 and abs(genPartMomID[igen]) == 24 :
@@ -2072,6 +2140,11 @@ for ifile in files : #{ Loop over root files
                 genEEEvents += 1
             elif ngenMu == 2 :
                 genMuMuEvents += 1
+
+            if options.reweightTopPt :
+                ptWeight = reweightTopPt.Eval( topQuarkPt  )
+                if ptWeight > 0.0000001 : 
+                    evWeight /= ptWeight
 
 
 
@@ -3418,145 +3491,146 @@ for ifile in files : #{ Loop over root files
 
 
                 #~ FILL ALL-HADRONIC TREE
-                Jet0Pt             [0] =  ak8JetsGood[0].Perp()
-                Jet0Eta            [0] =  ak8JetsGood[0].Eta()
-                Jet0Phi            [0] =  ak8JetsGood[0].Phi()
-                Jet0Rap            [0] =  ak8JetsGood[0].Rapidity()
-                Jet0Px             [0] =  ak8JetsGood[0].Px()
-                Jet0Py             [0] =  ak8JetsGood[0].Py()
-                Jet0Pz             [0] =  ak8JetsGood[0].Pz()
-                Jet0Energy         [0] =  ak8JetsGood[0].Energy()
-                Jet0RhoRatio       [0] =  pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
-                Jet0Mass           [0] =  ak8JetsGood[0].M()
-                Jet0MassSoftDrop   [0] =  ak8JetsGoodSDropMass[0]
-                Jet0MassPruned     [0] =  ak8JetsGoodPrunMass[0]
-                Jet0MassFiltered   [0] =  ak8JetsGoodFiltMass[0]
-                Jet0MassTrimmed    [0] =  ak8JetsGoodTrimMass[0]
-                Jet0Tau1           [0] =  ak8JetsGoodTau1[0]
-                Jet0Tau2           [0] =  ak8JetsGoodTau2[0]
-                Jet0Tau3           [0] =  ak8JetsGoodTau3[0]
-                Jet0Tau32          [0] =  tau32_jet0_
-                Jet0Tau21          [0] =  tau21_jet0_
-                Jet0SDnsubjets     [0] =  1 # to add later                   
-                Jet0SDbdisc0       [0] =  1 # to add later
-                Jet0SDbdisc1       [0] =  1 # to add later
-                Jet0SDmaxbdisc     [0] =  1 # to add later
-                Jet0SDsubjet0pt    [0] =  1 # to add later
-                Jet0SDsubjet0mass  [0] =  1 # to add later
-                Jet0SDsubjet1pt    [0] =  1 # to add later
-                Jet0SDsubjet1mass  [0] =  1 # to add later
-                Jet0CMSmaxbdisc    [0] =  1 # to add later
-                Jet0CMSnsubjets    [0] =  1 # to add later
-                Jet0CMSminMass     [0] =  ak8JetsGoodMinMass[0]
-                Jet0CMSm01         [0] =  1 # to add later
-                Jet0CMSm02         [0] =  1 # to add later
-                Jet0CMSm12         [0] =  1 # to add later
+                if options.writeTree : 
+                    Jet0Pt             [0] =  ak8JetsGood[0].Perp()
+                    Jet0Eta            [0] =  ak8JetsGood[0].Eta()
+                    Jet0Phi            [0] =  ak8JetsGood[0].Phi()
+                    Jet0Rap            [0] =  ak8JetsGood[0].Rapidity()
+                    Jet0Px             [0] =  ak8JetsGood[0].Px()
+                    Jet0Py             [0] =  ak8JetsGood[0].Py()
+                    Jet0Pz             [0] =  ak8JetsGood[0].Pz()
+                    Jet0Energy         [0] =  ak8JetsGood[0].Energy()
+                    Jet0RhoRatio       [0] =  pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
+                    Jet0Mass           [0] =  ak8JetsGood[0].M()
+                    Jet0MassSoftDrop   [0] =  ak8JetsGoodSDropMass[0]
+                    Jet0MassPruned     [0] =  ak8JetsGoodPrunMass[0]
+                    Jet0MassFiltered   [0] =  ak8JetsGoodFiltMass[0]
+                    Jet0MassTrimmed    [0] =  ak8JetsGoodTrimMass[0]
+                    Jet0Tau1           [0] =  ak8JetsGoodTau1[0]
+                    Jet0Tau2           [0] =  ak8JetsGoodTau2[0]
+                    Jet0Tau3           [0] =  ak8JetsGoodTau3[0]
+                    Jet0Tau32          [0] =  tau32_jet0_
+                    Jet0Tau21          [0] =  tau21_jet0_
+                    Jet0SDnsubjets     [0] =  1 # to add later                   
+                    Jet0SDbdisc0       [0] =  1 # to add later
+                    Jet0SDbdisc1       [0] =  1 # to add later
+                    Jet0SDmaxbdisc     [0] =  1 # to add later
+                    Jet0SDsubjet0pt    [0] =  1 # to add later
+                    Jet0SDsubjet0mass  [0] =  1 # to add later
+                    Jet0SDsubjet1pt    [0] =  1 # to add later
+                    Jet0SDsubjet1mass  [0] =  1 # to add later
+                    Jet0CMSmaxbdisc    [0] =  1 # to add later
+                    Jet0CMSnsubjets    [0] =  1 # to add later
+                    Jet0CMSminMass     [0] =  ak8JetsGoodMinMass[0]
+                    Jet0CMSm01         [0] =  1 # to add later
+                    Jet0CMSm02         [0] =  1 # to add later
+                    Jet0CMSm12         [0] =  1 # to add later
 
-                Jet1Pt             [0] =  ak8JetsGood[1].Perp()
-                Jet1Eta            [0] =  ak8JetsGood[1].Eta()
-                Jet1Phi            [0] =  ak8JetsGood[1].Phi()
-                Jet1Rap            [0] =  ak8JetsGood[1].Rapidity()
-                Jet1Px             [0] =  ak8JetsGood[1].Px()
-                Jet1Py             [0] =  ak8JetsGood[1].Py()
-                Jet1Pz             [0] =  ak8JetsGood[1].Pz()
-                Jet1Energy         [0] =  ak8JetsGood[1].Energy()
-                Jet1RhoRatio       [0] =  pow( ak8JetsGood[1].M() / (ak8JetsGood[1].Perp()*0.8) , 2)
-                Jet1Mass           [0] =  ak8JetsGood[1].M()
-                Jet1MassSoftDrop   [0] =  ak8JetsGoodSDropMass[1]
-                Jet1MassPruned     [0] =  ak8JetsGoodPrunMass[1]
-                Jet1MassFiltered   [0] =  ak8JetsGoodFiltMass[1]
-                Jet1MassTrimmed    [0] =  ak8JetsGoodTrimMass[1]
-                Jet1Tau1           [0] =  ak8JetsGoodTau1[1]
-                Jet1Tau2           [0] =  ak8JetsGoodTau2[1]
-                Jet1Tau3           [0] =  ak8JetsGoodTau3[1]
-                Jet1Tau32          [0] =  tau32_jet1_
-                Jet1Tau21          [0] =  tau21_jet1_
-                Jet1SDnsubjets     [0] =  1 # to add later                   
-                Jet1SDbdisc0       [0] =  1 # to add later
-                Jet1SDbdisc1       [0] =  1 # to add later
-                Jet1SDmaxbdisc     [0] =  1 # to add later
-                Jet1SDsubjet0pt    [0] =  1 # to add later
-                Jet1SDsubjet0mass  [0] =  1 # to add later
-                Jet1SDsubjet1pt    [0] =  1 # to add later
-                Jet1SDsubjet1mass  [0] =  1 # to add later
-                Jet1CMSmaxbdisc    [0] =  1 # to add later
-                Jet1CMSnsubjets    [0] =  1 # to add later
-                Jet1CMSminMass     [0] =  ak8JetsGoodMinMass[1]
-                Jet1CMSm01         [0] =  1 # to add later
-                Jet1CMSm02         [0] =  1 # to add later
-                Jet1CMSm12         [0] =  1 # to add later
+                    Jet1Pt             [0] =  ak8JetsGood[1].Perp()
+                    Jet1Eta            [0] =  ak8JetsGood[1].Eta()
+                    Jet1Phi            [0] =  ak8JetsGood[1].Phi()
+                    Jet1Rap            [0] =  ak8JetsGood[1].Rapidity()
+                    Jet1Px             [0] =  ak8JetsGood[1].Px()
+                    Jet1Py             [0] =  ak8JetsGood[1].Py()
+                    Jet1Pz             [0] =  ak8JetsGood[1].Pz()
+                    Jet1Energy         [0] =  ak8JetsGood[1].Energy()
+                    Jet1RhoRatio       [0] =  pow( ak8JetsGood[1].M() / (ak8JetsGood[1].Perp()*0.8) , 2)
+                    Jet1Mass           [0] =  ak8JetsGood[1].M()
+                    Jet1MassSoftDrop   [0] =  ak8JetsGoodSDropMass[1]
+                    Jet1MassPruned     [0] =  ak8JetsGoodPrunMass[1]
+                    Jet1MassFiltered   [0] =  ak8JetsGoodFiltMass[1]
+                    Jet1MassTrimmed    [0] =  ak8JetsGoodTrimMass[1]
+                    Jet1Tau1           [0] =  ak8JetsGoodTau1[1]
+                    Jet1Tau2           [0] =  ak8JetsGoodTau2[1]
+                    Jet1Tau3           [0] =  ak8JetsGoodTau3[1]
+                    Jet1Tau32          [0] =  tau32_jet1_
+                    Jet1Tau21          [0] =  tau21_jet1_
+                    Jet1SDnsubjets     [0] =  1 # to add later                   
+                    Jet1SDbdisc0       [0] =  1 # to add later
+                    Jet1SDbdisc1       [0] =  1 # to add later
+                    Jet1SDmaxbdisc     [0] =  1 # to add later
+                    Jet1SDsubjet0pt    [0] =  1 # to add later
+                    Jet1SDsubjet0mass  [0] =  1 # to add later
+                    Jet1SDsubjet1pt    [0] =  1 # to add later
+                    Jet1SDsubjet1mass  [0] =  1 # to add later
+                    Jet1CMSmaxbdisc    [0] =  1 # to add later
+                    Jet1CMSnsubjets    [0] =  1 # to add later
+                    Jet1CMSminMass     [0] =  ak8JetsGoodMinMass[1]
+                    Jet1CMSm01         [0] =  1 # to add later
+                    Jet1CMSm02         [0] =  1 # to add later
+                    Jet1CMSm12         [0] =  1 # to add later
 
-                AllHadMETpx        [0] = metPx
-                AllHadMETpy        [0] = metPy
-                AllHadMETpt        [0] = metPt
-                AllHadMETphi       [0] = metPhi      
-                AllHadNvtx         [0] = NPV   
-                AllHadEventWeight  [0] = evWeight   
+                    AllHadMETpx        [0] = metPx
+                    AllHadMETpy        [0] = metPy
+                    AllHadMETpt        [0] = metPt
+                    AllHadMETphi       [0] = metPhi      
+                    AllHadNvtx         [0] = NPV   
+                    AllHadEventWeight  [0] = evWeight   
 
-                DijetMass          [0] = ttMass
-                DijetModMassJet0   [0] = ttMass_modMass_jet0
-                DijetModMassJet1   [0] = ttMass_modMass_jet1
-                DijetDeltaR        [0] = ak8JetsGood[0].DeltaR   (ak8JetsGood[1])
-                DijetDeltaPhi      [0] = ak8JetsGood[0].DeltaPhi (ak8JetsGood[1])
-                DijetDeltaRap      [0] = abs(ak8JetsGood[0].Rapidity() - ak8JetsGood[1].Rapidity() )
+                    DijetMass          [0] = ttMass
+                    DijetModMassJet0   [0] = ttMass_modMass_jet0
+                    DijetModMassJet1   [0] = ttMass_modMass_jet1
+                    DijetDeltaR        [0] = ak8JetsGood[0].DeltaR   (ak8JetsGood[1])
+                    DijetDeltaPhi      [0] = ak8JetsGood[0].DeltaPhi (ak8JetsGood[1])
+                    DijetDeltaRap      [0] = abs(ak8JetsGood[0].Rapidity() - ak8JetsGood[1].Rapidity() )
 
-                TreeAllHad.Fill()
-            #} end check that we have at least 2 AK8 jets for all-hadronic background estimation            
-
-
-            if SemiLeptonic:
-                #~ Fill SemiLeptonic tree
-                FatJetPt            [0] = ak8JetsGood[0].Perp()
-                FatJetEta           [0] = ak8JetsGood[0].Eta()
-                FatJetPhi           [0] = ak8JetsGood[0].Phi()
-                FatJetRap           [0] = ak8JetsGood[0].Rapidity()
-                FatJetPx            [0] = ak8JetsGood[0].Px()
-                FatJetPy            [0] = ak8JetsGood[0].Py()
-                FatJetPz            [0] = ak8JetsGood[0].Pz()
-                FatJetEnergy        [0] = ak8JetsGood[0].Energy()
-                FatJetRhoRatio      [0] = pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
-                FatJetMass          [0] = ak8JetsGood[0].M()
-                FatJetMassSoftDrop  [0] = ak8JetsGoodSDropMass[0]
-                FatJetMassPruned    [0] = ak8JetsGoodPrunMass[0]
-                FatJetMassFiltered  [0] = ak8JetsGoodFiltMass[0]
-                FatJetMassTrimmed   [0] = ak8JetsGoodTrimMass[0]
-                FatJetTau1          [0] = ak8JetsGoodTau1[0]
-                FatJetTau2          [0] = ak8JetsGoodTau2[0]
-                FatJetTau3          [0] = ak8JetsGoodTau3[0]
-                FatJetTau32         [0] = 1
-                FatJetTau21         [0] = 1
-                FatJetSDnsubjets    [0] = 1 # to add later                   
-                FatJetSDbdisc0      [0] = 1 # to add later
-                FatJetSDbdisc1      [0] = 1 # to add later
-                FatJetSDmaxbdisc    [0] = 1 # to add later
-                FatJetSDsubjet0pt   [0] = 1 # to add later
-                FatJetSDsubjet0mass [0] = 1 # to add later
-                FatJetSDsubjet1pt   [0] = 1 # to add later
-                FatJetSDsubjet1mass [0] = 1 # to add later
-                FatJetCMSmaxbdisc   [0] = 1 # to add later
-                FatJetCMSnsubjets   [0] = 1 # to add later
-                FatJetCMSminMass    [0] = ak8JetsGoodMinMass[0]
-                FatJetCMSm01        [0] = 1 # to add later
-                FatJetCMSm02        [0] = 1 # to add later
-                FatJetCMSm12        [0] = 1 # to add later
-                LeptonPt            [0] = theLepton.Perp()  
-                LeptonEta           [0] = theLepton.Eta()
-                LeptonPhi           [0] = theLepton.Phi()
-                LeptonPx            [0] = theLepton.Px() 
-                LeptonPy            [0] = theLepton.Py() 
-                LeptonPz            [0] = theLepton.Pz()
-                LeptonEnergy        [0] = theLepton.E() 
-                SemiLepMETpx        [0] = metPx
-                SemiLepMETpy        [0] = metPy
-                SemiLepMETpt        [0] = metPt
-                SemiLepMETphi       [0] = metPhi     
-                SemiLepNvtx         [0] = NPV   
-                SemiLepEventWeight  [0] = evWeight 
-                # SemilLepTTmass      [0] = 
-                # DeltaPhiLepFat      [0] = 
+                    TreeAllHad.Fill()
+                #} end check that we have at least 2 AK8 jets for all-hadronic background estimation            
 
 
-                TreeSemiLept.Fill()
+                if SemiLeptonic:
+                    #~ Fill SemiLeptonic tree
+                    FatJetPt            [0] = ak8JetsGood[0].Perp()
+                    FatJetEta           [0] = ak8JetsGood[0].Eta()
+                    FatJetPhi           [0] = ak8JetsGood[0].Phi()
+                    FatJetRap           [0] = ak8JetsGood[0].Rapidity()
+                    FatJetPx            [0] = ak8JetsGood[0].Px()
+                    FatJetPy            [0] = ak8JetsGood[0].Py()
+                    FatJetPz            [0] = ak8JetsGood[0].Pz()
+                    FatJetEnergy        [0] = ak8JetsGood[0].Energy()
+                    FatJetRhoRatio      [0] = pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
+                    FatJetMass          [0] = ak8JetsGood[0].M()
+                    FatJetMassSoftDrop  [0] = ak8JetsGoodSDropMass[0]
+                    FatJetMassPruned    [0] = ak8JetsGoodPrunMass[0]
+                    FatJetMassFiltered  [0] = ak8JetsGoodFiltMass[0]
+                    FatJetMassTrimmed   [0] = ak8JetsGoodTrimMass[0]
+                    FatJetTau1          [0] = ak8JetsGoodTau1[0]
+                    FatJetTau2          [0] = ak8JetsGoodTau2[0]
+                    FatJetTau3          [0] = ak8JetsGoodTau3[0]
+                    FatJetTau32         [0] = 1
+                    FatJetTau21         [0] = 1
+                    FatJetSDnsubjets    [0] = 1 # to add later                   
+                    FatJetSDbdisc0      [0] = 1 # to add later
+                    FatJetSDbdisc1      [0] = 1 # to add later
+                    FatJetSDmaxbdisc    [0] = 1 # to add later
+                    FatJetSDsubjet0pt   [0] = 1 # to add later
+                    FatJetSDsubjet0mass [0] = 1 # to add later
+                    FatJetSDsubjet1pt   [0] = 1 # to add later
+                    FatJetSDsubjet1mass [0] = 1 # to add later
+                    FatJetCMSmaxbdisc   [0] = 1 # to add later
+                    FatJetCMSnsubjets   [0] = 1 # to add later
+                    FatJetCMSminMass    [0] = ak8JetsGoodMinMass[0]
+                    FatJetCMSm01        [0] = 1 # to add later
+                    FatJetCMSm02        [0] = 1 # to add later
+                    FatJetCMSm12        [0] = 1 # to add later
+                    LeptonPt            [0] = theLepton.Perp()  
+                    LeptonEta           [0] = theLepton.Eta()
+                    LeptonPhi           [0] = theLepton.Phi()
+                    LeptonPx            [0] = theLepton.Px() 
+                    LeptonPy            [0] = theLepton.Py() 
+                    LeptonPz            [0] = theLepton.Pz()
+                    LeptonEnergy        [0] = theLepton.E() 
+                    SemiLepMETpx        [0] = metPx
+                    SemiLepMETpy        [0] = metPy
+                    SemiLepMETpt        [0] = metPt
+                    SemiLepMETphi       [0] = metPhi     
+                    SemiLepNvtx         [0] = NPV   
+                    SemiLepEventWeight  [0] = evWeight 
+                    # SemilLepTTmass      [0] = 
+                    # DeltaPhiLepFat      [0] = 
+
+
+                    TreeSemiLept.Fill()
 
 
 
