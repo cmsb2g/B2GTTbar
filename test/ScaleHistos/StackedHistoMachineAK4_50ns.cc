@@ -15,7 +15,7 @@
 #include "TColor.h"
 using namespace std;
 
-TString theHists [] = {"h_mAK4", "h_ptAK4", "h_bdiscAK4", "h_ptLep"};
+TString theHists [] = {"h_ptLep", "h_mAK4", "h_ptAK4", "h_bdiscAK4"};
 
 void callHistos();
 void StackedHistoMachineAK4_50ns();
@@ -63,7 +63,7 @@ for (int j=0; j<3; j++) {
 	    xAxisTitle = "M_{jet} (GeV)"; 
 	    maxY = 250;
 	    minX = 0;
-	    maxX = 80; 
+	    maxX = 200; 
 	    xInfo = 0.301; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
 	    legendLocation[0] = 0.38058;
@@ -78,7 +78,7 @@ for (int j=0; j<3; j++) {
 	    xAxisTitle = "P_{T} of Jet (GeV)"; 
 	    maxY = 50;
             minX = 0;
-	    maxX = 200; 
+	    maxX = 800; 
 	    xInfo = 0.131; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
 	    legendLocation[0] = 0.370759;
@@ -105,7 +105,7 @@ for (int j=0; j<3; j++) {
 	    xAxisTitle = "P_{T} of Lepton (GeV)";
 	    maxY = 50;
 	    minX = 0;
-	    maxX = 200; 
+	    maxX = 800; 
 	    xInfo = 0.341; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
 	    legendLocation[0] = 0.520759;
@@ -124,22 +124,22 @@ for (int j=0; j<3; j++) {
 	  THStack *hs = new THStack();
 
 	//  @ set the Infile names (.root assumed)
-	  TString InFile1 = "ttjets_b2ganafw_v4_sel1";  // TT Jets
-	  TString InFile2 = "wjets_b2ganafw_v4_sel1";  // W + Jets                                                    
-	  TString InFile3 = "singletop_v74x_v4.3_tchan_local_sel1";  // Single Top
-	  TString InFile4 = "zjets_b2ganafw_v4_sel1";  // Drell- Yan
-	  TString InFile5 = "singlemu_v74x_v4.3_sel1";  //Muon Data
+	  TString InFile1 = "ttjets_b2ganafw_v5_sel1_st_update2d";  // TT Jets
+	  TString InFile2 = "wjets_b2ganafw_v5_sel1_st_update2d";  // W + Jets                                                    
+	  TString InFile3 = "singletop_v74x_v4.3_tchan_local_sel1_st_update2d";  // Single Top
+	  TString InFile4 = "zjets_b2ganafw_v4_sel1_st_update2d";  // Drell- Yan
+	  TString InFile5 = "singlemu_v74x_v5_sel1_st_update2d";  //Muon Data
 	  TString InFile6 = "July30n-Z-200-50ns-sel1"; // Z' W= 200
 	  TString InFile7 = "July30n-Z-20-50ns-sel1"; // Z' W = 20
-	  TString InFile8 = "singleel_v74x_v4.3_sel1";  //Electron Data
+	  TString InFile8 = "singleel_v74x_v5_dataset1_st_update2d";  //Electron Data
 
 	  TFile *PlotFile1 = TFile::Open("../"+InFile1+".root");       
 	  TFile *PlotFile2 = TFile::Open("../"+InFile2+".root");   
 	  TFile *PlotFile3 = TFile::Open("../"+InFile3+".root");       
 	  TFile *PlotFile4 = TFile::Open("../"+InFile4+".root");  
 	  TFile *PlotFile5 = TFile::Open("../"+InFile5+".root");       
-	  TFile *PlotFile6 = TFile::Open("../"+InFile6+".root");  
-	  TFile *PlotFile7 = TFile::Open("../"+InFile7+".root"); 
+	  // TFile *PlotFile6 = TFile::Open("../"+InFile6+".root");  
+	  // TFile *PlotFile7 = TFile::Open("../"+InFile7+".root"); 
 	  TFile *PlotFile8 = TFile::Open("../"+InFile8+".root"); 
 
 	  TH1F* histo1;
@@ -157,14 +157,13 @@ for (int j=0; j<3; j++) {
 	  histo3 = (TH1F*) PlotFile3->Get(Histo);
 	  histo4 = (TH1F*) PlotFile4->Get(Histo);
 	  histo5 = (TH1F*) PlotFile5->Get(Histo);
-	  histo6 = (TH1F*) PlotFile6->Get(Histo);
-	  histo7 = (TH1F*) PlotFile7->Get(Histo);
+	  // histo6 = (TH1F*) PlotFile6->Get(Histo);
+	  // histo7 = (TH1F*) PlotFile7->Get(Histo);
 	  histo8 = (TH1F*) PlotFile8->Get(Histo);
 	// @ set correct event numbers
-
-	  Double_t n_events1 = 4992231 ; // TTJets                     
+	  Double_t n_events1 = 19665194 ; // TTJets                     
 	  Double_t n_events2 = 24089991 ; // W->l+nu+Jets
-	  Double_t n_events3 = 1273800 ; // Single top
+	  Double_t n_events3 = 3999910 ; // Single top
 	  Double_t n_events4 = 19925500 ; // Drell Yan
 
 	  Double_t n_events6 = 103854 ; //  Z'-> t tbar 2TeV W = 200
@@ -174,8 +173,8 @@ for (int j=0; j<3; j++) {
 	  Double_t lum = 40.03 ; // From JSON on july 27
 	  Double_t xsTT = 831.76; // for 13 TeV from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO used top mass as 172.5, uncertainties on twiki	
 	  Double_t xsW = 20508.9;   // inclusive W  https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
-	  Double_t xsST = 136.02 ;   // t channel top at 13 TeV https://twiki.cern.ch/twiki/bin/viewauth/CMS/SingleTopSigma
-	  Double_t xsZ = 3205.6 ; // inclusive Z production https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
+	  Double_t xsST = 216.99 ;   // t channel top at 13 TeV https://twiki.cern.ch/twiki/bin/viewauth/CMS/SingleTopSigma
+	  Double_t xsZ = 2008.4; // inclusive Z production https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
 	  Double_t xsZprime = 10 ; // Arbitrary
 
 
@@ -205,13 +204,13 @@ for (int j=0; j<3; j++) {
 	 // histo5->SetMarkerStyle(20); 
 	//  histo5->SetBinError();  // https://root.cern.ch/root/html/TH1.html#TH1:SetBinError
 
-	  histo6->Scale( xsZprime * lum / n_events6 ); 
-	  histo6->SetLineWidth(2); 
-	  histo6->SetLineColor(kGray+1);
+	  // histo6->Scale( xsZprime * lum / n_events6 ); 
+	  // histo6->SetLineWidth(2); 
+	  // histo6->SetLineColor(kGray+1);
 
-	  histo7->Scale( xsZprime * lum / n_events7 ); 
-	  histo7->SetLineWidth(2);
-	  histo7->SetLineColor(kBlack);
+	  // histo7->Scale( xsZprime * lum / n_events7 ); 
+	  // histo7->SetLineWidth(2);
+	  // histo7->SetLineColor(kBlack);
           
           histo8->Sumw2();
           histo8->Add(histo5);
@@ -222,7 +221,7 @@ for (int j=0; j<3; j++) {
 	  hs->Add(histo2);
 	  hs->Add(histo1);
 
-	  hs->Draw();
+	  hs->Draw("hist");
 	  hs->GetXaxis()->SetLabelSize(0.042);
 	  hs->GetYaxis()->SetLabelSize(0.042);
 
@@ -240,17 +239,17 @@ for (int j=0; j<3; j++) {
 	  canvas->Modified();
 
 
-	  histo6->Draw("same");
-	  histo7->Draw("same");
-	  histo5->Draw("ep same");
-	  //histo8->Draw("ep same");
+	  // histo6->Draw("same");
+	  // histo7->Draw("same");
+	  //histo5->Draw("ep same");
+	  histo8->Draw("ep same");
 	  canvas->Modified();
 
 	  TLatex *tlx = new TLatex();
 	  tlx->SetNDC();
 	  tlx->SetTextFont(42);
 	  tlx->SetTextSize(0.057);
-	  tlx->DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 0.004003 fb^{-1}");
+	  tlx->DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 40.03 pb^{-1}");
 	 // tlx->DrawLatex(0.77, 0.86, "#bf{CMS}");
 	 // tlx->DrawLatex(0.72, 0.83, "#it{very preliminary}");
 	  tlx->SetTextSize(0.025);
@@ -277,8 +276,8 @@ for (int j=0; j<3; j++) {
 	  legend->SetMargin(0.3); 
 	  //legend->AddEntry(histo5,"Electron Data", "p");
 	  legend->AddEntry(histo8,"Data", "p");
-	  legend->AddEntry(histo7,"Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
-	  legend->AddEntry(histo6,"Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
+	  // legend->AddEntry(histo7,"Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
+	  // legend->AddEntry(histo6,"Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
 	  legend->AddEntry(histo1," t#bar{t}", "f");  
 	  legend->AddEntry(histo2,"W + Jets", "f");
 	  legend->AddEntry(histo4,"Z + Jets", "f");
