@@ -2,24 +2,19 @@
 from optparse import OptionParser
 parser = OptionParser()
 
-parser.add_option('--bunchX', metavar='F', type='string', action='store',
-                  dest='BX',
-                  default='25ns',
-                  help='Bunch Crossing ex: 25 or 50ns')
 parser.add_option('--files', type='string', action='store',
                   dest='inFiles',
                   help='Input files')
-#parser.add_option('--dynamic', '--db',
-#                  action='store_true',
-#                  default=False,
-#                  dest='dynamicBin',
-#                  help='Dynamic binning based on events per bin')
-parser.add_option('--setTitles', metavar='F', type='string', action='store',
-                  default=None,
-                  dest='SampleTitle',
-                  help='Set desired title for plots, typically indicating sample')
 
+parser.add_option('--stage', type='string', action='store',
+                  dest='stage',
+                  default = None,
+                  help='Stage of selection')
 
+parser.add_option('--hmax', type='float', action='store',
+                  dest='hmax',
+                  default = None,
+                  help='Histogram y max')
 (options, args) = parser.parse_args()
 argv = []
 
@@ -27,107 +22,145 @@ import ROOT
 
 ROOT.gStyle.SetOptStat(000000)
 ROOT.gROOT.Macro("rootlogon.C")
-
-histlist = [
-'h_mttbar',
-'h_ptLep',
-'h_etaLep',
-'h_met',
-'h_dRMin',
-'h_ptAK4',
-'h_etaAK4',
-'h_mAK4',
-'h_bdiscAK4',
-'h_ptAK8',
-'h_etaAK8',
-'h_mAK8',
-'h_mprunedAK8',
-'h_mfilteredAK8',
-'h_mtrimmedAK8',
-'h_mSDropAK8',
-'h_nsjAK8',
-'h_tau21AK8',
-'h_tau32AK8' 
-]
-Titles = [
-';Mass(GeV) of ttbar;Number of Events',
-';p_{T}(GeV) of Lepton;Number of Events',
-';y of Lepton;Number of Events',
-';MET(GeV);Number of Events',
-';dRMin;Number of Events',
-';p_{T}(GeV) of AK4 Jet;Number of Events',
-';y of AK4 Jet;Number of Events',
-';Mass(GeV) of AK4 Jet;Number of Events',
-';bDisc of AK4 Jet;Number of Events',
-';p_{T}(GeV) of AK8 Jet;Number of Events',
-';y of AK8 Jet;Number of Events',
-';Mass(GeV) of AK8 Jet;Number of Events',
-';Pruned Mass (GeV);Number of Events',
-';Filtered Mass (GeV);Number of Events',
-';Trimmed Mass (GeV);Number of Events',
-';Soft Drop Mass (GeV);Number of Events',
-';Number of Subjets;Number of Events',
-';\Tau_{21};Number of Events',
-';\Tau_{32};Number of Events'
+ROOT.gStyle.SetTitleOffset(1.0, "Y")
+HNAME_NDX = 0
+HTITLE_NDX = 1
+HMAX_NDX = 2
+HXMIN_NDX = 3
+HXMAX_NDX = 4
+LEGXMIN_NDX = 5
+LEGYMIN_NDX = 6
+LEGXMAX_NDX = 7
+LEGYMAX_NDX = 8
+hists = [
+#    ['h_ptLep',            ';p_{T}(GeV) of Lepton;Number of Events', 500., 0., 1000., 0.6, 0.6, 0.85, 0.85],
+#    ['h_etaLep',           ';y of Lepton;Number of Events',          500., -3., 3.,   0.6, 0.6, 0.85, 0.85],
+#    ['h_met',              ';MET(GeV);Number of Events',             500., 0., 1000., 0.6, 0.6, 0.85, 0.85],
+#    ['h_dRMin',            ';dRMin;Number of Events',                500., 0., 5.,    0.6, 0.6, 0.85, 0.85],
+#    Name                  Title                                           Max, Xmin, Xmax   Legend location 
+    ['h_ptAK4',            ';p_{T}(GeV) of AK4 Jet;Number of Events',      20., 0., 1500.,   0.6, 0.6, 0.85, 0.85],
+    ['h_etaAK4',           ';y of AK4 Jet;Number of Events',               20., -3., 3.,     0.6, 0.6, 0.85, 0.85],
+    ['h_mAK4',             ';Mass(GeV) of AK4 Jet;Number of Events',       60., 10., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_bdiscAK4',         ';b discriminator of AK4 Jet;Number of Events', 20., 0., 1.0,     0.6, 0.6, 0.85, 0.85],
+    ['h_ptAK8',            ';p_{T}(GeV) of AK8 Jet;Number of Events',      30., 400., 1500., 0.6, 0.6, 0.85, 0.85],
+    ['h_etaAK8',           ';y of AK8 Jet;Number of Events',               20., -3., 3.,     0.6, 0.6, 0.85, 0.85],
+    ['h_mAK8',             ';Mass(GeV) of AK8 Jet;Number of Events',       40., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mprunedAK8',       ';Pruned Mass (GeV);Number of Events',          40., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mfilteredAK8',     ';Filtered Mass (GeV);Number of Events',        40., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mtrimmedAK8',      ';Trimmed Mass (GeV);Number of Events',         40., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mSDropAK8',        ';Soft Drop Mass (GeV);Number of Events',       40., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_nsjAK8',           ';Number of Subjets;Number of Events',         100., 0., 5.,      0.6, 0.6, 0.85, 0.85],
+    ['h_tau21AK8',         ';#tau_{21};Number of Events',                  20.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_tau32AK8',         ';#tau_{32};Number of Events',                  20.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_nhfAK8',           ';Neutral hadron fraction;Number of Events',    20.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_chfAK8',           ';Charged hadron fraction;Number of Events',    20.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_nefAK8',           ';Neutral EM fraction;Number of Events',        20.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_cefAK8',           ';Charged EM fraction;Number of Events',        20.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
 ]
 
-Files = []
+if options.stage != None :
+    for ihist in hists :
+        ihist[HNAME_NDX] += '_' + options.stage
+        print 'Getting histogram : ' + ihist[HNAME_NDX]
 
-fileList = file(options.inFiles)
-filesraw = fileList.readlines()
-
-for filename in filesraw :
-    if len( filename ) > 2 :
-        s = filename.rstrip()
-        Files.append( ROOT.TFile(s) )
-
-
-
-colors = [2,4,7,9,1]
-markers = [20,21,22,23,24]
-Samples = [
-"TTBar",
-"ZPrime 2 TeV",
-"ZPrime 2.5 TeV",
-"ZPrime 3 TeV",
-"QCD"
+FILE_NDX = 0
+NAME_NDX = 1
+TITLE_NDX = 2
+SCALE_NDX = 3
+COLOR_NDX = 4
+lumi = 40.03
+samples = [
+    ["ttjets_b2ganafw_v5_sel1_synced.root",             'ttbar',  't#bar{t}',          831.76 * lumi / 19665194., ROOT.kRed + 1],
+    ["wjets_b2ganafw_v5_sel1_synced.root",              'wjets',  'W + Jets',         20508.9 * lumi / 24089991., ROOT.kGreen + 1 ],
+    ["singletop_v74x_v4.3_tchan_local_sel1_synced.root",'st',     'Single Top Quark',  216.99 * lumi / 3999910.,  ROOT.kMagenta + 1 ],
+    ["zjets_b2ganafw_v4_sel1_synced.root",              'zjets',  'Z + Jets',          2008.4 * lumi / 19925500., ROOT.kBlue - 4 ], 
+    ["singlemu_v74x_v5_sel1_synced.root",               'mudata', 'Data',              1.0,                       0 ],
+    ["singleel_v74x_v5_sel1_synced.root",               'eldata', 'Data',              1.0,                       0  ],
 ]
 
+histsMC = []
+histsData = []
+hstacks = []
 canvs = []
+files = []
+legs = []
 
-#Get various signal region backgrounds
-for ihist,shist in enumerate( histlist ) :
-    print 'processing shist = ' +  shist
-    canv = ROOT.TCanvas(shist, shist, 1600, 800)
-    leg = ROOT.TLegend(0.8, 0.6, 1.05, 0.85)
+for sample in samples :
+    ifile = ROOT.TFile( sample[FILE_NDX] )
+    files.append(ifile)
 
-    for iinfile,infile in enumerate(Files) :
-        print '   processing infile = ' + infile.GetName()
+for ihist,shist in enumerate( hists ) :
+    hstack = ROOT.THStack( shist[HNAME_NDX], shist[HTITLE_NDX] )
+    hdata = None
+    leg = ROOT.TLegend( shist[LEGXMIN_NDX],shist[LEGYMIN_NDX],shist[LEGXMAX_NDX],shist[LEGYMAX_NDX])
+    leg.SetFillColor(0)
+    leg.SetBorderSize(0)
+    print 'Getting histogram ' + shist[HNAME_NDX]
+    for isample,sample in enumerate(samples) :
+        iname = sample[NAME_NDX]
+        print '   -- Sample : ' + iname
         
-        hist = infile.Get( shist )
+        ihist = files[isample].Get( shist[HNAME_NDX] ).Clone()
+        ihist.UseCurrentStyle()
+        ihist.SetName( ihist.GetName() + '_' + iname )
+        ihist.Scale( sample[SCALE_NDX] )
+        if iname in ['ttbar', 'wjets', 'st', 'zjets' ] :
+            ihist.SetFillColor( sample[COLOR_NDX] )
+            hstack.Add( ihist )
+            histsMC.append( ihist )
+            leg.AddEntry( ihist, sample[TITLE_NDX], 'f')
+            print '    ====> Added to MC'
+        elif iname == 'mudata' :
+            hdata = ihist.Clone()
+            hdata.SetName( ihist.GetName() + '_' + 'data' )
+            histsData.append( hdata )
+            print '    ====> Initialized data with mu'
+        elif iname == 'eldata' :
+            hdata.Add ( ihist )
+            histsData.append( ihist )
+            print '    ====> Added to data with el'
+            hdata.SetMarkerStyle(20)
+            leg.AddEntry( hdata, 'Data', 'p')
         
-        if iinfile == 0 : 
-            scale = hist.GetEntries()
-        else :
-            if hist.GetEntries() != 0 :
-                hist.Scale(scale/hist.GetEntries())
+    canv = ROOT.TCanvas( 'c'+ shist[HNAME_NDX], 'c'+ shist[HNAME_NDX] )
+    hstack.Draw('hist')
+    hdata.Draw('e same')
 
-
-        hist.SetMarkerColor(colors[iinfile])
-        hist.SetLineColor(colors[iinfile])
-        hist.SetMarkerStyle(markers[iinfile])
-        
-        hist.SetTitle( Titles[ihist] )
-        
-        leg.AddEntry( hist, Samples[iinfile], 'p')
-        
-        if iinfile == 0 : 
-            hist.Draw()
-        else :
-            hist.Draw('same')
-            
+    if options.hmax != None : 
+        hstack.SetMaximum( options.hmax  )
+    else :
+        hstack.SetMaximum( shist[HMAX_NDX] )
+    hstack.GetXaxis().SetRangeUser( shist[HXMIN_NDX], shist[HXMAX_NDX] )
     leg.Draw()
+
+    tlx = ROOT.TLatex()
+    tlx.SetNDC()
+    tlx.SetTextFont(42)
+    tlx.SetTextSize(0.057)
+    tlx.DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 40.03 pb^{-1}")
+    # tlx.DrawLatex(0.77, 0.86, "#bf{CMS}")
+    # tlx.DrawLatex(0.72, 0.83, "#it{very preliminary}")
+    tlx.SetTextSize(0.025)
+    xInfo = 0.18
+    yInfoTop = 0.84
+    yInfo2 = yInfoTop-0.042
+    yInfo3 = yInfo2-0.042
+    yInfo4 = yInfo3-0.042
+    yInfo5 = yInfo4-0.042
+    yInfo6 = yInfo5-0.042
+    tlx.DrawLatex(xInfo, yInfoTop, "#bf{CMS Top Tagger}") # same for AK4 and AK8
+    tlx.DrawLatex(xInfo, yInfo2 , "#bf{Madgraph}") # same for AK4 and AK8                   
+    tlx.DrawLatex(xInfo, yInfo3, "#bf{AK R= 0.8}") # 0.8 or 0.4 for AK8 and AK4              change with histo
+    tlx.DrawLatex(xInfo, yInfo4, "#bf{|#eta| < 2.4 }")  # same for AK4 and AK8
+    tlx.DrawLatex(xInfo, yInfo5, "#bf{P_{T} > 400 GeV}")# > 400 for AK8 and > 30 for AK4     change with histo
+    tlx.DrawLatex(xInfo, yInfo6, "#bf{50 ns}")  # change with 25 or 50 ns bunchcrossings     change with root files
+    
     canv.Draw()
+
+    legs.append(leg)
     canvs.append(canv)
-    canv.Print('pngs/' + canv.GetName() + '_' + options.BX + '.png' )
-    canv.Print('pdfs/' + canv.GetName() + '_' + options.BX + '.pdf' )
+    hstacks.append(hstack)
+    canv.Print(shist[HNAME_NDX] + '.png', 'png')
+    canv.Print(shist[HNAME_NDX] + '.pdf', 'pdf')    
+    
+    
