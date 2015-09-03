@@ -15,7 +15,7 @@
 #include "TColor.h"
 using namespace std;
 
-TString theHists [] = {"h_mAK8","h_mSDropAK8","h_mprunedAK8","h_mfilteredAK8","h_mtrimmedAK8","h_minmassAK8","h_ptAK8","h_nsjAK8","h_tau21AK8","h_tau32AK8"};
+TString theHists [] = {"h_mAK8","h_mSDropAK8","h_mprunedAK8","h_mfilteredAK8","h_mtrimmedAK8","h_minmassAK8","h_ptAK8","h_nsjAK8","h_tau21AK8","h_tau32AK8", "h_etaAK8"};
 
 void callHistos();
 void StackedHistoMachineAK8_50ns();
@@ -43,7 +43,7 @@ double yInfoTop;
 double legendLocation [4];
 
   
-for (int j=0; j<10; j++) {
+for (int j=0; j<11; j++) {
 	int histo = 0;
 	Histo = theHists[j];
 	if (Histo == "h_mAK8")
@@ -75,7 +75,8 @@ for (int j=0; j<10; j++) {
 
 	if (Histo == "h_ptAK8" )
 		histo =10;
-
+	if (Histo == "h_etaAK8" )
+		histo =11;
 
 	switch (histo)
 	{
@@ -101,9 +102,9 @@ for (int j=0; j<10; j++) {
 	    maxY = 45;
 	    xInfo = 0.131; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.370759;
+	    legendLocation[0] = 0.570759;
 	    legendLocation[1] = 0.320595;
-	    legendLocation[2] = 0.650536;
+	    legendLocation[2] = 0.850536;
 	    legendLocation[3] = 0.611488;
 	    cout << "This histo is n_mSDropAK8 " << endl;
 	    break;
@@ -115,9 +116,9 @@ for (int j=0; j<10; j++) {
 	    maxY = 45;
 	    xInfo = 0.341; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.324777;
+	    legendLocation[0] = 0.524777;
 	    legendLocation[1] = 0.350893;
-	    legendLocation[2] = 0.675223;
+	    legendLocation[2] = 0.875223;
 	    legendLocation[3] = 0.651786;
 	    break;
 	    }
@@ -128,9 +129,9 @@ for (int j=0; j<10; j++) {
 	    maxY = 45;
 	    xInfo = 0.341; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.324777;
+	    legendLocation[0] = 0.524777;
 	    legendLocation[1] = 0.350893;
-	    legendLocation[2] = 0.675223;
+	    legendLocation[2] = 0.875223;
 	    legendLocation[3] = 0.651786;
 	    break;
 	    }
@@ -141,9 +142,9 @@ for (int j=0; j<10; j++) {
 	    maxY = 45;
 	    xInfo = 0.341; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.324777;
+	    legendLocation[0] = 0.524777;
 	    legendLocation[1] = 0.350893;
-	    legendLocation[2] = 0.675223;
+	    legendLocation[2] = 0.875223;
 	    legendLocation[3] = 0.651786;
 	    break;
 	    }
@@ -209,11 +210,24 @@ for (int j=0; j<10; j++) {
 	    maxX = 1300; 
 	    xInfo = 0.281; //  location of plot description in normalized coordinates
 	    yInfoTop = 0.868;
-	    legendLocation[0] = 0.256696;
+	    legendLocation[0] = 0.356696;
 	    legendLocation[1] = 0.315476;
-	    legendLocation[2] = 0.607143;
+	    legendLocation[2] = 0.707143;
 	    legendLocation[3] = 0.616071;
 	    cout << "This histo is h_ptAK8 " << endl;
+	    break;    
+	    }
+	    case 11 :{
+	    xAxisTitle = "Jet #eta"; 
+	    minX = -5.0;
+	    maxX = 5.0; 
+	    xInfo = 0.281; //  location of plot description in normalized coordinates
+	    yInfoTop = 0.868;
+	    legendLocation[0] = 0.356696;
+	    legendLocation[1] = 0.315476;
+	    legendLocation[2] = 0.707143;
+	    legendLocation[3] = 0.616071;
+	    cout << "This histo is h_etaAK8 " << endl;
 	    break;    
 	    }
 	    case 0 :{
@@ -226,22 +240,22 @@ for (int j=0; j<10; j++) {
 	  THStack *hs = new THStack();
 
 	//  @ set the Infile names (.root assumed)
-	  TString InFile1 = "July30n-TTJets-50ns-sel1";  // TT Jets
-	  TString InFile2 = "July30n-Wjets-50ns-sel1";  // W + Jets                                                    
-	  TString InFile3 = "July30n-ST-50ns-sel1";  // Single Top
-	  TString InFile4 = "July30n-Zjets-50ns-sel1";  // Drell- Yan
-	  TString InFile5 = "July30n-MuData-50ns-sel1";  //Muon Data
+	  TString InFile1 = "ttjets_b2ganafw_v5_sel1_synced";  // TT Jets
+	  TString InFile2 = "wjets_b2ganafw_v5_sel1_synced";  // W + Jets                                                    
+	  TString InFile3 = "singletop_v74x_v4.3_tchan_local_sel1_synced";  // Single Top
+	  TString InFile4 = "zjets_b2ganafw_v4_sel1_synced";  // Drell- Yan
+	  TString InFile5 = "singlemu_v74x_v5_sel1_synced";  //Muon Data
 	  TString InFile6 = "July30n-Z-200-50ns-sel1"; // Z' W= 200
 	  TString InFile7 = "July30n-Z-20-50ns-sel1"; // Z' W = 20
-	  TString InFile8 = "July30n-ElData-50ns-sel1";  //Electron Data
+	  TString InFile8 = "singleel_v74x_v5_sel1_synced";  //Electron Data
 
 	  TFile *PlotFile1 = TFile::Open("../"+InFile1+".root");       
 	  TFile *PlotFile2 = TFile::Open("../"+InFile2+".root");   
 	  TFile *PlotFile3 = TFile::Open("../"+InFile3+".root");       
 	  TFile *PlotFile4 = TFile::Open("../"+InFile4+".root");  
 	  TFile *PlotFile5 = TFile::Open("../"+InFile5+".root");       
-	  TFile *PlotFile6 = TFile::Open("../"+InFile6+".root");  
-	  TFile *PlotFile7 = TFile::Open("../"+InFile7+".root"); 
+	  // TFile *PlotFile6 = TFile::Open("../"+InFile6+".root");  
+	  // TFile *PlotFile7 = TFile::Open("../"+InFile7+".root"); 
 	  TFile *PlotFile8 = TFile::Open("../"+InFile8+".root"); 
 
 	  TH1F* histo1;
@@ -259,14 +273,14 @@ for (int j=0; j<10; j++) {
 	  histo3 = (TH1F*) PlotFile3->Get(Histo);
 	  histo4 = (TH1F*) PlotFile4->Get(Histo);
 	  histo5 = (TH1F*) PlotFile5->Get(Histo);
-	  histo6 = (TH1F*) PlotFile6->Get(Histo);
-	  histo7 = (TH1F*) PlotFile7->Get(Histo);
+	  // histo6 = (TH1F*) PlotFile6->Get(Histo);
+	  // histo7 = (TH1F*) PlotFile7->Get(Histo);
 	  histo8 = (TH1F*) PlotFile8->Get(Histo);
 	// @ set correct event numbers
 
-	  Double_t n_events1 = 4992231 ; // TTJets                     
+	  Double_t n_events1 = 19665194 ; // TTJets                     
 	  Double_t n_events2 = 24089991 ; // W->l+nu+Jets
-	  Double_t n_events3 = 1273800 ; // Single top
+	  Double_t n_events3 = 3999910 ; // Single top
 	  Double_t n_events4 = 19925500 ; // Drell Yan
 
 	  Double_t n_events6 = 103854 ; //  Z'-> t tbar 2TeV W = 200
@@ -276,8 +290,8 @@ for (int j=0; j<10; j++) {
 	  Double_t lum = 40.03 ; // From JSON on july 27
 	  Double_t xsTT = 831.76; // for 13 TeV from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO used top mass as 172.5, uncertainties on twiki	
 	  Double_t xsW = 20508.9;   // inclusive W  https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
-	  Double_t xsST = 136.02 ;   // t channel top at 13 TeV https://twiki.cern.ch/twiki/bin/viewauth/CMS/SingleTopSigma
-	  Double_t xsZ = 3205.6 ; // inclusive Z production https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
+	  Double_t xsST = 216.99 ;   // t channel top at 13 TeV https://twiki.cern.ch/twiki/bin/viewauth/CMS/SingleTopSigma
+	  Double_t xsZ = 2008.4; // inclusive Z production https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
 	  Double_t xsZprime = 10 ; // Arbitrary
 
 
@@ -307,16 +321,16 @@ for (int j=0; j<10; j++) {
 	 // histo5->SetMarkerStyle(20); 
 	//  histo5->SetBinError();  // https://root.cern.ch/root/html/TH1.html#TH1:SetBinError
 
-	  histo6->Scale( xsZprime * lum / n_events6 ); 
-	  histo6->SetLineWidth(2); 
-	  histo6->SetLineColor(kGray+1);
+	  // histo6->Scale( xsZprime * lum / n_events6 ); 
+	  // histo6->SetLineWidth(2); 
+	  // histo6->SetLineColor(kGray+1);
 
-	  histo7->Scale( xsZprime * lum / n_events7 ); 
-	  histo7->SetLineWidth(2);
-	  histo7->SetLineColor(kBlack);
+	  // histo7->Scale( xsZprime * lum / n_events7 ); 
+	  // histo7->SetLineWidth(2);
+	  // histo7->SetLineColor(kBlack);
           
           histo8->Sumw2();
-          histo8->Add(1, histo5);
+          histo8->Add(histo5);
 	  histo8->SetMarkerStyle(20);
 
 	  hs->Add(histo3);
@@ -324,7 +338,7 @@ for (int j=0; j<10; j++) {
 	  hs->Add(histo2);
 	  hs->Add(histo1);
 
-	  hs->Draw();
+	  hs->Draw("hist");
 	  hs->GetXaxis()->SetLabelSize(0.042);
 	  hs->GetYaxis()->SetLabelSize(0.042);
 
@@ -342,8 +356,8 @@ for (int j=0; j<10; j++) {
 	  canvas->Modified();
 
 
-	  histo6->Draw("same");
-	  histo7->Draw("same");
+	  // histo6->Draw("same");
+	  // histo7->Draw("same");
 	  //histo5->Draw("ep same");
 	  histo8->Draw("ep same");
 	  canvas->Modified();
@@ -352,7 +366,7 @@ for (int j=0; j<10; j++) {
 	  tlx->SetNDC();
 	  tlx->SetTextFont(42);
 	  tlx->SetTextSize(0.057);
-	  tlx->DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 0.004003 fb^{-1}");
+	  tlx->DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 40.03 pb^{-1}");
 	 // tlx->DrawLatex(0.77, 0.86, "#bf{CMS}");
 	 // tlx->DrawLatex(0.72, 0.83, "#it{very preliminary}");
 	  tlx->SetTextSize(0.025);
@@ -379,8 +393,8 @@ for (int j=0; j<10; j++) {
 	  legend->SetMargin(0.3); 
 	  //legend->AddEntry(histo5,"Electron Data", "p");
 	  legend->AddEntry(histo8,"Data", "p");
-	  legend->AddEntry(histo7,"Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
-	  legend->AddEntry(histo6,"Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
+	  // legend->AddEntry(histo7,"Z' 2 TeV #sigma = 10 pb, W = 20 GeV", "l");
+	  // legend->AddEntry(histo6,"Z' 2 TeV #sigma = 10 pb, W = 200 GeV", "l");
 	  legend->AddEntry(histo1," t#bar{t}", "f");  
 	  legend->AddEntry(histo2,"W + Jets", "f");
 	  legend->AddEntry(histo4,"Z + Jets", "f");

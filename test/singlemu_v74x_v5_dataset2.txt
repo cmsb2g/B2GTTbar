@@ -1,0 +1,2 @@
+/eos/uscms/store/user/rappocc/SingleMuon/crab_b2gttbar74x_V4_SingleMuon_decosa-SingleMuon_Run2015B-PromptReco-v74x_V5_v2-cbce20f52720ded6b8666f172a87a311/150820_210120/0000/B2GEDMNtuple_1.root
+/eos/uscms/store/user/rappocc/SingleMuon/crab_b2gttbar74x_V4_SingleMuon_decosa-SingleMuon_Run2015B-PromptReco-v74x_V5_v2-cbce20f52720ded6b8666f172a87a311/150820_210120/0000/B2GEDMNtuple_2.root

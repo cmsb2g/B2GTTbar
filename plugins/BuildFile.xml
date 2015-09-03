@@ -1,0 +1,13 @@
+<export>
+</export>
+<library   name="B2GTTbar_plugins" file="*.cc">
+  <use   name="FWCore/Framework"/>
+  <use   name="FWCore/ParameterSet"/>
+  <use   name="FWCore/MessageLogger"/>
+  <use   name="FWCore/MessageService"/>
+  <use   name="FWCore/Utilities"/>
+  <use   name="CommonTools/Utils"/>
+  <use   name="CommonTools/UtilAlgos"/>
+  <use   name="DataFormats/PatCandidates"/>
+  <use   name="root"/>
+</library>
