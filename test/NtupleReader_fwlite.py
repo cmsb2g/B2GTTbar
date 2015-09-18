@@ -2632,8 +2632,12 @@ for ifile in files : #{ Loop over root files
                         continue
                     if AK8P4Raw.Perp() > options.minAK8Pt:
                         NPassMinRawAK8PtCut = NPassMinRawAK8PtCut + 1
+                    if options.verbose :
+                        print 'passes  pt cut'
                     if abs(AK8P4Raw.Rapidity()) < options.maxAK8Rapidity :
                         NPassMaxAK8RapidityCut = NPassMaxAK8RapidityCut + 1
+                    if options.verbose :
+                        print 'passes eta cut'
                     # SemiLeptonic- Only keep AK8 jets "away" from the lepton, so we do not need lepton-jet cleaning here. There's no double counting. 
                     # Leptonic - No fat jets                                                                          
                     # Hadronic - 2 AK8's, no massy leptons to clean up after
@@ -2697,7 +2701,8 @@ for ifile in files : #{ Loop over root files
                         #     NPassAK8CorrMassCut = NPassAK8CorrMassCut + 1
                         # else:
                         #     continue
-                        print 'N AK8 Subjet B discriminators, Hadronic = ' + str( len(AK8SubjetbDisc) )
+                        if options.verbose:
+                            print 'N AK8 Subjet B discriminators, Hadronic = ' + str( len(AK8SubjetbDisc) )
                         ak8JetsGood.append(AK8P4Corr)
                         ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
                         ak8JetsGoodPrunMass.append( AK8PrunedM[i])
@@ -2743,6 +2748,12 @@ for ifile in files : #{ Loop over root files
             x = ROOT.gRandom.Uniform()
             if len(ak8JetsGood) > 1 and Hadronic: #{ check that we have at least 2 AK8 jets for all-hadronic background estimation    
                 NeventsBkgdEstimation +=1
+                deltaphi_jet0_jet1 = abs( ak8JetsGood[0].DeltaPhi (ak8JetsGood[1]) )
+                if deltaphi_jet0_jet1 < 2.1:
+                    if options.verbose:
+                        print 'deltaphi_jet0_jet1 '+str(deltaphi_jet0_jet1)
+                        print 'FAILS DELTAPHI CUT'
+                    continue
 
                 # calculate tau21
                 tau21_jet0_ = 1
@@ -3164,10 +3175,11 @@ for ifile in files : #{ Loop over root files
                 selectionsToPlot.append( SEL_BDISC_TAU32_NDX )
             if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and theLepJetBDisc > options.bDiscMin and tau32 < options.tau32Cut:
                 selectionsToPlot.append( SEL_M_TAU32_BDISC_NDX )
-            if ak8JetsGoodNHF[0] < 0.1 :
-                selectionsToPlot.append( SEL_NHF_LOW_NDX )
-            else :
-                selectionsToPlot.append( SEL_NHF_HIGH_NDX )
+            if len(ak8JetsGoodNHF) >0: 
+                if ak8JetsGoodNHF[0] < 0.1 :
+                    selectionsToPlot.append( SEL_NHF_LOW_NDX )
+                else :
+                    selectionsToPlot.append( SEL_NHF_HIGH_NDX )
 
             for ichannel in channelsToPlot :
                 for isel in selectionsToPlot: 
@@ -3185,13 +3197,20 @@ for ifile in files : #{ Loop over root files
                     h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
                     h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodSubjetMass[0], evWeight )
                     h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodSubjetbDisc[0], evWeight )
-                    h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[0], evWeight )
-                    h_chfAK8[ichannel][isel].Fill( ak8JetsGoodCHF[0], evWeight )
-                    h_nefAK8[ichannel][isel].Fill( ak8JetsGoodNEF[0], evWeight )
-                    h_cefAK8[ichannel][isel].Fill( ak8JetsGoodCEF[0], evWeight )
-                    h_ncAK8[ichannel][isel].Fill( ak8JetsGoodNC[0], evWeight )
-                    h_nchAK8[ichannel][isel].Fill( ak8JetsGoodNCH[0], evWeight )
-                    h_nsjAK8[ichannel][isel].Fill( ak8JetsGoodNSubJets[0], evWeight )
+                    if len(ak8JetsGoodNHF) >0: 
+                        h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[0], evWeight )
+                    if len(ak8JetsGoodCHF) >0: 
+                        h_chfAK8[ichannel][isel].Fill( ak8JetsGoodCHF[0], evWeight )
+                    if len(ak8JetsGoodNEF) >0: 
+                        h_nefAK8[ichannel][isel].Fill( ak8JetsGoodNEF[0], evWeight )
+                    if len(ak8JetsGoodCEF) >0: 
+                        h_cefAK8[ichannel][isel].Fill( ak8JetsGoodCEF[0], evWeight )
+                    if len(ak8JetsGoodNC) >0: 
+                        h_ncAK8[ichannel][isel].Fill( ak8JetsGoodNC[0], evWeight )
+                    if len(ak8JetsGoodNCH) >0:
+                        h_nchAK8[ichannel][isel].Fill( ak8JetsGoodNCH[0], evWeight )
+                    if len(ak8JetsGoodNSubJets) >0:                    
+                        h_nsjAK8[ichannel][isel].Fill( ak8JetsGoodNSubJets[0], evWeight )
                     h_ptAK4[ichannel][isel].Fill( theLepJet.Perp(), evWeight )
                     h_etaAK4[ichannel][isel].Fill( theLepJet.Eta(), evWeight )
                     h_yAK4[ichannel][isel].Fill( theLepJet.Rapidity(), evWeight )
