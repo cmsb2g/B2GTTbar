@@ -511,47 +511,95 @@ h_triggerPrescales = Handle( "std::vector<int>")
 l_triggerPrescales = ("TriggerUserData", "triggerPrescaleTree")
 
 #@ MODMASS
-FmodMass = ROOT.TFile("MODMASS.root")
-h_mAK8 = FmodMass.Get("h_mAK8").Clone()
-h_mSDropAK8  = FmodMass.Get("h_mSDropAK8").Clone()
-ROOT.SetOwnership( h_mAK8, False )
-ROOT.SetOwnership( h_mSDropAK8 , False )
+FmodMass = ROOT.TFile("ModMass_2015_09_22.root")
 
-print "h_mAK8 integral "+str( h_mAK8.Integral())
-print "h_mSDropAK8  integral "+str( h_mSDropAK8.Integral())
+h_modMass_Fat            = FmodMass.Get( "h_mAK8_ModMass"           ).Clone()
+h_modMass_SD             = FmodMass.Get( "h_mSDropAK8_ModMass"      ).Clone()
+h_modMass_Fat_jet0       = FmodMass.Get( "h_mAK8_ModMass_jet0"      ).Clone()
+h_modMass_SD_jet0        = FmodMass.Get( "h_mSDropAK8_ModMass_jet0" ).Clone()
+h_modMass_Fat_jet1       = FmodMass.Get( "h_mAK8_ModMass_jet1"      ).Clone()
+h_modMass_SD_jet1        = FmodMass.Get( "h_mSDropAK8_ModMass_jet1" ).Clone()
+
+h_modMass_Fat      .SetName("h_modMass_Fat")  
+h_modMass_SD       .SetName("h_modMass_SD")  
+h_modMass_Fat_jet0 .SetName("h_modMass_Fat_jet0")  
+h_modMass_SD_jet0  .SetName("h_modMass_SD_jet0")  
+h_modMass_Fat_jet1 .SetName("h_modMass_Fat_jet1")  
+h_modMass_SD_jet1  .SetName("h_modMass_SD_jet1")  
+
+ROOT.SetOwnership( h_modMass_Fat       , False )
+ROOT.SetOwnership( h_modMass_SD        , False )
+ROOT.SetOwnership( h_modMass_Fat_jet0  , False )
+ROOT.SetOwnership( h_modMass_SD_jet0   , False )
+ROOT.SetOwnership( h_modMass_Fat_jet1  , False )
+ROOT.SetOwnership( h_modMass_SD_jet1   , False )
+
+print "h_modMass_Fat      integral  " + str( h_modMass_Fat     .Integral() )
+print "h_modMass_SD       integral  " + str( h_modMass_SD      .Integral() )
+print "h_modMass_Fat_jet0 integral  " + str( h_modMass_Fat_jet0.Integral() )
+print "h_modMass_SD_jet0  integral  " + str( h_modMass_SD_jet0 .Integral() )
+print "h_modMass_Fat_jet1 integral  " + str( h_modMass_Fat_jet1.Integral() )
+print "h_modMass_SD_jet1  integral  " + str( h_modMass_SD_jet1 .Integral() )
 
 # Remake the modMass jet mass distributions in the range 140-250 for fat jet mass, 110-210 for SD mass
-binWidth = h_mAK8.GetBinWidth(1)
-nBinsX   = h_mAK8.GetNbinsX()
-nBinsmodMassFat   = (250-140)*nBinsX
-nBinsmodMassSD    = (210-110)*nBinsX
-h_modMass_Fat=ROOT.TH1F("h_modMass_Fat","",nBinsmodMassFat,140,250)
-h_modMass_SD =ROOT.TH1F("h_modMass_SD","",nBinsmodMassSD,110,210)
+# binWidth = h_mAK8.GetBinWidth(1)
+# nBinsX   = h_mAK8.GetNbinsX()
+# nBinsmodMassFat   = (250-140)*nBinsX
+# nBinsmodMassSD    = (210-110)*nBinsX
+# h_modMass_Fat=ROOT.TH1F("h_modMass_Fat","",nBinsmodMassFat,140,250)
+# h_modMass_SD =ROOT.TH1F("h_modMass_SD","",nBinsmodMassSD,110,210)
 
-for i in range( 1, h_mAK8.GetNbinsX() ):
-  print 'bin '+str(i)+' contents '+ str(h_mAK8.GetBinContent(i))+' width '+ str(h_mAK8.GetBinWidth(i))+' low edge '+ str(h_mAK8.GetBinLowEdge(i))
-  if h_mAK8.GetBinLowEdge(i) >=140 and (h_mAK8.GetBinLowEdge(i)+binWidth)<=250:
-    h_modMass_Fat.Fill( h_mAK8.GetBinCenter(i), h_mAK8.GetBinContent(i) )
-    print 'fillFat '+str( h_mAK8.GetBinContent(i) )
-  if h_mAK8.GetBinLowEdge(i) >=110 and (h_mAK8.GetBinLowEdge(i)+binWidth)<=210:
-    h_modMass_SD.Fill(h_mAK8.GetBinCenter(i), h_mSDropAK8.GetBinContent(i) )
-    print 'fillSD '+str( h_mSDropAK8.GetBinContent(i) )
+# # for i in range( 1, nBinsX ):
+# #     print 'bin '+str(i)+' contents '+ str(h_mAK8.GetBinContent(i))+' width '+ str(h_mAK8.GetBinWidth(i))+' low edge '+ str(h_mAK8.GetBinLowEdge(i))
+# #     if h_mAK8.GetBinLowEdge(i) >=140 and (h_mAK8.GetBinLowEdge(i)+binWidth)<=250:
+# #         h_modMass_Fat.Fill( h_mAK8.GetBinCenter(i), h_mAK8.GetBinContent(i) )
+# #         print 'fillFat '+str( h_mAK8.GetBinContent(i) )
+# #     if h_mAK8.GetBinLowEdge(i) >=110 and (h_mAK8.GetBinLowEdge(i)+binWidth)<=210:
+# #         h_modMass_SD.Fill(h_mAK8.GetBinCenter(i), h_mSDropAK8.GetBinContent(i) )
+# #         print 'fillSD '+str( h_mSDropAK8.GetBinContent(i) )
 
-ROOT.SetOwnership( h_modMass_Fat, False )
-ROOT.SetOwnership( h_modMass_SD , False )
+# ROOT.SetOwnership( h_modMass_Fat, False )
+# ROOT.SetOwnership( h_modMass_SD , False )
 
-print "h_modMass_Fat integral "+str( h_modMass_Fat.Integral())
-print "h_modMass_SD  integral "+str( h_modMass_SD.Integral())
+# print "h_modMass_Fat integral "+str( h_modMass_Fat.Integral())
+# print "h_modMass_SD  integral "+str( h_modMass_SD.Integral())
+
+# # gfit = ROOT.TF1("Exponential","expo",140,250); 
+# gfit = ROOT.TF1("gfit","pol5",140,250); 
+# gfit.SetLineStyle(2)
+# gfit.SetLineColor(3)
+# h_modMass_Fat.Fit("gfitr")
+
+# canv = ROOT.TCanvas()
+# h_modMass_Fat.Draw()
+# gfit.Draw("same")
+# canv.SaveAs("test_h_modMass_Fat.pdf")
+# ROOT.gRandom = ROOT.TRandom3(0)
+
+
+
+# h_check=ROOT.TH1F("h_modMass_Fat","",500,130,260)
+# ROOT.gRandom = ROOT.TRandom3(0)
+# for x in range(0, 500000):
+#   # randMass_QCD_Fat_jet0 = h_modMass_Fat.GetRandom()
+#   randMass_QCD_Fat_jet0 = gfit.GetRandom()
+#   print randMass_QCD_Fat_jet0
+#   h_check.Fill(randMass_QCD_Fat_jet0)
+# h_check.SetFillColor(3)
+# h_check.Draw("C")
+# canv.SaveAs("test_h_check_func.pdf")
+
+
 
 #@ MISTAG RATE HISTOGRAMS
 
-Fmistag = ROOT.TFile("MISTAG_RATE.root")
+Fmistag = ROOT.TFile("MISTAG_RATE_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_QCD_Pt_170toInf_091715.root")
 # h_mistag_vs_jetPt_TagMassSD         = Fmistag.Get("h_mistag_vs_jetPt_TagMassSD").Clone()
 # h_mistag_vs_jetPt_TagMassSDTau32    = Fmistag.Get("h_mistag_vs_jetPt_TagMassSDTau32").Clone()
 # h_mistag_vs_jetPt_TagMassSDMinMass  = Fmistag.Get("h_mistag_vs_jetPt_TagMassSDMinMass").Clone()
 # h_mistag_vs_jetPt_TagMassFat        = Fmistag.Get("h_mistag_vs_jetPt_TagMassFat").Clone()
-h_mistag_vs_jetPt_TagMassFatMinMass = Fmistag.Get("h_mistag_vs_jetPt_TagMassFatMinMass").Clone()
-
+h_mistag_vs_jetPt_TagMassFatMinMass = Fmistag.Get("h_mistag_vs_jetPt_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass").Clone()
+h_mistag_vs_jetPt_TagMassFatMinMass.SetName("h_mistag_vs_jetPt_TagMassFatMinMass")
 # ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSD         , False )
 # ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSDTau32    , False )
 # ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSDMinMass  , False )
@@ -991,6 +1039,15 @@ for ichannel,channel in enumerate(channels) :
         h_ncAK8[ichannel].append( ROOT.TH1F("h_ncAK8" + channel + sel, "AK8 Number of constituents;Number of constituents", 100, 0, 100) )
         h_nchAK8[ichannel].append( ROOT.TH1F("h_nchAK8" + channel + sel, "AK8 Number of charged hadrons;N charged hadrons", 100, 0, 100) )
 
+#^ Make modMass hist with small binning
+h_mAK8_ModMass           = ROOT.TH1F("h_mAK8_ModMass"               , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
+h_mSDropAK8_ModMass      = ROOT.TH1F("h_mSDropAK8_ModMass"          , "AK8 Jet Mass;Mass (GeV)", 200, 110, 210 )
+h_mAK8_ModMass_jet0      = ROOT.TH1F("h_mAK8_ModMass_jet0"     , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
+h_mSDropAK8_ModMass_jet0 = ROOT.TH1F("h_mSDropAK8_ModMass_jet0", "AK8 Jet Mass;Mass (GeV)", 200, 110, 210 )
+h_mAK8_ModMass_jet1      = ROOT.TH1F("h_mAK8_ModMass_jet1"     , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
+h_mSDropAK8_ModMass_jet1 = ROOT.TH1F("h_mSDropAK8_ModMass_jet1", "AK8 Jet Mass;Mass (GeV)", 200, 110, 210 )
+
+
 #^ Hadronic mtt selection and background estimaion
 h_mttMass_tagMassSD         = ROOT.TH1D("h_mttMass_tagMassSD"        , "", 700, 0, 7000 )
 h_mttMass_tagMassSDTau32    = ROOT.TH1D("h_mttMass_tagMassSDTau32"   , "", 700, 0, 7000 )
@@ -1009,6 +1066,12 @@ h_bkgdEst_modMass_tagMassSDTau32    = ROOT.TH1D("h_bkgdEst_modMass_tagMassSDTau3
 h_bkgdEst_modMass_tagMassSDMinMass  = ROOT.TH1D("h_bkgdEst_modMass_tagMassSDMinMass" , "", 700, 0, 7000 )
 h_bkgdEst_modMass_tagMassFat        = ROOT.TH1D("h_bkgdEst_modMass_tagMassFat"       , "", 700, 0, 7000 )
 h_bkgdEst_modMass_tagMassFatMinMass = ROOT.TH1D("h_bkgdEst_modMass_tagMassFatMinMass", "", 700, 0, 7000 )
+
+h_bkgdEst_modMass_flat_tagMassSD         = ROOT.TH1D("h_bkgdEst_modMass_flat_tagMassSD"        , "", 700, 0, 7000 )
+h_bkgdEst_modMass_flat_tagMassSDTau32    = ROOT.TH1D("h_bkgdEst_modMass_flat_tagMassSDTau32"   , "", 700, 0, 7000 )
+h_bkgdEst_modMass_flat_tagMassSDMinMass  = ROOT.TH1D("h_bkgdEst_modMass_flat_tagMassSDMinMass" , "", 700, 0, 7000 )
+h_bkgdEst_modMass_flat_tagMassFat        = ROOT.TH1D("h_bkgdEst_modMass_flat_tagMassFat"       , "", 700, 0, 7000 )
+h_bkgdEst_modMass_flat_tagMassFatMinMass = ROOT.TH1D("h_bkgdEst_modMass_flat_tagMassFatMinMass", "", 700, 0, 7000 )
 
 #^ Predicted Distribution - Background estimation 
 # mttPredDist_modMass_tagMassSD          = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSD         , "mttPredDist_modMass_tagMassSD"        , "mTT Mass", 700, 0, 7000 )
@@ -2755,6 +2818,8 @@ for ifile in files : #{ Loop over root files
                         print 'FAILS DELTAPHI CUT'
                     continue
 
+
+
                 # calculate tau21
                 tau21_jet0_ = 1
                 tau21_jet1_ = 1
@@ -2775,31 +2840,72 @@ for ifile in files : #{ Loop over root files
                 ttMass = (ak8JetsGood[0]+ak8JetsGood[1]).M()
 
                 #@ ALL-HADRONIC BACKGROUND ESTIMATION 
+                
+                # make the modMass histograms
+                h_mAK8_ModMass      .Fill( ak8JetsGood[0].M()       , evWeight )        
+                h_mSDropAK8_ModMass .Fill( ak8JetsGoodSDropMass[0]  , evWeight )
+                h_mAK8_ModMass      .Fill( ak8JetsGood[1].M()       , evWeight )        
+                h_mSDropAK8_ModMass .Fill( ak8JetsGoodSDropMass[1]  , evWeight )
+                
+                h_mAK8_ModMass_jet0      .Fill( ak8JetsGood[0].M()       , evWeight )        
+                h_mSDropAK8_ModMass_jet0 .Fill( ak8JetsGoodSDropMass[0]  , evWeight )
+                h_mAK8_ModMass_jet1      .Fill( ak8JetsGood[1].M()       , evWeight )        
+                h_mSDropAK8_ModMass_jet1 .Fill( ak8JetsGoodSDropMass[1]  , evWeight )
+
                 #setup the modMass procedure
-                randMass_QCD_Fat_jet0 = h_modMass_Fat.GetRandom()
+                ttMass_modMass_jet0 = ttMass
+                ttMass_modMass_jet1 = ttMass
+
+                #-----
+                # randomly sample from QCD mass distribution in [140,250] 
+                # ROOT.gRandom.SetSeed(0) # make sure =0 -> TRandom3 - Set the random generator sequence if seed is 0 (default value) a TUUID is generated and used to fill the first 8 integers of the seed 
+                ROOT.gRandom = ROOT.TRandom3(0)
+                randMass_QCD_Fat_jet0 = h_modMass_Fat_jet0.GetRandom()
+                randMass_QCD_Fat_jet1 = h_modMass_Fat_jet1.GetRandom()
+
+                # when doing the tag+X bkgd estimate procedure, change the mass of the X jet 
                 jet0P4_modMass = copy.copy ( ak8JetsGood[0] )
                 p_vec_jet0 = ROOT.TVector3( jet0P4_modMass.Px(), jet0P4_modMass.Py(), jet0P4_modMass.Pz())
                 jet0P4_modMass.SetVectM( p_vec_jet0, randMass_QCD_Fat_jet0)
-                ttMass_modMass_jet0 = (ak8JetsGood[1]+ jet0P4_modMass ).M()
 
-                randMass_QCD_Fat_jet1 = h_modMass_Fat.GetRandom()
                 jet1P4_modMass = copy.copy ( ak8JetsGood[1] )
                 p_vec_jet1 = ROOT.TVector3(jet1P4_modMass.Px(), jet1P4_modMass.Py(), jet1P4_modMass.Pz())
                 jet1P4_modMass.SetVectM( p_vec_jet1, randMass_QCD_Fat_jet1)
-                ttMass_modMass_jet1 = (ak8JetsGood[0]+ jet1P4_modMass ).M()
 
-                if options.verbose:
-                  print 'Unmodified: '
-                  print ' jet0P4 px py pz e m = ' + str(ak8JetsGood[0] .Px())+ ' '+ str(ak8JetsGood[0].Py())+ ' '+ str(ak8JetsGood[0].Pz())+ ' '+ str(ak8JetsGood[0].E())+ ' '+ str(ak8JetsGood[0].M())
-                  print ' jet1P4 px py pz e m = ' + str(ak8JetsGood[1] .Px())+ ' '+ str(ak8JetsGood[1].Py())+ ' '+ str(ak8JetsGood[1].Pz())+ ' '+ str(ak8JetsGood[1].E())+ ' '+ str(ak8JetsGood[1].M())
-                  print ' ttMass '+str(ttMass)
-                  print 'modMass:'
-                  print ' randMass_QCD_Fat_jet0 '+str(randMass_QCD_Fat_jet0)
-                  print ' randMass_QCD_Fat_jet1 '+str(randMass_QCD_Fat_jet1)
-                  print ' jet0P4_modMass px py pz e m = ' + str(jet0P4_modMass.Px())+ ' '+ str(jet0P4_modMass.Py())+ ' '+ str(jet0P4_modMass.Pz())+ ' '+ str(jet0P4_modMass.E())+ ' '+ str(jet0P4_modMass.M())
-                  print ' jet1P4_modMass px py pz e m = ' + str(jet1P4_modMass.Px())+ ' '+ str(jet1P4_modMass.Py())+ ' '+ str(jet1P4_modMass.Pz())+ ' '+ str(jet1P4_modMass.E())+ ' '+ str(jet1P4_modMass.M())
-                  print ' ttMass_modMass_jet0 '+str(ttMass_modMass_jet0)
-                  print ' ttMass_modMass_jet1 '+str(ttMass_modMass_jet1)
+                # #sample from a uniform distribution in [140,250]
+                rand =  TRandom3()
+                rand_mass = rand.Uniform(140,250)
+
+                jet0P4_modMass_flat = copy.copy ( ak8JetsGood[0] )
+                p_vec_jet0 = ROOT.TVector3( jet0P4_modMass_flat.Px(), jet0P4_modMass_flat.Py(), jet0P4_modMass_flat.Pz())
+                jet0P4_modMass_flat.SetVectM( p_vec_jet0, rand_mass )
+
+                jet1P4_modMass_flat = copy.copy ( ak8JetsGood[1] )
+                p_vec_jet1 = ROOT.TVector3( jet1P4_modMass_flat.Px(), jet1P4_modMass_flat.Py(), jet1P4_modMass_flat.Pz())
+                jet1P4_modMass_flat.SetVectM( p_vec_jet1, rand_mass )
+
+                # if jet 0 is outside of the top mass window, force it to have mass in the window 
+                if ak8JetsGood[0].M()<140 or ak8JetsGood[0].M()>250:
+                    ttMass_modMass_jet0 = (ak8JetsGood[1]+ jet0P4_modMass ).M()
+                    ttMass_modMass_flat_jet0 = (ak8JetsGood[1]+ jet0P4_modMass_flat ).M()
+
+                # if jet 0 is outside of the top mass window, force it to have mass in the window (sample from QCD mass distribution in [140,250])
+                if ak8JetsGood[1].M()<140 or ak8JetsGood[1].M()>250:
+                    ttMass_modMass_jet1 = (ak8JetsGood[0]+ jet1P4_modMass ).M()
+                    ttMass_modMass_flat_jet1 = (ak8JetsGood[0]+ jet1P4_modMass_flat ).M()
+
+                # if options.verbose:
+                #   print 'Unmodified: '
+                #   print ' jet0P4 px py pz e m = ' + str(ak8JetsGood[0] .Px())+ ' '+ str(ak8JetsGood[0].Py())+ ' '+ str(ak8JetsGood[0].Pz())+ ' '+ str(ak8JetsGood[0].E())+ ' '+ str(ak8JetsGood[0].M())
+                #   print ' jet1P4 px py pz e m = ' + str(ak8JetsGood[1] .Px())+ ' '+ str(ak8JetsGood[1].Py())+ ' '+ str(ak8JetsGood[1].Pz())+ ' '+ str(ak8JetsGood[1].E())+ ' '+ str(ak8JetsGood[1].M())
+                #   print ' ttMass '+str(ttMass)
+                #   print 'modMass:'
+                #   print ' randMass_QCD_Fat_jet0 '+str(randMass_QCD_Fat_jet0)
+                #   print ' randMass_QCD_Fat_jet1 '+str(randMass_QCD_Fat_jet1)
+                #   print ' jet0P4_modMass px py pz e m = ' + str(jet0P4_modMass.Px())+ ' '+ str(jet0P4_modMass.Py())+ ' '+ str(jet0P4_modMass.Pz())+ ' '+ str(jet0P4_modMass.E())+ ' '+ str(jet0P4_modMass.M())
+                #   print ' jet1P4_modMass px py pz e m = ' + str(jet1P4_modMass.Px())+ ' '+ str(jet1P4_modMass.Py())+ ' '+ str(jet1P4_modMass.Pz())+ ' '+ str(jet1P4_modMass.E())+ ' '+ str(jet1P4_modMass.M())
+                #   print ' ttMass_modMass_jet0 '+str(ttMass_modMass_jet0)
+                #   print ' ttMass_modMass_jet1 '+str(ttMass_modMass_jet1)
 
                 # define tags - make sure they are the same as what was used to calculate the mistag
                 topTag0MassFat                     = ak8JetsGood[0].M() > 140 and ak8JetsGood[0].M()< 250
@@ -2928,6 +3034,7 @@ for ifile in files : #{ Loop over root files
                         rate  = h_mistag_vs_jetPt_TagMassFatMinMass.GetBinContent(bin);
                         h_bkgdEst_tagMassFatMinMass .Fill(ttMass, evWeight*rate)
                         h_bkgdEst_modMass_tagMassFatMinMass .Fill(ttMass_modMass_jet1, evWeight*rate)
+                        h_bkgdEst_modMass_flat_tagMassFatMinMass .Fill(ttMass_modMass_flat_jet1, evWeight*rate)
 
                 # randomly select jet 1 to be the tag then fill predDist based on probability that jet 0 is mis-tagged
                 if x >= 0.5 :
@@ -2967,7 +3074,8 @@ for ifile in files : #{ Loop over root files
                         rate  = h_mistag_vs_jetPt_TagMassFatMinMass.GetBinContent(bin);
                         h_bkgdEst_tagMassFatMinMass .Fill(ttMass, evWeight*rate)
                         h_bkgdEst_modMass_tagMassFatMinMass .Fill(ttMass_modMass_jet0, evWeight*rate)
-            
+                        h_bkgdEst_modMass_flat_tagMassFatMinMass .Fill(ttMass_modMass_flat_jet0, evWeight*rate)
+
 
 
 
