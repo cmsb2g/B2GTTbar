@@ -2855,7 +2855,8 @@ for ifile in files : #{ Loop over root files
                 #setup the modMass procedure
                 ttMass_modMass_jet0 = ttMass
                 ttMass_modMass_jet1 = ttMass
-
+                ttMass_modMass_flat_jet0 = ttMass
+                ttMass_modMass_flat_jet1 = ttMass
                 #-----
                 # randomly sample from QCD mass distribution in [140,250] 
                 # ROOT.gRandom.SetSeed(0) # make sure =0 -> TRandom3 - Set the random generator sequence if seed is 0 (default value) a TUUID is generated and used to fill the first 8 integers of the seed 
