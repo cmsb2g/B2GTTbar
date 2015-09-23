@@ -2873,8 +2873,12 @@ for ifile in files : #{ Loop over root files
                 jet1P4_modMass.SetVectM( p_vec_jet1, randMass_QCD_Fat_jet1)
 
                 # #sample from a uniform distribution in [140,250]
-                rand =  TRandom3()
+                rand =  ROOT.TRandom3(0)
                 rand_mass = rand.Uniform(140,250)
+
+                # print 'randMass_QCD_Fat_jet0 '+str(randMass_QCD_Fat_jet0)
+                # print 'randMass_QCD_Fat_jet1 '+str(randMass_QCD_Fat_jet1)
+                # print 'rand_mass '+str(rand_mass)
 
                 jet0P4_modMass_flat = copy.copy ( ak8JetsGood[0] )
                 p_vec_jet0 = ROOT.TVector3( jet0P4_modMass_flat.Px(), jet0P4_modMass_flat.Py(), jet0P4_modMass_flat.Pz())
