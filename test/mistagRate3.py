@@ -30,7 +30,7 @@ parser.add_option('--maxevents', type='int', action='store',
 
 
 parser.add_option('--minAK8Pt', type='float', action='store',
-                  default=200.,
+                  default=400.,
                   dest='minAK8Pt',
                   help='Minimum PT for AK8 jets')
 
@@ -932,7 +932,7 @@ for ifile in files : #{ Loop over root files
             deltaPhi = deltaPhi + 2*ROOT.TMath.Pi()
 
         # apply the pt, Y, eta and deltaPhi cuts
-        ptCuts = ak8JetsGoodPt[0] > 350 and ak8JetsGoodPt[1] > 350
+        ptCuts = ak8JetsGoodPt[0] > options.minAK8Pt and ak8JetsGoodPt[1] > options.minAK8Pt
         deltaY = (ak8JetsGoodY[0] - ak8JetsGoodY[1])
         etaCuts = abs(ak8JetsGoodY[0]) < 2.4 and abs(ak8JetsGoodY[1]) < 2.4
         deltaPhiCut = abs(deltaPhi)>2.1
