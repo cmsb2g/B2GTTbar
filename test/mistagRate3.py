@@ -229,6 +229,121 @@ h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetY      = ROOT.TH1D("h_AntiT
 h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetTau32  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetTau32" , "", 800,  0,     1 )      
 h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetBdisc  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetBdisc" , "", 800,  0,     1 )       
 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt                 = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_Probe_jetPt"                , "", 800,  0,  4000 )      
+h_AntiTagTau32_ReqTopMassSD_Probe_jetY                  = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_Probe_jetY"                 , "", 800, -3,     3 )      
+h_AntiTagTau32_ReqTopMassSD_Probe_jetTau32              = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_Probe_jetTau32"             , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_Probe_jetBdisc              = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_Probe_jetBdisc"             , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt             = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt"            , "", 800,  0,  4000 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetY              = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetY"             , "", 800, -3,     3 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetTau32          = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetTau32"         , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetBdisc          = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetBdisc"         , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt        = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt"       , "", 800,  0,  4000 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetY         = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetY"        , "", 800, -3,     3 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetTau32     = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetTau32"    , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetBdisc     = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetBdisc"    , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt      = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt"     , "", 800,  0,  4000 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetY       = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetY"      , "", 800, -3,     3 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetTau32   = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetTau32"  , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetBdisc   = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetBdisc"  , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetPt     = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetPt"    , "", 800,  0,  4000 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetY      = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetY"     , "", 800, -3,     3 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32  = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32" , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc  = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc" , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt            = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt"           , "", 800,  0,  4000 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetY             = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetY"            , "", 800, -3,     3 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetTau32         = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetTau32"        , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetBdisc         = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetBdisc"        , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt     = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt"    , "", 800,  0,  4000 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetY      = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetY"     , "", 800, -3,     3 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetTau32  = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetTau32" , "", 800,  0,     1 )      
+h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetBdisc  = ROOT.TH1D("h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetBdisc" , "", 800,  0,     1 )       
+
+h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetPt                 = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetPt"                , "", 800,  0,  4000 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetY                  = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetY"                 , "", 800, -3,     3 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetTau32              = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetTau32"             , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetBdisc              = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetBdisc"             , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetPt             = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetPt"            , "", 800,  0,  4000 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetY              = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetY"             , "", 800, -3,     3 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetTau32          = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetTau32"         , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetBdisc          = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetBdisc"         , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetPt        = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetPt"       , "", 800,  0,  4000 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetY         = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetY"        , "", 800, -3,     3 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetTau32     = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetTau32"    , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetBdisc     = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetBdisc"    , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetPt      = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetPt"     , "", 800,  0,  4000 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetY       = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetY"      , "", 800, -3,     3 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetTau32   = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetTau32"  , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetBdisc   = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetBdisc"  , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetPt     = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetPt"    , "", 800,  0,  4000 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetY      = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetY"     , "", 800, -3,     3 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32  = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32" , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc  = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc" , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetPt            = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetPt"           , "", 800,  0,  4000 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetY             = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetY"            , "", 800, -3,     3 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetTau32         = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetTau32"        , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetBdisc         = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetBdisc"        , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetPt     = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetPt"    , "", 800,  0,  4000 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetY      = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetY"     , "", 800, -3,     3 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetTau32  = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetTau32" , "", 800,  0,     1 )      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetBdisc  = ROOT.TH1D("h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetBdisc" , "", 800,  0,     1 )       
+
+h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt                 = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt"                , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_ReqTopMassFat_Probe_jetY                  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_Probe_jetY"                 , "", 800, -3,     3 )      
+h_AntiTagMinMass30_ReqTopMassFat_Probe_jetTau32              = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_Probe_jetTau32"             , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_Probe_jetBdisc              = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_Probe_jetBdisc"             , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt             = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt"            , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetY              = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetY"             , "", 800, -3,     3 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetTau32          = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetTau32"         , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetBdisc          = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetBdisc"         , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt        = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt"       , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetY         = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetY"        , "", 800, -3,     3 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetTau32     = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetTau32"    , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetBdisc     = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetBdisc"    , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt      = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt"     , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetY       = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetY"      , "", 800, -3,     3 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetTau32   = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetTau32"  , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetBdisc   = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetBdisc"  , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt     = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt"    , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetY      = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetY"     , "", 800, -3,     3 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetTau32  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetTau32" , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetBdisc  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetBdisc" , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt            = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt"           , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetY             = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetY"            , "", 800, -3,     3 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetTau32         = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetTau32"        , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetBdisc         = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetBdisc"        , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt     = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt"    , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetY      = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetY"     , "", 800, -3,     3 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetTau32  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetTau32" , "", 800,  0,     1 )      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetBdisc  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetBdisc" , "", 800,  0,     1 )       
+
+h_AntiTagMinMass30_Probe_jetPt                 = ROOT.TH1D("h_AntiTagMinMass30_Probe_jetPt"                , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_Probe_jetY                  = ROOT.TH1D("h_AntiTagMinMass30_Probe_jetY"                 , "", 800, -3,     3 )      
+h_AntiTagMinMass30_Probe_jetTau32              = ROOT.TH1D("h_AntiTagMinMass30_Probe_jetTau32"             , "", 800,  0,     1 )      
+h_AntiTagMinMass30_Probe_jetBdisc              = ROOT.TH1D("h_AntiTagMinMass30_Probe_jetBdisc"             , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassSD_jetPt             = ROOT.TH1D("h_AntiTagMinMass30_TagMassSD_jetPt"            , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_TagMassSD_jetY              = ROOT.TH1D("h_AntiTagMinMass30_TagMassSD_jetY"             , "", 800, -3,     3 )      
+h_AntiTagMinMass30_TagMassSD_jetTau32          = ROOT.TH1D("h_AntiTagMinMass30_TagMassSD_jetTau32"         , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassSD_jetBdisc          = ROOT.TH1D("h_AntiTagMinMass30_TagMassSD_jetBdisc"         , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassSDTau32_jetPt        = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDTau32_jetPt"       , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_TagMassSDTau32_jetY         = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDTau32_jetY"        , "", 800, -3,     3 )      
+h_AntiTagMinMass30_TagMassSDTau32_jetTau32     = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDTau32_jetTau32"    , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassSDTau32_jetBdisc     = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDTau32_jetBdisc"    , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassSDMinMass_jetPt      = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDMinMass_jetPt"     , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_TagMassSDMinMass_jetY       = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDMinMass_jetY"      , "", 800, -3,     3 )      
+h_AntiTagMinMass30_TagMassSDMinMass_jetTau32   = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDMinMass_jetTau32"  , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassSDMinMass_jetBdisc   = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDMinMass_jetBdisc"  , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassSDMaxBdisc_jetPt     = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDMaxBdisc_jetPt"    , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_TagMassSDMaxBdisc_jetY      = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDMaxBdisc_jetY"     , "", 800, -3,     3 )      
+h_AntiTagMinMass30_TagMassSDMaxBdisc_jetTau32  = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDMaxBdisc_jetTau32" , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassSDMaxBdisc_jetBdisc  = ROOT.TH1D("h_AntiTagMinMass30_TagMassSDMaxBdisc_jetBdisc" , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassFat_jetPt            = ROOT.TH1D("h_AntiTagMinMass30_TagMassFat_jetPt"           , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_TagMassFat_jetY             = ROOT.TH1D("h_AntiTagMinMass30_TagMassFat_jetY"            , "", 800, -3,     3 )      
+h_AntiTagMinMass30_TagMassFat_jetTau32         = ROOT.TH1D("h_AntiTagMinMass30_TagMassFat_jetTau32"        , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassFat_jetBdisc         = ROOT.TH1D("h_AntiTagMinMass30_TagMassFat_jetBdisc"        , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassFatMinMass_jetPt     = ROOT.TH1D("h_AntiTagMinMass30_TagMassFatMinMass_jetPt"    , "", 800,  0,  4000 )      
+h_AntiTagMinMass30_TagMassFatMinMass_jetY      = ROOT.TH1D("h_AntiTagMinMass30_TagMassFatMinMass_jetY"     , "", 800, -3,     3 )      
+h_AntiTagMinMass30_TagMassFatMinMass_jetTau32  = ROOT.TH1D("h_AntiTagMinMass30_TagMassFatMinMass_jetTau32" , "", 800,  0,     1 )      
+h_AntiTagMinMass30_TagMassFatMinMass_jetBdisc  = ROOT.TH1D("h_AntiTagMinMass30_TagMassFatMinMass_jetBdisc" , "", 800,  0,     1 )       
 
 
 h_AntiTagNone_Probe_jetPt                . Sumw2()
@@ -288,7 +403,122 @@ h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetPt    . Sumw2()
 h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetY     . Sumw2()
 h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetTau32 . Sumw2()
 h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetBdisc . Sumw2()
+##
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt                 . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_Probe_jetY                  . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_Probe_jetTau32              . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_Probe_jetBdisc              . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt             . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetY              . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetTau32          . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetBdisc          . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt        . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetY         . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetTau32     . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetBdisc     . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt      . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetY       . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetTau32   . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetBdisc   . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetPt     . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetY      . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32  . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc  . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt            . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetY             . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetTau32         . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetBdisc         . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt     . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetY      . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetTau32  . Sumw2()      
+h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetBdisc  . Sumw2()       
 
+h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetPt                 . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetY                  . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetTau32              . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetBdisc              . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetPt             . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetY              . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetTau32          . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetBdisc          . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetPt        . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetY         . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetTau32     . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetBdisc     . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetPt      . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetY       . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetTau32   . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetBdisc   . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetPt     . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetY      . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32  . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc  . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetPt            . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetY             . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetTau32         . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetBdisc         . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetPt     . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetY      . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetTau32  . Sumw2()      
+h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetBdisc  . Sumw2()       
+
+h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt                 . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_Probe_jetY                  . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_Probe_jetTau32              . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_Probe_jetBdisc              . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt             . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetY              . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetTau32          . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetBdisc          . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt        . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetY         . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetTau32     . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetBdisc     . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt      . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetY       . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetTau32   . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetBdisc   . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt     . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetY      . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetTau32  . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetBdisc  . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt            . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetY             . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetTau32         . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetBdisc         . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt     . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetY      . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetTau32  . Sumw2()      
+h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetBdisc  . Sumw2()       
+
+h_AntiTagMinMass30_Probe_jetPt                 . Sumw2()      
+h_AntiTagMinMass30_Probe_jetY                  . Sumw2()      
+h_AntiTagMinMass30_Probe_jetTau32              . Sumw2()      
+h_AntiTagMinMass30_Probe_jetBdisc              . Sumw2()      
+h_AntiTagMinMass30_TagMassSD_jetPt             . Sumw2()      
+h_AntiTagMinMass30_TagMassSD_jetY              . Sumw2()      
+h_AntiTagMinMass30_TagMassSD_jetTau32          . Sumw2()      
+h_AntiTagMinMass30_TagMassSD_jetBdisc          . Sumw2()      
+h_AntiTagMinMass30_TagMassSDTau32_jetPt        . Sumw2()      
+h_AntiTagMinMass30_TagMassSDTau32_jetY         . Sumw2()      
+h_AntiTagMinMass30_TagMassSDTau32_jetTau32     . Sumw2()      
+h_AntiTagMinMass30_TagMassSDTau32_jetBdisc     . Sumw2()      
+h_AntiTagMinMass30_TagMassSDMinMass_jetPt      . Sumw2()      
+h_AntiTagMinMass30_TagMassSDMinMass_jetY       . Sumw2()      
+h_AntiTagMinMass30_TagMassSDMinMass_jetTau32   . Sumw2()      
+h_AntiTagMinMass30_TagMassSDMinMass_jetBdisc   . Sumw2()      
+h_AntiTagMinMass30_TagMassSDMaxBdisc_jetPt     . Sumw2()      
+h_AntiTagMinMass30_TagMassSDMaxBdisc_jetY      . Sumw2()      
+h_AntiTagMinMass30_TagMassSDMaxBdisc_jetTau32  . Sumw2()      
+h_AntiTagMinMass30_TagMassSDMaxBdisc_jetBdisc  . Sumw2()      
+h_AntiTagMinMass30_TagMassFat_jetPt            . Sumw2()      
+h_AntiTagMinMass30_TagMassFat_jetY             . Sumw2()      
+h_AntiTagMinMass30_TagMassFat_jetTau32         . Sumw2()      
+h_AntiTagMinMass30_TagMassFat_jetBdisc         . Sumw2()      
+h_AntiTagMinMass30_TagMassFatMinMass_jetPt     . Sumw2()      
+h_AntiTagMinMass30_TagMassFatMinMass_jetY      . Sumw2()      
+h_AntiTagMinMass30_TagMassFatMinMass_jetTau32  . Sumw2()      
+h_AntiTagMinMass30_TagMassFatMinMass_jetBdisc  . Sumw2()  
 
 
 #JET CORRECTIONS
@@ -815,37 +1045,37 @@ for ifile in files : #{ Loop over root files
         antiTag0MaxBdiscL                       = maxBdisc_jet0_ < 0.605 # CSVv2 loose operating point 2015_06
         antiTag1MaxBdiscL                       = maxBdisc_jet1_ < 0.605 # CSVv2 loose operating point 2015_06
 
-        antiTag0minMass50_ReqTopMassSD         = topTag0MassSD and antiTag0minMass50
-        antiTag1minMass50_ReqTopMassSD         = topTag1MassSD and antiTag1minMass50
-        antiTag0minMass30_ReqTopMassSD         = topTag0MassSD and antiTag0minMass30
-        antiTag1minMass30_ReqTopMassSD         = topTag1MassSD and antiTag1minMass30
-        antiTag0Tau32_ReqTopMassSD             = topTag0MassSD and antiTag0Tau32
-        antiTag1Tau32_ReqTopMassSD             = topTag1MassSD and antiTag1Tau32
-        antiTag0MaxBdiscVL_ReqTopMassSD        = topTag0MassSD and antiTag0MaxBdiscVL
-        antiTag1MaxBdiscVL_ReqTopMassSD        = topTag1MassSD and antiTag1MaxBdiscVL
-        antiTag0MaxBdiscL_ReqTopMassSD         = topTag0MassSD and antiTag0MaxBdiscL
-        antiTag1MaxBdiscL_ReqTopMassSD         = topTag1MassSD and antiTag1MaxBdiscL
+        antiTag0minMass50_ReqTopMassSD          = topTag0MassSD and antiTag0minMass50
+        antiTag1minMass50_ReqTopMassSD          = topTag1MassSD and antiTag1minMass50
+        antiTag0minMass30_ReqTopMassSD          = topTag0MassSD and antiTag0minMass30
+        antiTag1minMass30_ReqTopMassSD          = topTag1MassSD and antiTag1minMass30
+        antiTag0Tau32_ReqTopMassSD              = topTag0MassSD and antiTag0Tau32
+        antiTag1Tau32_ReqTopMassSD              = topTag1MassSD and antiTag1Tau32
+        antiTag0MaxBdiscVL_ReqTopMassSD         = topTag0MassSD and antiTag0MaxBdiscVL
+        antiTag1MaxBdiscVL_ReqTopMassSD         = topTag1MassSD and antiTag1MaxBdiscVL
+        antiTag0MaxBdiscL_ReqTopMassSD          = topTag0MassSD and antiTag0MaxBdiscL
+        antiTag1MaxBdiscL_ReqTopMassSD          = topTag1MassSD and antiTag1MaxBdiscL
 
-        antiTag0minMass50_ReqTopMassSD         = topTag0MassFat and antiTag0minMass50
-        antiTag1minMass50_ReqTopMassSD         = topTag1MassFat and antiTag1minMass50
-        antiTag0minMass30_ReqTopMassSD         = topTag0MassFat and antiTag0minMass30
-        antiTag1minMass30_ReqTopMassSD         = topTag1MassFat and antiTag1minMass30
-        antiTag0Tau32_ReqTopMassSD             = topTag0MassFat and antiTag0Tau32
-        antiTag1Tau32_ReqTopMassSD             = topTag1MassFat and antiTag1Tau32
-        antiTag0MaxBdiscVL_ReqTopMassSD        = topTag0MassFat and antiTag0MaxBdiscVL
-        antiTag1MaxBdiscVL_ReqTopMassSD        = topTag1MassFat and antiTag1MaxBdiscVL
-        antiTag0MaxBdiscL_ReqTopMassSD         = topTag0MassFat and antiTag0MaxBdiscL
-        antiTag1MaxBdiscL_ReqTopMassSD         = topTag1MassFat and antiTag1MaxBdiscL
+        antiTag0MinMass50_topTag0MassFat        = topTag0MassFat and antiTag0minMass50
+        antiTag1MinMass50_topTag1MassFat       = topTag1MassFat and antiTag1minMass50
+        antiTag0MinMass30_topTag0MassFat        = topTag0MassFat and antiTag0minMass30
+        antiTag1MinMass30_topTag1MassFat        = topTag1MassFat and antiTag1minMass30
+        antiTag0Tau32_topTag0MassFat            = topTag0MassFat and antiTag0Tau32
+        antiTag1Tau32_topTag1MassFat            = topTag1MassFat and antiTag1Tau32
+        antiTag0MaxBdiscVL_topTag0MassFat       = topTag0MassFat and antiTag0MaxBdiscVL
+        antiTag1MaxBdiscVL_topTag1MassFat       = topTag1MassFat and antiTag1MaxBdiscVL
+        antiTag0MaxBdiscL_topTag0MassFat        = topTag0MassFat and antiTag0MaxBdiscL
+        antiTag1MaxBdiscL_topTag1MassFat        = topTag1MassFat and antiTag1MaxBdiscL
 
 
 
         #NOTE TO MARAL: USE THESE antitags and tags 
         # no antitag ( just randomly pick a jet and use the opposite jet to probe )
-        # antiTag0minMass30_topTag0MassSD   
-        # antiTag0Tau32_topTag0MassSD       
-        # antiTag0MaxBdiscVL_topTag0MassSD  
-        # antiTag0minMass30_topTag0MassFat 
-        # antiTag0minMass30
+        # antiTag0minMass30_ReqTopMassSD   
+        # antiTag0Tau32_ReqtopMassSD       
+        # antiTag0MaxBdiscVL_ReqtopMassSD  
+        # antiTag0MinMass30_topTag0MassFat
+        # antiTag0MinMass30
        
         # topTag1MassSD               
         # topTag1MassSDTau32                 
@@ -860,8 +1090,8 @@ for ifile in files : #{ Loop over root files
         # anti tag names are:
         # h_AntiTagMinMass30_ReqTopMassSD
         # h_AntiTagTau32_ReqTopMassSD
-        # h_AntiTagMaxVdiscVL_ReqTopMassSD
-        # h_AntiTagMinMass30ReqTopMassFat
+        # h_AntiTagMaxBdiscVL_ReqTopMassSD
+        # h_AntiTagMinMass30_ReqTopMassFat
         # h_AntiTagMinMass30
 
    
@@ -970,6 +1200,154 @@ for ifile in files : #{ Loop over root files
                         h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetTau32   .Fill(             tau32_jet1_, Weight )
                         h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet1_, Weight ) 
 
+                # anti-tag tau32_jet0_ > 0.7, keep jet in SD mass window
+                if antiTag0Tau32_ReqTopMassSD:
+                    h_AntiTagTau32_ReqTopMassSD_Probe_jetPt                      .Fill(        ak8JetsGoodPt[1], Weight )
+                    h_AntiTagTau32_ReqTopMassSD_Probe_jetY                       .Fill(         ak8JetsGoodY[1], Weight ) 
+                    h_AntiTagTau32_ReqTopMassSD_Probe_jetTau32                   .Fill(             tau32_jet1_, Weight )
+                    h_AntiTagTau32_ReqTopMassSD_Probe_jetBdisc                   .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSD         :
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt              .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetY               .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetTau32           .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetBdisc           .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSDTau32    :
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt         .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetY          .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetTau32      .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetBdisc      .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassSDMinMass  :
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt       .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetY        .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetTau32    .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetBdisc    .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassSDMaxBdisc : 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetPt      .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetY       .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32   .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc   .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassFat        :
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt             .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetY              .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetTau32          .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetBdisc          .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassFatMinMass :
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt      .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetY       .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetTau32   .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet1_, Weight ) 
+
+                # anti-tag maxBdisc_jet0_ < 0.5, keep jet in SD mass window
+                if antiTag0MaxBdiscVL_ReqTopMassSD: 
+                    h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetPt                      .Fill(        ak8JetsGoodPt[1], Weight )
+                    h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetY                       .Fill(         ak8JetsGoodY[1], Weight ) 
+                    h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetTau32                   .Fill(             tau32_jet1_, Weight )
+                    h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetBdisc                   .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSD         :
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetPt              .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetY               .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetTau32           .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetBdisc           .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSDTau32    : 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetPt         .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetY          .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetTau32      .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetBdisc      .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassSDMinMass  :
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetPt       .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetY        .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetTau32    .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetBdisc    .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassSDMaxBdisc : 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetPt      .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetY       .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32   .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc   .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassFat        :
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetPt             .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetY              .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetTau32          .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetBdisc          .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassFatMinMass :
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetPt      .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetY       .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetTau32   .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet1_, Weight ) 
+
+                # anti-tag minMass<30, 140< jet mass <250
+                if antiTag0MinMass30_topTag0MassFat:
+                    h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt                      .Fill(        ak8JetsGoodPt[1], Weight )
+                    h_AntiTagMinMass30_ReqTopMassFat_Probe_jetY                       .Fill(         ak8JetsGoodY[1], Weight ) 
+                    h_AntiTagMinMass30_ReqTopMassFat_Probe_jetTau32                   .Fill(             tau32_jet1_, Weight )
+                    h_AntiTagMinMass30_ReqTopMassFat_Probe_jetBdisc                   .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSD         :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt              .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetY               .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetTau32           .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetBdisc           .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSDTau32    :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt         .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetY          .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetTau32      .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetBdisc      .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassSDMinMass  :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt       .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetY        .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetTau32    .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetBdisc    .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSDMaxBdisc :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetY       .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetTau32   .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetBdisc   .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassFat        :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt             .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetY              .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetTau32          .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetBdisc          .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassFatMinMass :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt      .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetY       .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetTau32   .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet1_, Weight ) 
+                
+                # anti-tag minMass<30
+                if antiTag0minMass30:
+                    h_AntiTagMinMass30_Probe_jetPt                      .Fill(        ak8JetsGoodPt[1], Weight )
+                    h_AntiTagMinMass30_Probe_jetY                       .Fill(         ak8JetsGoodY[1], Weight ) 
+                    h_AntiTagMinMass30_Probe_jetTau32                   .Fill(             tau32_jet1_, Weight )
+                    h_AntiTagMinMass30_Probe_jetBdisc                   .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSD         :
+                        h_AntiTagMinMass30_TagMassSD_jetPt              .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_TagMassSD_jetY               .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_TagMassSD_jetTau32           .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_TagMassSD_jetBdisc           .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSDTau32    :
+                        h_AntiTagMinMass30_TagMassSDTau32_jetPt         .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_TagMassSDTau32_jetY          .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_TagMassSDTau32_jetTau32      .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_TagMassSDTau32_jetBdisc      .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSDMinMass  :
+                        h_AntiTagMinMass30_TagMassSDMinMass_jetPt       .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_TagMassSDMinMass_jetY        .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_TagMassSDMinMass_jetTau32    .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_TagMassSDMinMass_jetBdisc    .Fill(          maxBdisc_jet1_, Weight )
+                    if topTag1MassSDMaxBdisc :
+                        h_AntiTagMinMass30_TagMassSDMaxBdisc_jetPt      .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_TagMassSDMaxBdisc_jetY       .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_TagMassSDMaxBdisc_jetTau32   .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_TagMassSDMaxBdisc_jetBdisc   .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassFat        :
+                        h_AntiTagMinMass30_TagMassFat_jetPt             .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_TagMassFat_jetY              .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_TagMassFat_jetTau32          .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_TagMassFat_jetBdisc          .Fill(          maxBdisc_jet1_, Weight ) 
+                    if topTag1MassFatMinMass :
+                        h_AntiTagMinMass30_TagMassFatMinMass_jetPt      .Fill(        ak8JetsGoodPt[1], Weight )
+                        h_AntiTagMinMass30_TagMassFatMinMass_jetY       .Fill(         ak8JetsGoodY[1], Weight ) 
+                        h_AntiTagMinMass30_TagMassFatMinMass_jetTau32   .Fill(             tau32_jet1_, Weight )
+                        h_AntiTagMinMass30_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet1_, Weight ) 
+
 
 
             #########################################################################################################################
@@ -1064,6 +1442,153 @@ for ifile in files : #{ Loop over root files
                         h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet0_, Weight ) 
 
                
+                # anti-tag tau32_jet0_ > 0.7, keep jet in SD mass window
+                if antiTag1Tau32_ReqTopMassSD:
+                    h_AntiTagTau32_ReqTopMassSD_Probe_jetPt                      .Fill(        ak8JetsGoodPt[0], Weight )
+                    h_AntiTagTau32_ReqTopMassSD_Probe_jetY                       .Fill(         ak8JetsGoodY[0], Weight ) 
+                    h_AntiTagTau32_ReqTopMassSD_Probe_jetTau32                   .Fill(             tau32_jet0_, Weight )
+                    h_AntiTagTau32_ReqTopMassSD_Probe_jetBdisc                   .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSD         :
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt              .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetY               .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetTau32           .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetBdisc           .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSDTau32    : 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt         .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetY          .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetTau32      .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetBdisc      .Fill(          maxBdisc_jet0_, Weight ) 
+                    if topTag0MassSDMinMass  :
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt       .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetY        .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetTau32    .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetBdisc    .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSDMaxBdisc : 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetPt      .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetY       .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32   .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc   .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassFat        :
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt             .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetY              .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetTau32          .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetBdisc          .Fill(          maxBdisc_jet0_, Weight ) 
+                    if topTag0MassFatMinMass :
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt      .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetY       .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetTau32   .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet0_, Weight )
+
+                # anti-tag maxBdisc_jet0_ < 0.5, keep jet in SD mass window
+                if antiTag1MaxBdiscVL_ReqTopMassSD:
+                    h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetPt                      .Fill(        ak8JetsGoodPt[0], Weight )
+                    h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetY                       .Fill(         ak8JetsGoodY[0], Weight ) 
+                    h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetTau32                   .Fill(             tau32_jet0_, Weight )
+                    h_AntiTagMaxBdiscVL_ReqTopMassSD_Probe_jetBdisc                   .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSD         :
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetPt              .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetY               .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetTau32           .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSD_jetBdisc           .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSDTau32    : 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetPt         .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetY          .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetTau32      .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDTau32_jetBdisc      .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSDMinMass  :
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetPt       .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetY        .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetTau32    .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMinMass_jetBdisc    .Fill(          maxBdisc_jet0_, Weight ) 
+                    if topTag0MassSDMaxBdisc : 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetPt      .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetY       .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetTau32   .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassSDMaxBdisc_jetBdisc   .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassFat        :
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetPt             .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetY              .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetTau32          .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFat_jetBdisc          .Fill(          maxBdisc_jet0_, Weight ) 
+                    if topTag0MassFatMinMass :
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetPt      .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetY       .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetTau32   .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMaxBdiscVL_ReqTopMassSD_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet0_, Weight )
+
+                # anti-tag minMass<30, 140< jet mass <250
+                if antiTag1MinMass30_topTag1MassFat:
+                    h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt                      .Fill(        ak8JetsGoodPt[0], Weight )
+                    h_AntiTagMinMass30_ReqTopMassFat_Probe_jetY                       .Fill(         ak8JetsGoodY[0], Weight ) 
+                    h_AntiTagMinMass30_ReqTopMassFat_Probe_jetTau32                   .Fill(             tau32_jet0_, Weight )
+                    h_AntiTagMinMass30_ReqTopMassFat_Probe_jetBdisc                   .Fill(          maxBdisc_jet0_, Weight ) 
+                    if topTag0MassSD         :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt              .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetY               .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetTau32           .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetBdisc           .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSDTau32    :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt         .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetY          .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetTau32      .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetBdisc      .Fill(          maxBdisc_jet0_, Weight ) 
+                    if topTag0MassSDMinMass  :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt       .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetY        .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetTau32    .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetBdisc    .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSDMaxBdisc :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetY       .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetTau32   .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetBdisc   .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassFat        :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt             .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetY              .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetTau32          .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetBdisc          .Fill(          maxBdisc_jet0_, Weight ) 
+                    if topTag0MassFatMinMass :
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt      .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetY       .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetTau32   .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet0_, Weight )
+                
+                # anti-tag minMass<30
+                if antiTag1minMass30:
+                    h_AntiTagMinMass30_Probe_jetPt                      .Fill(        ak8JetsGoodPt[0], Weight )
+                    h_AntiTagMinMass30_Probe_jetY                       .Fill(         ak8JetsGoodY[0], Weight ) 
+                    h_AntiTagMinMass30_Probe_jetTau32                   .Fill(             tau32_jet0_, Weight )
+                    h_AntiTagMinMass30_Probe_jetBdisc                   .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSD         :
+                        h_AntiTagMinMass30_TagMassSD_jetPt              .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_TagMassSD_jetY               .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_TagMassSD_jetTau32           .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_TagMassSD_jetBdisc           .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSDTau32    :
+                        h_AntiTagMinMass30_TagMassSDTau32_jetPt         .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_TagMassSDTau32_jetY          .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_TagMassSDTau32_jetTau32      .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_TagMassSDTau32_jetBdisc      .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSDMinMass  :
+                        h_AntiTagMinMass30_TagMassSDMinMass_jetPt       .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_TagMassSDMinMass_jetY        .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_TagMassSDMinMass_jetTau32    .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_TagMassSDMinMass_jetBdisc    .Fill(          maxBdisc_jet0_, Weight )
+                    if topTag0MassSDMaxBdisc :
+                        h_AntiTagMinMass30_TagMassSDMaxBdisc_jetPt      .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_TagMassSDMaxBdisc_jetY       .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_TagMassSDMaxBdisc_jetTau32   .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_TagMassSDMaxBdisc_jetBdisc   .Fill(          maxBdisc_jet0_, Weight )  
+                    if topTag0MassFat        :
+                        h_AntiTagMinMass30_TagMassFat_jetPt             .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_TagMassFat_jetY              .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_TagMassFat_jetTau32          .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_TagMassFat_jetBdisc          .Fill(          maxBdisc_jet0_, Weight ) 
+                    if topTag0MassFatMinMass :
+                        h_AntiTagMinMass30_TagMassFatMinMass_jetPt      .Fill(        ak8JetsGoodPt[0], Weight )
+                        h_AntiTagMinMass30_TagMassFatMinMass_jetY       .Fill(         ak8JetsGoodY[0], Weight ) 
+                        h_AntiTagMinMass30_TagMassFatMinMass_jetTau32   .Fill(             tau32_jet0_, Weight )
+                        h_AntiTagMinMass30_TagMassFatMinMass_jetBdisc   .Fill(          maxBdisc_jet0_, Weight ) 
  
 
 # print "======================"
