@@ -398,6 +398,11 @@ l_metPy = ("met" , "metPy")
 h_metPhi = Handle("std::vector<float>")
 l_metPhi = ("met" , "metPhi")
 
+# Generator info
+if options.isMC :
+    h_generator = Handle("GenEventInfoProduct")
+    l_generator = ("generator" , "" )
+
 #AK8 Jets label and Handles
 h_jetsAK8Pt = Handle("std::vector<float>")
 l_jetsAK8Pt = ("jetsAK8" , "jetAK8Pt") #
@@ -434,7 +439,6 @@ l_jetsAK8Y = ("jetsAK8" , "jetAK8Y")
 h_jetsAK8Keys = Handle("std::vector<std::vector<int> >")
 l_jetsAK8Keys = ( "jetKeysAK8" , "" )
 
-
 h_jetsAK8TrimMass = Handle("std::vector<float>")
 l_jetsAK8TrimMass = ("jetsAK8", "jetAK8trimmedMass" )
 h_jetsAK8PrunMass = Handle("std::vector<float>")
@@ -456,10 +460,6 @@ l_jetsAK8minmass = ("jetsAK8", "jetAK8minmass" )
 h_jetsAK8Area = Handle("std::vector<float>")
 l_jetsAK8Area = ( "jetsAK8" , "jetAK8jetArea" )
 
-if options.isMC :
-    h_generator = Handle("GenEventInfoProduct")
-    l_generator = ("generator" , "" )
-
 h_jetsAK8VSubjetIndex0 = Handle("std::vector<float>")
 l_jetsAK8VSubjetIndex0 = ("jetsAK8", "jetAK8vSubjetIndex0")
 h_jetsAK8VSubjetIndex1 = Handle("std::vector<float>")
@@ -474,11 +474,6 @@ l_jetsAK8TopSubjetIndex2 = ("jetsAK8", "jetAK8topSubjetIndex2")
 h_jetsAK8TopSubjetIndex3 = Handle("std::vector<float>")
 l_jetsAK8TopSubjetIndex3 = ("jetsAK8", "jetAK8topSubjetIndex3")
 
-
-# @@@ add to cut-flow table NPassAK8SubjetBDiscCut = 0
-
-# @@@ add label and handle for subjet pairwise masses m12, m13, and m23 then histos and cut-flow
-
 h_subjetsAK8BDisc = Handle( "std::vector<float>")
 l_subjetsAK8BDisc = ("subjetsCmsTopTag", "subjetCmsTopTagCSV") 
 h_subjetsAK8Pt = Handle( "std::vector<float>")
@@ -490,7 +485,6 @@ l_subjetsAK8Phi = ("subjetsCmsTopTag", "subjetCmsTopTagPhi")
 h_subjetsAK8Mass = Handle( "std::vector<float>")
 l_subjetsAK8Mass = ("subjetsCmsTopTag", "subjetCmsTopTagMass")
 
-
 # MET and HCAL Filter handles
 h_filterNameStrings = Handle( "std::vector<std::string>")
 l_filterNameStrings = ("METUserData", "triggerNameTree")
@@ -500,7 +494,6 @@ h_filterPrescales = Handle( "std::vector<int>")
 l_filterPrescales = ("METUserData", "triggerPrescaleTree")
 h_HBHEfilter = Handle("bool")
 l_HBHEfilter = ("HBHENoiseFilterResultProducer", "HBHENoiseFilterResult")
-
 
 # Triggers
 h_triggerNameStrings = Handle( "std::vector<std::string>")
@@ -558,48 +551,17 @@ print "h_modMass_SD_jet1  integral  " + str( h_modMass_SD_jet1 .Integral() )
 # #         h_modMass_SD.Fill(h_mAK8.GetBinCenter(i), h_mSDropAK8.GetBinContent(i) )
 # #         print 'fillSD '+str( h_mSDropAK8.GetBinContent(i) )
 
-# ROOT.SetOwnership( h_modMass_Fat, False )
-# ROOT.SetOwnership( h_modMass_SD , False )
-
-# print "h_modMass_Fat integral "+str( h_modMass_Fat.Integral())
-# print "h_modMass_SD  integral "+str( h_modMass_SD.Integral())
-
-# # gfit = ROOT.TF1("Exponential","expo",140,250); 
-# gfit = ROOT.TF1("gfit","pol5",140,250); 
-# gfit.SetLineStyle(2)
-# gfit.SetLineColor(3)
-# h_modMass_Fat.Fit("gfitr")
-
-# canv = ROOT.TCanvas()
-# h_modMass_Fat.Draw()
-# gfit.Draw("same")
-# canv.SaveAs("test_h_modMass_Fat.pdf")
-# ROOT.gRandom = ROOT.TRandom3(0)
 
 
+#@ Get MISTAG RATE HISTOGRAMS
 
-# h_check=ROOT.TH1F("h_modMass_Fat","",500,130,260)
-# ROOT.gRandom = ROOT.TRandom3(0)
-# for x in range(0, 500000):
-#   # randMass_QCD_Fat_jet0 = h_modMass_Fat.GetRandom()
-#   randMass_QCD_Fat_jet0 = gfit.GetRandom()
-#   print randMass_QCD_Fat_jet0
-#   h_check.Fill(randMass_QCD_Fat_jet0)
-# h_check.SetFillColor(3)
-# h_check.Draw("C")
-# canv.SaveAs("test_h_check_func.pdf")
-
-
-
-#@ MISTAG RATE HISTOGRAMS
-
-Fmistag = ROOT.TFile("MISTAG_RATE_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_QCD_Pt_170toInf_091715.root")
+Fmistag = ROOT.TFile("MistagRate_2015_09_24.root")
 # h_mistag_vs_jetPt_TagMassSD         = Fmistag.Get("h_mistag_vs_jetPt_TagMassSD").Clone()
 # h_mistag_vs_jetPt_TagMassSDTau32    = Fmistag.Get("h_mistag_vs_jetPt_TagMassSDTau32").Clone()
 # h_mistag_vs_jetPt_TagMassSDMinMass  = Fmistag.Get("h_mistag_vs_jetPt_TagMassSDMinMass").Clone()
 # h_mistag_vs_jetPt_TagMassFat        = Fmistag.Get("h_mistag_vs_jetPt_TagMassFat").Clone()
-h_mistag_vs_jetPt_TagMassFatMinMass = Fmistag.Get("h_mistag_vs_jetPt_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass").Clone()
-h_mistag_vs_jetPt_TagMassFatMinMass.SetName("h_mistag_vs_jetPt_TagMassFatMinMass")
+h_mistag_vs_jetPt_TagMassFatMinMass = Fmistag.Get("h_mistagFat").Clone()
+h_mistag_vs_jetPt_TagMassFatMinMass.SetName("h_mistagFat")
 # ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSD         , False )
 # ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSDTau32    , False )
 # ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSDMinMass  , False )
@@ -607,14 +569,14 @@ h_mistag_vs_jetPt_TagMassFatMinMass.SetName("h_mistag_vs_jetPt_TagMassFatMinMass
 ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassFatMinMass , False )
 
 
+#@ Reweight top function
 
 reweightTopPt = ROOT.TF1("reweightTopPt", "6.5e-4 + 0.9", 0, 13000)
 
-# @@@ add histos for subjet pairwise masses m12, m13, and m23 then histos and cut-flow
+# @@@ Create output root file
 
 f = ROOT.TFile(options.outname, "RECREATE")
 f.cd()
-
 
 #~ Tree initializations
 
@@ -889,9 +851,6 @@ if options.writeTree :
     TreeAllHad.Branch('DijetDeltaPhi'     , DijetDeltaPhi    , 'DijetDeltaPhi/F'       )
     TreeAllHad.Branch('DijetDeltaRap'     , DijetDeltaRap    , 'DijetDeltaRap/F'       )
 
-
-
-
 #^ Plot initialization
 h_NPVert         = ROOT.TH1D("h_NPVert"        , "", 200,0,200 )
 h_NtrueIntPU     = ROOT.TH1D("h_NtrueIntPU"    , "", 200,0,200 )
@@ -1049,12 +1008,27 @@ h_mSDropAK8_ModMass_jet1 = ROOT.TH1F("h_mSDropAK8_ModMass_jet1", "AK8 Jet Mass;M
 
 #^ Make mistag plots
 
-h_AntiTagMinMass30_ReqTopMassSD_Probe_jetPt             = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassSD_Probe_jetPt"             , "", 1400, 0, 7000 ) 
-h_AntiTagMinMass30_ReqTopMassSD_TagMassSD_jetPt         = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassSD_TagMassSD_jetPt"         , "", 1400, 0, 7000 ) 
-h_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32_jetPt    = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32_jetPt"    , "", 1400, 0, 7000 ) 
-h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMinMass_jetPt  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMinMass_jetPt"  , "", 1400, 0, 7000 ) 
-h_AntiTagMinMass30_ReqTopMassSD_TagMassFat_jetPt        = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassSD_TagMassFat_jetPt"        , "", 1400, 0, 7000 ) 
-h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetPt = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetPt" , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassSD_Probe_jetPt                   = ROOT.TH1D( "h_AntiTagNone_ReqTopMassSD_Probe_jetPt"                  , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassSD_TagMassSD_jetPt               = ROOT.TH1D( "h_AntiTagNone_ReqTopMassSD_TagMassSD_jetPt"              , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassSD_TagMassSDTau32_jetPt          = ROOT.TH1D( "h_AntiTagNone_ReqTopMassSD_TagMassSDTau32_jetPt"         , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassSD_TagMassSDMinMass_jetPt        = ROOT.TH1D( "h_AntiTagNone_ReqTopMassSD_TagMassSDMinMass_jetPt"       , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassSD_TagMassFat_jetPt              = ROOT.TH1D( "h_AntiTagNone_ReqTopMassSD_TagMassFat_jetPt"             , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassSD_TagMassFatMinMass_jetPt       = ROOT.TH1D( "h_AntiTagNone_ReqTopMassSD_TagMassFatMinMass_jetPt"      , "", 1400, 0, 7000 ) 
+     
+h_AntiTagNone_ReqTopMassFat_Probe_jetPt                  = ROOT.TH1D("h_AntiTagNone_ReqTopMassFat_Probe_jetPt"                  , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassFat_TagMassSD_jetPt              = ROOT.TH1D("h_AntiTagNone_ReqTopMassFat_TagMassSD_jetPt"              , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassFat_TagMassSDTau32_jetPt         = ROOT.TH1D("h_AntiTagNone_ReqTopMassFat_TagMassSDTau32_jetPt"         , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassFat_TagMassSDMinMass_jetPt       = ROOT.TH1D("h_AntiTagNone_ReqTopMassFat_TagMassSDMinMass_jetPt"       , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassFat_TagMassFat_jetPt             = ROOT.TH1D("h_AntiTagNone_ReqTopMassFat_TagMassFat_jetPt"             , "", 1400, 0, 7000 ) 
+h_AntiTagNone_ReqTopMassFat_TagMassFatMinMass_jetPt      = ROOT.TH1D("h_AntiTagNone_ReqTopMassFat_TagMassFatMinMass_jetPt"      , "", 1400, 0, 7000 ) 
+
+
+h_AntiTagMinMass30_ReqTopMassSD_Probe_jetPt              = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_Probe_jetPt"             , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass30_ReqTopMassSD_TagMassSD_jetPt          = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassSD_jetPt"         , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32_jetPt     = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32_jetPt"    , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMinMass_jetPt   = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMinMass_jetPt"  , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass30_ReqTopMassSD_TagMassFat_jetPt         = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassFat_jetPt"        , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetPt  = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetPt" , "", 1400, 0, 7000 ) 
 
 h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt             = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt"             , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt         = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt"         , "", 1400, 0, 7000 ) 
@@ -1062,6 +1036,36 @@ h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt    = ROOT.TH1D("h_AntiTagM
 h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt"  , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt        = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt"        , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt" , "", 1400, 0, 7000 ) 
+
+ 
+h_AntiTagMinMass50_ReqTopMassSD_Probe_jetPt              = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_Probe_jetPt"             , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassSD_TagMassSD_jetPt          = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassSD_jetPt"         , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassSD_TagMassSDTau32_jetPt     = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassSDTau32_jetPt"    , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMinMass_jetPt   = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMinMass_jetPt"  , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassSD_TagMassFat_jetPt         = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassFat_jetPt"        , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassSD_TagMassFatMinMass_jetPt  = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassFatMinMass_jetPt" , "", 1400, 0, 7000 ) 
+
+h_AntiTagMinMass50_ReqTopMassFat_Probe_jetPt             = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_Probe_jetPt"             , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassFat_TagMassSD_jetPt         = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassSD_jetPt"         , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassFat_TagMassSDTau32_jetPt    = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassSDTau32_jetPt"    , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMinMass_jetPt  = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMinMass_jetPt"  , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassFat_TagMassFat_jetPt        = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassFat_jetPt"        , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassFat_TagMassFatMinMass_jetPt = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassFatMinMass_jetPt" , "", 1400, 0, 7000 ) 
+
+
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt"                 , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt"             , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt"        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt       = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt"      , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt             = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt"            , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt      = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt"     , "", 1400, 0, 7000 ) 
+    
+h_AntiTagTau32_ReqTopMassFat_Probe_jetPt                 = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_Probe_jetPt"                 , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassFat_TagMassSD_jetPt             = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassSD_jetPt"             , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassFat_TagMassSDTau32_jetPt        = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassSDTau32_jetPt"        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassFat_TagMassSDMinMass_jetPt      = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassSDMinMass_jetPt"      , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassFat_TagMassFat_jetPt            = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassFat_jetPt"            , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt     = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt"     , "", 1400, 0, 7000 ) 
 
 
 #^ Hadronic mtt selection and background estimaion
@@ -2595,8 +2599,8 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodNHadE = []
             ak8JetsGoodNSubJets = []
             ak8JetsGoodMinMass = []
-            ak8JetsGoodSubjetbDisc = []
-            ak8JetsGoodSubjetMass = []
+            ak8JetsGoodTopSubjetbDisc = []
+            ak8JetsGoodTopSubjetMass = []
             ak8JetsGoodNHF = []
             ak8JetsGoodCHF = []
             ak8JetsGoodNEF = []
@@ -2746,11 +2750,11 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodMinMass.append( AK8minmass[i] )
                             ak8JetsGoodNHadE.append( AK8nHadE[i]   )
                             if i < len(AK8SubjetbDisc) :
-                                ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
-                                ak8JetsGoodSubjetMass.append(  AK8SubjetMass[i] )
+                                ak8JetsGoodTopSubjetbDisc.append( AK8SubjetbDisc[i] )
+                                ak8JetsGoodTopSubjetMass.append(  AK8SubjetMass[i] )
                             else :
-                                ak8JetsGoodSubjetbDisc.append( -1.0 )
-                                ak8JetsGoodSubjetMass.append(  -1.0 )
+                                ak8JetsGoodTopSubjetbDisc.append( -1.0 )
+                                ak8JetsGoodTopSubjetMass.append(  -1.0 )
                             ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
                             ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
                             ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
@@ -2793,15 +2797,21 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodNSubJets.append( AK8nSubJets[i])
                         ak8JetsGoodMinMass.append( AK8minmass[i] )
                         if i < len(AK8SubjetbDisc) :
-                            ak8JetsGoodSubjetbDisc.append( AK8SubjetbDisc[i] )
-                            ak8JetsGoodSubjetMass.append( AK8SubjetMass[i] )
+                            ak8JetsGoodTopSubjetbDisc.append( AK8SubjetbDisc[i] )
+                            ak8JetsGoodTopSubjetMass.append( AK8SubjetMass[i] )
                         else :
-                            ak8JetsGoodSubjetbDisc.append( -1.0 )
-                            ak8JetsGoodSubjetMass.append( -1.0 )
+                            ak8JetsGoodTopSubjetbDisc.append( -1.0 )
+                            ak8JetsGoodTopSubjetMass.append( -1.0 )
                         ak8JetsGoodTopSubjetIndex0.append( AK8TopSubjetIndex0[i] )
                         ak8JetsGoodTopSubjetIndex1.append( AK8TopSubjetIndex1[i] )
                         ak8JetsGoodTopSubjetIndex2.append( AK8TopSubjetIndex2[i] )
-                        ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )                        
+                        ak8JetsGoodTopSubjetIndex3.append( AK8TopSubjetIndex3[i] )    
+                        ak8JetsGoodNHF.append( nhf )
+                        ak8JetsGoodCHF.append( chf )
+                        ak8JetsGoodNEF.append( nef )
+                        ak8JetsGoodCEF.append( cef )
+                        ak8JetsGoodNC .append( nconstituents )
+                        ak8JetsGoodNCH.append( nch )                    
                         #} End AK8 Loop
             #if len(ak8JetsGood) > 1 :
               #  print ' Pt of leading AK8 Jet, ak8JetsGood[0] ' + str(ak8JetsGood[0].Perp())
@@ -2841,6 +2851,27 @@ for ifile in files : #{ Loop over root files
                     continue
 
 
+                # print 'jet 0 ak8JetsGood Perp          ' +str( ak8JetsGood               [0].Perp()  )    
+                # print 'jet 0 ak8JetsGood Eta           ' +str( ak8JetsGood               [0].Eta()   )    
+                # print 'jet 0 ak8JetsGoodTrimMass       ' +str( ak8JetsGoodTrimMass       [0]         )    
+                # print 'jet 0 ak8JetsGoodPrunMass       ' +str( ak8JetsGoodPrunMass       [0]         )    
+                # print 'jet 0 ak8JetsGoodFiltMass       ' +str( ak8JetsGoodFiltMass       [0]         )    
+                # print 'jet 0 ak8JetsGoodSDropMass      ' +str( ak8JetsGoodSDropMass      [0]         )    
+                # print 'jet 0 ak8JetsGoodTau1           ' +str( ak8JetsGoodTau1           [0]         )    
+                # print 'jet 0 ak8JetsGoodTau2           ' +str( ak8JetsGoodTau2           [0]         )    
+                # print 'jet 0 ak8JetsGoodTau3           ' +str( ak8JetsGoodTau3           [0]         )    
+                # print 'jet 0 ak8JetsGoodNSubJets       ' +str( ak8JetsGoodNSubJets       [0]         )    
+                # print 'jet 0 ak8JetsGoodMinMass        ' +str( ak8JetsGoodMinMass        [0]         )    
+                # print 'jet 0 ak8JetsGoodTopSubjetIndex0' +str( ak8JetsGoodTopSubjetIndex0[0]         )
+                # print 'jet 0 ak8JetsGoodTopSubjetIndex1' +str( ak8JetsGoodTopSubjetIndex1[0]         )
+                # print 'jet 0 ak8JetsGoodTopSubjetIndex2' +str( ak8JetsGoodTopSubjetIndex2[0]         )
+                # print 'jet 0 ak8JetsGoodTopSubjetIndex3' +str( ak8JetsGoodTopSubjetIndex3[0]         )
+                # print 'jet 0 ak8JetsGoodTopSubjetIndex3' +str( ak8JetsGoodSDSubjetIndex3 [0]         )
+                # print 'jet 0 ak8JetsGoodTopSubjetIndex3' +str( ak8JetsGoodSDSubjetIndex3 [0]         )
+                # print 'len ak8JetsGoodTopSubjetbDisc   '+str(len(ak8JetsGoodTopSubjetbDisc         ))
+                # for i in range(0,len(ak8JetsGoodTopSubjetbDisc)):
+                #   print 'subjet disc '+str(ak8JetsGoodTopSubjetbDisc[i])
+                #   print 'subjet mass '+str(ak8JetsGoodTopMass[i])
 
                 # calculate tau21
                 tau21_jet0_ = 1
@@ -2934,6 +2965,8 @@ for ifile in files : #{ Loop over root files
                 #   print ' ttMass_modMass_jet0 '+str(ttMass_modMass_jet0)
                 #   print ' ttMass_modMass_jet1 '+str(ttMass_modMass_jet1)
 
+                maxBdisc_jet0_ =0
+                maxBdisc_jet1_ =0
                 # define tags - make sure they are the same as what was used to calculate the mistag
                 topTag0MassFat                     = ak8JetsGood[0].M() > 140 and ak8JetsGood[0].M()< 250
                 topTag1MassFat                     = ak8JetsGood[1].M() > 140 and ak8JetsGood[1].M()< 250
@@ -2945,8 +2978,8 @@ for ifile in files : #{ Loop over root files
                 topTag1MinMass                     = ak8JetsGoodMinMass[1] > 50
                 # topTag0MaxBdiscL                   = maxBdisc_jet0_ > 0.605 # CSVv2 loose operating point 2015_06
                 # topTag1MaxBdiscL                   = maxBdisc_jet1_ > 0.605 # CSVv2 loose operating point 2015_06
-                # topTag0MaxBdiscM                   = maxBdisc_jet0_ > 0.890 # CSVv2 medium operating point 2015_06
-                # topTag1MaxBdiscM                   = maxBdisc_jet1_ > 0.890 # CSVv2 medium operating point 2015_06
+                topTag0MaxBdiscM                   = maxBdisc_jet0_ > 0.890 # CSVv2 medium operating point 2015_06
+                topTag1MaxBdiscM                   = maxBdisc_jet1_ > 0.890 # CSVv2 medium operating point 2015_06
                 # topTag0MaxBdiscT                   = maxBdisc_jet0_ > 0.970 # CSVv2 tight operating point 2015_06
                 # topTag1MaxBdiscT                   = maxBdisc_jet1_ > 0.970 # CSVv2 tight operating point 2015_06
                 topTag0MassSDTau32                 = topTag0MassSD and topTag0Tau32
@@ -2955,8 +2988,8 @@ for ifile in files : #{ Loop over root files
                 topTag1MassSDMinMass               = topTag1MassSD and topTag1MinMass
                 topTag0MassSDMinMassTau32          = topTag0MassSD and topTag0MinMass and topTag0Tau32
                 topTag1MassSDMinMassTau32          = topTag1MassSD and topTag1MinMass and topTag1Tau32
-                # topTag0MassSDMaxBdisc              = topTag0MassSD and topTag0MaxBdiscM
-                # topTag1MassSDMaxBdisc              = topTag1MassSD and topTag1MaxBdiscM
+                topTag0MassSDMaxBdisc              = topTag0MassSD and topTag0MaxBdiscM
+                topTag1MassSDMaxBdisc              = topTag1MassSD and topTag1MaxBdiscM
                 # topTag0MassSDMaxBdiscMinMass       = topTag0MassSD and topTag0MaxBdiscM and topTag0MinMass 
                 # topTag1MassSDMaxBdiscMinMass       = topTag1MassSD and topTag1MaxBdiscM and topTag1MinMass 
                 # topTag0MassSDMaxBdiscTau32         = topTag0MassSD and topTag0MaxBdiscM and topTag0Tau32 
@@ -2984,8 +3017,8 @@ for ifile in files : #{ Loop over root files
                 antiTag1minMass50                       = ak8JetsGoodMinMass[1] < 50
                 antiTag0minMass30                       = ak8JetsGoodMinMass[0] < 30 
                 antiTag1minMass30                       = ak8JetsGoodMinMass[1] < 30
-                antiTag0Tau32                           = tau32_jet0_ > 0.7
-                antiTag1Tau32                           = tau32_jet1_ > 0.7
+                antiTag0Tau32                           = tau32_jet0_ > 0.61
+                antiTag1Tau32                           = tau32_jet1_ > 0.61
                 # antiTag0MaxBdiscVL                      = maxBdisc_jet0_ < 0.5 # very loose
                 # antiTag1MaxBdiscVL                      = maxBdisc_jet1_ < 0.5 # very loose
                 # antiTag0MaxBdiscL                       = maxBdisc_jet0_ < 0.605 # CSVv2 loose operating point 2015_06
@@ -2995,8 +3028,8 @@ for ifile in files : #{ Loop over root files
                 antiTag1minMass50_ReqTopMassSD         = topTag1MassSD and antiTag1minMass50
                 antiTag0minMass30_ReqTopMassSD         = topTag0MassSD and antiTag0minMass30
                 antiTag1minMass30_ReqTopMassSD         = topTag1MassSD and antiTag1minMass30
-                # antiTag0Tau32_ReqTopMassSD             = topTag0MassSD and antiTag0Tau32
-                # antiTag1Tau32_ReqTopMassSD             = topTag1MassSD and antiTag1Tau32
+                antiTag0Tau32_ReqTopMassSD             = topTag0MassSD and antiTag0Tau32
+                antiTag1Tau32_ReqTopMassSD             = topTag1MassSD and antiTag1Tau32
                 # antiTag0MaxBdiscVL_ReqTopMassSD        = topTag0MassSD and antiTag0MaxBdiscVL
                 # antiTag1MaxBdiscVL_ReqTopMassSD        = topTag1MassSD and antiTag1MaxBdiscVL
                 # antiTag0MaxBdiscL_ReqTopMassSD         = topTag0MassSD and antiTag0MaxBdiscL
@@ -3006,15 +3039,15 @@ for ifile in files : #{ Loop over root files
                 antiTag1minMass50_ReqTopMassFat         = topTag1MassFat and antiTag1minMass50
                 antiTag0minMass30_ReqTopMassFat         = topTag0MassFat and antiTag0minMass30
                 antiTag1minMass30_ReqTopMassFat         = topTag1MassFat and antiTag1minMass30
-                # antiTag0Tau32_ReqTopMassFat             = topTag0MassFat and antiTag0Tau32
-                # antiTag1Tau32_ReqTopMassFat             = topTag1MassFat and antiTag1Tau32
+                antiTag0Tau32_ReqTopMassFat             = topTag0MassFat and antiTag0Tau32
+                antiTag1Tau32_ReqTopMassFat             = topTag1MassFat and antiTag1Tau32
                 # antiTag0MaxBdiscVL_ReqTopMassFat        = topTag0MassFat and antiTag0MaxBdiscVL
                 # antiTag1MaxBdiscVL_ReqTopMassFat        = topTag1MassFat and antiTag1MaxBdiscVL
                 # antiTag0MaxBdiscL_ReqTopMassFat         = topTag0MassFat and antiTag0MaxBdiscL
                 # antiTag1MaxBdiscL_ReqTopMassFat         = topTag1MassFat and antiTag1MaxBdiscL
 
                 if rand_mistag < 0.5 :
-                    # anti-tag minMass<30, keep jet in SD mass window
+                    #----------anti-tag minMass<30, keep jet in SD mass window
                     if antiTag0minMass30_ReqTopMassSD:
                         h_AntiTagMinMass30_ReqTopMassSD_Probe_jetPt                       .Fill( ak8JetsGood[1].Perp() , evWeight )
                         if topTag1MassSD         :  
@@ -3023,12 +3056,13 @@ for ifile in files : #{ Loop over root files
                             h_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32_jetPt          .Fill( ak8JetsGood[1].Perp() , evWeight )
                         if topTag1MassSDMinMass  :  
                             h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMinMass_jetPt        .Fill( ak8JetsGood[1].Perp() , evWeight )
-                        # if topTag1MassSDMaxBdisc : 
-                        #     h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMaxBdisc_jetPt       .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMaxBdisc : 
+                            h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMaxBdisc_jetPt       .Fill( ak8JetsGood[1].Perp() , evWeight )
                         if topTag1MassFat        :  
                             h_AntiTagMinMass30_ReqTopMassSD_TagMassFat_jetPt              .Fill( ak8JetsGood[1].Perp() , evWeight )
                         if topTag1MassFatMinMass :  
                             h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetPt       .Fill( ak8JetsGood[1].Perp() , evWeight )
+                    #----------anti-tag minMass<30, keep jet in Fat mass window
                     if antiTag0minMass30_ReqTopMassFat:
                         h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt                      .Fill( ak8JetsGood[1].Perp() , evWeight )
                         if topTag1MassSD         :  
@@ -3037,14 +3071,75 @@ for ifile in files : #{ Loop over root files
                             h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt         .Fill( ak8JetsGood[1].Perp() , evWeight )
                         if topTag1MassSDMinMass  :  
                             h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt       .Fill( ak8JetsGood[1].Perp() , evWeight )
-                        # if topTag1MassSDMaxBdisc : 
-                        #     h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMaxBdisc : 
+                            h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      .Fill( ak8JetsGood[1].Perp() , evWeight )
                         if topTag1MassFat        :  
                             h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt             .Fill( ak8JetsGood[1].Perp() , evWeight )
                         if topTag1MassFatMinMass :  
                             h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt      .Fill( ak8JetsGood[1].Perp() , evWeight )
+                    #----------anti-tag minMass<50, keep jet in SD mass window
+                    if antiTag0minMass50_ReqTopMassSD:
+                        h_AntiTagMinMass50_ReqTopMassSD_Probe_jetPt                       .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSD         :  
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassSD_jetPt               .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDTau32    : 
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassSDTau32_jetPt          .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMinMass  :  
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMinMass_jetPt        .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMaxBdisc : 
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMaxBdisc_jetPt       .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassFat        :  
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassFat_jetPt              .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassFatMinMass :  
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassFatMinMass_jetPt       .Fill( ak8JetsGood[1].Perp() , evWeight )
+                    #----------anti-tag minMass<50, keep jet in Fat mass window
+                    if antiTag0minMass50_ReqTopMassFat:
+                        h_AntiTagMinMass50_ReqTopMassFat_Probe_jetPt                      .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSD         :  
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassSD_jetPt              .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDTau32    : 
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassSDTau32_jetPt         .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMinMass  :  
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMinMass_jetPt       .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMaxBdisc : 
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassFat        :  
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassFat_jetPt             .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassFatMinMass :  
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassFatMinMass_jetPt      .Fill( ak8JetsGood[1].Perp() , evWeight )
+                    #----------anti-tag tau32, keep jet in SD mass window
+                    if antiTag0Tau32_ReqTopMassSD:
+                        h_AntiTagTau32_ReqTopMassSD_Probe_jetPt                           .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSD         :  
+                            h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt                   .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDTau32    : 
+                            h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt              .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMinMass  :  
+                            h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt            .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMaxBdisc : 
+                            h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetPt           .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassFat        :  
+                            h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt                  .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassFatMinMass :  
+                            h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt           .Fill( ak8JetsGood[1].Perp() , evWeight )
+                    #----------anti-tag tau32, keep jet in Fat mass window
+                    if antiTag0Tau32_ReqTopMassFat:
+                        h_AntiTagTau32_ReqTopMassFat_Probe_jetPt                          .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSD         :  
+                            h_AntiTagTau32_ReqTopMassFat_TagMassSD_jetPt                  .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDTau32    : 
+                            h_AntiTagTau32_ReqTopMassFat_TagMassSDTau32_jetPt             .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMinMass  :  
+                            h_AntiTagTau32_ReqTopMassFat_TagMassSDMinMass_jetPt           .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassSDMaxBdisc : 
+                            h_AntiTagTau32_ReqTopMassFat_TagMassSDMaxBdisc_jetPt          .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassFat        :  
+                            h_AntiTagTau32_ReqTopMassFat_TagMassFat_jetPt                 .Fill( ak8JetsGood[1].Perp() , evWeight )
+                        if topTag1MassFatMinMass :  
+                            h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt          .Fill( ak8JetsGood[1].Perp() , evWeight )
+
                 if rand_mistag >= 0.5 :
-                    # anti-tag minMass<30, keep jet in SD mass window
+                    #----------anti-tag minMass<30, keep jet in SD mass window
                     if antiTag1minMass30_ReqTopMassSD:
                         h_AntiTagMinMass30_ReqTopMassSD_Probe_jetPt                       .Fill( ak8JetsGood[0].Perp() , evWeight )
                         if topTag0MassSD         :  
@@ -3053,26 +3148,87 @@ for ifile in files : #{ Loop over root files
                             h_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32_jetPt          .Fill( ak8JetsGood[0].Perp() , evWeight )
                         if topTag0MassSDMinMass  :  
                             h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMinMass_jetPt        .Fill( ak8JetsGood[0].Perp() , evWeight )
-                        # if topTag0MassSDMaxBdisc : 
-                        #     h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMaxBdisc_jetPt       .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDMaxBdisc : 
+                            h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMaxBdisc_jetPt       .Fill( ak8JetsGood[0].Perp() , evWeight )
                         if topTag0MassFat        :  
                             h_AntiTagMinMass30_ReqTopMassSD_TagMassFat_jetPt              .Fill( ak8JetsGood[0].Perp() , evWeight )
                         if topTag0MassFatMinMass :  
                             h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetPt       .Fill( ak8JetsGood[0].Perp() , evWeight )
-                    if antiTag0minMass30_ReqTopMassFat:
+                    #----------anti-tag minMass<30, keep jet in Fat mass window
+                    if antiTag1minMass30_ReqTopMassFat:
                         h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt                      .Fill( ak8JetsGood[0].Perp() , evWeight )
-                        if topTag1MassSD         :  
+                        if topTag0MassSD         :  
                             h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt              .Fill( ak8JetsGood[0].Perp() , evWeight )
-                        if topTag1MassSDTau32    : 
+                        if topTag0MassSDTau32    : 
                             h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt         .Fill( ak8JetsGood[0].Perp() , evWeight )
-                        if topTag1MassSDMinMass  :  
+                        if topTag0MassSDMinMass  :  
                             h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt       .Fill( ak8JetsGood[0].Perp() , evWeight )
-                        # if topTag1MassSDMaxBdisc : 
-                        #     h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      .Fill( ak8JetsGood[0].Perp() , evWeight )
-                        if topTag1MassFat        :  
+                        if topTag0MassSDMaxBdisc : 
+                            h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassFat        :  
                             h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt             .Fill( ak8JetsGood[0].Perp() , evWeight )
-                        if topTag1MassFatMinMass :  
+                        if topTag0MassFatMinMass :  
                             h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt      .Fill( ak8JetsGood[0].Perp() , evWeight )
+                    #----------anti-tag minMass<50, keep jet in SD mass window
+                    if antiTag1minMass50_ReqTopMassSD:
+                        h_AntiTagMinMass50_ReqTopMassSD_Probe_jetPt                       .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSD         :  
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassSD_jetPt               .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDTau32    : 
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassSDTau32_jetPt          .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDMinMass  :  
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMinMass_jetPt        .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDMaxBdisc : 
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMaxBdisc_jetPt       .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassFat        :  
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassFat_jetPt              .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassFatMinMass :  
+                            h_AntiTagMinMass50_ReqTopMassSD_TagMassFatMinMass_jetPt       .Fill( ak8JetsGood[0].Perp() , evWeight )
+                    #----------anti-tag minMass<50, keep jet in Fat mass window
+                    if antiTag1minMass50_ReqTopMassFat:
+                        h_AntiTagMinMass50_ReqTopMassFat_Probe_jetPt                      .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSD         :  
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassSD_jetPt              .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDTau32    : 
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassSDTau32_jetPt         .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDMinMass  :  
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMinMass_jetPt       .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDMaxBdisc : 
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassFat        :  
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassFat_jetPt             .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassFatMinMass :  
+                            h_AntiTagMinMass50_ReqTopMassFat_TagMassFatMinMass_jetPt      .Fill( ak8JetsGood[0].Perp() , evWeight )
+                    #----------anti-tag tau32, keep jet in SD mass window
+                    if antiTag1Tau32_ReqTopMassSD:
+                        h_AntiTagTau32_ReqTopMassSD_Probe_jetPt                           .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSD         :  
+                            h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt                   .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDTau32    : 
+                            h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt              .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDMinMass  :  
+                            h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt            .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDMaxBdisc : 
+                            h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetPt           .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassFat        :  
+                            h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt                  .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassFatMinMass :  
+                            h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt           .Fill( ak8JetsGood[0].Perp() , evWeight )
+                    #----------anti-tag tau32, keep jet in Fat mass window
+                    if antiTag1Tau32_ReqTopMassFat:
+                        h_AntiTagTau32_ReqTopMassFat_Probe_jetPt                          .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSD         :  
+                            h_AntiTagTau32_ReqTopMassFat_TagMassSD_jetPt                  .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDTau32    : 
+                            h_AntiTagTau32_ReqTopMassFat_TagMassSDTau32_jetPt             .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDMinMass  :  
+                            h_AntiTagTau32_ReqTopMassFat_TagMassSDMinMass_jetPt           .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassSDMaxBdisc : 
+                            h_AntiTagTau32_ReqTopMassFat_TagMassSDMaxBdisc_jetPt          .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassFat        :  
+                            h_AntiTagTau32_ReqTopMassFat_TagMassFat_jetPt                 .Fill( ak8JetsGood[0].Perp() , evWeight )
+                        if topTag0MassFatMinMass :  
+                            h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt          .Fill( ak8JetsGood[0].Perp() , evWeight )
 
                 if options.verbose:
                     print 'ak8JetsGood[0].Perp()      '+ str(ak8JetsGood[0].Perp())
@@ -3354,8 +3510,8 @@ for ifile in files : #{ Loop over root files
             mAK8SDrop = AK8SDropM[0]
             # Make sure there are top tags if we want to plot them
             minMass = AK8minmass[0]
-            subjetBdisc = AK8SubjetbDisc[0]
-            subjetMass = AK8SubjetMass[0]
+            subjetBdisc = 0#AK8SubjetbDisc[0]
+            subjetMass = 0#AK8SubjetMass[0]
             nsubjets = AK8nSubJets[0]
             tau1 = AK8Tau1[0]  
             tau2 = AK8Tau2[0] 
@@ -3426,8 +3582,8 @@ for ifile in files : #{ Loop over root files
                     h_minmassAK8[ichannel][isel].Fill( ak8JetsGoodMinMass[0], evWeight )
                     h_tau21AK8[ichannel][isel].Fill( tau21, evWeight )
                     h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
-                    h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodSubjetMass[0], evWeight )
-                    h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodSubjetbDisc[0], evWeight )
+                    h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[0], evWeight )
+                    h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[0], evWeight )
                     if len(ak8JetsGoodNHF) >0: 
                         h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[0], evWeight )
                     if len(ak8JetsGoodCHF) >0: 
