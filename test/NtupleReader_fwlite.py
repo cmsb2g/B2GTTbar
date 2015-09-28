@@ -198,6 +198,13 @@ parser.add_option('--quickSelect', action='store_true',
                   dest='quickSelect',
                   help='Require AK8 pt > min immediately to remove low-pt events')
 
+
+parser.add_option('--quickSelectminAK8Pt', type='float', action='store',
+                  default=350.,
+                  dest='quickSelectminAK8Pt',
+                  help='Minimum PT for quick select using AK8 jets')
+
+
 parser.add_option('--njobs', type='int', action='store',
                   default=None,
                   dest='njobs',
@@ -1368,7 +1375,7 @@ for ifile in files : #{ Loop over root files
             ak8jetpts = h_jetsAK8Pt.product()
             if len(ak8jetpts) == 0 :
                 continue
-            if h_jetsAK8Pt.product()[0] < options.minAK8Pt :
+            if h_jetsAK8Pt.product()[0] < options.quickSelectminAK8Pt :
                 continue
 
         if options.applyFilters and readFilters :
