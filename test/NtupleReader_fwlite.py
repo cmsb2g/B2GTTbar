@@ -562,18 +562,28 @@ print "h_modMass_SD_jet1  integral  " + str( h_modMass_SD_jet1 .Integral() )
 
 #@ Get MISTAG RATE HISTOGRAMS
 
-Fmistag = ROOT.TFile("MistagRate_2015_09_24.root")
-# h_mistag_vs_jetPt_TagMassSD         = Fmistag.Get("h_mistag_vs_jetPt_TagMassSD").Clone()
-# h_mistag_vs_jetPt_TagMassSDTau32    = Fmistag.Get("h_mistag_vs_jetPt_TagMassSDTau32").Clone()
-# h_mistag_vs_jetPt_TagMassSDMinMass  = Fmistag.Get("h_mistag_vs_jetPt_TagMassSDMinMass").Clone()
-# h_mistag_vs_jetPt_TagMassFat        = Fmistag.Get("h_mistag_vs_jetPt_TagMassFat").Clone()
-h_mistag_vs_jetPt_TagMassFatMinMass = Fmistag.Get("h_mistagFat").Clone()
-h_mistag_vs_jetPt_TagMassFatMinMass.SetName("h_mistagFat")
-# ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSD         , False )
-# ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSDTau32    , False )
-# ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSDMinMass  , False )
-# ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassFat        , False )
+if options.isMC:
+  Fmistag = ROOT.TFile("MistagRate_2015_09_25.root")
+else:
+  Fmistag = ROOT.TFile("MistagRateBigBins_JetHT_knash_crab_Run2015D_PromptReco_v3_Sep25_v74x_V7_25ns_All_2015_09_28.root")
+
+h_mistag_vs_jetPt_TagMassSD           = Fmistag.Get("h_mistag_AntiTagMinMass30_ReqTopMassSD_TagMassSD"         ).Clone()
+h_mistag_vs_jetPt_TagMassSDTau32      = Fmistag.Get("h_mistag_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32"    ).Clone()
+h_mistag_vs_jetPt_TagMassSDMinMass    = Fmistag.Get("h_mistag_AntiTagMinMass50_ReqTopMassSD_TagMassSDMinMass"  ).Clone()
+h_mistag_vs_jetPt_TagMassFatMinMass   = Fmistag.Get("h_mistag_AntiTagMinMass50_ReqTopMassFat_TagMassFatMinMass").Clone()
+# h_mistag_vs_jetPt_TagMassFat          = Fmistag.Get("h_mistag_vs_jetPt_TagMassFat").Clone()
+
+h_mistag_vs_jetPt_TagMassSD           .SetName("h_mistag_AntiTagMinMass30_ReqTopMassSD_TagMassSD"         )
+h_mistag_vs_jetPt_TagMassSDTau32      .SetName("h_mistag_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32"    )
+h_mistag_vs_jetPt_TagMassSDMinMass    .SetName("h_mistag_AntiTagMinMass50_ReqTopMassSD_TagMassSDMinMass"  )
+h_mistag_vs_jetPt_TagMassFatMinMass   .SetName("h_mistag_AntiTagMinMass50_ReqTopMassFat_TagMassFatMinMass")
+
+
+ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSD         , False )
+ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSDTau32    , False )
+ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassSDMinMass  , False )
 ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassFatMinMass , False )
+# ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassFat        , False )
 
 
 #@ Reweight top function
@@ -1101,27 +1111,27 @@ h_bkgdEst_modMass_flat_tagMassFat        = ROOT.TH1D("h_bkgdEst_modMass_flat_tag
 h_bkgdEst_modMass_flat_tagMassFatMinMass = ROOT.TH1D("h_bkgdEst_modMass_flat_tagMassFatMinMass", "", 700, 0, 7000 )
 
 #^ Predicted Distribution - Background estimation 
-# mttPredDist_modMass_tagMassSD          = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSD         , "mttPredDist_modMass_tagMassSD"        , "mTT Mass", 700, 0, 7000 )
-# mttPredDist_modMass_tagMassSDTau32     = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32    , "mttPredDist_modMass_tagMassSDTau32"   , "mTT Mass", 700, 0, 7000 )
-# mttPredDist_modMass_tagMassSDMinMass   = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDMinMass  , "mttPredDist_modMass_tagMassSDMinMass" , "mTT Mass", 700, 0, 7000 )
+mttPredDist_modMass_tagMassSD          = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSD         , "mttPredDist_modMass_tagMassSD"        , "mTT Mass", 700, 0, 7000 )
+mttPredDist_modMass_tagMassSDTau32     = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32    , "mttPredDist_modMass_tagMassSDTau32"   , "mTT Mass", 700, 0, 7000 )
+mttPredDist_modMass_tagMassSDMinMass   = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDMinMass  , "mttPredDist_modMass_tagMassSDMinMass" , "mTT Mass", 700, 0, 7000 )
 # mttPredDist_modMass_tagMassFat         = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassFat        , "mttPredDist_modMass_tagMassFat"       , "mTT Mass", 700, 0, 7000 )
 mttPredDist_modMass_tagMassFatMinMass  = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassFatMinMass , "mttPredDist_modMass_tagMassFatMinMass", "mTT Mass", 700, 0, 7000 )
 
-# ROOT.SetOwnership( mttPredDist_modMass_tagMassSD         , False )
-# ROOT.SetOwnership( mttPredDist_modMass_tagMassSDTau32    , False )
-# ROOT.SetOwnership( mttPredDist_modMass_tagMassSDMinMass  , False )
+ROOT.SetOwnership( mttPredDist_modMass_tagMassSD         , False )
+ROOT.SetOwnership( mttPredDist_modMass_tagMassSDTau32    , False )
+ROOT.SetOwnership( mttPredDist_modMass_tagMassSDMinMass  , False )
 # ROOT.SetOwnership( mttPredDist_modMass_tagMassFat        , False )
 ROOT.SetOwnership( mttPredDist_modMass_tagMassFatMinMass , False )
 
-# mttPredDist_tagMassSD         = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSD         , "mttPredDist_tagMassSD"        , "mTT Mass", 700, 0, 7000 )
-# mttPredDist_tagMassSDTau32    = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32    , "mttPredDist_tagMassSDTau32"   , "mTT Mass", 700, 0, 7000 )
-# mttPredDist_tagMassSDMinMass  = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDMinMass  , "mttPredDist_tagMassSDMinMass" , "mTT Mass", 700, 0, 7000 )
+mttPredDist_tagMassSD         = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSD         , "mttPredDist_tagMassSD"        , "mTT Mass", 700, 0, 7000 )
+mttPredDist_tagMassSDTau32    = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32    , "mttPredDist_tagMassSDTau32"   , "mTT Mass", 700, 0, 7000 )
+mttPredDist_tagMassSDMinMass  = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDMinMass  , "mttPredDist_tagMassSDMinMass" , "mTT Mass", 700, 0, 7000 )
 # mttPredDist_tagMassFat        = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassFat        , "mttPredDist_tagMassFat"       , "mTT Mass", 700, 0, 7000 )
 mttPredDist_tagMassFatMinMass = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassFatMinMass , "mttPredDist_tagMassFatMinMass", "mTT Mass", 700, 0, 7000 )
 
-# ROOT.SetOwnership( mttPredDist_tagMassSD         , False )
-# ROOT.SetOwnership( mttPredDist_tagMassSDTau32    , False )
-# ROOT.SetOwnership( mttPredDist_tagMassSDMinMass  , False )
+ROOT.SetOwnership( mttPredDist_tagMassSD         , False )
+ROOT.SetOwnership( mttPredDist_tagMassSDTau32    , False )
+ROOT.SetOwnership( mttPredDist_tagMassSDMinMass  , False )
 # ROOT.SetOwnership( mttPredDist_tagMassFat        , False )
 ROOT.SetOwnership( mttPredDist_tagMassFatMinMass , False )
 
@@ -3278,35 +3288,65 @@ for ifile in files : #{ Loop over root files
                     h_mttMass_tagMassFatMinMass.Fill( ttMass, evWeight )
 
 
+# h_bkgdEst_tagMassSD         = ROOT.TH1D("h_bkgdEst_tagMassSD"        , "", 700, 0, 7000 )
+# h_bkgdEst_tagMassSDTau32    = ROOT.TH1D("h_bkgdEst_tagMassSDTau32"   , "", 700, 0, 7000 )
+# h_bkgdEst_tagMassSDMinMass  = ROOT.TH1D("h_bkgdEst_tagMassSDMinMass" , "", 700, 0, 7000 )
+# h_bkgdEst_tagMassFat        = ROOT.TH1D("h_bkgdEst_tagMassFat"       , "", 700, 0, 7000 )
+# h_bkgdEst_tagMassFatMinMass = ROOT.TH1D("h_bkgdEst_tagMassFatMinMass", "", 700, 0, 7000 )
+
+# h_mistag_vs_jetPt_TagMassSD           = SetName("h_mistag_AntiTagMinMass30_ReqTopMassSD_TagMassSD"         )
+# h_mistag_vs_jetPt_TagMassSDTau32      = SetName("h_mistag_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32"    )
+# h_mistag_vs_jetPt_TagMassSDMinMass    = SetName("h_mistag_AntiTagMinMass50_ReqTopMassSD_TagMassSDMinMass"  )
+# h_mistag_vs_jetPt_TagMassFatMinMass   = SetName("h_mistag_AntiTagMinMass50_ReqTopMassFat_TagMassFatMinMass")
+
+
                 #^ Fill predicted distribution
 
                 # randomly select jet 0 to be the tag then fill predDist based on probability that jet 1 is mis-tagged
                 if rand_bkgdest < 0.5 :
                     if options.verbose:
                         print 'jet 0 randomly selected to be the tag -> jet 1 is the probe'
-                    # if topTag0MassSD :
-                    #     if options.verbose:
-                    #         print '  tagged topTag0MassSD -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[1].Perp())+' tagged = '+str(topTag1MassSD)+ ' evWeight '+ str(evWeight)
-                    #     mttPredDist_tagMassSD        .Accumulate(              ttMass, ak8JetsGood[1].Perp(), topTag1MassSD, evWeight )
-                    #     mttPredDist_modMass_tagMassSD.Accumulate( ttMass_modMass_jet1, ak8JetsGood[1].Perp(), topTag1MassSD, evWeight )
-                    # if topTag0MassSDTau32 :
-                    #     if options.verbose:
-                    #         print '  tagged topTag0MassSDTau32 -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[1].Perp())+' tagged = '+str(topTag1MassSDTau32)+ ' evWeight '+ str(evWeight)
-                    #     mttPredDist_tagMassSDTau32        .Accumulate(              ttMass, ak8JetsGood[1].Perp(), topTag1MassSDTau32, evWeight )
-                    #     # mttPredDist_modMass_tagMassSDTau32.Accumulate( ttMass_modMass_jet1, ak8JetsGood[1].Perp(), topTag1MassSDTau32, evWeight )
-                    # if topTag0MassSDMinMass :
-                    #     if options.verbose:
-                    #        print '  tagged topTag0MassSDMinMass -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[1].Perp())+' tagged = '+str(topTag1MassSDMinMass)+ ' evWeight '+ str(evWeight)
-                    #     mttPredDist_tagMassSDMinMass        .Accumulate(              ttMass, ak8JetsGood[1].Perp(), topTag1MassSDMinMass, evWeight )
-                    #     # print 'debug1'
-                    #     # mttPredDist_modMass_tagMassSDMinMass.Accumulate( ttMass_modMass_jet1, ak8JetsGood[1].Perp(), topTag1MassSDMinMass, evWeight )
-                    #     # print 'debug2'
+                    if topTag0MassSD :
+                        if options.verbose:
+                            print '  tagged topTag0MassSD -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[1].Perp())+' tagged = '+str(topTag1MassSD)+ ' evWeight '+ str(evWeight)
+                        mttPredDist_tagMassSD        .Accumulate(              ttMass, ak8JetsGood[1].Perp(), topTag1MassSD, evWeight )
+                        # mttPredDist_modMass_tagMassSD.Accumulate( ttMass_modMass_jet1, ak8JetsGood[1].Perp(), topTag1MassSD, evWeight )
+                        bin   = h_mistag_vs_jetPt_TagMassSD.GetXaxis().FindBin( ak8JetsGood[1].Perp() )
+                        rate  = h_mistag_vs_jetPt_TagMassSD.GetBinContent(bin);
+                        h_bkgdEst_tagMassSD              .Fill(                    ttMass, evWeight*rate)
+                        h_bkgdEst_modMass_tagMassSD      .Fill(       ttMass_modMass_jet1, evWeight*rate)
+                        h_bkgdEst_modMass_flat_tagMassSD .Fill(  ttMass_modMass_flat_jet1, evWeight*rate)
+
+                    if topTag0MassSDTau32 :
+                        if options.verbose:
+                            print '  tagged topTag0MassSDTau32 -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[1].Perp())+' tagged = '+str(topTag1MassSDTau32)+ ' evWeight '+ str(evWeight)
+                        mttPredDist_tagMassSDTau32        .Accumulate(              ttMass, ak8JetsGood[1].Perp(), topTag1MassSDTau32, evWeight )
+                        # mttPredDist_modMass_tagMassSDTau32.Accumulate( ttMass_modMass_jet1, ak8JetsGood[1].Perp(), topTag1MassSDTau32, evWeight )
+                        bin   = h_mistag_vs_jetPt_TagMassSDTau32.GetXaxis().FindBin( ak8JetsGood[1].Perp() )
+                        rate  = h_mistag_vs_jetPt_TagMassSDTau32.GetBinContent(bin);
+                        h_bkgdEst_tagMassSDTau32              .Fill(                    ttMass, evWeight*rate)
+                        h_bkgdEst_modMass_tagMassSDTau32      .Fill(       ttMass_modMass_jet1, evWeight*rate)
+                        h_bkgdEst_modMass_flat_tagMassSDTau32 .Fill(  ttMass_modMass_flat_jet1, evWeight*rate)
+
+                    if topTag0MassSDMinMass :
+                        if options.verbose:
+                           print '  tagged topTag0MassSDMinMass -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[1].Perp())+' tagged = '+str(topTag1MassSDMinMass)+ ' evWeight '+ str(evWeight)
+                        mttPredDist_tagMassSDMinMass        .Accumulate(              ttMass, ak8JetsGood[1].Perp(), topTag1MassSDMinMass, evWeight )
+                        bin   = h_mistag_vs_jetPt_TagMassSDMinMass.GetXaxis().FindBin( ak8JetsGood[1].Perp() )
+                        rate  = h_mistag_vs_jetPt_TagMassSDMinMass.GetBinContent(bin);
+                        h_bkgdEst_tagMassSDMinMass              .Fill(                    ttMass, evWeight*rate)
+                        h_bkgdEst_modMass_tagMassSDMinMass      .Fill(       ttMass_modMass_jet1, evWeight*rate)
+                        h_bkgdEst_modMass_flat_tagMassSDMinMass .Fill(  ttMass_modMass_flat_jet1, evWeight*rate)
+
+                        # print 'debug1'
+                        # mttPredDist_modMass_tagMassSDMinMass.Accumulate( ttMass_modMass_jet1, ak8JetsGood[1].Perp(), topTag1MassSDMinMass, evWeight )
+                        # print 'debug2'
                     # if topTag0MassFat :
                     #     # print 'debug3'
                     #     if options.verbose:
                     #         print '  tagged topTag0MassFat -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[1].Perp())+' tagged = '+str(topTag1MassFat)+ ' evWeight '+ str(evWeight)
                     #     mttPredDist_tagMassFat        .Accumulate(              ttMass, ak8JetsGood[1].Perp(), topTag1MassFat, evWeight )
-                    #     mttPredDist_modMass_tagMassFat.Accumulate( ttMass_modMass_jet1, ak8JetsGood[1].Perp(), topTag1MassFat, evWeight )
+                    #     # mttPredDist_modMass_tagMassFat.Accumulate( ttMass_modMass_jet1, ak8JetsGood[1].Perp(), topTag1MassFat, evWeight )
                     #     bin   = h_mistag_vs_jetPt_TagMassFat.GetXaxis().FindBin( ak8JetsGood[1].Perp() )
                     #     rate  = h_mistag_vs_jetPt_TagMassFat.GetBinContent(bin);
                     #     h_bkgdEst_tagMassFat .Fill(ttMass, evWeight*rate)
@@ -3318,29 +3358,49 @@ for ifile in files : #{ Loop over root files
                         # do it again with incorrect error bars
                         bin   = h_mistag_vs_jetPt_TagMassFatMinMass.GetXaxis().FindBin( ak8JetsGood[1].Perp() )
                         rate  = h_mistag_vs_jetPt_TagMassFatMinMass.GetBinContent(bin);
-                        h_bkgdEst_tagMassFatMinMass .Fill(ttMass, evWeight*rate)
-                        h_bkgdEst_modMass_tagMassFatMinMass .Fill(ttMass_modMass_jet1, evWeight*rate)
-                        h_bkgdEst_modMass_flat_tagMassFatMinMass .Fill(ttMass_modMass_flat_jet1, evWeight*rate)
+                        h_bkgdEst_tagMassFatMinMass               .Fill(                   ttMass, evWeight*rate)
+                        h_bkgdEst_modMass_tagMassFatMinMass       .Fill(      ttMass_modMass_jet1, evWeight*rate)
+                        h_bkgdEst_modMass_flat_tagMassFatMinMass  .Fill( ttMass_modMass_flat_jet1, evWeight*rate)
 
                 # randomly select jet 1 to be the tag then fill predDist based on probability that jet 0 is mis-tagged
                 if rand_bkgdest >= 0.5 :
                     if options.verbose:
                         print 'jet 1 randomly selected to be the tag-> jet 0 is the probe'
-                    # if topTag1MassSD :
-                    #     if options.verbose:
-                    #         print '  tagged topTag1MassSD -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[0].Perp())+' tagged = '+str(topTag0MassSD)+ ' evWeight '+ str(evWeight)
-                    #     mttPredDist_tagMassSD        .Accumulate(              ttMass, ak8JetsGood[0].Perp(), topTag0MassSD, evWeight )
-                    #     mttPredDist_modMass_tagMassSD.Accumulate( ttMass_modMass_jet0, ak8JetsGood[0].Perp(), topTag0MassSD, evWeight )
-                    # if topTag1MassSDTau32 :
-                    #     if options.verbose:
-                    #         print '  tagged topTag1MassSDTau32 -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[0].Perp())+' tagged = '+str(topTag0MassSDTau32)+ ' evWeight '+ str(evWeight)
-                    #     mttPredDist_tagMassSDTau32        .Accumulate(              ttMass, ak8JetsGood[0].Perp(), topTag0MassSDTau32, evWeight )
-                    #     # mttPredDist_modMass_tagMassSDTau32.Accumulate( ttMass_modMass_jet0, ak8JetsGood[0].Perp(), topTag0MassSDTau32, evWeight )
-                    # if topTag1MassSDMinMass :
-                    #     if options.verbose:
-                    #         print '  tagged topTag1MassSDMinMass -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[0].Perp())+' tagged = '+str(topTag0MassSDMinMass)+ ' evWeight '+ str(evWeight)
-                    #     mttPredDist_tagMassSDMinMass        .Accumulate(              ttMass, ak8JetsGood[0].Perp(), topTag0MassSDMinMass, evWeight )
-                    #     # mttPredDist_modMass_tagMassSDMinMass.Accumulate( ttMass_modMass_jet0, ak8JetsGood[0].Perp(), topTag0MassSDMinMass, evWeight )
+                    if topTag1MassSD :
+                        if options.verbose:
+                            print '  tagged topTag1MassSD -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[0].Perp())+' tagged = '+str(topTag0MassSD)+ ' evWeight '+ str(evWeight)
+                        mttPredDist_tagMassSD        .Accumulate(              ttMass, ak8JetsGood[0].Perp(), topTag0MassSD, evWeight )
+                        # mttPredDist_modMass_tagMassSD.Accumulate( ttMass_modMass_jet0, ak8JetsGood[0].Perp(), topTag0MassSD, evWeight )
+                        bin   = h_mistag_vs_jetPt_TagMassSD.GetXaxis().FindBin( ak8JetsGood[0].Perp() )
+                        rate  = h_mistag_vs_jetPt_TagMassSD.GetBinContent(bin);
+                        h_bkgdEst_tagMassSD              .Fill(                    ttMass, evWeight*rate)
+                        h_bkgdEst_modMass_tagMassSD      .Fill(       ttMass_modMass_jet0, evWeight*rate)
+                        h_bkgdEst_modMass_flat_tagMassSD .Fill(  ttMass_modMass_flat_jet0, evWeight*rate)
+
+                    if topTag1MassSDTau32 :
+                        if options.verbose:
+                            print '  tagged topTag1MassSDTau32 -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[0].Perp())+' tagged = '+str(topTag0MassSDTau32)+ ' evWeight '+ str(evWeight)
+                        mttPredDist_tagMassSDTau32        .Accumulate(              ttMass, ak8JetsGood[0].Perp(), topTag0MassSDTau32, evWeight )
+                        # mttPredDist_modMass_tagMassSDTau32.Accumulate( ttMass_modMass_jet0, ak8JetsGood[0].Perp(), topTag0MassSDTau32, evWeight )
+                        bin   = h_mistag_vs_jetPt_TagMassSDTau32.GetXaxis().FindBin( ak8JetsGood[0].Perp() )
+                        rate  = h_mistag_vs_jetPt_TagMassSDTau32.GetBinContent(bin);
+                        h_bkgdEst_tagMassSDTau32              .Fill(                    ttMass, evWeight*rate)
+                        h_bkgdEst_modMass_tagMassSDTau32      .Fill(       ttMass_modMass_jet0, evWeight*rate)
+                        h_bkgdEst_modMass_flat_tagMassSDTau32 .Fill(  ttMass_modMass_flat_jet0, evWeight*rate)
+
+
+                    if topTag1MassSDMinMass :
+                        if options.verbose:
+                            print '  tagged topTag1MassSDMinMass -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[0].Perp())+' tagged = '+str(topTag0MassSDMinMass)+ ' evWeight '+ str(evWeight)
+                        mttPredDist_tagMassSDMinMass        .Accumulate(              ttMass, ak8JetsGood[0].Perp(), topTag0MassSDMinMass, evWeight )
+                        # mttPredDist_modMass_tagMassSDMinMass.Accumulate( ttMass_modMass_jet0, ak8JetsGood[0].Perp(), topTag0MassSDMinMass, evWeight )
+                        bin   = h_mistag_vs_jetPt_TagMassSDMinMass.GetXaxis().FindBin( ak8JetsGood[0].Perp() )
+                        rate  = h_mistag_vs_jetPt_TagMassSDMinMass.GetBinContent(bin);
+                        h_bkgdEst_tagMassSDMinMass              .Fill(                    ttMass, evWeight*rate)
+                        h_bkgdEst_modMass_tagMassSDMinMass      .Fill(       ttMass_modMass_jet0, evWeight*rate)
+                        h_bkgdEst_modMass_flat_tagMassSDMinMass .Fill(  ttMass_modMass_flat_jet0, evWeight*rate)
+
+
                     # if topTag1MassFat :
                     #     # print 'debug5'
                     #     if options.verbose:
