@@ -128,6 +128,20 @@ parser.add_option('--mAK8GroomedMaxCut', type='float', action='store',
                   dest='mAK8GroomedMaxCut',
                   help='Groomed maximum mass Cut for CMS Combined Tagger: Defaulted for Soft Drop Mass')
 
+
+parser.add_option('--mAK8GroomedWMinCut', type='float', action='store',
+                  default=60.,
+                  dest='mAK8GroomedWMinCut',
+                  help='Groomed minimum mass Cut for CMS Combined Tagger: Defaulted for Soft Drop Mass')
+
+parser.add_option('--mAK8GroomedWMaxCut', type='float', action='store',
+                  default=100.,
+                  dest='mAK8GroomedWMaxCut',
+                  help='Groomed maximum mass Cut for CMS Combined Tagger: Defaulted for Soft Drop Mass')
+
+
+
+
 parser.add_option('--tau32Cut', type='float', action='store',
                   default=0.62,
                   dest='tau32Cut',
@@ -858,8 +872,14 @@ h_NtrueIntPU     = ROOT.TH1D("h_NtrueIntPU"    , "", 200,0,200 )
 ALL_NDX = 0
 EL_NDX = 1
 MU_NDX = 2
+ALL_TYPE1_NDX = 3
+EL_TYPE1_NDX = 4
+MU_TYPE1_NDX = 5
+ALL_TYPE2_NDX = 6
+EL_TYPE2_NDX = 7
+MU_TYPE2_NDX = 8
 channels = [
-    '', 'el', 'mu'
+    '', 'el', 'mu', 'alltype1', 'eltype1', 'mutype1', 'alltype2', 'eltype2', 'mutype2'
     ]
 
 # indices correspond to stages in the selection
@@ -875,8 +895,11 @@ SEL_M_MINMASS_NDX = 8
 SEL_M_TAU32_BDISC_NDX = 9
 SEL_NHF_LOW_NDX = 10
 SEL_NHF_HIGH_NDX = 11
+SEL_MW_NDX = 12
+SEL_MW_TAU21_NDX = 13
+SEL_MW_TAU21_BDISC_NDX = 13
 selections = [
-    '', '_mSDcut', '_tau32cut', '_tau21cut', '_mSDcut_tau32cut', '_minMasscut', '_bDiscMincut', '_bDiscMincut_tau32cut', '_mSDcut_minMasscut', '_mSDcut_tau32cut_bDiscMincut', '_nhfLow', '_nhfHigh', 
+    '', '_mSDcut', '_tau32cut', '_tau21cut', '_mSDcut_tau32cut', '_minMasscut', '_bDiscMincut', '_bDiscMincut_tau32cut', '_mSDcut_minMasscut', '_mSDcut_tau32cut_bDiscMincut', '_nhfLow', '_nhfHigh', '_mWSDcut', '_mWSDcut_tau21cut', '_mWSDcut_tau21cut_bDiscMincut'
     ]
 
 #$ Below histos with only quality cuts (see default in options above) : only plotted jets with mSD > 10 GeV as Sal suggested
@@ -927,14 +950,14 @@ for ichannel,channel in enumerate(channels) :
     h_mttbar.append( [] )
     h_mttbar_true.append( [] )
 
-    h_ptLep.append( ROOT.TH1F("h_ptLep" + channel, "Lepton p_{T};p_{T} (GeV)", 100, 0, 1000) )
-    h_etaLep.append( ROOT.TH1F("h_etaLep" + channel, "Lepton #eta;#eta", 100, -5.0, 5.0 ) )
-    h_met.append( ROOT.TH1F("h_met" + channel, "Missing p_{T};p_{T} (GeV)", 100, 0, 1000) )
-    h_htLep.append( ROOT.TH1F("h_htLep" + channel, "Lepton p_{T} + Missing p_{T};H_{T}^{lep} (GeV)", 100, 0, 1000) )
-    h_st.append( ROOT.TH1F("h_st" + channel, "Lepton p_{T} + Missing p_{T} + H_{T};S_{T} (GeV)", 100, 0, 4000) )
-    h_ptRel.append( ROOT.TH1F("h_ptRel" + channel, "p_{T}^{REL};p_{T}^{REL} (GeV)", 100, 0, 100) )
-    h_dRMin.append( ROOT.TH1F("h_dRMin" + channel, "#Delta R_{MIN};#Delta R_{MIN}", 100, 0, 5.0) )
-    h_2DCut.append( ROOT.TH2F("h_2DCut" + channel, "2D Cut;#Delta R;p_{T}^{REL}", 20, 0, 5.0, 20, 0, 100 ) )
+    h_ptLep.append( ROOT.TH1F("SemiLepPlots/h_ptLep" + channel, "Lepton p_{T};p_{T} (GeV)", 100, 0, 1000) )
+    h_etaLep.append( ROOT.TH1F("SemiLepPlots/h_etaLep" + channel, "Lepton #eta;#eta", 100, -5.0, 5.0 ) )
+    h_met.append( ROOT.TH1F("SemiLepPlots/h_met" + channel, "Missing p_{T};p_{T} (GeV)", 100, 0, 1000) )
+    h_htLep.append( ROOT.TH1F("SemiLepPlots/h_htLep" + channel, "Lepton p_{T} + Missing p_{T};H_{T}^{lep} (GeV)", 100, 0, 1000) )
+    h_st.append( ROOT.TH1F("SemiLepPlots/h_st" + channel, "Lepton p_{T} + Missing p_{T} + H_{T};S_{T} (GeV)", 100, 0, 4000) )
+    h_ptRel.append( ROOT.TH1F("SemiLepPlots/h_ptRel" + channel, "p_{T}^{REL};p_{T}^{REL} (GeV)", 100, 0, 100) )
+    h_dRMin.append( ROOT.TH1F("SemiLepPlots/h_dRMin" + channel, "#Delta R_{MIN};#Delta R_{MIN}", 100, 0, 5.0) )
+    h_2DCut.append( ROOT.TH2F("SemiLepPlots/h_2DCut" + channel, "2D Cut;#Delta R;p_{T}^{REL}", 20, 0, 5.0, 20, 0, 100 ) )
     
     h_ptAK4.append( [] )
     h_etaAK4.append( [] )
@@ -966,37 +989,37 @@ for ichannel,channel in enumerate(channels) :
     h_nchAK8.append( [] )    
     for isel, sel in enumerate(selections) : 
         #$ Below histos with only quality cuts (see default in options above) : only plotted jets with mSD > 10 GeV as Sal suggested
-        h_mttbar[ichannel].append( ROOT.TH1F("h_mttbar" + channel + sel, ";m_{t#bar{t}} (GeV)", 200, 0, 6000) )
-        h_mttbar_true[ichannel].append( ROOT.TH1F("h_mttbar_true" + channel + sel, "True m_{t#bar{t}};m_{t#bar{t}} (GeV)", 200, 0, 6000) )
+        h_mttbar[ichannel].append( ROOT.TH1F("SemiLepPlots/h_mttbar" + channel + sel, ";m_{t#bar{t}} (GeV)", 200, 0, 6000) )
+        h_mttbar_true[ichannel].append( ROOT.TH1F("SemiLepPlots/h_mttbar_true" + channel + sel, "True m_{t#bar{t}};m_{t#bar{t}} (GeV)", 200, 0, 6000) )
 
-        h_ptAK4[ichannel].append( ROOT.TH1F("h_ptAK4" + channel + sel, "AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000) )
-        h_etaAK4[ichannel].append( ROOT.TH1F("h_etaAK4" + channel + sel, "AK4 Jet #eta;#eta", 120, -6, 6) )
-        h_yAK4[ichannel].append( ROOT.TH1F("h_yAK4" + channel + sel, "AK4 Jet Rapidity;y", 120, -6, 6) )
-        h_phiAK4[ichannel].append( ROOT.TH1F("h_phiAK4" + channel + sel, "AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14) )
-        h_mAK4[ichannel].append( ROOT.TH1F("h_mAK4" + channel + sel, "AK4 Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_bdiscAK4[ichannel].append( ROOT.TH1F("h_bdiscAK4" + channel + sel, "AK4 b discriminator;b discriminator", 100, 0, 1.0) )
+        h_ptAK4[ichannel].append( ROOT.TH1F("SemiLepPlots/h_ptAK4" + channel + sel, "AK4 Jet p_{T};p_{T} (GeV)", 300, 0, 3000) )
+        h_etaAK4[ichannel].append( ROOT.TH1F("SemiLepPlots/h_etaAK4" + channel + sel, "AK4 Jet #eta;#eta", 120, -6, 6) )
+        h_yAK4[ichannel].append( ROOT.TH1F("SemiLepPlots/h_yAK4" + channel + sel, "AK4 Jet Rapidity;y", 120, -6, 6) )
+        h_phiAK4[ichannel].append( ROOT.TH1F("SemiLepPlots/h_phiAK4" + channel + sel, "AK4 Jet #phi;#phi (radians)",100,-3.14, 3.14) )
+        h_mAK4[ichannel].append( ROOT.TH1F("SemiLepPlots/h_mAK4" + channel + sel, "AK4 Jet Mass;Mass (GeV)", 100, 0, 1000) )
+        h_bdiscAK4[ichannel].append( ROOT.TH1F("SemiLepPlots/h_bdiscAK4" + channel + sel, "AK4 b discriminator;b discriminator", 100, 0, 1.0) )
 
-        h_ptAK8[ichannel].append( ROOT.TH1F("h_ptAK8" + channel + sel, "AK8 Jet p_{T};p_{T} (GeV)", 300, 0, 3000) )
-        h_etaAK8[ichannel].append( ROOT.TH1F("h_etaAK8" + channel + sel, "AK8 Jet #eta;#eta", 120, -6, 6) )
-        h_yAK8[ichannel].append( ROOT.TH1F("h_yAK8" + channel + sel, "AK8 Jet Rapidity;y", 120, -6, 6) )
-        h_phiAK8[ichannel].append( ROOT.TH1F("h_phiAK8" + channel + sel, "AK8 Jet #phi;#phi (radians)",100,-3.14, 3.14) )
-        h_mAK8[ichannel].append( ROOT.TH1F("h_mAK8" + channel + sel, "AK8 Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_mprunedAK8[ichannel].append( ROOT.TH1F("h_mprunedAK8" + channel + sel, "AK8 Pruned Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_mfilteredAK8[ichannel].append( ROOT.TH1F("h_mfilteredAK8" + channel + sel, "AK8 Filtered Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_mtrimmedAK8[ichannel].append( ROOT.TH1F("h_mtrimmedAK8" + channel + sel, "AK8 Trimmed Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_mSDropAK8[ichannel].append( ROOT.TH1F("h_mSDropAK8" + channel + sel, "AK8 Soft Drop Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_minmassAK8[ichannel].append( ROOT.TH1F("h_minmassAK8" + channel + sel, "AK8 CMS Top Tagger Min Mass Paring;m_{min} (GeV)", 100, 0, 1000) )
-        h_subjetMassAK8[ichannel].append( ROOT.TH1F("h_subjetMassAK8" + channel + sel, "AK8 subjet mass; Mass (GeV)", 100, 0, 1000) )
-        h_subjetBdiscAK8[ichannel].append( ROOT.TH1F("h_subjetBdiscAK8" + channel + sel, "AK8 subjet b discriminator;b discriminator", 100, 0, 1.0) )
-        h_nsjAK8[ichannel].append( ROOT.TH1F("h_nsjAK8" + channel + sel, "AK8 CMS Top Tagger N_{subjets};N_{subjets}", 5, 0, 5) )
-        h_tau21AK8[ichannel].append( ROOT.TH1F("h_tau21AK8" + channel + sel, "AK8 Jet #tau_{2} / #tau_{1};Mass#tau_{21}", 100, 0, 1.0) )
-        h_tau32AK8[ichannel].append( ROOT.TH1F("h_tau32AK8" + channel + sel, "AK8 Jet #tau_{3} / #tau_{2};Mass#tau_{32}", 100, 0, 1.0) )
-        h_nhfAK8[ichannel].append( ROOT.TH1F("h_nhfAK8" + channel + sel, "AK8 Neutral hadron fraction;NHF", 100, 0, 1.0) )
-        h_chfAK8[ichannel].append( ROOT.TH1F("h_chfAK8" + channel + sel, "AK8 Charged hadron fraction;CHF", 100, 0, 1.0) )
-        h_nefAK8[ichannel].append( ROOT.TH1F("h_nefAK8" + channel + sel, "AK8 Neutral EM fraction;NEF", 100, 0, 1.0) )
-        h_cefAK8[ichannel].append( ROOT.TH1F("h_cefAK8" + channel + sel, "AK8 Charged EM fraction;CEF", 100, 0, 1.0) )
-        h_ncAK8[ichannel].append( ROOT.TH1F("h_ncAK8" + channel + sel, "AK8 Number of constituents;Number of constituents", 100, 0, 100) )
-        h_nchAK8[ichannel].append( ROOT.TH1F("h_nchAK8" + channel + sel, "AK8 Number of charged hadrons;N charged hadrons", 100, 0, 100) )
+        h_ptAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_ptAK8" + channel + sel, "AK8 Jet p_{T};p_{T} (GeV)", 300, 0, 3000) )
+        h_etaAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_etaAK8" + channel + sel, "AK8 Jet #eta;#eta", 120, -6, 6) )
+        h_yAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_yAK8" + channel + sel, "AK8 Jet Rapidity;y", 120, -6, 6) )
+        h_phiAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_phiAK8" + channel + sel, "AK8 Jet #phi;#phi (radians)",100,-3.14, 3.14) )
+        h_mAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_mAK8" + channel + sel, "AK8 Jet Mass;Mass (GeV)", 100, 0, 1000) )
+        h_mprunedAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_mprunedAK8" + channel + sel, "AK8 Pruned Jet Mass;Mass (GeV)", 100, 0, 1000) )
+        h_mfilteredAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_mfilteredAK8" + channel + sel, "AK8 Filtered Jet Mass;Mass (GeV)", 100, 0, 1000) )
+        h_mtrimmedAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_mtrimmedAK8" + channel + sel, "AK8 Trimmed Jet Mass;Mass (GeV)", 100, 0, 1000) )
+        h_mSDropAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_mSDropAK8" + channel + sel, "AK8 Soft Drop Jet Mass;Mass (GeV)", 100, 0, 1000) )
+        h_minmassAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_minmassAK8" + channel + sel, "AK8 CMS Top Tagger Min Mass Paring;m_{min} (GeV)", 100, 0, 1000) )
+        h_subjetMassAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_subjetMassAK8" + channel + sel, "AK8 subjet mass; Mass (GeV)", 100, 0, 1000) )
+        h_subjetBdiscAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_subjetBdiscAK8" + channel + sel, "AK8 subjet b discriminator;b discriminator", 100, 0, 1.0) )
+        h_nsjAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_nsjAK8" + channel + sel, "AK8 CMS Top Tagger N_{subjets};N_{subjets}", 5, 0, 5) )
+        h_tau21AK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_tau21AK8" + channel + sel, "AK8 Jet #tau_{2} / #tau_{1};Mass#tau_{21}", 100, 0, 1.0) )
+        h_tau32AK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_tau32AK8" + channel + sel, "AK8 Jet #tau_{3} / #tau_{2};Mass#tau_{32}", 100, 0, 1.0) )
+        h_nhfAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_nhfAK8" + channel + sel, "AK8 Neutral hadron fraction;NHF", 100, 0, 1.0) )
+        h_chfAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_chfAK8" + channel + sel, "AK8 Charged hadron fraction;CHF", 100, 0, 1.0) )
+        h_nefAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_nefAK8" + channel + sel, "AK8 Neutral EM fraction;NEF", 100, 0, 1.0) )
+        h_cefAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_cefAK8" + channel + sel, "AK8 Charged EM fraction;CEF", 100, 0, 1.0) )
+        h_ncAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_ncAK8" + channel + sel, "AK8 Number of constituents;Number of constituents", 100, 0, 100) )
+        h_nchAK8[ichannel].append( ROOT.TH1F("SemiLepPlots/h_nchAK8" + channel + sel, "AK8 Number of charged hadrons;N charged hadrons", 100, 0, 100) )
 
 #^ Make modMass hist with small binning
 h_mAK8_ModMass           = ROOT.TH1F("h_mAK8_ModMass"               , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
@@ -3503,107 +3526,116 @@ for ifile in files : #{ Loop over root files
 
 
             #Ashley - fill semileptonic histograms
-
-            mAK8Pruned = AK8PrunedM[0] 
-            mAK8Filtered = AK8FilteredM[0] 
-            mAK8Trimmed = AK8TrimmedM[0]
-            mAK8SDrop = AK8SDropM[0]
-            # Make sure there are top tags if we want to plot them
-            minMass = AK8minmass[0]
-            subjetBdisc = 0#AK8SubjetbDisc[0]
-            subjetMass = 0#AK8SubjetMass[0]
-            nsubjets = AK8nSubJets[0]
-            tau1 = AK8Tau1[0]  
-            tau2 = AK8Tau2[0] 
-            tau3 = AK8Tau3[0]
-            #^ Plot Taus
-            if tau1 > 0.0001 :
-                tau21 = tau2 / tau1
-            else :
-                tau21 = -1.0
-            if tau2 > 0.0001 :
-                tau32 = tau3 / tau2
-            else :
-                tau32 = -1.0
-
-
-            # Instead of cutting-and-pasting everything a hundred times, just keep track
-            # of the stages of the selection
-            selectionsToPlot = []
-            channelsToPlot = []
-            
-            #^ Plot Kinematics for leading AK8 Jet, using only those with soft drop mass > 10 GeV            
-            channelsToPlot.append(ALL_NDX)
-            if eleJets :
-                channelsToPlot.append(EL_NDX)
-            if muJets :
-                channelsToPlot.append(MU_NDX)
+            if SemiLeptonic:
+                tagCand = 0 # Type 1 top procedure
                 
-            if len(ak8JetsGoodSDropMass) > 0 :
-                selectionsToPlot.append( SEL_ALL_NDX )
-            else :
-                continue
-            
-            if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut:
-                selectionsToPlot.append( SEL_M_NDX )                
-            if minMass > options.minMassCut:
-                selectionsToPlot.append( SEL_MINMASS_NDX )
-            if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and minMass > options.minMassCut:
-                selectionsToPlot.append( SEL_M_MINMASS_NDX )
-            if tau32 < options.tau32Cut:
-                selectionsToPlot.append( SEL_TAU32_NDX )
-            if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and tau32 < options.tau32Cut:
-                selectionsToPlot.append( SEL_M_TAU32_NDX )
-            if tau21 < options.tau21Cut:
-                selectionsToPlot.append( SEL_TAU21_NDX )
-            if theLepJetBDisc > options.bDiscMin:
-                selectionsToPlot.append( SEL_BDISC_NDX )
-            if theLepJetBDisc > options.bDiscMin and tau32 < options.tau32Cut:
-                selectionsToPlot.append( SEL_BDISC_TAU32_NDX )
-            if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and theLepJetBDisc > options.bDiscMin and tau32 < options.tau32Cut:
-                selectionsToPlot.append( SEL_M_TAU32_BDISC_NDX )
-            if len(ak8JetsGoodNHF) >0: 
-                if ak8JetsGoodNHF[0] < 0.1 :
-                    selectionsToPlot.append( SEL_NHF_LOW_NDX )
+                mAK8Pruned = ak8JetsGoodPrunMass[tagCand] 
+                mAK8Filtered = ak8JetsGoodFiltMass[tagCand] 
+                mAK8Trimmed = ak8JetsGoodTrimMass[tagCand]
+                mAK8SDrop = ak8JetsGoodSDropMass[tagCand]
+                # Make sure there are top tags if we want to plot them
+                minMass = ak8JetsGoodMinMass[tagCand]
+                subjetBdisc = 0#AK8SubjetbDisc[tagCand]
+                subjetMass = 0#AK8SubjetMass[tagCand]
+                nsubjets = ak8JetsGoodNSubJets[tagCand]
+                tau1 = ak8JetsGoodTau1[tagCand]  
+                tau2 = ak8JetsGoodTau2[tagCand] 
+                tau3 = ak8JetsGoodTau3[tagCand]
+                #^ Plot Taus
+                if tau1 > 0.0001 :
+                    tau21 = tau2 / tau1
                 else :
-                    selectionsToPlot.append( SEL_NHF_HIGH_NDX )
+                    tau21 = -1.0
+                if tau2 > 0.0001 :
+                    tau32 = tau3 / tau2
+                else :
+                    tau32 = -1.0
 
-            for ichannel in channelsToPlot :
-                for isel in selectionsToPlot: 
-                    h_ptAK8[ichannel][isel].Fill( ak8JetsGood[0].Perp(), evWeight )
-                    h_etaAK8[ichannel][isel].Fill( ak8JetsGood[0].Eta(), evWeight )
-                    h_phiAK8[ichannel][isel].Fill( ak8JetsGood[0].Phi(), evWeight )
-                    h_yAK8[ichannel][isel].Fill( ak8JetsGood[0].Rapidity(), evWeight )
-                    h_mAK8[ichannel][isel].Fill( ak8JetsGood[0].M(), evWeight )
-                    h_mprunedAK8[ichannel][isel].Fill( ak8JetsGoodPrunMass[0], evWeight )
-                    h_mfilteredAK8[ichannel][isel].Fill( ak8JetsGoodFiltMass[0], evWeight )
-                    h_mtrimmedAK8[ichannel][isel].Fill( ak8JetsGoodTrimMass[0], evWeight )
-                    h_mSDropAK8[ichannel][isel].Fill( ak8JetsGoodSDropMass[0], evWeight )
-                    h_minmassAK8[ichannel][isel].Fill( ak8JetsGoodMinMass[0], evWeight )
-                    h_tau21AK8[ichannel][isel].Fill( tau21, evWeight )
-                    h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
-                    h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[0], evWeight )
-                    h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[0], evWeight )
-                    if len(ak8JetsGoodNHF) >0: 
-                        h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[0], evWeight )
-                    if len(ak8JetsGoodCHF) >0: 
-                        h_chfAK8[ichannel][isel].Fill( ak8JetsGoodCHF[0], evWeight )
-                    if len(ak8JetsGoodNEF) >0: 
-                        h_nefAK8[ichannel][isel].Fill( ak8JetsGoodNEF[0], evWeight )
-                    if len(ak8JetsGoodCEF) >0: 
-                        h_cefAK8[ichannel][isel].Fill( ak8JetsGoodCEF[0], evWeight )
-                    if len(ak8JetsGoodNC) >0: 
-                        h_ncAK8[ichannel][isel].Fill( ak8JetsGoodNC[0], evWeight )
-                    if len(ak8JetsGoodNCH) >0:
-                        h_nchAK8[ichannel][isel].Fill( ak8JetsGoodNCH[0], evWeight )
-                    if len(ak8JetsGoodNSubJets) >0:                    
-                        h_nsjAK8[ichannel][isel].Fill( ak8JetsGoodNSubJets[0], evWeight )
-                    h_ptAK4[ichannel][isel].Fill( theLepJet.Perp(), evWeight )
-                    h_etaAK4[ichannel][isel].Fill( theLepJet.Eta(), evWeight )
-                    h_yAK4[ichannel][isel].Fill( theLepJet.Rapidity(), evWeight )
-                    h_phiAK4[ichannel][isel].Fill( theLepJet.Phi(), evWeight )
-                    h_mAK4[ichannel][isel].Fill( theLepJet.M(), evWeight )
-                    h_bdiscAK4[ichannel][isel].Fill( theLepJetBDisc, evWeight )
+
+                # Instead of cutting-and-pasting everything a hundred times, just keep track
+                # of the stages of the selection
+                selectionsToPlot = []
+                channelsToPlot = []
+
+                #^ Plot Kinematics for leading AK8 Jet, using only those with soft drop mass > 10 GeV            
+                channelsToPlot.append(ALL_NDX)
+                if eleJets :
+                    channelsToPlot.append(EL_NDX)
+                if muJets :
+                    channelsToPlot.append(MU_NDX)
+
+                if len(ak8JetsGoodSDropMass) > 0 :
+                    selectionsToPlot.append( SEL_ALL_NDX )
+                else :
+                    continue
+
+                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut:
+                    selectionsToPlot.append( SEL_M_NDX )                
+                if minMass > options.minMassCut:
+                    selectionsToPlot.append( SEL_MINMASS_NDX )
+                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and minMass > options.minMassCut:
+                    selectionsToPlot.append( SEL_M_MINMASS_NDX )
+                if tau32 < options.tau32Cut:
+                    selectionsToPlot.append( SEL_TAU32_NDX )
+                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and tau32 < options.tau32Cut:
+                    selectionsToPlot.append( SEL_M_TAU32_NDX )
+                if tau21 < options.tau21Cut:
+                    selectionsToPlot.append( SEL_TAU21_NDX )
+                if theLepJetBDisc > options.bDiscMin:
+                    selectionsToPlot.append( SEL_BDISC_NDX )
+                if theLepJetBDisc > options.bDiscMin and tau32 < options.tau32Cut:
+                    selectionsToPlot.append( SEL_BDISC_TAU32_NDX )
+                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and theLepJetBDisc > options.bDiscMin and tau32 < options.tau32Cut:
+                    selectionsToPlot.append( SEL_M_TAU32_BDISC_NDX )
+                if mAK8SDrop < options.mAK8GroomedWMaxCut and mAK8SDrop > options.mAK8GroomedWMinCut and theLepJetBDisc > options.bDiscMin and tau21 < options.tau21Cut:
+                    selectionsToPlot.append( SEL_MW_TAU21_BDISC_NDX )
+                if mAK8SDrop < options.mAK8GroomedWMaxCut and mAK8SDrop > options.mAK8GroomedWMinCut and tau21 < options.tau21Cut:
+                    selectionsToPlot.append( SEL_MW_TAU21_NDX )
+                if mAK8SDrop < options.mAK8GroomedWMaxCut and mAK8SDrop > options.mAK8GroomedWMinCut :
+                    selectionsToPlot.append( SEL_MW_NDX )
+                                        
+                if len(ak8JetsGoodNHF) >0: 
+                    if ak8JetsGoodNHF[tagCand] < 0.1 :
+                        selectionsToPlot.append( SEL_NHF_LOW_NDX )
+                    else :
+                        selectionsToPlot.append( SEL_NHF_HIGH_NDX )
+
+                for ichannel in channelsToPlot :
+                    for isel in selectionsToPlot: 
+                        h_ptAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Perp(), evWeight )
+                        h_etaAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Eta(), evWeight )
+                        h_phiAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Phi(), evWeight )
+                        h_yAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Rapidity(), evWeight )
+                        h_mAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].M(), evWeight )
+                        h_mprunedAK8[ichannel][isel].Fill( ak8JetsGoodPrunMass[tagCand], evWeight )
+                        h_mfilteredAK8[ichannel][isel].Fill( ak8JetsGoodFiltMass[tagCand], evWeight )
+                        h_mtrimmedAK8[ichannel][isel].Fill( ak8JetsGoodTrimMass[tagCand], evWeight )
+                        h_mSDropAK8[ichannel][isel].Fill( ak8JetsGoodSDropMass[tagCand], evWeight )
+                        h_minmassAK8[ichannel][isel].Fill( ak8JetsGoodMinMass[tagCand], evWeight )
+                        h_tau21AK8[ichannel][isel].Fill( tau21, evWeight )
+                        h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
+                        h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[tagCand], evWeight )
+                        h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[tagCand], evWeight )
+                        if len(ak8JetsGoodNHF) >0: 
+                            h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[tagCand], evWeight )
+                        if len(ak8JetsGoodCHF) >0: 
+                            h_chfAK8[ichannel][isel].Fill( ak8JetsGoodCHF[tagCand], evWeight )
+                        if len(ak8JetsGoodNEF) >0: 
+                            h_nefAK8[ichannel][isel].Fill( ak8JetsGoodNEF[tagCand], evWeight )
+                        if len(ak8JetsGoodCEF) >0: 
+                            h_cefAK8[ichannel][isel].Fill( ak8JetsGoodCEF[tagCand], evWeight )
+                        if len(ak8JetsGoodNC) >0: 
+                            h_ncAK8[ichannel][isel].Fill( ak8JetsGoodNC[tagCand], evWeight )
+                        if len(ak8JetsGoodNCH) >0:
+                            h_nchAK8[ichannel][isel].Fill( ak8JetsGoodNCH[tagCand], evWeight )
+                        if len(ak8JetsGoodNSubJets) >0:                    
+                            h_nsjAK8[ichannel][isel].Fill( ak8JetsGoodNSubJets[tagCand], evWeight )
+                        h_ptAK4[ichannel][isel].Fill( theLepJet.Perp(), evWeight )
+                        h_etaAK4[ichannel][isel].Fill( theLepJet.Eta(), evWeight )
+                        h_yAK4[ichannel][isel].Fill( theLepJet.Rapidity(), evWeight )
+                        h_phiAK4[ichannel][isel].Fill( theLepJet.Phi(), evWeight )
+                        h_mAK4[ichannel][isel].Fill( theLepJet.M(), evWeight )
+                        h_bdiscAK4[ichannel][isel].Fill( theLepJetBDisc, evWeight )
                     
 
                                 
