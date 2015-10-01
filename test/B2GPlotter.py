@@ -2,10 +2,6 @@
 from optparse import OptionParser
 parser = OptionParser()
 
-parser.add_option('--files', type='string', action='store',
-                  dest='inFiles',
-                  help='Input files')
-
 parser.add_option('--stage', type='string', action='store',
                   dest='stage',
                   default = None,
@@ -68,14 +64,14 @@ NAME_NDX = 1
 TITLE_NDX = 2
 SCALE_NDX = 3
 COLOR_NDX = 4
-lumi = 40.03
+lumi = 153.3
 samples = [
     ["ttjets_b2ganafw_v5_sel1_synced.root",             'ttbar',  't#bar{t}',          831.76 * lumi / 19665194., ROOT.kRed + 1],
     ["wjets_b2ganafw_v5_sel1_synced.root",              'wjets',  'W + Jets',         20508.9 * lumi / 24089991., ROOT.kGreen + 1 ],
     ["singletop_v74x_v4.3_tchan_local_sel1_synced.root",'st',     'Single Top Quark',  216.99 * lumi / 3999910.,  ROOT.kMagenta + 1 ],
     ["zjets_b2ganafw_v4_sel1_synced.root",              'zjets',  'Z + Jets',          2008.4 * lumi / 19925500., ROOT.kBlue - 4 ], 
-    ["singlemu_v74x_v5_sel1_synced.root",               'mudata', 'Data',              1.0,                       0 ],
-    ["singleel_v74x_v5_sel1_synced.root",               'eldata', 'Data',              1.0,                       0  ],
+    ["singlemu_v74x_v6_dataset4.root",                  'mudata', 'Data',              1.0,                       0 ],
+    ["singleel_v74x_v6_dataset4.root",                  'eldata', 'Data',              1.0,                       0  ],
 ]
 
 histsMC = []
@@ -137,7 +133,7 @@ for ihist,shist in enumerate( hists ) :
     tlx.SetNDC()
     tlx.SetTextFont(42)
     tlx.SetTextSize(0.057)
-    tlx.DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, 40.03 pb^{-1}")
+    tlx.DrawLatex(0.131, 0.905, "CMS Preliminary #sqrt{s}=13 TeV, " + str(lumi) + " pb^{-1}")
     # tlx.DrawLatex(0.77, 0.86, "#bf{CMS}")
     # tlx.DrawLatex(0.72, 0.83, "#it{very preliminary}")
     tlx.SetTextSize(0.025)
