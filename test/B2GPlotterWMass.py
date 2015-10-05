@@ -67,12 +67,12 @@ SCALE_NDX = 3
 COLOR_NDX = 4
 lumi = 153.3
 samples = [
-    ["ttjets_b2ganafw_v6.root",                            'ttbar',  't#bar{t}',          831.76 * lumi / 19665194., ROOT.kRed + 1],
-    ["wjets_b2ganafw_v5_sel1_extracats.root",              'wjets',  'W + Jets',         20508.9 * lumi / 24089991., ROOT.kGreen + 1 ],
-    ["singletop_v74x_v4.3_tchan_local_sel1_extracats.root",'st',     'Single Top Quark',  216.99 * lumi / 3999910.,  ROOT.kMagenta + 1 ],
-    ["zjets_b2ganafw_v4_sel1_extracats.root",              'zjets',  'Z + Jets',          2008.4 * lumi / 19925500., ROOT.kBlue - 4 ], 
-    ["singlemu_v74x_v6_dataset4.root",                     'mudata', 'Data',              1.0,                       0 ],
-    ["singleel_v74x_v6_dataset4.root",                     'eldata', 'Data',              1.0,                       0  ],
+    ["ttjets_b2ganafw_v6_wtags.root",                    'ttbar',  't#bar{t}',                831.76 * lumi / 19665194., ROOT.kRed + 1],
+    ["wjets_b2ganafw_v5_sel1_extracats_wtags.root",      'wjets',  'W + Jets',               20508.9 * lumi / 24089991., ROOT.kGreen + 1 ],
+    ["singletop_v74x_v4.3_tchan_local_sel1_extracats_wtags.root",  'st', 'Single Top Quark',  216.99 * lumi / 3999910.,  ROOT.kMagenta + 1 ],
+    ["zjets_b2ganafw_v4_sel1_extracats_wtags.root",      'zjets',  'Z + Jets',                2008.4 * lumi / 19925500., ROOT.kBlue - 4 ], 
+    ["singlemu_v74x_v6_dataset4_wtags.root",             'mudata', 'Data',                   1.0,                       0 ],
+    ["singleel_v74x_v6_dataset4_wtags.root",             'eldata', 'Data',                   1.0,                       0  ],
 ]
 
 histsMC = []
