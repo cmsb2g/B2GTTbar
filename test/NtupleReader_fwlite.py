@@ -190,6 +190,11 @@ parser.add_option('--isMC', action='store_true',
                   dest='isMC',
                   help='is it MC?')
 
+parser.add_option('--getGenInfo', action='store_true',
+                  default=False,
+                  dest='getGenInfo',
+                  help='Get ttbar event gen-level info?')
+
 
 parser.add_option('--xrootd', type='string', action='store',
                   default=None,
@@ -287,7 +292,7 @@ l_genPartID = ("genPart" , "genPartID")
 h_genPartStatus = Handle("std::vector<float>")
 l_genPartStatus = ("genPart" , "genPartStatus")
 h_genPartMomID = Handle("std::vector<float>")
-l_genPartMomID = ("genPart" , "genPartMomID")
+l_genPartMomID = ("genPart" , "genPartMom0ID")
 
 #muon labels and handles
 h_muPt = Handle("std::vector<float>")
@@ -914,7 +919,7 @@ SEL_NHF_LOW_NDX = 10
 SEL_NHF_HIGH_NDX = 11
 SEL_MW_NDX = 12
 SEL_MW_TAU21_NDX = 13
-SEL_MW_TAU21_BDISC_NDX = 13
+SEL_MW_TAU21_BDISC_NDX = 14
 selections = [
     '', '_mSDcut', '_tau32cut', '_tau21cut', '_mSDcut_tau32cut', '_minMasscut', '_bDiscMincut', '_bDiscMincut_tau32cut', '_mSDcut_minMasscut', '_mSDcut_tau32cut_bDiscMincut', '_nhfLow', '_nhfHigh', '_mWSDcut', '_mWSDcut_tau21cut', '_mWSDcut_tau21cut_bDiscMincut'
     ]
@@ -1020,13 +1025,13 @@ for ichannel,channel in enumerate(channels) :
         h_etaAK8[ichannel].append( ROOT.TH1F("h_etaAK8" + channel + sel, "AK8 Jet #eta;#eta", 120, -6, 6) )
         h_yAK8[ichannel].append( ROOT.TH1F("h_yAK8" + channel + sel, "AK8 Jet Rapidity;y", 120, -6, 6) )
         h_phiAK8[ichannel].append( ROOT.TH1F("h_phiAK8" + channel + sel, "AK8 Jet #phi;#phi (radians)",100,-3.14, 3.14) )
-        h_mAK8[ichannel].append( ROOT.TH1F("h_mAK8" + channel + sel, "AK8 Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_mprunedAK8[ichannel].append( ROOT.TH1F("h_mprunedAK8" + channel + sel, "AK8 Pruned Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_mfilteredAK8[ichannel].append( ROOT.TH1F("h_mfilteredAK8" + channel + sel, "AK8 Filtered Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_mtrimmedAK8[ichannel].append( ROOT.TH1F("h_mtrimmedAK8" + channel + sel, "AK8 Trimmed Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_mSDropAK8[ichannel].append( ROOT.TH1F("h_mSDropAK8" + channel + sel, "AK8 Soft Drop Jet Mass;Mass (GeV)", 100, 0, 1000) )
-        h_minmassAK8[ichannel].append( ROOT.TH1F("h_minmassAK8" + channel + sel, "AK8 CMS Top Tagger Min Mass Paring;m_{min} (GeV)", 100, 0, 1000) )
-        h_subjetMassAK8[ichannel].append( ROOT.TH1F("h_subjetMassAK8" + channel + sel, "AK8 subjet mass; Mass (GeV)", 100, 0, 1000) )
+        h_mAK8[ichannel].append( ROOT.TH1F("h_mAK8" + channel + sel, "AK8 Jet Mass;Mass (GeV)", 1000, 0, 1000) )
+        h_mprunedAK8[ichannel].append( ROOT.TH1F("h_mprunedAK8" + channel + sel, "AK8 Pruned Jet Mass;Mass (GeV)", 1000, 0, 1000) )
+        h_mfilteredAK8[ichannel].append( ROOT.TH1F("h_mfilteredAK8" + channel + sel, "AK8 Filtered Jet Mass;Mass (GeV)", 1000, 0, 1000) )
+        h_mtrimmedAK8[ichannel].append( ROOT.TH1F("h_mtrimmedAK8" + channel + sel, "AK8 Trimmed Jet Mass;Mass (GeV)", 1000, 0, 1000) )
+        h_mSDropAK8[ichannel].append( ROOT.TH1F("h_mSDropAK8" + channel + sel, "AK8 Soft Drop Jet Mass;Mass (GeV)", 1000, 0, 1000) )
+        h_minmassAK8[ichannel].append( ROOT.TH1F("h_minmassAK8" + channel + sel, "AK8 CMS Top Tagger Min Mass Paring;m_{min} (GeV)", 1000, 0, 1000) )
+        h_subjetMassAK8[ichannel].append( ROOT.TH1F("h_subjetMassAK8" + channel + sel, "AK8 subjet mass; Mass (GeV)", 1000, 0, 1000) )
         h_subjetBdiscAK8[ichannel].append( ROOT.TH1F("h_subjetBdiscAK8" + channel + sel, "AK8 subjet b discriminator;b discriminator", 100, 0, 1.0) )
         h_nsjAK8[ichannel].append( ROOT.TH1F("h_nsjAK8" + channel + sel, "AK8 CMS Top Tagger N_{subjets};N_{subjets}", 5, 0, 5) )
         h_tau21AK8[ichannel].append( ROOT.TH1F("h_tau21AK8" + channel + sel, "AK8 Jet #tau_{2} / #tau_{1};Mass#tau_{21}", 100, 0, 1.0) )
@@ -1542,7 +1547,7 @@ for ifile in files : #{ Loop over root files
                 continue
 
             
-        if options.isMC :
+        if options.isMC and options.getGenInfo :
             #@ Generator information
             genEIndex = []
             genMuIndex = []
