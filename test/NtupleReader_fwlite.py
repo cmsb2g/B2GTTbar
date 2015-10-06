@@ -1410,6 +1410,14 @@ if not options.isMC :
 
 ak4JetCorrector = ROOT.FactorizedJetCorrector(vParJecAK4)
 
+vParJecAK4ForMass = ROOT.vector('JetCorrectorParameters')()
+vParJecAK4ForMass.push_back(L2JetParAK4)
+vParJecAK4ForMass.push_back(L3JetParAK4)
+if not options.isMC : 
+    vParJecAK4ForMass.push_back(ResJetParAK4)
+
+ak4JetCorrectorForMass = ROOT.FactorizedJetCorrector(vParJecAK4ForMass)
+
 vParJecAK8 = ROOT.vector('JetCorrectorParameters')()
 vParJecAK8.push_back(L1JetParAK8)
 vParJecAK8.push_back(L2JetParAK8)
@@ -2931,10 +2939,12 @@ for ifile in files : #{ Loop over root files
                 AK8CMSTTsubjetIndex3         = h_jetsAK8CmsTopTagSubjetIndex3 .product()
                 
                 CMSTTsubjetBDisc        =[]  
-                CMSTTsubjetPt           =[]  
+                CMSTTsubjetPtRaw        =[]
+                CMSTTsubjetPt           =[]
                 CMSTTsubjetEta          =[]  
                 CMSTTsubjetPhi          =[]  
-                CMSTTsubjetMass         =[]  
+                CMSTTsubjetMassRaw      =[]
+                CMSTTsubjetMass         =[]
                 CMSTTsubjetArea         =[]  
                 CMSTTsubjetnumDaughters =[]  
                 CMSTTsubjetY            =[]  
@@ -2947,10 +2957,10 @@ for ifile in files : #{ Loop over root files
 
                 if len(h_subjetsCmsTopTagBDisc.product() ) > 0 :
                     CMSTTsubjetBDisc          = h_subjetsCmsTopTagBDisc          .product()
-                    CMSTTsubjetPt             = h_subjetsCmsTopTagPt             .product()
+                    CMSTTsubjetPtRaw          = h_subjetsCmsTopTagPt             .product()
                     CMSTTsubjetEta            = h_subjetsCmsTopTagEta            .product()
                     CMSTTsubjetPhi            = h_subjetsCmsTopTagPhi            .product()
-                    CMSTTsubjetMass           = h_subjetsCmsTopTagMass           .product()
+                    CMSTTsubjetMassRaw        = h_subjetsCmsTopTagMass           .product()
                     CMSTTsubjetArea           = h_subjetsCmsTopTagArea           .product()
                     CMSTTsubjetnumDaughters   = h_subjetsCmsTopTagnumDaughters   .product()
                     CMSTTsubjetY              = h_subjetsCmsTopTagY              .product()
@@ -2961,6 +2971,25 @@ for ifile in files : #{ Loop over root files
                     CMSTTsubjetSmearedEta     = h_subjetsCmsTopTagSmearedEta     .product()
                     CMSTTsubjetSmearedPhi     = h_subjetsCmsTopTagSmearedPhi     .product()
                     CMSTTsubjetSmearedPt      = h_subjetsCmsTopTagSmearedPt      .product()
+
+
+                    for isubjet in xrange( len(CMSTTsubjetPtRaw) ) :
+                        spt  = CMSTTsubjetJEC0[isubjet] * CMSTTsubjetPtRaw[isubjet]
+                        seta = CMSTTsubjetEta[isubjet]
+                        sphi = CMSTTsubjetPhi[isubjet]
+                        smass= CMSTTsubjetJEC0[isubjet] * CMSTTsubjetMassRaw[isubjet]
+                        subjetP4Raw = ROOT.TLorentzVector()
+                        subjetP4Raw.SetPtEtaPhiM( spt, seta, sphi, smass)
+                        ak4JetCorrectorForMass.setJetEta( jetP4Raw.Eta() )
+                        ak4JetCorrectorForMass.setJetPt ( jetP4Raw.Perp() )
+                        ak4JetCorrectorForMass.setJetE  ( jetP4Raw.E() )
+                        ak4JetCorrectorForMass.setRho   ( rho )
+                        ak4JetCorrectorForMass.setNPV   ( NPV )
+                        newJEC = ak4JetCorrectorForMass.getCorrection()
+                        subjetP4 = subjetP4Raw * newJEC
+                        CMSTTsubjetPt.append( subjetP4.Perp() )
+                        CMSTTsubjetMass.append( subjetP4.M() )
+                        
 
 
                 AK8SDsubjetIndex0    = h_jetsAK8SoftDropSubjetIndex0 .product()
@@ -2984,10 +3013,10 @@ for ifile in files : #{ Loop over root files
 
                 if len(h_subjetsSoftDropBDisc.product() ) > 0 :
                     SDsubjetBDisc          = h_subjetsSoftDropBDisc          .product()
-                    SDsubjetPt             = h_subjetsSoftDropPt             .product()
+                    SDsubjetPtRaw          = h_subjetsSoftDropPt             .product()
                     SDsubjetEta            = h_subjetsSoftDropEta            .product()
                     SDsubjetPhi            = h_subjetsSoftDropPhi            .product()
-                    SDsubjetMass           = h_subjetsSoftDropMass           .product()
+                    SDsubjetMassRaw        = h_subjetsSoftDropMass           .product()
                     SDsubjetArea           = h_subjetsSoftDropArea           .product()
                     SDsubjetnumDaughters   = h_subjetsSoftDropnumDaughters   .product()
                     SDsubjetY              = h_subjetsSoftDropY              .product()
@@ -2999,6 +3028,23 @@ for ifile in files : #{ Loop over root files
                     SDsubjetSmearedPhi     = h_subjetsSoftDropSmearedPhi     .product()
                     SDsubjetSmearedPt      = h_subjetsSoftDropSmearedPt      .product()
 
+
+                    for isubjet in xrange( len(SDsubjetPtRaw) ) :
+                        spt  = SDsubjetJEC0[isubjet] * SDsubjetPtRaw[isubjet]
+                        seta = SDsubjetEta[isubjet]
+                        sphi = SDsubjetPhi[isubjet]
+                        smass= SDsubjetJEC0[isubjet] * SDsubjetMassRaw[isubjet]
+                        subjetP4Raw = ROOT.TLorentzVector()
+                        subjetP4Raw.SetPtEtaPhiM( spt, seta, sphi, smass)
+                        ak4JetCorrectorForMass.setJetEta( jetP4Raw.Eta() )
+                        ak4JetCorrectorForMass.setJetPt ( jetP4Raw.Perp() )
+                        ak4JetCorrectorForMass.setJetE  ( jetP4Raw.E() )
+                        ak4JetCorrectorForMass.setRho   ( rho )
+                        ak4JetCorrectorForMass.setNPV   ( NPV )
+                        newJEC = ak4JetCorrectorForMass.getCorrection()
+                        subjetP4 = subjetP4Raw* newJEC
+                        SDsubjetPt.append( subjetP4.Perp() )
+                        SDsubjetMass.append( subjetP4.M() )
                         
                 if options.isMC :
                     if options.deweightFlat :
@@ -3124,10 +3170,14 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodNSubJets.append( AK8nSubJets[i])
                             ak8JetsGoodMinMass.append( AK8minmass[i] )
                             ak8JetsGoodNHadE.append( AK8nHadE[i]   )
+                            #ak8JetsGoodTopSubjetMass.append(  CMSTTsubjetMass[ int(AK8CMSTTsubjetIndex0[i]) ]  )
+                            #ak8JetsGoodTopSubjetbDisc.append(  CMSTTsubjetBDisc[ int(AK8CMSTTsubjetIndex0[i]) ]  )
                             ak8JetsGoodCMSTTsubjetIndex0.append( AK8CMSTTsubjetIndex0[i] )
                             ak8JetsGoodCMSTTsubjetIndex1.append( AK8CMSTTsubjetIndex1[i] )
                             ak8JetsGoodCMSTTsubjetIndex2.append( AK8CMSTTsubjetIndex2[i] )
                             ak8JetsGoodCMSTTsubjetIndex3.append( AK8CMSTTsubjetIndex3[i] )
+                            ak8JetsGoodSDsubjetIndex0.append( AK8SDsubjetIndex0[i] )
+                            ak8JetsGoodSDsubjetIndex1.append( AK8SDsubjetIndex1[i] )
                             ak8JetsGoodNHF.append( nhf )
                             ak8JetsGoodCHF.append( chf )
                             ak8JetsGoodNEF.append( nef )
@@ -3163,7 +3213,8 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodCMSTTsubjetIndex3.append( AK8CMSTTsubjetIndex3[i] )  
                         ak8JetsGoodSDsubjetIndex0.append( AK8SDsubjetIndex0[i] )
                         ak8JetsGoodSDsubjetIndex1.append( AK8SDsubjetIndex1[i] )
-  
+                        #ak8JetsGoodTopSubjetMass.append(  CMSTTsubjetMass[ int(AK8CMSTTsubjetIndex0[i]) ]  )
+                        #ak8JetsGoodTopSubjetbDisc.append(  CMSTTsubjetBDisc[ int(AK8CMSTTsubjetIndex0[i]) ]  )
                         ak8JetsGoodNHF.append( nhf )
                         ak8JetsGoodCHF.append( chf )
                         ak8JetsGoodNEF.append( nef )
@@ -3297,41 +3348,21 @@ for ifile in files : #{ Loop over root files
                     print '   -subjet0pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_sd_s0_pt, jet0_sd_s0_eta, jet0_sd_s0_phi, jet0_sd_s0_bdisc )
                     print '   -subjet1pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_sd_s1_pt, jet0_sd_s1_eta, jet0_sd_s1_phi, jet0_sd_s1_bdisc )
 
-                # get subjet 4-vectors, uncorrect, then correct them
+                # From Sal : This is now corrected upstream
                 jet0_sd_s0 = ROOT.TLorentzVector()
                 jet0_sd_s0.SetPtEtaPhiM( jet0_sd_s0_pt , jet0_sd_s0_eta,jet0_sd_s0_phi, jet0_sd_s0_m )
-                jet0_sd_s0_raw = jet0_sd_s0*jet0_sd_s0_jec0 
-                ak4JetCorrector.setJetEta( jet0_sd_s0_raw.Eta() )
-                ak4JetCorrector.setJetPt ( jet0_sd_s0_raw.Perp() )
-                ak4JetCorrector.setJetE  ( jet0_sd_s0_raw.E() )
-                ak4JetCorrector.setJetA  ( 0.5 ) #set area to 0.5 ~= pi r squared for 0.4 jet
-                ak4JetCorrector.setRho   ( rho )
-                ak4JetCorrector.setNPV   ( NPV )
-                jet0_sd_s0_newjec = ak4JetCorrector.getCorrection()
-                jet0_sd_s0_corr = jet0_sd_s0_raw*jet0_sd_s0_newjec
 
                 # get subjet 4-vectors, uncorrect, then correct them
                 jet0_sd_s1 = ROOT.TLorentzVector()
                 jet0_sd_s1.SetPtEtaPhiM( jet0_sd_s1_pt , jet0_sd_s1_eta,jet0_sd_s1_phi, jet0_sd_s1_m )
-                jet0_sd_s1_raw = jet0_sd_s1*jet0_sd_s1_jec0 
-                ak4JetCorrector.setJetEta( jet0_sd_s1_raw.Eta() )
-                ak4JetCorrector.setJetPt ( jet0_sd_s1_raw.Perp() )
-                ak4JetCorrector.setJetE  ( jet0_sd_s1_raw.E() )
-                ak4JetCorrector.setJetA  ( 0.5 ) #set area to 0.5 ~= pi r squared for 0.4 jet
-                ak4JetCorrector.setRho   ( rho )
-                ak4JetCorrector.setNPV   ( NPV )
-                jet0_sd_s1_newjec = ak4JetCorrector.getCorrection()
-                jet0_sd_s1_corr = jet0_sd_s1_raw*jet0_sd_s1_newjec
+
+                #jet0_add_softdrop_subjets_originalCorr = jet0_sd_s0 + jet0_sd_s1
+                #jet0_add_softdrop_subjets_raw          = jet0_sd_s0_raw + jet0_sd_s1_raw
+                jet0_add_softdrop_subjets_newCorr      = jet0_sd_s0 + jet0_sd_s1
 
 
-
-                jet0_add_softdrop_subjets_originalCorr = jet0_sd_s0 + jet0_sd_s1
-                jet0_add_softdrop_subjets_raw          = jet0_sd_s0_raw + jet0_sd_s1_raw
-                jet0_add_softdrop_subjets_newCorr      = jet0_sd_s0_corr + jet0_sd_s1_corr
-
-
-                h_Jet0_MassSoft_CorrOrigSumSubjet   .Fill(  jet0_add_softdrop_subjets_originalCorr.M()  )
-                h_Jet0_MassSoft_RawSumSubjet        .Fill(  jet0_add_softdrop_subjets_raw.M()           )
+                #h_Jet0_MassSoft_CorrOrigSumSubjet   .Fill(  jet0_add_softdrop_subjets_originalCorr.M()  )
+                #h_Jet0_MassSoft_RawSumSubjet        .Fill(  jet0_add_softdrop_subjets_raw.M()           )
                 h_Jet0_MassSoft_CorrNewSumSubjet    .Fill(  jet0_add_softdrop_subjets_newCorr.M()       )
 
 
@@ -4211,8 +4242,8 @@ for ifile in files : #{ Loop over root files
                         h_minmassAK8[ichannel][isel].Fill( ak8JetsGoodMinMass[tagCand], evWeight )
                         h_tau21AK8[ichannel][isel].Fill( tau21, evWeight )
                         h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
-                        h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[tagCand], evWeight )
-                        h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[tagCand], evWeight )
+                        #h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[tagCand], evWeight )
+                        #h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[tagCand], evWeight )
                         if len(ak8JetsGoodNHF) >0: 
                             h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[tagCand], evWeight )
                         if len(ak8JetsGoodCHF) >0: 
