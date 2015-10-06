@@ -1076,49 +1076,62 @@ for ichannel,channel in enumerate(channels) :
 f.cd()
 f.mkdir("AllHad").cd()
 
-h_Jet0_MassSoft_Preselected_CorrNone   = ROOT.TH1D("h_Jet0_MassSoft_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet0_MassTrim_Preselected_CorrNone   = ROOT.TH1D("h_Jet0_MassTrim_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet0_MassFilt_Preselected_CorrNone   = ROOT.TH1D("h_Jet0_MassFilt_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet0_MassPrun_Preselected_CorrNone   = ROOT.TH1D("h_Jet0_MassPrun_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet0_MinCMSTT_Preselected_CorrNone   = ROOT.TH1D("h_Jet0_MinCMSTT_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet0_MassSoft_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet0_MassSoft_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet0_MassTrim_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet0_MassTrim_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet0_MassFilt_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet0_MassFilt_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet0_MassPrun_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet0_MassPrun_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet0_MinCMSTT_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet0_MinCMSTT_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet0_Tau1_Preselected                = ROOT.TH1D("h_Jet0_Tau1_Preselected"             , "",  500,  0,    1 )             
-h_Jet0_Tau2_Preselected                = ROOT.TH1D("h_Jet0_Tau2_Preselected"             , "",  500,  0,    1 )             
-h_Jet0_Tau3_Preselected                = ROOT.TH1D("h_Jet0_Tau3_Preselected"             , "",  500,  0,    1 )             
-h_Jet0_Tau21_Preselected               = ROOT.TH1D("h_Jet0_Tau21_Preselected"            , "",  500,  0,    1 )             
-h_Jet0_Tau32_Preselected               = ROOT.TH1D("h_Jet0_Tau32_Preselected"            , "",  500,  0,    1 )             
-h_Jet0_Pt_Preselected                  = ROOT.TH1D("h_Jet0_Pt_Preselected"               , "",  700,  0, 7000 )             
-h_Jet0_Rap_Preselected                 = ROOT.TH1D("h_Jet0_Rap_Preselected"              , "",  500, -3,   3  )             
-h_Jet1_MassSoft_Preselected_CorrNone   = ROOT.TH1D("h_Jet1_MassSoft_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet1_MassTrim_Preselected_CorrNone   = ROOT.TH1D("h_Jet1_MassTrim_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet1_MassFilt_Preselected_CorrNone   = ROOT.TH1D("h_Jet1_MassFilt_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet1_MassPrun_Preselected_CorrNone   = ROOT.TH1D("h_Jet1_MassPrun_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet1_MinCMSTT_Preselected_CorrNone   = ROOT.TH1D("h_Jet1_MinCMSTT_Preselected_CorrNone", "",  500,  0,  500 ) 
-h_Jet1_MassSoft_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet1_MassSoft_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet1_MassTrim_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet1_MassTrim_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet1_MassFilt_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet1_MassFilt_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet1_MassPrun_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet1_MassPrun_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet1_MinCMSTT_Preselected_CorrL2L3   = ROOT.TH1D("h_Jet1_MinCMSTT_Preselected_CorrL2L3", "",  500,  0,  500 ) 
-h_Jet1_Tau1_Preselected                = ROOT.TH1D("h_Jet1_Tau1_Preselected"             , "",  500,  0,    1 )             
-h_Jet1_Tau2_Preselected                = ROOT.TH1D("h_Jet1_Tau2_Preselected"             , "",  500,  0,    1 )             
-h_Jet1_Tau3_Preselected                = ROOT.TH1D("h_Jet1_Tau3_Preselected"             , "",  500,  0,    1 )             
-h_Jet1_Tau21_Preselected               = ROOT.TH1D("h_Jet1_Tau21_Preselected"            , "",  500,  0,    1 )             
-h_Jet1_Tau32_Preselected               = ROOT.TH1D("h_Jet1_Tau32_Preselected"            , "",  500,  0,    1 )             
-h_Jet1_Pt_Preselected                  = ROOT.TH1D("h_Jet1_Pt_Preselected"               , "",  700,  0, 7000 )             
-h_Jet1_Rap_Preselected                 = ROOT.TH1D("h_Jet1_Rap_Preselected"              , "",  500, -3,   3  )             
+h_Jet0_MassSoft_CorrNone   = ROOT.TH1D("h_Jet0_MassSoft_CorrNone", "",  500,  0,  500 ) 
+h_Jet0_MassTrim_CorrNone   = ROOT.TH1D("h_Jet0_MassTrim_CorrNone", "",  500,  0,  500 ) 
+h_Jet0_MassFilt_CorrNone   = ROOT.TH1D("h_Jet0_MassFilt_CorrNone", "",  500,  0,  500 ) 
+h_Jet0_MassPrun_CorrNone   = ROOT.TH1D("h_Jet0_MassPrun_CorrNone", "",  500,  0,  500 ) 
+h_Jet0_MinCMSTT_CorrNone   = ROOT.TH1D("h_Jet0_MinCMSTT_CorrNone", "",  500,  0,  500 ) 
+h_Jet0_MassSoft_CorrL2L3   = ROOT.TH1D("h_Jet0_MassSoft_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet0_MassTrim_CorrL2L3   = ROOT.TH1D("h_Jet0_MassTrim_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet0_MassFilt_CorrL2L3   = ROOT.TH1D("h_Jet0_MassFilt_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet0_MassPrun_CorrL2L3   = ROOT.TH1D("h_Jet0_MassPrun_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet0_MinCMSTT_CorrL2L3   = ROOT.TH1D("h_Jet0_MinCMSTT_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet0_Tau1                = ROOT.TH1D("h_Jet0_Tau1"             , "",  500,  0,    1 )             
+h_Jet0_Tau2                = ROOT.TH1D("h_Jet0_Tau2"             , "",  500,  0,    1 )             
+h_Jet0_Tau3                = ROOT.TH1D("h_Jet0_Tau3"             , "",  500,  0,    1 )             
+h_Jet0_Tau21               = ROOT.TH1D("h_Jet0_Tau21"            , "",  500,  0,    1 )             
+h_Jet0_Tau32               = ROOT.TH1D("h_Jet0_Tau32"            , "",  500,  0,    1 )             
+h_Jet0_Pt                  = ROOT.TH1D("h_Jet0_Pt"               , "",  700,  0, 7000 )             
+h_Jet0_Rap                 = ROOT.TH1D("h_Jet0_Rap"              , "",  500, -3,    3 )             
+h_Jet0_NHF                 = ROOT.TH1D("h_Jet0_NHF"              , "",  500,  0,  500 )
+h_Jet0_CHF                 = ROOT.TH1D("h_Jet0_CHF"              , "",  500,  0,  500 )
+h_Jet0_NEF                 = ROOT.TH1D("h_Jet0_NEF"              , "",  500,  0,  500 )
+h_Jet0_CEF                 = ROOT.TH1D("h_Jet0_CEF"              , "",  500,  0,  500 )
+h_Jet0_NC                  = ROOT.TH1D("h_Jet0_NC"               , "",  500,  0,  500 )
+h_Jet0_NCH                 = ROOT.TH1D("h_Jet0_NCH"              , "",  500,  0,  500 )
+
+h_Jet1_MassSoft_CorrNone   = ROOT.TH1D("h_Jet1_MassSoft_CorrNone", "",  500,  0,  500 ) 
+h_Jet1_MassTrim_CorrNone   = ROOT.TH1D("h_Jet1_MassTrim_CorrNone", "",  500,  0,  500 ) 
+h_Jet1_MassFilt_CorrNone   = ROOT.TH1D("h_Jet1_MassFilt_CorrNone", "",  500,  0,  500 ) 
+h_Jet1_MassPrun_CorrNone   = ROOT.TH1D("h_Jet1_MassPrun_CorrNone", "",  500,  0,  500 ) 
+h_Jet1_MinCMSTT_CorrNone   = ROOT.TH1D("h_Jet1_MinCMSTT_CorrNone", "",  500,  0,  500 ) 
+h_Jet1_MassSoft_CorrL2L3   = ROOT.TH1D("h_Jet1_MassSoft_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet1_MassTrim_CorrL2L3   = ROOT.TH1D("h_Jet1_MassTrim_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet1_MassFilt_CorrL2L3   = ROOT.TH1D("h_Jet1_MassFilt_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet1_MassPrun_CorrL2L3   = ROOT.TH1D("h_Jet1_MassPrun_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet1_MinCMSTT_CorrL2L3   = ROOT.TH1D("h_Jet1_MinCMSTT_CorrL2L3", "",  500,  0,  500 ) 
+h_Jet1_Tau1                = ROOT.TH1D("h_Jet1_Tau1"             , "",  500,  0,    1 )             
+h_Jet1_Tau2                = ROOT.TH1D("h_Jet1_Tau2"             , "",  500,  0,    1 )             
+h_Jet1_Tau3                = ROOT.TH1D("h_Jet1_Tau3"             , "",  500,  0,    1 )             
+h_Jet1_Tau21               = ROOT.TH1D("h_Jet1_Tau21"            , "",  500,  0,    1 )             
+h_Jet1_Tau32               = ROOT.TH1D("h_Jet1_Tau32"            , "",  500,  0,    1 )             
+h_Jet1_Pt                  = ROOT.TH1D("h_Jet1_Pt"               , "",  700,  0, 7000 )             
+h_Jet1_Rap                 = ROOT.TH1D("h_Jet1_Rap"              , "",  500, -3,    3 )             
+h_Jet1_NHF                 = ROOT.TH1D("h_Jet1_NHF"              , "",  500,  0,  500 )
+h_Jet1_CHF                 = ROOT.TH1D("h_Jet1_CHF"              , "",  500,  0,  500 )
+h_Jet1_NEF                 = ROOT.TH1D("h_Jet1_NEF"              , "",  500,  0,  500 )
+h_Jet1_CEF                 = ROOT.TH1D("h_Jet1_CEF"              , "",  500,  0,  500 )
+h_Jet1_NC                  = ROOT.TH1D("h_Jet1_NC"               , "",  500,  0,  500 )
+h_Jet1_NCH                 = ROOT.TH1D("h_Jet1_NCH"              , "",  500,  0,  500 )
 
 
 #^ Make modMass hist with small binning
 h_mAK8_ModMass           = ROOT.TH1F("h_mAK8_ModMass"               , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
 h_mSDropAK8_ModMass      = ROOT.TH1F("h_mSDropAK8_ModMass"          , "AK8 Jet Mass;Mass (GeV)", 200, 110, 210 )
-h_mAK8_ModMass_jet0      = ROOT.TH1F("h_mAK8_ModMass_jet0"     , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
-h_mSDropAK8_ModMass_jet0 = ROOT.TH1F("h_mSDropAK8_ModMass_jet0", "AK8 Jet Mass;Mass (GeV)", 200, 110, 210 )
-h_mAK8_ModMass_jet1      = ROOT.TH1F("h_mAK8_ModMass_jet1"     , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
-h_mSDropAK8_ModMass_jet1 = ROOT.TH1F("h_mSDropAK8_ModMass_jet1", "AK8 Jet Mass;Mass (GeV)", 200, 110, 210 )
+h_mAK8_ModMass_jet0      = ROOT.TH1F("h_mAK8_ModMass_jet0"          , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
+h_mSDropAK8_ModMass_jet0 = ROOT.TH1F("h_mSDropAK8_ModMass_jet0"     , "AK8 Jet Mass;Mass (GeV)", 200, 110, 210 )
+h_mAK8_ModMass_jet1      = ROOT.TH1F("h_mAK8_ModMass_jet1"          , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
+h_mSDropAK8_ModMass_jet1 = ROOT.TH1F("h_mSDropAK8_ModMass_jet1"     , "AK8 Jet Mass;Mass (GeV)", 200, 110, 210 )
 
 #^ Make mistag plots
 
@@ -1183,23 +1196,23 @@ h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt     = ROOT.TH1D("h_AntiTagT
 
 
 #^ Hadronic mtt selection and background estimaion
-h_mttMass_tagMassSD         = ROOT.TH1D("h_mttMass_tagMassSD"        , "", 700, 0, 7000 )
-h_mttMass_tagMassSDTau32    = ROOT.TH1D("h_mttMass_tagMassSDTau32"   , "", 700, 0, 7000 )
-h_mttMass_tagMassSDMinMass  = ROOT.TH1D("h_mttMass_tagMassSDMinMass" , "", 700, 0, 7000 )
-h_mttMass_tagMassFat        = ROOT.TH1D("h_mttMass_tagMassFat"       , "", 700, 0, 7000 )
-h_mttMass_tagMassFatMinMass = ROOT.TH1D("h_mttMass_tagMassFatMinMass", "", 700, 0, 7000 )
+h_mttMass_tagMassSD                      = ROOT.TH1D("h_mttMass_tagMassSD"                     , "", 700, 0, 7000 )
+h_mttMass_tagMassSDTau32                 = ROOT.TH1D("h_mttMass_tagMassSDTau32"                , "", 700, 0, 7000 )
+h_mttMass_tagMassSDMinMass               = ROOT.TH1D("h_mttMass_tagMassSDMinMass"              , "", 700, 0, 7000 )
+h_mttMass_tagMassFat                     = ROOT.TH1D("h_mttMass_tagMassFat"                    , "", 700, 0, 7000 )
+h_mttMass_tagMassFatMinMass              = ROOT.TH1D("h_mttMass_tagMassFatMinMass"             , "", 700, 0, 7000 )
 
-h_bkgdEst_tagMassSD         = ROOT.TH1D("h_bkgdEst_tagMassSD"        , "", 700, 0, 7000 )
-h_bkgdEst_tagMassSDTau32    = ROOT.TH1D("h_bkgdEst_tagMassSDTau32"   , "", 700, 0, 7000 )
-h_bkgdEst_tagMassSDMinMass  = ROOT.TH1D("h_bkgdEst_tagMassSDMinMass" , "", 700, 0, 7000 )
-h_bkgdEst_tagMassFat        = ROOT.TH1D("h_bkgdEst_tagMassFat"       , "", 700, 0, 7000 )
-h_bkgdEst_tagMassFatMinMass = ROOT.TH1D("h_bkgdEst_tagMassFatMinMass", "", 700, 0, 7000 )
+h_bkgdEst_tagMassSD                      = ROOT.TH1D("h_bkgdEst_tagMassSD"                     , "", 700, 0, 7000 )
+h_bkgdEst_tagMassSDTau32                 = ROOT.TH1D("h_bkgdEst_tagMassSDTau32"                , "", 700, 0, 7000 )
+h_bkgdEst_tagMassSDMinMass               = ROOT.TH1D("h_bkgdEst_tagMassSDMinMass"              , "", 700, 0, 7000 )
+h_bkgdEst_tagMassFat                     = ROOT.TH1D("h_bkgdEst_tagMassFat"                    , "", 700, 0, 7000 )
+h_bkgdEst_tagMassFatMinMass              = ROOT.TH1D("h_bkgdEst_tagMassFatMinMass"             , "", 700, 0, 7000 )
 
-h_bkgdEst_modMass_tagMassSD         = ROOT.TH1D("h_bkgdEst_modMass_tagMassSD"        , "", 700, 0, 7000 )
-h_bkgdEst_modMass_tagMassSDTau32    = ROOT.TH1D("h_bkgdEst_modMass_tagMassSDTau32"   , "", 700, 0, 7000 )
-h_bkgdEst_modMass_tagMassSDMinMass  = ROOT.TH1D("h_bkgdEst_modMass_tagMassSDMinMass" , "", 700, 0, 7000 )
-h_bkgdEst_modMass_tagMassFat        = ROOT.TH1D("h_bkgdEst_modMass_tagMassFat"       , "", 700, 0, 7000 )
-h_bkgdEst_modMass_tagMassFatMinMass = ROOT.TH1D("h_bkgdEst_modMass_tagMassFatMinMass", "", 700, 0, 7000 )
+h_bkgdEst_modMass_tagMassSD              = ROOT.TH1D("h_bkgdEst_modMass_tagMassSD"             , "", 700, 0, 7000 )
+h_bkgdEst_modMass_tagMassSDTau32         = ROOT.TH1D("h_bkgdEst_modMass_tagMassSDTau32"        , "", 700, 0, 7000 )
+h_bkgdEst_modMass_tagMassSDMinMass       = ROOT.TH1D("h_bkgdEst_modMass_tagMassSDMinMass"      , "", 700, 0, 7000 )
+h_bkgdEst_modMass_tagMassFat             = ROOT.TH1D("h_bkgdEst_modMass_tagMassFat"            , "", 700, 0, 7000 )
+h_bkgdEst_modMass_tagMassFatMinMass      = ROOT.TH1D("h_bkgdEst_modMass_tagMassFatMinMass"     , "", 700, 0, 7000 )
 
 h_bkgdEst_modMass_flat_tagMassSD         = ROOT.TH1D("h_bkgdEst_modMass_flat_tagMassSD"        , "", 700, 0, 7000 )
 h_bkgdEst_modMass_flat_tagMassSDTau32    = ROOT.TH1D("h_bkgdEst_modMass_flat_tagMassSDTau32"   , "", 700, 0, 7000 )
@@ -2738,40 +2751,42 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodL3cor = []     
 
             if len( h_jetsAK8Pt.product()) > 0 : 
-                AK8Pt = h_jetsAK8Pt.product()
-                AK8Eta = h_jetsAK8Eta.product()
-                AK8Phi = h_jetsAK8Phi.product()
-                AK8Mass = h_jetsAK8Mass.product()
-                AK8Energy = h_jetsAK8Energy.product()
-                AK8Y = h_jetsAK8Y.product()
+                AK8Pt              = h_jetsAK8Pt                 .product()
+                AK8Eta             = h_jetsAK8Eta                .product()
+                AK8Phi             = h_jetsAK8Phi                .product()
+                AK8Mass            = h_jetsAK8Mass               .product()
+                AK8Energy          = h_jetsAK8Energy             .product()
+                AK8Y               = h_jetsAK8Y                  .product()
+        
+                AK8JEC             = h_jetsAK8JEC                .product()
+                AK8Area            = h_jetsAK8Area               .product()
+        
+                AK8nHadE           = h_jetsAK8nHadEnergy         .product()
+                AK8nEME            = h_jetsAK8nEMEnergy          .product()
+                AK8cHadE           = h_jetsAK8cHadEnergy         .product()
+                AK8HFHadE          = h_jetsAK8HFHadronEnergy     .product()
+                AK8cEME            = h_jetsAK8cEMEnergy          .product()
+                AK8numDaughters    = h_jetsAK8numDaughters       .product()
+                AK8cMultip         = h_jetsAK8cMultip            .product()
+                AK8Y               = h_jetsAK8Y                  .product()
+  
+                AK8TrimmedM        = h_jetsAK8TrimMass           .product()
+                AK8PrunedM         = h_jetsAK8PrunMass           .product()
+                AK8FilteredM       = h_jetsAK8FiltMass           .product()
+                AK8SDropM          = h_jetsAK8SoftDropMass       .product()
+                AK8Tau1            = h_jetsAK8Tau1               .product()
+                AK8Tau2            = h_jetsAK8Tau2               .product()
+                AK8Tau3            = h_jetsAK8Tau3               .product()
+                AK8nSubJets        = h_jetsAK8nSubJets           .product()
+                AK8minmass         = h_jetsAK8minmass            .product()
+                AK8SubjetbDisc     = h_subjetsAK8BDisc           .product()
+                AK8SubjetMass      = h_subjetsAK8Mass            .product()
 
-                AK8JEC = h_jetsAK8JEC.product()
-                AK8Area = h_jetsAK8Area.product()
+                AK8TopSubjetIndex0 = h_jetsAK8TopSubjetIndex0 .product()
+                AK8TopSubjetIndex1 = h_jetsAK8TopSubjetIndex1 .product()
+                AK8TopSubjetIndex2 = h_jetsAK8TopSubjetIndex2 .product()
+                AK8TopSubjetIndex3 = h_jetsAK8TopSubjetIndex3 .product()
 
-                AK8nHadE = h_jetsAK8nHadEnergy.product()
-                AK8nEME = h_jetsAK8nEMEnergy.product()
-                AK8cHadE =  h_jetsAK8cHadEnergy.product()
-                AK8HFHadE = h_jetsAK8HFHadronEnergy.product()
-                AK8cEME =  h_jetsAK8cEMEnergy.product()
-                AK8numDaughters = h_jetsAK8numDaughters.product()
-                AK8cMultip =  h_jetsAK8cMultip.product()
-                AK8Y =  h_jetsAK8Y.product()
-
-                AK8TrimmedM = h_jetsAK8TrimMass.product()
-                AK8PrunedM = h_jetsAK8PrunMass.product()
-                AK8FilteredM = h_jetsAK8FiltMass.product()
-                AK8SDropM = h_jetsAK8SoftDropMass.product()
-                AK8Tau1 = h_jetsAK8Tau1.product()
-                AK8Tau2 = h_jetsAK8Tau2.product()
-                AK8Tau3 = h_jetsAK8Tau3.product()
-                AK8nSubJets = h_jetsAK8nSubJets.product()
-                AK8minmass = h_jetsAK8minmass.product()
-                AK8SubjetbDisc = h_subjetsAK8BDisc.product()
-                AK8SubjetMass = h_subjetsAK8Mass.product()
-                AK8TopSubjetIndex0 = h_jetsAK8TopSubjetIndex0.product()
-                AK8TopSubjetIndex1 = h_jetsAK8TopSubjetIndex1.product()
-                AK8TopSubjetIndex2 = h_jetsAK8TopSubjetIndex2.product()
-                AK8TopSubjetIndex3 = h_jetsAK8TopSubjetIndex3.product()
                 if options.isMC :
                     if options.deweightFlat :
                         pthat = 0.0
@@ -2914,23 +2929,6 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodNCH.append( nch )
                     #$ Cuts for Hadronic channel
                     else : 
-                        ## HADRONIC CHANNEL CRITERIA 
-
-                        # - minimum mass pairing > 50 GeV
-                        # - number of Subjets >= 3
-                        # - Jet Mass > 100 GeV
-                        # if AK8nSubJets[i] >= 3:
-                        #     NPassAK8nSubJetsCut = NPassAK8nSubJetsCut + 1
-                        # else:
-                        #     continue
-                        # if AK8minmass[i] > 50:
-                        #     NPassAK8MinMassCut = NPassAK8MinMassCut + 1
-                        # else:
-                        #     continue
-                        # if AK8P4Corr.M() > 100:
-                        #     NPassAK8CorrMassCut = NPassAK8CorrMassCut + 1
-                        # else:
-                        #     continue
                         if options.verbose:
                             print 'N AK8 Subjet B discriminators, Hadronic = ' + str( len(AK8SubjetbDisc) )
                         ak8JetsGood.append(AK8P4Corr)
@@ -2962,13 +2960,8 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodL1cor.append( L1cor )           
                         ak8JetsGoodL2cor.append( L2cor )           
                         ak8JetsGoodL3cor.append( L3cor )      
-
-                        #} End AK8 Loop
-            #if len(ak8JetsGood) > 1 :
-              #  print ' Pt of leading AK8 Jet, ak8JetsGood[0] ' + str(ak8JetsGood[0].Perp())
-              #  print ' Pt of second AK8 Jet, ak8JetsGood[1] ' + str(ak8JetsGood[1].Perp())
-               # if ak8JetsGood[0].Perp() < ak8JetsGood[1].Perp():
-                #    print 'WE HAVE A PROBLEM! The second AK8 Jet has higher Pt than the leading Jet'
+                #} End AK8 Loop
+            #} End if have AK8 product
 
             if len(ak8JetsGood) < 1 :
                 if options.verbose :
@@ -3047,45 +3040,57 @@ for ifile in files : #{ Loop over root files
 
 
 
-                h_Jet0_MassSoft_Preselected_CorrNone   .Fill( ak8JetsGoodSDropMass[0]                                              )
-                h_Jet0_MassTrim_Preselected_CorrNone   .Fill(  ak8JetsGoodTrimMass[0]                                              )
-                h_Jet0_MassFilt_Preselected_CorrNone   .Fill(  ak8JetsGoodFiltMass[0]                                              )
-                h_Jet0_MassPrun_Preselected_CorrNone   .Fill(  ak8JetsGoodPrunMass[0]                                              )
-                h_Jet0_MinCMSTT_Preselected_CorrNone   .Fill(   ak8JetsGoodMinMass[0]                                              )
-                h_Jet0_MassSoft_Preselected_CorrL2L3   .Fill( ak8JetsGoodSDropMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
-                h_Jet0_MassTrim_Preselected_CorrL2L3   .Fill(  ak8JetsGoodTrimMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
-                h_Jet0_MassFilt_Preselected_CorrL2L3   .Fill(  ak8JetsGoodFiltMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
-                h_Jet0_MassPrun_Preselected_CorrL2L3   .Fill(  ak8JetsGoodPrunMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
-                h_Jet0_MinCMSTT_Preselected_CorrL2L3   .Fill(   ak8JetsGoodMinMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
-                h_Jet0_Tau1_Preselected                .Fill(      ak8JetsGoodTau1[0]                                              )
-                h_Jet0_Tau2_Preselected                .Fill(      ak8JetsGoodTau2[0]                                              )
-                h_Jet0_Tau3_Preselected                .Fill(      ak8JetsGoodTau3[0]                                              )
-                h_Jet0_Tau21_Preselected               .Fill(             tau21_jet0_                                              )
-                h_Jet0_Tau32_Preselected               .Fill(             tau32_jet0_                                              )
-                h_Jet0_Pt_Preselected                  .Fill(          ak8JetsGood[0].Perp()                                       )
-                h_Jet0_Rap_Preselected                 .Fill(          ak8JetsGood[0].Rapidity()                                   )
-                                                                  
+                h_Jet0_MassSoft_CorrNone   .Fill( ak8JetsGoodSDropMass[0]                                              )
+                h_Jet0_MassTrim_CorrNone   .Fill(  ak8JetsGoodTrimMass[0]                                              )
+                h_Jet0_MassFilt_CorrNone   .Fill(  ak8JetsGoodFiltMass[0]                                              )
+                h_Jet0_MassPrun_CorrNone   .Fill(  ak8JetsGoodPrunMass[0]                                              )
+                h_Jet0_MinCMSTT_CorrNone   .Fill(   ak8JetsGoodMinMass[0]                                              )
+                h_Jet0_MassSoft_CorrL2L3   .Fill( ak8JetsGoodSDropMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
+                h_Jet0_MassTrim_CorrL2L3   .Fill(  ak8JetsGoodTrimMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
+                h_Jet0_MassFilt_CorrL2L3   .Fill(  ak8JetsGoodFiltMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
+                h_Jet0_MassPrun_CorrL2L3   .Fill(  ak8JetsGoodPrunMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
+                h_Jet0_MinCMSTT_CorrL2L3   .Fill(   ak8JetsGoodMinMass[0] * ak8JetsGoodL2cor[0] * ak8JetsGoodL3cor[0]  )
+                h_Jet0_Tau1                .Fill(      ak8JetsGoodTau1[0]                                              )
+                h_Jet0_Tau2                .Fill(      ak8JetsGoodTau2[0]                                              )
+                h_Jet0_Tau3                .Fill(      ak8JetsGoodTau3[0]                                              )
+                h_Jet0_Tau21               .Fill(             tau21_jet0_                                              )
+                h_Jet0_Tau32               .Fill(             tau32_jet0_                                              )
+                h_Jet0_Pt                  .Fill(          ak8JetsGood[0].Perp()                                       )
+                h_Jet0_Rap                 .Fill(          ak8JetsGood[0].Rapidity()                                   )
+                h_Jet0_NHF                 .Fill(       ak8JetsGoodNHF[0]                                              )
+                h_Jet0_CHF                 .Fill(       ak8JetsGoodCHF[0]                                              )
+                h_Jet0_NEF                 .Fill(       ak8JetsGoodNEF[0]                                              )
+                h_Jet0_CEF                 .Fill(       ak8JetsGoodCEF[0]                                              )
+                h_Jet0_NC                  .Fill(        ak8JetsGoodNC[0]                                              )
+                h_Jet0_NCH                 .Fill(       ak8JetsGoodNCH[0]                                              )
+
+
+                h_Jet1_MassSoft_CorrNone   .Fill( ak8JetsGoodSDropMass[1]                                              )
+                h_Jet1_MassTrim_CorrNone   .Fill(  ak8JetsGoodTrimMass[1]                                              )
+                h_Jet1_MassFilt_CorrNone   .Fill(  ak8JetsGoodFiltMass[1]                                              )
+                h_Jet1_MassPrun_CorrNone   .Fill(  ak8JetsGoodPrunMass[1]                                              )
+                h_Jet1_MinCMSTT_CorrNone   .Fill(   ak8JetsGoodMinMass[1]                                              )
+                h_Jet1_MassSoft_CorrL2L3   .Fill( ak8JetsGoodSDropMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
+                h_Jet1_MassTrim_CorrL2L3   .Fill(  ak8JetsGoodTrimMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
+                h_Jet1_MassFilt_CorrL2L3   .Fill(  ak8JetsGoodFiltMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
+                h_Jet1_MassPrun_CorrL2L3   .Fill(  ak8JetsGoodPrunMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
+                h_Jet1_MinCMSTT_CorrL2L3   .Fill(   ak8JetsGoodMinMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
+                h_Jet1_Tau1                .Fill(      ak8JetsGoodTau1[1]                                              )
+                h_Jet1_Tau2                .Fill(      ak8JetsGoodTau2[1]                                              )
+                h_Jet1_Tau3                .Fill(      ak8JetsGoodTau3[1]                                              )
+                h_Jet1_Tau21               .Fill(             tau21_jet1_                                              )
+                h_Jet1_Tau32               .Fill(             tau32_jet1_                                              )
+                h_Jet1_Pt                  .Fill(          ak8JetsGood[1].Perp()                                       )
+                h_Jet1_Rap                 .Fill(          ak8JetsGood[1].Rapidity()                                   )
+                h_Jet1_NHF                 .Fill(       ak8JetsGoodNHF[1]                                              )
+                h_Jet1_CHF                 .Fill(       ak8JetsGoodCHF[1]                                              )
+                h_Jet1_NEF                 .Fill(       ak8JetsGoodNEF[1]                                              )
+                h_Jet1_CEF                 .Fill(       ak8JetsGoodCEF[1]                                              )
+                h_Jet1_NC                  .Fill(        ak8JetsGoodNC[1]                                              )
+                h_Jet1_NCH                 .Fill(       ak8JetsGoodNCH[1]                                              )
 
 
 
-                h_Jet1_MassSoft_Preselected_CorrNone   .Fill( ak8JetsGoodSDropMass[1]                                              )
-                h_Jet1_MassTrim_Preselected_CorrNone   .Fill(  ak8JetsGoodTrimMass[1]                                              )
-                h_Jet1_MassFilt_Preselected_CorrNone   .Fill(  ak8JetsGoodFiltMass[1]                                              )
-                h_Jet1_MassPrun_Preselected_CorrNone   .Fill(  ak8JetsGoodPrunMass[1]                                              )
-                h_Jet1_MinCMSTT_Preselected_CorrNone   .Fill(   ak8JetsGoodMinMass[1]                                              )
-                h_Jet1_MassSoft_Preselected_CorrL2L3   .Fill( ak8JetsGoodSDropMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
-                h_Jet1_MassTrim_Preselected_CorrL2L3   .Fill(  ak8JetsGoodTrimMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
-                h_Jet1_MassFilt_Preselected_CorrL2L3   .Fill(  ak8JetsGoodFiltMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
-                h_Jet1_MassPrun_Preselected_CorrL2L3   .Fill(  ak8JetsGoodPrunMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
-                h_Jet1_MinCMSTT_Preselected_CorrL2L3   .Fill(   ak8JetsGoodMinMass[1] * ak8JetsGoodL2cor[1] * ak8JetsGoodL3cor[1]  )
-                h_Jet1_Tau1_Preselected                .Fill(      ak8JetsGoodTau1[1]                                              )
-                h_Jet1_Tau2_Preselected                .Fill(      ak8JetsGoodTau2[1]                                              )
-                h_Jet1_Tau3_Preselected                .Fill(      ak8JetsGoodTau3[1]                                              )
-                h_Jet1_Tau21_Preselected               .Fill(             tau21_jet1_                                              )
-                h_Jet1_Tau32_Preselected               .Fill(             tau32_jet1_                                              )
-                h_Jet1_Pt_Preselected                  .Fill(          ak8JetsGood[1].Perp()                                       )
-                h_Jet1_Rap_Preselected                 .Fill(          ak8JetsGood[1].Rapidity()                                   )
-             
                 #@ ALL-HADRONIC BACKGROUND ESTIMATION 
                 
                 # make the modMass histograms
