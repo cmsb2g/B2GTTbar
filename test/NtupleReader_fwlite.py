@@ -459,8 +459,6 @@ h_jetsAK8numDaughters = Handle("std::vector<float>")
 l_jetsAK8numDaughters = ("jetsAK8" , "jetAK8numberOfDaughters")
 h_jetsAK8cMultip = Handle("std::vector<float>")
 l_jetsAK8cMultip = ("jetsAK8" , "jetAK8chargedMultiplicity")
-h_jetsAK8Y = Handle("std::vector<float>")
-l_jetsAK8Y = ("jetsAK8" , "jetAK8Y")
 
 h_jetsAK8Keys = Handle("std::vector<std::vector<int> >")
 l_jetsAK8Keys = ( "jetKeysAK8" , "" )
@@ -2675,6 +2673,7 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_jetsAK8Eta, h_jetsAK8Eta )
             if not options.quickSelect : 
                 event.getByLabel ( l_jetsAK8Pt, h_jetsAK8Pt )
+           
             event.getByLabel ( l_jetsAK8Phi, h_jetsAK8Phi )
             event.getByLabel ( l_jetsAK8Mass, h_jetsAK8Mass )
             event.getByLabel ( l_jetsAK8Energy, h_jetsAK8Energy )
@@ -2692,8 +2691,6 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_jetsAK8nSubJets, h_jetsAK8nSubJets )
             event.getByLabel ( l_jetsAK8minmass, h_jetsAK8minmass )
 
-
-
             event.getByLabel ( l_jetsAK8nHadEnergy, h_jetsAK8nHadEnergy)
             event.getByLabel ( l_jetsAK8nEMEnergy, h_jetsAK8nEMEnergy )
             event.getByLabel ( l_jetsAK8cHadEnergy, h_jetsAK8cHadEnergy )
@@ -2701,7 +2698,6 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_jetsAK8cEMEnergy, h_jetsAK8cEMEnergy )
             event.getByLabel ( l_jetsAK8numDaughters, h_jetsAK8numDaughters )
             event.getByLabel ( l_jetsAK8cMultip, h_jetsAK8cMultip )
-            event.getByLabel ( l_jetsAK8Y, h_jetsAK8Y )
 
             event.getByLabel ( l_jetsAK8Keys, h_jetsAK8Keys )
 
@@ -2768,7 +2764,6 @@ for ifile in files : #{ Loop over root files
                 AK8cEME            = h_jetsAK8cEMEnergy          .product()
                 AK8numDaughters    = h_jetsAK8numDaughters       .product()
                 AK8cMultip         = h_jetsAK8cMultip            .product()
-                AK8Y               = h_jetsAK8Y                  .product()
   
                 AK8TrimmedM        = h_jetsAK8TrimMass           .product()
                 AK8PrunedM         = h_jetsAK8PrunMass           .product()
