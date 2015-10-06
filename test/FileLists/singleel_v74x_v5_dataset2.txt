@@ -1,0 +1,2 @@
+/eos/uscms/store/user/rappocc/SingleElectron/crab_b2gttbar74x_V4_SingleElectron_decosa-SingleElectron_Run2015B-PromptReco-v1_13Aug15-cbce20f52720ded6b8666f172a87a311/150820_210100/0000/B2GEDMNtuple_1.root
+/eos/uscms/store/user/rappocc/SingleElectron/crab_b2gttbar74x_V4_SingleElectron_decosa-SingleElectron_Run2015B-PromptReco-v1_13Aug15-cbce20f52720ded6b8666f172a87a311/150820_210100/0000/B2GEDMNtuple_2.root
