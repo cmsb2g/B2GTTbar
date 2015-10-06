@@ -529,6 +529,14 @@ l_triggerBits = ("TriggerUserData", "triggerBitTree")
 h_triggerPrescales = Handle( "std::vector<int>")
 l_triggerPrescales = ("TriggerUserData", "triggerPrescaleTree")
 
+
+# _____ _   _ _____  _    _ _______   _    _ _____  _____ _______ _____ 
+#|_   _| \ | |  __ \| |  | |__   __| | |  | |_   _|/ ____|__   __/ ____|
+#  | | |  \| | |__) | |  | |  | |    | |__| | | | | (___    | | | (___  
+#  | | | . ` |  ___/| |  | |  | |    |  __  | | |  \___ \   | |  \___ \ 
+# _| |_| |\  | |    | |__| |  | |    | |  | |_| |_ ____) |  | |  ____) |
+#|_____|_| \_|_|     \____/   |_|    |_|  |_|_____|_____/   |_| |_____/ 
+
 #@ MODMASS
 FmodMass = ROOT.TFile("ModMass_2015_09_22.root")
 
@@ -605,9 +613,24 @@ ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassFatMinMass , False )
 # ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassFat        , False )
 
 
+#@ Pileup reweighting
+if options.isMC and options.puFile != None :
+    fPU = ROOT.TFile(options.puFile)
+    hPU = fPU.Get("h_NPVert")
+
+
 #@ Reweight top function
 
 reweightTopPt = ROOT.TF1("reweightTopPt", "6.5e-4 + 0.9", 0, 13000)
+
+
+#   ____  _    _ _______ _____  _    _ _______   _____   ____   ____ _______ 
+#  / __ \| |  | |__   __|  __ \| |  | |__   __| |  __ \ / __ \ / __ \__   __|
+# | |  | | |  | |  | |  | |__) | |  | |  | |    | |__) | |  | | |  | | | |   
+# | |  | | |  | |  | |  |  ___/| |  | |  | |    |  _  /| |  | | |  | | | |   
+# | |__| | |__| |  | |  | |    | |__| |  | |    | | \ \| |__| | |__| | | |   
+#  \____/ \____/   |_|  |_|     \____/   |_|    |_|  \_\\____/ \____/  |_|   
+                                                                            
 
 # @@@ Create output root file
 
@@ -890,6 +913,11 @@ if options.writeTree :
 #^ Plot initialization
 h_NPVert         = ROOT.TH1D("h_NPVert"        , "", 200,0,200 )
 h_NtrueIntPU     = ROOT.TH1D("h_NtrueIntPU"    , "", 200,0,200 )
+
+
+# Loop over channels and selections. Make histograms for each. 
+f.mkdir("SelectionLoop").cd()
+
 # indices correspond to the lepton flavor
 ALL_NDX = 0
 EL_NDX = 1
@@ -1044,6 +1072,9 @@ for ichannel,channel in enumerate(channels) :
         h_nchAK8[ichannel].append( ROOT.TH1F("h_nchAK8" + channel + sel, "AK8 Number of charged hadrons;N charged hadrons", 100, 0, 100) )
 
 #^ Basic plots from all-hadronic preselected events (2 AK8 pT>400 jets)
+
+f.cd()
+f.mkdir("AllHad").cd()
 
 h_Jet0_MassSoft_Preselected_CorrNone   = ROOT.TH1D("h_Jet0_MassSoft_Preselected_CorrNone", "",  500,  0,  500 ) 
 h_Jet0_MassTrim_Preselected_CorrNone   = ROOT.TH1D("h_Jet0_MassTrim_Preselected_CorrNone", "",  500,  0,  500 ) 
@@ -1201,12 +1232,8 @@ ROOT.SetOwnership( mttPredDist_tagMassSDMinMass  , False )
 # ROOT.SetOwnership( mttPredDist_tagMassFat        , False )
 ROOT.SetOwnership( mttPredDist_tagMassFatMinMass , False )
 
+f.cd()
 
-
-#@ Pileup reweighting
-if options.isMC and options.puFile != None :
-    fPU = ROOT.TFile(options.puFile)
-    hPU = fPU.Get("h_NPVert")
 
 
 #@ JET CORRECTIONS
@@ -1277,6 +1304,13 @@ ak8JetCorrector = ROOT.FactorizedJetCorrector(vParJecAK8)
 
 #@ Run / lumi / event numbers
 runNumbers = []
+
+#  ________      ________ _   _ _______   _      ____   ____  _____  
+# |  ____\ \    / /  ____| \ | |__   __| | |    / __ \ / __ \|  __ \ 
+# | |__   \ \  / /| |__  |  \| |  | |    | |   | |  | | |  | | |__) |
+# |  __|   \ \/ / |  __| | . ` |  | |    | |   | |  | | |  | |  ___/ 
+# | |____   \  /  | |____| |\  |  | |    | |___| |__| | |__| | |     
+# |______|   \/   |______|_| \_|  |_|    |______\____/ \____/|_|     
 
 
 #@ EVENT LOOP
