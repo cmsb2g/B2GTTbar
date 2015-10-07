@@ -41,18 +41,18 @@ hists = [
     ['h_bdiscAK4',         ';b discriminator of AK4 Jet;Number of Events',None, 20., 0., 1.0,     0.6, 0.6, 0.85, 0.85],
     ['h_ptAK8',            ';p_{T}(GeV) of AK8 Jet;Number of Events',     None, 10., 400., 1500., 0.6, 0.6, 0.85, 0.85],
     ['h_etaAK8',           ';y of AK8 Jet;Number of Events',              None, 10., -3., 3.,     0.6, 0.6, 0.85, 0.85],
-    ['h_mAK8',             ';Mass(GeV) of AK8 Jet;Number of Events',      5,    10., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_mprunedAK8',       ';Pruned Mass (GeV);Number of Events',         5,    10., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_mfilteredAK8',     ';Filtered Mass (GeV);Number of Events',       5,    10., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_mtrimmedAK8',      ';Trimmed Mass (GeV);Number of Events',        5,    10., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_mSDropAK8',        ';Soft Drop Mass (GeV);Number of Events',      5,    10., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_nsjAK8',           ';Number of Subjets;Number of Events',         None,100., 0., 5.,      0.6, 0.6, 0.85, 0.85],
-    ['h_tau21AK8',         ';#tau_{21};Number of Events',                 None, 20.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_tau32AK8',         ';#tau_{32};Number of Events',                 None, 20.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_nhfAK8',           ';Neutral hadron fraction;Number of Events',   None, 20.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_chfAK8',           ';Charged hadron fraction;Number of Events',   None, 10.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_nefAK8',           ';Neutral EM fraction;Number of Events',       None, 10.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_cefAK8',           ';Charged EM fraction;Number of Events',       None,100.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_mAK8',             ';Mass(GeV) of AK8 Jet;Number of Events',      5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mprunedAK8',       ';Pruned Mass (GeV);Number of Events',         5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mfilteredAK8',     ';Filtered Mass (GeV);Number of Events',       5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mtrimmedAK8',      ';Trimmed Mass (GeV);Number of Events',        5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mSDropAK8',        ';Soft Drop Mass (GeV);Number of Events',      5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_nsjAK8',           ';Number of Subjets;Number of Events',      None,   200., 0., 5.,      0.6, 0.6, 0.85, 0.85],
+    ['h_tau21AK8',         ';#tau_{21};Number of Events',                 5,    40.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_tau32AK8',         ';#tau_{32};Number of Events',                 5,    60.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_nhfAK8',           ';Neutral hadron fraction;Number of Events',   5,   100.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_chfAK8',           ';Charged hadron fraction;Number of Events',   5,    40.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_nefAK8',           ';Neutral EM fraction;Number of Events',       5,    40.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_cefAK8',           ';Charged EM fraction;Number of Events',       5,   200.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
 ]
 
 if options.stage != None :
@@ -152,7 +152,7 @@ for ihist,shist in enumerate( hists ) :
     tlx.DrawLatex(xInfo, yInfo3, "#bf{AK R= 0.8}") # 0.8 or 0.4 for AK8 and AK4              change with histo
     tlx.DrawLatex(xInfo, yInfo4, "#bf{|#eta| < 2.4 }")  # same for AK4 and AK8
     tlx.DrawLatex(xInfo, yInfo5, "#bf{P_{T} > 400 GeV}")# > 400 for AK8 and > 30 for AK4     change with histo
-    tlx.DrawLatex(xInfo, yInfo6, "#bf{50 ns}")  # change with 25 or 50 ns bunchcrossings     change with root files
+    tlx.DrawLatex(xInfo, yInfo6, "#bf{25 ns}")  # change with 25 or 50 ns bunchcrossings     change with root files
     
     canv.Draw()
 
