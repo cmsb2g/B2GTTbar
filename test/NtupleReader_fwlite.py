@@ -4104,60 +4104,6 @@ for ifile in files : #{ Loop over root files
                 #} end check that we have at least 2 AK8 jets for all-hadronic background estimation            
 
 
-                if SemiLeptonic:
-                    #~ Fill SemiLeptonic tree
-                    FatJetPt            [0] = ak8JetsGood[0].Perp()
-                    FatJetEta           [0] = ak8JetsGood[0].Eta()
-                    FatJetPhi           [0] = ak8JetsGood[0].Phi()
-                    FatJetRap           [0] = ak8JetsGood[0].Rapidity()
-                    FatJetPx            [0] = ak8JetsGood[0].Px()
-                    FatJetPy            [0] = ak8JetsGood[0].Py()
-                    FatJetPz            [0] = ak8JetsGood[0].Pz()
-                    FatJetEnergy        [0] = ak8JetsGood[0].Energy()
-                    FatJetRhoRatio      [0] = pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
-                    FatJetMass          [0] = ak8JetsGood[0].M()
-                    FatJetMassSoftDrop  [0] = ak8JetsGoodSDropMass[0]
-                    FatJetMassPruned    [0] = ak8JetsGoodPrunMass[0]
-                    FatJetMassFiltered  [0] = ak8JetsGoodFiltMass[0]
-                    FatJetMassTrimmed   [0] = ak8JetsGoodTrimMass[0]
-                    FatJetTau1          [0] = ak8JetsGoodTau1[0]
-                    FatJetTau2          [0] = ak8JetsGoodTau2[0]
-                    FatJetTau3          [0] = ak8JetsGoodTau3[0]
-                    FatJetTau32         [0] = 1
-                    FatJetTau21         [0] = 1
-                    FatJetSDnsubjets    [0] = 1 # to add later                   
-                    FatJetSDbdisc0      [0] = 1 # to add later
-                    FatJetSDbdisc1      [0] = 1 # to add later
-                    FatJetSDmaxbdisc    [0] = 1 # to add later
-                    FatJetSDsubjet0pt   [0] = 1 # to add later
-                    FatJetSDsubjet0mass [0] = 1 # to add later
-                    FatJetSDsubjet1pt   [0] = 1 # to add later
-                    FatJetSDsubjet1mass [0] = 1 # to add later
-                    FatJetCMSmaxbdisc   [0] = 1 # to add later
-                    FatJetCMSnsubjets   [0] = 1 # to add later
-                    FatJetCMSminMass    [0] = ak8JetsGoodMinMass[0]
-                    FatJetCMSm01        [0] = 1 # to add later
-                    FatJetCMSm02        [0] = 1 # to add later
-                    FatJetCMSm12        [0] = 1 # to add later
-                    LeptonPt            [0] = theLepton.Perp()  
-                    LeptonEta           [0] = theLepton.Eta()
-                    LeptonPhi           [0] = theLepton.Phi()
-                    LeptonPx            [0] = theLepton.Px() 
-                    LeptonPy            [0] = theLepton.Py() 
-                    LeptonPz            [0] = theLepton.Pz()
-                    LeptonEnergy        [0] = theLepton.E() 
-                    SemiLepMETpx        [0] = metPx
-                    SemiLepMETpy        [0] = metPy
-                    SemiLepMETpt        [0] = metPt
-                    SemiLepMETphi       [0] = metPhi     
-                    SemiLepNvtx         [0] = NPV   
-                    SemiLepEventWeight  [0] = evWeight 
-                    # SemilLepTTmass      [0] = 
-                    # DeltaPhiLepFat      [0] = 
-
-
-                    TreeSemiLept.Fill()
-
 
 
             #Ashley - fill semileptonic histograms
@@ -4323,6 +4269,64 @@ for ifile in files : #{ Loop over root files
 
                 #} End t tagging loop
 
+
+
+            if options.writeTree :
+                #~ Fill SemiLeptonic tree
+                FatJetPt            [0] = ak8JetsGood[0].Perp()
+                FatJetEta           [0] = ak8JetsGood[0].Eta()
+                FatJetPhi           [0] = ak8JetsGood[0].Phi()
+                FatJetRap           [0] = ak8JetsGood[0].Rapidity()
+                FatJetPx            [0] = ak8JetsGood[0].Px()
+                FatJetPy            [0] = ak8JetsGood[0].Py()
+                FatJetPz            [0] = ak8JetsGood[0].Pz()
+                FatJetEnergy        [0] = ak8JetsGood[0].Energy()
+                FatJetRhoRatio      [0] = pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
+                FatJetMass          [0] = ak8JetsGood[0].M()
+                FatJetMassSoftDrop  [0] = ak8JetsGoodSDropMass[0]
+                FatJetMassPruned    [0] = ak8JetsGoodPrunMass[0]
+                FatJetMassFiltered  [0] = ak8JetsGoodFiltMass[0]
+                FatJetMassTrimmed   [0] = ak8JetsGoodTrimMass[0]
+                FatJetTau1          [0] = ak8JetsGoodTau1[0]
+                FatJetTau2          [0] = ak8JetsGoodTau2[0]
+                FatJetTau3          [0] = ak8JetsGoodTau3[0]
+                FatJetTau32         [0] = 1
+                FatJetTau21         [0] = 1
+                FatJetSDnsubjets    [0] = 1 # to add later                   
+                FatJetSDbdisc0      [0] = 1 # to add later
+                FatJetSDbdisc1      [0] = 1 # to add later
+                FatJetSDmaxbdisc    [0] = 1 # to add later
+                FatJetSDsubjet0pt   [0] = 1 # to add later
+                FatJetSDsubjet0mass [0] = 1 # to add later
+                FatJetSDsubjet1pt   [0] = 1 # to add later
+                FatJetSDsubjet1mass [0] = 1 # to add later
+                FatJetCMSmaxbdisc   [0] = 1 # to add later
+                FatJetCMSnsubjets   [0] = 1 # to add later
+                FatJetCMSminMass    [0] = ak8JetsGoodMinMass[0]
+                FatJetCMSm01        [0] = 1 # to add later
+                FatJetCMSm02        [0] = 1 # to add later
+                FatJetCMSm12        [0] = 1 # to add later
+                LeptonPt            [0] = theLepton.Perp()  
+                LeptonEta           [0] = theLepton.Eta()
+                LeptonPhi           [0] = theLepton.Phi()
+                LeptonPx            [0] = theLepton.Px() 
+                LeptonPy            [0] = theLepton.Py() 
+                LeptonPz            [0] = theLepton.Pz()
+                LeptonEnergy        [0] = theLepton.E() 
+                SemiLepMETpx        [0] = metPx
+                SemiLepMETpy        [0] = metPy
+                SemiLepMETpt        [0] = metPt
+                SemiLepMETphi       [0] = metPhi     
+                SemiLepNvtx         [0] = NPV   
+                SemiLepEventWeight  [0] = evWeight 
+                # SemilLepTTmass      [0] = 
+                # DeltaPhiLepFat      [0] = 
+
+
+                TreeSemiLept.Fill()
+
+
+                
         #@ KINEMATICS for all channels
 
         #@ Leptonic Kin
