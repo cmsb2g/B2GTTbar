@@ -3087,18 +3087,6 @@ for ifile in files : #{ Loop over root files
                       nconstituents > 1 and \
                       nch > 0
 
-                    if not goodJet :
-                        if options.verbose : 
-                            print '   bad jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
-                                AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
-                                )
-                        continue
-                    NPassGoodJetAK8Cut = NPassGoodJetAK8Cut + 1
-                    if options.verbose :
-                        print '   raw jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
-                            AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
-                            )
-
                     #@ JEC Scaling for AK8 Jets
                     ak8JetCorrector.setJetEta( AK8P4Raw.Eta() )
                     ak8JetCorrector.setJetPt ( AK8P4Raw.Perp() )
@@ -3136,6 +3124,18 @@ for ifile in files : #{ Loop over root files
                         print "L1cor "+str(L1cor)+" L2cor "+str(L2cor)+" L3cor "+str(L3cor)
 
 
+
+                    if not goodJet :
+                        if options.verbose : 
+                            print '   bad jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
+                                AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
+                                )
+                        continue
+                    NPassGoodJetAK8Cut = NPassGoodJetAK8Cut + 1
+                    if options.verbose :
+                        print '   raw jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
+                            AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
+                            )
 
 
                     #$ Cuts based on pt and rapidity
