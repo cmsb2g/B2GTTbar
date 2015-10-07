@@ -2919,10 +2919,10 @@ for ifile in files : #{ Loop over root files
                 AK8numDaughters    = h_jetsAK8numDaughters       .product()
                 AK8cMultip         = h_jetsAK8cMultip            .product()
   
-                AK8TrimmedM        = h_jetsAK8TrimMass           .product()
-                AK8PrunedM         = h_jetsAK8PrunMass           .product()
-                AK8FilteredM       = h_jetsAK8FiltMass           .product()
-                AK8SDropM          = h_jetsAK8SoftDropMass       .product()
+                AK8TrimmedMRaw     = h_jetsAK8TrimMass           .product()
+                AK8PrunedMRaw      = h_jetsAK8PrunMass           .product()
+                AK8FilteredMRaw    = h_jetsAK8FiltMass           .product()
+                AK8SDropMRaw       = h_jetsAK8SoftDropMass       .product()
                 AK8Tau1            = h_jetsAK8Tau1               .product()
                 AK8Tau2            = h_jetsAK8Tau2               .product()
                 AK8Tau3            = h_jetsAK8Tau3               .product()
@@ -2930,7 +2930,10 @@ for ifile in files : #{ Loop over root files
                 AK8minmass         = h_jetsAK8minmass            .product()
                 AK8Area            = h_jetsAK8Area               .product()
 
-
+                AK8TrimmedM = []
+                AK8PrunedM = []
+                AK8FilteredM = []
+                AK8SDropM = []
 
 
                 AK8CMSTTsubjetIndex0         = h_jetsAK8CmsTopTagSubjetIndex0 .product()
@@ -2989,7 +2992,7 @@ for ifile in files : #{ Loop over root files
                         subjetP4 = subjetP4Raw * newJEC
                         CMSTTsubjetPt.append( subjetP4.Perp() )
                         CMSTTsubjetMass.append( subjetP4.M() )
-                        
+
 
 
                 AK8SDsubjetIndex0    = h_jetsAK8SoftDropSubjetIndex0 .product()
@@ -3105,7 +3108,11 @@ for ifile in files : #{ Loop over root files
                     ak8JetCorrector.setNPV   ( NPV )
                     newJEC = ak8JetCorrector.getCorrection()
                     AK8P4Corr = AK8P4Raw*newJEC
- 
+
+                    AK8TrimmedM.append( AK8TrimmedMRaw[i] * newJEC )
+                    AK8PrunedM.append( AK8PrunedMRaw[i] * newJEC )
+                    AK8FilteredM.append( AK8FilteredMRaw[i] * newJEC )
+                    AK8SDropM.append( AK8SDropMRaw[i] * newJEC )
 
                     # avoid "%MSG-e FactorizedJetCorrectorCalculator: jet eta is not set" errors
                     ak8JetCorrector.setJetEta( AK8P4Raw.Eta() )
