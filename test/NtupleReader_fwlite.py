@@ -4336,11 +4336,11 @@ for ifile in files : #{ Loop over root files
                 SemiLepMETphi       [0] = metPhi     
                 SemiLepNvtx         [0] = NPV   
                 SemiLepEventWeight  [0] = evWeight 
-                AK4bDisc            [0] = ak4JetsGoodbDiscrim[0]
-                NearestAK4JetPt     [0] = ak4JetsGood[0].Perp()
-                NearestAK4JetEta    [0] = ak4JetsGood[0].Eta()
-                NearestAK4JetPhi    [0] = ak4JetsGood[0].Phi()
-                NearestAK4JetMass   [0] = ak4JetsGood[0].M()
+                AK4bDisc            [0] = nearestJetbDiscrim
+                NearestAK4JetPt     [0] = nearestJetP4.Perp()
+                NearestAK4JetEta    [0] = nearestJetP4.Eta()
+                NearestAK4JetPhi    [0] = nearestJetP4.Phi()
+                NearestAK4JetMass   [0] = nearestJetP4.M()
                 # SemilLepTTmass      [0] = 
                 # DeltaPhiLepFat      [0] = 
 
