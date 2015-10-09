@@ -35,24 +35,24 @@ hists = [
 #    ['h_met',              ';MET(GeV);Number of Events',             500., 0., 1000., 0.6, 0.6, 0.85, 0.85],
 #    ['h_dRMin',            ';dRMin;Number of Events',                500., 0., 5.,    0.6, 0.6, 0.85, 0.85],
 #    Name                  Title                                          Rebin Max, Xmin, Xmax   Legend location 
-    ['h_ptAK4',            ';p_{T}(GeV) of AK4 Jet;Number of Events',     None, 20., 0., 1500.,   0.6, 0.6, 0.85, 0.85],
-    ['h_etaAK4',           ';y of AK4 Jet;Number of Events',              None, 20., -3., 3.,     0.6, 0.6, 0.85, 0.85],
-    ['h_mAK4',             ';Mass(GeV) of AK4 Jet;Number of Events',      None, 60., 10., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_bdiscAK4',         ';b discriminator of AK4 Jet;Number of Events',None, 20., 0., 1.0,     0.6, 0.6, 0.85, 0.85],
-    ['h_ptAK8',            ';p_{T}(GeV) of AK8 Jet;Number of Events',     None, 10., 400., 1500., 0.6, 0.6, 0.85, 0.85],
-    ['h_etaAK8',           ';y of AK8 Jet;Number of Events',              None, 10., -3., 3.,     0.6, 0.6, 0.85, 0.85],
-    ['h_mAK8',             ';Mass(GeV) of AK8 Jet;Number of Events',      5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_mprunedAK8',       ';Pruned Mass (GeV);Number of Events',         5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_mfilteredAK8',     ';Filtered Mass (GeV);Number of Events',       5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_mtrimmedAK8',      ';Trimmed Mass (GeV);Number of Events',        5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_mSDropAK8',        ';Soft Drop Mass (GeV);Number of Events',      5,    20., 20., 300.,   0.6, 0.6, 0.85, 0.85],
-    ['h_nsjAK8',           ';Number of Subjets;Number of Events',      None,   200., 0., 5.,      0.6, 0.6, 0.85, 0.85],
-    ['h_tau21AK8',         ';#tau_{21};Number of Events',                 5,    40.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_tau32AK8',         ';#tau_{32};Number of Events',                 5,    60.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_nhfAK8',           ';Neutral hadron fraction;Number of Events',   5,   100.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_chfAK8',           ';Charged hadron fraction;Number of Events',   5,    40.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_nefAK8',           ';Neutral EM fraction;Number of Events',       5,    40.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
-    ['h_cefAK8',           ';Charged EM fraction;Number of Events',       5,   200.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_ptAK4',            ';p_{T}(GeV) of AK4 Jet;Number of Events',     None, 200., 0., 1500.,   0.6, 0.6, 0.85, 0.85],
+    ['h_etaAK4',           ';y of AK4 Jet;Number of Events',              None, 200., -3., 3.,     0.6, 0.6, 0.85, 0.85],
+    ['h_mAK4',             ';Mass(GeV) of AK4 Jet;Number of Events',      None,1000., 0., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_bdiscAK4',         ';b discriminator of AK4 Jet;Number of Events',None, 400., 0., 1.0,     0.6, 0.6, 0.85, 0.85],
+    ['h_ptAK8',            ';p_{T}(GeV) of AK8 Jet;Number of Events',     None, 400., 200., 1500., 0.6, 0.6, 0.85, 0.85],
+    ['h_etaAK8',           ';y of AK8 Jet;Number of Events',              None, 200., -3., 3.,     0.6, 0.6, 0.85, 0.85],
+    ['h_mAK8',             ';Mass(GeV) of AK8 Jet;Number of Events',      None, 600., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mprunedAK8',       ';Pruned Mass (GeV);Number of Events',         None, 600., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mfilteredAK8',     ';Filtered Mass (GeV);Number of Events',       None, 600., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mtrimmedAK8',      ';Trimmed Mass (GeV);Number of Events',        None, 600., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_mSDropAK8',        ';Soft Drop Mass (GeV);Number of Events',      None, 600., 20., 300.,   0.6, 0.6, 0.85, 0.85],
+    ['h_nsjAK8',           ';Number of Subjets;Number of Events',         None,2000., 0., 5.,      0.6, 0.6, 0.85, 0.85],
+    ['h_tau21AK8',         ';#tau_{21};Number of Events',                 None, 200.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_tau32AK8',         ';#tau_{32};Number of Events',                 None, 200.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_nhfAK8',           ';Neutral hadron fraction;Number of Events',   None, 300.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_chfAK8',           ';Charged hadron fraction;Number of Events',   None, 100.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_nefAK8',           ';Neutral EM fraction;Number of Events',       None, 100.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
+    ['h_cefAK8',           ';Charged EM fraction;Number of Events',       None,1000.,  0., 1.,     0.6, 0.6, 0.85, 0.85],
 ]
 
 if options.stage != None :
@@ -67,12 +67,12 @@ SCALE_NDX = 3
 COLOR_NDX = 4
 lumi = 153.3
 samples = [
-    ["ttjets_b2ganafw_v6.root",                            'ttbar',  't#bar{t}',          831.76 * lumi / 19665194., ROOT.kRed + 1],
-    ["wjets_b2ganafw_v5_sel1_extracats.root",              'wjets',  'W + Jets',         20508.9 * lumi / 24089991., ROOT.kGreen + 1 ],
-    ["singletop_v74x_v4.3_tchan_local_sel1_extracats.root",'st',     'Single Top Quark',  216.99 * lumi / 3999910.,  ROOT.kMagenta + 1 ],
-    ["zjets_b2ganafw_v4_sel1_extracats.root",              'zjets',  'Z + Jets',          2008.4 * lumi / 19925500., ROOT.kBlue - 4 ], 
-    ["singlemu_v74x_v6_dataset4.root",                     'mudata', 'Data',              1.0,                       0 ],
-    ["singleel_v74x_v6_dataset4.root",                     'eldata', 'Data',              1.0,                       0  ],
+    ["ttjets_b2ganafw_v6_wtags_jecv5.root",                    'ttbar',  't#bar{t}',                831.76 * lumi / 19665194. * 0.8, ROOT.kRed + 1],
+    ["wjets_b2ganafw_v5_sel1_extracats_wtags_jecv5.root",      'wjets',  'W + Jets',               20508.9 * lumi / 24089991., ROOT.kGreen + 1 ],
+    ["singletop_v74x_v4.3_tchan_local_sel1_extracats_wtags_jecv5.root",  'st', 'Single Top Quark',  216.99 * lumi / 3999910.,  ROOT.kMagenta + 1 ],
+    ["zjets_b2ganafw_v4_sel1_extracats_wtags_jecv5.root",      'zjets',  'Z + Jets',                2008.4 * lumi / 19925500., ROOT.kBlue - 4 ], 
+    ["singlemu_v74x_v6_dataset4_wtags_jecv5.root",             'mudata', 'Data',                   1.0,                       0 ],
+    ["singleel_v74x_v6_dataset4_wtags_jecv5.root",             'eldata', 'Data',                   1.0,                       0  ],
 ]
 
 histsMC = []
