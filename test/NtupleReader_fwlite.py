@@ -793,6 +793,12 @@ if options.writeTree :
     SemilLepTTmass      = array('f', [-1.])
     DeltaPhiLepFat      = array('f', [-1.]) 
 
+    AK4bDisc            = array('f', [-1.])
+    NearestAK4JetPt     = array('f', [-1.])
+    NearestAK4JetEta    = array('f', [-1.])
+    NearestAK4JetPhi    = array('f', [-1.])
+    NearestAK4JetMass   = array('f', [-1.])
+
 
     TreeSemiLept.Branch('FatJetPt'            , FatJetPt            ,  'FatJetPt/F'            )
     TreeSemiLept.Branch('FatJetEta'           , FatJetEta           ,  'FatJetEta/F'           )
@@ -842,6 +848,11 @@ if options.writeTree :
     TreeSemiLept.Branch('SemiLepEventWeight'  , SemiLepEventWeight  ,  'SemiLepEventWeight/F'  )
     TreeSemiLept.Branch('SemilLepTTmass'      , SemilLepTTmass      ,  'SemilLepTTmass/F'      )
     TreeSemiLept.Branch('DeltaPhiLepFat'      , DeltaPhiLepFat      ,  'DeltaPhiLepFat/F'      )
+    TreeSemiLept.Branch('AK4bDisc'            ,AK4bDisc             ,  'AK4bDisc/F'            )
+    TreeSemiLept.Branch('NearestAK4JetPt'     ,NearestAK4JetPt      ,  'NearestAK4JetPt/F'     )
+    TreeSemiLept.Branch('NearestAK4JetEta'    ,NearestAK4JetEta     ,  'NearestAK4JetEta/F'    )
+    TreeSemiLept.Branch('NearestAK4JetPhi'    ,NearestAK4JetPhi     ,  'NearestAK4JetPhi/F'    )
+    TreeSemiLept.Branch('NearestAK4JetMass'   ,NearestAK4JetMass    ,  'NearestAK4JetMass/F'   )
 
 
     TreeAllHad = ROOT.TTree("TreeAllHad", "TreeAllHad")
@@ -2897,7 +2908,9 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodSDsubjetIndex1 = []            
             ak8JetsGoodL1cor = []            
             ak8JetsGoodL2cor = []            
-            ak8JetsGoodL3cor = []     
+            ak8JetsGoodL3cor = []
+
+            ak8JetHt = 0     
 
             if len( h_jetsAK8Pt.product()) > 0 : 
                 AK8Pt              = h_jetsAK8Pt                 .product()
@@ -2983,9 +2996,9 @@ for ifile in files : #{ Loop over root files
                         smass= CMSTTsubjetJEC0[isubjet] * CMSTTsubjetMassRaw[isubjet]
                         subjetP4Raw = ROOT.TLorentzVector()
                         subjetP4Raw.SetPtEtaPhiM( spt, seta, sphi, smass)
-                        ak4JetCorrectorForMass.setJetEta( jetP4Raw.Eta() )
-                        ak4JetCorrectorForMass.setJetPt ( jetP4Raw.Perp() )
-                        ak4JetCorrectorForMass.setJetE  ( jetP4Raw.E() )
+                        ak4JetCorrectorForMass.setJetEta( subjetP4Raw.Eta() )
+                        ak4JetCorrectorForMass.setJetPt ( subjetP4Raw.Perp() )
+                        ak4JetCorrectorForMass.setJetE  ( subjetP4Raw.E() )
                         ak4JetCorrectorForMass.setRho   ( rho )
                         ak4JetCorrectorForMass.setNPV   ( NPV )
                         newJEC = ak4JetCorrectorForMass.getCorrection()
@@ -3039,9 +3052,9 @@ for ifile in files : #{ Loop over root files
                         smass= SDsubjetJEC0[isubjet] * SDsubjetMassRaw[isubjet]
                         subjetP4Raw = ROOT.TLorentzVector()
                         subjetP4Raw.SetPtEtaPhiM( spt, seta, sphi, smass)
-                        ak4JetCorrectorForMass.setJetEta( jetP4Raw.Eta() )
-                        ak4JetCorrectorForMass.setJetPt ( jetP4Raw.Perp() )
-                        ak4JetCorrectorForMass.setJetE  ( jetP4Raw.E() )
+                        ak4JetCorrectorForMass.setJetEta( subjetP4Raw.Eta() )
+                        ak4JetCorrectorForMass.setJetPt ( subjetP4Raw.Perp() )
+                        ak4JetCorrectorForMass.setJetE  ( subjetP4Raw.E() )
                         ak4JetCorrectorForMass.setRho   ( rho )
                         ak4JetCorrectorForMass.setNPV   ( NPV )
                         newJEC = ak4JetCorrectorForMass.getCorrection()
@@ -3137,6 +3150,8 @@ for ifile in files : #{ Loop over root files
                             AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
                             )
 
+                    #$ Ht Cut
+                    ak8JetHt = ak8JetHt + AK8P4Corr.Perp()
 
                     #$ Cuts based on pt and rapidity
                     if AK8P4Corr.Perp() < options.minAK8Pt or abs(AK8P4Corr.Rapidity()) > options.maxAK8Rapidity :
@@ -3266,6 +3281,8 @@ for ifile in files : #{ Loop over root files
                         print 'deltaphi_jet0_jet1 '+str(deltaphi_jet0_jet1)
                         print 'FAILS DELTAPHI CUT'
                     continue
+                if ak8JetHt < 1000:
+                    continue    
 
 
                 # print 'jet 0 ak8JetsGood Perp          ' +str( ak8JetsGood               [0].Perp()  )    
@@ -4319,6 +4336,11 @@ for ifile in files : #{ Loop over root files
                 SemiLepMETphi       [0] = metPhi     
                 SemiLepNvtx         [0] = NPV   
                 SemiLepEventWeight  [0] = evWeight 
+                AK4bDisc            [0] = ak4JetsGoodbDiscrim[0]
+                NearestAK4JetPt     [0] = ak4JetsGood[0].Perp()
+                NearestAK4JetEta    [0] = ak4JetsGood[0].Eta()
+                NearestAK4JetPhi    [0] = ak4JetsGood[0].Phi()
+                NearestAK4JetMass   [0] = ak4JetsGood[0].M()
                 # SemilLepTTmass      [0] = 
                 # DeltaPhiLepFat      [0] = 
 
