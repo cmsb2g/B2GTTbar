@@ -185,6 +185,11 @@ parser.add_option('--FlatSample', action='store_true',
                   dest='deweightFlat',
                   help='unweights flat samples')
 
+parser.add_option('--negativeWeights', action='store_true',
+                  default=False,
+                  dest='negativeWeights',
+                  help='Are there negative weights? aMC@NLO and madgraph have these')
+
 parser.add_option('--isMC', action='store_true',
                   default=False,
                   dest='isMC',
@@ -741,6 +746,7 @@ f.cd()
 
 if options.writeTree : 
     TreeSemiLept = ROOT.TTree("TreeSemiLept", "TreeSemiLept")
+    SemiLeptWeight      = array('f', [0.] )
     FatJetPt            = array('f', [-1.])
     FatJetEta           = array('f', [-1.])
     FatJetPhi           = array('f', [-1.])
@@ -799,7 +805,7 @@ if options.writeTree :
     NearestAK4JetPhi    = array('f', [-1.])
     NearestAK4JetMass   = array('f', [-1.])
 
-
+    TreeSemiLept.Branch('SemiLeptWeight'      , SemiLeptWeight      ,  'SemiLeptWeight/F'      )
     TreeSemiLept.Branch('FatJetPt'            , FatJetPt            ,  'FatJetPt/F'            )
     TreeSemiLept.Branch('FatJetEta'           , FatJetEta           ,  'FatJetEta/F'           )
     TreeSemiLept.Branch('FatJetPhi'           , FatJetPhi           ,  'FatJetPhi/F'           )
@@ -856,6 +862,7 @@ if options.writeTree :
 
 
     TreeAllHad = ROOT.TTree("TreeAllHad", "TreeAllHad")
+    AllHadWeight      = array('f', [0.])
     Jet0Pt            = array('f', [-1.])
     Jet0Eta           = array('f', [-1.])
     Jet0Phi           = array('f', [-1.])
@@ -938,7 +945,7 @@ if options.writeTree :
     DijetDeltaPhi     = array('f', [-1.])
     DijetDeltaRap     = array('f', [-1.])
 
-
+    TreeAllHad.Branch('AllHadWeight'      , AllHadWeight     ,  'AllHadWeight/F'     )
     TreeAllHad.Branch('Jet0Pt'            , Jet0Pt           , 'Jet0Pt/F'            )
     TreeAllHad.Branch('Jet0Eta'           , Jet0Eta          , 'Jet0Eta/F'           )
     TreeAllHad.Branch('Jet0Phi'           , Jet0Phi          , 'Jet0Phi/F'           )
@@ -1101,6 +1108,7 @@ h_subjetBdiscAK8 = []
 h_nsjAK8 = []
 h_tau21AK8 = []
 h_tau32AK8 = []
+h_BdiscAK8 = []
 h_nhfAK8 = []
 h_chfAK8 = []                    # *** add AK8 CSV
 h_nefAK8 = []
@@ -1143,6 +1151,7 @@ for ichannel,channel in enumerate(channels) :
     h_nsjAK8.append( [] )
     h_tau21AK8.append( [] )
     h_tau32AK8.append( [] )
+    h_BdiscAK8.append( [] )
     h_nhfAK8.append( [] )
     h_chfAK8.append( [] )
     h_nefAK8.append( [] )
@@ -1174,8 +1183,9 @@ for ichannel,channel in enumerate(channels) :
         h_subjetMassAK8[ichannel].append( ROOT.TH1F("h_subjetMassAK8" + channel + sel, "AK8 subjet mass; Mass (GeV)", 1000, 0, 1000) )
         h_subjetBdiscAK8[ichannel].append( ROOT.TH1F("h_subjetBdiscAK8" + channel + sel, "AK8 subjet b discriminator;b discriminator", 100, 0, 1.0) )
         h_nsjAK8[ichannel].append( ROOT.TH1F("h_nsjAK8" + channel + sel, "AK8 CMS Top Tagger N_{subjets};N_{subjets}", 5, 0, 5) )
-        h_tau21AK8[ichannel].append( ROOT.TH1F("h_tau21AK8" + channel + sel, "AK8 Jet #tau_{2} / #tau_{1};Mass#tau_{21}", 100, 0, 1.0) )
-        h_tau32AK8[ichannel].append( ROOT.TH1F("h_tau32AK8" + channel + sel, "AK8 Jet #tau_{3} / #tau_{2};Mass#tau_{32}", 100, 0, 1.0) )
+        h_tau21AK8[ichannel].append( ROOT.TH1F("h_tau21AK8" + channel + sel, "AK8 Jet #tau_{2} / #tau_{1};#tau_{21}", 100, 0, 1.0) )
+        h_tau32AK8[ichannel].append( ROOT.TH1F("h_tau32AK8" + channel + sel, "AK8 Jet #tau_{3} / #tau_{2};#tau_{32}", 100, 0, 1.0) )
+        h_BdiscAK8[ichannel].append( ROOT.TH1F("h_BdiscAK8" + channel + sel, "AK8 Jet b-discriminator;b discriminator", 100, 0, 1.0) )
         h_nhfAK8[ichannel].append( ROOT.TH1F("h_nhfAK8" + channel + sel, "AK8 Neutral hadron fraction;NHF", 100, 0, 1.0) )
         h_chfAK8[ichannel].append( ROOT.TH1F("h_chfAK8" + channel + sel, "AK8 Charged hadron fraction;CHF", 100, 0, 1.0) )
         h_nefAK8[ichannel].append( ROOT.TH1F("h_nefAK8" + channel + sel, "AK8 Neutral EM fraction;NEF", 100, 0, 1.0) )
@@ -1468,6 +1478,8 @@ NeventsBeforeChannelSelect = 0
 NeventsAfterChannelSelect = 0
 NeventsBkgdEstimation =0
 NeventsAK8product = 0
+
+Nevents_weighted = 0
 
 # Top Tag count
 nttags = 0
@@ -1808,7 +1820,7 @@ for ifile in files : #{ Loop over root files
             puNTrueInt = h_puNtrueInt.product()[0]    # @@@ is this right?
             h_NtrueIntPU.Fill( puNTrueInt )
             
-            evWeight = hPU.GetBinContent( hPU.GetXaxis().FindBin( NPV) )
+            evWeight *= hPU.GetBinContent( hPU.GetXaxis().FindBin( NPV) )
             
         h_NPVert.Fill( NPV, evWeight )
         
@@ -2077,7 +2089,7 @@ for ifile in files : #{ Loop over root files
             print 'Number of good muons = ' + str( len(goodmuonPt) )
             print 'Number of good electrons = ' + str( len(goodelectronPt) )
 
-            if options.isMC :
+            if options.isMC and options.getGenInfo :
                 if ngenE > 0 and len(goodelectronPt) == 0 :
                     print '--------------------'
                     print 'Electron not found : %6d %6d %7.2f %6.3f %6.3f %6.3f' % \
@@ -2881,10 +2893,9 @@ for ifile in files : #{ Loop over root files
 
 
 
-            if options.isMC :
-                if options.deweightFlat : 
-                    # Event weights
-                    gotGenerator = event.getByLabel( l_generator, h_generator )
+            if options.isMC and ( options.deweightFlat or options.negativeWeights ) : 
+                # Event weights
+                gotGenerator = event.getByLabel( l_generator, h_generator )
             
                 
             ak8JetsGood = []
@@ -3076,6 +3087,18 @@ for ifile in files : #{ Loop over root files
                         if h_generator.product().hasBinningValues() :
                             pthat = h_generator.product().binningValues()[0]
                             evWeight *= 1/pow(pthat/15.,4.5)
+                    if options.negativeWeights and gotGenerator :
+                        evtWeights = h_generator.product().weights()
+                        iweight = h_generator.product().weight()
+                        if iweight < 0 : 
+                            evWeight *= -1.0
+                            Nevents_weighted -= 1
+                        else :
+                            Nevents_weighted += 1
+                        if options.verbose :
+                            print 'got negative weights for generator, weight = ' + str( iweight )
+                            print 'now Nevents_weight = ' + str(Nevents_weighted)
+                        
  
                 
                 AK8Keys = h_jetsAK8Keys.product()
@@ -4043,7 +4066,8 @@ for ifile in files : #{ Loop over root files
 
 
                 #~ FILL ALL-HADRONIC TREE
-                if options.writeTree : 
+                if options.writeTree :
+                    AllHadWeight       [0] =  evWeight
                     Jet0Pt             [0] =  ak8JetsGood[0].Perp()
                     Jet0Eta            [0] =  ak8JetsGood[0].Eta()
                     Jet0Phi            [0] =  ak8JetsGood[0].Phi()
@@ -4159,19 +4183,22 @@ for ifile in files : #{ Loop over root files
                 else :
                     tau32 = -1.0
 
-                wtagCand = 0 # type 2 -w boson jet                               
-		btagCand = 1 # type 2 -b quark 
-		
-                # assume the leading jet is the W
-                AK8Bdisc1 = ak8JetsGoodCSV[wtagCand]
-                AK8Bdisc2 = ak8JetsGoodCSV[btagCand]
-                
-                # switch w and b jets if b is leading jet
-                if  AK8Bdisc1 > AK8Bdisc2:
-                    AK8Bdisc2 = ak8JetsGoodCSV[wtagCand]
-                    AK8Bdisc1 = ak8JetsGoodCSV[btagCand]
+                wtagCand = None # type 2 -w boson jet                               
+                btagCand = None # type 2 -b quark 
 
-                if AK8Bdisc1 > options.bDiscMin:
+                if len(ak8JetsGoodCSV) >= 2 :
+                    wtagCand = 0 # type 2 -w boson jet                               
+                    btagCand = 1 # type 2 -b quark 
+                    # assume the leading jet is the W
+                    AK8Bdisc1 = ak8JetsGoodCSV[wtagCand]
+                    AK8Bdisc2 = ak8JetsGoodCSV[btagCand]
+                
+                    # switch w and b jets if b is leading jet
+                    if  AK8Bdisc1 > AK8Bdisc2:
+                        AK8Bdisc2 = ak8JetsGoodCSV[wtagCand]
+                        AK8Bdisc1 = ak8JetsGoodCSV[btagCand]
+
+                if wtagCand != None and AK8Bdisc1 > options.bDiscMin:
                     typE = 2
                     mAK8Pruned = ak8JetsGoodPrunMass[wtagCand] 
                     mAK8Filtered = ak8JetsGoodFiltMass[wtagCand] 
@@ -4261,7 +4288,7 @@ for ifile in files : #{ Loop over root files
                         selectionsToPlot.append( SEL_NHF_HIGH_NDX )
 
                 for ichannel in channelsToPlot :
-                    if channelsToPlot[ichannel] > 5 : # greater than 5 are TYPE2-> ALL_TYPE2_NDX = 6, EL_TYPE2_NDX = 7, MU_TYPE2_NDX = 8
+                    if ichannel > 5 : # greater than 5 are TYPE2-> ALL_TYPE2_NDX = 6, EL_TYPE2_NDX = 7, MU_TYPE2_NDX = 8
                         for isel in selectionsToPlot: 
                             h_ptAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Perp(), evWeight )
                             h_etaAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Eta(), evWeight )
@@ -4391,6 +4418,7 @@ for ifile in files : #{ Loop over root files
 
             if options.writeTree :
                 #~ Fill SemiLeptonic tree
+                SemiLeptWeight      [0] =  evWeight
                 FatJetPt            [0] = ak8JetsGood[0].Perp()
                 FatJetEta           [0] = ak8JetsGood[0].Eta()
                 FatJetPhi           [0] = ak8JetsGood[0].Phi()
@@ -4633,6 +4661,7 @@ print '========================================='
 print ' Awesome Cut Flow Table'
 print '========================================='
 print 'Number of Events                            ' +str(Nevents)
+print 'Number of Events after event weighting      ' +str(Nevents_weighted)
 print 'Number of Events before channel selection   ' +str(NeventsBeforeChannelSelect)
 print 'Number of Events DiLeptonic                 ' +str(NeventsDiLeptonic           )         
 print 'Number of Events SemiLeptonic               ' +str(NeventsSemiLeptonic         )            
