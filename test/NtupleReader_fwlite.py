@@ -520,7 +520,7 @@ h_jetsAK8Area = Handle("std::vector<float>")
 l_jetsAK8Area = ( "jetsAK8" , "jetAK8jetArea" )
 
 
-h_jetsAK8CSV = Handle("std::vector<float>")
+h_jetsAK8CSV = Handle("std::vector<float>")               # use this ***
 l_jetsAK8CSV = ( "jetsAK8" , "jetAK8CSV" )
 
 #CMSTT W mass
@@ -1030,13 +1030,14 @@ h_NtrueIntPU     = ROOT.TH1D("h_NtrueIntPU"    , "", 200,0,200 )
 f.mkdir("SelectionLoop").cd()
 
 # indices correspond to the lepton flavor
+# Type2 semi-leptonic selection - no top tagged jet instead a w jet pt> 200 and a btagged jet
 ALL_NDX = 0
 EL_NDX = 1
 MU_NDX = 2
 ALL_TYPE1_NDX = 3
 EL_TYPE1_NDX = 4
 MU_TYPE1_NDX = 5
-ALL_TYPE2_NDX = 6
+ALL_TYPE2_NDX = 6             
 EL_TYPE2_NDX = 7
 MU_TYPE2_NDX = 8
 channels = [
@@ -1101,7 +1102,7 @@ h_nsjAK8 = []
 h_tau21AK8 = []
 h_tau32AK8 = []
 h_nhfAK8 = []
-h_chfAK8 = []
+h_chfAK8 = []                    # *** add AK8 CSV
 h_nefAK8 = []
 h_cefAK8 = []
 h_ncAK8 = []
@@ -2294,6 +2295,8 @@ for ifile in files : #{ Loop over root files
         nearest2JetP4 = None
         nearestJetbDiscrim = 0.0
 
+# *** added ifarJet1, farJet2bDiscrim etc...
+
         if len(h_jetsAK4Pt.product()) > 0 :
             AK4Pt = h_jetsAK4Pt.product()
             AK4Eta = h_jetsAK4Eta.product()
@@ -2510,6 +2513,8 @@ for ifile in files : #{ Loop over root files
                     nearestJetP4 = jetP4
                     dRMin = dR
                     nearestJetbDiscrim = AK4CSV[i]
+
+
             # @@@ SemiLeptonic but not boosted case- here we want 2 AK4 jets one of which is b-tagged  and other which is approx the W mass 
             ## and both far from the lepton 
             elif Leptonic :
@@ -2541,7 +2546,7 @@ for ifile in files : #{ Loop over root files
                         nearest2JetP4 = jetP4
                         dR2Min = abs(dR2)
                         nearest2JetbDiscrim = AK4CSV[i]
-                
+
             #} End AK4Jet Loop
         if Leptonic and inearestJet < 0 :
             if options.verbose :
@@ -2828,6 +2833,7 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_jetsAK8nSubJets, h_jetsAK8nSubJets )
             event.getByLabel ( l_jetsAK8minmass, h_jetsAK8minmass )
             event.getByLabel ( l_jetsAK8Area, h_jetsAK8Area )
+            event.getByLabel ( l_jetsAK8CSV, h_jetsAK8CSV )
 
             
             event.getByLabel ( l_jetsAK8CmsTopTagSubjetIndex0 , h_jetsAK8CmsTopTagSubjetIndex0  )
@@ -2900,6 +2906,7 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodCEF = []
             ak8JetsGoodNC  = []
             ak8JetsGoodNCH = []
+            ak8JetsGoodCSV = []
             ak8JetsGoodCMSTTsubjetIndex0 = []
             ak8JetsGoodCMSTTsubjetIndex1 = []
             ak8JetsGoodCMSTTsubjetIndex2 = []
@@ -2919,7 +2926,8 @@ for ifile in files : #{ Loop over root files
                 AK8Mass            = h_jetsAK8Mass               .product()
                 AK8Energy          = h_jetsAK8Energy             .product()
                 AK8Y               = h_jetsAK8Y                  .product()
-        
+                AK8CSV             = h_jetsAK8CSV                .product()  
+
                 AK8JEC             = h_jetsAK8JEC                .product()
                 AK8JERup           = h_jetsAK8JERup              .product()
                 AK8JERdown         = h_jetsAK8JERdown            .product()
@@ -3206,6 +3214,7 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodCEF.append( cef )
                             ak8JetsGoodNC.append( nconstituents )
                             ak8JetsGoodNCH.append( nch )
+                            ak8JetsGoodCSV.append( AK8CSV[i]  )
                     #$ Cuts for Hadronic channel
                     else : 
                         if options.verbose:
@@ -3989,7 +3998,7 @@ for ifile in files : #{ Loop over root files
                         if options.verbose:
                             print '  tagged topTag1MassSDTau32 -> Accumulate ( ttmass = '+str(ttMass)+' pt = '+str(ak8JetsGood[0].Perp())+' tagged = '+str(topTag0MassSDTau32)+ ' evWeight '+ str(evWeight)
                         mttPredDist_tagMassSDTau32        .Accumulate(              ttMass, ak8JetsGood[0].Perp(), topTag0MassSDTau32, evWeight )
-                        # mttPredDist_modMass_tagMassSDTau32.Accumulate( ttMass_modMass_jet0, ak8JetsGood[0].Perp(), topTag0MassSDTau32, evWeight )
+                       # mttPredDist_modMass_tagMassSDTau32.Accumulate( ttMass_modMass_jet0, ak8JetsGood[0].Perp(), topTag0MassSDTau32, evWeight )
                         bin   = h_mistag_vs_jetPt_TagMassSDTau32.GetXaxis().FindBin( ak8JetsGood[0].Perp() )
                         rate  = h_mistag_vs_jetPt_TagMassSDTau32.GetBinContent(bin);
                         h_bkgdEst_tagMassSDTau32              .Fill(                    ttMass, evWeight*rate)
@@ -4123,8 +4132,9 @@ for ifile in files : #{ Loop over root files
 
 
 
-            #Ashley - fill semileptonic histograms
+           #Ashley - fill semileptonic histograms
             if SemiLeptonic:
+                typE = None # set type 2 if one of the AK8's is b-tagged else type 1
                 tagCand = 0 # Type 1 top procedure
                 
                 mAK8Pruned = ak8JetsGoodPrunMass[tagCand] 
@@ -4133,8 +4143,8 @@ for ifile in files : #{ Loop over root files
                 mAK8SDrop = ak8JetsGoodSDropMass[tagCand]
                 # Make sure there are top tags if we want to plot them
                 minMass = ak8JetsGoodMinMass[tagCand]
-                subjetBdisc = 0#AK8SubjetbDisc[tagCand]
-                subjetMass = 0#AK8SubjetMass[tagCand]
+                subjetBdisc = 0  #AK8SubjetbDisc[tagCand]
+                subjetMass  = 0  #AK8SubjetMass[tagCand]
                 nsubjets = ak8JetsGoodNSubJets[tagCand]
                 tau1 = ak8JetsGoodTau1[tagCand]  
                 tau2 = ak8JetsGoodTau2[tagCand] 
@@ -4149,18 +4159,70 @@ for ifile in files : #{ Loop over root files
                 else :
                     tau32 = -1.0
 
+                wtagCand = 0 # type 2 -w boson jet                               
+		        btagCand = 1 # type 2 -b quark 
+		
+                # assume the leading jet is the W
+                AK8Bdisc1 = ak8JetsGoodCSV[wtagCand]
+                AK8Bdisc2 = ak8JetsGoodCSV[btagCand]
+                
+                # switch w and b jets if b is leading jet
+                if  AK8Bdisc1 > AK8Bdisc2:
+                    AK8Bdisc2 = ak8JetsGoodCSV[wtagCand]
+                    AK8Bdisc1 = ak8JetsGoodCSV[btagCand]
+
+                if AK8Bdisc1 > options.bDiscMin:
+                    typE = 2
+                    mAK8Pruned = ak8JetsGoodPrunMass[wtagCand] 
+                    mAK8Filtered = ak8JetsGoodFiltMass[wtagCand] 
+                    mAK8Trimmed = ak8JetsGoodTrimMass[wtagCand]
+                    mAK8SDrop = ak8JetsGoodSDropMass[wtagCand]
+                    # Make sure there are top tags if we want to plot them
+                    minMass = ak8JetsGoodMinMass[wtagCand]
+                    subjetBdisc = 0  
+                    subjetMass  = 0  
+                    nsubjets = ak8JetsGoodNSubJets[wtagCand]
+                    tau1 = ak8JetsGoodTau1[wtagCand]  
+                    tau2 = ak8JetsGoodTau2[wtagCand] 
+                    tau3 = ak8JetsGoodTau3[wtagCand]
+                    #^ Plot Taus
+                    if tau1 > 0.0001 :
+                        tau21 = tau2 / tau1
+                    else :
+                        tau21 = -1.0
+                    if tau2 > 0.0001 :
+                        tau32 = tau3 / tau2
+                    else :
+                        tau32 = -1.0
+                else :
+                    typE = 1
 
                 # Instead of cutting-and-pasting everything a hundred times, just keep track
                 # of the stages of the selection
                 selectionsToPlot = []
                 channelsToPlot = []
 
-                #^ Plot Kinematics for leading AK8 Jet, using only those with soft drop mass > 10 GeV            
+  
+              #^ Plot Kinematics for leading AK8 Jet, using only those with soft drop mass > 10 GeV   
+      
                 channelsToPlot.append(ALL_NDX)
                 if eleJets :
                     channelsToPlot.append(EL_NDX)
                 if muJets :
                     channelsToPlot.append(MU_NDX)
+                if typE == 1 :
+                    channelsToPlot.append(ALL_TYPE1_NDX)
+                    if eleJets :
+                        channelsToPlot.append(EL_TYPE1_NDX)
+                    if muJets :
+                        channelsToPlot.append(MU_TYPE1_NDX)
+                if typE == 2 :
+                    channelsToPlot.append(ALL_TYPE2_NDX)
+                    if eleJets :
+                        channelsToPlot.append(EL_TYPE2_NDX)
+                    if muJets :
+                        channelsToPlot.append(MU_TYPE2_NDX) 
+                
 
                 if len(ak8JetsGoodSDropMass) > 0 :
                     selectionsToPlot.append( SEL_ALL_NDX )
@@ -4199,42 +4261,81 @@ for ifile in files : #{ Loop over root files
                         selectionsToPlot.append( SEL_NHF_HIGH_NDX )
 
                 for ichannel in channelsToPlot :
-                    for isel in selectionsToPlot: 
-                        h_ptAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Perp(), evWeight )
-                        h_etaAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Eta(), evWeight )
-                        h_phiAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Phi(), evWeight )
-                        h_yAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Rapidity(), evWeight )
-                        h_mAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].M(), evWeight )
-                        h_mprunedAK8[ichannel][isel].Fill( ak8JetsGoodPrunMass[tagCand], evWeight )
-                        h_mfilteredAK8[ichannel][isel].Fill( ak8JetsGoodFiltMass[tagCand], evWeight )
-                        h_mtrimmedAK8[ichannel][isel].Fill( ak8JetsGoodTrimMass[tagCand], evWeight )
-                        h_mSDropAK8[ichannel][isel].Fill( ak8JetsGoodSDropMass[tagCand], evWeight )
-                        h_minmassAK8[ichannel][isel].Fill( ak8JetsGoodMinMass[tagCand], evWeight )
-                        h_tau21AK8[ichannel][isel].Fill( tau21, evWeight )
-                        h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
-                        #h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[tagCand], evWeight )
-                        #h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[tagCand], evWeight )
-                        if len(ak8JetsGoodNHF) >0: 
-                            h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[tagCand], evWeight )
-                        if len(ak8JetsGoodCHF) >0: 
-                            h_chfAK8[ichannel][isel].Fill( ak8JetsGoodCHF[tagCand], evWeight )
-                        if len(ak8JetsGoodNEF) >0: 
-                            h_nefAK8[ichannel][isel].Fill( ak8JetsGoodNEF[tagCand], evWeight )
-                        if len(ak8JetsGoodCEF) >0: 
-                            h_cefAK8[ichannel][isel].Fill( ak8JetsGoodCEF[tagCand], evWeight )
-                        if len(ak8JetsGoodNC) >0: 
-                            h_ncAK8[ichannel][isel].Fill( ak8JetsGoodNC[tagCand], evWeight )
-                        if len(ak8JetsGoodNCH) >0:
-                            h_nchAK8[ichannel][isel].Fill( ak8JetsGoodNCH[tagCand], evWeight )
-                        if len(ak8JetsGoodNSubJets) >0:                    
-                            h_nsjAK8[ichannel][isel].Fill( ak8JetsGoodNSubJets[tagCand], evWeight )
-                        h_ptAK4[ichannel][isel].Fill( theLepJet.Perp(), evWeight )
-                        h_etaAK4[ichannel][isel].Fill( theLepJet.Eta(), evWeight )
-                        h_yAK4[ichannel][isel].Fill( theLepJet.Rapidity(), evWeight )
-                        h_phiAK4[ichannel][isel].Fill( theLepJet.Phi(), evWeight )
-                        h_mAK4[ichannel][isel].Fill( theLepJet.M(), evWeight )
-                        h_bdiscAK4[ichannel][isel].Fill( theLepJetBDisc, evWeight )
-                    
+                    if channelsToPlot[ichannel] > 5 : # greater than 5 are TYPE2-> ALL_TYPE2_NDX = 6, EL_TYPE2_NDX = 7, MU_TYPE2_NDX = 8
+                        for isel in selectionsToPlot: 
+                            h_ptAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Perp(), evWeight )
+                            h_etaAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Eta(), evWeight )
+                            h_phiAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Phi(), evWeight )
+                            h_yAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Rapidity(), evWeight )
+                            h_mAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].M(), evWeight )
+                            h_mprunedAK8[ichannel][isel].Fill( ak8JetsGoodPrunMass[wtagCand], evWeight )
+                            h_mfilteredAK8[ichannel][isel].Fill( ak8JetsGoodFiltMass[wtagCand], evWeight )
+                            h_mtrimmedAK8[ichannel][isel].Fill( ak8JetsGoodTrimMass[wtagCand], evWeight )
+                            h_mSDropAK8[ichannel][isel].Fill( ak8JetsGoodSDropMass[wtagCand], evWeight )
+                            h_minmassAK8[ichannel][isel].Fill( ak8JetsGoodMinMass[wtagCand], evWeight )
+                            h_tau21AK8[ichannel][isel].Fill( tau21, evWeight )
+                            h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
+                            #h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[tagCand], evWeight )
+                            #h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[tagCand], evWeight )
+                            h_BdiscAK8[ichannel][isel].Fill( ak8JetsGoodCSV[wtagCand], evWeight )
+                            if len(ak8JetsGoodNHF) >0: 
+                                h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[wtagCand], evWeight )
+                            if len(ak8JetsGoodCHF) >0: 
+                                h_chfAK8[ichannel][isel].Fill( ak8JetsGoodCHF[wtagCand], evWeight )
+                            if len(ak8JetsGoodNEF) >0: 
+                                h_nefAK8[ichannel][isel].Fill( ak8JetsGoodNEF[wtagCand], evWeight )
+                            if len(ak8JetsGoodCEF) >0: 
+                                h_cefAK8[ichannel][isel].Fill( ak8JetsGoodCEF[wtagCand], evWeight )
+                            if len(ak8JetsGoodNC) >0: 
+                                h_ncAK8[ichannel][isel].Fill( ak8JetsGoodNC[wtagCand], evWeight )
+                            if len(ak8JetsGoodNCH) >0:
+                                h_nchAK8[ichannel][isel].Fill( ak8JetsGoodNCH[wtagCand], evWeight )
+                            if len(ak8JetsGoodNSubJets) >0:                    
+                                h_nsjAK8[ichannel][isel].Fill( ak8JetsGoodNSubJets[wtagCand], evWeight )
+                            h_ptAK4[ichannel][isel].Fill( theLepJet.Perp(), evWeight )
+                            h_etaAK4[ichannel][isel].Fill( theLepJet.Eta(), evWeight )
+                            h_yAK4[ichannel][isel].Fill( theLepJet.Rapidity(), evWeight )
+                            h_phiAK4[ichannel][isel].Fill( theLepJet.Phi(), evWeight )
+                            h_mAK4[ichannel][isel].Fill( theLepJet.M(), evWeight )
+                            h_bdiscAK4[ichannel][isel].Fill( theLepJetBDisc, evWeight )
+                    else : # less than or equal 5 are TYPE1-> ALL_NDX = 0,EL_NDX = 1,MU_NDX = 2,ALL_TYPE1_NDX = 3, EL_TYPE1_NDX = 4 ...
+                        for isel in selectionsToPlot: 
+                            h_ptAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Perp(), evWeight )
+                            h_etaAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Eta(), evWeight )
+                            h_phiAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Phi(), evWeight )
+                            h_yAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Rapidity(), evWeight )
+                            h_mAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].M(), evWeight )
+                            h_mprunedAK8[ichannel][isel].Fill( ak8JetsGoodPrunMass[tagCand], evWeight )
+                            h_mfilteredAK8[ichannel][isel].Fill( ak8JetsGoodFiltMass[tagCand], evWeight )
+                            h_mtrimmedAK8[ichannel][isel].Fill( ak8JetsGoodTrimMass[tagCand], evWeight )
+                            h_mSDropAK8[ichannel][isel].Fill( ak8JetsGoodSDropMass[tagCand], evWeight )
+                            h_minmassAK8[ichannel][isel].Fill( ak8JetsGoodMinMass[tagCand], evWeight )
+                            h_tau21AK8[ichannel][isel].Fill( tau21, evWeight )
+                            h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
+                            #h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[tagCand], evWeight )
+                            #h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[tagCand], evWeight )
+                            h_BdiscAK8[ichannel][isel].Fill( ak8JetsGoodCSV[tagCand], evWeight )
+                            if len(ak8JetsGoodNHF) >0: 
+                                h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[tagCand], evWeight )
+                            if len(ak8JetsGoodCHF) >0: 
+                                h_chfAK8[ichannel][isel].Fill( ak8JetsGoodCHF[tagCand], evWeight )
+                            if len(ak8JetsGoodNEF) >0: 
+                                h_nefAK8[ichannel][isel].Fill( ak8JetsGoodNEF[tagCand], evWeight )
+                            if len(ak8JetsGoodCEF) >0: 
+                                h_cefAK8[ichannel][isel].Fill( ak8JetsGoodCEF[tagCand], evWeight )
+                            if len(ak8JetsGoodNC) >0: 
+                                h_ncAK8[ichannel][isel].Fill( ak8JetsGoodNC[tagCand], evWeight )
+                            if len(ak8JetsGoodNCH) >0:
+                                h_nchAK8[ichannel][isel].Fill( ak8JetsGoodNCH[tagCand], evWeight )
+                            if len(ak8JetsGoodNSubJets) >0:                    
+                                h_nsjAK8[ichannel][isel].Fill( ak8JetsGoodNSubJets[tagCand], evWeight )
+                            h_ptAK4[ichannel][isel].Fill( theLepJet.Perp(), evWeight )
+                            h_etaAK4[ichannel][isel].Fill( theLepJet.Eta(), evWeight )
+                            h_yAK4[ichannel][isel].Fill( theLepJet.Rapidity(), evWeight )
+                            h_phiAK4[ichannel][isel].Fill( theLepJet.Phi(), evWeight )
+                            h_mAK4[ichannel][isel].Fill( theLepJet.M(), evWeight )
+                            h_bdiscAK4[ichannel][isel].Fill( theLepJetBDisc, evWeight )
+                        
 
                                 
             #@ Tagging
@@ -4468,10 +4569,6 @@ for ifile in files : #{ Loop over root files
                     eleJetsEvents += 1
 
                 lepTopCandP4 = nuCandP4 + theLepton + bJetCandP4
-
-        # @@@ Add this later
-        #@ Semileptonic- but not boosted   
-
 
                 #if ttbarCandP4.M() < 1000.0 :
                 #    print 'Weird event : ' + str(event.object().id().luminosityBlock()) + ', ' + str(event.object().id().event())
