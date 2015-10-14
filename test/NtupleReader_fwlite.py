@@ -4160,7 +4160,7 @@ for ifile in files : #{ Loop over root files
                     tau32 = -1.0
 
                 wtagCand = 0 # type 2 -w boson jet                               
-		        btagCand = 1 # type 2 -b quark 
+		btagCand = 1 # type 2 -b quark 
 		
                 # assume the leading jet is the W
                 AK8Bdisc1 = ak8JetsGoodCSV[wtagCand]
