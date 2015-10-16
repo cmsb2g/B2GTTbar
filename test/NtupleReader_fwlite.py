@@ -781,6 +781,7 @@ if options.writeTree :
     FatJetCMSm02        = array('f', [-1.])
     FatJetCMSm12        = array('f', [-1.])
 
+    LeptonType          = array('i', [-1])
     LeptonPt            = array('f', [-1.])
     LeptonEta           = array('f', [-1.])
     LeptonPhi           = array('f', [-1.])
@@ -839,6 +840,7 @@ if options.writeTree :
     TreeSemiLept.Branch('FatJetCMSm01'        , FatJetCMSm01        ,  'FatJetCMSm01/F'        )
     TreeSemiLept.Branch('FatJetCMSm02'        , FatJetCMSm02        ,  'FatJetCMSm02/F'        )
     TreeSemiLept.Branch('FatJetCMSm12'        , FatJetCMSm12        ,  'FatJetCMSm12/F'        )
+    TreeSemiLept.Branch('LeptonType'          , LeptonType          ,  'LeptonType/I'          )
     TreeSemiLept.Branch('LeptonPt'            , LeptonPt            ,  'LeptonPt/F'            )
     TreeSemiLept.Branch('LeptonEta'           , LeptonEta           ,  'LeptonEta/F'           )
     TreeSemiLept.Branch('LeptonPhi'           , LeptonPhi           ,  'LeptonPhi/F'           )
@@ -1597,10 +1599,6 @@ for ifile in files : #{ Loop over root files
     if options.maxevents > 0 and Nevents > options.maxevents :
         break
 
-
-    # Event weight
-    evWeight = 1.0
-
     # Make sure the handles we want are in the files so we can
     # avoid leaking memory
     readFilters = True
@@ -1614,6 +1612,14 @@ for ifile in files : #{ Loop over root files
         continue
     # loop over events in this file
     for event in events: #{ Loop over events in root files
+
+
+        # Event weight
+        evWeight = 1.0
+        print '------'
+        print 'evWeight starts at : ' + str(evWeight)
+
+        
         if options.verbose : 
             print 'Checking event.'
         if options.maxevents > 0 and Nevents > options.maxevents :
@@ -1728,6 +1734,7 @@ for ifile in files : #{ Loop over root files
                 prescale = 1.0
 
             evWeight = evWeight * prescale
+            print 'after prescale, evWeight is : ' + str(evWeight)
             if passTrig == False :
                 continue
 
@@ -1793,6 +1800,7 @@ for ifile in files : #{ Loop over root files
                 ptWeight = reweightTopPt.Eval( topQuarkPt  )
                 if ptWeight > 0.0000001 : 
                     evWeight /= ptWeight
+                    print 'after top pt reweighting, evWeight is : ' + str(evWeight)
 
 
 
@@ -1821,6 +1829,7 @@ for ifile in files : #{ Loop over root files
             h_NtrueIntPU.Fill( puNTrueInt )
             
             evWeight *= hPU.GetBinContent( hPU.GetXaxis().FindBin( NPV) )
+            print 'after purw, evWeight is : ' + str(evWeight)
             
         h_NPVert.Fill( NPV, evWeight )
         
@@ -1829,6 +1838,31 @@ for ifile in files : #{ Loop over root files
                 print "Event has no good primary vertex."
             continue
             
+        if options.isMC and ( options.deweightFlat or options.negativeWeights ) : 
+            # Event weights
+            gotGenerator = event.getByLabel( l_generator, h_generator )
+            generator = h_generator.product()
+            if not gotGenerator :
+                continue
+            
+            if options.deweightFlat :
+                pthat = 0.0
+                if generator.hasBinningValues() :
+                    pthat = generator.binningValues()[0]
+                    evWeight *= 1/pow(pthat/15.,4.5)
+                    print 'after deweight flat, evWeight is : ' + str(evWeight)
+            if options.negativeWeights and gotGenerator :
+                evtWeights = generator.weights()
+                iweight = generator.weight()
+                if iweight < 0 : 
+                    evWeight *= -1.0
+                    Nevents_weighted -= 1
+                else :
+                    Nevents_weighted += 1
+                print 'after negative weights, evWeight is : ' + str(evWeight)
+                if options.verbose :
+                    print 'got negative weights for generator, weight = ' + str( iweight )
+                    print 'now Nevents_weight = ' + str(Nevents_weighted)
 
                              
         #@ RHO VALUE
@@ -2891,11 +2925,6 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_subjetsSoftDropSmearedPt    , h_subjetsSoftDropSmearedPt     )            
                    
 
-
-
-            if options.isMC and ( options.deweightFlat or options.negativeWeights ) : 
-                # Event weights
-                gotGenerator = event.getByLabel( l_generator, h_generator )
             
                 
             ak8JetsGood = []
@@ -3080,25 +3109,7 @@ for ifile in files : #{ Loop over root files
                         subjetP4 = subjetP4Raw* newJEC
                         SDsubjetPt.append( subjetP4.Perp() )
                         SDsubjetMass.append( subjetP4.M() )
-                        
-                if options.isMC :
-                    if options.deweightFlat :
-                        pthat = 0.0
-                        if h_generator.product().hasBinningValues() :
-                            pthat = h_generator.product().binningValues()[0]
-                            evWeight *= 1/pow(pthat/15.,4.5)
-                    if options.negativeWeights and gotGenerator :
-                        evtWeights = h_generator.product().weights()
-                        iweight = h_generator.product().weight()
-                        if iweight < 0 : 
-                            evWeight *= -1.0
-                            Nevents_weighted -= 1
-                        else :
-                            Nevents_weighted += 1
-                        if options.verbose :
-                            print 'got negative weights for generator, weight = ' + str( iweight )
-                            print 'now Nevents_weight = ' + str(Nevents_weighted)
-                        
+
  
                 
                 AK8Keys = h_jetsAK8Keys.product()
@@ -4190,13 +4201,16 @@ for ifile in files : #{ Loop over root files
                     wtagCand = 0 # type 2 -w boson jet                               
                     btagCand = 1 # type 2 -b quark 
                     # assume the leading jet is the W
-                    AK8Bdisc1 = ak8JetsGoodCSV[wtagCand]
-                    AK8Bdisc2 = ak8JetsGoodCSV[btagCand]
+                    AK8Bdisc0 = ak8JetsGoodCSV[wtagCand]
+                    AK8Bdisc1 = ak8JetsGoodCSV[btagCand]
                 
                     # switch w and b jets if b is leading jet
-                    if  AK8Bdisc1 > AK8Bdisc2:
-                        AK8Bdisc2 = ak8JetsGoodCSV[wtagCand]
+                    if  AK8Bdisc0 > AK8Bdisc1:
+                        wtagCand = 1
+                        btagCand = 0
+                        AK8Bdisc0 = ak8JetsGoodCSV[wtagCand]
                         AK8Bdisc1 = ak8JetsGoodCSV[btagCand]
+
 
                 if wtagCand != None and AK8Bdisc1 > options.bDiscMin:
                     typE = 2
@@ -4224,6 +4238,75 @@ for ifile in files : #{ Loop over root files
                 else :
                     typE = 1
 
+
+
+                if options.writeTree :
+                    leptonType = 0
+                    if eleJets :
+                        leptonType = 1
+                    elif muJets :
+                        leptonType = 2
+                    #~ Fill SemiLeptonic tree
+                    SemiLeptWeight      [0] =  evWeight
+                    FatJetPt            [0] = ak8JetsGood[0].Perp()
+                    FatJetEta           [0] = ak8JetsGood[0].Eta()
+                    FatJetPhi           [0] = ak8JetsGood[0].Phi()
+                    FatJetRap           [0] = ak8JetsGood[0].Rapidity()
+                    FatJetPx            [0] = ak8JetsGood[0].Px()
+                    FatJetPy            [0] = ak8JetsGood[0].Py()
+                    FatJetPz            [0] = ak8JetsGood[0].Pz()
+                    FatJetEnergy        [0] = ak8JetsGood[0].Energy()
+                    FatJetRhoRatio      [0] = pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
+                    FatJetMass          [0] = ak8JetsGood[0].M()
+                    FatJetMassSoftDrop  [0] = ak8JetsGoodSDropMass[0]
+                    FatJetMassPruned    [0] = ak8JetsGoodPrunMass[0]
+                    FatJetMassFiltered  [0] = ak8JetsGoodFiltMass[0]
+                    FatJetMassTrimmed   [0] = ak8JetsGoodTrimMass[0]
+                    FatJetTau1          [0] = ak8JetsGoodTau1[0]
+                    FatJetTau2          [0] = ak8JetsGoodTau2[0]
+                    FatJetTau3          [0] = ak8JetsGoodTau3[0]
+                    FatJetTau32         [0] = 1
+                    FatJetTau21         [0] = 1
+                    FatJetSDnsubjets    [0] = 1 # to add later                   
+                    FatJetSDbdisc0      [0] = 1 # to add later
+                    FatJetSDbdisc1      [0] = 1 # to add later
+                    FatJetSDmaxbdisc    [0] = 1 # to add later
+                    FatJetSDsubjet0pt   [0] = 1 # to add later
+                    FatJetSDsubjet0mass [0] = 1 # to add later
+                    FatJetSDsubjet1pt   [0] = 1 # to add later
+                    FatJetSDsubjet1mass [0] = 1 # to add later
+                    FatJetCMSmaxbdisc   [0] = 1 # to add later
+                    FatJetCMSnsubjets   [0] = 1 # to add later
+                    FatJetCMSminMass    [0] = ak8JetsGoodMinMass[0]
+                    FatJetCMSm01        [0] = 1 # to add later
+                    FatJetCMSm02        [0] = 1 # to add later
+                    FatJetCMSm12        [0] = 1 # to add later
+                    LeptonType          [0] = leptonType
+                    LeptonPt            [0] = theLepton.Perp()  
+                    LeptonEta           [0] = theLepton.Eta()
+                    LeptonPhi           [0] = theLepton.Phi()
+                    LeptonPx            [0] = theLepton.Px() 
+                    LeptonPy            [0] = theLepton.Py() 
+                    LeptonPz            [0] = theLepton.Pz()
+                    LeptonEnergy        [0] = theLepton.E() 
+                    SemiLepMETpx        [0] = metPx
+                    SemiLepMETpy        [0] = metPy
+                    SemiLepMETpt        [0] = metPt
+                    SemiLepMETphi       [0] = metPhi     
+                    SemiLepNvtx         [0] = NPV   
+                    SemiLepEventWeight  [0] = evWeight 
+                    AK4bDisc            [0] = nearestJetbDiscrim
+                    NearestAK4JetPt     [0] = nearestJetP4.Perp()
+                    NearestAK4JetEta    [0] = nearestJetP4.Eta()
+                    NearestAK4JetPhi    [0] = nearestJetP4.Phi()
+                    NearestAK4JetMass   [0] = nearestJetP4.M()
+                    # SemilLepTTmass      [0] = 
+                    # DeltaPhiLepFat      [0] = 
+
+
+                    TreeSemiLept.Fill()
+
+                    
                 # Instead of cutting-and-pasting everything a hundred times, just keep track
                 # of the stages of the selection
                 selectionsToPlot = []
@@ -4416,65 +4499,7 @@ for ifile in files : #{ Loop over root files
 
 
 
-            if options.writeTree :
-                #~ Fill SemiLeptonic tree
-                SemiLeptWeight      [0] =  evWeight
-                FatJetPt            [0] = ak8JetsGood[0].Perp()
-                FatJetEta           [0] = ak8JetsGood[0].Eta()
-                FatJetPhi           [0] = ak8JetsGood[0].Phi()
-                FatJetRap           [0] = ak8JetsGood[0].Rapidity()
-                FatJetPx            [0] = ak8JetsGood[0].Px()
-                FatJetPy            [0] = ak8JetsGood[0].Py()
-                FatJetPz            [0] = ak8JetsGood[0].Pz()
-                FatJetEnergy        [0] = ak8JetsGood[0].Energy()
-                FatJetRhoRatio      [0] = pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
-                FatJetMass          [0] = ak8JetsGood[0].M()
-                FatJetMassSoftDrop  [0] = ak8JetsGoodSDropMass[0]
-                FatJetMassPruned    [0] = ak8JetsGoodPrunMass[0]
-                FatJetMassFiltered  [0] = ak8JetsGoodFiltMass[0]
-                FatJetMassTrimmed   [0] = ak8JetsGoodTrimMass[0]
-                FatJetTau1          [0] = ak8JetsGoodTau1[0]
-                FatJetTau2          [0] = ak8JetsGoodTau2[0]
-                FatJetTau3          [0] = ak8JetsGoodTau3[0]
-                FatJetTau32         [0] = 1
-                FatJetTau21         [0] = 1
-                FatJetSDnsubjets    [0] = 1 # to add later                   
-                FatJetSDbdisc0      [0] = 1 # to add later
-                FatJetSDbdisc1      [0] = 1 # to add later
-                FatJetSDmaxbdisc    [0] = 1 # to add later
-                FatJetSDsubjet0pt   [0] = 1 # to add later
-                FatJetSDsubjet0mass [0] = 1 # to add later
-                FatJetSDsubjet1pt   [0] = 1 # to add later
-                FatJetSDsubjet1mass [0] = 1 # to add later
-                FatJetCMSmaxbdisc   [0] = 1 # to add later
-                FatJetCMSnsubjets   [0] = 1 # to add later
-                FatJetCMSminMass    [0] = ak8JetsGoodMinMass[0]
-                FatJetCMSm01        [0] = 1 # to add later
-                FatJetCMSm02        [0] = 1 # to add later
-                FatJetCMSm12        [0] = 1 # to add later
-                LeptonPt            [0] = theLepton.Perp()  
-                LeptonEta           [0] = theLepton.Eta()
-                LeptonPhi           [0] = theLepton.Phi()
-                LeptonPx            [0] = theLepton.Px() 
-                LeptonPy            [0] = theLepton.Py() 
-                LeptonPz            [0] = theLepton.Pz()
-                LeptonEnergy        [0] = theLepton.E() 
-                SemiLepMETpx        [0] = metPx
-                SemiLepMETpy        [0] = metPy
-                SemiLepMETpt        [0] = metPt
-                SemiLepMETphi       [0] = metPhi     
-                SemiLepNvtx         [0] = NPV   
-                SemiLepEventWeight  [0] = evWeight 
-                AK4bDisc            [0] = nearestJetbDiscrim
-                NearestAK4JetPt     [0] = nearestJetP4.Perp()
-                NearestAK4JetEta    [0] = nearestJetP4.Eta()
-                NearestAK4JetPhi    [0] = nearestJetP4.Phi()
-                NearestAK4JetMass   [0] = nearestJetP4.M()
-                # SemilLepTTmass      [0] = 
-                # DeltaPhiLepFat      [0] = 
 
-
-                TreeSemiLept.Fill()
 
 
                 
