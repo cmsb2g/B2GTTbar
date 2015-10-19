@@ -72,7 +72,7 @@ parser.add_option('--bDiscMin', type='float', action='store',
 #                  help='Minimum b discriminator - Tight')
 
 parser.add_option('--minMuonPt', type='float', action='store',
-                  default=25.,
+                  default=50.,
                   dest='minMuonPt',
                   help='Minimum PT for muons')
 
@@ -82,7 +82,7 @@ parser.add_option('--maxMuonEta', type='float', action='store',
                   help='Maximum muon pseudorapidity')
 
 parser.add_option('--minElectronPt', type='float', action='store',
-                  default=25.,
+                  default=50.,
                   dest='minElectronPt',
                   help='Minimum PT for electrons')
 
@@ -93,7 +93,7 @@ parser.add_option('--maxElectronEta', type='float', action='store',
 
 
 parser.add_option('--minAK4Pt', type='float', action='store',
-                  default=30.,
+                  default=50.,
                   dest='minAK4Pt',
                   help='Minimum PT for AK4 jets')
 
@@ -103,7 +103,7 @@ parser.add_option('--maxAK4Rapidity', type='float', action='store',
                   help='Maximum AK4 rapidity')
 
 parser.add_option('--minAK8Pt', type='float', action='store',
-                  default=400.,
+                  default=200.,
                   dest='minAK8Pt',
                   help='Minimum PT for AK8 jets')
 
@@ -1616,8 +1616,9 @@ for ifile in files : #{ Loop over root files
 
         # Event weight
         evWeight = 1.0
-        print '------'
-        print 'evWeight starts at : ' + str(evWeight)
+        if options.verbose: 
+            print '------'
+            print 'evWeight starts at : ' + str(evWeight)
 
         
         if options.verbose : 
@@ -1713,15 +1714,21 @@ for ifile in files : #{ Loop over root files
             if options.verbose : 
                 print '-----'
             for itrig in xrange(0, len(triggerNameStrings) ) :
-                if options.verbose : 
+                if options.verbose :
                     print "%60s : %12.0f" % ( triggerNameStrings[itrig] , triggerPrescales[itrig] )
 
                 ## if "HLT_Mu45_eta2p1" in triggerNameStrings[itrig] or  "HLT_Ele105_CaloIdVT_GsfTrkIdT" in triggerNameStrings[itrig] or "HLT_Ele27_eta2p1_WPLoose_Gsf" in triggerNameStrings[itrig] or \
                 ##   "HLT_Ele32_eta2p1_WPLoose_Gsf" in triggerNameStrings[itrig] or "HLT_Mu50" in triggerNameStrings[itrig] or \
                 ##   "HLT_IsoMu24_eta2p1" in triggerNameStrings[itrig] or "HLT_IsoMu27" in triggerNameStrings[itrig]  :
-                if "HLT_Mu45_eta2p1" in triggerNameStrings[itrig] or "HLT_Ele27_eta2p1_WPLoose_Gsf" in triggerNameStrings[itrig] or \
-                    "HLT_IsoMu27" in triggerNameStrings[itrig] or \
-                    "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50" in triggerNameStrings[itrig] :
+                if "HLT_IsoMu24_eta2p1" in triggerNameStrings[itrig] or \
+                    "HLT_Mu45_eta2p1" in triggerNameStrings[itrig]  or  \
+                    "HLT_Mu50_" in triggerNameStrings[itrig]  or  \
+                    "HLT_Mu40_eta2p1_PFJet200_PFJet50_v3" in triggerNameStrings[itrig] or \
+                    "HLT_IsoMu24_eta2p1" in triggerNameStrings[itrig] or \
+                    "HLT_Ele32_eta2p1_WPLoose_Gsf" in triggerNameStrings[itrig] or \
+                    "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50" in triggerNameStrings[itrig] or \
+                    "HLT_Ele105_CaloIdVT_GsfTrkIdT" in triggerNameStrings[itrig] or \
+                    "HLT_Ele115_CaloIdVT_GsfTrkIdT" in triggerNameStrings[itrig] :
                     if triggerBits[itrig] == 1 :
                         passTrig = True
                         if triggerPrescales[itrig] == 1.0 :
@@ -1734,7 +1741,8 @@ for ifile in files : #{ Loop over root files
                 prescale = 1.0
 
             evWeight = evWeight * prescale
-            print 'after prescale, evWeight is : ' + str(evWeight)
+            if options.verbose : 
+                print 'after prescale, evWeight is : ' + str(evWeight)
             if passTrig == False :
                 continue
 
@@ -1829,7 +1837,8 @@ for ifile in files : #{ Loop over root files
             h_NtrueIntPU.Fill( puNTrueInt )
             
             evWeight *= hPU.GetBinContent( hPU.GetXaxis().FindBin( NPV) )
-            print 'after purw, evWeight is : ' + str(evWeight)
+            if options.verbose :
+                print 'after purw, evWeight is : ' + str(evWeight)
             
         h_NPVert.Fill( NPV, evWeight )
         
@@ -1850,7 +1859,8 @@ for ifile in files : #{ Loop over root files
                 if generator.hasBinningValues() :
                     pthat = generator.binningValues()[0]
                     evWeight *= 1/pow(pthat/15.,4.5)
-                    print 'after deweight flat, evWeight is : ' + str(evWeight)
+                    if options.verbose : 
+                        print 'after deweight flat, evWeight is : ' + str(evWeight)
             if options.negativeWeights and gotGenerator :
                 evtWeights = generator.weights()
                 iweight = generator.weight()
@@ -1859,8 +1869,8 @@ for ifile in files : #{ Loop over root files
                     Nevents_weighted -= 1
                 else :
                     Nevents_weighted += 1
-                print 'after negative weights, evWeight is : ' + str(evWeight)
-                if options.verbose :
+                if options.verbose : 
+                    print 'after negative weights, evWeight is : ' + str(evWeight)
                     print 'got negative weights for generator, weight = ' + str( iweight )
                     print 'now Nevents_weight = ' + str(Nevents_weighted)
 
