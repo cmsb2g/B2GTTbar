@@ -465,6 +465,20 @@ l_jetsAK8SmearedPhi = ("jetsAK8" , "jetAK8SmearedPhi")
 h_jetsAK8SmearedPt = Handle("std::vector<float>")
 l_jetsAK8SmearedPt = ("jetsAK8" , "jetAK8SmearedPt")
 
+
+h_jetsAK8GenJetE = Handle("std::vector<float>")
+l_jetsAK8GenJetE = ("jetsAK8" , "jetAK8GenJetE")
+h_jetsAK8GenJetEta = Handle("std::vector<float>")
+l_jetsAK8GenJetEta = ("jetsAK8" , "jetAK8GenJetEta")
+h_jetsAK8GenJetPhi = Handle("std::vector<float>")
+l_jetsAK8GenJetPhi = ("jetsAK8" , "jetAK8GenJetPhi")
+h_jetsAK8GenJetPt = Handle("std::vector<float>")
+l_jetsAK8GenJetPt = ("jetsAK8" , "jetAK8GenJetPt")
+h_jetsAK8GenJetY = Handle("std::vector<float>")
+l_jetsAK8GenJetY = ("jetsAK8" , "jetAK8GenJetY")
+
+
+
 h_jetsAK8nHadEnergy = Handle("std::vector<float>")
 l_jetsAK8nHadEnergy = ("jetsAK8" , "jetAK8neutralHadronEnergy")
 h_jetsAK8nEMEnergy = Handle("std::vector<float>")
@@ -747,6 +761,10 @@ f.cd()
 if options.writeTree : 
     TreeSemiLept = ROOT.TTree("TreeSemiLept", "TreeSemiLept")
     SemiLeptWeight      = array('f', [0.] )
+    
+    FatJetCorr          = array('f', [-1.])
+    FatJetCorrUp        = array('f', [-1.])
+    FatJetCorrDn        = array('f', [-1.])
     FatJetPt            = array('f', [-1.])
     FatJetEta           = array('f', [-1.])
     FatJetPhi           = array('f', [-1.])
@@ -807,6 +825,9 @@ if options.writeTree :
     NearestAK4JetMass   = array('f', [-1.])
 
     TreeSemiLept.Branch('SemiLeptWeight'      , SemiLeptWeight      ,  'SemiLeptWeight/F'      )
+    TreeSemiLept.Branch('FatJetCorr'          , FatJetCorr          ,  'FatJetCorr/F'          )
+    TreeSemiLept.Branch('FatJetCorrUp'        , FatJetCorrUp        ,  'FatJetCorrUp/F'        )
+    TreeSemiLept.Branch('FatJetCorrDn'        , FatJetCorrDn        ,  'FatJetCorrDn/F'        )
     TreeSemiLept.Branch('FatJetPt'            , FatJetPt            ,  'FatJetPt/F'            )
     TreeSemiLept.Branch('FatJetEta'           , FatJetEta           ,  'FatJetEta/F'           )
     TreeSemiLept.Branch('FatJetPhi'           , FatJetPhi           ,  'FatJetPhi/F'           )
@@ -865,6 +886,9 @@ if options.writeTree :
 
     TreeAllHad = ROOT.TTree("TreeAllHad", "TreeAllHad")
     AllHadWeight      = array('f', [0.])
+    Jet0Corr          = array('f', [-1.])
+    Jet0CorrUp        = array('f', [-1.])
+    Jet0CorrDn        = array('f', [-1.])
     Jet0Pt            = array('f', [-1.])
     Jet0Eta           = array('f', [-1.])
     Jet0Phi           = array('f', [-1.])
@@ -899,6 +923,9 @@ if options.writeTree :
     Jet0CMSm02        = array('f', [-1.])
     Jet0CMSm12        = array('f', [-1.])
 
+    Jet1Corr          = array('f', [-1.])
+    Jet1CorrUp        = array('f', [-1.])
+    Jet1CorrDn        = array('f', [-1.])
     Jet1Pt            = array('f', [-1.])
     Jet1Eta           = array('f', [-1.])
     Jet1Phi           = array('f', [-1.])
@@ -948,6 +975,9 @@ if options.writeTree :
     DijetDeltaRap     = array('f', [-1.])
 
     TreeAllHad.Branch('AllHadWeight'      , AllHadWeight     ,  'AllHadWeight/F'     )
+    TreeAllHad.Branch('Jet0Corr'          , Jet0Corr         , 'Jet0Corr/F'          )
+    TreeAllHad.Branch('Jet0CorrUp'        , Jet0CorrUp       , 'Jet0CorrUp/F'        )
+    TreeAllHad.Branch('Jet0CorrDn'        , Jet0CorrDn       , 'Jet0CorrDn/F'        )
     TreeAllHad.Branch('Jet0Pt'            , Jet0Pt           , 'Jet0Pt/F'            )
     TreeAllHad.Branch('Jet0Eta'           , Jet0Eta          , 'Jet0Eta/F'           )
     TreeAllHad.Branch('Jet0Phi'           , Jet0Phi          , 'Jet0Phi/F'           )
@@ -982,6 +1012,9 @@ if options.writeTree :
     TreeAllHad.Branch('Jet0CMSm02'        , Jet0CMSm02       , 'Jet0CMSm02/F'        )
     TreeAllHad.Branch('Jet0CMSm12'        , Jet0CMSm12       , 'Jet0CMSm12/F'        )
 
+    TreeAllHad.Branch('Jet1Corr'          , Jet1Corr         , 'Jet1Corr/F'          )
+    TreeAllHad.Branch('Jet1CorrUp'        , Jet1CorrUp       , 'Jet1CorrUp/F'        )
+    TreeAllHad.Branch('Jet1CorrDn'        , Jet1CorrDn       , 'Jet1CorrDn/F'        )
     TreeAllHad.Branch('Jet1Pt'            , Jet1Pt           , 'Jet1Pt/F'            )
     TreeAllHad.Branch('Jet1Eta'           , Jet1Eta          , 'Jet1Eta/F'           )
     TreeAllHad.Branch('Jet1Phi'           , Jet1Phi          , 'Jet1Phi/F'           )
@@ -1392,6 +1425,8 @@ if options.isMC :
     L2JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_50nsV5_MC_L2Relative_AK4PFchs.txt");
     print 'Getting L1 for AK4 MC'
     L1JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_50nsV5_MC_L1FastJet_AK4PFchs.txt");
+    print 'Getting Uncertainty for AK4 MC'
+    UncertJetAK4  = ROOT.JetCorrectionUncertainty("JECs/Summer15_50nsV5_MC_Uncertainty_AK4PFchs.txt");
 
 
     print 'Getting L3 for AK8 MC'
@@ -1400,6 +1435,8 @@ if options.isMC :
     L2JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_50nsV5_MC_L2Relative_AK8PFchs.txt");
     print 'Getting L1 for AK8 MC'
     L1JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_50nsV5_MC_L1FastJet_AK8PFchs.txt");
+    print 'Getting Uncertainty for AK8 MC'
+    UncertJetAK8  = ROOT.JetCorrectionUncertainty("JECs/Summer15_50nsV5_MC_Uncertainty_AK4PFchs.txt");
 else :
     print 'Getting L3 for AK4 DATA'
     L3JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV5_DATA_L3Absolute_AK4PFchs.txt");
@@ -1410,6 +1447,8 @@ else :
     # for data only :
     print 'Getting L2L3Residual for AK4 DATA'
     ResJetParAK4 = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV5_DATA_L2L3Residual_AK4PFchs.txt");
+    print 'Getting Uncertainty for AK4 DATA'
+    UncertJetAK4  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV5_DATA_Uncertainty_AK4PFchs.txt");
 
     print 'Getting L3 for AK8 DATA'
     L3JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV5_DATA_L3Absolute_AK8PFchs.txt");
@@ -1420,6 +1459,10 @@ else :
     # for data only :
     print 'Getting L2L3Residual for AK8 DATA'
     ResJetParAK8 = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV5_DATA_L2L3Residual_AK8PFchs.txt");
+    print 'Getting Uncertainty for AK8 DATA'
+    UncertJetAK8  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV5_DATA_Uncertainty_AK8PFchs.txt");
+
+
 
 
     
@@ -1451,6 +1494,45 @@ if not options.isMC :
     vParJecAK8.push_back(ResJetParAK8)
 
 ak8JetCorrector = ROOT.FactorizedJetCorrector(vParJecAK8)
+
+
+
+
+# def getJER(jetEta, sysType) :
+#     """
+#     Here, jetEta should be the jet pseudorapidity, and sysType is :
+#         nominal : 0
+#         down    : -1
+#         up      : +1
+#     """
+
+#     jerSF = 1.0
+
+#     if ( (sysType==0 or sysType==-1 or sysType==1) == False):
+#         print "ERROR: Can't get JER! use type=0 (nom), -1 (down), +1 (up)"
+#         return float(jerSF)
+
+#     # Values from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
+#     etamin = [0.0,0.5,1.1,1.7,2.3,2.8,3.2]
+#     etamax = [0.5,1.1,1.7,2.3,2.8,3.2,5.0]
+    
+#     scale_nom = [1.079,1.099,1.121,1.208,1.254,1.395,1.056]
+#     scale_dn  = [1.053,1.071,1.092,1.162,1.192,1.332,0.865]
+#     scale_up  = [1.105,1.127,1.150,1.254,1.316,1.458,1.247]
+
+#     for iSF in range(0,len(scale_nom)) :
+#         if abs(jetEta) >= etamin[iSF] and abs(jetEta) < etamax[iSF] :
+#             if sysType < 0 :
+#                 jerSF = scale_dn[iSF]
+#             elif sysType > 0 :
+#                 jerSF = scale_up[iSF]
+#             else :
+#                 jerSF = scale_nom[iSF]
+#             break
+
+#     return float(jerSF)
+
+
 
 
 #@ Run / lumi / event numbers
@@ -2864,10 +2946,24 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_jetsAK8Energy, h_jetsAK8Energy )
             event.getByLabel ( l_jetsAK8Y, h_jetsAK8Y )
 
-
             event.getByLabel ( l_jetsAK8JEC, h_jetsAK8JEC )
-            event.getByLabel ( l_jetsAK8JERup, h_jetsAK8JERup )
-            event.getByLabel ( l_jetsAK8JERdown, h_jetsAK8JERdown )
+            
+            event.getByLabel ( l_jetsAK8JERup     , h_jetsAK8JERup )
+            event.getByLabel ( l_jetsAK8JERdown   , h_jetsAK8JERdown )
+            event.getByLabel ( l_jetsAK8SmearedE  , h_jetsAK8SmearedE )
+            event.getByLabel ( l_jetsAK8SmearedPhi, h_jetsAK8SmearedPhi )
+            event.getByLabel ( l_jetsAK8SmearedEta, h_jetsAK8SmearedEta )
+            event.getByLabel ( l_jetsAK8SmearedPt , h_jetsAK8SmearedPt )
+
+            event.getByLabel ( l_jetsAK8GenJetE   , h_jetsAK8GenJetE )
+            event.getByLabel ( l_jetsAK8GenJetEta , h_jetsAK8GenJetEta )
+            event.getByLabel ( l_jetsAK8GenJetPhi , h_jetsAK8GenJetPhi )
+            event.getByLabel ( l_jetsAK8GenJetPt  , h_jetsAK8GenJetPt )
+            event.getByLabel ( l_jetsAK8GenJetY   , h_jetsAK8GenJetY )
+
+
+
+
 
             event.getByLabel ( l_jetsAK8nHadEnergy, h_jetsAK8nHadEnergy)
             event.getByLabel ( l_jetsAK8nEMEnergy, h_jetsAK8nEMEnergy )
@@ -2938,6 +3034,8 @@ for ifile in files : #{ Loop over root files
             
                 
             ak8JetsGood = []
+            ak8JetsGoodCorrUp   = []
+            ak8JetsGoodCorrDn   = []
             ak8JetsGoodTrimMass = []
             ak8JetsGoodPrunMass = []
             ak8JetsGoodFiltMass = []
@@ -2966,6 +3064,9 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodL1cor = []            
             ak8JetsGoodL2cor = []            
             ak8JetsGoodL3cor = []
+            ak8JetsGoodCorrFactor = []
+            ak8JetsGoodCorrUpFactor = []
+            ak8JetsGoodCorrDnFactor = []
 
             ak8JetHt = 0     
 
@@ -2979,9 +3080,23 @@ for ifile in files : #{ Loop over root files
                 AK8CSV             = h_jetsAK8CSV                .product()  
 
                 AK8JEC             = h_jetsAK8JEC                .product()
+                
                 AK8JERup           = h_jetsAK8JERup              .product()
                 AK8JERdown         = h_jetsAK8JERdown            .product()
-        
+                AK8SmearedE        = h_jetsAK8SmearedE           .product()
+                AK8SmearedPhi      = h_jetsAK8SmearedPhi         .product()
+                AK8SmearedEta      = h_jetsAK8SmearedEta         .product()
+                AK8SmearedPt       = h_jetsAK8SmearedPt          .product()
+                 
+                AK8GenJetE         = h_jetsAK8GenJetE            .product()
+                AK8GenJetEta       = h_jetsAK8GenJetEta          .product()
+                AK8GenJetPhi       = h_jetsAK8GenJetPhi          .product()
+                AK8GenJetPt        = h_jetsAK8GenJetPt           .product()
+                AK8GenJetY         = h_jetsAK8GenJetY            .product()
+
+
+
+
                 AK8nHadE           = h_jetsAK8nHadEnergy         .product()
                 AK8nEME            = h_jetsAK8nEMEnergy          .product()
                 AK8cHadE           = h_jetsAK8cHadEnergy         .product()
@@ -3152,7 +3267,26 @@ for ifile in files : #{ Loop over root files
                       nconstituents > 1 and \
                       nch > 0
 
+                    # JER
+                    if options.verbose:
+                        print "AK8JERup       "  + str( AK8JERup        [i] )
+                        print "AK8JERdown     "  + str( AK8JERdown      [i] )
+                        print "AK8SmearedE    "  + str( AK8SmearedE     [i] )  
+                        print "AK8SmearedPhi  "  + str( AK8SmearedPhi   [i] )  
+                        print "AK8SmearedEta  "  + str( AK8SmearedEta   [i] )  
+                        print "AK8SmearedPt   "  + str( AK8SmearedPt    [i] )  
+                        print "AK8PtRaw       "  + str( AK8P4Raw.Perp() )  
+                        print "AK8PtB2GCorr   "  + str( AK8Pt    [i] )  
+                    # AK8GenJetE  
+                    # AK8GenJetEta
+                    # AK8GenJetPhi
+                    # AK8GenJetPt 
+                    # AK8GenJetY  
+                    
                     #@ JEC Scaling for AK8 Jets
+                    corrDn = 1.0
+                    corrUp = 1.0
+
                     ak8JetCorrector.setJetEta( AK8P4Raw.Eta() )
                     ak8JetCorrector.setJetPt ( AK8P4Raw.Perp() )
                     ak8JetCorrector.setJetE  ( AK8P4Raw.E() )
@@ -3166,6 +3300,28 @@ for ifile in files : #{ Loop over root files
                     AK8PrunedM.append( AK8PrunedMRaw[i] * newJEC )
                     AK8FilteredM.append( AK8FilteredMRaw[i] * newJEC )
                     AK8SDropM.append( AK8SDropMRaw[i] * newJEC )
+
+                    # JEC Uncert
+                    if not UncertJetAK8:
+                      print "UncertJetAK8 not available"
+                    corrDn *= newJEC
+                    corrUp *= newJEC
+                    UncertJetAK8.setJetPhi(  AK8P4Raw.Phi()  )
+                    UncertJetAK8.setJetEta(  AK8P4Raw.Eta()  )
+                    UncertJetAK8.setJetPt(   AK8P4Corr.Perp()  )
+                    corrDn -= UncertJetAK8.getUncertainty(0)
+                    UncertJetAK8.setJetPhi(  AK8P4Raw.Phi()  )
+                    UncertJetAK8.setJetEta(  AK8P4Raw.Eta()  )
+                    UncertJetAK8.setJetPt(   AK8P4Corr.Perp()  )
+                    corrUp += UncertJetAK8.getUncertainty(1)
+
+                    AK8P4CorrDn = AK8P4Raw*corrDn
+                    AK8P4CorrUp = AK8P4Raw*corrUp
+
+                    if options.verbose:
+                        print 'newJEC '+str(newJEC)
+                        print 'corrDn '+str(corrDn)
+                        print 'corrUp '+str(corrUp)
 
                     # avoid "%MSG-e FactorizedJetCorrectorCalculator: jet eta is not set" errors
                     ak8JetCorrector.setJetEta( AK8P4Raw.Eta() )
@@ -3234,6 +3390,8 @@ for ifile in files : #{ Loop over root files
                             #          print 'N AK8 trimmed masses = ' + str( len(AK8TrimmedM) )  
                             #           print 'Next event'                    
                             ak8JetsGood.append(AK8P4Corr)
+                            ak8JetsGoodCorrUp.append(AK8P4CorrUp)
+                            ak8JetsGoodCorrDn.append(AK8P4CorrDn)
                             ak8JetsGoodTrimMass.append( AK8TrimmedM[i])
                             ak8JetsGoodPrunMass.append( AK8PrunedM[i])
                             ak8JetsGoodFiltMass.append( AK8FilteredM[i])
@@ -3259,6 +3417,12 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodNC.append( nconstituents )
                             ak8JetsGoodNCH.append( nch )
                             ak8JetsGoodCSV.append( AK8CSV[i]  )
+                            ak8JetsGoodL1cor.append( L1cor )           
+                            ak8JetsGoodL2cor.append( L2cor )           
+                            ak8JetsGoodL3cor.append( L3cor )  
+                            ak8JetsGoodCorrFactor.append( newJEC )
+                            ak8JetsGoodCorrUpFactor.append( corrUp )
+                            ak8JetsGoodCorrDnFactor.append( corrDn )
                     #$ Cuts for Hadronic channel
                     else : 
                         if options.verbose:
@@ -3271,6 +3435,8 @@ for ifile in files : #{ Loop over root files
                             print 'AK8CMSTTsubjetIndex3[i] '+str(AK8CMSTTsubjetIndex3[i] )
 
                         ak8JetsGood             .append( AK8P4Corr       )
+                        ak8JetsGoodCorrUp       .append( AK8P4CorrUp     )
+                        ak8JetsGoodCorrDn       .append( AK8P4CorrDn     )
                         ak8JetsGoodTrimMass     .append( AK8TrimmedM[i]  )
                         ak8JetsGoodPrunMass     .append( AK8PrunedM[i]   )
                         ak8JetsGoodFiltMass     .append( AK8FilteredM[i] )
@@ -3299,6 +3465,9 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodL1cor.append( L1cor )           
                         ak8JetsGoodL2cor.append( L2cor )           
                         ak8JetsGoodL3cor.append( L3cor )  
+                        ak8JetsGoodCorrFactor.append( newJEC )
+                        ak8JetsGoodCorrUpFactor.append( corrUp )
+                        ak8JetsGoodCorrDnFactor.append( corrDn )
 
 
                 #} End AK8 Loop
@@ -4089,6 +4258,9 @@ for ifile in files : #{ Loop over root files
                 #~ FILL ALL-HADRONIC TREE
                 if options.writeTree :
                     AllHadWeight       [0] =  evWeight
+                    Jet0Corr           [0] =  ak8JetsGoodCorrFactor[0]
+                    Jet0CorrUp         [0] =  ak8JetsGoodCorrUpFactor[0]
+                    Jet0CorrDn         [0] =  ak8JetsGoodCorrDnFactor[0]
                     Jet0Pt             [0] =  ak8JetsGood[0].Perp()
                     Jet0Eta            [0] =  ak8JetsGood[0].Eta()
                     Jet0Phi            [0] =  ak8JetsGood[0].Phi()
@@ -4123,6 +4295,10 @@ for ifile in files : #{ Loop over root files
                     Jet0CMSm02         [0] =  1 # to add later
                     Jet0CMSm12         [0] =  1 # to add later
 
+
+                    Jet1Corr           [0] =  ak8JetsGoodCorrFactor[0]
+                    Jet1CorrUp         [0] =  ak8JetsGoodCorrUpFactor[0]
+                    Jet1CorrDn         [0] =  ak8JetsGoodCorrDnFactor[0]
                     Jet1Pt             [0] =  ak8JetsGood[1].Perp()
                     Jet1Eta            [0] =  ak8JetsGood[1].Eta()
                     Jet1Phi            [0] =  ak8JetsGood[1].Phi()
@@ -4258,6 +4434,9 @@ for ifile in files : #{ Loop over root files
                         leptonType = 2
                     #~ Fill SemiLeptonic tree
                     SemiLeptWeight      [0] =  evWeight
+                    FatJetCorr          [0] =  ak8JetsGoodCorrFactor[0]
+                    FatJetCorrUp        [0] =  ak8JetsGoodCorrUpFactor[0]
+                    FatJetCorrDn        [0] =  ak8JetsGoodCorrDnFactor[0]
                     FatJetPt            [0] = ak8JetsGood[0].Perp()
                     FatJetEta           [0] = ak8JetsGood[0].Eta()
                     FatJetPhi           [0] = ak8JetsGood[0].Phi()
