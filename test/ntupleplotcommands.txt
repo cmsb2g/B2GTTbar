@@ -1,0 +1,99 @@
+
+
+
+python B2GNtuplePlotterOnTheFly.py --variable FatJetMassPruned --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep mu --filestr "mu" --nbins 26 --minval 20 --maxval 150
+
+python B2GNtuplePlotterOnTheFly.py --variable FatJetMassPruned --cut "LeptonPt > 110. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep el --filestr "el" --nbins 26 --minval 20 --maxval 150
+
+python B2GNtuplePlotterOnTheFly.py --variable FatJetMassPruned --cut "( (LeptonType == 1 && LeptonPt > 110.) || (LeptonType ==2 && LeptonPt > 55.)) && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --filestr "all" --nbins 26 --minval 20 --maxval 150
+
+
+
+
+
+
+python B2GNtuplePlotterOnTheFly.py --variable FatJetMassSoftDrop --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep mu --filestr "mu" --nbins 26 --minval 20 --maxval 150
+
+python B2GNtuplePlotterOnTheFly.py --variable FatJetMassSoftDrop --cut "LeptonPt > 110. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep el --filestr "el" --nbins 26 --minval 20 --maxval 150
+
+python B2GNtuplePlotterOnTheFly.py --variable FatJetMassSoftDrop --cut "( (LeptonType == 1 && LeptonPt > 110.) || (LeptonType ==2 && LeptonPt > 55.)) && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --filestr "all" --nbins 26 --minval 20 --maxval 150
+
+
+
+
+
+
+
+python B2GNtuplePlotterOnTheFly.py --variable NearestAK4JetPt --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep mu --filestr "mu" --nbins 100 --maxval 1000
+
+python B2GNtuplePlotterOnTheFly.py --variable NearestAK4JetPt --cut "LeptonPt > 110. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep el --filestr "el" --nbins 100 --maxval 1000
+
+python B2GNtuplePlotterOnTheFly.py --variable NearestAK4JetPt --cut "( (LeptonType == 1 && LeptonPt > 110.) || (LeptonType ==2 && LeptonPt > 55.)) && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --filestr "all" --nbins 100 --maxval 1000
+
+
+
+
+python B2GNtuplePlotterOnTheFly.py --variable NearestAK4JetPt --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep mu --filestr "mu" --nbins 100 --maxval 1000
+
+python B2GNtuplePlotterOnTheFly.py --variable NearestAK4JetPt --cut "LeptonPt > 110. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep el --filestr "el" --nbins 100 --maxval 1000
+
+python B2GNtuplePlotterOnTheFly.py --variable NearestAK4JetPt --cut "( (LeptonType == 1 && LeptonPt > 110.) || (LeptonType ==2 && LeptonPt > 55.)) && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --filestr "all" --nbins 100 --maxval 1000
+
+
+
+
+
+
+
+python B2GNtuplePlotterOnTheFly.py --variable "LeptonPt + SemiLepMETpt" --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep mu --filestr "mu" --nbins 100 --maxval 1000
+
+python B2GNtuplePlotterOnTheFly.py --variable "LeptonPt + SemiLepMETpt" --cut "LeptonPt > 110. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep el --filestr "el" --nbins 100 --maxval 1000
+
+python B2GNtuplePlotterOnTheFly.py --variable "LeptonPt + SemiLepMETpt" --cut "( (LeptonType == 1 && LeptonPt > 110.) || (LeptonType ==2 && LeptonPt > 55.)) && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --filestr "all" --nbins 100 --maxval 1000
+
+
+
+
+
+
+python B2GNtuplePlotterOnTheFly.py --variable "LeptonPt" --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep mu --filestr "mu" --nbins 25 --maxval 500
+
+python B2GNtuplePlotterOnTheFly.py --variable "LeptonPt" --cut "LeptonPt > 110. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --lep el --filestr "el" --nbins 25 --maxval 500
+
+python B2GNtuplePlotterOnTheFly.py --variable "LeptonPt" --cut "( (LeptonType == 1 && LeptonPt > 110.) || (LeptonType ==2 && LeptonPt > 55.)) && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetTau2/FatJetTau1 < 0.6 && AK4bDisc > 0.7" --filestr "all" --nbins 25 --maxval 500
+
+
+
+
+
+
+python B2GNtuplePlotterOnTheFly.py --variable "FatJetTau2/FatJetTau1" --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetMassPruned > 65. && FatJetMassPruned < 105. && AK4bDisc > 0.7" --lep mu --filestr "mu" --nbins 25 --maxval 1.0
+
+python B2GNtuplePlotterOnTheFly.py --variable "FatJetTau2/FatJetTau1" --cut "LeptonPt > 110. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetMassPruned > 65. && FatJetMassPruned < 105. && AK4bDisc > 0.7" --lep el --filestr "el" --nbins 25 --maxval 1.0
+
+python B2GNtuplePlotterOnTheFly.py --variable "FatJetTau2/FatJetTau1" --cut "( (LeptonType == 1 && LeptonPt > 110.) || (LeptonType ==2 && LeptonPt > 55.)) && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 200 && FatJetMassPruned > 65. && FatJetMassPruned < 105. && AK4bDisc > 0.7" --filestr "all" --nbins 25 --maxval 1.0
+
+
+
+
+
+
+
+python B2GNtuplePlotterOnTheFly.py --variable FatJetMassSoftDrop --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 400 && FatJetTau3/FatJetTau2 < 0.6" --lep mu --filestr "mu_toptag" --nbins 30 --minval 0 --maxval 300
+
+python B2GNtuplePlotterOnTheFly.py --variable FatJetMassSoftDrop --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 400 && FatJetTau3/FatJetTau2 < 0.6" --lep el --filestr "el_toptag" --nbins 30 --minval 0 --maxval 300
+
+python B2GNtuplePlotterOnTheFly.py --variable FatJetMassSoftDrop --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 400 && FatJetTau3/FatJetTau2 < 0.6" --filestr "all_toptag" --nbins 30 --minval 0 --maxval 300
+
+
+
+
+
+
+
+python B2GNtuplePlotterOnTheFly.py --variable "FatJetTau3/FatJetTau2" --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 400 && FatJetMassSoftDrop > 105. && FatJetMassSoftDrop < 250. && AK4bDisc > 0.7" --lep mu --filestr "mu" --nbins 25 --maxval 1.0 --legleft
+
+python B2GNtuplePlotterOnTheFly.py --variable "FatJetTau3/FatJetTau2" --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 400 && FatJetMassSoftDrop > 105. && FatJetMassSoftDrop < 250. && AK4bDisc > 0.7" --lep el --filestr "el" --nbins 25 --maxval 1.0 --legleft
+
+python B2GNtuplePlotterOnTheFly.py --variable "FatJetTau3/FatJetTau2" --cut "LeptonPt > 55. && NearestAK4JetPt > 50. && LeptonPt + SemiLepMETpt > 250. && FatJetPt > 400 && FatJetMassSoftDrop > 105. && FatJetMassSoftDrop < 250. && AK4bDisc > 0.7" --filestr "all" --nbins 25 --maxval 1.0 --legleft
+
