@@ -29,8 +29,8 @@ parser.add_option('--outname', type='string', action='store',
                   dest='outname',
                   help='Name of output file')
 
-parser.add_option('--verbose', action='store_true',
-                  default=False,
+parser.add_option('--verbose', type='int', action='store',
+                  default=0,
                   dest='verbose',
                   help='Print debugging info')
 
@@ -113,6 +113,13 @@ parser.add_option('--maxAK8Rapidity', type='float', action='store',
                   help='Maximum AK8 rapidity')
 
 
+
+parser.add_option('--hemisphereDPhi', type='float', action='store',
+                  default=1.0,
+                  dest='hemisphereDPhi',
+                  help='DR cut to define hemispheres for semilep analysis')
+
+
 parser.add_option('--minMassCut', type='float', action='store',
                   default=50.,
                   dest='minMassCut',
@@ -174,6 +181,10 @@ parser.add_option('--useTriangular', metavar='F', action='store_true',
                   dest='useTriangular',
                   help='Use triangular cut to reject electron QCD?')
 
+parser.add_option('--ignore2D', metavar='I', action='store_true',
+                  default=False,
+                  dest='ignore2D',
+                  help='Ignore the 2D cut')
 
 parser.add_option('--BkgEst', action='store_true',
                   default=False,
@@ -316,6 +327,9 @@ h_muDz = Handle("std::vector<float>")
 l_muDz = ("muons", "muDz")
 h_muCharge = Handle("std::vector<float>")
 l_muCharge = ("muons", "muCharge")
+
+h_muIso04 = Handle("std::vector<float>")
+l_muIso04 = ("muons", "muIso04")
 
 h_muKey = Handle("std::vector<std::vector<int> >")
 l_muKey = ("muonKeys")
@@ -746,6 +760,7 @@ f.cd()
 
 if options.writeTree : 
     TreeSemiLept = ROOT.TTree("TreeSemiLept", "TreeSemiLept")
+    SemiLeptTrig        = array('i', [0]  )
     SemiLeptWeight      = array('f', [0.] )
     FatJetPt            = array('f', [-1.])
     FatJetEta           = array('f', [-1.])
@@ -789,6 +804,9 @@ if options.writeTree :
     LeptonPy            = array('f', [-1.])
     LeptonPz            = array('f', [-1.])
     LeptonEnergy        = array('f', [-1.])
+    LeptonIso           = array('f', [-1.])
+    LeptonPtRel         = array('f', [-1.])
+    LeptonDRMin         = array('f', [-1.])
 
     SemiLepMETpx        = array('f', [-1.])
     SemiLepMETpy        = array('f', [-1.])
@@ -805,7 +823,8 @@ if options.writeTree :
     NearestAK4JetEta    = array('f', [-1.])
     NearestAK4JetPhi    = array('f', [-1.])
     NearestAK4JetMass   = array('f', [-1.])
-
+    
+    TreeSemiLept.Branch('SemiLeptTrig'        , SemiLeptTrig        ,  'SemiLeptTrig/I'      )
     TreeSemiLept.Branch('SemiLeptWeight'      , SemiLeptWeight      ,  'SemiLeptWeight/F'      )
     TreeSemiLept.Branch('FatJetPt'            , FatJetPt            ,  'FatJetPt/F'            )
     TreeSemiLept.Branch('FatJetEta'           , FatJetEta           ,  'FatJetEta/F'           )
@@ -848,6 +867,9 @@ if options.writeTree :
     TreeSemiLept.Branch('LeptonPy'            , LeptonPy            ,  'LeptonPy/F'            )
     TreeSemiLept.Branch('LeptonPz'            , LeptonPz            ,  'LeptonPz/F'            )
     TreeSemiLept.Branch('LeptonEnergy'        , LeptonEnergy        ,  'LeptonEnergy/F'        )
+    TreeSemiLept.Branch('LeptonIso'           , LeptonIso           ,  'LeptonIso/F'           )
+    TreeSemiLept.Branch('LeptonPtRel'         , LeptonPtRel         ,  'LeptonPtRel/F'         )
+    TreeSemiLept.Branch('LeptonDRMin'         , LeptonDRMin         ,  'LeptonDRMin/F'         )        
     TreeSemiLept.Branch('SemiLepMETpx'        , SemiLepMETpx        ,  'SemiLepMETpx/F'        )
     TreeSemiLept.Branch('SemiLepMETpy'        , SemiLepMETpy        ,  'SemiLepMETpy/F'        )
     TreeSemiLept.Branch('SemiLepMETpt'        , SemiLepMETpt        ,  'SemiLepMETpt/F'        )
@@ -1590,6 +1612,20 @@ for ifile in filesraw : #{ Loop over text file and find root files linked
         print 'Added ' + s
         #} End loop over txt file
 
+
+
+trigsToRun = [
+    "HLT_IsoMu24_eta2p1",
+    "HLT_Mu45_eta2p1",
+    "HLT_Mu50_",
+    "HLT_Mu40_eta2p1_PFJet200_PFJet50",
+    "HLT_IsoMu24_eta2p1",
+    "HLT_Ele32_eta2p1_WPLoose_Gsf",
+    "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50",
+    "HLT_Ele105_CaloIdVT_GsfTrkIdT",
+    "HLT_Ele115_CaloIdVT_GsfTrkIdT"
+    ]
+
 # loop over files
 for ifile in files : #{ Loop over root files
     print 'Processing file ' + ifile
@@ -1620,9 +1656,6 @@ for ifile in files : #{ Loop over root files
             print '------'
             print 'evWeight starts at : ' + str(evWeight)
 
-        
-        if options.verbose : 
-            print 'Checking event.'
         if options.maxevents > 0 and Nevents > options.maxevents :
             break
         Nevents += 1
@@ -1658,7 +1691,7 @@ for ifile in files : #{ Loop over root files
             gotit4 = event.getByLabel( l_HBHEfilter, h_HBHEfilter )
 
 
-            if options.verbose :
+            if options.verbose > 5 :
                 print 'Filter string names?  ' + str(gotit1)
                 print 'Filter bits?          ' + str(gotit2)
 
@@ -1671,7 +1704,7 @@ for ifile in files : #{ Loop over root files
             hbheFilt = h_HBHEfilter.product()[0]
             
             for itrig in xrange(0, len(filterNameStrings) ) :
-                if options.verbose :
+                if options.verbose > 5 :
                     print 'Filter name = ' + filterNameStrings[itrig]
                     print 'Filter bit  = ' + str(filterBits[itrig])
                 if "CSC" in filterNameStrings[itrig] :
@@ -1688,12 +1721,12 @@ for ifile in files : #{ Loop over root files
 
 
             if cscFilt == False or hbheFilt == False :
-                if options.verbose :
+                if options.verbose > 5 :
                     print 'Found filters, but they failed'
                 continue
 
         if not readFilters :
-            if options.verbose :
+            if options.verbose > 5 :
                 print 'Did not find filters'
             continue
 
@@ -1711,29 +1744,32 @@ for ifile in files : #{ Loop over root files
             triggerNameStrings = h_triggerNameStrings.product()
             triggerBits = h_triggerBits.product()
             triggerPrescales = h_triggerPrescales.product()
-            if options.verbose : 
+            if options.verbose > 5 : 
                 print '-----'
-            for itrig in xrange(0, len(triggerNameStrings) ) :
-                if options.verbose :
+            firedTrigs = []
+            for itrig in xrange(0, len(triggerBits) ) :
+                if triggerBits[itrig] == 1 :
+                    firedTrigs.append( itrig )
+
+            for trig in firedTrigs :
+                trigName = triggerNameStrings[trig]
+                for itrigToRun in xrange(0,len(trigsToRun)) :
+                    if trigsToRun[itrigToRun] in trigName :
+                        passTrig = True
+                        SemiLeptTrig[0] = itrigToRun
+                        break
+                if passTrig :
+                    break
+
+            if options.verbose > 5 :
+                for itrig in xrange(0, len(triggerNameStrings) ) :
                     print "%60s : %12.0f" % ( triggerNameStrings[itrig] , triggerPrescales[itrig] )
 
-                ## if "HLT_Mu45_eta2p1" in triggerNameStrings[itrig] or  "HLT_Ele105_CaloIdVT_GsfTrkIdT" in triggerNameStrings[itrig] or "HLT_Ele27_eta2p1_WPLoose_Gsf" in triggerNameStrings[itrig] or \
-                ##   "HLT_Ele32_eta2p1_WPLoose_Gsf" in triggerNameStrings[itrig] or "HLT_Mu50" in triggerNameStrings[itrig] or \
-                ##   "HLT_IsoMu24_eta2p1" in triggerNameStrings[itrig] or "HLT_IsoMu27" in triggerNameStrings[itrig]  :
-                if "HLT_IsoMu24_eta2p1" in triggerNameStrings[itrig] or \
-                    "HLT_Mu45_eta2p1" in triggerNameStrings[itrig]  or  \
-                    "HLT_Mu50_" in triggerNameStrings[itrig]  or  \
-                    "HLT_Mu40_eta2p1_PFJet200_PFJet50_v3" in triggerNameStrings[itrig] or \
-                    "HLT_IsoMu24_eta2p1" in triggerNameStrings[itrig] or \
-                    "HLT_Ele32_eta2p1_WPLoose_Gsf" in triggerNameStrings[itrig] or \
-                    "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50" in triggerNameStrings[itrig] or \
-                    "HLT_Ele105_CaloIdVT_GsfTrkIdT" in triggerNameStrings[itrig] or \
-                    "HLT_Ele115_CaloIdVT_GsfTrkIdT" in triggerNameStrings[itrig] :
-                    if triggerBits[itrig] == 1 :
-                        passTrig = True
-                        if triggerPrescales[itrig] == 1.0 :
-                            unprescaled = True
-                        prescale = prescale * triggerPrescales[itrig]
+
+            if passTrig :
+                if triggerPrescales[itrig] == 1.0 :
+                    unprescaled = True
+                prescale = prescale * triggerPrescales[itrig]
                         
 
 
@@ -1741,7 +1777,7 @@ for ifile in files : #{ Loop over root files
                 prescale = 1.0
 
             evWeight = evWeight * prescale
-            if options.verbose : 
+            if options.verbose > 3 : 
                 print 'after prescale, evWeight is : ' + str(evWeight)
             if passTrig == False :
                 continue
@@ -1788,7 +1824,7 @@ for ifile in files : #{ Loop over root files
                         ngenMu += 1
                     elif abs(genPartID[igen]) == 15 and abs(genPartMomID[igen]) == 24 :
                         genName = 'Tau'
-                    if options.verbose  and genName != None:
+                    if options.verbose > 3  and genName != None:
                         print '%10s : %6d %6d %7.2f %6.3f %6.3f %6.3f' % ( genName, genPartID[igen], genPartStatus[igen], genPartPt[igen], genPartEta[igen], genPartPhi[igen], genPartMass[igen] )
 
             if ngenE == 0 and ngenMu == 0 :
@@ -1895,6 +1931,7 @@ for ifile in files : #{ Loop over root files
         event.getByLabel ( l_muDz, h_muDz )
         event.getByLabel ( l_muKey, h_muKey )
         event.getByLabel ( l_muCharge, h_muCharge )
+        event.getByLabel ( l_muIso04, h_muIso04 )
 
         #@ Muon Selection
 
@@ -1904,6 +1941,7 @@ for ifile in files : #{ Loop over root files
         goodmuonMass = []
         goodmuonKey = []
         goodmuonCharge = []
+        goodmuonIso = []
 
         #Use MuPt as iterater due to no definite iterator value in ntuples
         if len(h_muPt.product()) > 0:
@@ -1916,6 +1954,7 @@ for ifile in files : #{ Loop over root files
             muonDz = h_muDz.product()
             muKey = h_muKey.product()
             muCharge = h_muCharge.product()
+            muIso = h_muIso04.product()
             for imuon, muon in enumerate(muonPt): #{ Loop over all muons in event
                 NMu = NMu + 1
                 if muonPt[imuon] < options.minMuonPt :  #$ Muon cuts
@@ -1942,12 +1981,13 @@ for ifile in files : #{ Loop over root files
                 goodmuonMass.append(muonMass[imuon])
                 goodmuonKey.append(muKey[imuon])
                 goodmuonCharge.append(muCharge[imuon])
-                if options.verbose : 
+                goodmuonIso.append( muIso[imuon] )
+                if options.verbose  : 
                     print "muon %2d: keys " %(imuon)
                     for ikey in muKey[imuon] : 
                         print   " %4d" % ( ikey ),
-                    print "     ---> pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d." %  \
-                        ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon])
+                    print "     ---> pt %4.1f, eta %+5.3f phi %+5.3f dz(PV) %+5.3f, POG loose id %d, tight id %d., iso %d" %  \
+                        ( muonPt[imuon], muonEta[imuon],muonPhi[imuon], muonDz[imuon], muonLoose[imuon], muonTight[imuon], muIso[imuon])
 
                 #} End Muon loop
                         
@@ -1979,6 +2019,7 @@ for ifile in files : #{ Loop over root files
         goodelectronMass = []
         goodelectronKey = []
         goodelectronCharge = []
+        goodelectronIso = []
 
 
 
@@ -2018,6 +2059,7 @@ for ifile in files : #{ Loop over root files
                     ieDz = electronDz[ielectron]
                     ieEmooP = electronooEmooP[ielectron]
                     ie5x5sigma = electronfullsiee[ielectron]
+                    ieIso = electronabsiso[ielectron]
 
                     if iePt > options.minElectronPt:
                         NPassElPtCut = NPassElPtCut + 1
@@ -2098,11 +2140,12 @@ for ifile in files : #{ Loop over root files
                         goodelectronMass.append( ieMass )
                         goodelectronKey.append( elKey[ielectron] )
                         goodelectronCharge.append( ieCharge )
+                        goodelectronIso.append( ieIso )
                         if options.verbose : 
                             print "elec %2d: keys " %(ielectron)
                             for ikey in elKey[ielectron] : 
                                 print   " %4d" % ( ikey ),
-                            print "     ---> , pt %4.1f, eta %4.1f, phi %+5.3f " % ( electronPt[ielectron], electronEta[ielectron], electronPhi[ielectron] )
+                            print "     ---> , pt %4.1f, eta %4.1f, phi %+5.3f %f" % ( iePt, ieEta, iePhi, ieIso)
                     
                     #} End Electron Loop
 
@@ -2276,6 +2319,9 @@ for ifile in files : #{ Loop over root files
         theLepton = ROOT.TLorentzVector()
         theMuon = ROOT.TLorentzVector()
         theElectron = ROOT.TLorentzVector()
+        theLeptonPtRel = -1.0
+        theLeptonDRMin = -1.0
+        theLeptonIso = -1.0
         if SemiLeptonic :
 
             if len(goodmuonPt) > 0 :
@@ -2292,7 +2338,7 @@ for ifile in files : #{ Loop over root files
                                         goodmuonPhi[0],
                                         goodmuonMass[0] )
                 theMuonObjKey = goodmuonKey[0]
-
+                theLeptonIso = goodmuonIso[0]
             else :
                 eleJets = True
                 # theLepton = ROOT.TLorentzVector()
@@ -2307,6 +2353,7 @@ for ifile in files : #{ Loop over root files
                                         goodelectronPhi[0],
                                         goodelectronMass[0] )
                 theElectronObjKey = goodelectronKey[0]
+                theLeptonIso = goodelectronIso[0]
 
                                    
         # EVENT AK4 JET HANDLES
@@ -2412,7 +2459,7 @@ for ifile in files : #{ Loop over root files
               nconstituents > 1 and \
               nch > 0
 
-            if options.verbose :
+            if options.verbose > 1 :
                 print '-----'
                 print 'jet index = %2d, nhf = %6.2f, nef = %6.2f, chf = %6.2f, cef = %6.2f, nconstituents = %3d, nch = %3d' % (i, nhf, nef, chf, cef, nconstituents, nch)
                 print '   keys : ', 
@@ -2420,13 +2467,13 @@ for ifile in files : #{ Loop over root files
                     print ' %d' % ( AK4Keys[i][j] ),
                 print ''
             if not goodJet :
-                if options.verbose : 
+                if options.verbose > 1 : 
                     print '   bad jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                         jetP4Raw.Perp(), jetP4Raw.Rapidity(), jetP4Raw.Phi(), jetP4Raw.M()
                         )
                 continue
             NPassGoodJetAK4Cut = NPassGoodJetAK4Cut + 1
-            if options.verbose :
+            if options.verbose > 1 :
                 print '   raw jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                     jetP4Raw.Perp(), jetP4Raw.Rapidity(), jetP4Raw.Phi(), jetP4Raw.M()
                     )
@@ -2528,13 +2575,13 @@ for ifile in files : #{ Loop over root files
             if jetP4.Perp() > options.minAK4Pt:   #$ Cuts for Pt and Rapidity
                 NPassMinAK4PtCut = NPassMinAK4PtCut + 1
             else:
-                if options.verbose :
+                if options.verbose > 1 :
                    print '   jet failed kinematic cuts'
                 continue
             if abs(jetP4.Rapidity()) < options.maxAK4Rapidity:                  
                 NPassMaxAK4RapidityCut = NPassMaxAK4RapidityCut + 1
             else:
-                if options.verbose :
+                if options.verbose > 1 :
                    print '   jet failed kinematic cuts'
                 continue
 
@@ -2559,7 +2606,7 @@ for ifile in files : #{ Loop over root files
                 dR2 = jetP4.DeltaR(Lepton2 )
             ak4JetsGood.append(jetP4)
             ak4JetsGoodbDiscrim.append(AK4CSV[i])
-            if options.verbose :
+            if options.verbose > 1 :
                 print '   corrjet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}, bdisc = {4:6.2f}'.format (
                     jetP4.Perp(), jetP4.Rapidity(), jetP4.Phi(), jetP4.M(), AK4CSV[i] )
             #@ Find the closest jets to each lepton
@@ -2697,6 +2744,8 @@ for ifile in files : #{ Loop over root files
             ptRel = theLepJet.Perp( theLepton.Vect() )
             
             #@ 2D Cuts
+            theLeptonPtRel = ptRel
+            theLeptonDRMin = dRMin
             pass2D = ptRel > 40.0 or dRMin > 0.4
             h_2DCut[ALL_NDX].Fill( dRMin,ptRel, evWeight)
             h_dRMin[ALL_NDX].Fill( dRMin, evWeight )
@@ -2710,7 +2759,7 @@ for ifile in files : #{ Loop over root files
                 print '>>>>>>>>>>>>>>'
                 print '2d cut : dRMin = {0:6.2f}, ptRel = {1:6.2f}'.format( dRMin, ptRel )
                 print '>>>>>>>>>>>>>>'
-            if pass2D == False :
+            if not options.ignore2D and pass2D == False :
                 continue
             else:
                 NPass2DCut += 1
@@ -2966,6 +3015,7 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodL1cor = []            
             ak8JetsGoodL2cor = []            
             ak8JetsGoodL3cor = []
+            ak8JetsDPhiLepJet = []
 
             ak8JetHt = 0     
 
@@ -3005,6 +3055,7 @@ for ifile in files : #{ Loop over root files
                 AK8PrunedM = []
                 AK8FilteredM = []
                 AK8SDropM = []
+                
 
 
                 AK8CMSTTsubjetIndex0         = h_jetsAK8CmsTopTagSubjetIndex0 .product()
@@ -3184,23 +3235,27 @@ for ifile in files : #{ Loop over root files
                         L2cor = factors[1]
                     if factors.size() > 2:
                         L3cor = factors[2]
-                    if options.verbose:
+                    if options.verbose > 3:
                         print "factors.size()"+str(factors.size())
                         print "L1cor "+str(L1cor)+" L2cor "+str(L2cor)+" L3cor "+str(L3cor)
 
 
 
                     if not goodJet :
-                        if options.verbose : 
+                        if options.verbose > 3 : 
                             print '   bad jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                                 AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
                                 )
                         continue
                     NPassGoodJetAK8Cut = NPassGoodJetAK8Cut + 1
-                    if options.verbose :
+                    if options.verbose > 3 :
                         print '   raw jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                             AK8P4Raw.Perp(), AK8P4Raw.Rapidity(), AK8P4Raw.Phi(), AK8P4Raw.M()
                             )
+                    if options.verbose  :
+                        print '   corr jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
+                            AK8P4Corr.Perp(), AK8P4Corr.Rapidity(), AK8P4Corr.Phi(), AK8P4Corr.M()
+                            )                        
 
                     #$ Ht Cut
                     ak8JetHt = ak8JetHt + AK8P4Corr.Perp()
@@ -3210,11 +3265,11 @@ for ifile in files : #{ Loop over root files
                         continue
                     if AK8P4Corr.Perp() > options.minAK8Pt:
                         NPassMinRawAK8PtCut = NPassMinRawAK8PtCut + 1
-                    if options.verbose :
+                    if options.verbose > 3 :
                         print 'passes  pt cut'
                     if abs(AK8P4Corr.Rapidity()) < options.maxAK8Rapidity :
                         NPassMaxAK8RapidityCut = NPassMaxAK8RapidityCut + 1
-                    if options.verbose :
+                    if options.verbose > 3 :
                         print 'passes eta cut'
                     # SemiLeptonic- Only keep AK8 jets "away" from the lepton, so we do not need lepton-jet cleaning here. There's no double counting. 
                     # Leptonic - No fat jets                                                                          
@@ -3223,10 +3278,12 @@ for ifile in files : #{ Loop over root files
                     #$ Cuts for fat jets that are far away from the leptons
                     if SemiLeptonic :
                         if eleJets :
-                            dR = jetP4.DeltaR(theElectron ) 
+                            dPhi = abs( jetP4.DeltaPhi(theElectron ) )
                         elif muJets :
-                            dR = jetP4.DeltaR(theMuon )  
-                        if dR > ROOT.TMath.Pi()/2.0 :
+                            dPhi = abs( jetP4.DeltaPhi(theMuon )  )
+                        if options.verbose :
+                            print 'dphi = ' + str(dPhi)
+                        if dPhi > options.hemisphereDPhi :
                             NPassSemiLeptonicDRjlCut = NPassSemiLeptonicDRjlCut + 1
                             #       print 'N AK8 Subjet B discriminators = ' + str( len(AK8SubjetbDisc) )
                             #        print 'N AK8 Subjets = ' + str( len(AK8nSubJets) )    
@@ -3259,6 +3316,7 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodNC.append( nconstituents )
                             ak8JetsGoodNCH.append( nch )
                             ak8JetsGoodCSV.append( AK8CSV[i]  )
+                            ak8JetsDPhiLepJet.append( dPhi )
                     #$ Cuts for Hadronic channel
                     else : 
                         if options.verbose:
@@ -3330,7 +3388,7 @@ for ifile in files : #{ Loop over root files
                 NeventsBkgdEstimation +=1
                 deltaphi_jet0_jet1 = abs( ak8JetsGood[0].DeltaPhi (ak8JetsGood[1]) )
                 if deltaphi_jet0_jet1 < 2.1:
-                    if options.verbose:
+                    if options.verbose > 2:
                         print 'deltaphi_jet0_jet1 '+str(deltaphi_jet0_jet1)
                         print 'FAILS DELTAPHI CUT'
                     continue
@@ -3411,7 +3469,7 @@ for ifile in files : #{ Loop over root files
                     jet0_sd_s1_jec0  = SDsubjetJEC0 [ int(ak8JetsGoodSDsubjetIndex1[0]) ]
 
                 
-                if options.verbose:
+                if options.verbose > 2:
                     print '   Subjet indices : %6d %6d' % (ak8JetsGoodSDsubjetIndex0[0],
                                                                    ak8JetsGoodSDsubjetIndex1[0])
 
@@ -4181,6 +4239,20 @@ for ifile in files : #{ Loop over root files
             if SemiLeptonic:
                 typE = None # set type 2 if one of the AK8's is b-tagged else type 1
                 tagCand = 0 # Type 1 top procedure
+                leadingAK8Pt = 0.0
+                if options.verbose :
+                    print '    After final selection, lepton has pt = %6.2f, eta = %6.2f, phi = %6.2f'  % (theLepton.Perp(), theLepton.Eta(), theLepton.Phi() )
+                    print '    After final selection, jets are : '
+                for icand in xrange(0, len(ak8JetsGood)):
+                    if options.verbose :
+                        print ' %3d : pt,eta,phi,m = %6.2f, %6.2f, %6.2f, %6.2f ' % ( icand, ak8JetsGood[icand].Perp(), ak8JetsGood[icand].Eta(), ak8JetsGood[icand].Phi(), ak8JetsGood[icand].M() )
+                    if ak8JetsGood[icand].Perp() > leadingAK8Pt :
+                        tagCand = icand
+                        leadingAK8Pt = ak8JetsGood[icand].Perp()
+
+                if options.verbose :
+                    print 'Leading AK8 jet : %3d, pt = %6.2f, dphi(lep,jet) = %6.2f' % \
+                       ( tagCand, ak8JetsGood[tagCand].Perp(), ak8JetsDPhiLepJet[tagCand] )
                 
                 mAK8Pruned = ak8JetsGoodPrunMass[tagCand] 
                 mAK8Filtered = ak8JetsGoodFiltMass[tagCand] 
@@ -4258,23 +4330,23 @@ for ifile in files : #{ Loop over root files
                         leptonType = 2
                     #~ Fill SemiLeptonic tree
                     SemiLeptWeight      [0] =  evWeight
-                    FatJetPt            [0] = ak8JetsGood[0].Perp()
-                    FatJetEta           [0] = ak8JetsGood[0].Eta()
-                    FatJetPhi           [0] = ak8JetsGood[0].Phi()
-                    FatJetRap           [0] = ak8JetsGood[0].Rapidity()
-                    FatJetPx            [0] = ak8JetsGood[0].Px()
-                    FatJetPy            [0] = ak8JetsGood[0].Py()
-                    FatJetPz            [0] = ak8JetsGood[0].Pz()
-                    FatJetEnergy        [0] = ak8JetsGood[0].Energy()
-                    FatJetRhoRatio      [0] = pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
-                    FatJetMass          [0] = ak8JetsGood[0].M()
-                    FatJetMassSoftDrop  [0] = ak8JetsGoodSDropMass[0]
-                    FatJetMassPruned    [0] = ak8JetsGoodPrunMass[0]
-                    FatJetMassFiltered  [0] = ak8JetsGoodFiltMass[0]
-                    FatJetMassTrimmed   [0] = ak8JetsGoodTrimMass[0]
-                    FatJetTau1          [0] = ak8JetsGoodTau1[0]
-                    FatJetTau2          [0] = ak8JetsGoodTau2[0]
-                    FatJetTau3          [0] = ak8JetsGoodTau3[0]
+                    FatJetPt            [0] = ak8JetsGood[tagCand].Perp()
+                    FatJetEta           [0] = ak8JetsGood[tagCand].Eta()
+                    FatJetPhi           [0] = ak8JetsGood[tagCand].Phi()
+                    FatJetRap           [0] = ak8JetsGood[tagCand].Rapidity()
+                    FatJetPx            [0] = ak8JetsGood[tagCand].Px()
+                    FatJetPy            [0] = ak8JetsGood[tagCand].Py()
+                    FatJetPz            [0] = ak8JetsGood[tagCand].Pz()
+                    FatJetEnergy        [0] = ak8JetsGood[tagCand].Energy()
+                    FatJetRhoRatio      [0] = pow( ak8JetsGood[tagCand].M() / (ak8JetsGood[tagCand].Perp()*0.8) , 2)
+                    FatJetMass          [0] = ak8JetsGood[tagCand].M()
+                    FatJetMassSoftDrop  [0] = ak8JetsGoodSDropMass[tagCand]
+                    FatJetMassPruned    [0] = ak8JetsGoodPrunMass[tagCand]
+                    FatJetMassFiltered  [0] = ak8JetsGoodFiltMass[tagCand]
+                    FatJetMassTrimmed   [0] = ak8JetsGoodTrimMass[tagCand]
+                    FatJetTau1          [0] = ak8JetsGoodTau1[tagCand]
+                    FatJetTau2          [0] = ak8JetsGoodTau2[tagCand]
+                    FatJetTau3          [0] = ak8JetsGoodTau3[tagCand]
                     FatJetTau32         [0] = 1
                     FatJetTau21         [0] = 1
                     FatJetSDnsubjets    [0] = 1 # to add later                   
@@ -4287,7 +4359,7 @@ for ifile in files : #{ Loop over root files
                     FatJetSDsubjet1mass [0] = 1 # to add later
                     FatJetCMSmaxbdisc   [0] = 1 # to add later
                     FatJetCMSnsubjets   [0] = 1 # to add later
-                    FatJetCMSminMass    [0] = ak8JetsGoodMinMass[0]
+                    FatJetCMSminMass    [0] = ak8JetsGoodMinMass[tagCand]
                     FatJetCMSm01        [0] = 1 # to add later
                     FatJetCMSm02        [0] = 1 # to add later
                     FatJetCMSm12        [0] = 1 # to add later
@@ -4298,7 +4370,10 @@ for ifile in files : #{ Loop over root files
                     LeptonPx            [0] = theLepton.Px() 
                     LeptonPy            [0] = theLepton.Py() 
                     LeptonPz            [0] = theLepton.Pz()
-                    LeptonEnergy        [0] = theLepton.E() 
+                    LeptonEnergy        [0] = theLepton.E()
+                    LeptonPtRel         [0] = theLeptonPtRel
+                    LeptonDRMin         [0] = theLeptonDRMin
+                    LeptonIso           [0] = theLeptonIso
                     SemiLepMETpx        [0] = metPx
                     SemiLepMETpy        [0] = metPy
                     SemiLepMETpt        [0] = metPt
@@ -4311,152 +4386,10 @@ for ifile in files : #{ Loop over root files
                     NearestAK4JetPhi    [0] = nearestJetP4.Phi()
                     NearestAK4JetMass   [0] = nearestJetP4.M()
                     # SemilLepTTmass      [0] = 
-                    # DeltaPhiLepFat      [0] = 
+                    DeltaPhiLepFat      [0] = ak8JetsDPhiLepJet[tagCand]
 
 
                     TreeSemiLept.Fill()
-
-                    
-                # Instead of cutting-and-pasting everything a hundred times, just keep track
-                # of the stages of the selection
-                selectionsToPlot = []
-                channelsToPlot = []
-
-  
-              #^ Plot Kinematics for leading AK8 Jet, using only those with soft drop mass > 10 GeV   
-      
-                channelsToPlot.append(ALL_NDX)
-                if eleJets :
-                    channelsToPlot.append(EL_NDX)
-                if muJets :
-                    channelsToPlot.append(MU_NDX)
-                if typE == 1 :
-                    channelsToPlot.append(ALL_TYPE1_NDX)
-                    if eleJets :
-                        channelsToPlot.append(EL_TYPE1_NDX)
-                    if muJets :
-                        channelsToPlot.append(MU_TYPE1_NDX)
-                if typE == 2 :
-                    channelsToPlot.append(ALL_TYPE2_NDX)
-                    if eleJets :
-                        channelsToPlot.append(EL_TYPE2_NDX)
-                    if muJets :
-                        channelsToPlot.append(MU_TYPE2_NDX) 
-                
-
-                if len(ak8JetsGoodSDropMass) > 0 :
-                    selectionsToPlot.append( SEL_ALL_NDX )
-                else :
-                    continue
-
-                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut:
-                    selectionsToPlot.append( SEL_M_NDX )                
-                if minMass > options.minMassCut:
-                    selectionsToPlot.append( SEL_MINMASS_NDX )
-                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and minMass > options.minMassCut:
-                    selectionsToPlot.append( SEL_M_MINMASS_NDX )
-                if tau32 < options.tau32Cut:
-                    selectionsToPlot.append( SEL_TAU32_NDX )
-                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and tau32 < options.tau32Cut:
-                    selectionsToPlot.append( SEL_M_TAU32_NDX )
-                if tau21 < options.tau21Cut:
-                    selectionsToPlot.append( SEL_TAU21_NDX )
-                if theLepJetBDisc > options.bDiscMin:
-                    selectionsToPlot.append( SEL_BDISC_NDX )
-                if theLepJetBDisc > options.bDiscMin and tau32 < options.tau32Cut:
-                    selectionsToPlot.append( SEL_BDISC_TAU32_NDX )
-                if mAK8SDrop < options.mAK8GroomedMaxCut and mAK8SDrop > options.mAK8GroomedMinCut and theLepJetBDisc > options.bDiscMin and tau32 < options.tau32Cut:
-                    selectionsToPlot.append( SEL_M_TAU32_BDISC_NDX )
-                if mAK8SDrop < options.mAK8GroomedWMaxCut and mAK8SDrop > options.mAK8GroomedWMinCut and theLepJetBDisc > options.bDiscMin and tau21 < options.tau21Cut:
-                    selectionsToPlot.append( SEL_MW_TAU21_BDISC_NDX )
-                if mAK8SDrop < options.mAK8GroomedWMaxCut and mAK8SDrop > options.mAK8GroomedWMinCut and tau21 < options.tau21Cut:
-                    selectionsToPlot.append( SEL_MW_TAU21_NDX )
-                if mAK8SDrop < options.mAK8GroomedWMaxCut and mAK8SDrop > options.mAK8GroomedWMinCut :
-                    selectionsToPlot.append( SEL_MW_NDX )
-                                        
-                if len(ak8JetsGoodNHF) >0: 
-                    if ak8JetsGoodNHF[tagCand] < 0.1 :
-                        selectionsToPlot.append( SEL_NHF_LOW_NDX )
-                    else :
-                        selectionsToPlot.append( SEL_NHF_HIGH_NDX )
-
-                for ichannel in channelsToPlot :
-                    if ichannel > 5 : # greater than 5 are TYPE2-> ALL_TYPE2_NDX = 6, EL_TYPE2_NDX = 7, MU_TYPE2_NDX = 8
-                        for isel in selectionsToPlot: 
-                            h_ptAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Perp(), evWeight )
-                            h_etaAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Eta(), evWeight )
-                            h_phiAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Phi(), evWeight )
-                            h_yAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].Rapidity(), evWeight )
-                            h_mAK8[ichannel][isel].Fill( ak8JetsGood[wtagCand].M(), evWeight )
-                            h_mprunedAK8[ichannel][isel].Fill( ak8JetsGoodPrunMass[wtagCand], evWeight )
-                            h_mfilteredAK8[ichannel][isel].Fill( ak8JetsGoodFiltMass[wtagCand], evWeight )
-                            h_mtrimmedAK8[ichannel][isel].Fill( ak8JetsGoodTrimMass[wtagCand], evWeight )
-                            h_mSDropAK8[ichannel][isel].Fill( ak8JetsGoodSDropMass[wtagCand], evWeight )
-                            h_minmassAK8[ichannel][isel].Fill( ak8JetsGoodMinMass[wtagCand], evWeight )
-                            h_tau21AK8[ichannel][isel].Fill( tau21, evWeight )
-                            h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
-                            #h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[tagCand], evWeight )
-                            #h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[tagCand], evWeight )
-                            h_BdiscAK8[ichannel][isel].Fill( ak8JetsGoodCSV[wtagCand], evWeight )
-                            if len(ak8JetsGoodNHF) >0: 
-                                h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[wtagCand], evWeight )
-                            if len(ak8JetsGoodCHF) >0: 
-                                h_chfAK8[ichannel][isel].Fill( ak8JetsGoodCHF[wtagCand], evWeight )
-                            if len(ak8JetsGoodNEF) >0: 
-                                h_nefAK8[ichannel][isel].Fill( ak8JetsGoodNEF[wtagCand], evWeight )
-                            if len(ak8JetsGoodCEF) >0: 
-                                h_cefAK8[ichannel][isel].Fill( ak8JetsGoodCEF[wtagCand], evWeight )
-                            if len(ak8JetsGoodNC) >0: 
-                                h_ncAK8[ichannel][isel].Fill( ak8JetsGoodNC[wtagCand], evWeight )
-                            if len(ak8JetsGoodNCH) >0:
-                                h_nchAK8[ichannel][isel].Fill( ak8JetsGoodNCH[wtagCand], evWeight )
-                            if len(ak8JetsGoodNSubJets) >0:                    
-                                h_nsjAK8[ichannel][isel].Fill( ak8JetsGoodNSubJets[wtagCand], evWeight )
-                            h_ptAK4[ichannel][isel].Fill( theLepJet.Perp(), evWeight )
-                            h_etaAK4[ichannel][isel].Fill( theLepJet.Eta(), evWeight )
-                            h_yAK4[ichannel][isel].Fill( theLepJet.Rapidity(), evWeight )
-                            h_phiAK4[ichannel][isel].Fill( theLepJet.Phi(), evWeight )
-                            h_mAK4[ichannel][isel].Fill( theLepJet.M(), evWeight )
-                            h_bdiscAK4[ichannel][isel].Fill( theLepJetBDisc, evWeight )
-                    else : # less than or equal 5 are TYPE1-> ALL_NDX = 0,EL_NDX = 1,MU_NDX = 2,ALL_TYPE1_NDX = 3, EL_TYPE1_NDX = 4 ...
-                        for isel in selectionsToPlot: 
-                            h_ptAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Perp(), evWeight )
-                            h_etaAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Eta(), evWeight )
-                            h_phiAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Phi(), evWeight )
-                            h_yAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].Rapidity(), evWeight )
-                            h_mAK8[ichannel][isel].Fill( ak8JetsGood[tagCand].M(), evWeight )
-                            h_mprunedAK8[ichannel][isel].Fill( ak8JetsGoodPrunMass[tagCand], evWeight )
-                            h_mfilteredAK8[ichannel][isel].Fill( ak8JetsGoodFiltMass[tagCand], evWeight )
-                            h_mtrimmedAK8[ichannel][isel].Fill( ak8JetsGoodTrimMass[tagCand], evWeight )
-                            h_mSDropAK8[ichannel][isel].Fill( ak8JetsGoodSDropMass[tagCand], evWeight )
-                            h_minmassAK8[ichannel][isel].Fill( ak8JetsGoodMinMass[tagCand], evWeight )
-                            h_tau21AK8[ichannel][isel].Fill( tau21, evWeight )
-                            h_tau32AK8[ichannel][isel].Fill( tau32, evWeight )
-                            #h_subjetMassAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetMass[tagCand], evWeight )
-                            #h_subjetBdiscAK8[ichannel][isel].Fill( ak8JetsGoodTopSubjetbDisc[tagCand], evWeight )
-                            h_BdiscAK8[ichannel][isel].Fill( ak8JetsGoodCSV[tagCand], evWeight )
-                            if len(ak8JetsGoodNHF) >0: 
-                                h_nhfAK8[ichannel][isel].Fill( ak8JetsGoodNHF[tagCand], evWeight )
-                            if len(ak8JetsGoodCHF) >0: 
-                                h_chfAK8[ichannel][isel].Fill( ak8JetsGoodCHF[tagCand], evWeight )
-                            if len(ak8JetsGoodNEF) >0: 
-                                h_nefAK8[ichannel][isel].Fill( ak8JetsGoodNEF[tagCand], evWeight )
-                            if len(ak8JetsGoodCEF) >0: 
-                                h_cefAK8[ichannel][isel].Fill( ak8JetsGoodCEF[tagCand], evWeight )
-                            if len(ak8JetsGoodNC) >0: 
-                                h_ncAK8[ichannel][isel].Fill( ak8JetsGoodNC[tagCand], evWeight )
-                            if len(ak8JetsGoodNCH) >0:
-                                h_nchAK8[ichannel][isel].Fill( ak8JetsGoodNCH[tagCand], evWeight )
-                            if len(ak8JetsGoodNSubJets) >0:                    
-                                h_nsjAK8[ichannel][isel].Fill( ak8JetsGoodNSubJets[tagCand], evWeight )
-                            h_ptAK4[ichannel][isel].Fill( theLepJet.Perp(), evWeight )
-                            h_etaAK4[ichannel][isel].Fill( theLepJet.Eta(), evWeight )
-                            h_yAK4[ichannel][isel].Fill( theLepJet.Rapidity(), evWeight )
-                            h_phiAK4[ichannel][isel].Fill( theLepJet.Phi(), evWeight )
-                            h_mAK4[ichannel][isel].Fill( theLepJet.M(), evWeight )
-                            h_bdiscAK4[ichannel][isel].Fill( theLepJetBDisc, evWeight )
-                        
-
                                 
             #@ Tagging
             if len(ak8JetsGood) < 1 :

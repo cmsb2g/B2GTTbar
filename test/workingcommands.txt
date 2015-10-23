@@ -269,20 +269,26 @@ python NtupleReader_fwlite.py --files singleel_v74x_v6_dataset5_local.txt --outn
 
 
 
-python NtupleReader_fwlite.py --files ttjets_b2ganafw_v6.txt --outname ttjets_b2ganafw_v6_jecv5_updatedsel_ntuple.root --selection 1 --applyFilters --isMC  --writeTree >& ttjets_b2ganafw_v6_output.txt &
-python NtupleReader_fwlite.py  --files wjets_b2ganafw_v5.txt --outname wjets_b2ganafw_v5_sel1_extracats_jecv5_updatedsel_ntuple.root --selection 1 --isMC  --applyFilters  --writeTree --negativeWeights >& wjets_b2ganafw_v5_output.txt &
-python NtupleReader_fwlite.py  --files FileLists/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_B2GAnaFW_V4_local.txt  --outname zjets_b2ganafw_v4_sel1_extracats_jecv5_updatedsel_ntuple.root --selection 1 --isMC --writeTree --negativeWeights  >& zjets_b2ganafw_v4_sel1_extracats_output.txt &
-python NtupleReader_fwlite.py  --files FileLists/singletop_v74x_v4.3_tchan_local.txt  --outname singletop_v74x_v4.3_tchan_local_sel1_extracats_jecv5_updatedsel_ntuple.root --selection 1 --isMC  --writeTree --negativeWeights >& singletop_v74x_v4.3_tchan_local_sel1_extracats_output.txt &
-python NtupleReader_fwlite.py  --files FileLists/singletop_v74x_v4.3_tWtop_local.txt  --outname singletop_v74x_v4.3_tWtop_local_sel1_extracats_jecv5_updatedsel_ntuple.root --selection 1 --isMC  --writeTree --negativeWeights >& singletop_v74x_v4.3_tWtop_local_sel1_extracats_output.txt &
-python NtupleReader_fwlite.py  --files FileLists/singletop_v74x_v4.3_tWantitop_local.txt  --outname singletop_v74x_v4.3_tWantitop_local_sel1_extracats_jecv5_updatedsel_ntuple.root --selection 1 --isMC  --writeTree --negativeWeights >& singletop_v74x_v4.3_tWantitop_local_sel1_extracats_output.txt &
+python NtupleReader_fwlite.py --files ttjets_b2ganafw_v6.txt --outname ttjets_b2ganafw_v6_jecv5_updateddphi_ntuple.root --selection 1 --applyFilters --isMC  --ignore2D --writeTree --quickSelect --quickSelectminAK8Pt 200. >&ttjets_b2ganafw_v6_output.txt &
+python NtupleReader_fwlite.py  --files wjets_b2ganafw_v5.txt --outname wjets_b2ganafw_v5_sel1_extracats_jecv5_updateddphi_ntuple.root --selection 1 --isMC  --applyFilters  --ignore2D --writeTree --negativeWeights --quickSelect --quickSelectminAK8Pt 200. >&wjets_b2ganafw_v5_output.txt &
+python NtupleReader_fwlite.py  --files FileLists/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_B2GAnaFW_V4_local.txt  --outname zjets_b2ganafw_v4_sel1_extracats_jecv5_updateddphi_ntuple.root --selection 1 --isMC --ignore2D --writeTree --negativeWeights  --quickSelect --quickSelectminAK8Pt 200. >&zjets_b2ganafw_v4_sel1_extracats_output.txt &
+python NtupleReader_fwlite.py  --files FileLists/singletop_v74x_v4.3_tchan_local.txt  --outname singletop_v74x_v4.3_tchan_local_sel1_extracats_jecv5_updateddphi_ntuple.root --selection 1 --isMC  --ignore2D --writeTree --negativeWeights --quickSelect --quickSelectminAK8Pt 200. >&singletop_v74x_v4.3_tchan_local_sel1_extracats_output.txt &
+python NtupleReader_fwlite.py  --files FileLists/singletop_v74x_v4.3_tWtop_local.txt  --outname singletop_v74x_v4.3_tWtop_local_sel1_extracats_jecv5_updateddphi_ntuple.root --selection 1 --isMC  --ignore2D --writeTree --negativeWeights --quickSelect --quickSelectminAK8Pt 200. >&singletop_v74x_v4.3_tWtop_local_sel1_extracats_output.txt &
+python NtupleReader_fwlite.py  --files FileLists/singletop_v74x_v4.3_tWantitop_local.txt  --outname singletop_v74x_v4.3_tWantitop_local_sel1_extracats_jecv5_updateddphi_ntuple.root --selection 1 --isMC  --ignore2D --writeTree --negativeWeights --quickSelect --quickSelectminAK8Pt 200. >&singletop_v74x_v4.3_tWantitop_local_sel1_extracats_output.txt &
 
 
 
-python NtupleReader_fwlite.py --files singlemu_v74x_v6_dataset5_local.txt --outname singlemu_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root --selection 1 --applyFilters --applyTriggers  --writeTree >& singlemu_v74x_v6_dataset5_output.txt &
+python NtupleReader_fwlite.py --files singlemu_v74x_v6_dataset5_local.txt --outname singlemu_v74x_v6_dataset5_jecv5_updateddphi_ntuple.root --selection 1 --applyFilters --applyTriggers  --ignore2D --writeTree --quickSelect --quickSelectminAK8Pt 200. >& singlemu_v74x_v6_dataset5_output.txt &
 
 
-python NtupleReader_fwlite.py --files singleel_v74x_v6_dataset5_local.txt --outname singleel_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root --selection 1 --applyFilters --applyTriggers  --writeTree >& singleel_v74x_v6_dataset5_output.txt &
+python NtupleReader_fwlite.py --files singleel_v74x_v6_dataset5_local.txt --outname singleel_v74x_v6_dataset5_jecv5_updateddphi_ntuple.root --selection 1 --applyFilters --applyTriggers  --ignore2D --writeTree --quickSelect 200. >& singleel_v74x_v6_dataset5_output.txt &
 
 
 
-python NtupleReader_fwlite.py --files singleel_v74x_v6_dataset5_local.txt --outname junk.root --selection 1 --applyFilters --applyTriggers  --maxevents 100 --verbose
+
+python NtupleReader_fwlite.py --files singleel_v74x_v6_dataset5_local1.txt --outname singleel_v74x_v6_dataset5_jecv5_updateddphi_ntuple1.root --selection 1 --applyFilters --applyTriggers  --ignore2D --writeTree --quickSelect --quickSelectminAK8Pt 200.  >& singleel_v74x_v6_dataset5_output1.txt &
+
+
+python NtupleReader_fwlite.py --files singleel_v74x_v6_dataset5_local2.txt --outname singleel_v74x_v6_dataset5_jecv5_updateddphi_ntuple2.root --selection 1 --applyFilters --applyTriggers  --ignore2D --writeTree --quickSelect --quickSelectminAK8Pt 200.  >& singleel_v74x_v6_dataset5_output2.txt &
+
+python NtupleReader_fwlite.py --files singleel_v74x_v6_dataset5_local3.txt --outname singleel_v74x_v6_dataset5_jecv5_updateddphi_ntuple3.root --selection 1 --applyFilters --applyTriggers  --ignore2D --writeTree --quickSelect --quickSelectminAK8Pt 200.  >& singleel_v74x_v6_dataset5_output3.txt &
