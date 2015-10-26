@@ -447,6 +447,8 @@ l_metPhi = ("met" , "metPhi")
 if options.isMC :
     h_generator = Handle("GenEventInfoProduct")
     l_generator = ("generator" , "" )
+    h_lhe = Handle("LHERunInfoProduct")
+    l_lhe = ("externalLHEProducer", "")
 
 #AK8 Jets label and Handles
 h_jetsAK8Pt = Handle("std::vector<float>")
@@ -1969,7 +1971,9 @@ for ifile in files : #{ Loop over root files
             # Event weights
             gotGenerator = event.getByLabel( l_generator, h_generator )
             generator = h_generator.product()
-            if not gotGenerator :
+            gotLHE = event.getByLabel( l_lhe, h_lhe )
+            lhe = h_lhe.product()
+            if not gotGenerator or not gotLHE :
                 continue
             
             if options.deweightFlat :
@@ -1980,6 +1984,13 @@ for ifile in files : #{ Loop over root files
                     if options.verbose : 
                         print 'after deweight flat, evWeight is : ' + str(evWeight)
             if options.negativeWeights and gotGenerator :
+
+                if options.verbose :
+                    for lheInfo in lhe :
+                        print lheInfo.tag()
+                        for iline in lheInfo.lines() :
+                            print iline
+                
                 evtWeights = generator.weights()
                 iweight = generator.weight()
                 if iweight < 0 : 
