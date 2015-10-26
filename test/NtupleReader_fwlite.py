@@ -932,7 +932,6 @@ if options.writeTree :
     Jet0Tau3          = array('f', [-1.])
     Jet0Tau32         = array('f', [-1.])
     Jet0Tau21         = array('f', [-1.])
-    Jet0SDnsubjets    = array('f', [-1.])
     Jet0SDbdisc0      = array('f', [-1.])
     Jet0SDbdisc1      = array('f', [-1.])
     Jet0SDmaxbdisc    = array('f', [-1.])
@@ -946,6 +945,12 @@ if options.writeTree :
     Jet0CMSm01        = array('f', [-1.])
     Jet0CMSm02        = array('f', [-1.])
     Jet0CMSm12        = array('f', [-1.])
+    Jet0NHF           = array('f', [-1.])
+    Jet0CHF           = array('f', [-1.])
+    Jet0NEF           = array('f', [-1.])
+    Jet0CEF           = array('f', [-1.])
+    Jet0NC            = array('f', [-1.])
+    Jet0NCH           = array('f', [-1.])
 
     Jet1Corr          = array('f', [-1.])
     Jet1CorrUp        = array('f', [-1.])
@@ -969,7 +974,6 @@ if options.writeTree :
     Jet1Tau3          = array('f', [-1.])
     Jet1Tau32         = array('f', [-1.])
     Jet1Tau21         = array('f', [-1.])
-    Jet1SDnsubjets    = array('f', [-1.])
     Jet1SDbdisc0      = array('f', [-1.])
     Jet1SDbdisc1      = array('f', [-1.])
     Jet1SDmaxbdisc    = array('f', [-1.])
@@ -983,6 +987,12 @@ if options.writeTree :
     Jet1CMSm01        = array('f', [-1.])
     Jet1CMSm02        = array('f', [-1.])
     Jet1CMSm12        = array('f', [-1.])
+    Jet1NHF           = array('f', [-1.])
+    Jet1CHF           = array('f', [-1.])
+    Jet1NEF           = array('f', [-1.])
+    Jet1CEF           = array('f', [-1.])
+    Jet1NC            = array('f', [-1.])
+    Jet1NCH           = array('f', [-1.])
 
     AllHadMETpx         = array('f', [-1.])
     AllHadMETpy         = array('f', [-1.])
@@ -1021,7 +1031,6 @@ if options.writeTree :
     TreeAllHad.Branch('Jet0Tau3'          , Jet0Tau3         , 'Jet0Tau3/F'          )
     TreeAllHad.Branch('Jet0Tau32'         , Jet0Tau32        , 'Jet0Tau32/F'         )
     TreeAllHad.Branch('Jet0Tau21'         , Jet0Tau21        , 'Jet0Tau21/F'         )
-    TreeAllHad.Branch('Jet0SDnsubjets'    , Jet0SDnsubjets   , 'Jet0SDnsubjets/F'    )
     TreeAllHad.Branch('Jet0SDbdisc0'      , Jet0SDbdisc0     , 'Jet0SDbdisc0/F'      )
     TreeAllHad.Branch('Jet0SDbdisc1'      , Jet0SDbdisc1     , 'Jet0SDbdisc1/F'      )
     TreeAllHad.Branch('Jet0SDmaxbdisc'    , Jet0SDmaxbdisc   , 'Jet0SDmaxbdisc/F'    )
@@ -1035,43 +1044,54 @@ if options.writeTree :
     TreeAllHad.Branch('Jet0CMSm01'        , Jet0CMSm01       , 'Jet0CMSm01/F'        )
     TreeAllHad.Branch('Jet0CMSm02'        , Jet0CMSm02       , 'Jet0CMSm02/F'        )
     TreeAllHad.Branch('Jet0CMSm12'        , Jet0CMSm12       , 'Jet0CMSm12/F'        )
+    TreeAllHad.Branch('Jet0NHF'           , Jet0NHF          , 'Jet0NHF/F'           )    
+    TreeAllHad.Branch('Jet0CHF'           , Jet0CHF          , 'Jet0CHF/F'           )    
+    TreeAllHad.Branch('Jet0NEF'           , Jet0NEF          , 'Jet0NEF/F'           )    
+    TreeAllHad.Branch('Jet0CEF'           , Jet0CEF          , 'Jet0CEF/F'           )    
+    TreeAllHad.Branch('Jet0NC'            , Jet0NC           , 'Jet0NC/F'            )    
+    TreeAllHad.Branch('Jet0NCH'           , Jet0NCH          , 'Jet0NCH/F'           )    
 
-    TreeAllHad.Branch('Jet1Corr'          , Jet1Corr         , 'Jet1Corr/F'          )
-    TreeAllHad.Branch('Jet1CorrUp'        , Jet1CorrUp       , 'Jet1CorrUp/F'        )
-    TreeAllHad.Branch('Jet1CorrDn'        , Jet1CorrDn       , 'Jet1CorrDn/F'        )
-    TreeAllHad.Branch('Jet1Pt'            , Jet1Pt           , 'Jet1Pt/F'            )
-    TreeAllHad.Branch('Jet1Eta'           , Jet1Eta          , 'Jet1Eta/F'           )
-    TreeAllHad.Branch('Jet1Phi'           , Jet1Phi          , 'Jet1Phi/F'           )
-    TreeAllHad.Branch('Jet1Rap'           , Jet1Rap          , 'Jet1Rap/F'           )
-    TreeAllHad.Branch('Jet1Px'            , Jet1Px           , 'Jet1Px/F'            )
-    TreeAllHad.Branch('Jet1Py'            , Jet1Py           , 'Jet1Py/F'            )
-    TreeAllHad.Branch('Jet1Pz'            , Jet1Pz           , 'Jet1Pz/F'            )
-    TreeAllHad.Branch('Jet1Energy'        , Jet1Energy       , 'Jet1Energy/F'        )
-    TreeAllHad.Branch('Jet1RhoRatio'      , Jet1RhoRatio     , 'Jet1RhoRatio/F'      )
-    TreeAllHad.Branch('Jet1Mass'          , Jet1Mass         , 'Jet1Mass/F'          )
-    TreeAllHad.Branch('Jet1MassSoftDrop'  , Jet1MassSoftDrop , 'Jet1MassSoftDrop/F'  )
-    TreeAllHad.Branch('Jet1MassPruned'    , Jet1MassPruned   , 'Jet1MassPruned/F'    )
-    TreeAllHad.Branch('Jet1MassFiltered'  , Jet1MassFiltered , 'Jet1MassFiltered/F'  )
-    TreeAllHad.Branch('Jet1MassTrimmed'   , Jet1MassTrimmed  , 'Jet1MassTrimmed/F'   )
-    TreeAllHad.Branch('Jet1Tau1'          , Jet1Tau1         , 'Jet1Tau1/F'          )
-    TreeAllHad.Branch('Jet1Tau2'          , Jet1Tau2         , 'Jet1Tau2/F'          )
-    TreeAllHad.Branch('Jet1Tau3'          , Jet1Tau3         , 'Jet1Tau3/F'          )
-    TreeAllHad.Branch('Jet1Tau32'         , Jet1Tau32        , 'Jet1Tau32/F'         )
-    TreeAllHad.Branch('Jet1Tau21'         , Jet1Tau21        , 'Jet1Tau21/F'         )
-    TreeAllHad.Branch('Jet1SDnsubjets'    , Jet1SDnsubjets   , 'Jet1SDnsubjets/F'    )
-    TreeAllHad.Branch('Jet1SDbdisc0'      , Jet1SDbdisc0     , 'Jet1SDbdisc0/F'      )
-    TreeAllHad.Branch('Jet1SDbdisc1'      , Jet1SDbdisc1     , 'Jet1SDbdisc1/F'      )
-    TreeAllHad.Branch('Jet1SDmaxbdisc'    , Jet1SDmaxbdisc   , 'Jet1SDmaxbdisc/F'    )
-    TreeAllHad.Branch('Jet1SDsubjet0pt'   , Jet1SDsubjet0pt  , 'Jet1SDsubjet0pt/F'   )
-    TreeAllHad.Branch('Jet1SDsubjet0mass' , Jet1SDsubjet0mass, 'Jet1SDsubjet0mass/F' )
-    TreeAllHad.Branch('Jet1SDsubjet1pt'   , Jet1SDsubjet1pt  , 'Jet1SDsubjet1pt/F'   )
-    TreeAllHad.Branch('Jet1SDsubjet1mass' , Jet1SDsubjet1mass, 'Jet1SDsubjet1mass/F' )
-    TreeAllHad.Branch('Jet1CMSmaxbdisc'   , Jet1CMSmaxbdisc  , 'Jet1CMSmaxbdisc/F'   )
-    TreeAllHad.Branch('Jet1CMSnsubjets'   , Jet1CMSnsubjets  , 'Jet1CMSnsubjets/F'   )
-    TreeAllHad.Branch('Jet1CMSminMass'    , Jet1CMSminMass   , 'Jet1CMSminMass/F'    )
-    TreeAllHad.Branch('Jet1CMSm01'        , Jet1CMSm01       , 'Jet1CMSm01/F'        )
-    TreeAllHad.Branch('Jet1CMSm02'        , Jet1CMSm02       , 'Jet1CMSm02/F'        )
-    TreeAllHad.Branch('Jet1CMSm12'        , Jet1CMSm12       , 'Jet1CMSm12/F'        )
+    TreeAllHad.Branch('Jet1Corr'            , Jet1Corr             , 'Jet1Corr/F'            )
+    TreeAllHad.Branch('Jet1CorrUp'          , Jet1CorrUp           , 'Jet1CorrUp/F'          )
+    TreeAllHad.Branch('Jet1CorrDn'          , Jet1CorrDn           , 'Jet1CorrDn/F'          )
+    TreeAllHad.Branch('Jet1Pt'              , Jet1Pt               , 'Jet1Pt/F'              )
+    TreeAllHad.Branch('Jet1Eta'             , Jet1Eta              , 'Jet1Eta/F'             )
+    TreeAllHad.Branch('Jet1Phi'             , Jet1Phi              , 'Jet1Phi/F'             )
+    TreeAllHad.Branch('Jet1Rap'             , Jet1Rap              , 'Jet1Rap/F'             )
+    TreeAllHad.Branch('Jet1Px'              , Jet1Px               , 'Jet1Px/F'              )
+    TreeAllHad.Branch('Jet1Py'              , Jet1Py               , 'Jet1Py/F'              )
+    TreeAllHad.Branch('Jet1Pz'              , Jet1Pz               , 'Jet1Pz/F'              )
+    TreeAllHad.Branch('Jet1Energy'          , Jet1Energy           , 'Jet1Energy/F'          )
+    TreeAllHad.Branch('Jet1RhoRatio'        , Jet1RhoRatio         , 'Jet1RhoRatio/F'        )
+    TreeAllHad.Branch('Jet1Mass'            , Jet1Mass             , 'Jet1Mass/F'            )
+    TreeAllHad.Branch('Jet1MassSoftDrop'    , Jet1MassSoftDrop     , 'Jet1MassSoftDrop/F'    )
+    TreeAllHad.Branch('Jet1MassPruned'      , Jet1MassPruned       , 'Jet1MassPruned/F'      )
+    TreeAllHad.Branch('Jet1MassFiltered'    , Jet1MassFiltered     , 'Jet1MassFiltered/F'    )
+    TreeAllHad.Branch('Jet1MassTrimmed'     , Jet1MassTrimmed      , 'Jet1MassTrimmed/F'     )
+    TreeAllHad.Branch('Jet1Tau1'            , Jet1Tau1             , 'Jet1Tau1/F'            )
+    TreeAllHad.Branch('Jet1Tau2'            , Jet1Tau2             , 'Jet1Tau2/F'            )
+    TreeAllHad.Branch('Jet1Tau3'            , Jet1Tau3             , 'Jet1Tau3/F'            )
+    TreeAllHad.Branch('Jet1Tau32'           , Jet1Tau32            , 'Jet1Tau32/F'           )
+    TreeAllHad.Branch('Jet1Tau21'           , Jet1Tau21            , 'Jet1Tau21/F'           )
+    TreeAllHad.Branch('Jet1SDbdisc0'        , Jet1SDbdisc0         , 'Jet1SDbdisc0/F'        )
+    TreeAllHad.Branch('Jet1SDbdisc1'        , Jet1SDbdisc1         , 'Jet1SDbdisc1/F'        )
+    TreeAllHad.Branch('Jet1SDmaxbdisc'      , Jet1SDmaxbdisc       , 'Jet1SDmaxbdisc/F'      )
+    TreeAllHad.Branch('Jet1SDsubjet0pt'     , Jet1SDsubjet0pt      , 'Jet1SDsubjet0pt/F'     )
+    TreeAllHad.Branch('Jet1SDsubjet0mass'   , Jet1SDsubjet0mass    , 'Jet1SDsubjet0mass/F'   )
+    TreeAllHad.Branch('Jet1SDsubjet1pt'     , Jet1SDsubjet1pt      , 'Jet1SDsubjet1pt/F'     )
+    TreeAllHad.Branch('Jet1SDsubjet1mass'   , Jet1SDsubjet1mass    , 'Jet1SDsubjet1mass/F'   )
+    TreeAllHad.Branch('Jet1CMSmaxbdisc'     , Jet1CMSmaxbdisc      , 'Jet1CMSmaxbdisc/F'     )
+    TreeAllHad.Branch('Jet1CMSnsubjets'     , Jet1CMSnsubjets      , 'Jet1CMSnsubjets/F'     )
+    TreeAllHad.Branch('Jet1CMSminMass'      , Jet1CMSminMass       , 'Jet1CMSminMass/F'      )
+    TreeAllHad.Branch('Jet1CMSm01'          , Jet1CMSm01           , 'Jet1CMSm01/F'          )
+    TreeAllHad.Branch('Jet1CMSm02'          , Jet1CMSm02           , 'Jet1CMSm02/F'          )
+    TreeAllHad.Branch('Jet1CMSm12'          , Jet1CMSm12           , 'Jet1CMSm12/F'          )
+    TreeAllHad.Branch('Jet1NHF'             , Jet1NHF              , 'Jet1NHF/F'             )    
+    TreeAllHad.Branch('Jet1CHF'             , Jet1CHF              , 'Jet1CHF/F'             )    
+    TreeAllHad.Branch('Jet1NEF'             , Jet1NEF              , 'Jet1NEF/F'             )    
+    TreeAllHad.Branch('Jet1CEF'             , Jet1CEF              , 'Jet1CEF/F'             )    
+    TreeAllHad.Branch('Jet1NC'              , Jet1NC               , 'Jet1NC/F'              )    
+    TreeAllHad.Branch('Jet1NCH'             , Jet1NCH              , 'Jet1NCH/F'             )    
 
     TreeAllHad.Branch('AllHadMETpx'         , AllHadMETpx        , 'AllHadMETpx/F'           )
     TreeAllHad.Branch('AllHadMETpy'         , AllHadMETpy        , 'AllHadMETpy/F'           )
@@ -1274,10 +1294,10 @@ h_Jet0_Tau21               = ROOT.TH1D("h_Jet0_Tau21"            , "",  500,  0,
 h_Jet0_Tau32               = ROOT.TH1D("h_Jet0_Tau32"            , "",  500,  0,    1 )             
 h_Jet0_Pt                  = ROOT.TH1D("h_Jet0_Pt"               , "",  700,  0, 7000 )             
 h_Jet0_Rap                 = ROOT.TH1D("h_Jet0_Rap"              , "",  500, -3,    3 )             
-h_Jet0_NHF                 = ROOT.TH1D("h_Jet0_NHF"              , "",  500,  0,  500 )
-h_Jet0_CHF                 = ROOT.TH1D("h_Jet0_CHF"              , "",  500,  0,  500 )
-h_Jet0_NEF                 = ROOT.TH1D("h_Jet0_NEF"              , "",  500,  0,  500 )
-h_Jet0_CEF                 = ROOT.TH1D("h_Jet0_CEF"              , "",  500,  0,  500 )
+h_Jet0_NHF                 = ROOT.TH1D("h_Jet0_NHF"              , "",  500,  0,  1 )
+h_Jet0_CHF                 = ROOT.TH1D("h_Jet0_CHF"              , "",  500,  0,  1 )
+h_Jet0_NEF                 = ROOT.TH1D("h_Jet0_NEF"              , "",  500,  0,  1 )
+h_Jet0_CEF                 = ROOT.TH1D("h_Jet0_CEF"              , "",  500,  0,  1 )
 h_Jet0_NC                  = ROOT.TH1D("h_Jet0_NC"               , "",  500,  0,  500 )
 h_Jet0_NCH                 = ROOT.TH1D("h_Jet0_NCH"              , "",  500,  0,  500 )
 
@@ -1302,13 +1322,17 @@ h_Jet1_Tau21               = ROOT.TH1D("h_Jet1_Tau21"            , "",  500,  0,
 h_Jet1_Tau32               = ROOT.TH1D("h_Jet1_Tau32"            , "",  500,  0,    1 )             
 h_Jet1_Pt                  = ROOT.TH1D("h_Jet1_Pt"               , "",  700,  0, 7000 )             
 h_Jet1_Rap                 = ROOT.TH1D("h_Jet1_Rap"              , "",  500, -3,    3 )             
-h_Jet1_NHF                 = ROOT.TH1D("h_Jet1_NHF"              , "",  500,  0,  500 )
-h_Jet1_CHF                 = ROOT.TH1D("h_Jet1_CHF"              , "",  500,  0,  500 )
-h_Jet1_NEF                 = ROOT.TH1D("h_Jet1_NEF"              , "",  500,  0,  500 )
-h_Jet1_CEF                 = ROOT.TH1D("h_Jet1_CEF"              , "",  500,  0,  500 )
+h_Jet1_NHF                 = ROOT.TH1D("h_Jet1_NHF"              , "",  500,  0,    1 )
+h_Jet1_CHF                 = ROOT.TH1D("h_Jet1_CHF"              , "",  500,  0,    1 )
+h_Jet1_NEF                 = ROOT.TH1D("h_Jet1_NEF"              , "",  500,  0,    1 )
+h_Jet1_CEF                 = ROOT.TH1D("h_Jet1_CEF"              , "",  500,  0,    1 )
 h_Jet1_NC                  = ROOT.TH1D("h_Jet1_NC"               , "",  500,  0,  500 )
 h_Jet1_NCH                 = ROOT.TH1D("h_Jet1_NCH"              , "",  500,  0,  500 )
 
+
+h_Jet1_MassSoft_CorrOrigSumSubjet  = ROOT.TH1D("h_Jet1_MassSoft_CorrOrigSumSubjet" , "",  500,  0,  500 ) 
+h_Jet1_MassSoft_RawSumSubjet       = ROOT.TH1D("h_Jet1_MassSoft_RawSumSubjet"      , "",  500,  0,  500 ) 
+h_Jet1_MassSoft_CorrNewSumSubjet   = ROOT.TH1D("h_Jet1_MassSoft_CorrNewSumSubjet"  , "",  500,  0,  500 ) 
 
 #^ Make modMass hist with small binning
 h_mAK8_ModMass           = ROOT.TH1F("h_mAK8_ModMass"               , "AK8 Jet Mass;Mass (GeV)", 220, 140, 250 )
@@ -1339,6 +1363,7 @@ h_AntiTagMinMass30_ReqTopMassSD_Probe_jetPt              = ROOT.TH1D( "h_AntiTag
 h_AntiTagMinMass30_ReqTopMassSD_TagMassSD_jetPt          = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassSD_jetPt"         , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32_jetPt     = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassSDTau32_jetPt"    , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMinMass_jetPt   = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMinMass_jetPt"  , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMaxBdisc_jetPt      = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassSDMaxBdisc_jetPt"     , "", 1400, 0, 7000 )
 h_AntiTagMinMass30_ReqTopMassSD_TagMassFat_jetPt         = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassFat_jetPt"        , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetPt  = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassSD_TagMassFatMinMass_jetPt" , "", 1400, 0, 7000 ) 
 
@@ -1346,6 +1371,8 @@ h_AntiTagMinMass30_ReqTopMassFat_Probe_jetPt             = ROOT.TH1D("h_AntiTagM
 h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt         = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSD_jetPt"         , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt    = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDTau32_jetPt"    , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt  = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMinMass_jetPt"  , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      = ROOT.TH1D( "h_AntiTagMinMass30_ReqTopMassFat_TagMassSDMaxBdisc_jetPt"     , "", 1400, 0, 7000 )
+
 h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt        = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFat_jetPt"        , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt = ROOT.TH1D("h_AntiTagMinMass30_ReqTopMassFat_TagMassFatMinMass_jetPt" , "", 1400, 0, 7000 ) 
 
@@ -1354,6 +1381,7 @@ h_AntiTagMinMass50_ReqTopMassSD_Probe_jetPt              = ROOT.TH1D( "h_AntiTag
 h_AntiTagMinMass50_ReqTopMassSD_TagMassSD_jetPt          = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassSD_jetPt"         , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass50_ReqTopMassSD_TagMassSDTau32_jetPt     = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassSDTau32_jetPt"    , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMinMass_jetPt   = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMinMass_jetPt"  , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMaxBdisc_jetPt      = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassSDMaxBdisc_jetPt"     , "", 1400, 0, 7000 )
 h_AntiTagMinMass50_ReqTopMassSD_TagMassFat_jetPt         = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassFat_jetPt"        , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass50_ReqTopMassSD_TagMassFatMinMass_jetPt  = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassSD_TagMassFatMinMass_jetPt" , "", 1400, 0, 7000 ) 
 
@@ -1361,6 +1389,7 @@ h_AntiTagMinMass50_ReqTopMassFat_Probe_jetPt             = ROOT.TH1D("h_AntiTagM
 h_AntiTagMinMass50_ReqTopMassFat_TagMassSD_jetPt         = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassSD_jetPt"         , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass50_ReqTopMassFat_TagMassSDTau32_jetPt    = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassSDTau32_jetPt"    , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMinMass_jetPt  = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMinMass_jetPt"  , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMaxBdisc_jetPt      = ROOT.TH1D( "h_AntiTagMinMass50_ReqTopMassFat_TagMassSDMaxBdisc_jetPt"     , "", 1400, 0, 7000 )
 h_AntiTagMinMass50_ReqTopMassFat_TagMassFat_jetPt        = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassFat_jetPt"        , "", 1400, 0, 7000 ) 
 h_AntiTagMinMass50_ReqTopMassFat_TagMassFatMinMass_jetPt = ROOT.TH1D("h_AntiTagMinMass50_ReqTopMassFat_TagMassFatMinMass_jetPt" , "", 1400, 0, 7000 ) 
 
@@ -1369,6 +1398,7 @@ h_AntiTagTau32_ReqTopMassSD_Probe_jetPt                  = ROOT.TH1D( "h_AntiTag
 h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSD_jetPt"             , "", 1400, 0, 7000 ) 
 h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt"        , "", 1400, 0, 7000 ) 
 h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt       = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDMinMass_jetPt"      , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetPt      = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDMaxBdisc_jetPt"     , "", 1400, 0, 7000 )
 h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt             = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassFat_jetPt"            , "", 1400, 0, 7000 ) 
 h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt      = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassFatMinMass_jetPt"     , "", 1400, 0, 7000 ) 
     
@@ -1376,6 +1406,7 @@ h_AntiTagTau32_ReqTopMassFat_Probe_jetPt                 = ROOT.TH1D("h_AntiTagT
 h_AntiTagTau32_ReqTopMassFat_TagMassSD_jetPt             = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassSD_jetPt"             , "", 1400, 0, 7000 ) 
 h_AntiTagTau32_ReqTopMassFat_TagMassSDTau32_jetPt        = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassSDTau32_jetPt"        , "", 1400, 0, 7000 ) 
 h_AntiTagTau32_ReqTopMassFat_TagMassSDMinMass_jetPt      = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassSDMinMass_jetPt"      , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassFat_TagMassSDMaxBdisc_jetPt     = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassSDMaxBdisc_jetPt"     , "", 1400, 0, 7000 )
 h_AntiTagTau32_ReqTopMassFat_TagMassFat_jetPt            = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassFat_jetPt"            , "", 1400, 0, 7000 ) 
 h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt     = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt"     , "", 1400, 0, 7000 ) 
 
@@ -3681,80 +3712,248 @@ for ifile in files : #{ Loop over root files
                 h_Jet0_MassSoft_CorrNewSumSubjet    .Fill(  jet0_add_softdrop_subjets_newCorr.M()       )
 
 
+                jet0_bdiscs =[jet0_sd_s0_bdisc, jet0_sd_s1_bdisc] 
+                jet0_sd_maxbdisc = max(jet0_bdiscs)
+ 
+
+                # Jet 1 SD subjets
+                jet1_sd_s0_bdisc = -1.
+                jet1_sd_s1_bdisc = -1.
+                jet1_sd_s0_pt    = -1.
+                jet1_sd_s1_pt    = -1.
+                jet1_sd_s0_eta   = -1.
+                jet1_sd_s1_eta   = -1.
+                jet1_sd_s0_phi   = -1.
+                jet1_sd_s1_phi   = -1.
+                jet1_sd_s0_m     = -1.
+                jet1_sd_s1_m     = -1.
+                jet1_sd_s0_jec0  = -1.
+                jet1_sd_s1_jec0  = -1.
+                if ak8JetsGoodSDsubjetIndex0[1] > -1 :
+                    jet1_sd_s0_bdisc = SDsubjetBDisc[ int(ak8JetsGoodSDsubjetIndex0[1]) ]
+                    jet1_sd_s0_pt    = SDsubjetPt   [ int(ak8JetsGoodSDsubjetIndex0[1]) ]
+                    jet1_sd_s0_eta   = SDsubjetEta  [ int(ak8JetsGoodSDsubjetIndex0[1]) ]
+                    jet1_sd_s0_phi   = SDsubjetPhi  [ int(ak8JetsGoodSDsubjetIndex0[1]) ]
+                    jet1_sd_s0_m     = SDsubjetMass [ int(ak8JetsGoodSDsubjetIndex0[1]) ]
+                    jet1_sd_s0_jec0  = SDsubjetJEC0 [ int(ak8JetsGoodSDsubjetIndex0[1]) ]
+
+                if ak8JetsGoodSDsubjetIndex1[1] > -1 :
+                    jet1_sd_s1_bdisc = SDsubjetBDisc[ int(ak8JetsGoodSDsubjetIndex1[1]) ]
+                    jet1_sd_s1_pt    = SDsubjetPt   [ int(ak8JetsGoodSDsubjetIndex1[1]) ]
+                    jet1_sd_s1_eta   = SDsubjetEta  [ int(ak8JetsGoodSDsubjetIndex1[1]) ]
+                    jet1_sd_s1_phi   = SDsubjetPhi  [ int(ak8JetsGoodSDsubjetIndex1[1]) ]
+                    jet1_sd_s1_m     = SDsubjetMass [ int(ak8JetsGoodSDsubjetIndex1[1]) ]
+                    jet1_sd_s1_jec0  = SDsubjetJEC0 [ int(ak8JetsGoodSDsubjetIndex1[1]) ]
+
+              
+                # From Sal : This is now corrected upstream
+                jet1_sd_s0 = ROOT.TLorentzVector()
+                jet1_sd_s0.SetPtEtaPhiM( jet1_sd_s0_pt , jet1_sd_s0_eta,jet1_sd_s0_phi, jet1_sd_s0_m )
+
+                # get subjet 4-vectors, uncorrect, then correct them
+                jet1_sd_s1 = ROOT.TLorentzVector()
+                jet1_sd_s1.SetPtEtaPhiM( jet1_sd_s1_pt , jet1_sd_s1_eta,jet1_sd_s1_phi, jet1_sd_s1_m )
+
+                #jet0_add_softdrop_subjets_originalCorr = jet0_sd_s0 + jet0_sd_s1
+                #jet0_add_softdrop_subjets_raw          = jet0_sd_s0_raw + jet0_sd_s1_raw
+                jet1_add_softdrop_subjets_newCorr      = jet1_sd_s0 + jet1_sd_s1
 
 
+                #h_Jet0_MassSoft_CorrOrigSumSubjet   .Fill(  jet0_add_softdrop_subjets_originalCorr.M()  )
+                #h_Jet0_MassSoft_RawSumSubjet        .Fill(  jet0_add_softdrop_subjets_raw.M()           )
+                h_Jet1_MassSoft_CorrNewSumSubjet    .Fill(  jet0_add_softdrop_subjets_newCorr.M()       )
 
 
-
-                # # Jet 0 CMSTT subjets
-                # jet0_cmstt_sbdisc0 = -1.
-                # jet0_cmstt_sbdisc1 = -1.
-                # jet0_cmstt_sbdisc2 = -1.
-                # jet0_cmstt_sbdisc3 = -1.
-                # jet0_cmstt_spt0    = -1.
-                # jet0_cmstt_spt1    = -1.
-                # jet0_cmstt_spt2    = -1.
-                # jet0_cmstt_spt3    = -1.
-                # jet0_cmstt_seta0   = -1.
-                # jet0_cmstt_seta1   = -1.
-                # jet0_cmstt_seta2   = -1.
-                # jet0_cmstt_seta3   = -1.
-                # jet0_cmstt_sphi0   = -1.
-                # jet0_cmstt_sphi1   = -1.
-                # jet0_cmstt_sphi2   = -1.
-                # jet0_cmstt_sphi3   = -1.
-
-                # print 'Top tag candidate : '+str(0)
-                # print '   top jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
-                #     ak8JetsGood[0].Perp(), ak8JetsGood[0].Rapidity(), ak8JetsGood[0].Phi(), ak8JetsGood[0].M() )                 
-
-
-                # if ak8JetsGoodCMSTTsubjetIndex0[0] > -1 :
-                #     jet0_cmstt_sbdisc0 = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
-                #     jet0_cmstt_spt0    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
-                #     jet0_cmstt_seta0   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
-                #     jet0_cmstt_sphi0   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
-
-                # if ak8JetsGoodCMSTTsubjetIndex1[0] > -1 :
-                #     jet0_cmstt_sbdisc1 = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
-                #     jet0_cmstt_spt1    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
-                #     jet0_cmstt_seta1   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
-                #     jet0_cmstt_sphi1   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
-
-                # if ak8JetsGoodCMSTTsubjetIndex2[0] > -1 :
-                #     jet0_cmstt_sbdisc2 = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
-                #     jet0_cmstt_spt2    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
-                #     jet0_cmstt_seta2   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
-                #     jet0_cmstt_sphi2   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
-
-                # if ak8JetsGoodCMSTTsubjetIndex3[0] > -1 :
-                #     jet0_cmstt_sbdisc3 = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
-                #     jet0_cmstt_spt3    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
-                #     jet0_cmstt_seta3   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
-                #     jet0_cmstt_sphi3   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
-                    
-           
+                jet1_bdiscs =[jet1_sd_s0_bdisc, jet1_sd_s1_bdisc] 
+                jet1_sd_maxbdisc = max(jet1_bdiscs)
                 
-                # print '   Subjet indices : %6d %6d %6d %6d' % (ak8JetsGoodCMSTTsubjetIndex0[0],
-                #                                                ak8JetsGoodCMSTTsubjetIndex1[0],
-                #                                                ak8JetsGoodCMSTTsubjetIndex2[0],
-                #                                                ak8JetsGoodCMSTTsubjetIndex3[0])
+                if options.verbose:
+                    print 'jet0_sd_s0_bdisc '+str(jet0_sd_s0_bdisc)
+                    print 'jet0_sd_s1_bdisc '+str(jet0_sd_s1_bdisc)
+                    print 'jet0_sd_maxbdisc '+str(jet0_sd_maxbdisc)
 
-                # for index in [ak8JetsGoodCMSTTsubjetIndex0[0],
-                #               ak8JetsGoodCMSTTsubjetIndex1[0],
-                #               ak8JetsGoodCMSTTsubjetIndex2[0],
-                #               ak8JetsGoodCMSTTsubjetIndex3[0] ] :
-                #     if index > len(CMSTTsubjetBDisc) :
-                #         print "Problem! Subjet indices are wrong!"
-                #         exit(1)
+                    print 'jet1_sd_s0_bdisc '+str(jet1_sd_s0_bdisc)
+                    print 'jet1_sd_s1_bdisc '+str(jet1_sd_s1_bdisc)
+                    print 'jet1_sd_maxbdisc '+str(jet1_sd_maxbdisc)
 
 
-                # print '   -subjet0pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_spt0, jet0_cmstt_seta0, jet0_cmstt_sphi0, jet0_cmstt_sbdisc0 )
-                # print '   -subjet1pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_spt1, jet0_cmstt_seta1, jet0_cmstt_sphi1, jet0_cmstt_sbdisc1 )
-                # print '   -subjet2pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_spt2, jet0_cmstt_seta2, jet0_cmstt_sphi2, jet0_cmstt_sbdisc2 )
-                # print '   -subjet3pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_spt3, jet0_cmstt_seta3, jet0_cmstt_sphi3, jet0_cmstt_sbdisc3 )                 
 
 
+
+                # Jet 0 CMSTT subjets
+                jet0_cmstt_s0_bdisc = -1.
+                jet0_cmstt_s1_bdisc = -1.
+                jet0_cmstt_s2_bdisc = -1.
+                jet0_cmstt_s3_bdisc = -1.
+                jet0_cmstt_s0_pt    = -1.
+                jet0_cmstt_s1_pt    = -1.
+                jet0_cmstt_s2_pt    = -1.
+                jet0_cmstt_s3_pt    = -1.
+                jet0_cmstt_s0_eta   = -1.
+                jet0_cmstt_s1_eta   = -1.
+                jet0_cmstt_s2_eta   = -1.
+                jet0_cmstt_s3_eta   = -1.
+                jet0_cmstt_s0_phi   = -1.
+                jet0_cmstt_s1_phi   = -1.
+                jet0_cmstt_s2_phi   = -1.
+                jet0_cmstt_s3_phi   = -1.
+                jet0_cmstt_s0_m     = -1.
+                jet0_cmstt_s1_m     = -1.
+                jet0_cmstt_s2_m     = -1.
+                jet0_cmstt_s3_m     = -1.
+
+                if ak8JetsGoodCMSTTsubjetIndex0[0] > -1 :
+                    jet0_cmstt_s0_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
+                    jet0_cmstt_s0_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
+                    jet0_cmstt_s0_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
+                    jet0_cmstt_s0_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
+                    jet0_cmstt_s0_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
+
+                if ak8JetsGoodCMSTTsubjetIndex1[0] > -1 :
+                    jet0_cmstt_s1_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
+                    jet0_cmstt_s1_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
+                    jet0_cmstt_s1_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
+                    jet0_cmstt_s1_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
+                    jet0_cmstt_s1_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
+
+                if ak8JetsGoodCMSTTsubjetIndex2[0] > -1 :
+                    jet0_cmstt_s2_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
+                    jet0_cmstt_s2_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
+                    jet0_cmstt_s2_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
+                    jet0_cmstt_s2_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
+                    jet0_cmstt_s2_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
+
+                if ak8JetsGoodCMSTTsubjetIndex3[0] > -1 :
+                    jet0_cmstt_s3_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
+                    jet0_cmstt_s3_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
+                    jet0_cmstt_s3_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
+                    jet0_cmstt_s3_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
+                    jet0_cmstt_s3_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
+
+                jet0_bdiscs =[jet0_cmstt_s0_bdisc, jet0_cmstt_s1_bdisc, jet0_cmstt_s2_bdisc, jet0_cmstt_s3_bdisc] 
+                jet0_cmstt_maxbdisc = max(jet0_bdiscs)
+                
+                jet0_cmstt_s0 = ROOT.TLorentzVector()
+                jet0_cmstt_s1 = ROOT.TLorentzVector()
+                jet0_cmstt_s2 = ROOT.TLorentzVector()
+                jet0_cmstt_s0.SetPtEtaPhiM( jet0_cmstt_s0_pt , jet0_cmstt_s0_eta, jet0_cmstt_s0_phi, jet0_cmstt_s0_m )
+                jet0_cmstt_s1.SetPtEtaPhiM( jet0_cmstt_s1_pt , jet0_cmstt_s1_eta, jet0_cmstt_s1_phi, jet0_cmstt_s1_m )
+                jet0_cmstt_s2.SetPtEtaPhiM( jet0_cmstt_s2_pt , jet0_cmstt_s2_eta, jet0_cmstt_s2_phi, jet0_cmstt_s2_m )
+                jet0_cmstt_m01 = (jet0_cmstt_s0 + jet0_cmstt_s1 ).M()
+                jet0_cmstt_m02 = (jet0_cmstt_s0 + jet0_cmstt_s2 ).M()
+                jet0_cmstt_m12 = (jet0_cmstt_s1 + jet0_cmstt_s2 ).M()
+
+                if options.verbose:
+                    print 'Top tag candidate : '+str(0)
+                    print '   top jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
+                        ak8JetsGood[0].Perp(), ak8JetsGood[0].Rapidity(), ak8JetsGood[0].Phi(), ak8JetsGood[0].M() )                 
+
+                    print '   Subjet indices : %6d %6d %6d %6d' % (ak8JetsGoodCMSTTsubjetIndex0[0],
+                                                                   ak8JetsGoodCMSTTsubjetIndex1[0],
+                                                                   ak8JetsGoodCMSTTsubjetIndex2[0],
+                                                                   ak8JetsGoodCMSTTsubjetIndex3[0])
+
+                    for index in [ak8JetsGoodCMSTTsubjetIndex0[0],
+                                  ak8JetsGoodCMSTTsubjetIndex1[0],
+                                  ak8JetsGoodCMSTTsubjetIndex2[0],
+                                  ak8JetsGoodCMSTTsubjetIndex3[0] ] :
+                        if index > len(CMSTTsubjetBDisc) :
+                            print "Problem! Subjet indices are wrong!"
+                            exit(1)
+
+                    print '   -subjet0pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_s0_pt, jet0_cmstt_s0_eta, jet0_cmstt_s0_phi, jet0_cmstt_s0_bdisc )
+                    print '   -subjet1pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_s1_pt, jet0_cmstt_s1_eta, jet0_cmstt_s1_phi, jet0_cmstt_s1_bdisc )
+                    print '   -subjet2pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_s2_pt, jet0_cmstt_s2_eta, jet0_cmstt_s2_phi, jet0_cmstt_s2_bdisc )
+                    print '   -subjet3pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_s3_pt, jet0_cmstt_s3_eta, jet0_cmstt_s3_phi, jet0_cmstt_s3_bdisc )                 
+                    print 'jet0_cmstt_maxbdisc '+str(jet0_cmstt_maxbdisc)
+
+                 # Jet 0 CMSTT subjets
+                jet1_cmstt_s0_bdisc = -1.
+                jet1_cmstt_s1_bdisc = -1.
+                jet1_cmstt_s2_bdisc = -1.
+                jet1_cmstt_s3_bdisc = -1.
+                jet1_cmstt_s0_pt    = -1.
+                jet1_cmstt_s1_pt    = -1.
+                jet1_cmstt_s2_pt    = -1.
+                jet1_cmstt_s3_pt    = -1.
+                jet1_cmstt_s0_eta   = -1.
+                jet1_cmstt_s1_eta   = -1.
+                jet1_cmstt_s2_eta   = -1.
+                jet1_cmstt_s3_eta   = -1.
+                jet1_cmstt_s0_phi   = -1.
+                jet1_cmstt_s1_phi   = -1.
+                jet1_cmstt_s2_phi   = -1.
+                jet1_cmstt_s3_phi   = -1.
+                jet1_cmstt_s0_m     = -1.
+                jet1_cmstt_s1_m     = -1.
+                jet1_cmstt_s2_m     = -1.
+                jet1_cmstt_s3_m     = -1.
+
+                if ak8JetsGoodCMSTTsubjetIndex0[1] > -1 :
+                    jet1_cmstt_s0_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
+                    jet1_cmstt_s0_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
+                    jet1_cmstt_s0_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
+                    jet1_cmstt_s0_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
+                    jet1_cmstt_s0_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
+
+                if ak8JetsGoodCMSTTsubjetIndex1[1] > -1 :
+                    jet1_cmstt_s1_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
+                    jet1_cmstt_s1_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
+                    jet1_cmstt_s1_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
+                    jet1_cmstt_s1_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
+                    jet1_cmstt_s1_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
+
+                if ak8JetsGoodCMSTTsubjetIndex2[1] > -1 :
+                    jet1_cmstt_s2_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
+                    jet1_cmstt_s2_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
+                    jet1_cmstt_s2_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
+                    jet1_cmstt_s2_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
+                    jet1_cmstt_s2_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
+
+                if ak8JetsGoodCMSTTsubjetIndex3[1] > -1 :
+                    jet1_cmstt_s3_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
+                    jet1_cmstt_s3_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
+                    jet1_cmstt_s3_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
+                    jet1_cmstt_s3_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
+                    jet1_cmstt_s3_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
+
+                jet1_bdiscs =[jet1_cmstt_s0_bdisc, jet1_cmstt_s1_bdisc, jet1_cmstt_s2_bdisc, jet1_cmstt_s3_bdisc] 
+                jet1_cmstt_maxbdisc = max(jet1_bdiscs)
+                
+                jet1_cmstt_s0 = ROOT.TLorentzVector()
+                jet1_cmstt_s1 = ROOT.TLorentzVector()
+                jet1_cmstt_s2 = ROOT.TLorentzVector()
+                jet1_cmstt_s0.SetPtEtaPhiM( jet1_cmstt_s0_pt , jet1_cmstt_s0_eta, jet1_cmstt_s0_phi, jet1_cmstt_s0_m )
+                jet1_cmstt_s1.SetPtEtaPhiM( jet1_cmstt_s1_pt , jet1_cmstt_s1_eta, jet1_cmstt_s1_phi, jet1_cmstt_s1_m )
+                jet1_cmstt_s2.SetPtEtaPhiM( jet1_cmstt_s2_pt , jet1_cmstt_s2_eta, jet1_cmstt_s2_phi, jet1_cmstt_s2_m )
+                jet1_cmstt_m01 = (jet1_cmstt_s0 + jet1_cmstt_s1 ).M()
+                jet1_cmstt_m02 = (jet1_cmstt_s0 + jet1_cmstt_s2 ).M()
+                jet1_cmstt_m12 = (jet1_cmstt_s1 + jet1_cmstt_s2 ).M()
+
+
+                if options.verbose:
+                    print 'Top tag candidate : '+str(0)
+                    print '   top jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
+                        ak8JetsGood[1].Perp(), ak8JetsGood[1].Rapidity(), ak8JetsGood[1].Phi(), ak8JetsGood[1].M() )                 
+
+                    print '   Subjet indices : %6d %6d %6d %6d' % (ak8JetsGoodCMSTTsubjetIndex0[1],
+                                                                   ak8JetsGoodCMSTTsubjetIndex1[1],
+                                                                   ak8JetsGoodCMSTTsubjetIndex2[1],
+                                                                   ak8JetsGoodCMSTTsubjetIndex3[1])
+
+                    for index in [ak8JetsGoodCMSTTsubjetIndex0[1],
+                                  ak8JetsGoodCMSTTsubjetIndex1[1],
+                                  ak8JetsGoodCMSTTsubjetIndex2[1],
+                                  ak8JetsGoodCMSTTsubjetIndex3[1] ] :
+                        if index > len(CMSTTsubjetBDisc) :
+                            print "Problem! Subjet indices are wrong!"
+                            exit(1)
+
+                    print '   -subjet1pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet1_cmstt_s0_pt, jet1_cmstt_s0_eta, jet1_cmstt_s0_phi, jet1_cmstt_s0_bdisc )
+                    print '   -subjet1pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet1_cmstt_s1_pt, jet1_cmstt_s1_eta, jet1_cmstt_s1_phi, jet1_cmstt_s1_bdisc )
+                    print '   -subjet2pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet1_cmstt_s2_pt, jet1_cmstt_s2_eta, jet1_cmstt_s2_phi, jet1_cmstt_s2_bdisc )
+                    print '   -subjet3pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet1_cmstt_s3_pt, jet1_cmstt_s3_eta, jet1_cmstt_s3_phi, jet1_cmstt_s3_bdisc )                 
+                    print 'jet1_cmstt_maxbdisc '+str(jet1_cmstt_maxbdisc)
 
 
                 h_Jet0_MassSoft_CorrNone   .Fill( ak8JetsGoodSDropMass[0]                                              )
@@ -3881,8 +4080,8 @@ for ifile in files : #{ Loop over root files
                 #   print ' ttMass_modMass_jet0 '+str(ttMass_modMass_jet0)
                 #   print ' ttMass_modMass_jet1 '+str(ttMass_modMass_jet1)
 
-                maxBdisc_jet0_ =0
-                maxBdisc_jet1_ =0
+               
+
                 # define tags - make sure they are the same as what was used to calculate the mistag
                 topTag0MassFat                     = ak8JetsGood[0].M() > 140 and ak8JetsGood[0].M()< 250
                 topTag1MassFat                     = ak8JetsGood[1].M() > 140 and ak8JetsGood[1].M()< 250
@@ -3892,12 +4091,12 @@ for ifile in files : #{ Loop over root files
                 topTag1Tau32                       = tau32_jet1_ < 0.61
                 topTag0MinMass                     = ak8JetsGoodMinMass[0] > 50 
                 topTag1MinMass                     = ak8JetsGoodMinMass[1] > 50
-                # topTag0MaxBdiscL                   = maxBdisc_jet0_ > 0.605 # CSVv2 loose operating point 2015_06
-                # topTag1MaxBdiscL                   = maxBdisc_jet1_ > 0.605 # CSVv2 loose operating point 2015_06
-                topTag0MaxBdiscM                   = maxBdisc_jet0_ > 0.890 # CSVv2 medium operating point 2015_06
-                topTag1MaxBdiscM                   = maxBdisc_jet1_ > 0.890 # CSVv2 medium operating point 2015_06
-                # topTag0MaxBdiscT                   = maxBdisc_jet0_ > 0.970 # CSVv2 tight operating point 2015_06
-                # topTag1MaxBdiscT                   = maxBdisc_jet1_ > 0.970 # CSVv2 tight operating point 2015_06
+                topTag0MaxBdiscL                   = jet0_sd_maxbdisc > 0.605 # CSVv2 loose operating point 2015_06
+                topTag1MaxBdiscL                   = jet1_sd_maxbdisc > 0.605 # CSVv2 loose operating point 2015_06
+                topTag0MaxBdiscM                   = jet0_sd_maxbdisc > 0.890 # CSVv2 medium operating point 2015_06
+                topTag1MaxBdiscM                   = jet1_sd_maxbdisc > 0.890 # CSVv2 medium operating point 2015_06
+                topTag0MaxBdiscT                   = jet0_sd_maxbdisc > 0.970 # CSVv2 tight operating point 2015_06
+                topTag1MaxBdiscT                   = jet1_sd_maxbdisc > 0.970 # CSVv2 tight operating point 2015_06
                 topTag0MassSDTau32                 = topTag0MassSD and topTag0Tau32
                 topTag1MassSDTau32                 = topTag1MassSD and topTag1Tau32
                 topTag0MassSDMinMass               = topTag0MassSD and topTag0MinMass
@@ -3935,10 +4134,10 @@ for ifile in files : #{ Loop over root files
                 antiTag1minMass30                       = ak8JetsGoodMinMass[1] < 30
                 antiTag0Tau32                           = tau32_jet0_ > 0.61
                 antiTag1Tau32                           = tau32_jet1_ > 0.61
-                # antiTag0MaxBdiscVL                      = maxBdisc_jet0_ < 0.5 # very loose
-                # antiTag1MaxBdiscVL                      = maxBdisc_jet1_ < 0.5 # very loose
-                # antiTag0MaxBdiscL                       = maxBdisc_jet0_ < 0.605 # CSVv2 loose operating point 2015_06
-                # antiTag1MaxBdiscL                       = maxBdisc_jet1_ < 0.605 # CSVv2 loose operating point 2015_06
+                # antiTag0MaxBdiscVL                      = jet0_sd_maxbdisc < 0.5 # very loose
+                # antiTag1MaxBdiscVL                      = jet1_sd_maxbdisc < 0.5 # very loose
+                # antiTag0MaxBdiscL                       = jet0_sd_maxbdisc < 0.605 # CSVv2 loose operating point 2015_06
+                # antiTag1MaxBdiscL                       = jet1_sd_maxbdisc < 0.605 # CSVv2 loose operating point 2015_06
 
                 antiTag0minMass50_ReqTopMassSD         = topTag0MassSD and antiTag0minMass50
                 antiTag1minMass50_ReqTopMassSD         = topTag1MassSD and antiTag1minMass50
@@ -4349,20 +4548,25 @@ for ifile in files : #{ Loop over root files
                     Jet0Tau3           [0] =  ak8JetsGoodTau3[0]
                     Jet0Tau32          [0] =  tau32_jet0_
                     Jet0Tau21          [0] =  tau21_jet0_
-                    Jet0SDnsubjets     [0] =  1 # to add later                   
-                    Jet0SDbdisc0       [0] =  1 # to add later
-                    Jet0SDbdisc1       [0] =  1 # to add later
-                    Jet0SDmaxbdisc     [0] =  1 # to add later
-                    Jet0SDsubjet0pt    [0] =  1 # to add later
-                    Jet0SDsubjet0mass  [0] =  1 # to add later
-                    Jet0SDsubjet1pt    [0] =  1 # to add later
-                    Jet0SDsubjet1mass  [0] =  1 # to add later
-                    Jet0CMSmaxbdisc    [0] =  1 # to add later
-                    Jet0CMSnsubjets    [0] =  1 # to add later
+                    Jet0SDbdisc0       [0] =  jet0_sd_s0_bdisc
+                    Jet0SDbdisc1       [0] =  jet0_sd_s1_bdisc
+                    Jet0SDmaxbdisc     [0] =  jet0_sd_maxbdisc
+                    Jet0SDsubjet0pt    [0] =  jet0_sd_s0_pt
+                    Jet0SDsubjet0mass  [0] =  jet0_sd_s0_m
+                    Jet0SDsubjet1pt    [0] =  jet0_sd_s1_pt
+                    Jet0SDsubjet1mass  [0] =  jet0_sd_s1_m
+                    Jet0CMSmaxbdisc    [0] =  jet0_cmstt_maxbdisc
+                    Jet0CMSnsubjets    [0] =  ak8JetsGoodNSubJets[0]
                     Jet0CMSminMass     [0] =  ak8JetsGoodMinMass[0]
-                    Jet0CMSm01         [0] =  1 # to add later
-                    Jet0CMSm02         [0] =  1 # to add later
-                    Jet0CMSm12         [0] =  1 # to add later
+                    Jet0CMSm01         [0] =  jet0_cmstt_m01
+                    Jet0CMSm02         [0] =  jet0_cmstt_m02
+                    Jet0CMSm12         [0] =  jet0_cmstt_m12
+                    Jet0NHF            [0] =  ak8JetsGoodNHF[0]
+                    Jet0CHF            [0] =  ak8JetsGoodCHF[0]
+                    Jet0NEF            [0] =  ak8JetsGoodNEF[0]
+                    Jet0CEF            [0] =  ak8JetsGoodCEF[0]
+                    Jet0NC             [0] =  ak8JetsGoodNC [0]
+                    Jet0NCH            [0] =  ak8JetsGoodNCH[0]
 
 
                     Jet1Corr           [0] =  ak8JetsGoodCorrFactor[0]
@@ -4387,20 +4591,25 @@ for ifile in files : #{ Loop over root files
                     Jet1Tau3           [0] =  ak8JetsGoodTau3[1]
                     Jet1Tau32          [0] =  tau32_jet1_
                     Jet1Tau21          [0] =  tau21_jet1_
-                    Jet1SDnsubjets     [0] =  1 # to add later                   
-                    Jet1SDbdisc0       [0] =  1 # to add later
-                    Jet1SDbdisc1       [0] =  1 # to add later
-                    Jet1SDmaxbdisc     [0] =  1 # to add later
-                    Jet1SDsubjet0pt    [0] =  1 # to add later
-                    Jet1SDsubjet0mass  [0] =  1 # to add later
-                    Jet1SDsubjet1pt    [0] =  1 # to add later
-                    Jet1SDsubjet1mass  [0] =  1 # to add later
-                    Jet1CMSmaxbdisc    [0] =  1 # to add later
-                    Jet1CMSnsubjets    [0] =  1 # to add later
+                    Jet1SDbdisc0       [0] =  jet1_sd_s0_bdisc
+                    Jet1SDbdisc1       [0] =  jet1_sd_s1_bdisc
+                    Jet1SDmaxbdisc     [0] =  jet1_sd_maxbdisc
+                    Jet1SDsubjet0pt    [0] =  jet1_sd_s0_pt
+                    Jet1SDsubjet0mass  [0] =  jet1_sd_s0_m
+                    Jet1SDsubjet1pt    [0] =  jet1_sd_s1_pt
+                    Jet1SDsubjet1mass  [0] =  jet1_sd_s1_m
+                    Jet1CMSmaxbdisc    [0] =  jet1_cmstt_maxbdisc
+                    Jet1CMSnsubjets    [0] =  ak8JetsGoodNSubJets[1]
                     Jet1CMSminMass     [0] =  ak8JetsGoodMinMass[1]
-                    Jet1CMSm01         [0] =  1 # to add later
-                    Jet1CMSm02         [0] =  1 # to add later
-                    Jet1CMSm12         [0] =  1 # to add later
+                    Jet1CMSm01         [0] =  jet1_cmstt_m01
+                    Jet1CMSm02         [0] =  jet1_cmstt_m02
+                    Jet1CMSm12         [0] =  jet1_cmstt_m12
+                    Jet1NHF            [0] =  ak8JetsGoodNHF[0]
+                    Jet1CHF            [0] =  ak8JetsGoodCHF[0]
+                    Jet1NEF            [0] =  ak8JetsGoodNEF[0]
+                    Jet1CEF            [0] =  ak8JetsGoodCEF[0]
+                    Jet1NC             [0] =  ak8JetsGoodNC [0]
+                    Jet1NCH            [0] =  ak8JetsGoodNCH[0]
 
                     AllHadMETpx        [0] = metPx
                     AllHadMETpy        [0] = metPy
