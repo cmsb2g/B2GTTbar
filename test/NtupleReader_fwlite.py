@@ -777,6 +777,7 @@ f.cd()
 if options.writeTree : 
     TreeSemiLept = ROOT.TTree("TreeSemiLept", "TreeSemiLept")
     SemiLeptTrig        = array('i', [0]  )
+    BoosttypE           = array('i', [0] )
     SemiLeptWeight      = array('f', [0.] )
     
     FatJetCorr          = array('f', [-1.])
@@ -790,6 +791,7 @@ if options.writeTree :
     FatJetPy            = array('f', [-1.])
     FatJetPz            = array('f', [-1.])
     FatJetEnergy        = array('f', [-1.])
+    FatJetBDisc         = array('f', [-1.])
     FatJetRhoRatio      = array('f', [-1.])
     FatJetMass          = array('f', [-1.])
     FatJetMassSoftDrop  = array('f', [-1.])
@@ -801,23 +803,28 @@ if options.writeTree :
     FatJetTau3          = array('f', [-1.]) 
     FatJetTau32         = array('f', [-1.])
     FatJetTau21         = array('f', [-1.]) 
-    FatJetSDbdisc0      = array('f', [-1.])
-    FatJetSDbdisc1      = array('f', [-1.])
+    FatJetSDnsubjets    = array('f', [-1.])
+    FatJetSDbdiscW      = array('f', [-1.])
+    FatJetSDbdiscB      = array('f', [-1.])
     FatJetSDmaxbdisc    = array('f', [-1.])
-    FatJetSDsubjet0pt   = array('f', [-1.])
-    FatJetSDsubjet0mass = array('f', [-1.])
-    FatJetSDsubjet0eta  = array('f', [-1.])
-    FatJetSDsubjet0phi  = array('f', [-1.])
-    FatJetSDsubjet1pt   = array('f', [-1.])
-    FatJetSDsubjet1mass = array('f', [-1.])
-    FatJetSDsubjet1eta  = array('f', [-1.])
-    FatJetSDsubjet1phi  = array('f', [-1.])
+    FatJetSDsubjetWpt   = array('f', [-1.])
+    FatJetSDsubjetWmass = array('f', [-1.])
+    FatJetSDsubjetWp4   = array('f', [-1.])
+    FatJetSDsubjetBpt   = array('f', [-1.])
+    FatJetSDsubjetBmass = array('f', [-1.])
+    FatJetSDsubjetBp4   = array('f', [-1.])
     FatJetCMSmaxbdisc   = array('f', [-1.])
     FatJetCMSnsubjets   = array('f', [-1.])
     FatJetCMSminMass    = array('f', [-1.])
     FatJetCMSm01        = array('f', [-1.])
     FatJetCMSm02        = array('f', [-1.])
     FatJetCMSm12        = array('f', [-1.])
+
+    BJetbDisc           = array('f', [-1.])
+    BJetPt              = array('f', [-1.])
+    BJetEta             = array('f', [-1.])
+    BJetPhi             = array('f', [-1.])
+    BJetMass            = array('f', [-1.])
 
     LeptonType          = array('i', [-1])
     LeptonPt            = array('f', [-1.])
@@ -846,9 +853,11 @@ if options.writeTree :
     NearestAK4JetEta    = array('f', [-1.])
     NearestAK4JetPhi    = array('f', [-1.])
     NearestAK4JetMass   = array('f', [-1.])
+
     
-    TreeSemiLept.Branch('SemiLeptTrig'        , SemiLeptTrig        ,  'SemiLeptTrig/I'      )
-    TreeSemiLept.Branch('SemiLeptWeight'      , SemiLeptWeight      ,  'SemiLeptWeight/F'      )
+    TreeSemiLept.Branch('SemiLeptTrig'        , SemiLeptTrig        ,  'SemiLeptTrig/I'        )
+    TreeSemiLept.Branch('SemiLeptWeight'      , SemiLeptWeight      ,  'SemiLeptWeight/F'      )    
+    TreeSemiLept.Branch('BoosttypE'           , BoosttypE           ,  'BoosttypE/I'           )
     TreeSemiLept.Branch('FatJetCorr'          , FatJetCorr          ,  'FatJetCorr/F'          )
     TreeSemiLept.Branch('FatJetCorrUp'        , FatJetCorrUp        ,  'FatJetCorrUp/F'        )
     TreeSemiLept.Branch('FatJetCorrDn'        , FatJetCorrDn        ,  'FatJetCorrDn/F'        )
@@ -860,6 +869,7 @@ if options.writeTree :
     TreeSemiLept.Branch('FatJetPy'            , FatJetPy            ,  'FatJetPy/F'            )
     TreeSemiLept.Branch('FatJetPz'            , FatJetPz            ,  'FatJetPz/F'            )
     TreeSemiLept.Branch('FatJetEnergy'        , FatJetEnergy        ,  'FatJetEnergy/F'        )
+    TreeSemiLept.Branch('FatJetBDisc'         , FatJetBDisc         ,  'FatJetBDisc/F'         )
     TreeSemiLept.Branch('FatJetRhoRatio'      , FatJetRhoRatio      ,  'FatJetRhoRatio/F'      )
     TreeSemiLept.Branch('FatJetMass'          , FatJetMass          ,  'FatJetMass/F'          )
     TreeSemiLept.Branch('FatJetMassSoftDrop'  , FatJetMassSoftDrop  ,  'FatJetMassSoftDrop/F'  )
@@ -871,23 +881,27 @@ if options.writeTree :
     TreeSemiLept.Branch('FatJetTau3'          , FatJetTau3          ,  'FatJetTau3/F'          )
     TreeSemiLept.Branch('FatJetTau32'         , FatJetTau32         ,  'FatJetTau32/F'         )
     TreeSemiLept.Branch('FatJetTau21'         , FatJetTau21         ,  'FatJetTau21/F'         )
-    TreeSemiLept.Branch('FatJetSDbdisc0'      , FatJetSDbdisc0      ,  'FatJetSDbdisc0/F'      )
-    TreeSemiLept.Branch('FatJetSDbdisc1'      , FatJetSDbdisc1      ,  'FatJetSDbdisc1/F'      )
+    TreeSemiLept.Branch('FatJetSDnsubjets'    , FatJetSDnsubjets    ,  'FatJetSDnsubjets/F'    )
+    TreeSemiLept.Branch('FatJetSDbdiscW'      , FatJetSDbdiscW      ,  'FatJetSDbdiscW/F'      )
+    TreeSemiLept.Branch('FatJetSDbdiscB'      , FatJetSDbdiscB      ,  'FatJetSDbdiscB/F'      )
     TreeSemiLept.Branch('FatJetSDmaxbdisc'    , FatJetSDmaxbdisc    ,  'FatJetSDmaxbdisc/F'    )
-    TreeSemiLept.Branch('FatJetSDsubjet0pt'   , FatJetSDsubjet0pt   ,  'FatJetSDsubjet0pt/F'   )
-    TreeSemiLept.Branch('FatJetSDsubjet0mass' , FatJetSDsubjet0mass ,  'FatJetSDsubjet0mass/F' )
-    TreeSemiLept.Branch('FatJetSDsubjet0eta'  , FatJetSDsubjet0eta  ,  'FatJetSDsubjet0eta/F'  )
-    TreeSemiLept.Branch('FatJetSDsubjet0phi'  , FatJetSDsubjet0phi  ,  'FatJetSDsubjet0phi/F'  )
-    TreeSemiLept.Branch('FatJetSDsubjet1pt'   , FatJetSDsubjet1pt   ,  'FatJetSDsubjet1pt/F'   )
-    TreeSemiLept.Branch('FatJetSDsubjet1mass' , FatJetSDsubjet1mass ,  'FatJetSDsubjet1mass/F' )
-    TreeSemiLept.Branch('FatJetSDsubjet1eta'  , FatJetSDsubjet1eta  ,  'FatJetSDsubjet1eta/F'  )
-    TreeSemiLept.Branch('FatJetSDsubjet1phi'  , FatJetSDsubjet1phi  ,  'FatJetSDsubjet1phi/F'  )
+    TreeSemiLept.Branch('FatJetSDsubjetWpt'   , FatJetSDsubjetWpt   ,  'FatJetSDsubjetWpt/F'   )
+    TreeSemiLept.Branch('FatJetSDsubjetWmass' , FatJetSDsubjetWmass ,  'FatJetSDsubjetWmass/F' )
+    TreeSemiLept.Branch('FatJetSDsubjetWp4'   , FatJetSDsubjetWp4   ,  'FatJetSDsubjetWp4/F'   )
+    TreeSemiLept.Branch('FatJetSDsubjetBpt'   , FatJetSDsubjetBpt   ,  'FatJetSDsubjetBpt/F'   )
+    TreeSemiLept.Branch('FatJetSDsubjetBmass' , FatJetSDsubjetBmass ,  'FatJetSDsubjetBmass/F' )
+    TreeSemiLept.Branch('FatJetSDsubjetBp4'   , FatJetSDsubjetBp4   ,  'FatJetSDsubjetBp4/F'   )
     TreeSemiLept.Branch('FatJetCMSmaxbdisc'   , FatJetCMSmaxbdisc   ,  'FatJetCMSmaxbdisc/F'   )
     TreeSemiLept.Branch('FatJetCMSnsubjets'   , FatJetCMSnsubjets   ,  'FatJetCMSnsubjets/F'   )
     TreeSemiLept.Branch('FatJetCMSminMass'    , FatJetCMSminMass    ,  'FatJetCMSminMass/F'    )
     TreeSemiLept.Branch('FatJetCMSm01'        , FatJetCMSm01        ,  'FatJetCMSm01/F'        )
     TreeSemiLept.Branch('FatJetCMSm02'        , FatJetCMSm02        ,  'FatJetCMSm02/F'        )
     TreeSemiLept.Branch('FatJetCMSm12'        , FatJetCMSm12        ,  'FatJetCMSm12/F'        )
+    TreeSemiLept.Branch('BJetbDisc'           , BJetbDisc           ,  'BJetbDisc/F'           )
+    TreeSemiLept.Branch('BJetPt'              , BJetPt              ,  'BJetPt/F'              )
+    TreeSemiLept.Branch('BJetEta'             , BJetEta             ,  'BJetEta/F'             )
+    TreeSemiLept.Branch('BJetPhi'             , BJetPhi             ,  'BJetPhi/F'             )
+    TreeSemiLept.Branch('BJetMass'            , BJetMass            ,  'BJetMass/F'            )
     TreeSemiLept.Branch('LeptonType'          , LeptonType          ,  'LeptonType/I'          )
     TreeSemiLept.Branch('LeptonPt'            , LeptonPt            ,  'LeptonPt/F'            )
     TreeSemiLept.Branch('LeptonEta'           , LeptonEta           ,  'LeptonEta/F'           )
@@ -3157,7 +3171,15 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodCMSTTsubjetIndex2 = []
             ak8JetsGoodCMSTTsubjetIndex3 = []            
             ak8JetsGoodSDsubjetIndex0 = []            
-            ak8JetsGoodSDsubjetIndex1 = []            
+            ak8JetsGoodSDsubjetIndex1 = []   
+            ak8JetsGoodSDsubjet0Mass = []            
+            ak8JetsGoodSDsubjet1Mass = [] 
+            ak8JetsGoodSDsubjet0Bdisc = []            
+            ak8JetsGoodSDsubjet1Bdisc = []    
+            ak8JetsGoodSDsubjet0Pt = []            
+            ak8JetsGoodSDsubjet1Pt = [] 
+            ak8JetsGoodSDsubjet0P4 = []            
+            ak8JetsGoodSDsubjet1P4 = []      
             ak8JetsGoodL1cor = []            
             ak8JetsGoodL2cor = []            
             ak8JetsGoodL3cor = []
@@ -3515,6 +3537,21 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodCMSTTsubjetIndex3.append( AK8CMSTTsubjetIndex3[i] )
                             ak8JetsGoodSDsubjetIndex0.append( AK8SDsubjetIndex0[i] )
                             ak8JetsGoodSDsubjetIndex1.append( AK8SDsubjetIndex1[i] )
+                            if len(SDsubjetMass) >= 2:
+                                ak8JetsGoodSDsubjet0Mass.append( SDsubjetMass[int(AK8SDsubjetIndex0[i])] )
+                                ak8JetsGoodSDsubjet1Mass.append( SDsubjetMass[int(AK8SDsubjetIndex1[i])] )
+                                ak8JetsGoodSDsubjet0Pt.append( SDsubjetPt[int(AK8SDsubjetIndex0[i])] )
+                                ak8JetsGoodSDsubjet1Pt.append( SDsubjetPt[int(AK8SDsubjetIndex1[i])] )
+                                ak8JetsGoodSDsubjet0Bdisc.append( SDsubjetBDisc[int(AK8SDsubjetIndex0[i])] )
+                                ak8JetsGoodSDsubjet1Bdisc.append( SDsubjetBDisc[int(AK8SDsubjetIndex1[i])] )
+                            else :
+                                ak8JetsGoodSDsubjet0Mass.append( 0 )
+                                ak8JetsGoodSDsubjet1Mass.append( 0 )
+                                ak8JetsGoodSDsubjet0Pt.append( 0 )
+                                ak8JetsGoodSDsubjet1Pt.append( 0 )
+                                ak8JetsGoodSDsubjet0Bdisc.append( 0 )
+                                ak8JetsGoodSDsubjet1Bdisc.append( 0 )
+
                             ak8JetsGoodNHF.append( nhf )
                             ak8JetsGoodCHF.append( chf )
                             ak8JetsGoodNEF.append( nef )
@@ -4662,8 +4699,23 @@ for ifile in files : #{ Loop over root files
                 mAK8SDrop = ak8JetsGoodSDropMass[tagCand]
                 # Make sure there are top tags if we want to plot them
                 minMass = ak8JetsGoodMinMass[tagCand]
-                subjetBdisc = 0  #AK8SubjetbDisc[tagCand]
-                subjetMass  = 0  #AK8SubjetMass[tagCand]
+                if ak8JetsGoodSDsubjet0Bdisc[tagCand] > ak8JetsGoodSDsubjet0Bdisc[tagCand] :
+                    subjetBdiscW = ak8JetsGoodSDsubjet1Bdisc[tagCand]   
+                    subjetBdiscB = ak8JetsGoodSDsubjet0Bdisc[tagCand]  
+                    subjetBdiscMax = ak8JetsGoodSDsubjet0Bdisc[tagCand] 
+                    subjetWMass  = ak8JetsGoodSDsubjet1Mass[tagCand] 
+                    subjetBMass  = ak8JetsGoodSDsubjet0Mass[tagCand]  
+                    subjetWPt  = ak8JetsGoodSDsubjet1Pt[tagCand] 
+                    subjetBPt  = ak8JetsGoodSDsubjet0Pt[tagCand]
+                else :                    
+                    subjetBdiscW = ak8JetsGoodSDsubjet0Bdisc[tagCand]   
+                    subjetBdiscB = ak8JetsGoodSDsubjet1Bdisc[tagCand]  
+                    subjetBdiscMax = ak8JetsGoodSDsubjet1Bdisc[tagCand] 
+                    subjetWMass  = ak8JetsGoodSDsubjet0Mass[tagCand] 
+                    subjetBMass  = ak8JetsGoodSDsubjet1Mass[tagCand] 
+                    subjetWPt  = ak8JetsGoodSDsubjet0Pt[tagCand] 
+                    subjetBPt  = ak8JetsGoodSDsubjet1Pt[tagCand]     
+
                 nsubjets = ak8JetsGoodNSubJets[tagCand]
                 tau1 = ak8JetsGoodTau1[tagCand]  
                 tau2 = ak8JetsGoodTau2[tagCand] 
@@ -4857,8 +4909,17 @@ for ifile in files : #{ Loop over root files
                     mAK8SDrop = ak8JetsGoodSDropMass[wtagCand]
                     # Make sure there are top tags if we want to plot them
                     minMass = ak8JetsGoodMinMass[wtagCand]
-                    subjetBdisc = 0  
-                    subjetMass  = 0  
+
+
+                    subjetBdiscW = 0  
+                    subjetBdiscB = 0  
+                    subjetBdiscMax = 0  
+
+                    subjetWMass  = 0  
+                    subjetBMass  = 0  
+                    subjetWPt  = 0  
+                    subjetBPt = 0 
+
                     nsubjets = ak8JetsGoodNSubJets[wtagCand]
                     tau1 = ak8JetsGoodTau1[wtagCand]  
                     tau2 = ak8JetsGoodTau2[wtagCand] 
@@ -4883,47 +4944,73 @@ for ifile in files : #{ Loop over root files
                         leptonType = 1
                     elif muJets :
                         leptonType = 2
-                    #~ Fill SemiLeptonic tree
-                    SemiLeptWeight      [0] =  evWeight
-                    FatJetCorr          [0] =  ak8JetsGoodCorrFactor[0]
-                    FatJetCorrUp        [0] =  ak8JetsGoodCorrUpFactor[0]
-                    FatJetCorrDn        [0] =  ak8JetsGoodCorrDnFactor[0]
-                    FatJetPt            [0] = ak8JetsGood[0].Perp()
-                    FatJetEta           [0] = ak8JetsGood[0].Eta()
-                    FatJetPhi           [0] = ak8JetsGood[0].Phi()
-                    FatJetRap           [0] = ak8JetsGood[0].Rapidity()
-                    FatJetPx            [0] = ak8JetsGood[0].Px()
-                    FatJetPy            [0] = ak8JetsGood[0].Py()
-                    FatJetPz            [0] = ak8JetsGood[0].Pz()
-                    FatJetEnergy        [0] = ak8JetsGood[0].Energy()
-                    FatJetRhoRatio      [0] = pow( ak8JetsGood[0].M() / (ak8JetsGood[0].Perp()*0.8) , 2)
-                    FatJetMass          [0] = ak8JetsGood[0].M()
-                    FatJetMassSoftDrop  [0] = ak8JetsGoodSDropMass[0]
-                    FatJetMassPruned    [0] = ak8JetsGoodPrunMass[0]
-                    FatJetMassFiltered  [0] = ak8JetsGoodFiltMass[0]
-                    FatJetMassTrimmed   [0] = ak8JetsGoodTrimMass[0]
-                    FatJetTau1          [0] = ak8JetsGoodTau1[0]
-                    FatJetTau2          [0] = ak8JetsGoodTau2[0]
-                    FatJetTau3          [0] = ak8JetsGoodTau3[0]
-                    FatJetTau32         [0] = tau32
-                    FatJetTau21         [0] = tau21
-                    FatJetSDbdisc0      [0] = jetFat_sd_s0_bdisc
-                    FatJetSDbdisc1      [0] = jetFat_sd_s1_bdisc
-                    FatJetSDmaxbdisc    [0] = jetFat_sd_maxbdisc
-                    FatJetSDsubjet0pt   [0] = jetFat_sd_s0_pt
-                    FatJetSDsubjet0mass [0] = jetFat_sd_s0_m
-                    FatJetSDsubjet0eta  [0] = jetFat_sd_s0_eta
-                    FatJetSDsubjet0phi  [0] = jetFat_sd_s0_phi
-                    FatJetSDsubjet1pt   [0] = jetFat_sd_s1_pt
-                    FatJetSDsubjet1mass [0] = jetFat_sd_s1_m
-                    FatJetSDsubjet1eta  [0] = jetFat_sd_s1_eta
-                    FatJetSDsubjet1phi  [0] = jetFat_sd_s1_phi
+
+                        
+                    if typE == 1 :
+                        tagCand = tagCand
+                        BjetBDisc = 0
+                        BjetPt = 0
+                        BjetEta = 0
+                        BjetPhi = 0
+                        BjetMass = 0
+                    else :
+                        tagCand = wtagCand
+                        BjetBDisc = ak8JetsGoodCSV[btagCand]
+                        BjetPt = ak8JetsGood[btagCand].Perp()
+                        BjetEta = ak8JetsGood[btagCand].Eta()
+                        BjetPhi = ak8JetsGood[btagCand].Phi()
+                        BjetMass = ak8JetsGood[btagCand].M()
+
+
+                    candToPlot = tagCand
+                    if typE == 2 :
+                        candToPlot = wCand
+
+                    #~ Fill SemiLeptonic tree 
+                    BoosttypE           [0] = typE
+                    SemiLeptWeight      [0] = evWeight
+                    FatJetCorr          [0] = ak8JetsGoodCorrFactor[candToPlot]
+                    FatJetCorrUp        [0] = ak8JetsGoodCorrUpFactor[candToPlot]
+                    FatJetCorrDn        [0] = ak8JetsGoodCorrDnFactor[candToPlot]
+                    FatJetPt            [0] = ak8JetsGood[candToPlot].Perp()
+                    FatJetEta           [0] = ak8JetsGood[candToPlot].Eta()
+                    FatJetPhi           [0] = ak8JetsGood[candToPlot].Phi()
+                    FatJetRap           [0] = ak8JetsGood[candToPlot].Rapidity()
+                    FatJetPx            [0] = ak8JetsGood[candToPlot].Px()
+                    FatJetPy            [0] = ak8JetsGood[candToPlot].Py()
+                    FatJetPz            [0] = ak8JetsGood[candToPlot].Pz()
+                    FatJetEnergy        [0] = ak8JetsGood[candToPlot].Energy()
+                    FatJetBDisc         [0] = ak8JetsGoodCSV[candToPlot]
+                    FatJetRhoRatio      [0] = pow( ak8JetsGood[candToPlot].M() / (ak8JetsGood[candToPlot].Perp()*0.8) , 2)
+                    FatJetMass          [0] = ak8JetsGood[candToPlot].M()
+                    FatJetMassSoftDrop  [0] = mAK8SDrop
+                    FatJetMassPruned    [0] = mAK8Pruned
+                    FatJetMassFiltered  [0] = mAK8Filtered
+                    FatJetMassTrimmed   [0] = mAK8Trimmed
+                    FatJetTau1          [0] = tau1
+                    FatJetTau2          [0] = tau2
+                    FatJetTau3          [0] = tau3
+                    FatJetTau32         [0] = tau3 / tau2
+                    FatJetTau21         [0] = tau2 / tau1
+                    FatJetSDnsubjets    [0] = nsubjets                 
+                    FatJetSDbdiscW      [0] = subjetBdiscW
+                    FatJetSDbdiscB      [0] = subjetBdiscB
+                    FatJetSDmaxbdisc    [0] = subjetBdiscMax
+                    FatJetSDsubjetWpt   [0] = subjetWPt
+                    FatJetSDsubjetWmass [0] = subjetWMass
+                    FatJetSDsubjetBpt   [0] = subjetBPt 
+                    FatJetSDsubjetBmass [0] = subjetBMass
                     FatJetCMSmaxbdisc   [0] = jetFat_cmstt_maxbdisc
-                    FatJetCMSnsubjets   [0] = ak8JetsGoodNSubJets[tagCand]
-                    FatJetCMSminMass    [0] = ak8JetsGoodMinMass[tagCand]
-                    FatJetCMSm01        [0] = jetFat_cmstt_m01 
-                    FatJetCMSm02        [0] = jetFat_cmstt_m02 
-                    FatJetCMSm12        [0] = jetFat_cmstt_m12 
+                    FatJetCMSnsubjets   [0] = nsubjets
+                    FatJetCMSminMass    [0] = minMass
+                    FatJetCMSm01        [0] = jetFat_cmstt_m01
+                    FatJetCMSm02        [0] = jetFat_cmstt_m02
+                    FatJetCMSm12        [0] = jetFat_cmstt_m12
+                    BJetbDisc           [0] = BjetBDisc          
+                    BJetPt              [0] = BjetPt
+                    BJetEta             [0] = BjetEta
+                    BJetPhi             [0] = BjetPhi
+                    BJetMass            [0] = BjetMass
                     LeptonType          [0] = leptonType
                     LeptonPt            [0] = theLepton.Perp()  
                     LeptonEta           [0] = theLepton.Eta()
