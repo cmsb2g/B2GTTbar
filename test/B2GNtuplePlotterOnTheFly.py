@@ -34,6 +34,11 @@ parser.add_option('--legleft',  action='store_true',
                   dest='legleft',
                   default = False,
                   help='Plot legend on the left')
+
+parser.add_option('--trig', type = 'string', action='store',
+                  dest='trig',
+                  default = None,
+                  help="Triggers to plot")
 (options, args) = parser.parse_args()
 argv = []
 
@@ -44,14 +49,21 @@ import array
 ROOT.gStyle.SetOptStat(000000)
 #ROOT.gROOT.Macro("rootlogon.C")
 ROOT.gStyle.SetTitleOffset(1.0, "Y")
-ttbarIn = ROOT.TFile( 'NTUPLES/ttjets_b2ganafw_v6_jecv5_updatedsel_ntuple.root' )
-wjetsIn = ROOT.TFile( 'NTUPLES/wjets_b2ganafw_v5_sel1_extracats_jecv5_updatedsel_ntuple.root' )
-zjetsIn = ROOT.TFile( 'NTUPLES/zjets_b2ganafw_v4_sel1_extracats_jecv5_updatedsel_ntuple.root' )
-singletopIn = ROOT.TFile( 'NTUPLES/singletop_v74x_v4.3_tchan_local_sel1_extracats_jecv5_updatedsel_ntuple.root' )
-singlemuIn = ROOT.TFile( 'NTUPLES/singlemu_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root' )
-singleelIn = ROOT.TFile( 'NTUPLES/singleel_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root' )
+## ttbarIn = ROOT.TFile( 'NTUPLES/ttjets_b2ganafw_v6_jecv5_updatedsel_ntuple.root' )
+## wjetsIn = ROOT.TFile( 'NTUPLES/wjets_b2ganafw_v5_sel1_extracats_jecv5_updatedsel_ntuple.root' )
+## zjetsIn = ROOT.TFile( 'NTUPLES/zjets_b2ganafw_v4_sel1_extracats_jecv5_updatedsel_ntuple.root' )
+## singletopIn = ROOT.TFile( 'NTUPLES/singletop_v74x_v4.3_tchan_local_sel1_extracats_jecv5_updatedsel_ntuple.root' )
+## singlemuIn = ROOT.TFile( 'NTUPLES/singlemu_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root' )
+## singleelIn = ROOT.TFile( 'NTUPLES/singleel_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root' )
 
-lumi = 626.4
+ttbarIn = ROOT.TFile( 'NTUPLES/ttjets_b2ganafw_v6_jecv5_updatedmcrw_ntuple.root' )
+wjetsIn = ROOT.TFile( 'NTUPLES/wjets_b2ganafw_v5_sel1_extracats_jecv5_updatedmcrw_ntuple.root' )
+zjetsIn = ROOT.TFile( 'NTUPLES/zjets_b2ganafw_v4_sel1_extracats_jecv5_updatedmcrw_ntuple.root' )
+singletopIn = ROOT.TFile( 'NTUPLES/singletop_v74x_v4.3_tchan_local_sel1_extracats_jecv5_updatedmcrw_ntuple.root' )
+singlemuIn = ROOT.TFile( 'NTUPLES/singlemu_v74x_v6_dataset6_jecv5_updateddphi_ntuple.root' )
+singleelIn = ROOT.TFile( 'NTUPLES/singleel_v74x_v6_dataset5_jecv5_updateddphi_ntuple.root' )
+
+lumi = 1263.88
 
 ttbar = ttbarIn.Get("TreeSemiLept")
 wjets = wjetsIn.Get("TreeSemiLept")
@@ -67,7 +79,13 @@ titles = {
     'LeptonPt + SemiLepMETpt':['htlep',';H_{T}^{LEP} (GeV);Number'],
     'FatJetTau2/FatJetTau1':['tau21',';#tau_{2}/#tau_{1};Number'],
     'FatJetTau3/FatJetTau2':['tau32',';#tau_{3}/#tau_{2};Number'],
-    'NearestAK4JetPt':['ak4pt',';Lepton-side AK4 Jet p_{T} (GeV);Number']
+    'NearestAK4JetPt':['ak4pt',';Lepton-side AK4 Jet p_{T} (GeV);Number'],
+    'DeltaPhiLepFat':['deltaPhiLepFat',';#Delta #phi (lep, AK8);Number'],
+    'NearestAK4JetEta':['ak4eta', ';Jet Rapidity;Number'],
+    'FatJetRhoRatio':['ak8rho', ';Jet #rho = (m/p_{T}R)^{2};Number'],
+    'AK4bDisc':['ak4bdisc',';Jet B Discriminator;Number'],
+    'LeptonPtRel':['LeptonPtRel',';p_{T}^{REL} (lep,jet);Number'],
+    'LeptonDRMin':['LeptonDRMin',';#Delta R (lep,jet);Number'],
     }
 
 variable = options.variable
@@ -88,12 +106,15 @@ if options.lep == 'mu' :
 elif options.lep == 'el' :
     lepstrMC = lepstrELE
 
-ttbar.Draw(variable     + " >> httbar"     + histbins, cut + " && " + lepstrMC, "goff")
-wjets.Draw(variable     + " >> hwjets"     + histbins, cut + " && " + lepstrMC, "goff")
-zjets.Draw(variable     + " >> hzjets"     + histbins, cut + " && " + lepstrMC, "goff")
-singletop.Draw(variable + " >> hsingletop" + histbins, cut + " && " + lepstrMC, "goff")
-singlemu.Draw(variable  + " >> hsinglemu"  + histbins, cut + " && " + lepstrMUO, "goff")
-singleel.Draw(variable  + " >> hsingleel"  + histbins, cut + " && " + lepstrELE, "goff")
+#weightstr = "SemiLeptWeight * "
+weightstr = ""
+
+ttbar.Draw(variable     + " >> httbar"     + histbins, weightstr + "(" + cut + " && " + lepstrMC + ")", "goff")
+wjets.Draw(variable     + " >> hwjets"     + histbins, weightstr + "(" + cut + " && " + lepstrMC + ")", "goff")
+zjets.Draw(variable     + " >> hzjets"     + histbins, weightstr + "(" + cut + " && " + lepstrMC + ")", "goff")
+singletop.Draw(variable + " >> hsingletop" + histbins, weightstr + "(" + cut + " && " + lepstrMC + ")", "goff")
+singlemu.Draw(variable  + " >> hsinglemu"  + histbins, cut + " && " + lepstrMUO + " && " + options.trig, "goff")
+singleel.Draw(variable  + " >> hsingleel"  + histbins, cut + " && " + lepstrELE + " && " + options.trig, "goff")
 
 httbar = ROOT.gDirectory.Get('httbar')
 hwjets = ROOT.gDirectory.Get('hwjets')
@@ -111,14 +132,31 @@ else :
     hdata.SetName("hdata")
     hsingleel = ROOT.gDirectory.Get('hsingleel')
     hdata.Add( hsingleel)
-    
-httbar.Scale( 831.76 * lumi / 19665194. )
+
+
+
+if httbar.Integral() > 0 : 
+    httbar.Scale( 831.76 * lumi / 19665194. * httbar.GetEntries()/httbar.Integral())
+else :
+    httbar.Scale( 0.)
 httbar.SetFillColor(ROOT.kGreen + 2)
-hwjets.Scale(20508.9 * lumi / 24089991. )
+
+if hwjets.Integral() > 0 : 
+    hwjets.Scale(20508.9 * lumi / 24089991. * hwjets.GetEntries()/hwjets.Integral())
+else :
+    hwjets.Scale( 0.)
 hwjets.SetFillColor(ROOT.kRed)
-hzjets.Scale( 2008.4 * lumi / 19925500. )
+
+if hzjets.Integral() > 0 : 
+    hzjets.Scale( 2008.4 * lumi / 19925500. * hzjets.GetEntries()/hzjets.Integral())
+else :
+    hzjets.Scale( 0. )
 hzjets.SetFillColor(ROOT.kBlue - 4)
-hsingletop.Scale( 216.99 * lumi / 3999910. )
+
+if hsingletop.Integral() > 0  : 
+    hsingletop.Scale( 216.99 * lumi / 3999910. * hsingletop.GetEntries()/hsingletop.Integral())
+else :
+    hsingletop.Scale(0)
 hsingletop.SetFillColor(ROOT.kCyan )
 
 
