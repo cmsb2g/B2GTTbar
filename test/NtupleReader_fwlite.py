@@ -2022,11 +2022,14 @@ for ifile in files : #{ Loop over root files
             # Event weights
             gotGenerator = event.getByLabel( l_generator, h_generator )
             generator = h_generator.product()
-            gotLHE = event.getByLabel( l_lhe, h_lhe )
-            lhe = h_lhe.product()
-            if not gotGenerator or not gotLHE :
+            ## gotLHE = event.getByLabel( l_lhe, h_lhe )
+            ## lhe = h_lhe.product()
+            ## if not gotGenerator or not gotLHE :
+            ##     continue
+
+            if not gotGenerator :
                 continue
-            
+                        
             if options.deweightFlat :
                 pthat = 0.0
                 if generator.hasBinningValues() :
@@ -2036,11 +2039,11 @@ for ifile in files : #{ Loop over root files
                         print 'after deweight flat, evWeight is : ' + str(evWeight)
             if options.negativeWeights and gotGenerator :
 
-                if options.verbose :
-                    for lheInfo in lhe :
-                        print lheInfo.tag()
-                        for iline in lheInfo.lines() :
-                            print iline
+                ## if options.verbose :
+                ##     for lheInfo in lhe :
+                ##         print lheInfo.tag()
+                ##         for iline in lheInfo.lines() :
+                ##             print iline
                 
                 evtWeights = generator.weights()
                 iweight = generator.weight()
