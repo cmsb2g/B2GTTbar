@@ -4777,7 +4777,7 @@ for ifile in files : #{ Loop over root files
 
                 #h_Jet0_MassSoft_CorrOrigSumSubjet   .Fill(  jet0_add_softdrop_subjets_originalCorr.M()  )
                 #h_Jet0_MassSoft_RawSumSubjet        .Fill(  jet0_add_softdrop_subjets_raw.M()           )
-                h_Jet1_MassSoft_CorrNewSumSubjet    .Fill(  jet0_add_softdrop_subjets_newCorr.M()       )
+                #h_Jet1_MassSoft_CorrNewSumSubjet    .Fill(  jet0_add_softdrop_subjets_newCorr.M()       )
 
 
                 jetFat_bdiscs =[jetFat_sd_s0_bdisc, jetFat_sd_s1_bdisc] 
@@ -4964,7 +4964,7 @@ for ifile in files : #{ Loop over root files
 
                     candToPlot = tagCand
                     if typE == 2 :
-                        candToPlot = wCand
+                        candToPlot = wtagCand
 
                     #~ Fill SemiLeptonic tree 
                     BoosttypE           [0] = typE
