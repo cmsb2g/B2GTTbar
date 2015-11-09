@@ -4479,7 +4479,7 @@ for ifile in files : #{ Loop over root files
                 mAK8SDrop = ak8JetsGoodSDropMass[tagCand]
                 # Make sure there are top tags if we want to plot them
                 minMass = ak8JetsGoodMinMass[tagCand]
-                if ak8JetsGoodSDsubjet0Bdisc[tagCand] > ak8JetsGoodSDsubjet0Bdisc[tagCand] :
+                if ak8JetsGoodSDsubjet1Bdisc[tagCand] > ak8JetsGoodSDsubjet0Bdisc[tagCand] :
                     subjetBdiscW = ak8JetsGoodSDsubjet1Bdisc[tagCand]   
                     subjetBdiscB = ak8JetsGoodSDsubjet0Bdisc[tagCand]  
                     subjetBdiscMax = ak8JetsGoodSDsubjet0Bdisc[tagCand] 
