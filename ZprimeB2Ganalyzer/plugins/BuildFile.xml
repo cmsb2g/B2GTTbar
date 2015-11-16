@@ -3,7 +3,6 @@
 <use name="FWCore/PluginManager"/>
 <use name="FWCore/ParameterSet"/>
 <use name="DataFormats/PatCandidates"/>
-<use name="DataFormats/PatCandidates"/>
 <use name="PhysicsTools/UtilAlgos"/>
 <use name="FWCore/ServiceRegistry"/>
 <use name="clhep"/>
