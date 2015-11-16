@@ -28,7 +28,15 @@ process.source = cms.Source("PoolSource",
 
 ###############################################################################
 #PRODUCER
-process.b2gntuple = cms.EDAnalyzer('ZprimeB2Ganalyzer')
+process.b2gntuple = cms.EDAnalyzer('ZprimeB2Ganalyzer',
+                                   #testSrc = cms.string('hola')
+                                   negativeWeights = cms.bool(True),
+                                   isMC = cms.bool(True),
+                                   isFlat = cms.bool(False),
+                                   applyFilters = cms.bool(True),
+                                   applyTriggers = cms.bool(False),
+                                   JERshift = cms.int(0),
+                                   )
 
 ###############################################################################
 #OUTPUT
