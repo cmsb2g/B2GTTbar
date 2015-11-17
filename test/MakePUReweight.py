@@ -1,8 +1,8 @@
 import ROOT
 
 
-fData = ROOT.TFile("July30n-MuData-50ns-sel1.root")
-fMC = ROOT.TFile("July30n-TTJets-50ns-sel1.root")
+fData = ROOT.TFile("NTUPLES/singlemu_v74x_v6_dataset5_jecv5_updateddphi_ntuple.root")
+fMC = ROOT.TFile("NTUPLES/ttjets_b2ganafw_v6_jecv5_updateddphi_ntuple.root")
 
 hData = fData.Get("h_NPVert")
 hMC = fMC.Get("h_NPVert")

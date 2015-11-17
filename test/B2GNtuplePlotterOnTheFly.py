@@ -35,14 +35,21 @@ parser.add_option('--legleft',  action='store_true',
                   dest='legleft',
                   default = False,
                   help='Plot legend on the left')
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 parser.add_option('--trig', type = 'string', action='store',
                   dest='trig',
                   default = None,
                   help="Triggers to plot")
+<<<<<<< HEAD
 parser.add_option('--type2', action='store_true',
                   default=False,
                   dest='Type2',
                   help='W and B jets NOT merged')
+=======
+>>>>>>> upstream/master
 (options, args) = parser.parse_args()
 argv = []
 
@@ -54,6 +61,7 @@ ROOT.gStyle.SetOptStat(000000)
 
 #ROOT.gROOT.Macro("rootlogon.C")
 ROOT.gStyle.SetTitleOffset(1.0, "Y")
+<<<<<<< HEAD
 
 ttbarIn = ROOT.TFile( './ttjets_b2ganafw_v6_sel1_jec25nsV6_ntuple_Nov9b.root' )
 wjetsIn = ROOT.TFile( './wjets_b2ganafw_v5_sel1_negWeights_jec25nsV6_ntuple_Nov9.root' )
@@ -62,6 +70,21 @@ singletopIn = ROOT.TFile( './singletop_v74x_v4.3_tchan_local_sel1_negWeights_jec
 singlemuIn = ROOT.TFile( './singlemu_v74x_v6_dataset6_jec25nsV6_ntuple_Nov9b.root' )
 singleelIn = ROOT.TFile( './singleel_v74x_v6_dataset6_jec25nsV6_updateddphi_ntuple_Nov9.root' )
 
+=======
+## ttbarIn = ROOT.TFile( 'NTUPLES/ttjets_b2ganafw_v6_jecv5_updatedsel_ntuple.root' )
+## wjetsIn = ROOT.TFile( 'NTUPLES/wjets_b2ganafw_v5_sel1_extracats_jecv5_updatedsel_ntuple.root' )
+## zjetsIn = ROOT.TFile( 'NTUPLES/zjets_b2ganafw_v4_sel1_extracats_jecv5_updatedsel_ntuple.root' )
+## singletopIn = ROOT.TFile( 'NTUPLES/singletop_v74x_v4.3_tchan_local_sel1_extracats_jecv5_updatedsel_ntuple.root' )
+## singlemuIn = ROOT.TFile( 'NTUPLES/singlemu_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root' )
+## singleelIn = ROOT.TFile( 'NTUPLES/singleel_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root' )
+
+ttbarIn = ROOT.TFile( 'NTUPLES/ttjets_b2ganafw_v6_jecv5_updatedmcrw_ntuple.root' )
+wjetsIn = ROOT.TFile( 'NTUPLES/wjets_b2ganafw_v5_sel1_extracats_jecv5_updatedmcrw_ntuple.root' )
+zjetsIn = ROOT.TFile( 'NTUPLES/zjets_b2ganafw_v4_sel1_extracats_jecv5_updatedmcrw_ntuple.root' )
+singletopIn = ROOT.TFile( 'NTUPLES/singletop_v74x_v4.3_tchan_local_sel1_extracats_jecv5_updatedmcrw_ntuple.root' )
+singlemuIn = ROOT.TFile( 'NTUPLES/singlemu_v74x_v6_dataset6_jecv5_updateddphi_ntuple.root' )
+singleelIn = ROOT.TFile( 'NTUPLES/singleel_v74x_v6_dataset5_jecv5_updateddphi_ntuple.root' )
+>>>>>>> upstream/master
 
 lumi = 1263.88
 
@@ -111,12 +134,24 @@ titles = {
     'LeptonEta':['Lepton_Eta','; Lepton \| #eta \| ;Number'],
     'LeptonPhi':['Lepton_Phi','; Lepton  #phi ;Number'],
     'LeptonPt + SemiLepMETpt':['htlep',';H_{T}^{LEP} (GeV);Number'],
+<<<<<<< HEAD
     'LeptonPtRel':['LeptonPtRel',';p_{T}^{REL} (lep,jet);Number'],
     'LeptonDRMin':['LeptonDRMin',';#Delta R (lep,jet);Number'],
     'AK4bDisc':['ak4bdisc',';Jet B Discriminator;Number'],
     'NearestAK4JetPt':['ak4pt',';Lepton-side AK4 Jet p_{T} (GeV);Number'],
     'DeltaPhiLepFat':['deltaPhiLepFat',';#Delta #phi (lep, AK8);Number'],
     'NearestAK4JetEta':['ak4eta', ';Jet Rapidity;Number']
+=======
+    'FatJetTau2/FatJetTau1':['tau21',';#tau_{2}/#tau_{1};Number'],
+    'FatJetTau3/FatJetTau2':['tau32',';#tau_{3}/#tau_{2};Number'],
+    'NearestAK4JetPt':['ak4pt',';Lepton-side AK4 Jet p_{T} (GeV);Number'],
+    'DeltaPhiLepFat':['deltaPhiLepFat',';#Delta #phi (lep, AK8);Number'],
+    'NearestAK4JetEta':['ak4eta', ';Jet Rapidity;Number'],
+    'FatJetRhoRatio':['ak8rho', ';Jet #rho = (m/p_{T}R)^{2};Number'],
+    'AK4bDisc':['ak4bdisc',';Jet B Discriminator;Number'],
+    'LeptonPtRel':['LeptonPtRel',';p_{T}^{REL} (lep,jet);Number'],
+    'LeptonDRMin':['LeptonDRMin',';#Delta R (lep,jet);Number'],
+>>>>>>> upstream/master
     }
 
 variable = options.variable
@@ -144,6 +179,7 @@ elif options.lep == 'el' :
 #weightstr = "SemiLeptWeight * "
 weightstr = ""
 
+<<<<<<< HEAD
 if options.Type2 :
     ttbar.Draw(variable     + " >> httbar"     + histbins, weightstr + "(" + cut + " && " + lepstrMC + " && " + type2str + ")", "goff")
     wjets.Draw(variable     + " >> hwjets"     + histbins, weightstr + "(" + cut + " && " + lepstrMC + " && " + type2str +")", "goff")
@@ -159,6 +195,14 @@ else :
     singletop.Draw(variable + " >> hsingletop" + histbins, weightstr + "(" + cut + " && " + lepstrMC + " && " + type1str +")", "goff")
     singlemu.Draw(variable  + " >> hsinglemu"  + histbins, cut + " && " + lepstrMUO + " && " + type1str +" && " + options.trig, "goff")
     singleel.Draw(variable  + " >> hsingleel"  + histbins, cut + " && " + lepstrELE + " && " + type1str +" && " + options.trig, "goff")
+=======
+ttbar.Draw(variable     + " >> httbar"     + histbins, weightstr + "(" + cut + " && " + lepstrMC + ")", "goff")
+wjets.Draw(variable     + " >> hwjets"     + histbins, weightstr + "(" + cut + " && " + lepstrMC + ")", "goff")
+zjets.Draw(variable     + " >> hzjets"     + histbins, weightstr + "(" + cut + " && " + lepstrMC + ")", "goff")
+singletop.Draw(variable + " >> hsingletop" + histbins, weightstr + "(" + cut + " && " + lepstrMC + ")", "goff")
+singlemu.Draw(variable  + " >> hsinglemu"  + histbins, cut + " && " + lepstrMUO + " && " + options.trig, "goff")
+singleel.Draw(variable  + " >> hsingleel"  + histbins, cut + " && " + lepstrELE + " && " + options.trig, "goff")
+>>>>>>> upstream/master
 
 httbar = ROOT.gDirectory.Get('httbar')
 hwjets = ROOT.gDirectory.Get('hwjets')
@@ -182,41 +226,61 @@ else :
     hdata.SetName("hdata")
     hsingleel = ROOT.gDirectory.Get('hsingleel')
     hdata.Add( hsingleel)
+<<<<<<< HEAD
     fdata = ROOT.gDirectory.Get('hsinglemu').Clone()
     fdata.SetName("fdata")
     hsingleel = ROOT.gDirectory.Get('hsingleel')
     fdata.Add( hsingleel)
+=======
+
+>>>>>>> upstream/master
 
 
 if httbar.Integral() > 0 : 
     httbar.Scale( 831.76 * lumi / 19665194. * httbar.GetEntries()/httbar.Integral())
+<<<<<<< HEAD
     # t tbar - https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO used top mass as 172.5, uncertainties on twiki
 else :
     print "tt empty"
+=======
+else :
+>>>>>>> upstream/master
     httbar.Scale( 0.)
 httbar.SetFillColor(ROOT.kGreen + 2)
 
 if hwjets.Integral() > 0 : 
     hwjets.Scale(20508.9 * lumi / 24089991. * hwjets.GetEntries()/hwjets.Integral())
+<<<<<<< HEAD
     # inclusive W  https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
 else :
     print "w empty"
+=======
+else :
+>>>>>>> upstream/master
     hwjets.Scale( 0.)
 hwjets.SetFillColor(ROOT.kRed)
 
 if hzjets.Integral() > 0 : 
     hzjets.Scale( 2008.4 * lumi / 19925500. * hzjets.GetEntries()/hzjets.Integral())
+<<<<<<< HEAD
     # inclusive Z production https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
 else :
     print "z empty"
+=======
+else :
+>>>>>>> upstream/master
     hzjets.Scale( 0. )
 hzjets.SetFillColor(ROOT.kBlue - 4)
 
 if hsingletop.Integral() > 0  : 
     hsingletop.Scale( 216.99 * lumi / 3999910. * hsingletop.GetEntries()/hsingletop.Integral())
+<<<<<<< HEAD
     # t channel top at 13 TeV https://twiki.cern.ch/twiki/bin/viewauth/CMS/SingleTopSigma
 else :
     print "ST empty"
+=======
+else :
+>>>>>>> upstream/master
     hsingletop.Scale(0)
 hsingletop.SetFillColor(ROOT.kCyan )
 
