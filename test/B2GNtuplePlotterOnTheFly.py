@@ -1,4 +1,4 @@
-#!it/usr/bin/env python
+#!/usr/bin/env python
 from optparse import OptionParser
 from numpy import *
 
@@ -50,35 +50,22 @@ import ROOT
 import array
 
 
-#ROOT.gStyle.SetOptStat(000000)
+ROOT.gStyle.SetOptStat(000000)
 
 #ROOT.gROOT.Macro("rootlogon.C")
 ROOT.gStyle.SetTitleOffset(1.0, "Y")
-## ttbarIn = ROOT.TFile( 'NTUPLES/ttjets_b2ganafw_v6_jecv5_updatedsel_ntuple.root' )
-## wjetsIn = ROOT.TFile( 'NTUPLES/wjets_b2ganafw_v5_sel1_extracats_jecv5_updatedsel_ntuple.root' )
-## zjetsIn = ROOT.TFile( 'NTUPLES/zjets_b2ganafw_v4_sel1_extracats_jecv5_updatedsel_ntuple.root' )
-## singletopIn = ROOT.TFile( 'NTUPLES/singletop_v74x_v4.3_tchan_local_sel1_extracats_jecv5_updatedsel_ntuple.root' )
-## singlemuIn = ROOT.TFile( 'NTUPLES/singlemu_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root' )
-## singleelIn = ROOT.TFile( 'NTUPLES/singleel_v74x_v6_dataset5_jecv5_updatedsel_ntuple.root' )
 
 ttbarIn = ROOT.TFile( './ttjets_b2ganafw_v6_sel1_jec25nsV6_ntuple_Nov9b.root' )
-print "tt in"
 wjetsIn = ROOT.TFile( './wjets_b2ganafw_v5_sel1_negWeights_jec25nsV6_ntuple_Nov9.root' )
-print "w in"
 zjetsIn = ROOT.TFile( './zjets_b2ganafw_v4_sel1_negWeights_jec25nsV6_ntuple_Nov9.root' )
-print "z in"
 singletopIn = ROOT.TFile( './singletop_v74x_v4.3_tchan_local_sel1_negWeights_jec25nsV6_ntuple_Nov9.root' )
-print "ST in"
 singlemuIn = ROOT.TFile( './singlemu_v74x_v6_dataset6_jec25nsV6_ntuple_Nov9b.root' )
-print "single mu data in"
 singleelIn = ROOT.TFile( './singleel_v74x_v6_dataset6_jec25nsV6_updateddphi_ntuple_Nov9.root' )
-print "single el data"
 
 
 lumi = 1263.88
-print "open tree"
+
 ttbar = ttbarIn.Get("TreeSemiLept")
-print "second tree"
 wjets = wjetsIn.Get("TreeSemiLept")
 zjets = zjetsIn.Get("TreeSemiLept")
 singletop = singletopIn.Get("TreeSemiLept")
@@ -371,5 +358,5 @@ if options.Type2 :
 else :
     typE = 'type1'
 
-c.Print('Nov2/' + name + '_' + options.filestr + typE + '.png', 'png' )
-c.Print('Nov2/' + name + '_' + options.filestr + typE +'.pdf', 'pdf' )
+c.Print( name + '_' + options.filestr + typE + '.png', 'png' )
+c.Print( name + '_' + options.filestr + typE +'.pdf', 'pdf' )
