@@ -2091,7 +2091,7 @@ for ifile in files : #{ Loop over root files
         goodmuonIso = []
 
         #Use MuPt as iterater due to no definite iterator value in ntuples
-        if len(h_muPt.product()) > 0:
+        if len(h_muEta.product()) > 0:
             muonPt = h_muPt.product()
             muonEta = h_muEta.product()
             muonPhi = h_muPhi.product()
@@ -2356,11 +2356,12 @@ for ifile in files : #{ Loop over root files
         event.getByLabel ( l_metPx, h_metPx )
         event.getByLabel ( l_metPy, h_metPy )
         event.getByLabel ( l_metPhi, h_metPhi )
-
-        metPx = h_metPx.product()[0]
-        metPy = h_metPy.product()[0]
-        metPhi = h_metPhi.product()[0]
-        metPt = h_metPt.product()[0]
+        
+        if len(h_metPx.product()) > 0 :
+            metPx = h_metPx.product()[0]
+            metPy = h_metPy.product()[0]
+            metPhi = h_metPhi.product()[0]
+            metPt = h_metPt.product()[0]
 
         #@ Dileptonic
         if Leptonic == True : 
@@ -4702,7 +4703,7 @@ for ifile in files : #{ Loop over root files
                 mAK8SDrop = ak8JetsGoodSDropMass[tagCand]
                 # Make sure there are top tags if we want to plot them
                 minMass = ak8JetsGoodMinMass[tagCand]
-                if ak8JetsGoodSDsubjet1Bdisc[tagCand] > ak8JetsGoodSDsubjet0Bdisc[tagCand] :
+                if ak8JetsGoodSDsubjet0Bdisc[tagCand] > ak8JetsGoodSDsubjet1Bdisc[tagCand] :
                     subjetBdiscW = ak8JetsGoodSDsubjet1Bdisc[tagCand]   
                     subjetBdiscB = ak8JetsGoodSDsubjet0Bdisc[tagCand]  
                     subjetBdiscMax = ak8JetsGoodSDsubjet0Bdisc[tagCand] 
@@ -4993,8 +4994,8 @@ for ifile in files : #{ Loop over root files
                     FatJetTau1          [0] = tau1
                     FatJetTau2          [0] = tau2
                     FatJetTau3          [0] = tau3
-                    FatJetTau32         [0] = tau3 / tau2
-                    FatJetTau21         [0] = tau2 / tau1
+                    FatJetTau32         [0] = tau32
+                    FatJetTau21         [0] = tau21
                     FatJetSDnsubjets    [0] = nsubjets                 
                     FatJetSDbdiscW      [0] = subjetBdiscW
                     FatJetSDbdiscB      [0] = subjetBdiscB
