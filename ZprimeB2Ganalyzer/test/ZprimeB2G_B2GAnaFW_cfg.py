@@ -35,6 +35,7 @@ process.b2gntuple = cms.EDAnalyzer('ZprimeB2Ganalyzer',
                                    isFlat = cms.bool(False),
                                    applyFilters = cms.bool(True),
                                    JERshift = cms.int(0),
+                                   JECshift = cms.int(0),
                                    reweightTopPt = cms.bool(False),
                                    puFile = cms.string('/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/pileup_reweight.root'),
                                    )

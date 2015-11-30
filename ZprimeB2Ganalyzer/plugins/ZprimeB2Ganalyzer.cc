@@ -91,6 +91,7 @@ class ZprimeB2Ganalyzer : public edm::EDAnalyzer {
   bool isFlat_;
   bool applyFilters_;
   int JERshift_;
+  int JECshift_;
   bool reweightTopPt_;
   string puFile_;
 
@@ -119,6 +120,7 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   isFlat_            (iConfig.getParameter<bool>("isFlat")),
   applyFilters_      (iConfig.getParameter<bool>("applyFilters")),
   JERshift_          (iConfig.getParameter<int>("JERshift")),
+  JECshift_          (iConfig.getParameter<int>("JECshift")),
   reweightTopPt_     (iConfig.getParameter<bool>("reweightTopPt")),
   puFile_            (iConfig.getParameter<string>("puFile"))
 {
@@ -545,17 +547,17 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    Handle<vector<float> > h_subjetsCmsTopTagPhi;
    Handle<vector<float> > h_subjetsCmsTopTagMass;
    Handle<vector<float> > h_subjetsCmsTopTagArea;
-   Handle<vector<float> > h_subjetCmsTopTagnumDaughters;
-   Handle<vector<float> > h_subjetCmsTopTagY;
+   Handle<vector<float> > h_subjetsCmsTopTagnumDaughters;
+   Handle<vector<float> > h_subjetsCmsTopTagY;
 
-   Handle<vector<float> > h_subjetCmsTopTagJEC0;
-   Handle<vector<float> > h_subjetCmsTopTagJERup;
-   Handle<vector<float> > h_subjetCmsTopTagJERdown;
+   Handle<vector<float> > h_subjetsCmsTopTagJEC0;
+   Handle<vector<float> > h_subjetsCmsTopTagJERup;
+   Handle<vector<float> > h_subjetsCmsTopTagJERdown;
 
-   Handle<vector<float> > h_subjetCmsTopTagSmearedE;
-   Handle<vector<float> > h_subjetCmsTopTagSmearedEta;
-   Handle<vector<float> > h_subjetCmsTopTagSmearedPhi;
-   Handle<vector<float> > h_subjetCmsTopTagSmearedPt;
+   Handle<vector<float> > h_subjetsCmsTopTagSmearedE;
+   Handle<vector<float> > h_subjetsCmsTopTagSmearedEta;
+   Handle<vector<float> > h_subjetsCmsTopTagSmearedPhi;
+   Handle<vector<float> > h_subjetsCmsTopTagSmearedPt;
 
    //AK8 Soft Drop subjet handles - labeled
    Handle<vector<float> > h_ak8jetSoftDropSubjetIndex0;
@@ -567,17 +569,17 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    Handle<vector<float> > h_subjetsSoftDropPhi;
    Handle<vector<float> > h_subjetsSoftDropMass;
    Handle<vector<float> > h_subjetsSoftDropArea;
-   Handle<vector<float> > h_subjetSoftDropnumDaughters;
-   Handle<vector<float> > h_subjetSoftDropY;
+   Handle<vector<float> > h_subjetsSoftDropnumDaughters;
+   Handle<vector<float> > h_subjetsSoftDropY;
 
-   Handle<vector<float> > h_subjetSoftDropJEC0;
-   Handle<vector<float> > h_subjetSoftDropJERup;
-   Handle<vector<float> > h_subjetSoftDropJERdown;
+   Handle<vector<float> > h_subjetsSoftDropJEC0;
+   Handle<vector<float> > h_subjetsSoftDropJERup;
+   Handle<vector<float> > h_subjetsSoftDropJERdown;
 
-   Handle<vector<float> > h_subjetSoftDropSmearedE;
-   Handle<vector<float> > h_subjetSoftDropSmearedEta;
-   Handle<vector<float> > h_subjetSoftDropSmearedPhi;
-   Handle<vector<float> > h_subjetSoftDropSmearedPt;
+   Handle<vector<float> > h_subjetsSoftDropSmearedE;
+   Handle<vector<float> > h_subjetsSoftDropSmearedEta;
+   Handle<vector<float> > h_subjetsSoftDropSmearedPhi;
+   Handle<vector<float> > h_subjetsSoftDropSmearedPt;
 
    /*Handle<vector<float> > h_subjetsAK8GenE;
    Handle<vector<float> > h_subjetsAK8GenPt;
@@ -766,17 +768,17 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagPhi", h_subjetsCmsTopTagPhi);
    iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagMass", h_subjetsCmsTopTagMass);
    iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagjetArea", h_subjetsCmsTopTagArea);
-   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagnumberOfDaughters", h_subjetCmsTopTagnumDaughters);
-   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagY", h_subjetCmsTopTagY);
+   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagnumberOfDaughters", h_subjetsCmsTopTagnumDaughters);
+   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagY", h_subjetsCmsTopTagY);
 
-   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagjecFactor0", h_subjetCmsTopTagJEC0);
-   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagJERup", h_subjetCmsTopTagJERup);
-   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagJERdown", h_subjetCmsTopTagJERdown);
+   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagjecFactor0", h_subjetsCmsTopTagJEC0);
+   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagJERup", h_subjetsCmsTopTagJERup);
+   iEvent.getByLabel("subjetsCmsTopTag", "subjetCmsTopTagJERdown", h_subjetsCmsTopTagJERdown);
 
-   iEvent.getByLabel("subjetsCmsTopTag" , "subjetCmsTopTagSmearedE", h_subjetCmsTopTagSmearedE);
-   iEvent.getByLabel("subjetsCmsTopTag" , "subjetCmsTopTagSmearedPEta", h_subjetCmsTopTagSmearedEta);
-   iEvent.getByLabel("subjetsCmsTopTag" , "subjetCmsTopTagSmearedPhi", h_subjetCmsTopTagSmearedPhi);
-   iEvent.getByLabel("subjetsCmsTopTag" , "subjetCmsTopTagSmearedPt", h_subjetCmsTopTagSmearedPt);
+   iEvent.getByLabel("subjetsCmsTopTag" , "subjetCmsTopTagSmearedE", h_subjetsCmsTopTagSmearedE);
+   iEvent.getByLabel("subjetsCmsTopTag" , "subjetCmsTopTagSmearedPEta", h_subjetsCmsTopTagSmearedEta);
+   iEvent.getByLabel("subjetsCmsTopTag" , "subjetCmsTopTagSmearedPhi", h_subjetsCmsTopTagSmearedPhi);
+   iEvent.getByLabel("subjetsCmsTopTag" , "subjetCmsTopTagSmearedPt", h_subjetsCmsTopTagSmearedPt);
 
    //AK8 Soft Drop subjet labels
    iEvent.getByLabel("jetsAK8", "jetAK8vSubjetIndex0", h_ak8jetSoftDropSubjetIndex0);
@@ -788,17 +790,17 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropPhi", h_subjetsSoftDropPhi);
    iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropMass", h_subjetsSoftDropMass);
    iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropjetArea", h_subjetsSoftDropArea);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropnumberOfDaughters", h_subjetSoftDropnumDaughters);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropY", h_subjetSoftDropY);
+   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropnumberOfDaughters", h_subjetsSoftDropnumDaughters);
+   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropY", h_subjetsSoftDropY);
 
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropjecFactor0", h_subjetSoftDropJEC0);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropJERup", h_subjetSoftDropJERup);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropJERdown", h_subjetSoftDropJERdown);
+   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropjecFactor0", h_subjetsSoftDropJEC0);
+   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropJERup", h_subjetsSoftDropJERup);
+   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropJERdown", h_subjetsSoftDropJERdown);
 
-   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedE", h_subjetSoftDropSmearedE);
-   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedPEta", h_subjetSoftDropSmearedEta);
-   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedPhi", h_subjetSoftDropSmearedPhi);
-   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedPt", h_subjetSoftDropSmearedPt);
+   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedE", h_subjetsSoftDropSmearedE);
+   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedPEta", h_subjetsSoftDropSmearedEta);
+   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedPhi", h_subjetsSoftDropSmearedPhi);
+   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedPt", h_subjetsSoftDropSmearedPt);
 
    //cout<<"Handles set!"<<endl;
 
@@ -1251,6 +1253,9 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
      }//negative weights
    }//flat sample and negative weights
 
+   //rho value
+   double rho = -999.99;
+   if(h_rho.isValid()) rho = (*h_rho);
 
    //muon selection
    vector<double> goodmuonPt;
@@ -1366,11 +1371,208 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    //hadTreeVars["npv"] = *h_npv;
    //semileptTreeVars["npv"] = *h_npv;
 
+
+   //AK8 Jet Vectors
+   vector<double> ak8JetsGood;
+   vector<double> ak8JetsGoodCorrUp  ;
+   vector<double> ak8JetsGoodCorrDn  ;
+   vector<double> ak8JetsGoodTrimMass;
+   vector<double> ak8JetsGoodPrunMass;
+   vector<double> ak8JetsGoodFiltMass;
+   vector<double> ak8JetsGoodSDropMass;
+   vector<double> ak8JetsGoodTau1;
+   vector<double> ak8JetsGoodTau2;
+   vector<double> ak8JetsGoodTau3;
+   vector<double> ak8JetsGoodNHadE;
+   vector<double> ak8JetsGoodNSubJets;
+   vector<double> ak8JetsGoodMinMass;
+   vector<double> ak8JetsGoodTopSubjetbDisc;
+   vector<double> ak8JetsGoodTopSubjetMass;
+   vector<double> ak8JetsGoodNHF;
+   vector<double> ak8JetsGoodCHF;
+   vector<double> ak8JetsGoodNEF;
+   vector<double> ak8JetsGoodCEF;
+   vector<double> ak8JetsGoodNC ;
+   vector<double> ak8JetsGoodNCH;
+   vector<double> ak8JetsGoodCSV;
+   vector<double> ak8JetsGoodCMSTTsubjetIndex0;
+   vector<double> ak8JetsGoodCMSTTsubjetIndex1;
+   vector<double> ak8JetsGoodCMSTTsubjetIndex2;
+   vector<double> ak8JetsGoodCMSTTsubjetIndex3;            
+   vector<double> ak8JetsGoodSDsubjetIndex0;            
+   vector<double> ak8JetsGoodSDsubjetIndex1;   
+   vector<double> ak8JetsGoodSDsubjet0Mass;            
+   vector<double> ak8JetsGoodSDsubjet1Mass; 
+   vector<double> ak8JetsGoodSDsubjet0Bdisc;            
+   vector<double> ak8JetsGoodSDsubjet1Bdisc;    
+   vector<double> ak8JetsGoodSDsubjet0Pt;            
+   vector<double> ak8JetsGoodSDsubjet1Pt; 
+   vector<double> ak8JetsGoodSDsubjet0P4;            
+   vector<double> ak8JetsGoodSDsubjet1P4;      
+   vector<double> ak8JetsGoodL1cor;            
+   vector<double> ak8JetsGoodL2cor;            
+   vector<double> ak8JetsGoodL3cor;
+   vector<double> ak8JetsDPhiLepJet;
+   vector<double> ak8JetsGoodCorrFactor;
+   vector<double> ak8JetsGoodCorrUpFactor;
+   vector<double> ak8JetsGoodCorrDnFactor;
+
+   vector<double> AK8TrimmedM;
+   vector<double> AK8PrunedM;
+   vector<double> AK8FilteredM;
+   vector<double> AK8SDropM;
    
+   vector<double> CMSTTsubjetBDisc       ;  
+   vector<double> CMSTTsubjetPtRaw       ;
+   vector<double> CMSTTsubjetPt          ;
+   vector<double> CMSTTsubjetEta         ;  
+   vector<double> CMSTTsubjetPhi         ;  
+   vector<double> CMSTTsubjetMassRaw     ;
+   vector<double> CMSTTsubjetMass        ;
+   vector<double> CMSTTsubjetArea        ;  
+   vector<double> CMSTTsubjetnumDaughters;  
+   vector<double> CMSTTsubjetY           ;  
+   vector<double> CMSTTsubjetJEC0        ;  
+   vector<double> CMSTTsubjetJERup       ;  
+   vector<double> CMSTTsubjetJERdown     ;  
+   vector<double> CMSTTsubjetSmearedE    ;  
+   vector<double> CMSTTsubjetSmearedEta  ;  
+   vector<double> CMSTTsubjetSmearedPhi  ; 
+     
+   vector<double> SDsubjetBDisc        ;
+   vector<double> SDsubjetPt           ;
+   vector<double> SDsubjetEta          ;
+   vector<double> SDsubjetPhi          ;
+   vector<double> SDsubjetMass         ;
+   vector<double> SDsubjetArea         ;
+   vector<double> SDsubjetnumDaughters ;
+   vector<double> SDsubjetY            ;
+   vector<double> SDsubjetJEC0         ;
+   vector<double> SDsubjetJERup        ;
+   vector<double> SDsubjetJERdown      ;
+   vector<double> SDsubjetSmearedE     ;
+   vector<double> SDsubjetSmearedEta   ;
+   vector<double> SDsubjetSmearedPhi   ;
+   vector<double> SDsubjetSmearedPt    ;
+	
+   double ak8JetHt = 0;
+
 
    //AK8 Jet Loop
    if (h_jetsAK8Pt.isValid()){//make sure there are AK8 jets
+     if(h_subjetsCmsTopTagCSV->size() > 0){
+       for(size_t isubjet=0; isubjet < h_subjetsCmsTopTagPt->size(); isubjet++){
+	 double spt  = ((*h_subjetsCmsTopTagJEC0)[isubjet])*((*h_subjetsCmsTopTagPt)[isubjet]);
+	 double seta = (*h_subjetsCmsTopTagEta)[isubjet];
+	 double sphi = (*h_subjetsCmsTopTagPhi)[isubjet];
+	 double smass = ((*h_subjetsCmsTopTagJEC0)[isubjet])*((*h_subjetsCmsTopTagMass)[isubjet]);
+	 TLorentzVector subjetP4Raw;
+	 subjetP4Raw.SetPtEtaPhiM( spt, seta, sphi, smass);
+	 ak4JetCorrectorForMass.setJetEta( subjetP4Raw.Eta() );
+	 ak4JetCorrectorForMass.setJetPt ( subjetP4Raw.Perp() );
+	 ak4JetCorrectorForMass.setJetE  ( subjetP4Raw.E() );
+	 ak4JetCorrectorForMass.setRho   ( rho );
+	 ak4JetCorrectorForMass.setNPV   ( NPV );
+	 double newJEC = ak4JetCorrectorForMass.getCorrection();
+	 TLorentzVector subjetP4 = subjetP4Raw * newJEC;
+	 CMSTTsubjetPt.push_back( subjetP4.Perp() );
+	 CMSTTsubjetMass.push_back( subjetP4.M() );
+       }
+     }//applying CMSTT subjet corrections
+
+     if(h_subjetsSoftDropCSV->size() > 0){
+       for(size_t isubjet=0; isubjet < h_subjetsSoftDropPt->size(); isubjet++){
+	 double spt  = ((*h_subjetsSoftDropJEC0)[isubjet])*((*h_subjetsSoftDropPt)[isubjet]);
+	 double seta = (*h_subjetsSoftDropEta)[isubjet];
+	 double sphi = (*h_subjetsSoftDropPhi)[isubjet];
+	 double smass = ((*h_subjetsSoftDropJEC0)[isubjet])*((*h_subjetsSoftDropMass)[isubjet]);
+	 TLorentzVector subjetP4Raw;
+	 subjetP4Raw.SetPtEtaPhiM( spt, seta, sphi, smass);
+	 ak4JetCorrectorForMass.setJetEta( subjetP4Raw.Eta() );
+	 ak4JetCorrectorForMass.setJetPt ( subjetP4Raw.Perp() );
+	 ak4JetCorrectorForMass.setJetE  ( subjetP4Raw.E() );
+	 ak4JetCorrectorForMass.setRho   ( rho );
+	 ak4JetCorrectorForMass.setNPV   ( NPV );
+	 double newJEC = ak4JetCorrectorForMass.getCorrection();
+	 TLorentzVector subjetP4 = subjetP4Raw * newJEC;
+	 SDsubjetPt.push_back( subjetP4.Perp() );
+	 SDsubjetMass.push_back( subjetP4.M() );
+       }
+     }//applying SoftDrop subjet corrections
+    
      for (unsigned i=0; i<h_jetsAK8Pt->size(); i++){//looping over AK8 jets
+       //JEC
+       double AK8JECFromB2GAnaFW = (*h_jetsAK8JEC)[i];
+       TLorentzVector AK8P4Raw;
+       AK8P4Raw.SetPtEtaPhiM( (*h_jetsAK8Pt)[i] , (*h_jetsAK8Eta)[i], (*h_jetsAK8Phi)[i], (*h_jetsAK8ungroomedMass)[i]);
+       AK8P4Raw *= AK8JECFromB2GAnaFW;
+
+       //Charged and neutral energy for AK8 jets
+       double nhf = (*h_jetsAK8nHadEnergy)[i] / AK8P4Raw.E();
+       double nef = (*h_jetsAK8nEMEnergy)[i] / AK8P4Raw.E();
+       double chf = (*h_jetsAK8cHadEnergy)[i] / AK8P4Raw.E();
+       double cef = (*h_jetsAK8cEMEnergy)[i] / AK8P4Raw.E();
+       double nconstituents = (*h_jetsAK8numDaughters)[i];
+       double nch = (*h_jetsAK8cMultip)[i];
+       bool goodJet = 0;
+       if(nhf < 0.99 && nef < 0.99 && chf > 0.00 && cef < 0.99 && nconstituents > 1 && nch > 0) goodJet = 1;
+       
+       //JEC scaling
+       double corrDn = 1.0;
+       double corrUp = 1.0;
+
+       ak8JetCorrector.setJetEta( AK8P4Raw.Eta() );
+       ak8JetCorrector.setJetPt ( AK8P4Raw.Perp() );
+       ak8JetCorrector.setJetE  ( AK8P4Raw.E() );
+       ak8JetCorrector.setJetA  ( (*h_jetsAK8Area)[i] );
+       ak8JetCorrector.setRho   ( rho );
+       ak8JetCorrector.setNPV   ( NPV );
+       double newJEC = ak8JetCorrector.getCorrection();
+       TLorentzVector AK8P4Corr = AK8P4Raw*newJEC;
+
+       //JEC Uncertainty 
+       corrDn *= newJEC;
+       corrUp *= newJEC;
+
+       UncertJetAK8.setJetPhi(  AK8P4Raw.Phi()  );
+       UncertJetAK8.setJetEta(  AK8P4Raw.Eta()  );
+       UncertJetAK8.setJetPt(   AK8P4Corr.Perp()  );
+       corrDn -= UncertJetAK8.getUncertainty(0);
+       UncertJetAK8.setJetPhi(  AK8P4Raw.Phi()  );
+       UncertJetAK8.setJetEta(  AK8P4Raw.Eta()  );
+       UncertJetAK8.setJetPt(   AK8P4Corr.Perp()  );
+       corrUp += UncertJetAK8.getUncertainty(1);
+	 
+       cout<<"JEC: "<<newJEC<<endl;
+       cout<<"JEC up: "<<corrUp<<corrUp<<endl;
+       cout<<"JEC down: "<<corrDn<<endl;
+       
+       //no JEC applied
+       if(JECshift_ = 0){
+	 AK8TrimmedM.push_back( (*h_jetsAK8trimmedMass)[i] * newJEC );
+	 AK8PrunedM.push_back( (*h_jetsAK8prunedMass)[i] * newJEC );
+	 AK8FilteredM.push_back( (*h_jetsAK8filteredMass)[i] * newJEC );
+	 AK8SDropM.push_back( (*h_jetsAK8softDropMass)[i] * newJEC );
+       }
+       
+       //JEC down
+       if(JECshift_ = -1){
+	 AK8P4Corr = AK8P4Raw*corrDn;
+ 	 AK8TrimmedM.push_back( (*h_jetsAK8trimmedMass)[i] * corrDn );
+	 AK8PrunedM.push_back( (*h_jetsAK8prunedMass)[i] * corrDn );
+	 AK8FilteredM.push_back( (*h_jetsAK8filteredMass)[i] * corrDn );
+	 AK8SDropM.push_back( (*h_jetsAK8softDropMass)[i] * corrDn );
+       }
+       
+       //JEC up
+       if(JECshift_ = 1){
+	 AK8P4Corr = AK8P4Raw*corrUp;	 
+ 	 AK8TrimmedM.push_back( (*h_jetsAK8trimmedMass)[i] * corrUp );
+	 AK8PrunedM.push_back( (*h_jetsAK8prunedMass)[i] * corrUp );
+	 AK8FilteredM.push_back( (*h_jetsAK8filteredMass)[i] * corrUp );
+	 AK8SDropM.push_back( (*h_jetsAK8softDropMass)[i] * corrUp );
+       }
+
        //pt and eta preselection cuts
        if ((*h_jetsAK8Pt)[i] > 400 && abs((*h_jetsAK8Eta)[i]) < 2.4){
 	 //hadTreeVars["jet"+s+"AK8Pt"] = (*h_jetsAK8Pt)[i];
