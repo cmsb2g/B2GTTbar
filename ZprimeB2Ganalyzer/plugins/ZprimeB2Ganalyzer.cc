@@ -77,21 +77,21 @@ class ZprimeB2Ganalyzer : public edm::EDAnalyzer {
   
 
   //TTree *tree_lept;
-  TTree *tree_semilept;
+  //TTree *tree_semilept;
   TTree *tree_had;
 
   std::map<std::string, float> hadTreeVars;
-  std::map<std::string, float> semileptTreeVars;
+  //std::map<std::string, float> semileptTreeVars;
   std::vector<std::string> listOfHadVars;
-  std::vector<std::string> listOfSemileptVars;
+  //std::vector<std::string> listOfSemileptVars;
 
   //options
   bool negativeWeights_;
   bool isMC_;
   bool isFlat_;
   bool applyFilters_;
-  int JERshift_;
-  int JECshift_;
+  double JERshift_;
+  double JECshift_;
   bool reweightTopPt_;
   string puFile_;
 
@@ -119,15 +119,15 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   isMC_              (iConfig.getParameter<bool>("isMC")),
   isFlat_            (iConfig.getParameter<bool>("isFlat")),
   applyFilters_      (iConfig.getParameter<bool>("applyFilters")),
-  JERshift_          (iConfig.getParameter<int>("JERshift")),
-  JECshift_          (iConfig.getParameter<int>("JECshift")),
+  JERshift_          (iConfig.getParameter<double>("JERshift")),
+  JECshift_          (iConfig.getParameter<double>("JECshift")),
   reweightTopPt_     (iConfig.getParameter<bool>("reweightTopPt")),
   puFile_            (iConfig.getParameter<string>("puFile"))
 {
    //now do what ever initialization is needed
   edm::Service<TFileService> fs;
   //tree_lept = fs->make<TTree>("tree_lept","tree_lept");//leptonic tree
-  tree_semilept = fs->make<TTree>("tree_semilept","tree_semilept");//semi-leptonic tree
+  //tree_semilept = fs->make<TTree>("tree_semilept","tree_semilept");//semi-leptonic tree
   tree_had = fs->make<TTree>("tree_had","tree_had");//all hadronic tree
 
   //hadronic tree variables
@@ -257,7 +257,7 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   listOfHadVars.push_back("hadSelectionPass");
 
   //semileptonic variables
-  listOfSemileptVars.push_back("SemiLeptTrig");
+  /*listOfSemileptVars.push_back("SemiLeptTrig");
   listOfSemileptVars.push_back("SemiLeptWeight");    
   listOfSemileptVars.push_back("BoosttypE");
   listOfSemileptVars.push_back("FatJetCorr");
@@ -341,15 +341,15 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   listOfSemileptVars.push_back("leptSelectionPass");
   listOfSemileptVars.push_back("semileptSelectionPass");
   listOfSemileptVars.push_back("hadSelectionPass");
-  
+  */
   for (unsigned i = 0; i < listOfHadVars.size(); i++){
     hadTreeVars[ listOfHadVars[i] ] = -999.99;
     tree_had->Branch( (listOfHadVars[i]).c_str() , &(hadTreeVars[ listOfHadVars[i] ]), (listOfHadVars[i]+"/F").c_str() );
   }
-  for (unsigned i = 0; i < listOfSemileptVars.size(); i++){
+  /*for (unsigned i = 0; i < listOfSemileptVars.size(); i++){
     semileptTreeVars[ listOfSemileptVars[i] ] = -999.99;
     tree_semilept->Branch( (listOfSemileptVars[i]).c_str() , &(semileptTreeVars[ listOfSemileptVars[i] ]), (listOfSemileptVars[i]+"/F").c_str() );
-  }
+    }*/
 }
 
 
@@ -374,8 +374,6 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    using namespace std;
 
    //cout <<"Hello!"<<endl;
-   //cout <<"Event number: "<<iEvent<<endl;
-
    //cout<<testSrc_<<endl;
 
    //***HANDLES***
@@ -392,6 +390,8 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    Handle<vector<int> > triggerPrescaleHandle;
 
    //event info
+   Handle<ULong64_t> h_eventNumber;
+
    Handle<int> h_npv;
    Handle<int> h_puNtrueInt;
       
@@ -606,6 +606,7 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    iEvent.getByLabel("TriggerUserData", "triggerPrescaleTree", triggerPrescaleHandle);
 
    //event info
+   iEvent.getByLabel("eventInfo", "evtInfoEventNumber", h_eventNumber);
    iEvent.getByLabel("eventUserData", "npv", h_npv );
    iEvent.getByLabel("eventUserData" , "puNtrueInt", h_puNtrueInt);
       
@@ -782,25 +783,25 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
    //AK8 Soft Drop subjet labels
    iEvent.getByLabel("jetsAK8", "jetAK8vSubjetIndex0", h_ak8jetSoftDropSubjetIndex0);
-   iEvent.getByLabel("jetsAK8", "jetAK8topSubjetIndex1", h_ak8jetSoftDropSubjetIndex1);
+   iEvent.getByLabel("jetsAK8", "jetAK8vSubjetIndex1", h_ak8jetSoftDropSubjetIndex1);
    iEvent.getByLabel("subjetsAK8", "subjetAK8CSV", h_subjetsSoftDropCSV);
 
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropPt", h_subjetsSoftDropPt);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropEta", h_subjetsSoftDropEta);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropPhi", h_subjetsSoftDropPhi);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropMass", h_subjetsSoftDropMass);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropjetArea", h_subjetsSoftDropArea);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropnumberOfDaughters", h_subjetsSoftDropnumDaughters);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropY", h_subjetsSoftDropY);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8Pt", h_subjetsSoftDropPt);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8Eta", h_subjetsSoftDropEta);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8Phi", h_subjetsSoftDropPhi);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8Mass", h_subjetsSoftDropMass);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8jetArea", h_subjetsSoftDropArea);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8numberOfDaughters", h_subjetsSoftDropnumDaughters);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8Y", h_subjetsSoftDropY);
 
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropjecFactor0", h_subjetsSoftDropJEC0);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropJERup", h_subjetsSoftDropJERup);
-   iEvent.getByLabel("subjetsSoftDrop", "subjetSoftDropJERdown", h_subjetsSoftDropJERdown);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8jecFactor0", h_subjetsSoftDropJEC0);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8JERup", h_subjetsSoftDropJERup);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8JERdown", h_subjetsSoftDropJERdown);
 
-   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedE", h_subjetsSoftDropSmearedE);
-   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedPEta", h_subjetsSoftDropSmearedEta);
-   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedPhi", h_subjetsSoftDropSmearedPhi);
-   iEvent.getByLabel("subjetsSoftDrop" , "subjetSoftDropSmearedPt", h_subjetsSoftDropSmearedPt);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8DropSmearedE", h_subjetsSoftDropSmearedE);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8DropSmearedPEta", h_subjetsSoftDropSmearedEta);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8DropSmearedPhi", h_subjetsSoftDropSmearedPhi);
+   iEvent.getByLabel("subjetsAK8", "subjetAK8DropSmearedPt", h_subjetsSoftDropSmearedPt);
 
    //cout<<"Handles set!"<<endl;
 
@@ -942,7 +943,9 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    //TLorentzVector prunedJet1;
    //TLorentzVector trimmedJet
 
-   
+
+   //cout <<"Event number: "<<*h_eventNumber<<endl;
+
    //want to make sure the AK8 jet vectors match up
    if (h_jetsAK8Pt->size() != h_jetsAK8minmass->size() || h_jetsAK8Pt->size() != h_jetsAK8topMass->size()){
      cout<<"Error! Mismatched vectors."<<endl;
@@ -954,62 +957,76 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    for (unsigned i = 0; i < listOfHadVars.size(); i++){
      hadTreeVars[ listOfHadVars[i] ] = -999.99;
    }
-   for (unsigned i = 0; i < listOfSemileptVars.size(); i++){
+   /*for (unsigned i = 0; i < listOfSemileptVars.size(); i++){
      semileptTreeVars[ listOfSemileptVars[i] ] = -999.99;
-   }
+     }*/
+
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Getting JECs!"<<endl;
 
    //JECs - for MC
    //AK4
    const string L3JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L3Absolute_AK4PFchs.txt");
    JetCorrectorParameters L3JetParAK4(L3JetParAK4_ptr);
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK4 MC JEC L3 acquired!"<<endl;
    const string L2JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L2Relative_AK4PFchs.txt");
    JetCorrectorParameters L2JetParAK4(L2JetParAK4_ptr);
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK4 MC JEC L2 acquired!"<<endl;
    const string L1JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L1FastJet_AK4PFchs.txt");
    JetCorrectorParameters L1JetParAK4(L1JetParAK4_ptr);
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK4 MC JEC L1 acquired!"<<endl;
    const string UncertJetAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_Uncertainty_AK4PFchs.txt");
    JetCorrectionUncertainty UncertJetAK4(UncertJetAK4_ptr);
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK4 MC JEC Uncert acquired!"<<endl;
 
    //AK8
    const string L3JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L3Absolute_AK8PFchs.txt");
    JetCorrectorParameters L3JetParAK8(L3JetParAK8_ptr);
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK8 MC JEC L3 acquired!"<<endl;
    const string L2JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L2Relative_AK8PFchs.txt");
    JetCorrectorParameters L2JetParAK8(L2JetParAK8_ptr);
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK8 MC JEC L2 acquired!"<<endl;
    const string L1JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L1FastJet_AK8PFchs.txt");
    JetCorrectorParameters L1JetParAK8(L1JetParAK8_ptr);
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK8 MC JEC L1 acquired!"<<endl;
    const string UncertJetAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_Uncertainty_AK8PFchs.txt");
    JetCorrectionUncertainty UncertJetAK8(UncertJetAK8_ptr);
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK8 MC JEC Uncert acquired!"<<endl;
+
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"MC JECs acquired!"<<endl;
   
    //for data
-   const string ResJetParAK4_ptr();
-   JetCorrectorParameters ResJetParAK4("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2L3Residual_AK4PFchs.txt");
-   const string ResJetParAK8_ptr();
-   JetCorrectorParameters ResJetParAK8("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2L3Residual_AK8PFchs.txt");
+   const string ResJetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2L3Residual_AK4PFchs.txt");
+   JetCorrectorParameters ResJetParAK4(ResJetParAK4_ptr);
+   const string ResJetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2L3Residual_AK8PFchs.txt");
+   JetCorrectorParameters ResJetParAK8(ResJetParAK8_ptr);
 
    if (isMC_){
-     cout<<"Getting MC JECs!"<<endl;
+     //cout<<"Getting MC JECs!"<<endl;
    }
    else{
-     cout<<"Getting DATA JECs!"<<endl;
+     //cout<<"Getting DATA JECs!"<<endl;
      //AK4
-     const string L3JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L3Absolute_AK4PFchs.txt");
+     const string L3JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L3Absolute_AK4PFchs.txt");
      JetCorrectorParameters L3JetParAK4(L3JetParAK4_ptr);
-     const string L2JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L2Relative_AK4PFchs.txt");
+     const string L2JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2Relative_AK4PFchs.txt");
      JetCorrectorParameters L2JetParAK4(L2JetParAK4_ptr);
-     const string L1JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L1FastJet_AK4PFchs.txt");
+     const string L1JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L1FastJet_AK4PFchs.txt");
      JetCorrectorParameters L1JetParAK4(L1JetParAK4_ptr);
-     const string UncertJetAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_Uncertainty_AK4PFchs.txt");
+     const string UncertJetAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_Uncertainty_AK4PFchs.txt");
      JetCorrectionUncertainty UncertJetAK4(UncertJetAK4_ptr);
      
      //AK8
-     const string L3JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L3Absolute_AK8PFchs.txt");
+     const string L3JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L3Absolute_AK8PFchs.txt");
      JetCorrectorParameters L3JetParAK8(L3JetParAK8_ptr);
-     const string L2JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L2Relative_AK8PFchs.txt");
+     const string L2JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2Relative_AK8PFchs.txt");
      JetCorrectorParameters L2JetParAK8(L2JetParAK8_ptr);
-     const string L1JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L1FastJet_AK8PFchs.txt");
+     const string L1JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L1FastJet_AK8PFchs.txt");
      JetCorrectorParameters L1JetParAK8(L1JetParAK8_ptr);
-     const string UncertJetAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_Uncertainty_AK8PFchs.txt");
+     const string UncertJetAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_Uncertainty_AK8PFchs.txt");
      JetCorrectionUncertainty UncertJetAK8(UncertJetAK8_ptr);
    }
+
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"DATA JECs acquired!"<<endl;
 
    //Load the JetCorrectorParameter objects into a vector, IMPORTANT: THE ORDER MATTERS HERE !!!!
    vector<JetCorrectorParameters> vParJecAK4;
@@ -1019,6 +1036,8 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    //for data
    if (!isMC_) vParJecAK4.push_back(ResJetParAK4);
 
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Filled vParJecAK4"<<endl;
+
    FactorizedJetCorrector ak4JetCorrector(vParJecAK4);
 
    vector<JetCorrectorParameters> vParJecAK4ForMass;
@@ -1027,7 +1046,11 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    //for data
    if (!isMC_) vParJecAK4ForMass.push_back(ResJetParAK4);
 
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Filled vParJecAK4ForMass"<<endl;
+
    FactorizedJetCorrector ak4JetCorrectorForMass(vParJecAK4ForMass);
+
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Defined ak4JetCorrectorForMass"<<endl;
 
    vector<JetCorrectorParameters> vParJecAK8;
    vParJecAK8.push_back(L1JetParAK8);
@@ -1036,7 +1059,11 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    //for data
    if (!isMC_) vParJecAK8.push_back(ResJetParAK8);
 
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Filled vParJecAK4"<<endl;
+
    FactorizedJetCorrector ak8JetCorrector(vParJecAK8);
+
+   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Defined ak8JetCorrector"<<endl;
 
    //event filters
    bool cscFilt = 0;
@@ -1069,9 +1096,9 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    hadTreeVars["vertexFilt"] = vertexFilt;
    hadTreeVars["hbheFilt"] = hbheFilt;
 
-   semileptTreeVars["cscFilt"] = cscFilt;
+   /*semileptTreeVars["cscFilt"] = cscFilt;
    semileptTreeVars["vertexFilt"] = vertexFilt;
-   semileptTreeVars["hbheFilt"] = hbheFilt;
+   semileptTreeVars["hbheFilt"] = hbheFilt;*/
 
    //cout<<"CSC Filter bit: "<<cscFilt<<endl;
    //cout<<"VERTEX Filter bit: "<<vertexFilt<<endl;
@@ -1119,7 +1146,7 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    evWeight = evWeight * prescale;*/
 
    //leptonic trigger booleans
-   bool isoMu24trig = 0;
+   /*bool isoMu24trig = 0;
    bool mu45trig = 0;
    bool mu50trig = 0;
    bool mu40trig = 0;
@@ -1165,7 +1192,7 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    semileptTreeVars["ele45trig"] = ele45trig;
    semileptTreeVars["ele105trig"] = ele105trig;
    semileptTreeVars["ele115trig"] = ele115trig;
-
+   */
    //hadronic trigger booleans
    bool htTrig = 0;
    bool jetTrig = 0;
@@ -1185,7 +1212,7 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	 if ( (*triggerBitHandle)[i] == 1 ) trimjetTrig = 1;
        }
      }
-   }
+     }
 
    //cout<<"Storing trigger bits!"<<endl;
 
@@ -1352,9 +1379,9 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    hadTreeVars["semileptSelectionPass"] = semileptonic;
    hadTreeVars["hadSelectionPass"] = hadronic;
 
-   semileptTreeVars["leptSelectionPass"] = leptonic;
+   /*semileptTreeVars["leptSelectionPass"] = leptonic;
    semileptTreeVars["semileptSelectionPass"] = semileptonic;
-   semileptTreeVars["hadSelectionPass"] = hadronic;
+   semileptTreeVars["hadSelectionPass"] = hadronic;*/
 
    //cutflow
    if(leptonic){
@@ -1543,61 +1570,116 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
        UncertJetAK8.setJetPt(   AK8P4Corr.Perp()  );
        corrUp += UncertJetAK8.getUncertainty(1);
 	 
-       cout<<"JEC: "<<newJEC<<endl;
-       cout<<"JEC up: "<<corrUp<<corrUp<<endl;
-       cout<<"JEC down: "<<corrDn<<endl;
+       //cout<<"JEC: "<<newJEC<<endl;
+       // cout<<"JEC up: "<<corrUp<<endl;
+       //cout<<"JEC down: "<<corrDn<<endl;
        
+       double jetsAK8Pt = -999.99;
+       double jetsAK8Eta = -999.99;
+       double jetsAK8Phi = -999.99;
+       double jetsAK8E = -999.99;
+       double jetsAK8Y = -999.99;
+
+       double jetsAK8ungroomedMass = -999.99;
+       double jetsAK8topMass = -999.99;
+       double jetsAK8trimmedMass = -999.99;
+       double jetsAK8prunedMass = -999.99;
+       double jetsAK8filteredMass = -999.99;
+       double jetsAK8softDropMass = -999.99;
+	 
        //no JEC applied
-       if(JECshift_ = 0){
+       if(JECshift_ == 0){
+	 //cout<<"JEC shift = 0!"<<endl;
 	 AK8TrimmedM.push_back( (*h_jetsAK8trimmedMass)[i] * newJEC );
 	 AK8PrunedM.push_back( (*h_jetsAK8prunedMass)[i] * newJEC );
 	 AK8FilteredM.push_back( (*h_jetsAK8filteredMass)[i] * newJEC );
 	 AK8SDropM.push_back( (*h_jetsAK8softDropMass)[i] * newJEC );
+
+	 jetsAK8Pt = AK8P4Corr.Pt();
+	 jetsAK8Eta = AK8P4Corr.Eta();
+	 jetsAK8Phi = AK8P4Corr.Phi();
+	 jetsAK8E = AK8P4Corr.E();
+	 jetsAK8Y = AK8P4Corr.Rapidity();
+
+	 jetsAK8ungroomedMass = AK8P4Corr.M();
+	 jetsAK8topMass = ( (*h_jetsAK8topMass)[i] * newJEC );
+	 jetsAK8trimmedMass = ( (*h_jetsAK8trimmedMass)[i] * newJEC );
+	 jetsAK8prunedMass = ( (*h_jetsAK8prunedMass)[i] * newJEC );
+	 jetsAK8filteredMass = ( (*h_jetsAK8filteredMass)[i] * newJEC );
+	 jetsAK8softDropMass = ( (*h_jetsAK8softDropMass)[i] * newJEC );
        }
        
        //JEC down
-       if(JECshift_ = -1){
+       if(JECshift_ == -1){
+	 //cout<<"JEC shift = -1!"<<endl;
 	 AK8P4Corr = AK8P4Raw*corrDn;
  	 AK8TrimmedM.push_back( (*h_jetsAK8trimmedMass)[i] * corrDn );
 	 AK8PrunedM.push_back( (*h_jetsAK8prunedMass)[i] * corrDn );
 	 AK8FilteredM.push_back( (*h_jetsAK8filteredMass)[i] * corrDn );
 	 AK8SDropM.push_back( (*h_jetsAK8softDropMass)[i] * corrDn );
+       
+	 jetsAK8Pt = AK8P4Corr.Pt();
+	 jetsAK8Eta = AK8P4Corr.Eta();
+	 jetsAK8Phi = AK8P4Corr.Phi();
+	 jetsAK8E = AK8P4Corr.E();
+	 jetsAK8Y = AK8P4Corr.Rapidity();
+
+	 jetsAK8ungroomedMass = AK8P4Corr.M();
+	 jetsAK8topMass = ( (*h_jetsAK8topMass)[i] * newJEC );
+	 jetsAK8trimmedMass = ( (*h_jetsAK8trimmedMass)[i] * newJEC );
+	 jetsAK8prunedMass = ( (*h_jetsAK8prunedMass)[i] * newJEC );
+	 jetsAK8filteredMass = ( (*h_jetsAK8filteredMass)[i] * newJEC );
+	 jetsAK8softDropMass = ( (*h_jetsAK8softDropMass)[i] * newJEC );
        }
        
        //JEC up
-       if(JECshift_ = 1){
+       if(JECshift_ == 1){
+	 //cout<<"JEC shift = 1!"<<endl;
 	 AK8P4Corr = AK8P4Raw*corrUp;	 
  	 AK8TrimmedM.push_back( (*h_jetsAK8trimmedMass)[i] * corrUp );
 	 AK8PrunedM.push_back( (*h_jetsAK8prunedMass)[i] * corrUp );
 	 AK8FilteredM.push_back( (*h_jetsAK8filteredMass)[i] * corrUp );
 	 AK8SDropM.push_back( (*h_jetsAK8softDropMass)[i] * corrUp );
+       
+	 jetsAK8Pt = AK8P4Corr.Pt();
+	 jetsAK8Eta = AK8P4Corr.Eta();
+	 jetsAK8Phi = AK8P4Corr.Phi();
+	 jetsAK8E = AK8P4Corr.E();
+	 jetsAK8Y = AK8P4Corr.Rapidity();
+
+	 jetsAK8ungroomedMass = AK8P4Corr.M();
+	 jetsAK8topMass = ( (*h_jetsAK8topMass)[i] * newJEC );
+	 jetsAK8trimmedMass = ( (*h_jetsAK8trimmedMass)[i] * newJEC );
+	 jetsAK8prunedMass = ( (*h_jetsAK8prunedMass)[i] * newJEC );
+	 jetsAK8filteredMass = ( (*h_jetsAK8filteredMass)[i] * newJEC );
+	 jetsAK8softDropMass = ( (*h_jetsAK8softDropMass)[i] * newJEC );
        }
 
        //pt and eta preselection cuts
-       if ((*h_jetsAK8Pt)[i] > 400 && abs((*h_jetsAK8Eta)[i]) < 2.4){
-	 //hadTreeVars["jet"+s+"AK8Pt"] = (*h_jetsAK8Pt)[i];
+       if (jetsAK8Pt > 400 && abs(jetsAK8Eta) < 2.4){
+	 //hadTreeVars["jet"+s+"AK8Pt"] = jetsAK8Pt;
 	 //top tagging requirements
 	 if (nAK8pt400eta2p4jets == 0){//first top tag jet candidate
-	   hadTreeVars["topTagJet0_pt"] = (*h_jetsAK8Pt)[i];
-	   hadTreeVars["topTagJet0_eta"] = (*h_jetsAK8Eta)[i];
-	   hadTreeVars["topTagJet0_phi"] = (*h_jetsAK8Phi)[i];
-	   hadTreeVars["topTagJet0_E"] = (*h_jetsAK8E)[i];
-	   hadTreeVars["topTagJet0_Y"] = (*h_jetsAK8Y)[i];
+	   hadTreeVars["topTagJet0_pt"] = jetsAK8Pt;
+	   hadTreeVars["topTagJet0_eta"] = jetsAK8Eta;
+	   hadTreeVars["topTagJet0_phi"] = jetsAK8Phi;
+	   hadTreeVars["topTagJet0_E"] = jetsAK8E;
+	   hadTreeVars["topTagJet0_Y"] = jetsAK8Y;
 	   hadTreeVars["topTagJet0_minmass"] = (*h_jetsAK8minmass)[i];
 	   hadTreeVars["topTagJet0_nSubJets"] = (*h_jetsAK8nSubJets)[i];
 	   hadTreeVars["topTagJet0_tau1"] = (*h_jetsAK8tau1)[i];
 	   hadTreeVars["topTagJet0_tau2"] = (*h_jetsAK8tau2)[i];
 	   hadTreeVars["topTagJet0_tau3"] = (*h_jetsAK8tau3)[i];
-	   hadTreeVars["topTagJet0_ungroomedMass"] = (*h_jetsAK8ungroomedMass)[i];
-	   hadTreeVars["topTagJet0_topMass"] = (*h_jetsAK8topMass)[i];
-	   hadTreeVars["topTagJet0_filteredMass"] = (*h_jetsAK8filteredMass)[i];
-	   hadTreeVars["topTagJet0_prunedMass"] = (*h_jetsAK8prunedMass)[i];
-	   hadTreeVars["topTagJet0_trimmedMass"] = (*h_jetsAK8trimmedMass)[i];
-	   hadTreeVars["topTagJet0_softDropMass"] = (*h_jetsAK8softDropMass)[i];
+	   hadTreeVars["topTagJet0_ungroomedMass"] = jetsAK8ungroomedMass;
+	   hadTreeVars["topTagJet0_topMass"] = jetsAK8topMass;
+	   hadTreeVars["topTagJet0_filteredMass"] = jetsAK8filteredMass;
+	   hadTreeVars["topTagJet0_prunedMass"] = jetsAK8prunedMass;
+	   hadTreeVars["topTagJet0_trimmedMass"] = jetsAK8trimmedMass;
+	   hadTreeVars["topTagJet0_softDropMass"] = jetsAK8softDropMass;
 
 	   //Lorentz vectors
-	   softDropJet0.SetPtEtaPhiM((*h_jetsAK8Pt)[i],(*h_jetsAK8Eta)[i],(*h_jetsAK8Phi)[i],(*h_jetsAK8softDropMass)[i]);
-	   ungroomedJet0.SetPtEtaPhiM((*h_jetsAK8Pt)[i],(*h_jetsAK8Eta)[i],(*h_jetsAK8Phi)[i],(*h_jetsAK8ungroomedMass)[i]);
+	   softDropJet0.SetPtEtaPhiM(jetsAK8Pt,jetsAK8Eta,jetsAK8Phi,jetsAK8softDropMass);
+	   ungroomedJet0.SetPtEtaPhiM(jetsAK8Pt,jetsAK8Eta,jetsAK8Phi,jetsAK8ungroomedMass);
 	   
 	   //////b-tagging
 	   float nSubjets_jet0 = (*h_jetsAK8nSubJets)[i];
@@ -1640,7 +1722,7 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	   hadTreeVars["topTagJet0_tau32"] = nSubjettiness;
 	   
 	   //top tagging with softdrop mass
-	   if ((*h_jetsAK8softDropMass)[i] > 110.0 && (*h_jetsAK8softDropMass)[i] < 210.0){
+	   if (jetsAK8softDropMass > 110.0 && jetsAK8softDropMass < 210.0){
 	     topTagJet0_topTagFlag = 1;
 	   }
 	   
@@ -1685,26 +1767,26 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	     }*/
 	 }//end AK8 jet 0 loop
 	 else if (nAK8pt400eta2p4jets == 1){//second top tag jet candidate
-	   hadTreeVars["topTagJet1_pt"] = (*h_jetsAK8Pt)[i];
-	   hadTreeVars["topTagJet1_eta"] = (*h_jetsAK8Eta)[i];
-	   hadTreeVars["topTagJet1_phi"] = (*h_jetsAK8Phi)[i];
-	   hadTreeVars["topTagJet1_E"] = (*h_jetsAK8E)[i];
-	   hadTreeVars["topTagJet1_Y"] = (*h_jetsAK8Y)[i];
+	   hadTreeVars["topTagJet1_pt"] = jetsAK8Pt;
+	   hadTreeVars["topTagJet1_eta"] = jetsAK8Eta;
+	   hadTreeVars["topTagJet1_phi"] = jetsAK8Phi;
+	   hadTreeVars["topTagJet1_E"] = jetsAK8E;
+	   hadTreeVars["topTagJet1_Y"] = jetsAK8Y;
 	   hadTreeVars["topTagJet1_minmass"] = (*h_jetsAK8minmass)[i];
 	   hadTreeVars["topTagJet1_nSubJets"] = (*h_jetsAK8nSubJets)[i];
 	   hadTreeVars["topTagJet1_tau1"] = (*h_jetsAK8tau1)[i];
 	   hadTreeVars["topTagJet1_tau2"] = (*h_jetsAK8tau2)[i];
 	   hadTreeVars["topTagJet1_tau3"] = (*h_jetsAK8tau3)[i];
-	   hadTreeVars["topTagJet1_ungroomedMass"] = (*h_jetsAK8ungroomedMass)[i];
-	   hadTreeVars["topTagJet1_topMass"] = (*h_jetsAK8topMass)[i];
-	   hadTreeVars["topTagJet1_filteredMass"] = (*h_jetsAK8filteredMass)[i];
-	   hadTreeVars["topTagJet1_prunedMass"] = (*h_jetsAK8prunedMass)[i];
-	   hadTreeVars["topTagJet1_trimmedMass"] = (*h_jetsAK8trimmedMass)[i];
-	   hadTreeVars["topTagJet1_softDropMass"] = (*h_jetsAK8softDropMass)[i];
+	   hadTreeVars["topTagJet1_ungroomedMass"] = jetsAK8ungroomedMass;
+	   hadTreeVars["topTagJet1_topMass"] = jetsAK8topMass;
+	   hadTreeVars["topTagJet1_filteredMass"] = jetsAK8filteredMass;
+	   hadTreeVars["topTagJet1_prunedMass"] = jetsAK8prunedMass;
+	   hadTreeVars["topTagJet1_trimmedMass"] = jetsAK8trimmedMass;
+	   hadTreeVars["topTagJet1_softDropMass"] = jetsAK8softDropMass;
 
 	   //Lorentz vectors
-	   softDropJet1.SetPtEtaPhiM((*h_jetsAK8Pt)[i],(*h_jetsAK8Eta)[i],(*h_jetsAK8Phi)[i],(*h_jetsAK8softDropMass)[i]);
-	   ungroomedJet1.SetPtEtaPhiM((*h_jetsAK8Pt)[i],(*h_jetsAK8Eta)[i],(*h_jetsAK8Phi)[i],(*h_jetsAK8ungroomedMass)[i]);
+	   softDropJet1.SetPtEtaPhiM(jetsAK8Pt,jetsAK8Eta,jetsAK8Phi,jetsAK8softDropMass);
+	   ungroomedJet1.SetPtEtaPhiM(jetsAK8Pt,jetsAK8Eta,jetsAK8Phi,jetsAK8ungroomedMass);
 	   
 	   //////b-tagging
 	   float nSubjets_jet1 = (*h_jetsAK8nSubJets)[i];
@@ -1747,7 +1829,7 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	   hadTreeVars["topTagJet1_tau32"] = nSubjettiness;
 
 	   //top tagging with softdrop mass
-	   if ((*h_jetsAK8softDropMass)[i] > 110.0 && (*h_jetsAK8softDropMass)[i] < 210.0){
+	   if (jetsAK8softDropMass > 110.0 && jetsAK8softDropMass < 210.0){
 	     topTagJet1_topTagFlag = 1;
 	   }
 	   
