@@ -112,7 +112,10 @@ parser.add_option('--maxAK8Rapidity', type='float', action='store',
                   dest='maxAK8Rapidity',
                   help='Maximum AK8 rapidity')
 
-
+parser.add_option('--minAK8JetHt', type='float', action='store',
+                  default=400,
+                  dest='minAK8JetHt',
+                  help='HT cut for all-hadronic')
 
 parser.add_option('--hemisphereDPhi', type='float', action='store',
                   default=1.0,
@@ -1062,13 +1065,22 @@ if options.writeTree :
     AllHadNvtx          = array('f', [-1.])
     AllHadEventWeight   = array('f', [0.])
 
-    DijetMass         = array('f', [-1.])
-    DijetModMassJet0  = array('f', [-1.])
-    DijetModMassJet1  = array('f', [-1.])
-    DijetDeltaR       = array('f', [-1.])
-    DijetDeltaPhi     = array('f', [-1.])
-    DijetDeltaRap     = array('f', [-1.])
+    DijetMass           = array('f', [-1.])
+    DijetModMassJet0    = array('f', [-1.])
+    DijetModMassJet1    = array('f', [-1.])
+    DijetDeltaR         = array('f', [-1.])
+    DijetDeltaPhi       = array('f', [-1.])
+    DijetDeltaRap       = array('f', [-1.])
 
+    HT                  = array('f', [-1.])   
+    HT_ptGT50           = array('f', [-1.])   
+    HT_ptGT100          = array('f', [-1.])   
+    HT_ptGT200          = array('f', [-1.])   
+    HT_ptGT400          = array('f', [-1.])   
+    HT_CorrDn           = array('f', [-1.])   
+    HT_CorrUp           = array('f', [-1.])   
+    HT_PtSmearUp        = array('f', [-1.])   
+    HT_PtSmearDn        = array('f', [-1.])   
 
     TreeAllHad.Branch('Jet0CorrFactor'     , Jet0CorrFactor      , 'Jet0CorrFactor/F'      ) 
     TreeAllHad.Branch('Jet0CorrFactorUp'   , Jet0CorrFactorUp    , 'Jet0CorrFactorUp/F'    ) 
@@ -1189,6 +1201,16 @@ if options.writeTree :
     TreeAllHad.Branch('DijetDeltaR'       , DijetDeltaR      , 'DijetDeltaR/F'         )
     TreeAllHad.Branch('DijetDeltaPhi'     , DijetDeltaPhi    , 'DijetDeltaPhi/F'       )
     TreeAllHad.Branch('DijetDeltaRap'     , DijetDeltaRap    , 'DijetDeltaRap/F'       )
+      
+    TreeAllHad.Branch('HT'                ,  HT              ,  'HT/F'                 )
+    TreeAllHad.Branch('HT_ptGT50'         ,  HT_ptGT50       ,  'HT_ptGT50/F'          )
+    TreeAllHad.Branch('HT_ptGT100'        ,  HT_ptGT100      ,  'HT_ptGT100/F'         )
+    TreeAllHad.Branch('HT_ptGT200'        ,  HT_ptGT200      ,  'HT_ptGT200/F'         )
+    TreeAllHad.Branch('HT_ptGT400'        ,  HT_ptGT400      ,  'HT_ptGT400/F'         )
+    TreeAllHad.Branch('HT_CorrDn'         ,  HT_CorrDn       ,  'HT_CorrDn/F'          )
+    TreeAllHad.Branch('HT_CorrUp'         ,  HT_CorrUp       ,  'HT_CorrUp/F'          )
+    TreeAllHad.Branch('HT_PtSmearUp'      ,  HT_PtSmearUp    ,  'HT_PtSmearUp/F'       )
+    TreeAllHad.Branch('HT_PtSmearDn'      ,  HT_PtSmearDn    ,  'HT_PtSmearDn/F'       )
 
 #^ Plot initialization
 h_NPVert         = ROOT.TH1D("h_NPVert"        , "", 200,0,200 )
@@ -3268,7 +3290,15 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodMatchedGenJetPt = []
 
 
-            ak8JetHt = 0     
+            ak8JetHt           = 0     
+            ak8JetHt_ptGT50    = 0     
+            ak8JetHt_ptGT100   = 0     
+            ak8JetHt_ptGT200   = 0     
+            ak8JetHt_ptGT400   = 0  
+            ak8JetHt_CorrDn    = 0 
+            ak8JetHt_CorrUp    = 0 
+            ak8JetHt_PtSmearUp = 0 
+            ak8JetHt_PtSmearDn = 0    
 
             if len( h_jetsAK8Pt.product()) > 0 : 
                 AK8Pt              = h_jetsAK8Pt                 .product()
@@ -3618,8 +3648,23 @@ for ifile in files : #{ Loop over root files
                             AK8P4Corr.Perp(), AK8P4Corr.Rapidity(), AK8P4Corr.Phi(), AK8P4Corr.M()
                             )                        
 
-                    #$ Ht Cut
+                    #$ Ht = sume jet energy
+
                     ak8JetHt = ak8JetHt + AK8P4Corr.Perp()
+                    if AK8P4Corr.Perp() >  50 :
+                        ak8JetHt_ptGT50  = ak8JetHt_ptGT50  + AK8P4Corr.Perp()
+                    if AK8P4Corr.Perp() > 100 :
+                        ak8JetHt_ptGT100 = ak8JetHt_ptGT100 + AK8P4Corr.Perp()
+                    if AK8P4Corr.Perp() > 200 :
+                        ak8JetHt_ptGT200 = ak8JetHt_ptGT200 + AK8P4Corr.Perp()
+                    if AK8P4Corr.Perp() > 400 :
+                        ak8JetHt_ptGT400 = ak8JetHt_ptGT400 + AK8P4Corr.Perp()
+
+                    ak8JetHt_CorrDn    = ak8JetHt_CorrDn  + AK8P4CorrDn.Perp()
+                    ak8JetHt_CorrUp    = ak8JetHt_CorrUp  + AK8P4CorrUp.Perp()
+                    ak8JetHt_PtSmearUp = ak8JetHt_PtSmearUp  + AK8P4Corr.Perp() * ptsmearUp
+                    ak8JetHt_PtSmearDn = ak8JetHt_PtSmearDn  + AK8P4Corr.Perp() * ptsmearDn
+
 
                     #$ Cuts based on pt and rapidity
                     if AK8P4Corr.Perp() < options.minAK8Pt or abs(AK8P4Corr.Rapidity()) > options.maxAK8Rapidity :
@@ -3797,7 +3842,7 @@ for ifile in files : #{ Loop over root files
                         print 'deltaphi_jet0_jet1 '+str(deltaphi_jet0_jet1)
                         print 'FAILS DELTAPHI CUT'
                     continue
-                if ak8JetHt < 1000:
+                if ak8JetHt < options.minAK8JetHt:
                     continue    
 
 
@@ -4837,6 +4882,16 @@ for ifile in files : #{ Loop over root files
                     DijetDeltaR        [0] = ak8JetsGood[0].DeltaR   (ak8JetsGood[1])
                     DijetDeltaPhi      [0] = ak8JetsGood[0].DeltaPhi (ak8JetsGood[1])
                     DijetDeltaRap      [0] = abs(ak8JetsGood[0].Rapidity() - ak8JetsGood[1].Rapidity() )
+
+                    HT                 [0] = ak8JetHt          
+                    HT_ptGT50          [0] = ak8JetHt_ptGT50   
+                    HT_ptGT100         [0] = ak8JetHt_ptGT100  
+                    HT_ptGT200         [0] = ak8JetHt_ptGT200  
+                    HT_ptGT400         [0] = ak8JetHt_ptGT400  
+                    HT_CorrDn          [0] = ak8JetHt_CorrDn   
+                    HT_CorrUp          [0] = ak8JetHt_CorrUp   
+                    HT_PtSmearUp       [0] = ak8JetHt_PtSmearUp
+                    HT_PtSmearDn       [0] = ak8JetHt_PtSmearDn
 
                     TreeAllHad.Fill()
                 #} end check that we have at least 2 AK8 jets for all-hadronic background estimation            
