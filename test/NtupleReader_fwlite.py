@@ -435,13 +435,29 @@ l_rho = ("fixedGridRhoFastjetAll", "")
 
 #MET label and Handles
 h_metPt = Handle("std::vector<float>")
-l_metPt = ("met" , "metPt")
+l_metPt = ("metNoHF" , "metNoHFPt")
 h_metPx = Handle("std::vector<float>")
-l_metPx = ("met" , "metPx")
+l_metPx = ("metNoHF" , "metNoHFPx")
 h_metPy = Handle("std::vector<float>")
-l_metPy = ("met" , "metPy")
+l_metPy = ("metNoHF" , "metNoHFPy")
 h_metPhi = Handle("std::vector<float>")
-l_metPhi = ("met" , "metPhi")
+l_metPhi = ("metNoHF" , "metNoHFPhi")
+
+
+# vector<float>             "metFull"                   "metFullPhi"      "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFullPt"       "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFullPx"       "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFullPy"       "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFulluncorPhi"   "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFulluncorPt"   "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFulluncorSumEt"   "b2gEDMNtuples"
+# vector<float>             "metNoHF"                   "metNoHFPhi"      "b2gEDMNtuples"
+# vector<float>             "metNoHF"                   "metNoHFPt"       "b2gEDMNtuples"
+# vector<float>             "metNoHF"                   "metNoHFPx"       "b2gEDMNtuples"
+# vector<float>             "metNoHF"                   "metNoHFPy"       "b2gEDMNtuples"
+# vector<float>             "metNoHF"                   "metNoHFuncorPhi"   "b2gEDMNtuples"
+# vector<float>             "metNoHF"                   "metNoHFuncorPt"   "b2gEDMNtuples"
+# vector<float>             "metNoHF"                   "metNoHFuncorSumEt"   "b2gEDMNtuples"
 
 # Generator info
 if options.isMC :
