@@ -87,9 +87,10 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
   if (data){
 
-    infile_name       = "outNTR_JetHT_Run2015D_PromptReco-v3andv4_oct19json_jdolen_all.root";
-    infile_ttbar_name = "ttjets_b2ganafw_v6_All_tag_and_probe_102415.root";
+    infile_name       = "outAntiTag_JetHT_Run2015D_PromptReco-v3_and_v4_oct19json_tag_and_probe_113015.root";
+    infile_ttbar_name = "outAntiTag_ttjets_b2ganafw_v6_113015.root";
   } 
+  string date = "113015";
 
   int nbins = bins.size();
   stringstream temp1;
@@ -99,7 +100,8 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   if (noSubtract) subtractOrNot = "_noSubstract_";
   if (!noSubtract) subtractOrNot = "_Substract_";
   if (!data) subtractOrNot = "_MC_";
-  string outfile_name = "MistagRate_nbins"+snbins+subtractOrNot+infile_name;
+
+  string outfile_name = "MistagRate_nbins_"+date+"_"+snbins+subtractOrNot+infile_name;
 
   cout<<"Opening "<<infile_name<<endl;
   InFile        = new TFile(      infile_name.c_str()      );
@@ -112,30 +114,44 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   vector <string> antitag_def;
   vector <string> tag_def;
 
-  antitag_def.push_back("AntiTagMinMass30_ReqTopMassFat");
-  antitag_def.push_back("AntiTagMinMass30_ReqTopMassSD");
-  antitag_def.push_back("AntiTagMinMass50_ReqTopMassFat");
-  antitag_def.push_back("AntiTagMinMass50_ReqTopMassSD");
-  antitag_def.push_back("AntiTagTau32_ReqTopMassFat");
+  //antitag_def.push_back("AntiTagMinMass30_ReqTopMassFat");
+  //antitag_def.push_back("AntiTagMinMass30_ReqTopMassSD");
+  //antitag_def.push_back("AntiTagMinMass50_ReqTopMassFat");
+  //antitag_def.push_back("AntiTagMinMass50_ReqTopMassSD");
+  //antitag_def.push_back("AntiTagTau32_ReqTopMassFat");
   antitag_def.push_back("AntiTagTau32_ReqTopMassSD");
  
-  tag_def.push_back("_TagMassFatMinMass");
-  tag_def.push_back("_TagMassSD"        );
+  //tag_def.push_back("_TagMassFatMinMass");
+  //tag_def.push_back("_TagMassSD"        );
   tag_def.push_back("_TagMassSDTau32"   );
-  tag_def.push_back("_TagMassSDMinMass" );
+  //tag_def.push_back("_TagMassSDMinMass" );
 
-  string pre = "AllHad/h_";
-  string post = "_jetPt";
-  string probe = "_Probe";
+  //string pre = "AllHad/h_";
+  string pre = "h_";
   string save_pre = "h_mistag_";
-
+  string probe = "_Probe";
+  vector <string> post;
+  post.push_back("_jetPt_dRapHi_inclusive");
+  post.push_back("_jetPt_dRapHi_0btag");
+  post.push_back("_jetPt_dRapHi_1btag");
+  post.push_back("_jetPt_dRapHi_2btag");
+  post.push_back("_jetPt_dRapLo_inclusive");
+  post.push_back("_jetPt_dRapLo_0btag");
+  post.push_back("_jetPt_dRapLo_1btag");
+  post.push_back("_jetPt_dRapLo_2btag");
+  
+  
+  
   for (unsigned int i=0; i<antitag_def.size(); i++ ){
-      for (unsigned int j=0; j<tag_def.size(); j++ ){
-        string numer = pre + antitag_def[i] + tag_def[j] + post;
-        string denom = pre + antitag_def[i] + probe+post;
-        string savename = save_pre + antitag_def[i] + tag_def[j] ;
-        string savename2 = save_pre + antitag_def[i] + tag_def[j] ;
-        string savename3 = "teff_" + antitag_def[i] + tag_def[j] ;
+    for (unsigned int j=0; j<tag_def.size(); j++ ){
+      for (unsigned int k=0; k<post.size(); k++ ){
+        string numer = pre + antitag_def[i] + tag_def[j] + post[k];
+        cout <<"numer:"<<numer<<endl;
+        string denom = pre + antitag_def[i] + probe + post[k];
+        cout <<"denom:"<<denom<<endl;
+        string savename = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
+        string savename2 = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
+        string savename3 = "teff_" + antitag_def[i] + tag_def[j] + post[k] ;
 
         // cout<<numer<<"      "<<denom<<"     "<<
         cout<<savename<<endl;
@@ -144,7 +160,7 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         TH1D * bkgd_denom = (TH1D*)InFile->Get(denom.c_str());
         bkgd_numer  ->Sumw2();
         bkgd_denom  ->Sumw2();
-       
+        
         TH1D *bkgd_numer_new =(TH1D*) bkgd_numer->Clone();
         TH1D *bkgd_denom_new =(TH1D*) bkgd_denom->Clone();
         bkgd_numer_new->Sumw2();
@@ -194,16 +210,16 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
           ttbar_numer_rebin->Scale(scale_ttbar);
           ttbar_denom_rebin->Scale(scale_ttbar);
 
-          string ttbar_numer_name = "check_"+antitag_def[i] + tag_def[j] + post +"_ttbar";
-          string ttbar_denom_name = "check_"+antitag_def[i] + probe      + post +"_ttbar";
+          string ttbar_numer_name = "check_"+antitag_def[i] + tag_def[j] + post[k] +"_ttbar";
+          string ttbar_denom_name = "check_"+antitag_def[i] + probe      + post[k] +"_ttbar";
           ttbar_numer_rebin ->SetName(ttbar_numer_name.c_str() );
           ttbar_denom_rebin ->SetName(ttbar_denom_name.c_str() );
           ttbar_numer_rebin ->Write();
           ttbar_denom_rebin ->Write();
 
 
-          string data_nosubtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post +"_data_nosubtract";
-          string data_nosubtract_denom_name =  "check_"+antitag_def[i] + probe      + post +"_data_nosubtract";
+          string data_nosubtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post[k] +"_data_nosubtract";
+          string data_nosubtract_denom_name =  "check_"+antitag_def[i] + probe      + post[k] +"_data_nosubtract";
           bkgd_numer_rebin ->SetName(data_nosubtract_numer_name.c_str() );
           bkgd_denom_rebin ->SetName(data_nosubtract_denom_name.c_str() );
           bkgd_numer_rebin ->Write();
@@ -216,8 +232,8 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
           cout<<"post subtract numer "<<bkgd_numer_rebin->Integral()<<endl;
           cout<<"post subtract denom "<<bkgd_denom_rebin->Integral()<<endl;
 
-          string data_subtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post +"_data_subtract";
-          string data_subtract_denom_name =  "check_"+antitag_def[i] + probe      + post +"_data_subtract";
+          string data_subtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post[k] +"_data_subtract";
+          string data_subtract_denom_name =  "check_"+antitag_def[i] + probe      + post[k] +"_data_subtract";
           bkgd_numer_rebin ->SetName(data_subtract_numer_name.c_str() );
           bkgd_denom_rebin ->SetName(data_subtract_denom_name.c_str() );
           bkgd_numer_rebin ->Write();
@@ -254,6 +270,7 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         bkgd_numer_rebin->SetName(savename.c_str());
         bkgd_numer_rebin->Write();
 
+      }
     }
   }
   OutFile->cd();
