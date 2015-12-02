@@ -112,10 +112,7 @@ parser.add_option('--maxAK8Rapidity', type='float', action='store',
                   dest='maxAK8Rapidity',
                   help='Maximum AK8 rapidity')
 
-parser.add_option('--minAK8JetHt', type='float', action='store',
-                  default=400,
-                  dest='minAK8JetHt',
-                  help='HT cut for all-hadronic')
+
 
 parser.add_option('--hemisphereDPhi', type='float', action='store',
                   default=1.0,
@@ -802,6 +799,18 @@ if options.writeTree :
     FatJetCorr          = array('f', [-1.])
     FatJetCorrUp        = array('f', [-1.])
     FatJetCorrDn        = array('f', [-1.])
+    JetPtSmearFactor    = array('f', [-1.])
+    JetPtSmearFactorUp  = array('f', [-1.])
+    JetPtSmearFactorDn  = array('f', [-1.])
+    JetEtaScaleFactor   = array('f', [-1.])
+    JetPhiScaleFactor   = array('f', [-1.])
+    JetMatchedGenJetPt  = array('f', [-1.])
+    FatJetPtRaw         = array('f', [-1.])
+    FatJetEtaRaw        = array('f', [-1.])
+    FatJetPhiRaw        = array('f', [-1.])
+    FatJetRapRaw        = array('f', [-1.])
+    FatJetMassRaw       = array('f', [-1.])
+
     FatJetPt            = array('f', [-1.])
     FatJetEta           = array('f', [-1.])
     FatJetPhi           = array('f', [-1.])
@@ -880,6 +889,17 @@ if options.writeTree :
     TreeSemiLept.Branch('FatJetCorr'          , FatJetCorr          ,  'FatJetCorr/F'          )
     TreeSemiLept.Branch('FatJetCorrUp'        , FatJetCorrUp        ,  'FatJetCorrUp/F'        )
     TreeSemiLept.Branch('FatJetCorrDn'        , FatJetCorrDn        ,  'FatJetCorrDn/F'        )
+    TreeSemiLept.Branch('JetPtSmearFactor'  , JetPtSmearFactor   , 'JetPtSmearFactor/F'   ) 
+    TreeSemiLept.Branch('JetPtSmearFactorUp', JetPtSmearFactorUp , 'JetPtSmearFactorUp/F' ) 
+    TreeSemiLept.Branch('JetPtSmearFactorDn', JetPtSmearFactorDn , 'JetPtSmearFactorDn/F' ) 
+    TreeSemiLept.Branch('JetEtaScaleFactor' , JetEtaScaleFactor  , 'JetEtaScaleFactor/F'  ) 
+    TreeSemiLept.Branch('JetPhiScaleFactor' , JetPhiScaleFactor  , 'JetPhiScaleFactor/F'  ) 
+    TreeSemiLept.Branch('JetMatchedGenJetPt', JetMatchedGenJetPt , 'JetMatchedGenJetPt/F' ) 
+    TreeSemiLept.Branch('FatJetPtRaw'          , FatJetPtRaw           , 'FatJetPtRaw/F'           )
+    TreeSemiLept.Branch('FatJetEtaRaw'         , FatJetEtaRaw          , 'FatJetEtaRaw/F'          ) 
+    TreeSemiLept.Branch('FatJetPhiRaw'         , FatJetPhiRaw          , 'FatJetPhiRaw/F'          ) 
+    TreeSemiLept.Branch('FatJetRapRaw'         , FatJetRapRaw          , 'FatJetRapRaw/F'          ) 
+    TreeSemiLept.Branch('FatJetMassRaw'        , FatJetMassRaw         , 'FatJetMassRaw/F'         ) 
     TreeSemiLept.Branch('FatJetPt'            , FatJetPt            ,  'FatJetPt/F'            )
     TreeSemiLept.Branch('FatJetEta'           , FatJetEta           ,  'FatJetEta/F'           )
     TreeSemiLept.Branch('FatJetPhi'           , FatJetPhi           ,  'FatJetPhi/F'           )
@@ -1065,22 +1085,13 @@ if options.writeTree :
     AllHadNvtx          = array('f', [-1.])
     AllHadEventWeight   = array('f', [0.])
 
-    DijetMass           = array('f', [-1.])
-    DijetModMassJet0    = array('f', [-1.])
-    DijetModMassJet1    = array('f', [-1.])
-    DijetDeltaR         = array('f', [-1.])
-    DijetDeltaPhi       = array('f', [-1.])
-    DijetDeltaRap       = array('f', [-1.])
+    DijetMass         = array('f', [-1.])
+    DijetModMassJet0  = array('f', [-1.])
+    DijetModMassJet1  = array('f', [-1.])
+    DijetDeltaR       = array('f', [-1.])
+    DijetDeltaPhi     = array('f', [-1.])
+    DijetDeltaRap     = array('f', [-1.])
 
-    HT                  = array('f', [-1.])   
-    HT_ptGT50           = array('f', [-1.])   
-    HT_ptGT100          = array('f', [-1.])   
-    HT_ptGT200          = array('f', [-1.])   
-    HT_ptGT400          = array('f', [-1.])   
-    HT_CorrDn           = array('f', [-1.])   
-    HT_CorrUp           = array('f', [-1.])   
-    HT_PtSmearUp        = array('f', [-1.])   
-    HT_PtSmearDn        = array('f', [-1.])   
 
     TreeAllHad.Branch('Jet0CorrFactor'     , Jet0CorrFactor      , 'Jet0CorrFactor/F'      ) 
     TreeAllHad.Branch('Jet0CorrFactorUp'   , Jet0CorrFactorUp    , 'Jet0CorrFactorUp/F'    ) 
@@ -1201,16 +1212,6 @@ if options.writeTree :
     TreeAllHad.Branch('DijetDeltaR'       , DijetDeltaR      , 'DijetDeltaR/F'         )
     TreeAllHad.Branch('DijetDeltaPhi'     , DijetDeltaPhi    , 'DijetDeltaPhi/F'       )
     TreeAllHad.Branch('DijetDeltaRap'     , DijetDeltaRap    , 'DijetDeltaRap/F'       )
-      
-    TreeAllHad.Branch('HT'                ,  HT              ,  'HT/F'                 )
-    TreeAllHad.Branch('HT_ptGT50'         ,  HT_ptGT50       ,  'HT_ptGT50/F'          )
-    TreeAllHad.Branch('HT_ptGT100'        ,  HT_ptGT100      ,  'HT_ptGT100/F'         )
-    TreeAllHad.Branch('HT_ptGT200'        ,  HT_ptGT200      ,  'HT_ptGT200/F'         )
-    TreeAllHad.Branch('HT_ptGT400'        ,  HT_ptGT400      ,  'HT_ptGT400/F'         )
-    TreeAllHad.Branch('HT_CorrDn'         ,  HT_CorrDn       ,  'HT_CorrDn/F'          )
-    TreeAllHad.Branch('HT_CorrUp'         ,  HT_CorrUp       ,  'HT_CorrUp/F'          )
-    TreeAllHad.Branch('HT_PtSmearUp'      ,  HT_PtSmearUp    ,  'HT_PtSmearUp/F'       )
-    TreeAllHad.Branch('HT_PtSmearDn'      ,  HT_PtSmearDn    ,  'HT_PtSmearDn/F'       )
 
 #^ Plot initialization
 h_NPVert         = ROOT.TH1D("h_NPVert"        , "", 200,0,200 )
@@ -3290,15 +3291,7 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodMatchedGenJetPt = []
 
 
-            ak8JetHt           = 0     
-            ak8JetHt_ptGT50    = 0     
-            ak8JetHt_ptGT100   = 0     
-            ak8JetHt_ptGT200   = 0     
-            ak8JetHt_ptGT400   = 0  
-            ak8JetHt_CorrDn    = 0 
-            ak8JetHt_CorrUp    = 0 
-            ak8JetHt_PtSmearUp = 0 
-            ak8JetHt_PtSmearDn = 0    
+            ak8JetHt = 0     
 
             if len( h_jetsAK8Pt.product()) > 0 : 
                 AK8Pt              = h_jetsAK8Pt                 .product()
@@ -3648,23 +3641,8 @@ for ifile in files : #{ Loop over root files
                             AK8P4Corr.Perp(), AK8P4Corr.Rapidity(), AK8P4Corr.Phi(), AK8P4Corr.M()
                             )                        
 
-                    #$ Ht = sume jet energy
-
+                    #$ Ht Cut
                     ak8JetHt = ak8JetHt + AK8P4Corr.Perp()
-                    if AK8P4Corr.Perp() >  50 :
-                        ak8JetHt_ptGT50  = ak8JetHt_ptGT50  + AK8P4Corr.Perp()
-                    if AK8P4Corr.Perp() > 100 :
-                        ak8JetHt_ptGT100 = ak8JetHt_ptGT100 + AK8P4Corr.Perp()
-                    if AK8P4Corr.Perp() > 200 :
-                        ak8JetHt_ptGT200 = ak8JetHt_ptGT200 + AK8P4Corr.Perp()
-                    if AK8P4Corr.Perp() > 400 :
-                        ak8JetHt_ptGT400 = ak8JetHt_ptGT400 + AK8P4Corr.Perp()
-
-                    ak8JetHt_CorrDn    = ak8JetHt_CorrDn  + AK8P4CorrDn.Perp()
-                    ak8JetHt_CorrUp    = ak8JetHt_CorrUp  + AK8P4CorrUp.Perp()
-                    ak8JetHt_PtSmearUp = ak8JetHt_PtSmearUp  + AK8P4Corr.Perp() * ptsmearUp
-                    ak8JetHt_PtSmearDn = ak8JetHt_PtSmearDn  + AK8P4Corr.Perp() * ptsmearDn
-
 
                     #$ Cuts based on pt and rapidity
                     if AK8P4Corr.Perp() < options.minAK8Pt or abs(AK8P4Corr.Rapidity()) > options.maxAK8Rapidity :
@@ -3842,7 +3820,7 @@ for ifile in files : #{ Loop over root files
                         print 'deltaphi_jet0_jet1 '+str(deltaphi_jet0_jet1)
                         print 'FAILS DELTAPHI CUT'
                     continue
-                if ak8JetHt < options.minAK8JetHt:
+                if ak8JetHt < 1000:
                     continue    
 
 
@@ -4883,16 +4861,6 @@ for ifile in files : #{ Loop over root files
                     DijetDeltaPhi      [0] = ak8JetsGood[0].DeltaPhi (ak8JetsGood[1])
                     DijetDeltaRap      [0] = abs(ak8JetsGood[0].Rapidity() - ak8JetsGood[1].Rapidity() )
 
-                    HT                 [0] = ak8JetHt          
-                    HT_ptGT50          [0] = ak8JetHt_ptGT50   
-                    HT_ptGT100         [0] = ak8JetHt_ptGT100  
-                    HT_ptGT200         [0] = ak8JetHt_ptGT200  
-                    HT_ptGT400         [0] = ak8JetHt_ptGT400  
-                    HT_CorrDn          [0] = ak8JetHt_CorrDn   
-                    HT_CorrUp          [0] = ak8JetHt_CorrUp   
-                    HT_PtSmearUp       [0] = ak8JetHt_PtSmearUp
-                    HT_PtSmearDn       [0] = ak8JetHt_PtSmearDn
-
                     TreeAllHad.Fill()
                 #} end check that we have at least 2 AK8 jets for all-hadronic background estimation            
 
@@ -5191,12 +5159,54 @@ for ifile in files : #{ Loop over root files
                     if typE == 2 :
                         candToPlot = wtagCand
 
+                    if len(ak8JetsGoodPtSmear) >= (candToPlot+1) :
+                        smearPt = ak8JetsGoodPtSmear[candToPlot]
+                        smearPtu = ak8JetsGoodPtSmearUp[candToPlot]
+                        smearPtd = ak8JetsGoodPtSmearDn[candToPlot]
+                    else :
+                        smearPt = 1.
+                        smearPtu = 1.
+                        smearPtd = 1.
+
+                    if len(ak8JetsGoodEtaScale) >= (candToPlot+1) :
+                        etas = ak8JetsGoodEtaScale[candToPlot]
+                        phis = ak8JetsGoodPhiScale[candToPlot]
+                        matgen = ak8JetsGoodMatchedGenJetPt[candToPlot]
+                    else :
+                        etas = 1.
+                        phis = 1.
+                        matgen = 0.
+
+                    if len(ak8JetsGoodRaw) >= (candToPlot+1) :
+                        rpt = ak8JetsGoodRaw[candToPlot].Perp()
+                        reta = ak8JetsGoodRaw[candToPlot].Eta()
+                        rphi = ak8JetsGoodRaw[candToPlot].Phi()
+                        ry = ak8JetsGoodRaw[candToPlot].Rapidity()
+                        rmass = ak8JetsGoodRaw[candToPlot].M()
+                    else :
+                        rpt = 0.
+                        reta = 0.
+                        rphi = 0.
+                        ry = 0.
+                        rmass = 0.
+
                     #~ Fill SemiLeptonic tree 
                     BoosttypE           [0] = typE
                     SemiLeptWeight      [0] = evWeight
                     FatJetCorr          [0] = ak8JetsGoodCorrFactor[candToPlot]
                     FatJetCorrUp        [0] = ak8JetsGoodCorrUpFactor[candToPlot]
                     FatJetCorrDn        [0] = ak8JetsGoodCorrDnFactor[candToPlot]
+                    JetPtSmearFactor    [0] =  smearPt
+                    JetPtSmearFactorUp  [0] =  smearPtu
+                    JetPtSmearFactorDn  [0] =  smearPtd
+                    JetEtaScaleFactor   [0] =  etas
+                    JetPhiScaleFactor   [0] =  phis
+                    JetMatchedGenJetPt  [0] =  matgen
+                    FatJetPtRaw         [0] =  rpt
+                    FatJetEtaRaw        [0] =  reta
+                    FatJetPhiRaw        [0] =  rphi
+                    FatJetRapRaw        [0] =  ry
+                    FatJetMassRaw       [0] =  rmass
                     FatJetPt            [0] = ak8JetsGood[candToPlot].Perp()
                     FatJetEta           [0] = ak8JetsGood[candToPlot].Eta()
                     FatJetPhi           [0] = ak8JetsGood[candToPlot].Phi()
