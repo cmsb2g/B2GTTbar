@@ -80,10 +80,18 @@ class ZprimeB2Ganalyzer : public edm::EDAnalyzer {
   //TTree *tree_semilept;
   TTree *tree_had;
 
+  TFile* fPU;
+  TH1F* hPU;
+
   std::map<std::string, float> hadTreeVars;
   //std::map<std::string, float> semileptTreeVars;
   std::vector<std::string> listOfHadVars;
   //std::vector<std::string> listOfSemileptVars;
+
+  boost::shared_ptr<FactorizedJetCorrector> ak4JetCorrector;
+  boost::shared_ptr<FactorizedJetCorrector> ak4JetCorrectorForMass;
+  boost::shared_ptr<FactorizedJetCorrector> ak8JetCorrector;
+  boost::shared_ptr<JetCorrectionUncertainty> UncertJetAK8;
 
   //options
   bool negativeWeights_;
@@ -95,8 +103,46 @@ class ZprimeB2Ganalyzer : public edm::EDAnalyzer {
   bool reweightTopPt_;
   string puFile_;
 
-  //std::string testSrc_;
+  //std::string testSrc_; 
+
+  float getJER(float jetEta, int sysType){
+    /*
+    Here, jetEta should be the jet pseudorapidity, and sysType is :
+    nominal : 0
+    down    : -1
+    up      : +1
+    */
+
+    float jerSF = 1.0;
+
+    if ( !(sysType==0 || sysType==-1 || sysType==1)){
+      cout<<"ERROR: Can't get JER! use type=0 (nom), -1 (down), +1 (up)"<<endl;
+      return (jerSF);
+    }
+
+    //Values from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
+    float etamin[7]{0.0,0.8,1.3,1.9,2.5,3.0,3.2};
+    float etamax[7]{0.8,1.3,1.9,2.5,3.0,3.2,5.0};
+    float scale_nom[7]{1.061,1.088,1.106,1.126,1.343,1.303,1.320};
+    float scale_uncert[7]{0.023,0.029,0.030,0.094,0.123,0.111,0.286};
   
+    // old 8 TeV
+    // etamin = [0.0,0.5,1.1,1.7,2.3,2.8,3.2]
+    // etamax = [0.5,1.1,1.7,2.3,2.8,3.2,5.0]
+    // scale_nom = [1.079,1.099,1.121,1.208,1.254,1.395,1.056]
+    // scale_dn  = [1.053,1.071,1.092,1.162,1.192,1.332,0.865]
+    // scale_up  = [1.105,1.127,1.150,1.254,1.316,1.458,1.247]
+
+    for (int iSF = 0; iSF < 7; iSF++){
+      if (abs(jetEta) >= etamin[iSF] && abs(jetEta) < etamax[iSF]){
+	if (sysType < 0) jerSF = scale_nom[iSF] - scale_uncert[iSF];
+	else if (sysType > 0) jerSF = scale_nom[iSF] + scale_uncert[iSF];
+	else jerSF = scale_nom[iSF];
+	break;
+      }
+    }
+    return (jerSF);
+  }
 };
 
 //
@@ -136,7 +182,10 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   listOfHadVars.push_back("hbheFilt");
   listOfHadVars.push_back("htTrig");
   listOfHadVars.push_back("jetTrig");
-  listOfHadVars.push_back("trimjetTrig");
+
+  listOfHadVars.push_back("ak8TrimjetTrig");
+  listOfHadVars.push_back("ht650TrimjetTrig");
+  listOfHadVars.push_back("ht700TrimjetTrig");
 
   listOfHadVars.push_back("npv");
   listOfHadVars.push_back("evWeight");
@@ -350,6 +399,90 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
     semileptTreeVars[ listOfSemileptVars[i] ] = -999.99;
     tree_semilept->Branch( (listOfSemileptVars[i]).c_str() , &(semileptTreeVars[ listOfSemileptVars[i] ]), (listOfSemileptVars[i]+"/F").c_str() );
     }*/
+
+  //JECs - for MC
+  //AK4
+  const string L3JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L3Absolute_AK4PFchs.txt");
+  JetCorrectorParameters L3JetParAK4(L3JetParAK4_ptr);
+  const string L2JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L2Relative_AK4PFchs.txt");
+  JetCorrectorParameters L2JetParAK4(L2JetParAK4_ptr);
+  const string L1JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L1FastJet_AK4PFchs.txt");
+  JetCorrectorParameters L1JetParAK4(L1JetParAK4_ptr);
+  const string UncertJetAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_Uncertainty_AK4PFchs.txt");
+  JetCorrectionUncertainty UncertJetAK4(UncertJetAK4_ptr);
+  
+  //AK8
+  const string L3JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L3Absolute_AK8PFchs.txt");
+  JetCorrectorParameters L3JetParAK8(L3JetParAK8_ptr);
+  const string L2JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L2Relative_AK8PFchs.txt");
+  JetCorrectorParameters L2JetParAK8(L2JetParAK8_ptr);
+  const string L1JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L1FastJet_AK8PFchs.txt");
+  JetCorrectorParameters L1JetParAK8(L1JetParAK8_ptr);
+  const string UncertJetAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_Uncertainty_AK8PFchs.txt");
+  UncertJetAK8 = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(UncertJetAK8_ptr));
+  
+  //for data
+  const string ResJetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2L3Residual_AK4PFchs.txt");
+  JetCorrectorParameters ResJetParAK4(ResJetParAK4_ptr);
+  const string ResJetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2L3Residual_AK8PFchs.txt");
+  JetCorrectorParameters ResJetParAK8(ResJetParAK8_ptr);
+  
+  if (isMC_){
+    //cout<<"Getting MC JECs!"<<endl;
+  }
+  else{
+    //cout<<"Getting DATA JECs!"<<endl;
+    //AK4
+    const string L3JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L3Absolute_AK4PFchs.txt");
+    JetCorrectorParameters L3JetParAK4(L3JetParAK4_ptr);
+    const string L2JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2Relative_AK4PFchs.txt");
+    JetCorrectorParameters L2JetParAK4(L2JetParAK4_ptr);
+    const string L1JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L1FastJet_AK4PFchs.txt");
+    JetCorrectorParameters L1JetParAK4(L1JetParAK4_ptr);
+    const string UncertJetAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_Uncertainty_AK4PFchs.txt");
+    JetCorrectionUncertainty UncertJetAK4(UncertJetAK4_ptr);
+    
+    //AK8
+    const string L3JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L3Absolute_AK8PFchs.txt");
+    JetCorrectorParameters L3JetParAK8(L3JetParAK8_ptr);
+    const string L2JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2Relative_AK8PFchs.txt");
+    JetCorrectorParameters L2JetParAK8(L2JetParAK8_ptr);
+    const string L1JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L1FastJet_AK8PFchs.txt");
+    JetCorrectorParameters L1JetParAK8(L1JetParAK8_ptr);
+    const string UncertJetAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_Uncertainty_AK8PFchs.txt");
+    JetCorrectionUncertainty UncertJetAK8(UncertJetAK8_ptr);
+  }
+
+  //Load the JetCorrectorParameter objects into a vector, IMPORTANT: THE ORDER MATTERS HERE !!!!
+  vector<JetCorrectorParameters> vParJecAK4;
+  vParJecAK4.push_back(L1JetParAK4);
+  vParJecAK4.push_back(L2JetParAK4);
+  vParJecAK4.push_back(L3JetParAK4);
+  //for data
+  if (!isMC_) vParJecAK4.push_back(ResJetParAK4);
+   
+  ak4JetCorrector = boost::shared_ptr<FactorizedJetCorrector> (new FactorizedJetCorrector(vParJecAK4));
+
+  vector<JetCorrectorParameters> vParJecAK4ForMass;
+  vParJecAK4ForMass.push_back(L2JetParAK4);
+  vParJecAK4ForMass.push_back(L3JetParAK4);
+  //for data
+  if (!isMC_) vParJecAK4ForMass.push_back(ResJetParAK4);
+  
+  ak4JetCorrectorForMass = boost::shared_ptr<FactorizedJetCorrector> (new FactorizedJetCorrector(vParJecAK4ForMass));
+  
+  vector<JetCorrectorParameters> vParJecAK8;
+  vParJecAK8.push_back(L1JetParAK8);
+  vParJecAK8.push_back(L2JetParAK8);
+  vParJecAK8.push_back(L3JetParAK8);
+  //for data
+  if (!isMC_) vParJecAK8.push_back(ResJetParAK8);
+  
+  ak8JetCorrector = boost::shared_ptr<FactorizedJetCorrector> (new FactorizedJetCorrector(vParJecAK8));
+
+  //pileup reweighting
+  fPU = new TFile(puFile_.c_str(), "READ");
+  hPU = (TH1F *) fPU->Get("h_NPVert");
 }
 
 
@@ -961,110 +1094,6 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
      semileptTreeVars[ listOfSemileptVars[i] ] = -999.99;
      }*/
 
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Getting JECs!"<<endl;
-
-   //JECs - for MC
-   //AK4
-   const string L3JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L3Absolute_AK4PFchs.txt");
-   JetCorrectorParameters L3JetParAK4(L3JetParAK4_ptr);
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK4 MC JEC L3 acquired!"<<endl;
-   const string L2JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L2Relative_AK4PFchs.txt");
-   JetCorrectorParameters L2JetParAK4(L2JetParAK4_ptr);
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK4 MC JEC L2 acquired!"<<endl;
-   const string L1JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L1FastJet_AK4PFchs.txt");
-   JetCorrectorParameters L1JetParAK4(L1JetParAK4_ptr);
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK4 MC JEC L1 acquired!"<<endl;
-   const string UncertJetAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_Uncertainty_AK4PFchs.txt");
-   JetCorrectionUncertainty UncertJetAK4(UncertJetAK4_ptr);
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK4 MC JEC Uncert acquired!"<<endl;
-
-   //AK8
-   const string L3JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L3Absolute_AK8PFchs.txt");
-   JetCorrectorParameters L3JetParAK8(L3JetParAK8_ptr);
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK8 MC JEC L3 acquired!"<<endl;
-   const string L2JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L2Relative_AK8PFchs.txt");
-   JetCorrectorParameters L2JetParAK8(L2JetParAK8_ptr);
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK8 MC JEC L2 acquired!"<<endl;
-   const string L1JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_L1FastJet_AK8PFchs.txt");
-   JetCorrectorParameters L1JetParAK8(L1JetParAK8_ptr);
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK8 MC JEC L1 acquired!"<<endl;
-   const string UncertJetAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_MC_Uncertainty_AK8PFchs.txt");
-   JetCorrectionUncertainty UncertJetAK8(UncertJetAK8_ptr);
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"AK8 MC JEC Uncert acquired!"<<endl;
-
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"MC JECs acquired!"<<endl;
-  
-   //for data
-   const string ResJetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2L3Residual_AK4PFchs.txt");
-   JetCorrectorParameters ResJetParAK4(ResJetParAK4_ptr);
-   const string ResJetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2L3Residual_AK8PFchs.txt");
-   JetCorrectorParameters ResJetParAK8(ResJetParAK8_ptr);
-
-   if (isMC_){
-     //cout<<"Getting MC JECs!"<<endl;
-   }
-   else{
-     //cout<<"Getting DATA JECs!"<<endl;
-     //AK4
-     const string L3JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L3Absolute_AK4PFchs.txt");
-     JetCorrectorParameters L3JetParAK4(L3JetParAK4_ptr);
-     const string L2JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2Relative_AK4PFchs.txt");
-     JetCorrectorParameters L2JetParAK4(L2JetParAK4_ptr);
-     const string L1JetParAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L1FastJet_AK4PFchs.txt");
-     JetCorrectorParameters L1JetParAK4(L1JetParAK4_ptr);
-     const string UncertJetAK4_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_Uncertainty_AK4PFchs.txt");
-     JetCorrectionUncertainty UncertJetAK4(UncertJetAK4_ptr);
-     
-     //AK8
-     const string L3JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L3Absolute_AK8PFchs.txt");
-     JetCorrectorParameters L3JetParAK8(L3JetParAK8_ptr);
-     const string L2JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L2Relative_AK8PFchs.txt");
-     JetCorrectorParameters L2JetParAK8(L2JetParAK8_ptr);
-     const string L1JetParAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_L1FastJet_AK8PFchs.txt");
-     JetCorrectorParameters L1JetParAK8(L1JetParAK8_ptr);
-     const string UncertJetAK8_ptr("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/JECs/Summer15_25nsV6_DATA_Uncertainty_AK8PFchs.txt");
-     JetCorrectionUncertainty UncertJetAK8(UncertJetAK8_ptr);
-   }
-
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"DATA JECs acquired!"<<endl;
-
-   //Load the JetCorrectorParameter objects into a vector, IMPORTANT: THE ORDER MATTERS HERE !!!!
-   vector<JetCorrectorParameters> vParJecAK4;
-   vParJecAK4.push_back(L1JetParAK4);
-   vParJecAK4.push_back(L2JetParAK4);
-   vParJecAK4.push_back(L3JetParAK4);
-   //for data
-   if (!isMC_) vParJecAK4.push_back(ResJetParAK4);
-
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Filled vParJecAK4"<<endl;
-
-   FactorizedJetCorrector ak4JetCorrector(vParJecAK4);
-
-   vector<JetCorrectorParameters> vParJecAK4ForMass;
-   vParJecAK4ForMass.push_back(L2JetParAK4);
-   vParJecAK4ForMass.push_back(L3JetParAK4);
-   //for data
-   if (!isMC_) vParJecAK4ForMass.push_back(ResJetParAK4);
-
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Filled vParJecAK4ForMass"<<endl;
-
-   FactorizedJetCorrector ak4JetCorrectorForMass(vParJecAK4ForMass);
-
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Defined ak4JetCorrectorForMass"<<endl;
-
-   vector<JetCorrectorParameters> vParJecAK8;
-   vParJecAK8.push_back(L1JetParAK8);
-   vParJecAK8.push_back(L2JetParAK8);
-   vParJecAK8.push_back(L3JetParAK8);
-   //for data
-   if (!isMC_) vParJecAK8.push_back(ResJetParAK8);
-
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Filled vParJecAK4"<<endl;
-
-   FactorizedJetCorrector ak8JetCorrector(vParJecAK8);
-
-   if(*h_eventNumber == 25157 || *h_eventNumber == 25159) cout<<"Defined ak8JetCorrector"<<endl;
-
    //event filters
    bool cscFilt = 0;
    bool vertexFilt = 0;
@@ -1193,10 +1222,13 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    semileptTreeVars["ele105trig"] = ele105trig;
    semileptTreeVars["ele115trig"] = ele115trig;
    */
+
    //hadronic trigger booleans
    bool htTrig = 0;
    bool jetTrig = 0;
-   bool trimjetTrig = 0;
+   bool ak8TrimjetTrig = 0;
+   bool ht650TrimjetTrig = 0;
+   bool ht700TrimjetTrig = 0;
 
    //cout<<"Setting trigger bits!"<<endl;
 
@@ -1209,16 +1241,24 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	 if ( (*triggerBitHandle)[i] == 1 ) jetTrig = 1;
        }
        if ( (*triggerNameStringsHandle)[i].find("AK8PFJet360_TrimMass30") != string::npos) {
-	 if ( (*triggerBitHandle)[i] == 1 ) trimjetTrig = 1;
+	 if ( (*triggerBitHandle)[i] == 1 ) ak8TrimjetTrig = 1;
+       }
+       if ( (*triggerNameStringsHandle)[i].find("HT650_Trim") != string::npos) {
+	 if ( (*triggerBitHandle)[i] == 1 ) ht650TrimjetTrig = 1;
+       }
+       if ( (*triggerNameStringsHandle)[i].find("HT700_Trim") != string::npos) {
+	 if ( (*triggerBitHandle)[i] == 1 ) ht700TrimjetTrig = 1;
        }
      }
-     }
+   }
 
    //cout<<"Storing trigger bits!"<<endl;
 
    hadTreeVars["htTrig"] = htTrig;
    hadTreeVars["jetTrig"] = jetTrig;
-   hadTreeVars["trimjetTrig"] = trimjetTrig;
+   hadTreeVars["ak8TrimjetTrig"] = ak8TrimjetTrig;
+   hadTreeVars["ht650TrimjetTrig"] = ht650TrimjetTrig;
+   hadTreeVars["ht700TrimjetTrig"] = ht700TrimjetTrig;
 
    //cout<<"Initializing event weights!"<<endl;
 
@@ -1258,8 +1298,6 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
      if(abs((*h_pv_z)[ivtx]) < 24. && (*h_pv_ndof)[ivtx] > 4 && abs((*h_pv_rho)[ivtx]) < 2.0) NPV += 1;
    }
    if(isMC_){
-     TFile* fPU = new TFile(puFile_.c_str(), "READ");
-     TH1F* hPU = (TH1F *) fPU->Get("h_NPVert");
      evWeight *= hPU->GetBinContent(hPU->GetXaxis()->FindBin(NPV));
    }
 
@@ -1495,12 +1533,12 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	 double smass = ((*h_subjetsCmsTopTagJEC0)[isubjet])*((*h_subjetsCmsTopTagMass)[isubjet]);
 	 TLorentzVector subjetP4Raw;
 	 subjetP4Raw.SetPtEtaPhiM( spt, seta, sphi, smass);
-	 ak4JetCorrectorForMass.setJetEta( subjetP4Raw.Eta() );
-	 ak4JetCorrectorForMass.setJetPt ( subjetP4Raw.Perp() );
-	 ak4JetCorrectorForMass.setJetE  ( subjetP4Raw.E() );
-	 ak4JetCorrectorForMass.setRho   ( rho );
-	 ak4JetCorrectorForMass.setNPV   ( NPV );
-	 double newJEC = ak4JetCorrectorForMass.getCorrection();
+	 ak4JetCorrectorForMass->setJetEta( subjetP4Raw.Eta() );
+	 ak4JetCorrectorForMass->setJetPt ( subjetP4Raw.Perp() );
+	 ak4JetCorrectorForMass->setJetE  ( subjetP4Raw.E() );
+	 ak4JetCorrectorForMass->setRho   ( rho );
+	 ak4JetCorrectorForMass->setNPV   ( NPV );
+	 double newJEC = ak4JetCorrectorForMass->getCorrection();
 	 TLorentzVector subjetP4 = subjetP4Raw * newJEC;
 	 CMSTTsubjetPt.push_back( subjetP4.Perp() );
 	 CMSTTsubjetMass.push_back( subjetP4.M() );
@@ -1515,12 +1553,12 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	 double smass = ((*h_subjetsSoftDropJEC0)[isubjet])*((*h_subjetsSoftDropMass)[isubjet]);
 	 TLorentzVector subjetP4Raw;
 	 subjetP4Raw.SetPtEtaPhiM( spt, seta, sphi, smass);
-	 ak4JetCorrectorForMass.setJetEta( subjetP4Raw.Eta() );
-	 ak4JetCorrectorForMass.setJetPt ( subjetP4Raw.Perp() );
-	 ak4JetCorrectorForMass.setJetE  ( subjetP4Raw.E() );
-	 ak4JetCorrectorForMass.setRho   ( rho );
-	 ak4JetCorrectorForMass.setNPV   ( NPV );
-	 double newJEC = ak4JetCorrectorForMass.getCorrection();
+	 ak4JetCorrectorForMass->setJetEta( subjetP4Raw.Eta() );
+	 ak4JetCorrectorForMass->setJetPt ( subjetP4Raw.Perp() );
+	 ak4JetCorrectorForMass->setJetE  ( subjetP4Raw.E() );
+	 ak4JetCorrectorForMass->setRho   ( rho );
+	 ak4JetCorrectorForMass->setNPV   ( NPV );
+	 double newJEC = ak4JetCorrectorForMass->getCorrection();
 	 TLorentzVector subjetP4 = subjetP4Raw * newJEC;
 	 SDsubjetPt.push_back( subjetP4.Perp() );
 	 SDsubjetMass.push_back( subjetP4.M() );
@@ -1548,112 +1586,168 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
        double corrDn = 1.0;
        double corrUp = 1.0;
 
-       ak8JetCorrector.setJetEta( AK8P4Raw.Eta() );
-       ak8JetCorrector.setJetPt ( AK8P4Raw.Perp() );
-       ak8JetCorrector.setJetE  ( AK8P4Raw.E() );
-       ak8JetCorrector.setJetA  ( (*h_jetsAK8Area)[i] );
-       ak8JetCorrector.setRho   ( rho );
-       ak8JetCorrector.setNPV   ( NPV );
-       double newJEC = ak8JetCorrector.getCorrection();
+       ak8JetCorrector->setJetEta( AK8P4Raw.Eta() );
+       ak8JetCorrector->setJetPt ( AK8P4Raw.Perp() );
+       ak8JetCorrector->setJetE  ( AK8P4Raw.E() );
+       ak8JetCorrector->setJetA  ( (*h_jetsAK8Area)[i] );
+       ak8JetCorrector->setRho   ( rho );
+       ak8JetCorrector->setNPV   ( NPV );
+       double newJEC = ak8JetCorrector->getCorrection();
        TLorentzVector AK8P4Corr = AK8P4Raw*newJEC;
 
        //JEC Uncertainty 
        corrDn *= newJEC;
        corrUp *= newJEC;
 
-       UncertJetAK8.setJetPhi(  AK8P4Raw.Phi()  );
-       UncertJetAK8.setJetEta(  AK8P4Raw.Eta()  );
-       UncertJetAK8.setJetPt(   AK8P4Corr.Perp()  );
-       corrDn -= UncertJetAK8.getUncertainty(0);
-       UncertJetAK8.setJetPhi(  AK8P4Raw.Phi()  );
-       UncertJetAK8.setJetEta(  AK8P4Raw.Eta()  );
-       UncertJetAK8.setJetPt(   AK8P4Corr.Perp()  );
-       corrUp += UncertJetAK8.getUncertainty(1);
+       UncertJetAK8->setJetPhi(  AK8P4Raw.Phi()  );
+       UncertJetAK8->setJetEta(  AK8P4Raw.Eta()  );
+       UncertJetAK8->setJetPt(   AK8P4Corr.Perp()  );
+       corrDn -= UncertJetAK8->getUncertainty(0);
+       UncertJetAK8->setJetPhi(  AK8P4Raw.Phi()  );
+       UncertJetAK8->setJetEta(  AK8P4Raw.Eta()  );
+       UncertJetAK8->setJetPt(   AK8P4Corr.Perp()  );
+       corrUp += UncertJetAK8->getUncertainty(1);
 	 
        //cout<<"JEC: "<<newJEC<<endl;
        // cout<<"JEC up: "<<corrUp<<endl;
        //cout<<"JEC down: "<<corrDn<<endl;
-       
-       double jetsAK8Pt = -999.99;
-       double jetsAK8Eta = -999.99;
-       double jetsAK8Phi = -999.99;
-       double jetsAK8E = -999.99;
-       double jetsAK8Y = -999.99;
 
-       double jetsAK8ungroomedMass = -999.99;
-       double jetsAK8topMass = -999.99;
-       double jetsAK8trimmedMass = -999.99;
-       double jetsAK8prunedMass = -999.99;
-       double jetsAK8filteredMass = -999.99;
-       double jetsAK8softDropMass = -999.99;
+       double jetsAK8topMass = (*h_jetsAK8topMass)[i];
+       double jetsAK8trimmedMass = (*h_jetsAK8trimmedMass)[i];
+       double jetsAK8prunedMass = (*h_jetsAK8prunedMass)[i];
+       double jetsAK8filteredMass = (*h_jetsAK8filteredMass)[i];
+       double jetsAK8softDropMass = (*h_jetsAK8softDropMass)[i];
 	 
        //no JEC applied
        if(JECshift_ == 0){
 	 //cout<<"JEC shift = 0!"<<endl;
-	 AK8TrimmedM.push_back( (*h_jetsAK8trimmedMass)[i] * newJEC );
-	 AK8PrunedM.push_back( (*h_jetsAK8prunedMass)[i] * newJEC );
-	 AK8FilteredM.push_back( (*h_jetsAK8filteredMass)[i] * newJEC );
-	 AK8SDropM.push_back( (*h_jetsAK8softDropMass)[i] * newJEC );
-
-	 jetsAK8Pt = AK8P4Corr.Pt();
-	 jetsAK8Eta = AK8P4Corr.Eta();
-	 jetsAK8Phi = AK8P4Corr.Phi();
-	 jetsAK8E = AK8P4Corr.E();
-	 jetsAK8Y = AK8P4Corr.Rapidity();
-
-	 jetsAK8ungroomedMass = AK8P4Corr.M();
-	 jetsAK8topMass = ( (*h_jetsAK8topMass)[i] * newJEC );
-	 jetsAK8trimmedMass = ( (*h_jetsAK8trimmedMass)[i] * newJEC );
-	 jetsAK8prunedMass = ( (*h_jetsAK8prunedMass)[i] * newJEC );
-	 jetsAK8filteredMass = ( (*h_jetsAK8filteredMass)[i] * newJEC );
-	 jetsAK8softDropMass = ( (*h_jetsAK8softDropMass)[i] * newJEC );
+	 jetsAK8topMass *= newJEC;
+	 jetsAK8trimmedMass *= newJEC;
+	 jetsAK8prunedMass *= newJEC;
+	 jetsAK8filteredMass *= newJEC;
+	 jetsAK8softDropMass *= newJEC;
        }
        
        //JEC down
        if(JECshift_ == -1){
 	 //cout<<"JEC shift = -1!"<<endl;
 	 AK8P4Corr = AK8P4Raw*corrDn;
- 	 AK8TrimmedM.push_back( (*h_jetsAK8trimmedMass)[i] * corrDn );
-	 AK8PrunedM.push_back( (*h_jetsAK8prunedMass)[i] * corrDn );
-	 AK8FilteredM.push_back( (*h_jetsAK8filteredMass)[i] * corrDn );
-	 AK8SDropM.push_back( (*h_jetsAK8softDropMass)[i] * corrDn );
-       
-	 jetsAK8Pt = AK8P4Corr.Pt();
-	 jetsAK8Eta = AK8P4Corr.Eta();
-	 jetsAK8Phi = AK8P4Corr.Phi();
-	 jetsAK8E = AK8P4Corr.E();
-	 jetsAK8Y = AK8P4Corr.Rapidity();
-
-	 jetsAK8ungroomedMass = AK8P4Corr.M();
-	 jetsAK8topMass = ( (*h_jetsAK8topMass)[i] * newJEC );
-	 jetsAK8trimmedMass = ( (*h_jetsAK8trimmedMass)[i] * newJEC );
-	 jetsAK8prunedMass = ( (*h_jetsAK8prunedMass)[i] * newJEC );
-	 jetsAK8filteredMass = ( (*h_jetsAK8filteredMass)[i] * newJEC );
-	 jetsAK8softDropMass = ( (*h_jetsAK8softDropMass)[i] * newJEC );
+	 jetsAK8topMass *= corrDn;
+	 jetsAK8trimmedMass *= corrDn;
+	 jetsAK8prunedMass *= corrDn;
+	 jetsAK8filteredMass *= corrDn;
+	 jetsAK8softDropMass *= corrDn;
        }
        
        //JEC up
        if(JECshift_ == 1){
 	 //cout<<"JEC shift = 1!"<<endl;
-	 AK8P4Corr = AK8P4Raw*corrUp;	 
- 	 AK8TrimmedM.push_back( (*h_jetsAK8trimmedMass)[i] * corrUp );
-	 AK8PrunedM.push_back( (*h_jetsAK8prunedMass)[i] * corrUp );
-	 AK8FilteredM.push_back( (*h_jetsAK8filteredMass)[i] * corrUp );
-	 AK8SDropM.push_back( (*h_jetsAK8softDropMass)[i] * corrUp );
-       
-	 jetsAK8Pt = AK8P4Corr.Pt();
-	 jetsAK8Eta = AK8P4Corr.Eta();
-	 jetsAK8Phi = AK8P4Corr.Phi();
-	 jetsAK8E = AK8P4Corr.E();
-	 jetsAK8Y = AK8P4Corr.Rapidity();
-
-	 jetsAK8ungroomedMass = AK8P4Corr.M();
-	 jetsAK8topMass = ( (*h_jetsAK8topMass)[i] * newJEC );
-	 jetsAK8trimmedMass = ( (*h_jetsAK8trimmedMass)[i] * newJEC );
-	 jetsAK8prunedMass = ( (*h_jetsAK8prunedMass)[i] * newJEC );
-	 jetsAK8filteredMass = ( (*h_jetsAK8filteredMass)[i] * newJEC );
-	 jetsAK8softDropMass = ( (*h_jetsAK8softDropMass)[i] * newJEC );
+	 AK8P4Corr = AK8P4Raw*corrUp;
+	 jetsAK8topMass *= corrUp;
+	 jetsAK8trimmedMass *= corrUp;
+	 jetsAK8prunedMass *= corrUp;
+	 jetsAK8filteredMass *= corrUp;
+	 jetsAK8softDropMass *= corrUp;
        }
+
+       //saving L1, L2, and L3 corrections separately
+       ak8JetCorrector->setJetEta( AK8P4Raw.Eta() );
+       ak8JetCorrector->setJetPt ( AK8P4Raw.Perp() );
+       ak8JetCorrector->setJetE  ( AK8P4Raw.E() );
+       ak8JetCorrector->setJetA  ( (*h_jetsAK8Area)[i] );
+       ak8JetCorrector->setRho   ( rho );
+       ak8JetCorrector->setNPV   ( NPV );
+       vector<float> factors = ak8JetCorrector->getSubCorrections();
+       float L1cor = 1.0;
+       float L2cor = 1.0;
+       float L3cor = 1.0;
+       if (factors.size() > 0) L1cor = factors[0];
+       if (factors.size() > 1) L2cor = factors[1];
+       if (factors.size() > 2) L3cor = factors[2];
+
+       //JER and JAR
+       float ptsmear   = 1.0;
+       float ptsmearUp = 1.0;
+       float ptsmearDn = 1.0;
+       float etascale  = 1.0;
+       float phiscale  = 1.0;
+
+       if(isMC_){
+	 //JER
+	 float smear     = getJER( AK8P4Corr.Eta(),  0);
+	 float smearUp   = getJER( AK8P4Corr.Eta(),  1);
+	 float smearDn   = getJER( AK8P4Corr.Eta(), -1); 
+	 float recopt    = AK8P4Corr.Pt();
+	 float genpt     = (*h_jetsAK8GenJetPt)[i];
+	 float deltapt   = (recopt-genpt)*(smear-1.0);
+	 float deltaptUp = (recopt-genpt)*(smearUp-1.0);
+	 float deltaptDn = (recopt-genpt)*(smearDn-1.0);
+	 ptsmear   = max((float)0.0, (recopt+deltapt)/recopt);
+	 ptsmearUp = max((float)0.0, (recopt+deltaptUp)/recopt);
+	 ptsmearDn = max((float)0.0, (recopt+deltaptDn)/recopt);
+
+	 //no JER applied
+	 if(JERshift_ == 0){
+	   //cout<<"JER shift = 0!"<<endl;
+	   AK8P4Corr   = AK8P4Corr*ptsmear;
+	   jetsAK8topMass *= ptsmear;
+	   jetsAK8trimmedMass *= ptsmear;
+	   jetsAK8prunedMass *= ptsmear;
+	   jetsAK8filteredMass *= ptsmear;
+	   jetsAK8softDropMass *= ptsmear;
+	 }
+       
+	 //JER down
+	 if(JERshift_ == -1){
+	   //cout<<"JER shift = -1!"<<endl;
+	   AK8P4Corr = AK8P4Corr*ptsmearDn;
+	   jetsAK8topMass *= ptsmearDn;
+	   jetsAK8trimmedMass *= ptsmearDn;
+	   jetsAK8prunedMass *= ptsmearDn;
+	   jetsAK8filteredMass *= ptsmearDn;
+	   jetsAK8softDropMass *= ptsmearDn;
+	 }
+	 
+	 //JER up
+	 if(JERshift_ == 1){
+	   //cout<<"JER shift = 1!"<<endl;
+	   AK8P4Corr = AK8P4Corr*ptsmearUp;
+	   jetsAK8topMass *= ptsmearUp;
+	   jetsAK8trimmedMass *= ptsmearUp;
+	   jetsAK8prunedMass *= ptsmearUp;
+	   jetsAK8filteredMass *= ptsmearUp;
+	   jetsAK8softDropMass *= ptsmearUp;
+	 }
+
+	 //JAR
+	 float etasmearfactor = 0.1;
+	 float recoeta = AK8P4Corr.Eta();
+	 float geneta  = (*h_jetsAK8GenJetEta)[i];
+	 float deltaeta = (recoeta-geneta)*etasmearfactor ;
+	 etascale = max((float)0.0, (recoeta+deltaeta)/recoeta  );
+
+	 float phismearfactor = 0.1;
+	 float recophi = AK8P4Corr.Phi();
+	 float genphi  = (*h_jetsAK8GenJetPhi)[i];
+	 float deltaphi = (recophi-genphi)*phismearfactor;
+	 phiscale = max((float)0.0, (recophi+deltaphi)/recophi  );
+       }
+       
+       //getting kinematic values
+       float jetsAK8Pt = AK8P4Corr.Pt();
+       float jetsAK8Eta = AK8P4Corr.Eta();
+       float jetsAK8Phi = AK8P4Corr.Phi();
+       float jetsAK8E = AK8P4Corr.E();
+       float jetsAK8Y = AK8P4Corr.Rapidity();
+       float jetsAK8ungroomedMass = AK8P4Corr.M();
+
+       AK8TrimmedM.push_back(jetsAK8trimmedMass);
+       AK8PrunedM.push_back(jetsAK8prunedMass);
+       AK8FilteredM.push_back(jetsAK8filteredMass);
+       AK8SDropM.push_back(jetsAK8softDropMass);
+
+       if(!goodJet) continue;
+       NPassGoodJetAK8Cut = NPassGoodJetAK8Cut + 1;
 
        //pt and eta preselection cuts
        if (jetsAK8Pt > 400 && abs(jetsAK8Eta) < 2.4){
@@ -1890,16 +1984,15 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
      tree_had->Fill();
      
      if (nAK8pt400eta2p4jets > 0){
-       hadTreeVars["cutflow"] = 1.0;//1 AK8 jet that passes preselection
-       tree_had->Fill();
+       hadTreeVars["cutflow"] = 1.0;//1 AK8 jet that passes preselection       tree_had->Fill();
        if (nAK8pt400eta2p4jets > 1){
 	 hadTreeVars["cutflow"] = 2.0;//2 AK8 jets that pass preselection
-	 tree_had->Fill();
 	 //Reconstructing the Z-peak with 2 good AK8 jets
 	 TLorentzVector softDrop_Z = softDropJet0 + softDropJet1;
 	 hadTreeVars["softDrop_Z_mass"] = softDrop_Z.M();
 	 TLorentzVector ungroomed_Z = ungroomedJet0 + ungroomedJet1;
 	 hadTreeVars["ungroomed_Z_mass"] = ungroomed_Z.M();
+	 tree_had->Fill();
        }//2+ good AK8 jets
        if ((topTagJet0_topTagFlag == 1) || (topTagJet1_topTagFlag == 1)){
 	 hadTreeVars["cutflow"] = 3.0;//1 good AK8 jet in mass window
