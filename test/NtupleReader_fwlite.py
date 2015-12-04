@@ -1619,7 +1619,7 @@ if options.isMC :
     print 'Getting L1 for AK8 MC'
     L1JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_MC_L1FastJet_AK8PFchs.txt");
     print 'Getting Uncertainty for AK8 MC'
-    UncertJetAK8  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV6_MC_Uncertainty_AK4PFchs.txt");
+    UncertJetAK8  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV6_MC_Uncertainty_AK8PFchs.txt");
 else :
     print 'Getting L3 for AK4 DATA'
     L3JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_DATA_L3Absolute_AK4PFchs.txt");
@@ -3685,8 +3685,8 @@ for ifile in files : #{ Loop over root files
 
                     ak8JetHt_CorrDn    = ak8JetHt_CorrDn  + AK8P4CorrDn.Perp()
                     ak8JetHt_CorrUp    = ak8JetHt_CorrUp  + AK8P4CorrUp.Perp()
-                    ak8JetHt_PtSmearUp = ak8JetHt_PtSmearUp  + AK8P4Corr.Perp() * ptsmearUp
-                    ak8JetHt_PtSmearDn = ak8JetHt_PtSmearDn  + AK8P4Corr.Perp() * ptsmearDn
+                    ak8JetHt_PtSmearUp = ak8JetHt_PtSmearUp  + AK8P4Raw.Perp()*newJEC*ptsmearUp
+                    ak8JetHt_PtSmearDn = ak8JetHt_PtSmearDn  + AK8P4Raw.Perp()*newJEC*ptsmearUp
 
 
                     #$ Cuts based on pt and rapidity
