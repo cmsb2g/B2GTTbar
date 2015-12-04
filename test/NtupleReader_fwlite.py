@@ -885,6 +885,10 @@ if options.writeTree :
     NearestAK4JetPhi    = array('f', [-1.])
     NearestAK4JetMass   = array('f', [-1.])
 
+    SemiLeptRunNum        = array('f', [-1.])   
+    SemiLeptLumiBlock     = array('f', [-1.])   
+    SemiLeptEventNum      = array('f', [-1.])   
+
     
     TreeSemiLept.Branch('SemiLeptTrig'        , SemiLeptTrig        ,  'SemiLeptTrig/I'        )
     TreeSemiLept.Branch('SemiLeptWeight'      , SemiLeptWeight      ,  'SemiLeptWeight/F'      )    
@@ -968,6 +972,11 @@ if options.writeTree :
     TreeSemiLept.Branch('NearestAK4JetEta'    ,NearestAK4JetEta     ,  'NearestAK4JetEta/F'    )
     TreeSemiLept.Branch('NearestAK4JetPhi'    ,NearestAK4JetPhi     ,  'NearestAK4JetPhi/F'    )
     TreeSemiLept.Branch('NearestAK4JetMass'   ,NearestAK4JetMass    ,  'NearestAK4JetMass/F'   )
+
+    TreeSemiLept.Branch('SemiLeptRunNum'         ,  SemiLeptRunNum       ,  'SemiLeptRunNum/F'          )
+    TreeSemiLept.Branch('SemiLeptLumiBlock'      ,  SemiLeptLumiBlock    ,  'SemiLeptLumiBlock/F'       )
+    TreeSemiLept.Branch('SemiLeptEventNum'       ,  SemiLeptEventNum     ,  'SemiLeptEventNum/F'        )
+
 
 
     TreeAllHad = ROOT.TTree("TreeAllHad", "TreeAllHad")
@@ -1105,6 +1114,11 @@ if options.writeTree :
     HT_PtSmearUp        = array('f', [-1.])   
     HT_PtSmearDn        = array('f', [-1.])   
 
+    AllHadRunNum        = array('f', [-1.])   
+    AllHadLumiBlock     = array('f', [-1.])   
+    AllHadEventNum      = array('f', [-1.])   
+
+
     TreeAllHad.Branch('Jet0CorrFactor'     , Jet0CorrFactor      , 'Jet0CorrFactor/F'      ) 
     TreeAllHad.Branch('Jet0CorrFactorUp'   , Jet0CorrFactorUp    , 'Jet0CorrFactorUp/F'    ) 
     TreeAllHad.Branch('Jet0CorrFactorDn'   , Jet0CorrFactorDn    , 'Jet0CorrFactorDn/F'    ) 
@@ -1234,6 +1248,11 @@ if options.writeTree :
     TreeAllHad.Branch('HT_CorrUp'         ,  HT_CorrUp       ,  'HT_CorrUp/F'          )
     TreeAllHad.Branch('HT_PtSmearUp'      ,  HT_PtSmearUp    ,  'HT_PtSmearUp/F'       )
     TreeAllHad.Branch('HT_PtSmearDn'      ,  HT_PtSmearDn    ,  'HT_PtSmearDn/F'       )
+
+    TreeAllHad.Branch('AllHadRunNum'         ,  AllHadRunNum       ,  'AllHadRunNum/F'          )
+    TreeAllHad.Branch('AllHadLumiBlock'      ,  AllHadLumiBlock    ,  'AllHadLumiBlock/F'       )
+    TreeAllHad.Branch('AllHadEventNum'       ,  AllHadEventNum     ,  'AllHadEventNum/F'        )
+
 
 #^ Plot initialization
 h_NPVert         = ROOT.TH1D("h_NPVert"        , "", 200,0,200 )
@@ -4916,6 +4935,11 @@ for ifile in files : #{ Loop over root files
                     HT_PtSmearUp       [0] = ak8JetHt_PtSmearUp
                     HT_PtSmearDn       [0] = ak8JetHt_PtSmearDn
 
+                    AllHadRunNum       [0] = event.object().id().run()
+                    AllHadLumiBlock    [0] = event.object().luminosityBlock()
+                    AllHadEventNum     [0] = event.object().id().event()
+
+
                     TreeAllHad.Fill()
                 #} end check that we have at least 2 AK8 jets for all-hadronic background estimation            
 
@@ -5326,6 +5350,9 @@ for ifile in files : #{ Loop over root files
                     # SemilLepTTmass      [0] = 
                     DeltaPhiLepFat      [0] = ak8JetsDPhiLepJet[tagCand]
 
+                    SemiLeptRunNum      [0] = event.object().id().run()
+                    SemiLeptLumiBlock   [0] = event.object().luminosityBlock()
+                    SemiLeptEventNum    [0] = event.object().id().event()
 
                     TreeSemiLept.Fill()
                                 
