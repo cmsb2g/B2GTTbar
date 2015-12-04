@@ -802,6 +802,18 @@ if options.writeTree :
     FatJetCorr          = array('f', [-1.])
     FatJetCorrUp        = array('f', [-1.])
     FatJetCorrDn        = array('f', [-1.])
+    JetPtSmearFactor    = array('f', [-1.])
+    JetPtSmearFactorUp  = array('f', [-1.])
+    JetPtSmearFactorDn  = array('f', [-1.])
+    JetEtaScaleFactor   = array('f', [-1.])
+    JetPhiScaleFactor   = array('f', [-1.])
+    JetMatchedGenJetPt  = array('f', [-1.])
+    FatJetPtRaw         = array('f', [-1.])
+    FatJetEtaRaw        = array('f', [-1.])
+    FatJetPhiRaw        = array('f', [-1.])
+    FatJetRapRaw        = array('f', [-1.])
+    FatJetMassRaw       = array('f', [-1.])
+
     FatJetPt            = array('f', [-1.])
     FatJetEta           = array('f', [-1.])
     FatJetPhi           = array('f', [-1.])
@@ -880,6 +892,17 @@ if options.writeTree :
     TreeSemiLept.Branch('FatJetCorr'          , FatJetCorr          ,  'FatJetCorr/F'          )
     TreeSemiLept.Branch('FatJetCorrUp'        , FatJetCorrUp        ,  'FatJetCorrUp/F'        )
     TreeSemiLept.Branch('FatJetCorrDn'        , FatJetCorrDn        ,  'FatJetCorrDn/F'        )
+    TreeSemiLept.Branch('JetPtSmearFactor'  , JetPtSmearFactor   , 'JetPtSmearFactor/F'   ) 
+    TreeSemiLept.Branch('JetPtSmearFactorUp', JetPtSmearFactorUp , 'JetPtSmearFactorUp/F' ) 
+    TreeSemiLept.Branch('JetPtSmearFactorDn', JetPtSmearFactorDn , 'JetPtSmearFactorDn/F' ) 
+    TreeSemiLept.Branch('JetEtaScaleFactor' , JetEtaScaleFactor  , 'JetEtaScaleFactor/F'  ) 
+    TreeSemiLept.Branch('JetPhiScaleFactor' , JetPhiScaleFactor  , 'JetPhiScaleFactor/F'  ) 
+    TreeSemiLept.Branch('JetMatchedGenJetPt', JetMatchedGenJetPt , 'JetMatchedGenJetPt/F' ) 
+    TreeSemiLept.Branch('FatJetPtRaw'          , FatJetPtRaw           , 'FatJetPtRaw/F'           )
+    TreeSemiLept.Branch('FatJetEtaRaw'         , FatJetEtaRaw          , 'FatJetEtaRaw/F'          ) 
+    TreeSemiLept.Branch('FatJetPhiRaw'         , FatJetPhiRaw          , 'FatJetPhiRaw/F'          ) 
+    TreeSemiLept.Branch('FatJetRapRaw'         , FatJetRapRaw          , 'FatJetRapRaw/F'          ) 
+    TreeSemiLept.Branch('FatJetMassRaw'        , FatJetMassRaw         , 'FatJetMassRaw/F'         ) 
     TreeSemiLept.Branch('FatJetPt'            , FatJetPt            ,  'FatJetPt/F'            )
     TreeSemiLept.Branch('FatJetEta'           , FatJetEta           ,  'FatJetEta/F'           )
     TreeSemiLept.Branch('FatJetPhi'           , FatJetPhi           ,  'FatJetPhi/F'           )
@@ -5191,12 +5214,54 @@ for ifile in files : #{ Loop over root files
                     if typE == 2 :
                         candToPlot = wtagCand
 
+                    if len(ak8JetsGoodPtSmear) >= (candToPlot+1) :
+                        smearPt = ak8JetsGoodPtSmear[candToPlot]
+                        smearPtu = ak8JetsGoodPtSmearUp[candToPlot]
+                        smearPtd = ak8JetsGoodPtSmearDn[candToPlot]
+                    else :
+                        smearPt = 1.
+                        smearPtu = 1.
+                        smearPtd = 1.
+
+                    if len(ak8JetsGoodEtaScale) >= (candToPlot+1) :
+                        etas = ak8JetsGoodEtaScale[candToPlot]
+                        phis = ak8JetsGoodPhiScale[candToPlot]
+                        matgen = ak8JetsGoodMatchedGenJetPt[candToPlot]
+                    else :
+                        etas = 1.
+                        phis = 1.
+                        matgen = 0.
+
+                    if len(ak8JetsGoodRaw) >= (candToPlot+1) :
+                        rpt = ak8JetsGoodRaw[candToPlot].Perp()
+                        reta = ak8JetsGoodRaw[candToPlot].Eta()
+                        rphi = ak8JetsGoodRaw[candToPlot].Phi()
+                        ry = ak8JetsGoodRaw[candToPlot].Rapidity()
+                        rmass = ak8JetsGoodRaw[candToPlot].M()
+                    else :
+                        rpt = 0.
+                        reta = 0.
+                        rphi = 0.
+                        ry = 0.
+                        rmass = 0.
+
                     #~ Fill SemiLeptonic tree 
                     BoosttypE           [0] = typE
                     SemiLeptWeight      [0] = evWeight
                     FatJetCorr          [0] = ak8JetsGoodCorrFactor[candToPlot]
                     FatJetCorrUp        [0] = ak8JetsGoodCorrUpFactor[candToPlot]
                     FatJetCorrDn        [0] = ak8JetsGoodCorrDnFactor[candToPlot]
+                    JetPtSmearFactor    [0] =  smearPt
+                    JetPtSmearFactorUp  [0] =  smearPtu
+                    JetPtSmearFactorDn  [0] =  smearPtd
+                    JetEtaScaleFactor   [0] =  etas
+                    JetPhiScaleFactor   [0] =  phis
+                    JetMatchedGenJetPt  [0] =  matgen
+                    FatJetPtRaw         [0] =  rpt
+                    FatJetEtaRaw        [0] =  reta
+                    FatJetPhiRaw        [0] =  rphi
+                    FatJetRapRaw        [0] =  ry
+                    FatJetMassRaw       [0] =  rmass
                     FatJetPt            [0] = ak8JetsGood[candToPlot].Perp()
                     FatJetEta           [0] = ak8JetsGood[candToPlot].Eta()
                     FatJetPhi           [0] = ak8JetsGood[candToPlot].Phi()
