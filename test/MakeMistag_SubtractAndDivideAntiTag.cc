@@ -132,13 +132,13 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   string probe = "_Probe";
   vector <string> post;
   post.push_back("_jetPt_dRapHi_inclusive");
-  post.push_back("_jetPt_dRapHi_0btag");
-  post.push_back("_jetPt_dRapHi_1btag");
   post.push_back("_jetPt_dRapHi_2btag");
+  post.push_back("_jetPt_dRapHi_1btag");
+  post.push_back("_jetPt_dRapHi_0btag");
   post.push_back("_jetPt_dRapLo_inclusive");
-  post.push_back("_jetPt_dRapLo_0btag");
-  post.push_back("_jetPt_dRapLo_1btag");
   post.push_back("_jetPt_dRapLo_2btag");
+  post.push_back("_jetPt_dRapLo_1btag");
+  post.push_back("_jetPt_dRapLo_0btag");
   
   
   
