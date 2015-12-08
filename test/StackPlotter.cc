@@ -33,7 +33,7 @@ using namespace std;
 
 void run(){
 
-    const double luminosity = 1263.890;  //166;
+    const double luminosity = 2460;  //166;
     double nevents_ttbar  = 19665194;
     double xsec_ttbar  =  815.96  ;
     double scale_ttbar= xsec_ttbar * luminosity / nevents_ttbar;
@@ -51,25 +51,25 @@ void run(){
     const int nMass = 6;
     TString name_zPrime[nMass] = {"M-1000_W-10", "M-1500_W-15", "M-2000_W-20", "M-2500_W-25", "M-3000_W-30", "M-3500_W-35"};
 
-    string date = "120615";
+    string date = "120715";
 
     vector <string> post;
     post.push_back("_dRapHi_inclusive");
     post.push_back("_dRapHi_2btag");
-    //post.push_back("_dRapHi_1btag");
-    //post.push_back("_dRapHi_0btag");
+    post.push_back("_dRapHi_1btag");
+    post.push_back("_dRapHi_0btag");
     post.push_back("_dRapLo_inclusive");
     post.push_back("_dRapLo_2btag");
-    //post.push_back("_dRapLo_1btag");
-    //post.push_back("_dRapLo_0btag");
+    post.push_back("_dRapLo_1btag");
+    post.push_back("_dRapLo_0btag");
 
     // Get the ttbar MC, Zprime and data files
     cout<<"Getting the files"<<endl;
     TFile* f_ttbar; TFile* f_data; TFile* f_zPrime[nMass]; //TH1F* Check;
-    f_data = new TFile("outBkgdEst_JetHT_Run2015D_PromptReco-v3_and_v4_oct19json_120615.root","READ");
-    cout<<"Got outBkgdEst_JetHT_Run2015D_PromptReco-v3_and_v4_oct19json_120615.root"<<endl;
-    f_ttbar = new TFile("outBkgdEst_ttjets_b2ganafw_v6_120615.root","READ");
-    cout<<"Got outBkgdEst_ttjets_b2ganafw_v6_120615.root"<<endl;
+    f_data = new TFile("outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_120715.root","READ");
+    cout<<"Got outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_120715.root"<<endl;
+    f_ttbar = new TFile("outBkgdEst_TTpowheg_B2Gv8p4_reader603e_120715.root","READ");
+    cout<<"Got outBkgdEst_TTpowheg_B2Gv8p4_reader603e_120715.root"<<endl;
     //for (int iMass=0; iMass<nMass; iMass++) {
     //    f_zPrime[iMass] = new TFile("runs/run_102715/ZprimeToTT_"+name_zPrime[iMass]+"_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_bckGrndEst_102715.root","READ");
     //    cout <<"Got runs/run_102715/ZprimeToTT_"+name_zPrime[iMass]+"_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_bckGrndEst_102715.root"<<endl;
@@ -140,17 +140,42 @@ void run(){
         h_stack-> Add(h_bckGrnd);
         h_mttMass_data->SetMarkerColor(kBlack);
         h_mttMass_data->SetMarkerStyle(20);
+        
+
+        TH1F* h_totalbckGrnd = (TH1F*) h_mttMass_ttbar->Clone(); 
+        h_totalbckGrnd->Add(h_bckGrnd);
+
+        TH1F* h_ratio = (TH1F*) h_mttMass_data->Clone();
+        //h_ratio->Sumw2();
+        h_ratio->Divide(h_totalbckGrnd);
+        h_ratio->SetName("h_ratio");
+        //h_ratio->SetTitle(";data/MC");
+        h_ratio->GetYaxis()->SetTitle("Data/MC");
+        h_ratio->GetXaxis()->SetTitle("Dijet Mass (GeV)");
 
         //for (int iMass=0; iMass<nMass; iMass++) {
         //    h_mttMass_zPrime[iMass] -> SetLineStyle(2+iMass);
         //    h_mttMass_zPrime[iMass] ->SetMarkerColor(kBlack);
         //}
 
-        TCanvas* c;
+        TCanvas* c; TPad* p1; TPad* p2; 
         c = new TCanvas("c", "" , 700, 625);
+        p1 = new TPad("p1", "",0,0.3,1,1);
+        p2 = new TPad("p2", "",0,0.0,1,0.28);
         c ->cd();
+        p1->SetBottomMargin(0.05);
+        p1->Draw();
+        p1->cd();
         h_stack->Draw("hist");
-        h_mttMass_data->Draw("e same");
+        //h_mttMass_data->UseCurrentStyle();
+        //h_mttMass_data->GetXaxis()->SetTitleSize(0.1);
+        //h_mttMass_data->GetXaxis()->SetLabelSize(0.1);
+        //h_mttMass_data->GetYaxis()->SetTitleSize(0.1);
+        //h_mttMass_data->GetYaxis()->SetLabelSize(0.1);
+        //h_mttMass_data->GetXaxis()->SetTitleOffset(1.3);
+        //h_mttMass_data->GetYaxis()->SetTitleOffset(0.4);
+        //h_mttMass_data->GetYaxis()->SetTitle("Number");
+        h_mttMass_data->Draw("ep same");
         //for (int iMass=0; iMass<nMass; iMass++) {
         //    h_mttMass_zPrime[iMass] -> Draw("hist same");
         //}
@@ -168,14 +193,34 @@ void run(){
         //}
         leg->SetFillStyle(0);
         leg->SetBorderSize(0);
-        leg->SetTextSize(0.02);
+        leg->SetTextSize(0.025);
         leg->SetTextFont(42);
         leg->Draw();
         c ->Draw();
+
+        c->cd();
+        p2->SetTopMargin(0.05);
+        p2->SetBottomMargin(0.4);
+        p2->SetGrid();
+        p2->Draw();
+        p2->cd();
+        h_ratio->SetMaximum(2.0);
+        h_ratio->SetMinimum(0.0);
+        h_ratio->GetXaxis()->SetTitleSize(0.1);
+        h_ratio->GetXaxis()->SetLabelSize(0.1);
+        h_ratio->GetYaxis()->SetTitleSize(0.1);
+        h_ratio->GetYaxis()->SetLabelSize(0.1);
+        h_ratio->GetXaxis()->SetTitleOffset(1.3);
+        h_ratio->GetYaxis()->SetTitleOffset(0.4);
+        h_ratio->GetYaxis()->SetNdivisions(4,4,0,false);
+        h_ratio->Draw("e");
+
+        c->Update();
+
         string outname = "stacked_comparison_softDrop_"+date+post[i]+".png";
         string outname_log = "stacked_comparison_log_softDrop_"+date+post[i]+".png";
         c ->SaveAs(outname.c_str());
-        c ->SetLogy();
+        p1 ->SetLogy();
         c ->SaveAs(outname_log.c_str());
         c ->SetLogy(0);
 
