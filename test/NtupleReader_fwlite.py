@@ -842,6 +842,13 @@ if options.writeTree :
     FatJetRhoRatio      = array('f', [-1.])
     FatJetMass          = array('f', [-1.])
     FatJetMassSoftDrop  = array('f', [-1.])
+    FatJetMassSDsumSubjetCorr        = array('f', [-1.] )
+    FatJetMassSDsumSubjetRaw         = array('f', [-1.] )
+    FatJetMassSDsumSubjetCorrUp      = array('f', [-1.] )
+    FatJetMassSDsumSubjetCorrDn      = array('f', [-1.] )
+    FatJetMassSDsumSubjetCorrSmear   = array('f', [-1.] )
+    FatJetMassSDsumSubjetCorrSmearUp = array('f', [-1.] )
+    FatJetMassSDsumSubjetCorrSmearDn = array('f', [-1.] )
     FatJetMassPruned    = array('f', [-1.])
     FatJetMassFiltered  = array('f', [-1.])
     FatJetMassTrimmed   = array('f', [-1.])
@@ -935,6 +942,13 @@ if options.writeTree :
     TreeSemiLept.Branch('FatJetRhoRatio'      , FatJetRhoRatio      ,  'FatJetRhoRatio/F'      )
     TreeSemiLept.Branch('FatJetMass'          , FatJetMass          ,  'FatJetMass/F'          )
     TreeSemiLept.Branch('FatJetMassSoftDrop'  , FatJetMassSoftDrop  ,  'FatJetMassSoftDrop/F'  )
+    TreeSemiLept.Branch('FatJetMassSDsumSubjetCorr'        , FatJetMassSDsumSubjetCorr         , 'FatJetMassSDsumSubjetCorr/F'        )   
+    TreeSemiLept.Branch('FatJetMassSDsumSubjetRaw'         , FatJetMassSDsumSubjetRaw          , 'FatJetMassSDsumSubjetRaw/F'         )   
+    TreeSemiLept.Branch('FatJetMassSDsumSubjetCorrUp'      , FatJetMassSDsumSubjetCorrUp       , 'FatJetMassSDsumSubjetCorrUp/F'      )   
+    TreeSemiLept.Branch('FatJetMassSDsumSubjetCorrDn'      , FatJetMassSDsumSubjetCorrDn       , 'FatJetMassSDsumSubjetCorrDn/F'      )   
+    TreeSemiLept.Branch('FatJetMassSDsumSubjetCorrSmear'   , FatJetMassSDsumSubjetCorrSmear    , 'FatJetMassSDsumSubjetCorrSmear/F'   )   
+    TreeSemiLept.Branch('FatJetMassSDsumSubjetCorrSmearUp' , FatJetMassSDsumSubjetCorrSmearUp  , 'FatJetMassSDsumSubjetCorrSmearUp/F' )   
+    TreeSemiLept.Branch('FatJetMassSDsumSubjetCorrSmearDn' , FatJetMassSDsumSubjetCorrSmearDn  , 'FatJetMassSDsumSubjetCorrSmearDn/F' )   
     TreeSemiLept.Branch('FatJetMassPruned'    , FatJetMassPruned    ,  'FatJetMassPruned/F'    )
     TreeSemiLept.Branch('FatJetMassFiltered'  , FatJetMassFiltered  ,  'FatJetMassFiltered/F'  )
     TreeSemiLept.Branch('FatJetMassTrimmed'   , FatJetMassTrimmed   ,  'FatJetMassTrimmed/F'   )
@@ -1828,6 +1842,8 @@ for ifile in files : #{ Loop over root files
             cscFilt = False
             vertexFilt = False
             hbheFilt = False
+            # hbheisoFilt = False
+            eeBadScFilt = False
 
             
             gotit1 = event.getByLabel( l_filterNameStrings, h_filterNameStrings )
@@ -1856,16 +1872,18 @@ for ifile in files : #{ Loop over root files
                     if filterBits[itrig] == 1 :
                         cscFilt = True
                 # (Apply vertex filter later)
-                #if "goodVer" in filterNameStrings[itrig] :
-                #    if filterBits[itrig] == 1 :
-                #        vertexFilt = True
-                # (For now turn off HBHE filter, needs re-miniaod)
-                #if "HBHE" in filterNameStrings[itrig] :
-                #    if filterBits[itrig] == 1 :
-                #        hbheFilt = True
+                if "goodVer" in filterNameStrings[itrig] :
+                   if filterBits[itrig] == 1 :
+                       vertexFilt = True
+                # (Should work in B2GAnaFW8p4
+                if "HBHE" in filterNameStrings[itrig] :
+                   if filterBits[itrig] == 1 :
+                       hbheFilt = True
+                if "eeBadSc" in filterNameStrings[itrig] :
+                   if filterBits[itrig] == 1 :
+                       eeBadScFilt = True
 
-
-            if cscFilt == False or hbheFilt == False :
+            if hbheFilt == False or vertexFilt == False or eeBadScFilt == False :  #  cscFilt == False  # use the file lists for the csc filter
                 if options.verbose > 5 :
                     print 'Found filters, but they failed'
                 continue
@@ -3576,9 +3594,6 @@ for ifile in files : #{ Loop over root files
                         L123cor = factors[2]
                     if factors.size() > 3 and not options.isMC :
                         L123rescor = factors[3]
-                    if options.verbose > 3:
-                        print "factors.size()"+str(factors.size())
-                        print "L1cor "+str(L1cor)+" L2cor "+str(L2cor)+" L3cor "+str(L3cor)
 
 
                     L2cor = L12cor/L1cor
@@ -3650,26 +3665,26 @@ for ifile in files : #{ Loop over root files
                         phiscale = max(0.0, (recophi+deltaphi)/recophi  )
 
 
-                    if options.verbose > 3 :
-                        print "uncorr pt            "  + str( AK8P4Raw.Perp() )
-                        print "corr pt              "  + str( AK8P4Corr.Perp() )
-                        print "corr up pt           "  + str( AK8P4CorrUp.Perp() )
-                        print "corr dn pt           "  + str( AK8P4CorrDn.Perp() )
-                        print "corr pt * smearnom   "  + str( AK8P4Corr.Perp() * smear   )
-                        print "corr pt * smearup    "  + str( AK8P4Corr.Perp() * smearUp )
-                        print "corr pt * smeardn    "  + str( AK8P4Corr.Perp() * smearDn )
-                        print "corr pt * smeardn    "  + str( AK8P4Corr.Perp() * smearDn )
-                        print "smear                "  + str( smear   )
-                        print "smearUp              "  + str( smearUp )
-                        print "smearDn              "  + str( smearDn )
-                        print "AK8JERup             "  + str( AK8JERup        [i] )
-                        print "AK8JERdown           "  + str( AK8JERdown      [i] )
-                        print "AK8SmearedE          "  + str( AK8SmearedE     [i] )  
-                        print "AK8SmearedPhi        "  + str( AK8SmearedPhi   [i] )  
-                        print "AK8SmearedEta        "  + str( AK8SmearedEta   [i] )  
-                        print "AK8SmearedPt         "  + str( AK8SmearedPt    [i] )  
-                        print "AK8PtRaw             "  + str( AK8P4Raw.Perp() )  
-                        print "AK8PtB2GCorr         "  + str( AK8Pt    [i] )  
+                        if options.verbose > 3 :
+                            print "uncorr pt            "  + str( AK8P4Raw.Perp() )
+                            print "corr pt              "  + str( AK8P4Corr.Perp() )
+                            print "corr up pt           "  + str( AK8P4CorrUp.Perp() )
+                            print "corr dn pt           "  + str( AK8P4CorrDn.Perp() )
+                            print "corr pt * smearnom   "  + str( AK8P4Corr.Perp() * smear   )
+                            print "corr pt * smearup    "  + str( AK8P4Corr.Perp() * smearUp )
+                            print "corr pt * smeardn    "  + str( AK8P4Corr.Perp() * smearDn )
+                            print "corr pt * smeardn    "  + str( AK8P4Corr.Perp() * smearDn )
+                            print "smear                "  + str( smear   )
+                            print "smearUp              "  + str( smearUp )
+                            print "smearDn              "  + str( smearDn )
+                            print "AK8JERup             "  + str( AK8JERup        [i] )
+                            print "AK8JERdown           "  + str( AK8JERdown      [i] )
+                            print "AK8SmearedE          "  + str( AK8SmearedE     [i] )  
+                            print "AK8SmearedPhi        "  + str( AK8SmearedPhi   [i] )  
+                            print "AK8SmearedEta        "  + str( AK8SmearedEta   [i] )  
+                            print "AK8SmearedPt         "  + str( AK8SmearedPt    [i] )  
+                            print "AK8PtRaw             "  + str( AK8P4Raw.Perp() )  
+                            print "AK8PtB2GCorr         "  + str( AK8Pt    [i] )  
 
                     if not goodJet :
                         if options.verbose > 3 : 
@@ -4600,62 +4615,104 @@ for ifile in files : #{ Loop over root files
                     tau32 = -1.0
 
 
+                # jetFat SD subjets
+                jetFat_sd_s0_bdisc    = -1.
+                jetFat_sd_s1_bdisc    = -1.
+                jetFat_sd_s0_pt       = -1.
+                jetFat_sd_s1_pt       = -1.
+                jetFat_sd_s0_eta      = -1.
+                jetFat_sd_s1_eta      = -1.
+                jetFat_sd_s0_phi      = -1.
+                jetFat_sd_s1_phi      = -1.
+                jetFat_sd_s0_m        = -1.
+                jetFat_sd_s1_m        = -1.
+                jetFat_sd_s0_jec0     = -1.
+                jetFat_sd_s1_jec0     = -1.
+                jetFat_sd_s0_p4corr   = ROOT.TLorentzVector()
+                jetFat_sd_s1_p4corr   = ROOT.TLorentzVector()
+                jetFat_sd_s0_p4raw    = ROOT.TLorentzVector()
+                jetFat_sd_s1_p4raw    = ROOT.TLorentzVector()
+                jetFat_sd_s0_p4corrUp = ROOT.TLorentzVector()
+                jetFat_sd_s1_p4corrUp = ROOT.TLorentzVector()
+                jetFat_sd_s0_p4corrDn = ROOT.TLorentzVector()
+                jetFat_sd_s1_p4corrDn = ROOT.TLorentzVector()
+                jetFat_sd_s0_smear    = 1.
+                jetFat_sd_s1_smear    = 1.
+                jetFat_sd_s0_smearUp  = 1.
+                jetFat_sd_s1_smearUp  = 1.
+                jetFat_sd_s0_smearDn  = 1.
+                jetFat_sd_s1_smearDn  = 1.
+                jetFat_sd_s0_scaleEta  = 1.
+                jetFat_sd_s1_scaleEta  = 1.
+                jetFat_sd_s0_scalePhi  = 1.
+                jetFat_sd_s1_scalePhi  = 1.
+                jetFat_sd_s0_area      = -1.
+                jetFat_sd_s1_area      = -1.
+                jetFat_sd_s0_flavour   = -1.
+                jetFat_sd_s1_flavour   = -1.
 
-                # AK8 jet SD subjets
-                jetFat_sd_s0_bdisc = -1.
-                jetFat_sd_s1_bdisc = -1.
-                jetFat_sd_s0_pt    = -1.
-                jetFat_sd_s1_pt    = -1.
-                jetFat_sd_s0_eta   = -1.
-                jetFat_sd_s1_eta   = -1.
-                jetFat_sd_s0_phi   = -1.
-                jetFat_sd_s1_phi   = -1.
-                jetFat_sd_s0_m     = -1.
-                jetFat_sd_s1_m     = -1.
-                jetFat_sd_s0_jec0  = -1.
-                jetFat_sd_s1_jec0  = -1.
-                if ak8JetsGoodSDsubjetIndex0[tagCand] > -1 :
-                    jetFat_sd_s0_bdisc = SDsubjetBDisc[ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
-                    jetFat_sd_s0_pt    = SDsubjetPt   [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
-                    jetFat_sd_s0_eta   = SDsubjetEta  [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
-                    jetFat_sd_s0_phi   = SDsubjetPhi  [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
-                    jetFat_sd_s0_m     = SDsubjetMass [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
-                    jetFat_sd_s0_jec0  = SDsubjetJEC0 [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
 
-                if ak8JetsGoodSDsubjetIndex1[tagCand] > -1 :
-                    jetFat_sd_s1_bdisc = SDsubjetBDisc[ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
-                    jetFat_sd_s1_pt    = SDsubjetPt   [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
-                    jetFat_sd_s1_eta   = SDsubjetEta  [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
-                    jetFat_sd_s1_phi   = SDsubjetPhi  [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
-                    jetFat_sd_s1_m     = SDsubjetMass [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
-                    jetFat_sd_s1_jec0  = SDsubjetJEC0 [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                if ak8JetsGoodSDsubjetIndex0[0] > -1 :
+                    jetFat_sd_s0_bdisc      = SDsubjetBDisc          [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_pt         = SDsubjetPt             [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_eta        = SDsubjetEta            [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_phi        = SDsubjetPhi            [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_m          = SDsubjetMass           [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_jec0       = SDsubjetJEC0           [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_p4corr     = SDsubjetP4corr         [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_p4raw      = SDsubjetP4raw          [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_p4corrUp   = SDsubjetP4corrUp       [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_p4corrDn   = SDsubjetP4corrDn       [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_area       = SDsubjetJetArea        [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]       
+                    if options.isMC:
+                        jetFat_sd_s0_smear      = SDsubjetSmearFactor    [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                        jetFat_sd_s0_smearUp    = SDsubjetSmearFactorUp  [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                        jetFat_sd_s0_smearDn    = SDsubjetSmearFactorDn  [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                        jetFat_sd_s0_scaleEta   = SDsubjetScaleEta  [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                        jetFat_sd_s0_scalePhi   = SDsubjetScalePhi  [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                        jetFat_sd_s0_flavour    = SDsubjetPartonFlavour  [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+ 
+
+                if ak8JetsGoodSDsubjetIndex1[0] > -1 :
+                    jetFat_sd_s1_bdisc      = SDsubjetBDisc          [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_pt         = SDsubjetPt             [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_eta        = SDsubjetEta            [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_phi        = SDsubjetPhi            [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_m          = SDsubjetMass           [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_jec0       = SDsubjetJEC0           [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_p4corr     = SDsubjetP4corr         [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_p4raw      = SDsubjetP4raw          [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_p4corrUp   = SDsubjetP4corrUp       [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_p4corrDn   = SDsubjetP4corrDn       [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_area       = SDsubjetJetArea        [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]       
+                    if options.isMC:
+                        jetFat_sd_s1_smear      = SDsubjetSmearFactor    [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                        jetFat_sd_s1_smearUp    = SDsubjetSmearFactorUp  [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                        jetFat_sd_s1_smearDn    = SDsubjetSmearFactorDn  [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                        jetFat_sd_s1_scaleEta   = SDsubjetScaleEta  [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                        jetFat_sd_s1_scalePhi   = SDsubjetScalePhi  [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                        jetFat_sd_s1_flavour    = SDsubjetPartonFlavour  [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+
 
               
-                # From Sal : This is now corrected upstream
-                jetFat_sd_s0 = ROOT.TLorentzVector()
-                jetFat_sd_s0.SetPtEtaPhiM( jetFat_sd_s0_pt , jetFat_sd_s0_eta,jetFat_sd_s0_phi, jetFat_sd_s0_m )
+                # Sum subjet 4-vector
+                jetFat_sum_sd_subjet_p4_corr           = jetFat_sd_s0_p4corr   + jetFat_sd_s1_p4corr  
+                jetFat_sum_sd_subjet_p4_raw            = jetFat_sd_s0_p4raw    + jetFat_sd_s1_p4raw   
+                jetFat_sum_sd_subjet_p4_corrUp         = jetFat_sd_s0_p4corrUp + jetFat_sd_s1_p4corrUp
+                jetFat_sum_sd_subjet_p4_corrDn         = jetFat_sd_s0_p4corrDn + jetFat_sd_s1_p4corrDn
+                jetFat_sum_sd_subjet_p4_corr_smear     = jetFat_sd_s0_p4corr*jetFat_sd_s0_smear   + jetFat_sd_s1_p4corr*jetFat_sd_s1_smear   
+                jetFat_sum_sd_subjet_p4_corr_smearUp   = jetFat_sd_s0_p4corr*jetFat_sd_s0_smearUp + jetFat_sd_s1_p4corr*jetFat_sd_s1_smearUp   
+                jetFat_sum_sd_subjet_p4_corr_smearDn   = jetFat_sd_s0_p4corr*jetFat_sd_s0_smearDn + jetFat_sd_s1_p4corr*jetFat_sd_s1_smearDn   
 
-                # get subjet 4-vectors, uncorrect, then correct them
-                jetFat_sd_s1 = ROOT.TLorentzVector()
-                jetFat_sd_s1.SetPtEtaPhiM( jetFat_sd_s1_pt , jetFat_sd_s1_eta,jetFat_sd_s1_phi, jetFat_sd_s1_m )
-
-                #jet0_add_softdrop_subjets_originalCorr = jet0_sd_s0 + jet0_sd_s1
-                #jet0_add_softdrop_subjets_raw          = jet0_sd_s0_raw + jet0_sd_s1_raw
-                jetFat_add_softdrop_subjets_newCorr      = jetFat_sd_s0 + jetFat_sd_s1
-
-
-                #h_Jet0_MassSoft_CorrOrigSumSubjet   .Fill(  jet0_add_softdrop_subjets_originalCorr.M()  )
-                #h_Jet0_MassSoft_RawSumSubjet        .Fill(  jet0_add_softdrop_subjets_raw.M()           )
-                #h_Jet1_MassSoft_CorrNewSumSubjet    .Fill(  jet0_add_softdrop_subjets_newCorr.M()       )
-
-
+                # find max subjet b-disc
                 jetFat_bdiscs =[jetFat_sd_s0_bdisc, jetFat_sd_s1_bdisc] 
                 jetFat_sd_maxbdisc = max(jetFat_bdiscs)
                 
-                if options.verbose:
-                    print 'jetFat_sd_s0_bdisc '+str(jetFat_sd_s0_bdisc)
-                    print 'jetFat_sd_s1_bdisc '+str(jetFat_sd_s1_bdisc)
-                    print 'jetFat_sd_maxbdisc '+str(jetFat_sd_maxbdisc)
+                if (jetFat_sd_maxbdisc == jetFat_sd_s0_bdisc) :
+                  jetFat_sd_maxbdisc_subjet_flavour = jetFat_sd_s0_flavour
+                if (jetFat_sd_maxbdisc == jetFat_sd_s1_bdisc) :
+                  jetFat_sd_maxbdisc_subjet_flavour = jetFat_sd_s1_flavour
+
 
 
 
@@ -4898,6 +4955,13 @@ for ifile in files : #{ Loop over root files
                     FatJetMassPruned    [0] = mAK8Pruned
                     FatJetMassFiltered  [0] = mAK8Filtered
                     FatJetMassTrimmed   [0] = mAK8Trimmed
+                    FatJetMassSDsumSubjetCorr        [0] =  (jet0_sum_sd_subjet_p4_corr         ).M() 
+                    FatJetMassSDsumSubjetRaw         [0] =  (jet0_sum_sd_subjet_p4_raw          ).M() 
+                    FatJetMassSDsumSubjetCorrUp      [0] =  (jet0_sum_sd_subjet_p4_corrUp       ).M() 
+                    FatJetMassSDsumSubjetCorrDn      [0] =  (jet0_sum_sd_subjet_p4_corrDn       ).M() 
+                    FatJetMassSDsumSubjetCorrSmear   [0] =  (jet0_sum_sd_subjet_p4_corr_smear   ).M() 
+                    FatJetMassSDsumSubjetCorrSmearUp [0] =  (jet0_sum_sd_subjet_p4_corr_smearUp ).M() 
+                    FatJetMassSDsumSubjetCorrSmearDn [0] =  (jet0_sum_sd_subjet_p4_corr_smearDn ).M() 
                     FatJetTau1          [0] = tau1
                     FatJetTau2          [0] = tau2
                     FatJetTau3          [0] = tau3
