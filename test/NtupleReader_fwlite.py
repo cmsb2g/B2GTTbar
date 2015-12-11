@@ -3996,37 +3996,37 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodMatchedGenJetPt.append( AK8GenJetPt[i] )
 
                         
-                        matchingGenJetMass = 0
-                        matchingGenJetSoftDropMass = 0
+                        # matchingGenJetMass = 0
+                        # matchingGenJetSoftDropMass = 0
 
-                        # hack since mass not saved for matching gen jet
-                        if options.isMC:
-                            event.getByLabel ( l_genJetsAK8Pt     , h_genJetsAK8Pt )
-                            event.getByLabel ( l_genJetsAK8Mass     , h_genJetsAK8Mass )
-                            event.getByLabel ( l_genJetsAK8SoftDropMass     , h_genJetsAK8SoftDropMass )
-                            if len( h_genJetsAK8Pt.product()) > 0 : 
-                                 GenJetPt  = h_genJetsAK8Pt                 .product()
-                                 GenJetMass  = h_genJetsAK8Mass                 .product()
-                                 GenJetDSMass  = h_genJetsAK8SoftDropMass                 .product()
+                        # # hack since mass not saved for matching gen jet
+                        # if options.isMC:
+                        #     event.getByLabel ( l_genJetsAK8Pt     , h_genJetsAK8Pt )
+                        #     event.getByLabel ( l_genJetsAK8Mass     , h_genJetsAK8Mass )
+                        #     event.getByLabel ( l_genJetsAK8SoftDropMass     , h_genJetsAK8SoftDropMass )
+                        #     if len( h_genJetsAK8Pt.product()) > 0 : 
+                        #          GenJetPt  = h_genJetsAK8Pt                 .product()
+                        #          GenJetMass  = h_genJetsAK8Mass                 .product()
+                        #          GenJetDSMass  = h_genJetsAK8SoftDropMass                 .product()
 
-                                 if options.verbose > 8 :
-                                    print 'event '+str( Nevents )+' AK8GenJetPt[i] '+str(AK8GenJetPt[i])
-                                 for k in range(0,len(GenJetPt)):
-                                      if options.verbose > 8 :
-                                          print '  GenJetPt[k] '+str(GenJetPt[k])
-                                      if abs(AK8GenJetPt[i] - GenJetPt[k]) < 1 :
-                                          matchingGenJetMass = GenJetMass[k]
-                                          matchingGenJetSoftDropMass = GenJetDSMass[k]
-                                          if options.verbose > 8 :
-                                              print 'found matching GenJet!' 
+                        #          if options.verbose > 8 :
+                        #             print 'event '+str( Nevents )+' AK8GenJetPt[i] '+str(AK8GenJetPt[i])
+                        #          for k in range(0,len(GenJetPt)):
+                        #               if options.verbose > 8 :
+                        #                   print '  GenJetPt[k] '+str(GenJetPt[k])
+                        #               if abs(AK8GenJetPt[i] - GenJetPt[k]) < 1 :
+                        #                   matchingGenJetMass = GenJetMass[k]
+                        #                   matchingGenJetSoftDropMass = GenJetDSMass[k]
+                        #                   if options.verbose > 8 :
+                        #                       print 'found matching GenJet!' 
 
-                        ak8JetsGoodMatchedGenJetMass.append( matchingGenJetMass )
-                        ak8JetsGoodMatchedGenJetMassSD.append( matchingGenJetSoftDropMass )
+                        # ak8JetsGoodMatchedGenJetMass.append( matchingGenJetMass )
+                        # ak8JetsGoodMatchedGenJetMassSD.append( matchingGenJetSoftDropMass )
                      
-                        GenJetP4 = ROOT.TLorentzVector()
-                        GenJetP4.SetPtEtaPhiM( AK8GenJetPt[i] , AK8GenJetEta[i] , AK8GenJetPhi[i] , matchingGenJetMass)
+                        # GenJetP4 = ROOT.TLorentzVector()
+                        # GenJetP4.SetPtEtaPhiM( AK8GenJetPt[i] , AK8GenJetEta[i] , AK8GenJetPhi[i] , matchingGenJetMass)
    
-                        ak8JetsGoodMatchedGenJetP4.append( GenJetP4 )
+                        # ak8JetsGoodMatchedGenJetP4.append( GenJetP4 )
 
 
                 #} End AK8 Loop
@@ -4604,8 +4604,8 @@ for ifile in files : #{ Loop over root files
                     Jet0EtaScaleFactor             [0] =  ak8JetsGoodEtaScale[0]
                     Jet0PhiScaleFactor             [0] =  ak8JetsGoodPhiScale[0]
                     Jet0MatchedGenJetPt            [0] =  ak8JetsGoodMatchedGenJetPt[0]
-                    Jet0MatchedGenJetMass          [0] =  ak8JetsGoodMatchedGenJetMass[0]
-                    Jet0MatchedGenJetMassSD        [0] =  ak8JetsGoodMatchedGenJetMassSD[0]
+                    # Jet0MatchedGenJetMass          [0] =  ak8JetsGoodMatchedGenJetMass[0]
+                    # Jet0MatchedGenJetMassSD        [0] =  ak8JetsGoodMatchedGenJetMassSD[0]
                     Jet0PtRaw                      [0] =  ak8JetsGoodRaw[0].Perp()
                     Jet0EtaRaw                     [0] =  ak8JetsGoodRaw[0].Eta()
                     Jet0PhiRaw                     [0] =  ak8JetsGoodRaw[0].Phi()
@@ -4700,8 +4700,8 @@ for ifile in files : #{ Loop over root files
                     Jet1EtaScaleFactor             [0] =  ak8JetsGoodEtaScale[1]
                     Jet1PhiScaleFactor             [0] =  ak8JetsGoodPhiScale[1]
                     Jet1MatchedGenJetPt            [0] =  ak8JetsGoodMatchedGenJetPt[1]
-                    Jet1MatchedGenJetMass          [0] =  ak8JetsGoodMatchedGenJetMass[1]
-                    Jet1MatchedGenJetMassSD        [0] =  ak8JetsGoodMatchedGenJetMassSD[1]
+                    # Jet1MatchedGenJetMass          [0] =  ak8JetsGoodMatchedGenJetMass[1]
+                    # Jet1MatchedGenJetMassSD        [0] =  ak8JetsGoodMatchedGenJetMassSD[1]
                     Jet1PtRaw                      [0] =  ak8JetsGoodRaw[1].Perp()
                     Jet1EtaRaw                     [0] =  ak8JetsGoodRaw[1].Eta()
                     Jet1PhiRaw                     [0] =  ak8JetsGoodRaw[1].Phi()
@@ -4770,7 +4770,7 @@ for ifile in files : #{ Loop over root files
                     DijetDeltaPhi                  [0] = ak8JetsGood[0].DeltaPhi (ak8JetsGood[1])
                     DijetDeltaRap                  [0] = abs(ak8JetsGood[0].Rapidity() - ak8JetsGood[1].Rapidity() )
 
-                    DiGenJetMass                   [0] = (ak8JetsGoodMatchedGenJetP4[0]+ak8JetsGoodMatchedGenJetP4[1]).M()
+                    # DiGenJetMass                   [0] = (ak8JetsGoodMatchedGenJetP4[0]+ak8JetsGoodMatchedGenJetP4[1]).M()
                     GenTTmass                      [0] = genZprimeMass
 
                     HT                             [0] = ak8JetHt          
