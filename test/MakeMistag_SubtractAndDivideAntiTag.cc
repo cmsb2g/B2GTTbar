@@ -87,10 +87,10 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
   if (data){
 
-    infile_name       = "outAntiTag_JetHT_Run2015D_PromptReco-v3_and_v4_oct19json_tag_and_probe_113015.root";
-    infile_ttbar_name = "outAntiTag_ttjets_b2ganafw_v6_113015.root";
+    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_120715.root";
+    infile_ttbar_name = "outAntiTag_TTpowheg_B2Gv8p4_reader603e_all_120715.root";
   } 
-  string date = "113015";
+  string date = "120715";
 
   int nbins = bins.size();
   stringstream temp1;
