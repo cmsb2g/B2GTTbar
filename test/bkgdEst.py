@@ -4,14 +4,14 @@ from math import *
 # ROOT.gSystem.Load("libAnalysisPredictedDistribution")
 
 
-OUT =  ROOT.TFile("outBkgdEst_JetHT_Run2015D_PromptReco-v3_and_v4_oct19json_120615.root","RECREATE");
-F1   =  ROOT.TFile("/uscms_data/d3/maral87/ttbarResonances/B2GAnaFW/CMSSW_7_4_12/src/Analysis/B2GAnaFW_Maral/NTUPLES/runs/run_102415/JetHT_Run2015D_PromptReco-v3_and_v4_oct19json_tag_and_probe_102415.root");
+OUT =  ROOT.TFile("outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_120715.root","RECREATE");
+F1   =  ROOT.TFile("/eos/uscms/store/user/jdolen/B2GAnaFW/Trees/tree_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON.root");
 Tree = F1.Get("TreeAllHad");
 entries = Tree.GetEntries();
 print 'entries '+str(entries)  
 
 
-Fmistag = ROOT.TFile("run_113015/run_113015_2/MistagRate_nbins_113015_8_Substract_outAntiTag_JetHT_Run2015D_PromptReco-v3_and_v4_oct19json_tag_and_probe_113015.root")
+Fmistag = ROOT.TFile("MistagRate_nbins_120715_8_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_120715.root")
 
 post = ["_jetPt_dRapHi_inclusive", "_jetPt_dRapHi_2btag", "_jetPt_dRapHi_1btag", "_jetPt_dRapHi_0btag",   
         "_jetPt_dRapLo_inclusive", "_jetPt_dRapLo_2btag", "_jetPt_dRapLo_1btag", "_jetPt_dRapLo_0btag"]
@@ -113,17 +113,18 @@ for i in xrange(len(post)):
     # ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassFat        , False )
 
 
-
-    
-
-
-
-
 count = 0
+
+
 for event in Tree:
   count +=1
   if count%1000 ==0:
     print str(count)+" / "+str(entries)
+  maxJet0Pt = event.Jet0Pt
+  maxJet1Pt = event.Jet1Pt
+
+  maxJetHt = event.HT
+
   maxBdisc_jet0_ = event.Jet0SDbdisc0
   maxBdisc_jet1_ = event.Jet0SDbdisc1
   # define tags - make sure they are the same as what was used to calculate the mistag
@@ -170,6 +171,12 @@ for event in Tree:
   # topTag0MassFatMaxBdiscMinMassTau32 = topTag0MassFat and topTag0MaxBdiscM and topTag0MinMass and topTag0Tau32
   # topTag1MassFatMaxBdiscMinMassTau32 = topTag1MassFat and topTag1MaxBdiscM and topTag1MinMass and topTag1Tau32
     #MaxBdiscL_ReqTopMassFat         = topTag1MassFat and antiTag1MaxBdiscL
+
+  if maxJet0Pt < 400 or maxJet1Pt < 400:
+    continue
+
+  if maxJetHt < 1000:
+    continue
 
   #^ fill double tagged dijet distributions
   if topTag0MassSD and topTag1MassSD:
@@ -420,4 +427,51 @@ h_bkgdEst_modMass_tagMassFatMinMass              .Write()
 
 OUT.Write()
 OUT.Close()
+
+
+print "Number of events in h_mttMass_tagMassSDTau32_dRapHi_inclusive: ", h_mttMass_tagMassSDTau32_dRapHi_inclusive.GetSum()
+print "Number of events in h_mttMass_tagMassSDTau32_dRapHi_0btag: "    , h_mttMass_tagMassSDTau32_dRapHi_0btag    .GetSum()         
+print "Number of events in h_mttMass_tagMassSDTau32_dRapHi_1btag: "    , h_mttMass_tagMassSDTau32_dRapHi_1btag    .GetSum()         
+print "Number of events in h_mttMass_tagMassSDTau32_dRapHi_2btag: "    , h_mttMass_tagMassSDTau32_dRapHi_2btag    .GetSum()         
+print "Summed number of events of dRapHi_0btag + dRapHi_1btag + dRapHi_2btag: "       , h_mttMass_tagMassSDTau32_dRapHi_0btag.GetSum() + h_mttMass_tagMassSDTau32_dRapHi_1btag.GetSum() + h_mttMass_tagMassSDTau32_dRapHi_2btag.GetSum()
+print ""
+print "Number of events in h_mttMass_tagMassSDTau32_dRapLo_inclusive: ", h_mttMass_tagMassSDTau32_dRapLo_inclusive.GetSum()         
+print "Number of events in h_mttMass_tagMassSDTau32_dRapLo_0btag: "    , h_mttMass_tagMassSDTau32_dRapLo_0btag    .GetSum()         
+print "Number of events in h_mttMass_tagMassSDTau32_dRapLo_1btag: "    , h_mttMass_tagMassSDTau32_dRapLo_1btag    .GetSum()         
+print "Number of events in h_mttMass_tagMassSDTau32_dRapLo_2btag: "    , h_mttMass_tagMassSDTau32_dRapLo_2btag    .GetSum() 
+print "Summed number of events of dRapLo_0btag + dRapLo_1btag + dRapLo_2btag: "       , h_mttMass_tagMassSDTau32_dRapLo_0btag.GetSum() + h_mttMass_tagMassSDTau32_dRapLo_1btag.GetSum() + h_mttMass_tagMassSDTau32_dRapLo_2btag.GetSum()        
+print ""
+print ""
+print "Number of events in h_bkgdEst_tagMassSDTau32_dRapHi_inclusive: ", h_bkgdEst_tagMassSDTau32_dRapHi_inclusive.GetSum()
+print "Number of events in h_bkgdEst_tagMassSDTau32_dRapHi_0btag: "    , h_bkgdEst_tagMassSDTau32_dRapHi_0btag    .GetSum()         
+print "Number of events in h_bkgdEst_tagMassSDTau32_dRapHi_1btag: "    , h_bkgdEst_tagMassSDTau32_dRapHi_1btag    .GetSum()         
+print "Number of events in h_bkgdEst_tagMassSDTau32_dRapHi_2btag: "    , h_bkgdEst_tagMassSDTau32_dRapHi_2btag    .GetSum()         
+print "Summed number of events of dRapHi_0btag + dRapHi_1btag + dRapHi_2btag: "       , h_bkgdEst_tagMassSDTau32_dRapHi_0btag.GetSum() + h_bkgdEst_tagMassSDTau32_dRapHi_1btag.GetSum() + h_bkgdEst_tagMassSDTau32_dRapHi_2btag.GetSum()
+print ""
+print "Number of events in h_bkgdEst_tagMassSDTau32_dRapLo_inclusive: ", h_bkgdEst_tagMassSDTau32_dRapLo_inclusive.GetSum()         
+print "Number of events in h_bkgdEst_tagMassSDTau32_dRapLo_0btag: "    , h_bkgdEst_tagMassSDTau32_dRapLo_0btag    .GetSum()         
+print "Number of events in h_bkgdEst_tagMassSDTau32_dRapLo_1btag: "    , h_bkgdEst_tagMassSDTau32_dRapLo_1btag    .GetSum()         
+print "Number of events in h_bkgdEst_tagMassSDTau32_dRapLo_2btag: "    , h_bkgdEst_tagMassSDTau32_dRapLo_2btag    .GetSum() 
+print "Summed number of events of dRapLo_0btag + dRapLo_1btag + dRapLo_2btag: "       , h_bkgdEst_tagMassSDTau32_dRapLo_0btag.GetSum() + h_bkgdEst_tagMassSDTau32_dRapLo_1btag.GetSum() + h_bkgdEst_tagMassSDTau32_dRapLo_2btag.GetSum()        
+print ""
+print ""
+print "Number of events in h_bkgdEst_modMass_tagMassSDTau32_dRapHi_inclusive: ", h_bkgdEst_modMass_tagMassSDTau32_dRapHi_inclusive.GetSum()
+print "Number of events in h_bkgdEst_modMass_tagMassSDTau32_dRapHi_0btag: "    , h_bkgdEst_modMass_tagMassSDTau32_dRapHi_0btag    .GetSum()         
+print "Number of events in h_bkgdEst_modMass_tagMassSDTau32_dRapHi_1btag: "    , h_bkgdEst_modMass_tagMassSDTau32_dRapHi_1btag    .GetSum()         
+print "Number of events in h_bkgdEst_modMass_tagMassSDTau32_dRapHi_2btag: "    , h_bkgdEst_modMass_tagMassSDTau32_dRapHi_2btag    .GetSum()         
+print "Summed number of events of dRapHi_0btag + dRapHi_1btag + dRapHi_2btag: "       , h_bkgdEst_modMass_tagMassSDTau32_dRapHi_0btag.GetSum() + h_bkgdEst_modMass_tagMassSDTau32_dRapHi_1btag.GetSum() + h_bkgdEst_modMass_tagMassSDTau32_dRapHi_2btag.GetSum()
+print ""
+print "Number of events in h_bkgdEst_modMass_tagMassSDTau32_dRapLo_inclusive: ", h_bkgdEst_modMass_tagMassSDTau32_dRapLo_inclusive.GetSum()         
+print "Number of events in h_bkgdEst_modMass_tagMassSDTau32_dRapLo_0btag: "    , h_bkgdEst_modMass_tagMassSDTau32_dRapLo_0btag    .GetSum()         
+print "Number of events in h_bkgdEst_modMass_tagMassSDTau32_dRapLo_1btag: "    , h_bkgdEst_modMass_tagMassSDTau32_dRapLo_1btag    .GetSum()         
+print "Number of events in h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag: "    , h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag    .GetSum() 
+print "Summed number of events of dRapLo_0btag + dRapLo_1btag + dRapLo_2btag: "       , h_bkgdEst_modMass_tagMassSDTau32_dRapLo_0btag.GetSum() + h_bkgdEst_modMass_tagMassSDTau32_dRapLo_1btag.GetSum() + h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag.GetSum()        
+
+
+
+
+
+
+
+
 
