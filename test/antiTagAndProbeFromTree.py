@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 import ROOT
 
-OUT =  ROOT.TFile("outAntiTag_ttjets_b2ganafw_v6_113015.root","RECREATE");
-F1   =  ROOT.TFile("/uscms_data/d3/maral87/ttbarResonances/B2GAnaFW/CMSSW_7_4_12/src/Analysis/B2GAnaFW_Maral/NTUPLES/runs/run_102415/ttjets_b2ganafw_v6_tag_and_probe_102415.root");
+OUT =  ROOT.TFile("outAntiTag_TTpowheg_B2Gv8p4_reader603e_all_120715.root","RECREATE");
+F1   =  ROOT.TFile("/eos/uscms/store/user/jdolen/B2GAnaFW/Trees/tree_TTpowheg_B2Gv8p4_reader603e_all.root");
 Tree = F1.Get("TreeAllHad");
 entries = Tree.GetEntries();
 print 'entries '+str(entries)  
@@ -88,12 +88,19 @@ h_AntiTagTau32_ReqTopMassFat_TagMassSDMaxBdisc_jetPt     = ROOT.TH1D("h_AntiTagT
 h_AntiTagTau32_ReqTopMassFat_TagMassFat_jetPt            = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassFat_jetPt"            , "", 1400, 0, 7000 ) 
 h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt     = ROOT.TH1D("h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt"     , "", 1400, 0, 7000 ) 
 
-
 count = 0
+maxJet0Ht = 0
+maxJet1Ht = 0
+
 for event in Tree:
   count +=1
   if count%1000 ==0:
     print count
+  maxJet0Pt = event.Jet0Pt
+  maxJet1Pt = event.Jet1Pt
+
+  maxJetHt = event.HT
+
   maxBdisc_jet0_ = event.Jet0SDbdisc0
   maxBdisc_jet1_ = event.Jet0SDbdisc1
   # define tags - make sure they are the same as what was used to calculate the mistag
@@ -174,6 +181,12 @@ for event in Tree:
   # antiTag1MaxBdiscVL_ReqTopMassFat        = topTag1MassFat and antiTag1MaxBdiscVL
   # antiTag0MaxBdiscL_ReqTopMassFat         = topTag0MassFat and antiTag0MaxBdiscL
   # antiTag1MaxBdiscL_ReqTopMassFat         = topTag1MassFat and antiTag1MaxBdiscL
+
+  if maxJet0Pt < 400 or maxJet1Pt < 400:
+    continue
+
+  if maxJetHt < 1000:
+    continue
 
   evWeight = 1
   rand1 =  ROOT.TRandom3(0)
@@ -523,4 +536,20 @@ h_AntiTagTau32_ReqTopMassFat_TagMassFatMinMass_jetPt             .Write()
 
 OUT.Write()
 OUT.Close()
+
+print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive: ", h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive.GetSum()
+print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag    .GetSum()         
+print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag    .GetSum()         
+print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag    .GetSum()         
+print "Summed number of events of dRapHi_0btag + dRapHi_1btag + dRapHi_2btag: "       , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag.GetSum()
+print ""
+print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive: ", h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive.GetSum()         
+print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag    .GetSum()         
+print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag    .GetSum()         
+print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag    .GetSum() 
+print "Summed number of events of dRapLo_0btag + dRapLo_1btag + dRapLo_2btag: "       , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag.GetSum()        
+
+
+
+
 
