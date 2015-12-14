@@ -2029,13 +2029,13 @@ for ifile in files : #{ Loop over root files
 
             if options.verbose > 5 :
                 for itrig in xrange(0, len(triggerNameStrings) ) :
-                    print "%60s : %12.0f" % ( triggerNameStrings[itrig] , triggerPrescales[itrig] )
+                    print "%60s : %12.0f" % ( triggerNameStrings[itrigToRun] , triggerPrescales[itrigToRun] )## Changed itrig to itrigToRun
 
 
             if passTrig :
-                if triggerPrescales[itrig] == 1.0 :
+                if triggerPrescales[itrigToRun] == 1.0 : ## Changed itrig to itrigToRun
                     unprescaled = True
-                prescale = prescale * triggerPrescales[itrig]
+                prescale = prescale * triggerPrescales[itrigToRun] ## Changed itrig to itrigToRun
                         
 
 
