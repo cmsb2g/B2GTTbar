@@ -87,11 +87,12 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
   if (data){
 
-    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_120715.root";
-    infile_ttbar_name = "outAntiTag_TTpowheg_B2Gv8p4_reader603e_all_120715.root";
+    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121415_jec_dn.root";
+    infile_ttbar_name = "outAntiTag_TTpowheg_B2Gv8p4_reader5a85e65_all_121415_jec_dn.root";
   } 
-  string date = "120715";
-
+  string syst = "jec_dn";
+  string date = "121415";
+  
   int nbins = bins.size();
   stringstream temp1;
   temp1 << nbins;
@@ -131,27 +132,27 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   string save_pre = "h_mistag_";
   string probe = "_Probe";
   vector <string> post;
-  post.push_back("_jetPt_dRapHi_inclusive");
-  post.push_back("_jetPt_dRapHi_2btag");
-  post.push_back("_jetPt_dRapHi_1btag");
-  post.push_back("_jetPt_dRapHi_0btag");
-  post.push_back("_jetPt_dRapLo_inclusive");
-  post.push_back("_jetPt_dRapLo_2btag");
-  post.push_back("_jetPt_dRapLo_1btag");
-  post.push_back("_jetPt_dRapLo_0btag");
+  post.push_back("_jetPt_dRapHi_inclusive_");
+  post.push_back("_jetPt_dRapHi_2btag_");
+  post.push_back("_jetPt_dRapHi_1btag_");
+  post.push_back("_jetPt_dRapHi_0btag_");
+  post.push_back("_jetPt_dRapLo_inclusive_");
+  post.push_back("_jetPt_dRapLo_2btag_");
+  post.push_back("_jetPt_dRapLo_1btag_");
+  post.push_back("_jetPt_dRapLo_0btag_");
   
   
   
   for (unsigned int i=0; i<antitag_def.size(); i++ ){
     for (unsigned int j=0; j<tag_def.size(); j++ ){
       for (unsigned int k=0; k<post.size(); k++ ){
-        string numer = pre + antitag_def[i] + tag_def[j] + post[k];
+        string numer = pre + antitag_def[i] + tag_def[j] + post[k] + syst;
         cout <<"numer:"<<numer<<endl;
-        string denom = pre + antitag_def[i] + probe + post[k];
+        string denom = pre + antitag_def[i] + probe + post[k] + syst;
         cout <<"denom:"<<denom<<endl;
-        string savename = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
-        string savename2 = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
-        string savename3 = "teff_" + antitag_def[i] + tag_def[j] + post[k] ;
+        string savename = save_pre + antitag_def[i] + tag_def[j] + post[k] + syst;
+        string savename2 = save_pre + antitag_def[i] + tag_def[j] + post[k] + syst;
+        string savename3 = "teff_" + antitag_def[i] + tag_def[j] + post[k] + syst;
 
         // cout<<numer<<"      "<<denom<<"     "<<
         cout<<savename<<endl;
@@ -266,9 +267,23 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         eff_jeffrey ->Write();
 
         bkgd_numer_rebin->Divide(bkgd_numer_rebin,bkgd_denom_rebin,1,1,"B");
-        bkgd_numer_rebin->SetTitle(";;Mistag Rate");
+        bkgd_numer_rebin->SetTitle(";Jet PT (GeV/c);Top Mistag Rate");
         bkgd_numer_rebin->SetName(savename.c_str());
         bkgd_numer_rebin->Write();
+
+        TCanvas* c;
+        c = new TCanvas("c", "" , 700, 625);
+        c->cd();
+        bkgd_numer_rebin->Draw();
+        bkgd_numer_rebin->GetXaxis()->SetTitleSize(0.03);
+        bkgd_numer_rebin->GetXaxis()->SetLabelSize(0.025);
+        bkgd_numer_rebin->GetYaxis()->SetTitleSize(0.03);
+        bkgd_numer_rebin->GetYaxis()->SetLabelSize(0.025);
+        bkgd_numer_rebin->GetXaxis()->SetTitleOffset(1.3);
+        bkgd_numer_rebin->GetYaxis()->SetTitleOffset(1.5);
+        bkgd_numer_rebin->Draw("SAME");
+        string savename_mistag = savename + ".png";
+        c->SaveAs(savename_mistag.c_str());
 
       }
     }
