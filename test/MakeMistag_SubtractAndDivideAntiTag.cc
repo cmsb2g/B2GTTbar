@@ -87,11 +87,11 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
   if (data){
 
-    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121415_jec_dn.root";
-    infile_ttbar_name = "outAntiTag_TTpowheg_B2Gv8p4_reader5a85e65_all_121415_jec_dn.root";
+    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121615_jec_nom.root";
+    infile_ttbar_name = "outAntiTag_TTpowheg_B2Gv8p4_reader5a85e65_all_121615_jec_up.root";
   } 
-  string syst = "jec_dn";
-  string date = "121415";
+  string syst = "jec_up";
+  string date = "121615";
   
   int nbins = bins.size();
   stringstream temp1;
@@ -102,7 +102,7 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   if (!noSubtract) subtractOrNot = "_Substract_";
   if (!data) subtractOrNot = "_MC_";
 
-  string outfile_name = "MistagRate_nbins_"+date+"_"+snbins+subtractOrNot+infile_name;
+  string outfile_name = "MistagRate_nbins_"+date+"_"+snbins+"_ttbar_"+syst+"_"+subtractOrNot+infile_name;
 
   cout<<"Opening "<<infile_name<<endl;
   InFile        = new TFile(      infile_name.c_str()      );
@@ -132,27 +132,27 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   string save_pre = "h_mistag_";
   string probe = "_Probe";
   vector <string> post;
-  post.push_back("_jetPt_dRapHi_inclusive_");
-  post.push_back("_jetPt_dRapHi_2btag_");
-  post.push_back("_jetPt_dRapHi_1btag_");
-  post.push_back("_jetPt_dRapHi_0btag_");
-  post.push_back("_jetPt_dRapLo_inclusive_");
-  post.push_back("_jetPt_dRapLo_2btag_");
-  post.push_back("_jetPt_dRapLo_1btag_");
-  post.push_back("_jetPt_dRapLo_0btag_");
+  post.push_back("_jetPt_dRapHi_inclusive");
+  post.push_back("_jetPt_dRapHi_2btag");
+  post.push_back("_jetPt_dRapHi_1btag");
+  post.push_back("_jetPt_dRapHi_0btag");
+  post.push_back("_jetPt_dRapLo_inclusive");
+  post.push_back("_jetPt_dRapLo_2btag");
+  post.push_back("_jetPt_dRapLo_1btag");
+  post.push_back("_jetPt_dRapLo_0btag");
   
   
   
   for (unsigned int i=0; i<antitag_def.size(); i++ ){
     for (unsigned int j=0; j<tag_def.size(); j++ ){
       for (unsigned int k=0; k<post.size(); k++ ){
-        string numer = pre + antitag_def[i] + tag_def[j] + post[k] + syst;
+        string numer = pre + antitag_def[i] + tag_def[j] + post[k] ;
         cout <<"numer:"<<numer<<endl;
-        string denom = pre + antitag_def[i] + probe + post[k] + syst;
+        string denom = pre + antitag_def[i] + probe + post[k] ;
         cout <<"denom:"<<denom<<endl;
-        string savename = save_pre + antitag_def[i] + tag_def[j] + post[k] + syst;
-        string savename2 = save_pre + antitag_def[i] + tag_def[j] + post[k] + syst;
-        string savename3 = "teff_" + antitag_def[i] + tag_def[j] + post[k] + syst;
+        string savename = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
+        string savename2 = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
+        string savename3 = "teff_" + antitag_def[i] + tag_def[j] + post[k] ;
 
         // cout<<numer<<"      "<<denom<<"     "<<
         cout<<savename<<endl;
@@ -203,10 +203,11 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         if (data && !noSubtract){
 
       
-          double luminosity = 1263.890;  //166;
+          double luminosity = 2564.649;   //1263.890;  //166;
           double nevents_dataset_ttbar  = 19665194;
           double xsec_ttbar  =  815.96  ;
-          double scale_ttbar= xsec_ttbar * luminosity / nevents_dataset_ttbar;
+          double kfactor = 0.8;
+          double scale_ttbar= kfactor * xsec_ttbar * luminosity / nevents_dataset_ttbar;
           cout<<"scale_ttbar "<<scale_ttbar<<endl;
           ttbar_numer_rebin->Scale(scale_ttbar);
           ttbar_denom_rebin->Scale(scale_ttbar);
@@ -244,27 +245,27 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
         // divide histograms
 
-        TEfficiency * eff_default = new TEfficiency(*bkgd_numer_rebin,*bkgd_denom_rebin);
-        TEfficiency * eff_normal  = new TEfficiency(*eff_default);
-        TEfficiency * eff_wilson  = new TEfficiency(*eff_default);
-        TEfficiency * eff_jeffrey = new TEfficiency(*eff_default);
-        eff_normal ->SetStatisticOption(TEfficiency::kFNormal);
-        eff_wilson ->SetStatisticOption(TEfficiency::kFWilson);
-        eff_jeffrey->SetStatisticOption(TEfficiency::kBJeffrey);
+        // TEfficiency * eff_default = new TEfficiency(*bkgd_numer_rebin,*bkgd_denom_rebin);
+        // TEfficiency * eff_normal  = new TEfficiency(*eff_default);
+        // TEfficiency * eff_wilson  = new TEfficiency(*eff_default);
+        // TEfficiency * eff_jeffrey = new TEfficiency(*eff_default);
+        // eff_normal ->SetStatisticOption(TEfficiency::kFNormal);
+        // eff_wilson ->SetStatisticOption(TEfficiency::kFWilson);
+        // eff_jeffrey->SetStatisticOption(TEfficiency::kBJeffrey);
 
 
-        string savename_eff_default = savename3 + "_default" ;     
-        string savename_eff_normal  = savename3 + "_normal"  ;    
-        string savename_eff_wilson  = savename3 + "_wilson"  ;    
-        string savename_eff_jeffrey = savename3 + "_jeffrey" ;     
-        eff_default ->SetName(savename_eff_default.c_str());      
-        eff_normal  ->SetName(savename_eff_normal .c_str());      
-        eff_wilson  ->SetName(savename_eff_wilson .c_str());
-        eff_jeffrey ->SetName(savename_eff_jeffrey.c_str());
-        eff_default ->Write();
-        eff_normal  ->Write();
-        eff_wilson  ->Write();
-        eff_jeffrey ->Write();
+        // string savename_eff_default = savename3 + "_default" ;     
+        // string savename_eff_normal  = savename3 + "_normal"  ;    
+        // string savename_eff_wilson  = savename3 + "_wilson"  ;    
+        // string savename_eff_jeffrey = savename3 + "_jeffrey" ;     
+        // eff_default ->SetName(savename_eff_default.c_str());      
+        // eff_normal  ->SetName(savename_eff_normal .c_str());      
+        // eff_wilson  ->SetName(savename_eff_wilson .c_str());
+        // eff_jeffrey ->SetName(savename_eff_jeffrey.c_str());
+        // eff_default ->Write();
+        // eff_normal  ->Write();
+        // eff_wilson  ->Write();
+        // eff_jeffrey ->Write();
 
         bkgd_numer_rebin->Divide(bkgd_numer_rebin,bkgd_denom_rebin,1,1,"B");
         bkgd_numer_rebin->SetTitle(";Jet PT (GeV/c);Top Mistag Rate");
@@ -282,14 +283,14 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         bkgd_numer_rebin->GetXaxis()->SetTitleOffset(1.3);
         bkgd_numer_rebin->GetYaxis()->SetTitleOffset(1.5);
         bkgd_numer_rebin->Draw("SAME");
-        string savename_mistag = savename + ".png";
+        string savename_mistag = savename +"_"+ syst +".png";
         c->SaveAs(savename_mistag.c_str());
 
       }
     }
   }
   OutFile->cd();
-  OutFile->Write();
+  // OutFile->Write();
   OutFile->Close();
 }
 
