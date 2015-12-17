@@ -33,10 +33,11 @@ using namespace std;
 
 void run(){
 
-    const double luminosity = 2460;  //166;
+    const double luminosity = 2564.649;//2460;  //166;
     double nevents_ttbar  = 19665194;
     double xsec_ttbar  =  815.96  ;
-    double scale_ttbar= xsec_ttbar * luminosity / nevents_ttbar;
+    double kfactor = 0.8;
+    double scale_ttbar= kfactor* xsec_ttbar * luminosity / nevents_ttbar;
     cout<<"scale_ttbar "<<scale_ttbar<<endl;
     /*
     //                          xs(pb)  / nevents * lumi
@@ -51,7 +52,7 @@ void run(){
     const int nMass = 6;
     TString name_zPrime[nMass] = {"M-1000_W-10", "M-1500_W-15", "M-2000_W-20", "M-2500_W-25", "M-3000_W-30", "M-3500_W-35"};
 
-    string date = "121415";
+    string date = "121615";
     const int nSyst = 3;
     string syst[nSyst] = {"_jec_dn", "_jec_nom", "_jec_up"};
 
@@ -69,21 +70,23 @@ void run(){
 
     // Get the ttbar MC, Zprime and data files
     cout<<"Getting the files"<<endl;
-    TFile* f_ttbar[nSyst]; TFile* f_data[nSyst]; TFile* f_zPrime[nMass][nSyst]; TH1F* Check;
+    TFile* f_ttbar[nSyst]; TFile* f_data; TFile* f_zPrime[nMass][nSyst]; TH1F* Check;
 
     for (int iSyst=0; iSyst<nSyst; iSyst++) {
-        string fttbar = "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_121415"+syst[iSyst]+".root";
+        string fttbar = "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_121615"+syst[iSyst]+".root";
         f_ttbar[iSyst]  = new TFile(fttbar.c_str(),"READ");
         cout<<"Got "<< fttbar.c_str() <<endl;
-        string fdata = "outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121415"+ syst[iSyst] +".root";
-        f_data[iSyst] = new TFile(fdata.c_str(),"READ");
-        cout<<"Got "<< fdata.c_str() <<endl;
     }
     cout<<"checking"<<endl;
-    string bkgdEst1 = "h_bkgdEst_modMass_tagMassSDTau32"+post[7]+syst[2];
-    Check = (TH1F*) f_data[2] ->Get(bkgdEst1.c_str())->Clone();
+    string bkgdEst1 = "h_bkgdEst_tagMassSDTau32"+post[7]; //h_bkgdEst_modMass_tagMassSDTau32
+    Check = (TH1F*) f_ttbar[2] ->Get(bkgdEst1.c_str())->Clone();
     cout<<"DEBUG: after reading the file array h_mttMass_tagMassSDTau32 for data jec up = "<< Check->GetSum()<<endl;
     
+    string fdata = "outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121615_jec_nom.root";
+    f_data = new TFile(fdata.c_str(),"READ");
+    cout<<"Got "<< fdata.c_str() <<endl;
+
+
     //for (int iMass=0; iMass<nMass; iMass++) {
     //    f_zPrime[iMass] = new TFile("runs/run_102715/ZprimeToTT_"+name_zPrime[iMass]+"_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_bckGrndEst_102715.root","READ");
     //    cout <<"Got runs/run_102715/ZprimeToTT_"+name_zPrime[iMass]+"_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_bckGrndEst_102715.root"<<endl;
@@ -92,7 +95,7 @@ void run(){
     //Check = (TH1F*) f_zPrime[5]->Get("h_mttMass_tagMassSDTau32")->Clone();
     //cout<<"DEBUG: after reading the file ="<< Check->GetSum()<<endl;
     TFile* OutFile;
-    string outfile_name = "histfile_"+date+"_bkgdEst_tagMassSDTau32_modMass"+".root";
+    string outfile_name = "histfile_"+date+"_bkgdEst_tagMassSDTau32"+".root"; ///h_bkgdEst_modMass_tagMassSDTau32    h_bkgdEst_tagMassSDTau32    
     OutFile  = new TFile( outfile_name.c_str(), "RECREATE");
     OutFile->cd();
 
@@ -102,21 +105,21 @@ void run(){
             cout <<"Getting h_backgrndEst hist for data and ttbar MC for "+post[i]+"_region"<<endl;
             TH1F* bckGrnd_ttbar; TH1F* bckGrnd_data; TH1F* h_bckGrnd;
             
-            string bkgdEst = "h_bkgdEst_modMass_tagMassSDTau32"+post[i]+syst[iSyst];
+            string bkgdEst = "h_bkgdEst_tagMassSDTau32"+post[i]; ///h_bkgdEst_modMass_tagMassSDTau32
             cout << "h_bkgdEst: "<< bkgdEst <<endl;
             bckGrnd_ttbar = (TH1F*) f_ttbar[iSyst]->Get(bkgdEst.c_str())->Clone();
             bckGrnd_ttbar -> Scale(scale_ttbar);
-            bckGrnd_data  = (TH1F*) f_data[iSyst] ->Get(bkgdEst.c_str())->Clone();
+            bckGrnd_data  = (TH1F*) f_data ->Get(bkgdEst.c_str())->Clone();
         
             // Subtract ttbar MC backGrndEst from data backgrndEst
             h_bckGrnd = (TH1F*) bckGrnd_data ->Clone();
             h_bckGrnd ->Add( (TH1F*)bckGrnd_ttbar, -1);
-            string h_bckGrnd_name = "h_bkgdEst_modMass_tagMassSDTau32"+post[i]+syst[iSyst];
+            string h_bckGrnd_name = "h_bkgdEst_tagMassSDTau32"+post[i]+syst[iSyst]; //h_bkgdEst_modMass_tagMassSDTau32
             h_bckGrnd -> SetName(h_bckGrnd_name.c_str());
 
             // Get mttMass ttbar signal hist
             TH1F* h_mttMass_ttbar;
-            string mttMass = "h_mttMass_tagMassSDTau32"+post[i]+syst[iSyst];
+            string mttMass = "h_mttMass_tagMassSDTau32"+post[i];
             cout << "h_mttMass: "<< bkgdEst <<endl;
             h_mttMass_ttbar = (TH1F*) f_ttbar[iSyst]->Get(mttMass.c_str())->Clone();
 
@@ -127,7 +130,7 @@ void run(){
 
             // Get mttMass data hist
             TH1F* h_mttMass_data;
-            h_mttMass_data = (TH1F*) f_data[iSyst]->Get(mttMass.c_str())->Clone();
+            h_mttMass_data = (TH1F*) f_data->Get(mttMass.c_str())->Clone();
             string h_mttMass_data_name = "h_mttMass_tagMassSDTau32_data"+post[i]+syst[iSyst];
             h_mttMass_data -> SetName(h_mttMass_data_name.c_str());
 
@@ -238,8 +241,8 @@ void run(){
 
             c->Update();
 
-            string outname = "stacked_comparison_softDrop_"+date+post[i]+syst[iSyst]+"_modMass.png";
-            string outname_log = "stacked_comparison_log_softDrop_"+date+post[i]+syst[iSyst]+"_modMass.png";
+            string outname = "stacked_comparison_softDrop_"+date+post[i]+syst[iSyst]+".png";
+            string outname_log = "stacked_comparison_log_softDrop_"+date+post[i]+syst[iSyst]+".png";
             c ->SaveAs(outname.c_str());
             p1 ->SetLogy();
             c ->SaveAs(outname_log.c_str());
