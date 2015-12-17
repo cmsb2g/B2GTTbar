@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 import ROOT
 
-date = "121415"
-jecSys = 0  # jecDn = -1; jecNom = 0; jecUp = +1
+date = "121615"
+jecSys = 1  # jecDn = -1; jecNom = 0; jecUp = +1
 
 if jecSys == 0:
   syst = "jec_nom"
@@ -24,22 +24,22 @@ print 'entries '+str(entries)
 
 #^ Make mistag plots
 
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive          = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive_" + syst           , "", 1400, 0, 7000 )
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag_"     + syst           , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag_"     + syst           , "", 1400, 0, 7000 ) 
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag_"     + syst           , "", 1400, 0, 7000 ) 
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive          = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive_" + syst           , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag_"     + syst           , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag_"     + syst           , "", 1400, 0, 7000 )   
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag_"     + syst           , "", 1400, 0, 7000 )
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive_" + syst  , "", 1400, 0, 7000 )
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag_"     + syst  , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag_"     + syst  , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag_"     + syst  , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive_" + syst  , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag_"     + syst  , "", 1400, 0, 7000 )     
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag_"     + syst  , "", 1400, 0, 7000 )     
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag_"     + syst  , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive          = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive"            , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag"                , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag"                , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag"                , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive          = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive"            , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag"                , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag"                , "", 1400, 0, 7000 )   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag"                , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive"   , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag"       , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag"       , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag"       , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive"   , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag"       , "", 1400, 0, 7000 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag"       , "", 1400, 0, 7000 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag"       , "", 1400, 0, 7000 )  
    
 
 count = 0
