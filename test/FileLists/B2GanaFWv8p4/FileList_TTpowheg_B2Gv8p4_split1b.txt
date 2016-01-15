@@ -1,0 +1,11 @@
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_11.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_110.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_111.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_112.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_113.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_114.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_115.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_116.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_117.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_118.root
+/store/user/decosa/ttDM/CMSSW_7_4_15/TT_TuneCUETP8M1_13TeV-powheg-pythia8/TT_TuneCUETP8M1_13TeV/151111_103631/0000/B2GEDMNtuple_119.root

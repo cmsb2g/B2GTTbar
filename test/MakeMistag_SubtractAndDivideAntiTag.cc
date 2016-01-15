@@ -87,10 +87,12 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
   if (data){
 
-    infile_name       = "outNTR_JetHT_Run2015D_PromptReco-v3andv4_oct19json_jdolen_all.root";
-    infile_ttbar_name = "ttjets_b2ganafw_v6_All_tag_and_probe_102415.root";
+    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121615_jec_nom.root";
+    infile_ttbar_name = "outAntiTag_TTpowheg_B2Gv8p4_reader5a85e65_all_121615_jec_up.root";
   } 
-
+  string syst = "jec_up";
+  string date = "121615";
+  
   int nbins = bins.size();
   stringstream temp1;
   temp1 << nbins;
@@ -99,7 +101,8 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   if (noSubtract) subtractOrNot = "_noSubstract_";
   if (!noSubtract) subtractOrNot = "_Substract_";
   if (!data) subtractOrNot = "_MC_";
-  string outfile_name = "MistagRate_nbins"+snbins+subtractOrNot+infile_name;
+
+  string outfile_name = "MistagRate_nbins_"+date+"_"+snbins+"_ttbar_"+syst+"_"+subtractOrNot+infile_name;
 
   cout<<"Opening "<<infile_name<<endl;
   InFile        = new TFile(      infile_name.c_str()      );
@@ -112,30 +115,44 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   vector <string> antitag_def;
   vector <string> tag_def;
 
-  antitag_def.push_back("AntiTagMinMass30_ReqTopMassFat");
-  antitag_def.push_back("AntiTagMinMass30_ReqTopMassSD");
-  antitag_def.push_back("AntiTagMinMass50_ReqTopMassFat");
-  antitag_def.push_back("AntiTagMinMass50_ReqTopMassSD");
-  antitag_def.push_back("AntiTagTau32_ReqTopMassFat");
+  //antitag_def.push_back("AntiTagMinMass30_ReqTopMassFat");
+  //antitag_def.push_back("AntiTagMinMass30_ReqTopMassSD");
+  //antitag_def.push_back("AntiTagMinMass50_ReqTopMassFat");
+  //antitag_def.push_back("AntiTagMinMass50_ReqTopMassSD");
+  //antitag_def.push_back("AntiTagTau32_ReqTopMassFat");
   antitag_def.push_back("AntiTagTau32_ReqTopMassSD");
  
-  tag_def.push_back("_TagMassFatMinMass");
-  tag_def.push_back("_TagMassSD"        );
+  //tag_def.push_back("_TagMassFatMinMass");
+  //tag_def.push_back("_TagMassSD"        );
   tag_def.push_back("_TagMassSDTau32"   );
-  tag_def.push_back("_TagMassSDMinMass" );
+  //tag_def.push_back("_TagMassSDMinMass" );
 
-  string pre = "AllHad/h_";
-  string post = "_jetPt";
-  string probe = "_Probe";
+  //string pre = "AllHad/h_";
+  string pre = "h_";
   string save_pre = "h_mistag_";
-
+  string probe = "_Probe";
+  vector <string> post;
+  post.push_back("_jetPt_dRapHi_inclusive");
+  post.push_back("_jetPt_dRapHi_2btag");
+  post.push_back("_jetPt_dRapHi_1btag");
+  post.push_back("_jetPt_dRapHi_0btag");
+  post.push_back("_jetPt_dRapLo_inclusive");
+  post.push_back("_jetPt_dRapLo_2btag");
+  post.push_back("_jetPt_dRapLo_1btag");
+  post.push_back("_jetPt_dRapLo_0btag");
+  
+  
+  
   for (unsigned int i=0; i<antitag_def.size(); i++ ){
-      for (unsigned int j=0; j<tag_def.size(); j++ ){
-        string numer = pre + antitag_def[i] + tag_def[j] + post;
-        string denom = pre + antitag_def[i] + probe+post;
-        string savename = save_pre + antitag_def[i] + tag_def[j] ;
-        string savename2 = save_pre + antitag_def[i] + tag_def[j] ;
-        string savename3 = "teff_" + antitag_def[i] + tag_def[j] ;
+    for (unsigned int j=0; j<tag_def.size(); j++ ){
+      for (unsigned int k=0; k<post.size(); k++ ){
+        string numer = pre + antitag_def[i] + tag_def[j] + post[k] ;
+        cout <<"numer:"<<numer<<endl;
+        string denom = pre + antitag_def[i] + probe + post[k] ;
+        cout <<"denom:"<<denom<<endl;
+        string savename = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
+        string savename2 = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
+        string savename3 = "teff_" + antitag_def[i] + tag_def[j] + post[k] ;
 
         // cout<<numer<<"      "<<denom<<"     "<<
         cout<<savename<<endl;
@@ -144,7 +161,7 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         TH1D * bkgd_denom = (TH1D*)InFile->Get(denom.c_str());
         bkgd_numer  ->Sumw2();
         bkgd_denom  ->Sumw2();
-       
+        
         TH1D *bkgd_numer_new =(TH1D*) bkgd_numer->Clone();
         TH1D *bkgd_denom_new =(TH1D*) bkgd_denom->Clone();
         bkgd_numer_new->Sumw2();
@@ -186,24 +203,25 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         if (data && !noSubtract){
 
       
-          double luminosity = 1263.890;  //166;
+          double luminosity = 2564.649;   //1263.890;  //166;
           double nevents_dataset_ttbar  = 19665194;
           double xsec_ttbar  =  815.96  ;
-          double scale_ttbar= xsec_ttbar * luminosity / nevents_dataset_ttbar;
+          double kfactor = 0.8;
+          double scale_ttbar= kfactor * xsec_ttbar * luminosity / nevents_dataset_ttbar;
           cout<<"scale_ttbar "<<scale_ttbar<<endl;
           ttbar_numer_rebin->Scale(scale_ttbar);
           ttbar_denom_rebin->Scale(scale_ttbar);
 
-          string ttbar_numer_name = "check_"+antitag_def[i] + tag_def[j] + post +"_ttbar";
-          string ttbar_denom_name = "check_"+antitag_def[i] + probe      + post +"_ttbar";
+          string ttbar_numer_name = "check_"+antitag_def[i] + tag_def[j] + post[k] +"_ttbar";
+          string ttbar_denom_name = "check_"+antitag_def[i] + probe      + post[k] +"_ttbar";
           ttbar_numer_rebin ->SetName(ttbar_numer_name.c_str() );
           ttbar_denom_rebin ->SetName(ttbar_denom_name.c_str() );
           ttbar_numer_rebin ->Write();
           ttbar_denom_rebin ->Write();
 
 
-          string data_nosubtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post +"_data_nosubtract";
-          string data_nosubtract_denom_name =  "check_"+antitag_def[i] + probe      + post +"_data_nosubtract";
+          string data_nosubtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post[k] +"_data_nosubtract";
+          string data_nosubtract_denom_name =  "check_"+antitag_def[i] + probe      + post[k] +"_data_nosubtract";
           bkgd_numer_rebin ->SetName(data_nosubtract_numer_name.c_str() );
           bkgd_denom_rebin ->SetName(data_nosubtract_denom_name.c_str() );
           bkgd_numer_rebin ->Write();
@@ -216,8 +234,8 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
           cout<<"post subtract numer "<<bkgd_numer_rebin->Integral()<<endl;
           cout<<"post subtract denom "<<bkgd_denom_rebin->Integral()<<endl;
 
-          string data_subtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post +"_data_subtract";
-          string data_subtract_denom_name =  "check_"+antitag_def[i] + probe      + post +"_data_subtract";
+          string data_subtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post[k] +"_data_subtract";
+          string data_subtract_denom_name =  "check_"+antitag_def[i] + probe      + post[k] +"_data_subtract";
           bkgd_numer_rebin ->SetName(data_subtract_numer_name.c_str() );
           bkgd_denom_rebin ->SetName(data_subtract_denom_name.c_str() );
           bkgd_numer_rebin ->Write();
@@ -227,37 +245,52 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
         // divide histograms
 
-        TEfficiency * eff_default = new TEfficiency(*bkgd_numer_rebin,*bkgd_denom_rebin);
-        TEfficiency * eff_normal  = new TEfficiency(*eff_default);
-        TEfficiency * eff_wilson  = new TEfficiency(*eff_default);
-        TEfficiency * eff_jeffrey = new TEfficiency(*eff_default);
-        eff_normal ->SetStatisticOption(TEfficiency::kFNormal);
-        eff_wilson ->SetStatisticOption(TEfficiency::kFWilson);
-        eff_jeffrey->SetStatisticOption(TEfficiency::kBJeffrey);
+        // TEfficiency * eff_default = new TEfficiency(*bkgd_numer_rebin,*bkgd_denom_rebin);
+        // TEfficiency * eff_normal  = new TEfficiency(*eff_default);
+        // TEfficiency * eff_wilson  = new TEfficiency(*eff_default);
+        // TEfficiency * eff_jeffrey = new TEfficiency(*eff_default);
+        // eff_normal ->SetStatisticOption(TEfficiency::kFNormal);
+        // eff_wilson ->SetStatisticOption(TEfficiency::kFWilson);
+        // eff_jeffrey->SetStatisticOption(TEfficiency::kBJeffrey);
 
 
-        string savename_eff_default = savename3 + "_default" ;     
-        string savename_eff_normal  = savename3 + "_normal"  ;    
-        string savename_eff_wilson  = savename3 + "_wilson"  ;    
-        string savename_eff_jeffrey = savename3 + "_jeffrey" ;     
-        eff_default ->SetName(savename_eff_default.c_str());      
-        eff_normal  ->SetName(savename_eff_normal .c_str());      
-        eff_wilson  ->SetName(savename_eff_wilson .c_str());
-        eff_jeffrey ->SetName(savename_eff_jeffrey.c_str());
-        eff_default ->Write();
-        eff_normal  ->Write();
-        eff_wilson  ->Write();
-        eff_jeffrey ->Write();
+        // string savename_eff_default = savename3 + "_default" ;     
+        // string savename_eff_normal  = savename3 + "_normal"  ;    
+        // string savename_eff_wilson  = savename3 + "_wilson"  ;    
+        // string savename_eff_jeffrey = savename3 + "_jeffrey" ;     
+        // eff_default ->SetName(savename_eff_default.c_str());      
+        // eff_normal  ->SetName(savename_eff_normal .c_str());      
+        // eff_wilson  ->SetName(savename_eff_wilson .c_str());
+        // eff_jeffrey ->SetName(savename_eff_jeffrey.c_str());
+        // eff_default ->Write();
+        // eff_normal  ->Write();
+        // eff_wilson  ->Write();
+        // eff_jeffrey ->Write();
 
         bkgd_numer_rebin->Divide(bkgd_numer_rebin,bkgd_denom_rebin,1,1,"B");
-        bkgd_numer_rebin->SetTitle(";;Mistag Rate");
+        bkgd_numer_rebin->SetTitle(";Jet PT (GeV/c);Top Mistag Rate");
         bkgd_numer_rebin->SetName(savename.c_str());
         bkgd_numer_rebin->Write();
 
+        TCanvas* c;
+        c = new TCanvas("c", "" , 700, 625);
+        c->cd();
+        bkgd_numer_rebin->Draw();
+        bkgd_numer_rebin->GetXaxis()->SetTitleSize(0.03);
+        bkgd_numer_rebin->GetXaxis()->SetLabelSize(0.025);
+        bkgd_numer_rebin->GetYaxis()->SetTitleSize(0.03);
+        bkgd_numer_rebin->GetYaxis()->SetLabelSize(0.025);
+        bkgd_numer_rebin->GetXaxis()->SetTitleOffset(1.3);
+        bkgd_numer_rebin->GetYaxis()->SetTitleOffset(1.5);
+        bkgd_numer_rebin->Draw("SAME");
+        string savename_mistag = savename +"_"+ syst +".png";
+        c->SaveAs(savename_mistag.c_str());
+
+      }
     }
   }
   OutFile->cd();
-  OutFile->Write();
+  // OutFile->Write();
   OutFile->Close();
 }
 
