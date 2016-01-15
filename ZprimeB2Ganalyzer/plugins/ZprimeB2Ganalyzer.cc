@@ -177,6 +177,7 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   tree_had = fs->make<TTree>("tree_had","tree_had");//all hadronic tree
 
   //hadronic tree variables
+  listOfHadVars.push_back("eventNumber");
   listOfHadVars.push_back("cscFilt");
   listOfHadVars.push_back("vertexFilt");
   listOfHadVars.push_back("hbheFilt");
@@ -186,6 +187,10 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   listOfHadVars.push_back("ak8TrimjetTrig");
   listOfHadVars.push_back("ht650TrimjetTrig");
   listOfHadVars.push_back("ht700TrimjetTrig");
+
+  listOfHadVars.push_back("L1cor");
+  listOfHadVars.push_back("L2cor");
+  listOfHadVars.push_back("L3cor");
 
   listOfHadVars.push_back("npv");
   listOfHadVars.push_back("evWeight");
@@ -212,6 +217,12 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   listOfHadVars.push_back("topTagJet0_prunedMass");
   listOfHadVars.push_back("topTagJet0_trimmedMass");
   listOfHadVars.push_back("topTagJet0_softDropMass");
+  listOfHadVars.push_back("topTagJet0_ungroomedMassRaw");
+  listOfHadVars.push_back("topTagJet0_topMassRaw");
+  listOfHadVars.push_back("topTagJet0_filteredMassRaw");
+  listOfHadVars.push_back("topTagJet0_prunedMassRaw");
+  listOfHadVars.push_back("topTagJet0_trimmedMassRaw");
+  listOfHadVars.push_back("topTagJet0_softDropMassRaw");
 
   listOfHadVars.push_back("topTagJet0_JetCorr");
   listOfHadVars.push_back("topTagJet0_JetCorrUp");
@@ -245,6 +256,12 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   listOfHadVars.push_back("topTagJet1_prunedMass");
   listOfHadVars.push_back("topTagJet1_trimmedMass");
   listOfHadVars.push_back("topTagJet1_softDropMass");
+  listOfHadVars.push_back("topTagJet1_ungroomedMassRaw");
+  listOfHadVars.push_back("topTagJet1_topMassRaw");
+  listOfHadVars.push_back("topTagJet1_filteredMassRaw");
+  listOfHadVars.push_back("topTagJet1_prunedMassRaw");
+  listOfHadVars.push_back("topTagJet1_trimmedMassRaw");
+  listOfHadVars.push_back("topTagJet1_softDropMassRaw");
 
   listOfHadVars.push_back("topTagJet1_JetCorr");
   listOfHadVars.push_back("topTagJet1_JetCorrUp");
@@ -299,7 +316,8 @@ ZprimeB2Ganalyzer::ZprimeB2Ganalyzer(const edm::ParameterSet& iConfig):
   //listOfHadVars.push_back("pruned_Z_mass");
   //listOfHadVars.push_back("trimmed_Z_mass");
   listOfHadVars.push_back("softDrop_Z_mass");
-  listOfHadVars.push_back("ungroomed_Z_mass");
+  listOfHadVars.push_back("ungroomedDeltaPhi");
+  listOfHadVars.push_back("ungroomedDeltaRapidity");
 
   listOfHadVars.push_back("leptSelectionPass");
   listOfHadVars.push_back("semileptSelectionPass");
@@ -1078,6 +1096,7 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
 
    //cout <<"Event number: "<<*h_eventNumber<<endl;
+   if (h_eventNumber.isValid()) hadTreeVars["eventNumber"] = *h_eventNumber;
 
    //want to make sure the AK8 jet vectors match up
    if (h_jetsAK8Pt->size() != h_jetsAK8minmass->size() || h_jetsAK8Pt->size() != h_jetsAK8topMass->size()){
@@ -1612,11 +1631,20 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
        // cout<<"JEC up: "<<corrUp<<endl;
        //cout<<"JEC down: "<<corrDn<<endl;
 
-       double jetsAK8topMass = (*h_jetsAK8topMass)[i];
-       double jetsAK8trimmedMass = (*h_jetsAK8trimmedMass)[i];
-       double jetsAK8prunedMass = (*h_jetsAK8prunedMass)[i];
-       double jetsAK8filteredMass = (*h_jetsAK8filteredMass)[i];
-       double jetsAK8softDropMass = (*h_jetsAK8softDropMass)[i];
+       //Raw Mass values
+       float jetsAK8ungroomedMassRaw = AK8P4Raw.M();
+       float jetsAK8topMassRaw = (*h_jetsAK8topMass)[i];
+       float jetsAK8trimmedMassRaw = (*h_jetsAK8trimmedMass)[i];
+       float jetsAK8prunedMassRaw = (*h_jetsAK8prunedMass)[i];
+       float jetsAK8filteredMassRaw = (*h_jetsAK8filteredMass)[i];
+       float jetsAK8softDropMassRaw = (*h_jetsAK8softDropMass)[i];
+
+       //Mass values to be corrected
+       float jetsAK8topMass = (*h_jetsAK8topMass)[i];
+       float jetsAK8trimmedMass = (*h_jetsAK8trimmedMass)[i];
+       float jetsAK8prunedMass = (*h_jetsAK8prunedMass)[i];
+       float jetsAK8filteredMass = (*h_jetsAK8filteredMass)[i];
+       float jetsAK8softDropMass = (*h_jetsAK8softDropMass)[i];
 	 
        //no JEC applied
        if(JECshift_ == 0){
@@ -1664,6 +1692,10 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
        if (factors.size() > 0) L1cor = factors[0];
        if (factors.size() > 1) L2cor = factors[1];
        if (factors.size() > 2) L3cor = factors[2];
+
+       hadTreeVars["L1cor"] = L1cor;
+       hadTreeVars["L2cor"] = L2cor;
+       hadTreeVars["L3cor"] = L3cor;
 
        //JER and JAR
        float ptsmear   = 1.0;
@@ -1770,6 +1802,12 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	   hadTreeVars["topTagJet0_prunedMass"] = jetsAK8prunedMass;
 	   hadTreeVars["topTagJet0_trimmedMass"] = jetsAK8trimmedMass;
 	   hadTreeVars["topTagJet0_softDropMass"] = jetsAK8softDropMass;
+	   hadTreeVars["topTagJet0_ungroomedMassRaw"] = jetsAK8ungroomedMassRaw;
+	   hadTreeVars["topTagJet0_topMassRaw"] = jetsAK8topMassRaw;
+	   hadTreeVars["topTagJet0_filteredMassRaw"] = jetsAK8filteredMassRaw;
+	   hadTreeVars["topTagJet0_prunedMassRaw"] = jetsAK8prunedMassRaw;
+	   hadTreeVars["topTagJet0_trimmedMassRaw"] = jetsAK8trimmedMassRaw;
+	   hadTreeVars["topTagJet0_softDropMassRaw"] = jetsAK8softDropMassRaw;
 
 	   //Lorentz vectors
 	   softDropJet0.SetPtEtaPhiM(jetsAK8Pt,jetsAK8Eta,jetsAK8Phi,jetsAK8softDropMass);
@@ -1877,6 +1915,12 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	   hadTreeVars["topTagJet1_prunedMass"] = jetsAK8prunedMass;
 	   hadTreeVars["topTagJet1_trimmedMass"] = jetsAK8trimmedMass;
 	   hadTreeVars["topTagJet1_softDropMass"] = jetsAK8softDropMass;
+	   hadTreeVars["topTagJet1_ungroomedMassRaw"] = jetsAK8ungroomedMassRaw;
+	   hadTreeVars["topTagJet1_topMassRaw"] = jetsAK8topMassRaw;
+	   hadTreeVars["topTagJet1_filteredMassRaw"] = jetsAK8filteredMassRaw;
+	   hadTreeVars["topTagJet1_prunedMassRaw"] = jetsAK8prunedMassRaw;
+	   hadTreeVars["topTagJet1_trimmedMassRaw"] = jetsAK8trimmedMassRaw;
+	   hadTreeVars["topTagJet1_softDropMassRaw"] = jetsAK8softDropMassRaw;
 
 	   //Lorentz vectors
 	   softDropJet1.SetPtEtaPhiM(jetsAK8Pt,jetsAK8Eta,jetsAK8Phi,jetsAK8softDropMass);
@@ -1984,7 +2028,8 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
      tree_had->Fill();
      
      if (nAK8pt400eta2p4jets > 0){
-       hadTreeVars["cutflow"] = 1.0;//1 AK8 jet that passes preselection       tree_had->Fill();
+       hadTreeVars["cutflow"] = 1.0;//1 AK8 jet that passes preselection
+       tree_had->Fill();
        if (nAK8pt400eta2p4jets > 1){
 	 hadTreeVars["cutflow"] = 2.0;//2 AK8 jets that pass preselection
 	 //Reconstructing the Z-peak with 2 good AK8 jets
@@ -1992,6 +2037,10 @@ ZprimeB2Ganalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 	 hadTreeVars["softDrop_Z_mass"] = softDrop_Z.M();
 	 TLorentzVector ungroomed_Z = ungroomedJet0 + ungroomedJet1;
 	 hadTreeVars["ungroomed_Z_mass"] = ungroomed_Z.M();
+	 float ungroomedDeltaPhi = ungroomedJet0.DeltaPhi(ungroomedJet1);
+	 hadTreeVars["ungroomedDeltaPhi"] = ungroomedDeltaPhi;
+	 float ungroomedDeltaRapidity =  fabs(ungroomedJet0.Rapidity() - ungroomedJet1.Rapidity());
+	 hadTreeVars["ungroomedDeltaRapidity"] = ungroomedDeltaRapidity;
 	 tree_had->Fill();
        }//2+ good AK8 jets
        if ((topTagJet0_topTagFlag == 1) || (topTagJet1_topTagFlag == 1)){

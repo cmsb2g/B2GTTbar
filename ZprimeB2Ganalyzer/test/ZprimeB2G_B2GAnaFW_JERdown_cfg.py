@@ -35,8 +35,8 @@ process.b2gntuple = cms.EDAnalyzer('ZprimeB2Ganalyzer',
                                    isMC = cms.bool(True),
                                    isFlat = cms.bool(False),
                                    applyFilters = cms.bool(True),
-                                   JERshift = cms.double(0),
-                                   JECshift = cms.double(1),
+                                   JERshift = cms.double(-1),
+                                   JECshift = cms.double(0),
                                    reweightTopPt = cms.bool(False),
                                    puFile = cms.string('/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/pileup_reweight.root'),
                                    )
@@ -45,7 +45,7 @@ process.b2gntuple = cms.EDAnalyzer('ZprimeB2Ganalyzer',
 #OUTPUT
  
 #process.TFileService = cms.Service("TFileService", fileName = cms.string("histo_DATA.root"))
-process.TFileService = cms.Service("TFileService", fileName = cms.string("output/B2Gtree_B2Gtree_ZprimeToTT_M-1250_W-125_JECup.root") )
+process.TFileService = cms.Service("TFileService", fileName = cms.string("output/B2Gtree_B2Gtree_ZprimeToTT_M-1250_W-125_JERdown.root") )
 
 process.out = cms.OutputModule("PoolOutputModule",
                                fileName = cms.untracked.string("ZprimeB2G_out.root"),
