@@ -3,25 +3,61 @@ import ROOT
 from math import *
 import copy
 # ROOT.gSystem.Load("libAnalysisPredictedDistribution")
+from optparse import OptionParser
+parser = OptionParser()
 
-date = "121615"
-jecSys = 0  # jecDn = -1; jecNom = 0; jecUp = +1
+parser.add_option('--file', type='string', action='store',
+                  dest='file',
+                  help='Input file')
 
-if jecSys == 0:
-  syst = "jec_nom"
-elif jecSys == 1:
-  syst = "jec_up"
-elif jecSys == -1:
-  syst = "jec_dn"
+parser.add_option('--mistagFile', type='string', action='store',
+                  dest='mistagFile',
+                  help='MistagRate file')
 
-OUT =  ROOT.TFile("outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_"+date+"_"+syst+".root","RECREATE");
-F1   =  ROOT.TFile("/eos/uscms/store/user/jdolen/B2GAnaFW/Trees/JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65.root");
+parser.add_option('--outname', type='string', action='store',
+                  default='outBkgdEst_outplots',
+                  dest='outname',
+                  help='Name of output file')
+
+parser.add_option('--Syst', type='int', action='store',
+                  default= 0,
+                  dest='Syst',
+                  help='Systematic type; jerDn = -2; jecDn = -1; jecNom = 0; jecUp = +1; jerUp = +2 ')
+
+parser.add_option('--date', type='string', action='store',
+                  default='011416',
+                  dest='date',
+                  help='date')
+
+(options, args) = parser.parse_args()
+argv = []
+
+#date = "121615"
+#Syst = 0  # jerDn = -2; jecDn = -1; jecNom = 0; jecUp = +1; jerUp = +2
+
+if options.Syst == 0:
+  systType = "nom"
+elif options.Syst == 1:
+  systType = "jec_up"
+elif options.Syst == -1:
+  systType = "jec_dn"
+elif options.Syst == 2:
+  systType = "jer_up"
+elif options.Syst == -2:
+  systType = "jer_dn"
+
+
+#OUT =  ROOT.TFile("outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_"+date+"_"+systType+".root","RECREATE");
+OUT =  ROOT.TFile(options.outname+"_"+options.date+"_"+systType+".root","RECREATE");
+#F1   =  ROOT.TFile("/eos/uscms/store/user/jdolen/B2GAnaFW/Trees/JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65.root");
+F1   =  ROOT.TFile(options.file);
 Tree = F1.Get("TreeAllHad");
 entries = Tree.GetEntries();
 print 'entries '+str(entries)  
 
 
-Fmistag = ROOT.TFile("MistagRate_nbins_121615_8_ttbar_"+syst+"__Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121615_jec_nom.root")
+#Fmistag = ROOT.TFile("MistagRate_nbins_121615_8_ttbar_nom__Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121615_jec_nom.root")
+Fmistag = ROOT.TFile(options.mistagFile)
 
 post = ["_jetPt_dRapHi_inclusive", "_jetPt_dRapHi_2btag", "_jetPt_dRapHi_1btag", "_jetPt_dRapHi_0btag",   
         "_jetPt_dRapLo_inclusive", "_jetPt_dRapLo_2btag", "_jetPt_dRapLo_1btag", "_jetPt_dRapLo_0btag"]
@@ -131,18 +167,34 @@ for event in Tree:
   Jet1CorrFactorUp = event.Jet1CorrFactorUp
   Jet1CorrFactorDn = event.Jet1CorrFactorDn
 
-  if jecSys == 0:
-      jet0P4 = jet0P4Raw * Jet0CorrFactor
-      jet1P4 = jet1P4Raw * Jet1CorrFactor
+  Jet0PtSmearFactor   = event.Jet0PtSmearFactor
+  Jet0PtSmearFactorUp = event.Jet0PtSmearFactorUp
+  Jet0PtSmearFactorDn = event.Jet0PtSmearFactorDn
+
+  Jet1PtSmearFactor   = event.Jet1PtSmearFactor
+  Jet1PtSmearFactorUp = event.Jet1PtSmearFactorUp
+  Jet1PtSmearFactorDn = event.Jet1PtSmearFactorDn
+
+  if options.Syst == 0:
+      jet0P4 = jet0P4Raw * Jet0CorrFactor * Jet0PtSmearFactor
+      jet1P4 = jet1P4Raw * Jet1CorrFactor * Jet1PtSmearFactor
       maxJetHt = event.HT
-  elif jecSys == 1:
-      jet0P4 = jet0P4Raw * Jet0CorrFactorUp
-      jet1P4 = jet1P4Raw * Jet1CorrFactorUp
+  elif options.Syst == 1:
+      jet0P4 = jet0P4Raw * Jet0CorrFactorUp * Jet0PtSmearFactor
+      jet1P4 = jet1P4Raw * Jet1CorrFactorUp * Jet1PtSmearFactor
       maxJetHt = event.HT_CorrUp
-  elif jecSys == -1:
-      jet0P4 = jet0P4Raw * Jet0CorrFactorDn
-      jet1P4 = jet1P4Raw * Jet1CorrFactorDn
+  elif options.Syst == -1:
+      jet0P4 = jet0P4Raw * Jet0CorrFactorDn * Jet0PtSmearFactor
+      jet1P4 = jet1P4Raw * Jet1CorrFactorDn * Jet1PtSmearFactor
       maxJetHt = event.HT_CorrDn
+  elif options.Syst == 2:
+      jet0P4 = jet0P4Raw * Jet0CorrFactor * Jet0PtSmearFactorUp
+      jet1P4 = jet1P4Raw * Jet1CorrFactor * Jet1PtSmearFactorUp
+      maxJetHt = event.HT_PtSmearUp
+  elif options.Syst == -2:
+      jet0P4 = jet0P4Raw * Jet0CorrFactor * Jet0PtSmearFactorDn
+      jet1P4 = jet1P4Raw * Jet1CorrFactor * Jet1PtSmearFactorDn
+      maxJetHt = event.HT_PtSmearDn
   
   DijetMass = (jet0P4 + jet1P4).M()
 
