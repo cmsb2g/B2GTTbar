@@ -88,6 +88,8 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 	labels[names::ZPN30_JERDN] = "ZpN30_jer_dn";
 	labels[names::ZPN35_JERDN] = "ZpN35_jer_dn";
 	labels[names::ZPN40_JERDN] = "ZpN40_jer_dn";
+	labels[names::ZPN30_PDFUP] = "ZpN30_pdf_up";
+	labels[names::ZPN30_PDFDN] = "ZpN30_pdf_dn";
 	
 
 	int nTagCats = 7;
@@ -164,6 +166,8 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 	files[names::ZPN30_JERDN] = dir +  "outBkgdEst_ZprimeToTT_M-3000_W-30_B2Gv8p4_reader603e_011416_jer_dn.root";
 	files[names::ZPN35_JERDN] = dir +  "outBkgdEst_ZprimeToTT_M-3500_W-35_B2Gv8p4_reader603e_011416_jer_dn.root";
 	files[names::ZPN40_JERDN] = dir +  "outBkgdEst_ZprimeToTT_M-4000_W-40_B2Gv8p4_reader603e_011416_jer_dn.root";
+	files[names::ZPN30_PDFUP] = "outBkgdEst_ZprimeToTT_M-3000_W-30_B2Gv8p4_reader603e_012016_pdf_up.root";
+	files[names::ZPN30_PDFDN] = "outBkgdEst_ZprimeToTT_M-3000_W-30_B2Gv8p4_reader603e_012016_pdf_dn.root";
 
 	for (int proc = 0; proc < names::NUM_PROCS; proc++){
 
@@ -261,6 +265,8 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 		histos[names::ZPN30_JERDN][tag]->Scale( 1. * lumi / 117069. ); 
 		histos[names::ZPN35_JERDN][tag]->Scale( 1. * lumi / 113527. );
 		histos[names::ZPN40_JERDN][tag]->Scale( 1. * lumi / 111625. );
+		histos[names::ZPN30_PDFUP][tag]->Scale( 1. * lumi / 117069. ); 
+		histos[names::ZPN30_PDFUP][tag]->Scale( 1. * lumi / 117069. ); 
 
 
 	histos[names::TT][tag]->SetFillColor(kRed);
@@ -439,6 +445,8 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 		histos[names::ZPN35_JERDN][tag]->Write( Form("btag%d__Zprime3500__jer__minus", tag) );	
 		histos[names::ZPN40_JERDN][tag]->Write( Form("btag%d__Zprime4000__jer__minus", tag) );	
 
+		histos[names::ZPN30_PDFUP][tag]->Write( Form("btag%d__Zprime3000__pdf__plus", tag) );
+		histos[names::ZPN30_PDFDN][tag]->Write( Form("btag%d__Zprime3000__pdf__minus", tag) );
 
 		}
 
