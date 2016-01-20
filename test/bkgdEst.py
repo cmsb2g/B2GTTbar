@@ -45,7 +45,14 @@ elif options.Syst == 2:
   systType = "jer_up"
 elif options.Syst == -2:
   systType = "jer_dn"
-
+elif options.Syst == 3:
+  systType = "pdf_up"
+elif options.Syst == -3:
+  systType = "pdf_dn"
+elif options.Syst == 4:
+  systType = "q2_up"
+elif options.Syst == -4:
+  systType = "q2_dn"
 
 #OUT =  ROOT.TFile("outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_"+date+"_"+systType+".root","RECREATE");
 OUT =  ROOT.TFile(options.outname+"_"+options.date+"_"+systType+".root","RECREATE");
@@ -199,6 +206,8 @@ for event in Tree:
   DijetMass = (jet0P4 + jet1P4).M()
 
 
+
+
   if jet0P4.Perp() < 400 or jet1P4.Perp() < 400:
     continue
 
@@ -281,6 +290,15 @@ for event in Tree:
       DijetMass_modMass_jet1 = (jet0P4+ jet1P4_modMass ).M()
       DijetMass_modMass_flat_jet1 = (jet0P4+ jet1P4_modMass_flat ).M()
 
+  evWeight = 1
+  if (options.Syst == 3):
+     evWeight *= event.CT10PDFweight_CorrUp
+  if (options.Syst == -3):
+     evWeight *= event.CT10PDFweight_CorrDn
+  if (options.Syst == 4):
+     evWeight *= event.Q2weight_CorrUp
+  if (options.Syst == -4):
+     evWeight *= event.Q2weight_CorrDn
 
 
   #^ fill double tagged dijet distributions
@@ -312,7 +330,6 @@ for event in Tree:
   
 
 
-  evWeight = 1
   rand1 =  ROOT.TRandom3(0)
   rand_bkgdest  = rand1.Uniform(0,1.0)
 
