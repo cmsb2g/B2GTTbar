@@ -1,0 +1,11 @@
+<use name="FWCore/Framework"/>
+<use name="FWCore/PluginManager"/>
+<use name="FWCore/ParameterSet"/>
+<use name="DataFormats/PatCandidates"/>
+<use name="DataFormats/PatCandidates"/>
+<use name="PhysicsTools/UtilAlgos"/>
+<use name="FWCore/ServiceRegistry"/>
+<use name="clhep"/>
+<use name="ROOT"/>
+<flags EDM_PLUGIN="1"/>
+<flags USER_CXXFLAGS="-Wno-error=unused-but-set-variable"/>

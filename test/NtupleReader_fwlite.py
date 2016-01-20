@@ -487,9 +487,9 @@ l_metPhi = ("metNoHF" , "metNoHFPhi")
 if options.isMC :
     h_generator = Handle("GenEventInfoProduct")
     l_generator = ("generator" , "" )
-    h_lhe = Handle("LHERunInfoProduct")
+    h_lhe = Handle("LHEEventProduct")
     l_lhe = ("externalLHEProducer", "")
-
+    
 #AK8 Jets label and Handles
 h_jetsAK8Pt = Handle("std::vector<float>")
 l_jetsAK8Pt = ("jetsAK8" , "jetAK8Pt") #
@@ -1226,6 +1226,12 @@ if options.writeTree  and options.selection == 2 :
     HT_PtSmearUp        = array('f', [-1.])   
     HT_PtSmearDn        = array('f', [-1.])   
 
+    Q2weight_CorrDn     = array('f', [-1.])
+    Q2weight_CorrUp     = array('f', [-1.])
+
+    CT10PDFweight_CorrDn     = array('f', [-1.])
+    CT10PDFweight_CorrUp     = array('f', [-1.])
+    
     AllHadRunNum        = array('f', [-1.])   
     AllHadLumiBlock     = array('f', [-1.])   
     AllHadEventNum      = array('f', [-1.])   
@@ -1390,6 +1396,12 @@ if options.writeTree  and options.selection == 2 :
     TreeAllHad.Branch('HT_CorrUp'         ,  HT_CorrUp       ,  'HT_CorrUp/F'          )
     TreeAllHad.Branch('HT_PtSmearUp'      ,  HT_PtSmearUp    ,  'HT_PtSmearUp/F'       )
     TreeAllHad.Branch('HT_PtSmearDn'      ,  HT_PtSmearDn    ,  'HT_PtSmearDn/F'       )
+
+    TreeAllHad.Branch('Q2weight_CorrDn'   ,  Q2weight_CorrDn       ,  'Q2weight_CorrDn/F'          )
+    TreeAllHad.Branch('Q2weight_CorrUp'   ,  Q2weight_CorrUp       ,  'Q2weight_CorrUp/F'          )
+
+    TreeAllHad.Branch('CT10PDFweight_CorrDn'   ,  CT10PDFweight_CorrDn       ,  'CT10PDFweight_CorrDn/F'          )
+    TreeAllHad.Branch('CT10PDFweight_CorrUp'   ,  CT10PDFweight_CorrUp       ,  'CT10PDFweight_CorrUp/F'          )
 
     TreeAllHad.Branch('AllHadRunNum'         ,  AllHadRunNum       ,  'AllHadRunNum/F'          )
     TreeAllHad.Branch('AllHadLumiBlock'      ,  AllHadLumiBlock    ,  'AllHadLumiBlock/F'       )
@@ -2152,6 +2164,62 @@ for ifile in files : #{ Loop over root files
             evWeight *= hPU.GetBinContent( hPU.GetXaxis().FindBin( NPV) )
             if options.verbose :
                 print 'after purw, evWeight is : ' + str(evWeight)
+
+            #@Event weight errors
+            gotLHE = event.getByLabel( l_lhe, h_lhe )
+            lhe = h_lhe.product()
+           
+            #Q^2 up and down
+            maxQ2wgt_frac = 1
+            minQ2wgt_frac = 1
+            
+            for i_lhe in range(0,9):
+                if i_lhe != 5 and i_lhe != 7:
+                    Q2wgt = lhe.weights()[i_lhe].wgt
+                    Q2wgt_frac = Q2wgt/(lhe.weights()[0].wgt)
+                    maxQ2wgt_frac = max(maxQ2wgt_frac, Q2wgt_frac)
+                    minQ2wgt_frac = min(minQ2wgt_frac, Q2wgt_frac)
+                    if options.verbose :
+                        print str(i_lhe) + ".)"
+                        print "Q^2 LHE weight: " + str(Q2wgt)
+                        Q2wgt_norm = Q2wgt/(lhe.originalXWGTUP())
+                        print "Normalized Q2wgt: " + str(Q2wgt_norm)
+                        print "Fractional Q2wgt (compared to central value): " + str(Q2wgt_frac)
+
+            Q2wgt_up = maxQ2wgt_frac
+            Q2wgt_down = minQ2wgt_frac
+            if options.verbose :
+                print "Q^2 weight up: " + str(Q2wgt_up)
+                print "Q^2 weight down: " + str(Q2wgt_down)
+                print ""
+
+            #CT10 PDF up and down
+            maxCT10PDFwgt_frac = 1
+            minCT10PDFwgt_frac = 1
+            
+            for i_lhePDF in range(392,445):
+                CT10PDFwgt = lhe.weights()[i_lhePDF].wgt
+                CT10PDFwgt_frac = CT10PDFwgt/(lhe.weights()[392].wgt)
+                maxCT10PDFwgt_frac = max(maxCT10PDFwgt_frac, CT10PDFwgt_frac)
+                minCT10PDFwgt_frac = min(minCT10PDFwgt_frac, CT10PDFwgt_frac)
+                if options.verbose :
+                    print str(i_lhePDF) + ".)"
+                    print "CT10 PDF LHE weight: " + str(CT10PDFwgt)
+                    CT10PDFwgt_norm = CT10PDFwgt/(lhe.originalXWGTUP())
+                    print "Normalized CT10 PDF wgt: " + str(CT10PDFwgt_norm)
+                    print "Fractional CT10 PDF wgt (compared to central value): " + str(CT10PDFwgt_frac)
+
+            CT10PDFwgt_up = maxCT10PDFwgt_frac
+            CT10PDFwgt_down = minCT10PDFwgt_frac
+            if options.verbose :
+                print "CT10 PDF weight up: " + str(CT10PDFwgt_up)
+                print "CT10 PDF weight down: " + str(CT10PDFwgt_down)
+                print ""
+                
+            ##weight_id = lhe.weights()[0].wgt
+            #print '***********' + str(weight_id)
+            ## if not gotGenerator or not gotLHE :
+            ##     continue
             
         h_NPVert.Fill( NPV, evWeight )
         
@@ -2168,10 +2236,7 @@ for ifile in files : #{ Loop over root files
             # Event weights
             gotGenerator = event.getByLabel( l_generator, h_generator )
             generator = h_generator.product()
-            ## gotLHE = event.getByLabel( l_lhe, h_lhe )
-            ## lhe = h_lhe.product()
-            ## if not gotGenerator or not gotLHE :
-            ##     continue
+
 
             if not gotGenerator :
                 continue
@@ -4778,6 +4843,12 @@ for ifile in files : #{ Loop over root files
                     HT_CorrUp                      [0] = ak8JetHt_CorrUp   
                     HT_PtSmearUp                   [0] = ak8JetHt_PtSmearUp
                     HT_PtSmearDn                   [0] = ak8JetHt_PtSmearDn
+
+                    Q2weight_CorrDn                [0] = Q2wgt_down
+                    Q2weight_CorrUp                [0] = Q2wgt_up 
+
+                    CT10PDFweight_CorrDn           [0] = CT10PDFwgt_down
+                    CT10PDFweight_CorrUp           [0] = CT10PDFwgt_up   
 
                     AllHadRunNum                   [0] = event.object().id().run()
                     AllHadLumiBlock                [0] = event.object().luminosityBlock()
