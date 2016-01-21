@@ -53,12 +53,19 @@ elif options.Syst == 3:
   systType = "bTag_up"
 elif options.Syst == -3:
   systType = "bTag_dn"
-
+elif options.Syst == 4:
+  systType = "pdf_up"
+elif options.Syst == -4:
+  systType = "pdf_dn"
+elif options.Syst == 5:
+  systType = "q2_up"
+elif options.Syst == -5:
+  systType = "q2_dn"
 
 #OUT =  ROOT.TFile("outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_"+date+"_"+systType+".root","RECREATE");
 OUT =  ROOT.TFile(options.outname+"_"+options.date+"_"+systType+".root","RECREATE");
 #F1   =  ROOT.TFile("/eos/uscms/store/user/jdolen/B2GAnaFW/Trees/JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65.root");
-F1   =  ROOT.TFile(options.file);
+F1   =  ROOT.TFile.Open(options.file);
 Tree = F1.Get("TreeAllHad");
 entries = Tree.GetEntries();
 print 'entries '+str(entries)  
@@ -219,7 +226,7 @@ for event in Tree:
   Jet1PtSmearFactorDn = event.Jet1PtSmearFactorDn
 
  
-  if options.Syst == 0:
+  if (options.Syst == 0 or abs(options.Syst) == 4 or abs(options.Syst) == 5):
       jet0P4 = jet0P4Raw * Jet0CorrFactor * Jet0PtSmearFactor
       jet1P4 = jet1P4Raw * Jet1CorrFactor * Jet1PtSmearFactor
       reader = ROOT.BTagCalibrationReader(calib, 0, "comb", "central")  # 0 is for loose op 
@@ -378,6 +385,19 @@ for event in Tree:
 
 
   evWeight = 1
+
+  evWeight = 1
+  if (options.Syst == 4):
+     evWeight *= event.CT10PDFweight_CorrUp
+  if (options.Syst == -4):
+     evWeight *= event.CT10PDFweight_CorrDn
+  if (options.Syst == 5):
+     evWeight *= event.Q2weight_CorrUp
+  if (options.Syst == -5):
+     evWeight *= event.Q2weight_CorrDn
+
+
+
   #^ fill double tagged dijet distributions
   if topTag0MassSDTau32 and topTag1MassSDTau32:
       if event.DijetDeltaRap > 1 :
