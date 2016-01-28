@@ -209,6 +209,16 @@ parser.add_option('--isMC', action='store_true',
                   dest='isMC',
                   help='is it MC?')
 
+parser.add_option('--isZprime', action='store_true',
+                  default=False,
+                  dest='isZprime',
+                  help='is it Zprime?')
+
+parser.add_option('--isttbar', action='store_true',
+                  default=False,
+                  dest='isttbar',
+                  help='is it ttbar?')
+
 parser.add_option('--getGenInfo', action='store_true',
                   default=False,
                   dest='getGenInfo',
@@ -1892,8 +1902,9 @@ trigsToRun = [
 for ifile in files : #{ Loop over root files
     print 'Processing file ' + ifile
     events = Events (ifile)
+    print 'Opened file successfully'
     if options.verbose : 
-        print 'Opened file successfullly'
+        print 'Opened file successfully'
     if options.maxevents > 0 and Nevents > options.maxevents :
         break
 
@@ -2165,6 +2176,7 @@ for ifile in files : #{ Loop over root files
             if options.verbose :
                 print 'after purw, evWeight is : ' + str(evWeight)
 
+        if options.isZprime or options.isttbar:
             #@Event weight errors
             gotLHE = event.getByLabel( l_lhe, h_lhe )
             lhe = h_lhe.product()
@@ -2196,31 +2208,46 @@ for ifile in files : #{ Loop over root files
             #CT10 PDF up and down
             maxCT10PDFwgt_frac = 1
             minCT10PDFwgt_frac = 1
-            
-            for i_lhePDF in range(392,445):
-                CT10PDFwgt = lhe.weights()[i_lhePDF].wgt
-                CT10PDFwgt_frac = CT10PDFwgt/(lhe.weights()[392].wgt)
-                maxCT10PDFwgt_frac = max(maxCT10PDFwgt_frac, CT10PDFwgt_frac)
-                minCT10PDFwgt_frac = min(minCT10PDFwgt_frac, CT10PDFwgt_frac)
+                
+            if options.isZprime:
+                PDFstart = 392
+                PDFend = 445
+            else:
+                PDFstart = 109
+                PDFend = 162
+                
+            #Making sure central PDF isn't zero
+            if lhe.weights()[PDFstart].wgt == 0:
+                maxCT10PDFwgt_frac = 0
+                minCT10PDFwgt_frac = 0
                 if options.verbose :
-                    print str(i_lhePDF) + ".)"
-                    print "CT10 PDF LHE weight: " + str(CT10PDFwgt)
-                    CT10PDFwgt_norm = CT10PDFwgt/(lhe.originalXWGTUP())
-                    print "Normalized CT10 PDF wgt: " + str(CT10PDFwgt_norm)
-                    print "Fractional CT10 PDF wgt (compared to central value): " + str(CT10PDFwgt_frac)
-
+                    print "Unphysical: central PDF weight is zero!"
+            else:
+                for i_lhePDF in range(PDFstart,PDFend):
+                    CT10PDFwgt = lhe.weights()[i_lhePDF].wgt
+                    CT10PDFwgt_frac = CT10PDFwgt/(lhe.weights()[PDFstart].wgt)
+                    maxCT10PDFwgt_frac = max(maxCT10PDFwgt_frac, CT10PDFwgt_frac)
+                    minCT10PDFwgt_frac = min(minCT10PDFwgt_frac, CT10PDFwgt_frac)
+                    if options.verbose :
+                        print str(i_lhePDF) + ".)"
+                        print "CT10 PDF LHE weight: " + str(CT10PDFwgt)
+                        CT10PDFwgt_norm = CT10PDFwgt/(lhe.originalXWGTUP())
+                        print "Normalized CT10 PDF wgt: " + str(CT10PDFwgt_norm)
+                        print "Fractional CT10 PDF wgt (compared to central value): " + str(CT10PDFwgt_frac)
+                
             CT10PDFwgt_up = maxCT10PDFwgt_frac
             CT10PDFwgt_down = minCT10PDFwgt_frac
             if options.verbose :
                 print "CT10 PDF weight up: " + str(CT10PDFwgt_up)
                 print "CT10 PDF weight down: " + str(CT10PDFwgt_down)
                 print ""
-                
-            ##weight_id = lhe.weights()[0].wgt
-            #print '***********' + str(weight_id)
-            ## if not gotGenerator or not gotLHE :
-            ##     continue
-            
+        else:
+            Q2wgt_up = -999
+            Q2wgt_down = -999
+            CT10PDFwgt_up = -999
+            CT10PDFwgt_down = -999
+             
+        
         h_NPVert.Fill( NPV, evWeight )
         
         if NPV == 0 :
