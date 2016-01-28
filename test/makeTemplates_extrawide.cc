@@ -53,6 +53,8 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 	labels[names::TT_SCALEDN] = "ttbar_jes_dn";
 	labels[names::TT_JERUP] = "ttbar_jer_up";
 	labels[names::TT_JERDN] = "ttbar_jer_dn";
+        labels[names::TT_BTAGUP] = "ttbar_bTag_up";
+        labels[names::TT_BTAGDN] = "ttbar_bTag_dn";
 	labels[names::ZPN10] = "ZpXW10";
 	labels[names::ZPN15] = "ZpXW15";
 	labels[names::ZPN20] = "ZpXW20";
@@ -88,6 +90,34 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 	labels[names::ZPN30_JERDN] = "ZpXW30_jer_dn";
 	labels[names::ZPN35_JERDN] = "ZpXW35_jer_dn";
 	labels[names::ZPN40_JERDN] = "ZpXW40_jer_dn";
+        labels[names::ZPN10_BTAGUP] = "ZpW10_bTag_up";
+	labels[names::ZPN15_BTAGUP] = "ZpW15_bTag_up";
+        labels[names::ZPN20_BTAGUP] = "ZpW20_bTag_up";
+        labels[names::ZPN25_BTAGUP] = "ZpW25_bTag_up";
+	labels[names::ZPN30_BTAGUP] = "ZpW30_bTag_up";
+        labels[names::ZPN35_BTAGUP] = "ZpW35_bTag_up";
+	labels[names::ZPN40_BTAGUP] = "ZpW40_bTag_up";
+	labels[names::ZPN10_BTAGDN] = "ZpW10_bTag_dn";
+	labels[names::ZPN15_BTAGDN] = "ZpW15_bTag_dn";
+        labels[names::ZPN20_BTAGDN] = "ZpW20_bTag_dn";
+	labels[names::ZPN25_BTAGDN] = "ZpW25_bTag_dn";
+        labels[names::ZPN30_BTAGDN] = "ZpW30_bTag_dn";
+	labels[names::ZPN35_BTAGDN] = "ZpW35_bTag_dn";
+	labels[names::ZPN40_BTAGDN] = "ZpW40_bTag_dn";
+        labels[names::ZPN10_PDFUP] = "ZpW10_pdf_up";
+	labels[names::ZPN15_PDFUP] = "ZpW15_pdf_up";
+	labels[names::ZPN20_PDFUP] = "ZpW20_pdf_up";
+	labels[names::ZPN25_PDFUP] = "ZpW25_pdf_up";
+        labels[names::ZPN30_PDFUP] = "ZpW30_pdf_up";
+        labels[names::ZPN35_PDFUP] = "ZpW35_pdf_up";
+        labels[names::ZPN40_PDFUP] = "ZpW40_pdf_up";
+        labels[names::ZPN10_PDFDN] = "ZpW10_pdf_dn";
+        labels[names::ZPN15_PDFDN] = "ZpW15_pdf_dn";
+        labels[names::ZPN20_PDFDN] = "ZpW20_pdf_dn";
+        labels[names::ZPN25_PDFDN] = "ZpW25_pdf_dn";
+        labels[names::ZPN30_PDFDN] = "ZpW30_pdf_dn";
+        labels[names::ZPN35_PDFDN] = "ZpW35_pdf_dn";
+        labels[names::ZPN40_PDFDN] = "ZpW40_pdf_dn";
 	
 
 	int nTagCats = 7;
@@ -120,6 +150,7 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 	}
 
 	TString dir = "/uscms_data/d3/maral87/ttbarResonances/B2GAnaFW/CMSSW_7_4_12/src/Analysis/B2GTTbar/test/runs/run_011416/";
+	TString dir1 = "/uscms_data/d3/pilot/MINIAOD/CMSSW_7_4_1/src/B2GTTbar/test/";
 
 	TString files[100];
 	files[names::DATA] = dir +  "outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_011416_nom.root";
@@ -129,41 +160,72 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 	files[names::TT_JERDN] = dir +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_011416_jer_dn.root";
 	files[names::TT_SCALEUP] = dir +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_011416_jec_up.root";
 	files[names::TT_SCALEDN] = dir +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_011416_jec_dn.root";
-	files[names::ZPN10] = dir +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_nom.root";
-	files[names::ZPN15] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_nom.root";
-	files[names::ZPN20] = dir +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_nom.root";
-	files[names::ZPN25] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_nom.root";
-	files[names::ZPN30] = dir +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_nom.root";
-	files[names::ZPN35] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_nom.root";
-	files[names::ZPN40] = dir +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_nom.root";
-	files[names::ZPN10_SCALEUP] = dir +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_jec_up.root";
-	files[names::ZPN15_SCALEUP] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_jec_up.root";
-	files[names::ZPN20_SCALEUP] = dir +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_jec_up.root";
-	files[names::ZPN25_SCALEUP] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_jec_up.root";
-	files[names::ZPN30_SCALEUP] = dir +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_jec_up.root";
-	files[names::ZPN35_SCALEUP] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_jec_up.root";
-	files[names::ZPN40_SCALEUP] = dir +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_jec_up.root";
-	files[names::ZPN10_SCALEDN] = dir +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_jec_dn.root";
-	files[names::ZPN15_SCALEDN] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_jec_dn.root";
-	files[names::ZPN20_SCALEDN] = dir +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_jec_dn.root";
-	files[names::ZPN25_SCALEDN] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_jec_dn.root";
-	files[names::ZPN30_SCALEDN] = dir +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_jec_dn.root";
-	files[names::ZPN35_SCALEDN] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_jec_dn.root";
-	files[names::ZPN40_SCALEDN] = dir +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_jec_dn.root";
-	files[names::ZPN10_JERUP] = dir +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_jer_up.root";
-	files[names::ZPN15_JERUP] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_jer_up.root";
-	files[names::ZPN20_JERUP] = dir +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_jer_up.root";
-	files[names::ZPN25_JERUP] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_jer_up.root";
-	files[names::ZPN30_JERUP] = dir +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_jer_up.root";
-	files[names::ZPN35_JERUP] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_jer_up.root";
-	files[names::ZPN40_JERUP] = dir +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_jer_up.root";
-	files[names::ZPN10_JERDN] = dir +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_jer_dn.root";
-	files[names::ZPN15_JERDN] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_jer_dn.root";
-	files[names::ZPN20_JERDN] = dir +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_jer_dn.root";
-	files[names::ZPN25_JERDN] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_jer_dn.root";
-	files[names::ZPN30_JERDN] = dir +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_jer_dn.root";
-	files[names::ZPN35_JERDN] = files[names::ZPN10];//dir +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_jer_dn.root";
-	files[names::ZPN40_JERDN] = dir +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_jer_dn.root";
+	files[names::TT_BTAGUP] = dir1 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_011516_bTag_up.root";
+	files[names::TT_BTAGDN] = dir1 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_011516_bTag_dn.root";
+	files[names::ZPN10] = dir1 +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_nom.root";
+	files[names::ZPN15] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_nom.root";
+	files[names::ZPN20] = dir1 +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_nom.root";
+	files[names::ZPN25] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_nom.root";
+	files[names::ZPN30] = dir1 +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_nom.root";
+	files[names::ZPN35] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_nom.root";
+	files[names::ZPN40] = dir1 +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_nom.root";
+	files[names::ZPN10_SCALEUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_jec_up.root";
+	files[names::ZPN15_SCALEUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_jec_up.root";
+	files[names::ZPN20_SCALEUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_jec_up.root";
+	files[names::ZPN25_SCALEUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_jec_up.root";
+	files[names::ZPN30_SCALEUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_jec_up.root";
+	files[names::ZPN35_SCALEUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_jec_up.root";
+	files[names::ZPN40_SCALEUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_jec_up.root";
+	files[names::ZPN10_SCALEDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_jec_dn.root";
+	files[names::ZPN15_SCALEDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_jec_dn.root";
+	files[names::ZPN20_SCALEDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_jec_dn.root";
+	files[names::ZPN25_SCALEDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_jec_dn.root";
+	files[names::ZPN30_SCALEDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_jec_dn.root";
+	files[names::ZPN35_SCALEDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_jec_dn.root";
+	files[names::ZPN40_SCALEDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_jec_dn.root";
+	files[names::ZPN10_JERUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_jer_up.root";
+	files[names::ZPN15_JERUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_jer_up.root";
+	files[names::ZPN20_JERUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_jer_up.root";
+	files[names::ZPN25_JERUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_jer_up.root";
+	files[names::ZPN30_JERUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_jer_up.root";
+	files[names::ZPN35_JERUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_jer_up.root";
+	files[names::ZPN40_JERUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_jer_up.root";
+	files[names::ZPN10_JERDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_jer_dn.root";
+	files[names::ZPN15_JERDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_jer_dn.root";
+	files[names::ZPN20_JERDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_jer_dn.root";
+	files[names::ZPN25_JERDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_jer_dn.root";
+	files[names::ZPN30_JERDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_jer_dn.root";
+	files[names::ZPN35_JERDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_jer_dn.root";
+	files[names::ZPN40_JERDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_jer_dn.root";
+	files[names::ZPN10_BTAGUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_bTag_up.root";
+	files[names::ZPN15_BTAGUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_bTag_up.root";
+	files[names::ZPN20_BTAGUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_bTag_up.root";
+	files[names::ZPN25_BTAGUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_bTag_up.root";
+	files[names::ZPN30_BTAGUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_bTag_up.root";
+	files[names::ZPN35_BTAGUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_bTag_up.root";
+	files[names::ZPN40_BTAGUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_bTag_up.root";
+	files[names::ZPN10_BTAGDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_bTag_dn.root";
+	files[names::ZPN15_BTAGDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_bTag_dn.root";
+	files[names::ZPN20_BTAGDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_bTag_dn.root";
+	files[names::ZPN25_BTAGDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_bTag_dn.root";
+	files[names::ZPN30_BTAGDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_bTag_dn.root";
+	files[names::ZPN35_BTAGDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_bTag_dn.root";
+	files[names::ZPN40_BTAGDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_bTag_dn.root";
+	files[names::ZPN10_PDFUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_pdf_up.root";
+	files[names::ZPN15_PDFUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_pdf_up.root";
+	files[names::ZPN20_PDFUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_pdf_up.root";
+	files[names::ZPN25_PDFUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_pdf_up.root";
+	files[names::ZPN30_PDFUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_pdf_up.root";
+	files[names::ZPN35_PDFUP] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_pdf_up.root";
+	files[names::ZPN40_PDFUP] = dir1 +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_pdf_up.root";
+	files[names::ZPN10_PDFDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-1000_W-300_B2Gv8p4_reader603e_011516_pdf_dn.root";
+	files[names::ZPN15_PDFDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-1500_W-450_B2Gv8p4_reader603e_011516_pdf_dn.root";
+	files[names::ZPN20_PDFDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-2000_W-600_B2Gv8p4_reader603e_011516_pdf_dn.root";
+	files[names::ZPN25_PDFDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-2500_W-750_B2Gv8p4_reader603e_011516_pdf_dn.root";
+	files[names::ZPN30_PDFDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-3000_W-900_B2Gv8p4_reader603e_011516_pdf_dn.root";
+	files[names::ZPN35_PDFDN] = files[names::ZPN10];//dir1 +  "outBkgdEst_ZprimeToTT_M-3500_W-1050_B2Gv8p4_reader603e_011516_pdf_dn.root";
+	files[names::ZPN40_PDFDN] = dir1 +  "outBkgdEst_ZprimeToTT_M-4000_W-1200_B2Gv8p4_reader603e_011516_pdf_dn.root";
+
 
 	for (int proc = 0; proc < names::NUM_PROCS; proc++){
 
@@ -224,6 +286,8 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 		histos[names::TT_SCALEDN][tag]->Scale( 815.96 * lumi * kfactor / nttbar );
 		histos[names::TT_JERUP][tag]->Scale( 815.96 * lumi * kfactor / nttbar );
 		histos[names::TT_JERDN][tag]->Scale( 815.96 * lumi * kfactor / nttbar );
+		histos[names::TT_BTAGUP][tag]->Scale( 815.96 * lumi * kfactor / nttbar );
+                histos[names::TT_BTAGDN][tag]->Scale( 815.96 * lumi * kfactor / nttbar );
 		histos[names::TT][tag]->Scale( 815.96 * lumi * kfactor / nttbar );
 
 		histos[names::ZPN10][tag]->Scale( 1. * lumi / 125837. ); 
@@ -261,6 +325,34 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 		histos[names::ZPN30_JERDN][tag]->Scale( 1. * lumi / 106338. ); 
 		histos[names::ZPN35_JERDN][tag]->Scale( 1. * lumi / 1. );
 		histos[names::ZPN40_JERDN][tag]->Scale( 1. * lumi / 107643. );
+		histos[names::ZPN10_BTAGUP][tag]->Scale( 1. * lumi / 125837. ); 
+		histos[names::ZPN15_BTAGUP][tag]->Scale( 1. * lumi / 1. ); 
+		histos[names::ZPN20_BTAGUP][tag]->Scale( 1. * lumi / 136191. ); 
+		histos[names::ZPN25_BTAGUP][tag]->Scale( 1. * lumi / 1. ); 
+		histos[names::ZPN30_BTAGUP][tag]->Scale( 1. * lumi / 106338. ); 
+		histos[names::ZPN35_BTAGUP][tag]->Scale( 1. * lumi / 1. );
+		histos[names::ZPN40_BTAGUP][tag]->Scale( 1. * lumi / 107643. );
+		histos[names::ZPN10_BTAGDN][tag]->Scale( 1. * lumi / 125837. ); 
+		histos[names::ZPN15_BTAGDN][tag]->Scale( 1. * lumi / 1. ); 
+		histos[names::ZPN20_BTAGDN][tag]->Scale( 1. * lumi / 136191. ); 
+		histos[names::ZPN25_BTAGDN][tag]->Scale( 1. * lumi / 1. ); 
+		histos[names::ZPN30_BTAGDN][tag]->Scale( 1. * lumi / 106338. ); 
+		histos[names::ZPN35_BTAGDN][tag]->Scale( 1. * lumi / 1. );
+		histos[names::ZPN40_BTAGDN][tag]->Scale( 1. * lumi / 107643. );
+		histos[names::ZPN10_PDFUP][tag]->Scale( 1. * lumi / 125837. ); 
+		histos[names::ZPN15_PDFUP][tag]->Scale( 1. * lumi / 1. ); 
+		histos[names::ZPN20_PDFUP][tag]->Scale( 1. * lumi / 136191. ); 
+		histos[names::ZPN25_PDFUP][tag]->Scale( 1. * lumi / 1. ); 
+		histos[names::ZPN30_PDFUP][tag]->Scale( 1. * lumi / 106338. ); 
+		histos[names::ZPN35_PDFUP][tag]->Scale( 1. * lumi / 1. );
+		histos[names::ZPN40_PDFUP][tag]->Scale( 1. * lumi / 107643. );
+		histos[names::ZPN10_PDFDN][tag]->Scale( 1. * lumi / 125837. ); 
+		histos[names::ZPN15_PDFDN][tag]->Scale( 1. * lumi / 1. ); 
+		histos[names::ZPN20_PDFDN][tag]->Scale( 1. * lumi / 136191. ); 
+		histos[names::ZPN25_PDFDN][tag]->Scale( 1. * lumi / 1. ); 
+		histos[names::ZPN30_PDFDN][tag]->Scale( 1. * lumi / 106338. ); 
+		histos[names::ZPN35_PDFDN][tag]->Scale( 1. * lumi / 1. );
+		histos[names::ZPN40_PDFDN][tag]->Scale( 1. * lumi / 107643. );
 
 
 	histos[names::TT][tag]->SetFillColor(kRed);
@@ -398,6 +490,8 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 		histos[names::TT_SCALEDN][tag]->Write( Form("btag%d__ttbar__jec__minus", tag) );
 		histos[names::TT_JERUP][tag]->Write( Form("btag%d__ttbar__jer__plus", tag) );
 		histos[names::TT_JERDN][tag]->Write( Form("btag%d__ttbar__jer__minus", tag) );
+		histos[names::TT_BTAGUP][tag]->Write( Form("btag%d__ttbar__bTag__plus", tag) );
+		histos[names::TT_BTAGDN][tag]->Write( Form("btag%d__ttbar__bTag__minus", tag) );
 		
 		bool writeZPN = ZPNflag;
 		if (writeZPN){
@@ -439,6 +533,35 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 	//	histos[names::ZPN35_JERDN][tag]->Write( Form("btag%d__Zprime3500__jer__minus", tag) );	
 		histos[names::ZPN40_JERDN][tag]->Write( Form("btag%d__Zprime4000__jer__minus", tag) );	
 
+		histos[names::ZPN10_BTAGUP][tag]->Write( Form("btag%d__Zprime1000__bTag__plus", tag));
+	//	histos[names::ZPN15_BTAGUP][tag]->Write( Form("btag%d__Zprime1500__bTag__plus", tag) );
+		histos[names::ZPN20_BTAGUP][tag]->Write( Form("btag%d__Zprime2000__bTag__plus", tag) );
+	//	histos[names::ZPN25_BTAGUP][tag]->Write( Form("btag%d__Zprime2500__bTag__plus", tag) );
+		histos[names::ZPN30_BTAGUP][tag]->Write( Form("btag%d__Zprime3000__bTag__plus", tag) );
+	//	histos[names::ZPN35_BTAGUP][tag]->Write( Form("btag%d__Zprime3500__bTag__plus", tag) );	
+		histos[names::ZPN40_BTAGUP][tag]->Write( Form("btag%d__Zprime4000__bTag__plus", tag) );	
+		histos[names::ZPN10_BTAGDN][tag]->Write( Form("btag%d__Zprime1000__bTag__minus", tag));
+	//	histos[names::ZPN15_BTAGDN][tag]->Write( Form("btag%d__Zprime1500__bTag__minus", tag) );
+		histos[names::ZPN20_BTAGDN][tag]->Write( Form("btag%d__Zprime2000__bTag__minus", tag) );
+	//	histos[names::ZPN25_BTAGDN][tag]->Write( Form("btag%d__Zprime2500__bTag__minus", tag) );
+		histos[names::ZPN30_BTAGDN][tag]->Write( Form("btag%d__Zprime3000__bTag__minus", tag) );
+	//	histos[names::ZPN35_BTAGDN][tag]->Write( Form("btag%d__Zprime3500__bTag__minus", tag) );	
+		histos[names::ZPN40_BTAGDN][tag]->Write( Form("btag%d__Zprime4000__bTag__minus", tag) );	
+
+		histos[names::ZPN10_PDFUP][tag]->Write( Form("btag%d__Zprime1000__pdf__plus", tag));
+	//	histos[names::ZPN15_PDFUP][tag]->Write( Form("btag%d__Zprime1500__pdf__plus", tag) );
+		histos[names::ZPN20_PDFUP][tag]->Write( Form("btag%d__Zprime2000__pdf__plus", tag) );
+	//	histos[names::ZPN25_PDFUP][tag]->Write( Form("btag%d__Zprime2500__pdf__plus", tag) );
+		histos[names::ZPN30_PDFUP][tag]->Write( Form("btag%d__Zprime3000__pdf__plus", tag) );
+	//	histos[names::ZPN35_PDFUP][tag]->Write( Form("btag%d__Zprime3500__pdf__plus", tag) );	
+		histos[names::ZPN40_PDFUP][tag]->Write( Form("btag%d__Zprime4000__pdf__plus", tag) );	
+		histos[names::ZPN10_PDFDN][tag]->Write( Form("btag%d__Zprime1000__pdf__minus", tag));
+	//	histos[names::ZPN15_PDFDN][tag]->Write( Form("btag%d__Zprime1500__pdf__minus", tag) );
+		histos[names::ZPN20_PDFDN][tag]->Write( Form("btag%d__Zprime2000__pdf__minus", tag) );
+	//	histos[names::ZPN25_PDFDN][tag]->Write( Form("btag%d__Zprime2500__pdf__minus", tag) );
+		histos[names::ZPN30_PDFDN][tag]->Write( Form("btag%d__Zprime3000__pdf__minus", tag) );
+	//	histos[names::ZPN35_PDFDN][tag]->Write( Form("btag%d__Zprime3500__pdf__minus", tag) );	
+		histos[names::ZPN40_PDFDN][tag]->Write( Form("btag%d__Zprime4000__pdf__minus", tag) );	
 
 		}
 
