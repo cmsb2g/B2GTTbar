@@ -87,11 +87,13 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
   if (data){
 
-    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121615_jec_nom.root";
-    infile_ttbar_name = "outAntiTag_TTpowheg_B2Gv8p4_reader5a85e65_all_121615_jec_up.root";
+    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_012716.root";
+    infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_012716.root";
   } 
-  string syst = "jec_up";
-  string date = "121615";
+
+  string date = "012716";
+  //string syst = "jec_up";
+  
   
   int nbins = bins.size();
   stringstream temp1;
@@ -102,7 +104,7 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   if (!noSubtract) subtractOrNot = "_Substract_";
   if (!data) subtractOrNot = "_MC_";
 
-  string outfile_name = "MistagRate_nbins_"+date+"_"+snbins+"_ttbar_"+syst+"_"+subtractOrNot+infile_name;
+  string outfile_name = "MistagRate_nbins_"+date+"_"+snbins+"_ttbar"+subtractOrNot+infile_name;
 
   cout<<"Opening "<<infile_name<<endl;
   InFile        = new TFile(      infile_name.c_str()      );
@@ -204,7 +206,7 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
       
           double luminosity = 2564.649;   //1263.890;  //166;
-          double nevents_dataset_ttbar  = 19665194;
+          double nevents_dataset_ttbar  = 96834559;
           double xsec_ttbar  =  815.96  ;
           double kfactor = 0.8;
           double scale_ttbar= kfactor * xsec_ttbar * luminosity / nevents_dataset_ttbar;
@@ -283,7 +285,7 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         bkgd_numer_rebin->GetXaxis()->SetTitleOffset(1.3);
         bkgd_numer_rebin->GetYaxis()->SetTitleOffset(1.5);
         bkgd_numer_rebin->Draw("SAME");
-        string savename_mistag = savename +"_"+ syst +".png";
+        string savename_mistag = savename +".png";
         c->SaveAs(savename_mistag.c_str());
 
       }
