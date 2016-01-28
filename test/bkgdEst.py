@@ -269,6 +269,30 @@ for event in Tree:
   Jet1PtSmearFactorDn = event.Jet1PtSmearFactorDn
 
   # Top tagging scale factors from Svenja's talk
+  sf0_MassTau32_nom     = 1.0
+  sf0_MassTau32_err     = 0.0
+  sf0_MassTau32_up      = 1.0
+  sf0_MassTau32_dn      = 1.0
+  sf0_MassTau32bTag_nom = 1.0
+  sf0_MassTau32bTag_err = 0.0
+  sf0_MassTau32bTag_up  = 1.0
+  sf0_MassTau32bTag_dn  = 1.0
+  sf0_bTag_nom          = 1.0
+  sf0_bTag_err          = 0.0
+  sf0_bTag_up           = 1.0
+  sf0_bTag_dn           = 1.0
+  sf1_MassTau32_nom     = 1.0
+  sf1_MassTau32_err     = 0.0
+  sf1_MassTau32_up      = 1.0
+  sf1_MassTau32_dn      = 1.0
+  sf1_MassTau32bTag_nom = 1.0
+  sf1_MassTau32bTag_err = 0.0
+  sf1_MassTau32bTag_up  = 1.0
+  sf1_MassTau32bTag_dn  = 1.0
+  sf1_bTag_nom          = 1.0
+  sf1_bTag_err          = 0.0
+  sf1_bTag_up           = 1.0
+  sf1_bTag_dn           = 1.0
   # Jet 0
   if  400 < jet0P4Raw.Perp() * Jet0CorrFactor * Jet0PtSmearFactor < 550:
       sf0_MassTau32_nom     = 0.8
