@@ -206,7 +206,7 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
       
           double luminosity = 2564.649;   //1263.890;  //166;
-          double nevents_dataset_ttbar  = 19665194;
+          double nevents_dataset_ttbar  = 96834559;
           double xsec_ttbar  =  815.96  ;
           double kfactor = 0.8;
           double scale_ttbar= kfactor * xsec_ttbar * luminosity / nevents_dataset_ttbar;
