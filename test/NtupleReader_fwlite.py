@@ -300,7 +300,7 @@ argv = []
 import ROOT
 import sys
 from DataFormats.FWLite import Events, Handle
-ROOT.gROOT.Macro("rootlogon.C")
+#ROOT.gROOT.Macro("rootlogon.C")
 from leptonic_nu_z_component import solve_nu_tmass, solve_nu
 import copy
 from array import array
@@ -1884,19 +1884,24 @@ for ifile in filesraw : #{ Loop over text file and find root files linked
         print 'Added ' + s
         #} End loop over txt file
 
+trigsToRun = []
 
-
-trigsToRun = [
-    "HLT_IsoMu24_eta2p1",
-    "HLT_Mu45_eta2p1",
-    "HLT_Mu50_",
-    "HLT_Mu40_eta2p1_PFJet200_PFJet50",
-    "HLT_IsoMu24_eta2p1",
-    "HLT_Ele32_eta2p1_WPLoose_Gsf",
-    "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50",
-    "HLT_Ele105_CaloIdVT_GsfTrkIdT",
-    "HLT_Ele115_CaloIdVT_GsfTrkIdT"
-    ]
+if options.selection == 1:
+      trigsToRun = [
+          "HLT_IsoMu24_eta2p1",
+          "HLT_Mu45_eta2p1",
+          "HLT_Mu50_",
+          "HLT_Mu40_eta2p1_PFJet200_PFJet50",
+          "HLT_IsoMu24_eta2p1",
+          "HLT_Ele32_eta2p1_WPLoose_Gsf",
+          "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50",
+          "HLT_Ele105_CaloIdVT_GsfTrkIdT",
+          "HLT_Ele115_CaloIdVT_GsfTrkIdT"
+          ]
+if options.selection == 2:
+      trigsToRun = [
+          "HLT_PFHT800"
+      ]
 
 # loop over files
 for ifile in files : #{ Loop over root files
