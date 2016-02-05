@@ -199,8 +199,8 @@ for event in Tree:
       sf0_MassTau32bTag_err = 0.1 #0.0936928
       # sf0_MassTau32bTag_up  = sf0_MassTau32bTag_nom + sf0_MassTau32bTag_err
       # sf0_MassTau32bTag_dn  = sf0_MassTau32bTag_nom - sf0_MassTau32bTag_err
-      sf0_bTag_nom          = sf0_MassTau32bTag_nom / sf0_MassTau32_nom
-      sf0_bTag_err          = 0.06 #(1/sf0_bTag_nom)*sqrt((sf0_MassTau32_err/sf0_MassTau32_nom)**2+(sf0_MassTau32bTag_err/sf0_MassTau32bTag_nom)**2)
+      sf0_bTag_nom          = 0.92
+      sf0_bTag_err          = 0.07 #(1/sf0_bTag_nom)*sqrt((sf0_MassTau32_err/sf0_MassTau32_nom)**2+(sf0_MassTau32bTag_err/sf0_MassTau32bTag_nom)**2)
       # sf0_bTag_up           = sf0_bTag_nom + sf0_bTag_err
       # sf0_bTag_dn           = sf0_bTag_nom - sf0_bTag_err
       #print 'sf0_MassTau32_nom '+str(sf0_MassTau32_nom)+' sf0_MassTau32bTag_nom '+str(sf0_MassTau32bTag_nom)+' sf0_bTag_nom '+str(sf0_bTag_nom)
@@ -213,8 +213,8 @@ for event in Tree:
       sf0_MassTau32bTag_err = 0.1 #0.193302
       # sf0_MassTau32bTag_up  = sf0_MassTau32bTag_nom + sf0_MassTau32bTag_err
       # sf0_MassTau32bTag_dn  = sf0_MassTau32bTag_nom - sf0_MassTau32bTag_err
-      sf0_bTag_nom          = sf0_MassTau32bTag_nom / sf0_MassTau32_nom
-      sf0_bTag_err          = 0.06 #(1/sf0_bTag_nom)*sqrt((sf0_MassTau32_err/sf0_MassTau32_nom)**2+(sf0_MassTau32bTag_err/sf0_MassTau32bTag_nom)**2)
+      sf0_bTag_nom          = 0.72
+      sf0_bTag_err          = 0.16 #(1/sf0_bTag_nom)*sqrt((sf0_MassTau32_err/sf0_MassTau32_nom)**2+(sf0_MassTau32bTag_err/sf0_MassTau32bTag_nom)**2)
       # sf0_bTag_up           = sf0_bTag_nom + sf0_bTag_err
       # sf0_bTag_dn           = sf0_bTag_nom - sf0_bTag_err
   # Jet 1
@@ -227,8 +227,8 @@ for event in Tree:
       sf1_MassTau32bTag_err = 0.1 #0.0936928
       # sf1_MassTau32bTag_up  = sf1_MassTau32bTag_nom + sf1_MassTau32bTag_err
       # sf1_MassTau32bTag_dn  = sf1_MassTau32bTag_nom - sf1_MassTau32bTag_err
-      sf1_bTag_nom          = sf1_MassTau32bTag_nom / sf1_MassTau32_nom
-      sf1_bTag_err          = 0.06 #(1/sf1_bTag_nom)*sqrt((sf1_MassTau32_err/sf1_MassTau32_nom)**2+(sf1_MassTau32bTag_err/sf1_MassTau32bTag_nom)**2)
+      sf1_bTag_nom          = 0.92
+      sf1_bTag_err          = 0.07 #(1/sf1_bTag_nom)*sqrt((sf1_MassTau32_err/sf1_MassTau32_nom)**2+(sf1_MassTau32bTag_err/sf1_MassTau32bTag_nom)**2)
       # sf1_bTag_up           = sf1_bTag_nom + sf1_bTag_err
       # sf1_bTag_dn           = sf1_bTag_nom - sf1_bTag_err
   if jet1P4Raw.Perp() * Jet1CorrFactor * Jet1PtSmearFactor > 550:
@@ -240,8 +240,8 @@ for event in Tree:
       sf1_MassTau32bTag_err = 0.1 #0.193302
       # sf1_MassTau32bTag_up  = sf1_MassTau32bTag_nom + sf1_MassTau32bTag_err
       # sf1_MassTau32bTag_dn  = sf1_MassTau32bTag_nom - sf1_MassTau32bTag_err
-      sf1_bTag_nom          = sf1_MassTau32bTag_nom / sf1_MassTau32_nom
-      sf1_bTag_err          = 0.06 #(1/sf1_bTag_nom)*sqrt((sf1_MassTau32_err/sf1_MassTau32_nom)**2+(sf1_MassTau32bTag_err/sf1_MassTau32bTag_nom)**2)
+      sf1_bTag_nom          = 0.72
+      sf1_bTag_err          = 0.16 #(1/sf1_bTag_nom)*sqrt((sf1_MassTau32_err/sf1_MassTau32_nom)**2+(sf1_MassTau32bTag_err/sf1_MassTau32bTag_nom)**2)
       # sf1_bTag_up           = sf1_bTag_nom + sf1_bTag_err
       # sf1_bTag_dn           = sf1_bTag_nom - sf1_bTag_err
 
@@ -357,128 +357,128 @@ for event in Tree:
   if rand_mistag < 0.5 :
     #----------anti-tag tau32, keep jet in SD mass window
     if antiTag0Tau32_ReqTopMassSD:
-        if event.DijetDeltaRap > 1:
-            #inclusive
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive  .Fill( event.Jet1Pt, evWeight )
-            #2btag
-            if newbtagjet0 and newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag  .Fill( event.Jet1Pt, evWeight )
-            #1btag
-            if (newbtagjet0 and not newbtagjet1):
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
-            if (newbtagjet1 and not newbtagjet0):
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
-            #0btag
-            if not newbtagjet0 and not newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag  .Fill( event.Jet1Pt, evWeight )
-        if event.DijetDeltaRap < 1:
-            #inclusive
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive     .Fill( event.Jet1Pt, evWeight )
-            #2btag
-            if newbtagjet0 and newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag     .Fill( event.Jet1Pt, evWeight )
-            #1btag
-            if (newbtagjet0 and not newbtagjet1):
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
-            if (newbtagjet1 and not newbtagjet0):
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
-            #0btag
-            if not newbtagjet0 and not newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag     .Fill( event.Jet1Pt, evWeight )
+        #if event.DijetDeltaRap > 1:
+        #inclusive
+        h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive  .Fill( event.Jet1Pt, evWeight )
+        #2btag
+        if newbtagjet0 and newbtagjet1:
+            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag  .Fill( event.Jet1Pt, evWeight )
+        #1btag
+        if (newbtagjet0 and not newbtagjet1):
+            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
+        if (newbtagjet1 and not newbtagjet0):
+            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
+        #0btag
+        if not newbtagjet0 and not newbtagjet1:
+            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag  .Fill( event.Jet1Pt, evWeight )
+        # if event.DijetDeltaRap < 1:
+        #     #inclusive
+        #     h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive     .Fill( event.Jet1Pt, evWeight )
+        #     #2btag
+        #     if newbtagjet0 and newbtagjet1:
+        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag     .Fill( event.Jet1Pt, evWeight )
+        #     #1btag
+        #     if (newbtagjet0 and not newbtagjet1):
+        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
+        #     if (newbtagjet1 and not newbtagjet0):
+        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
+        #     #0btag
+        #     if not newbtagjet0 and not newbtagjet1:
+        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag     .Fill( event.Jet1Pt, evWeight )
         
         if topTag1MassSDTau32    : 
-            if event.DijetDeltaRap > 1 :
-                #inclusive
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive  .Fill( event.Jet1Pt, evWeight )
-                #2btag
-                if newbtagjet0 and newbtagjet1:
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag  .Fill( event.Jet1Pt, evWeight )
-                #1btag
-                if (newbtagjet0 and not newbtagjet1):
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
-                if (newbtagjet1 and not newbtagjet0):
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
-                #0btag
-                if not newbtagjet0 and not newbtagjet1:
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag  .Fill( event.Jet1Pt, evWeight )
-            if event.DijetDeltaRap < 1 :
-                #inclusive
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive     .Fill( event.Jet1Pt, evWeight )
-                #2btag
-                if newbtagjet0 and newbtagjet1:
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag     .Fill( event.Jet1Pt, evWeight )
-                #1btag
-                if (newbtagjet0 and not newbtagjet1):
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
-                if (newbtagjet1 and not newbtagjet0):
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
-                #0btag
-                if not newbtagjet0 and not newbtagjet1:
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag     .Fill( event.Jet1Pt, evWeight )
+            #if event.DijetDeltaRap > 1 :
+            #inclusive
+            h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive  .Fill( event.Jet1Pt, evWeight )
+            #2btag
+            if newbtagjet0 and newbtagjet1:
+                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag  .Fill( event.Jet1Pt, evWeight )
+            #1btag
+            if (newbtagjet0 and not newbtagjet1):
+                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
+            if (newbtagjet1 and not newbtagjet0):
+                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
+            #0btag
+            if not newbtagjet0 and not newbtagjet1:
+                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag  .Fill( event.Jet1Pt, evWeight )
+            # if event.DijetDeltaRap < 1 :
+            #     #inclusive
+            #     h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive     .Fill( event.Jet1Pt, evWeight )
+            #     #2btag
+            #     if newbtagjet0 and newbtagjet1:
+            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag     .Fill( event.Jet1Pt, evWeight )
+            #     #1btag
+            #     if (newbtagjet0 and not newbtagjet1):
+            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
+            #     if (newbtagjet1 and not newbtagjet0):
+            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
+            #     #0btag
+            #     if not newbtagjet0 and not newbtagjet1:
+            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag     .Fill( event.Jet1Pt, evWeight )
         
     
 
 if rand_mistag >= 0.5 :
     #----------anti-tag tau32, keep jet in SD mass window
     if antiTag1Tau32_ReqTopMassSD:
-        if event.DijetDeltaRap > 1:
-            #inclusive
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive  .Fill( event.Jet0Pt, evWeight )
-            #2btag
-            if newbtagjet0 and newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag  .Fill( event.Jet0Pt, evWeight )
-            #1btag
-            if (newbtagjet0 and not newbtagjet1):
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight )
-            if (newbtagjet1 and not newbtagjet0):
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight )
-            #0btag
-            if not newbtagjet0 and not newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag  .Fill( event.Jet0Pt, evWeight )
-        if event.DijetDeltaRap < 1: 
-            #inclusive
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive     .Fill( event.Jet0Pt, evWeight )
-            #2btag
-            if newbtagjet0 and newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag     .Fill( event.Jet0Pt, evWeight )
-            #1btag
-            if (newbtagjet0 and not newbtagjet1):
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet0Pt, evWeight )
-            if (newbtagjet1 and not newbtagjet0):
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet0Pt, evWeight )
-            #0btag
-            if not newbtagjet0 and not newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag     .Fill( event.Jet0Pt, evWeight )   
+        #if event.DijetDeltaRap > 1:
+        #inclusive
+        h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive  .Fill( event.Jet0Pt, evWeight )
+        #2btag
+        if newbtagjet0 and newbtagjet1:
+            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag  .Fill( event.Jet0Pt, evWeight )
+        #1btag
+        if (newbtagjet0 and not newbtagjet1):
+            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight )
+        if (newbtagjet1 and not newbtagjet0):
+            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight )
+        #0btag
+        if not newbtagjet0 and not newbtagjet1:
+            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag  .Fill( event.Jet0Pt, evWeight )
+        # if event.DijetDeltaRap < 1: 
+        #     #inclusive
+        #     h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive     .Fill( event.Jet0Pt, evWeight )
+        #     #2btag
+        #     if newbtagjet0 and newbtagjet1:
+        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag     .Fill( event.Jet0Pt, evWeight )
+        #     #1btag
+        #     if (newbtagjet0 and not newbtagjet1):
+        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet0Pt, evWeight )
+        #     if (newbtagjet1 and not newbtagjet0):
+        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet0Pt, evWeight )
+        #     #0btag
+        #     if not newbtagjet0 and not newbtagjet1:
+        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag     .Fill( event.Jet0Pt, evWeight )   
         
         if topTag0MassSDTau32    : 
-            if event.DijetDeltaRap > 1 :
-                #inclusive
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive  .Fill( event.Jet0Pt, evWeight )
-                #2btag
-                if newbtagjet0 and newbtagjet1:
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag  .Fill( event.Jet0Pt, evWeight )
-                #1btag
-                if (newbtagjet0 and not newbtagjet1):
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight )
-                if (newbtagjet1 and not newbtagjet0):
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight ) 
-                #0btag
-                if not newbtagjet0 and not newbtagjet1:
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag  .Fill( event.Jet0Pt, evWeight )
-            if event.DijetDeltaRap < 1 :
-                #inclusive
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive  .Fill( event.Jet0Pt, evWeight )
-                #2btag
-                if newbtagjet0 and newbtagjet1:
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag  .Fill( event.Jet0Pt, evWeight )
-                #1btag
-                if (newbtagjet0 and not newbtagjet1):
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag  .Fill( event.Jet0Pt, evWeight )
-                if (newbtagjet1 and not newbtagjet0):
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag  .Fill( event.Jet0Pt, evWeight )
-                #0btag
-                if not newbtagjet0 and not newbtagjet1:
-                    h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag  .Fill( event.Jet0Pt, evWeight )
+            #if event.DijetDeltaRap > 1 :
+            #inclusive
+            h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive  .Fill( event.Jet0Pt, evWeight )
+            #2btag
+            if newbtagjet0 and newbtagjet1:
+                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag  .Fill( event.Jet0Pt, evWeight )
+            #1btag
+            if (newbtagjet0 and not newbtagjet1):
+                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight )
+            if (newbtagjet1 and not newbtagjet0):
+                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight ) 
+            #0btag
+            if not newbtagjet0 and not newbtagjet1:
+                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag  .Fill( event.Jet0Pt, evWeight )
+            # if event.DijetDeltaRap < 1 :
+            #     #inclusive
+            #     h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive  .Fill( event.Jet0Pt, evWeight )
+            #     #2btag
+            #     if newbtagjet0 and newbtagjet1:
+            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag  .Fill( event.Jet0Pt, evWeight )
+            #     #1btag
+            #     if (newbtagjet0 and not newbtagjet1):
+            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag  .Fill( event.Jet0Pt, evWeight )
+            #     if (newbtagjet1 and not newbtagjet0):
+            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag  .Fill( event.Jet0Pt, evWeight )
+            #     #0btag
+            #     if not newbtagjet0 and not newbtagjet1:
+            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag  .Fill( event.Jet0Pt, evWeight )
     
 
 
@@ -488,18 +488,18 @@ h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive         .Write()
 h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag             .Write()
 h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag             .Write()
 h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag             .Write()
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive         .Write()
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag             .Write()
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag             .Write()
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag             .Write()
+# h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive         .Write()
+# h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag             .Write()
+# h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag             .Write()
+# h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag             .Write()
 h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive.Write()
 h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag    .Write() 
 h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag    .Write()
 h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag    .Write()
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive.Write()
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag    .Write()
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag    .Write()
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag    .Write()
+# h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive.Write()
+# h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag    .Write()
+# h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag    .Write()
+# h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag    .Write()
 
 
 OUT.Write()
@@ -510,12 +510,12 @@ print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag:
 print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag    .GetSum()         
 print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag    .GetSum()         
 print "Summed number of events of dRapHi_0btag + dRapHi_1btag + dRapHi_2btag: "       , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag.GetSum()
-print ""
-print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive: ", h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive.GetSum()         
-print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag    .GetSum()         
-print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag    .GetSum()         
-print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag    .GetSum() 
-print "Summed number of events of dRapLo_0btag + dRapLo_1btag + dRapLo_2btag: "       , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag.GetSum()        
+# print ""
+# print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive: ", h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive.GetSum()         
+# print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag    .GetSum()         
+# print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag    .GetSum()         
+# print "Number of events in h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag: "    , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag    .GetSum() 
+# print "Summed number of events of dRapLo_0btag + dRapLo_1btag + dRapLo_2btag: "       , h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag.GetSum() + h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag.GetSum()        
 
 
 
