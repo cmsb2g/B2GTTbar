@@ -87,11 +87,11 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
 
   if (data){
 
-    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_012716.root";
-    infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_012716.root";
+    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_020516.root";
+    infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_020516.root";
   } 
 
-  string date = "012716";
+  string date = "020516";
   //string syst = "jec_up";
   
   
@@ -138,10 +138,10 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   post.push_back("_jetPt_dRapHi_2btag");
   post.push_back("_jetPt_dRapHi_1btag");
   post.push_back("_jetPt_dRapHi_0btag");
-  post.push_back("_jetPt_dRapLo_inclusive");
-  post.push_back("_jetPt_dRapLo_2btag");
-  post.push_back("_jetPt_dRapLo_1btag");
-  post.push_back("_jetPt_dRapLo_0btag");
+  // post.push_back("_jetPt_dRapLo_inclusive");
+  // post.push_back("_jetPt_dRapLo_2btag");
+  // post.push_back("_jetPt_dRapLo_1btag");
+  // post.push_back("_jetPt_dRapLo_0btag");
   
   
   
@@ -205,11 +205,12 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         if (data && !noSubtract){
 
       
-          double luminosity = 2564.649;   //1263.890;  //166;
+          double luminosity = 2530;   //1263.890;  //166; pb-1
           double nevents_dataset_ttbar  = 96834559;
-          double xsec_ttbar  =  815.96  ;
-          double kfactor = 0.8;
-          double scale_ttbar= kfactor * xsec_ttbar * luminosity / nevents_dataset_ttbar;
+          double xsec_ttbar  =  831.76  ;
+          double kfactor = 0.93;
+          double toptagsf = 0.82;
+          double scale_ttbar= toptagsf * toptagsf * kfactor * xsec_ttbar * luminosity / nevents_dataset_ttbar;
           cout<<"scale_ttbar "<<scale_ttbar<<endl;
           ttbar_numer_rebin->Scale(scale_ttbar);
           ttbar_denom_rebin->Scale(scale_ttbar);
