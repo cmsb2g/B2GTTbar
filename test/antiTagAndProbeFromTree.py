@@ -418,7 +418,7 @@ for event in Tree:
         
     
 
-if rand_mistag >= 0.5 :
+  if rand_mistag >= 0.5 :
     #----------anti-tag tau32, keep jet in SD mass window
     if antiTag1Tau32_ReqTopMassSD:
         #if event.DijetDeltaRap > 1:
