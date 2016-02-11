@@ -1900,9 +1900,29 @@ if options.selection == 1:
           "HLT_Ele115_CaloIdVT_GsfTrkIdT"
           ]
 if options.selection == 2:
-      trigsToRun = [
-          "HLT_PFHT800"
-      ]
+    if options.isMC:
+        trigsToRun = [
+            "HLT_PFHT900"
+            ]
+    else :
+        trigsToRun = [
+            "HLT_PFHT200_v",
+            "HLT_PFHT250_v",
+            "HLT_PFHT300_v",
+            "HLT_PFHT350_v",
+            "HLT_PFHT400_v",
+            "HLT_PFHT475_v",
+            "HLT_PFHT600_v",
+            "HLT_PFHT650_v",
+            "HLT_PFHT800_v",
+            "HLT_PFJet140_v",
+            "HLT_PFJet200_v",
+            "HLT_PFJet260_v",
+            "HLT_PFJet320_v",
+            "HLT_PFJet400_v",
+            "HLT_PFJet450_v",
+            "HLT_PFJet500_v"
+            ]
 
 # loop over files
 for ifile in files : #{ Loop over root files
