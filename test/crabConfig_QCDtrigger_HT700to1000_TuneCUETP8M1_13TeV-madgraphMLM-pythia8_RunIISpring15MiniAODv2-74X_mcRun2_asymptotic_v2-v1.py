@@ -2,7 +2,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'QCDAnaTrees_QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_noTrigger'
+config.General.requestName = 'QCDAnaTrees_QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_PFHT900trigger'
 config.General.workArea = 'QCDAnaRunII'
 config.General.transferLogs = True
 
@@ -11,10 +11,10 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'PSet.py'
 config.JobType.inputFiles = ['FrameworkJobReport.xml', 'execute_for_crab_qcd.py', 'NtupleReader_fwlite.py', 'leptonic_nu_z_component.py', 'JECs', 'ModMass_2015_09_22.root', 'MistagRate_2015_09_25.root', 'pileup_reweight.root']
 config.JobType.outputFiles = ['outplots.root']
-config.JobType.scriptExe = 'execute_for_crab_qcd.sh'
+config.JobType.scriptExe = 'execute_for_crab_qcdTrigger.sh'
 
 config.section_("Data")
-config.Data.inputDataset = '/QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/decosa-QCD_HT500to700-50153fb607659b6f9fb41d9f35391d0e/USER'
+config.Data.inputDataset = '/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/decosa-QCD_HT700to1000-50153fb607659b6f9fb41d9f35391d0e/USER'
 config.Data.inputDBS = 'phys03'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 2
