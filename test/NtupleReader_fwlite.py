@@ -2233,6 +2233,7 @@ for ifile in files : #{ Loop over root files
                 print ""
 
             #NNPDF3 PDF up and down
+            NNPDF3wgtAvg = 0.0
             NNPDF3wgtRMS = 0.0
             PDFcentral = 1.0
                 
@@ -2255,15 +2256,24 @@ for ifile in files : #{ Loop over root files
                 for i_lhePDF in range(PDFstart,PDFend):
                     NNPDF3wgt = lhe.weights()[i_lhePDF].wgt
                     NNPDF3wgt_frac = NNPDF3wgt/(PDFcentral)
-                    NNPDF3wgtRMS += (NNPDF3wgt_frac)*(NNPDF3wgt_frac)
+                    NNPDF3wgtAvg += NNPDF3wgt_frac
                     if options.verbose:
                         print "-----"
                         print i_lhePDF - PDFstart
                         print "Fractional PDF weight: " + str(NNPDF3wgt_frac)
                         print "-----"
                         print ""
-
-            NNPDF3wgtRMS = abs(sqrt(NNPDF3wgtRMS/100) - 1.0)
+                NNPDF3wgtAvg = NNPDF3wgtAvg/100
+                if options.verbose:
+                    print NNPDF3wgtAvg
+                for i_lhePDF in range(PDFstart,PDFend):
+                    NNPDF3wgt = lhe.weights()[i_lhePDF].wgt
+                    NNPDF3wgt_frac = NNPDF3wgt/(PDFcentral)
+                    NNPDF3wgtRMS += (NNPDF3wgt_frac - NNPDF3wgtAvg)*(NNPDF3wgt_frac - NNPDF3wgtAvg)
+ 
+            NNPDF3wgtRMS = sqrt(NNPDF3wgtRMS/99)
+            if options.verbose:
+                print NNPDF3wgtRMS
             if PDFcentral == 0:
                 NNPDF3wgt_up = 0.
                 NNPDF3wgt_down = 0.
