@@ -2204,6 +2204,7 @@ for ifile in files : #{ Loop over root files
 
         if options.isZprime or options.isttbar:
             #@Event weight errors
+            #instructions: https://indico.cern.ch/event/460462/contribution/3/attachments/1184257/1717129/PPD_Review_for_B2G.pdf
             gotLHE = event.getByLabel( l_lhe, h_lhe )
             lhe = h_lhe.product()
            
@@ -2232,43 +2233,60 @@ for ifile in files : #{ Loop over root files
                 print ""
 
             #NNPDF3 PDF up and down
-            maxNNPDF3wgt_frac = 1
-            minNNPDF3wgt_frac = 1
+            NNPDF3wgtAvg = 0.0
+            NNPDF3wgtRMS = 0.0
             PDFcentral = 1.0
                 
             if options.isZprime:
-                PDFstart = 110
+                PDFstart = 111
                 PDFend = 211
-                PDFcentral = lhe.weights()[PDFstart].wgt 
+                PDFcentral = lhe.weights()[110].wgt 
             else:
                 PDFstart = 9
                 PDFend = 109
+
+            if options.verbose:
+                print "************************"
                 
             #Making sure central PDF isn't zero
             if PDFcentral == 0:
-                maxNNPDF3wgt_frac = 0
-                minNNPDF3wgt_frac = 0
                 if options.verbose :
                     print "Unphysical: central PDF weight is zero!"
             else:
                 for i_lhePDF in range(PDFstart,PDFend):
                     NNPDF3wgt = lhe.weights()[i_lhePDF].wgt
                     NNPDF3wgt_frac = NNPDF3wgt/(PDFcentral)
-                    maxNNPDF3wgt_frac = max(maxNNPDF3wgt_frac, NNPDF3wgt_frac)
-                    minNNPDF3wgt_frac = min(minNNPDF3wgt_frac, NNPDF3wgt_frac)
-                    if options.verbose :
-                        print str(i_lhePDF) + ".)"
-                        print "NNPDF3 PDF LHE weight: " + str(NNPDF3wgt)
-                        NNPDF3wgt_norm = NNPDF3wgt/(lhe.originalXWGTUP())
-                        print "Normalized NNPDF3 PDF wgt: " + str(NNPDF3wgt_norm)
-                        print "Fractional NNPDF3 PDF wgt (compared to central value): " + str(NNPDF3wgt_frac)
-                
-            NNPDF3wgt_up = maxNNPDF3wgt_frac
-            NNPDF3wgt_down = minNNPDF3wgt_frac
-            if options.verbose :
-                print "NNPDF3 PDF weight up: " + str(NNPDF3wgt_up)
-                print "NNPDF3 PDF weight down: " + str(NNPDF3wgt_down)
+                    NNPDF3wgtAvg += NNPDF3wgt_frac
+                    if options.verbose:
+                        print "-----"
+                        print i_lhePDF - PDFstart
+                        print "Fractional PDF weight: " + str(NNPDF3wgt_frac)
+                        print "-----"
+                        print ""
+                NNPDF3wgtAvg = NNPDF3wgtAvg/100
+                if options.verbose:
+                    print NNPDF3wgtAvg
+                for i_lhePDF in range(PDFstart,PDFend):
+                    NNPDF3wgt = lhe.weights()[i_lhePDF].wgt
+                    NNPDF3wgt_frac = NNPDF3wgt/(PDFcentral)
+                    NNPDF3wgtRMS += (NNPDF3wgt_frac - NNPDF3wgtAvg)*(NNPDF3wgt_frac - NNPDF3wgtAvg)
+ 
+            NNPDF3wgtRMS = sqrt(NNPDF3wgtRMS/99)
+            if options.verbose:
+                print NNPDF3wgtRMS
+            if PDFcentral == 0:
+                NNPDF3wgt_up = 0.
+                NNPDF3wgt_down = 0.
+            else:
+                NNPDF3wgt_up = 1.0 + NNPDF3wgtRMS
+                NNPDF3wgt_down = 1.0 - NNPDF3wgtRMS
+            if options.verbose:
+                print "NNPDF RMS: " + str(NNPDF3wgtRMS)
+                print "NNPDF UP: " + str(NNPDF3wgt_up)
+                print "NNPDF DOWN: " + str(NNPDF3wgt_down)
+                print "************************"
                 print ""
+
         else:
             Q2wgt_up = -999
             Q2wgt_down = -999
