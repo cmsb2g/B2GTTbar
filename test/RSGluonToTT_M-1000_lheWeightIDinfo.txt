@@ -1,0 +1,5 @@
+[?1034hTDR Style initialized
+Added root://cmsxrootd.fnal.gov//store/user/jpilot/RSGluonToTT_M-1000_TuneCUETP8M1_13TeV-pythia8/RSGluonToTT_M-1000_TuneCUETP8M1_13TeV-pythia8/160203_123001/0000/B2GEDMNtuple_1.root
+Added root://cmsxrootd.fnal.gov//store/user/jpilot/RSGluonToTT_M-1000_TuneCUETP8M1_13TeV-pythia8/RSGluonToTT_M-1000_TuneCUETP8M1_13TeV-pythia8/160203_123001/0000/B2GEDMNtuple_2.root
+Added root://cmsxrootd.fnal.gov//store/user/jpilot/RSGluonToTT_M-1000_TuneCUETP8M1_13TeV-pythia8/RSGluonToTT_M-1000_TuneCUETP8M1_13TeV-pythia8/160203_123001/0000/B2GEDMNtuple_3.root
+Processing file root://cmsxrootd.fnal.gov//store/user/jpilot/RSGluonToTT_M-1000_TuneCUETP8M1_13TeV-pythia8/RSGluonToTT_M-1000_TuneCUETP8M1_13TeV-pythia8/160203_123001/0000/B2GEDMNtuple_1.root
