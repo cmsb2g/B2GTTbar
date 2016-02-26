@@ -20,13 +20,15 @@
 #include <vector>
 
 using namespace std;
-void makeHists(bool, bool, vector<int>);
+void makeHists(bool, bool, vector<double>);
 
 void run(){
 
   // Define mistag rate bins
-  vector <int> bins_small;
-  vector <int> bins_big;
+  vector <double> bins_small;
+  vector <double> bins_medium;
+  vector <double> bins_big;
+  vector <double> bins_eta;
   int x;
 
   cout<<"Define small bins: ";
@@ -37,6 +39,20 @@ void run(){
     if ( x<1000) x+=50;
     else if (x<2000) x+=100;
     else if (x<3500) x+=500;
+    else x+=1000;
+  }
+  cout<<endl;
+
+  cout<<"Define medium bins: ";
+  x=400;
+  while (x<=5000){
+    cout<<" "<<x;
+    bins_medium.push_back(x);
+    if ( x<1000) x+=100;
+    else if (x<1200) x+=200;
+    else if (x<1500) x+=300;
+    else if (x<2000) x+=500;
+    else if (x<5000) x+=1000;
     else x+=1000;
   }
   cout<<endl;
@@ -60,19 +76,34 @@ void run(){
     // else x+=2000;
   }
 
+
+  cout<<"Define eta bins: ";
+  // x=400;
+  // while (x<=2000){
+  //   cout<<" "<<x;
+  //   bins_big.push_back(x);
+  //   x+=100;
+  // }
+  for (double i = -2.4; i<= 2.4; i+=0.2){
+      bins_eta.push_back(i);
+      cout<<" "<<i;
+  }
   cout<<endl;
 
+
   // bool data, bool noSubtract, vector of bins
-  // cout<<" makeHists(false, false, bins_small )"<<endl;  makeHists(false, false, bins_small );  // Monte Carlo  - small bins
+  cout<<" makeHists(false, false, bins_small )"<<endl;   makeHists(true, false, bins_small );  // Monte Carlo  - small bins
+  cout<<" makeHists(false, false, bins_medium )"<<endl;  makeHists(true, false, bins_medium );  // Monte Carlo  - bins_medium
+  cout<<" makeHists(false, false, bins_eta)"<<endl;      makeHists(true, false, bins_eta );  // Monte Carlo  - bins_medium
   // cout<<" makeHists(false, false, bins_big   )"<<endl;  makeHists(false, false, bins_big   );  // Monte Carlo  - small bins
-  cout<<" makeHists(true , false, bins_big   )"<<endl;  makeHists(true , false, bins_big   );   // Data - subtract - small bins
-  cout<<" makeHists(true ,  true, bins_big   )"<<endl;  makeHists(true ,  true, bins_big   );   // Data - no subtract - small bins
+  // cout<<" makeHists(true , false, bins_medium   )"<<endl;  makeHists(true , false, bins_medium   );   // Data - subtract - medium bins
+  // cout<<" makeHists(true ,  true, bins_medium   )"<<endl;  makeHists(true ,  true, bins_medium   );   // Data - no subtract - medium bins
 
 }
 
 
 // void makeHists( bool data = false, bool noSubtract = false, vector<int> bins ){
-void makeHists( bool data, bool noSubtract, vector<int> bins ){
+void makeHists( bool data, bool noSubtract, vector<double> bins ){
 	// Get input file and setup output file
   TFile * InFile;
   TFile * InFileTTbar;
@@ -83,15 +114,15 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   string infile_ttbar_name ;
 
   // QCD Monte Carlo Input (scaled) and Output files
-  if (!data) infile_name = "ModMass_mistagTagAndProbe_2015_09_28bkgdEst.root";
+  if (!data) infile_name = "outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_021816_nom_scaled.root";
 
   if (data){
 
-    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_020516.root";
-    infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_020516.root";
+    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_021816.root";
+    infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_021816.root";
   } 
 
-  string date = "020516";
+  string date = "021816";
   //string syst = "jec_up";
   
   
@@ -123,6 +154,12 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   //antitag_def.push_back("AntiTagMinMass50_ReqTopMassSD");
   //antitag_def.push_back("AntiTagTau32_ReqTopMassFat");
   antitag_def.push_back("AntiTagTau32_ReqTopMassSD");
+  antitag_def.push_back("AntiTagMinMass_ReqTopMassSD");
+  antitag_def.push_back("NoAntiTag_ReqTopMassSD");
+  antitag_def.push_back("AntiTagTau32_NoMassReq");
+  antitag_def.push_back("TagOdd");
+  antitag_def.push_back("TagEven");
+
  
   //tag_def.push_back("_TagMassFatMinMass");
   //tag_def.push_back("_TagMassSD"        );
@@ -134,10 +171,65 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
   string save_pre = "h_mistag_";
   string probe = "_Probe";
   vector <string> post;
+  post.push_back("_jetPt_dRapIn_inclusive");
+  post.push_back("_jetPt_dRapIn_0btag");
+  post.push_back("_jetPt_dRapIn_1btag");
+  post.push_back("_jetPt_dRapIn_2btag");
   post.push_back("_jetPt_dRapHi_inclusive");
-  post.push_back("_jetPt_dRapHi_2btag");
-  post.push_back("_jetPt_dRapHi_1btag");
   post.push_back("_jetPt_dRapHi_0btag");
+  post.push_back("_jetPt_dRapHi_1btag");
+  post.push_back("_jetPt_dRapHi_2btag");
+  post.push_back("_jetPt_dRapLo_inclusive");
+  post.push_back("_jetPt_dRapLo_0btag");
+  post.push_back("_jetPt_dRapLo_1btag");
+  post.push_back("_jetPt_dRapLo_2btag");
+  
+  post.push_back("_jetP_dRapIn_inclusive");
+  post.push_back("_jetP_dRapIn_0btag");
+  post.push_back("_jetP_dRapIn_1btag");
+  post.push_back("_jetP_dRapIn_2btag");
+  post.push_back("_jetP_dRapHi_inclusive");
+  post.push_back("_jetP_dRapHi_0btag");
+  post.push_back("_jetP_dRapHi_1btag");
+  post.push_back("_jetP_dRapHi_2btag");
+  post.push_back("_jetP_dRapLo_inclusive");
+  post.push_back("_jetP_dRapLo_0btag");
+  post.push_back("_jetP_dRapLo_1btag");
+  post.push_back("_jetP_dRapLo_2btag");
+
+  post.push_back("_jetRap_dRapIn_inclusive");
+  post.push_back("_jetRap_dRapIn_0btag");
+  post.push_back("_jetRap_dRapIn_1btag");
+  post.push_back("_jetRap_dRapIn_2btag");
+  post.push_back("_jetRap_dRapHi_inclusive");
+  post.push_back("_jetRap_dRapHi_0btag");
+  post.push_back("_jetRap_dRapHi_1btag");
+  post.push_back("_jetRap_dRapHi_2btag");
+  post.push_back("_jetRap_dRapLo_inclusive");
+  post.push_back("_jetRap_dRapLo_0btag");
+  post.push_back("_jetRap_dRapLo_1btag");
+  post.push_back("_jetRap_dRapLo_2btag");
+
+
+
+
+  // post.push_back("_2D_dRapAll_inclusive");
+  // post.push_back("_2D_dRapAll_0btag");
+  // post.push_back("_2D_dRapAll_1btag");
+  // post.push_back("_2D_dRapAll_2btag");
+  // post.push_back("_2D_dRapHi_inclusive");
+  // post.push_back("_2D_dRapHi_0btag");
+  // post.push_back("_2D_dRapHi_1btag");
+  // post.push_back("_2D_dRapHi_2btag");
+  // post.push_back("_2D_dRapLo_inclusive");
+  // post.push_back("_2D_dRapLo_0btag");
+  // post.push_back("_2D_dRapLo_1btag");
+  // post.push_back("_2D_dRapLo_2btag");
+
+  // post.push_back("_jetPt_dRapHi_inclusive");
+  // post.push_back("_jetPt_dRapHi_2btag");
+  // post.push_back("_jetPt_dRapHi_1btag");
+  // post.push_back("_jetPt_dRapHi_0btag");
   // post.push_back("_jetPt_dRapLo_inclusive");
   // post.push_back("_jetPt_dRapLo_2btag");
   // post.push_back("_jetPt_dRapLo_1btag");
@@ -275,19 +367,19 @@ void makeHists( bool data, bool noSubtract, vector<int> bins ){
         bkgd_numer_rebin->SetName(savename.c_str());
         bkgd_numer_rebin->Write();
 
-        TCanvas* c;
-        c = new TCanvas("c", "" , 700, 625);
-        c->cd();
-        bkgd_numer_rebin->Draw();
-        bkgd_numer_rebin->GetXaxis()->SetTitleSize(0.03);
-        bkgd_numer_rebin->GetXaxis()->SetLabelSize(0.025);
-        bkgd_numer_rebin->GetYaxis()->SetTitleSize(0.03);
-        bkgd_numer_rebin->GetYaxis()->SetLabelSize(0.025);
-        bkgd_numer_rebin->GetXaxis()->SetTitleOffset(1.3);
-        bkgd_numer_rebin->GetYaxis()->SetTitleOffset(1.5);
-        bkgd_numer_rebin->Draw("SAME");
-        string savename_mistag = savename +".png";
-        c->SaveAs(savename_mistag.c_str());
+        // TCanvas* c;
+        // c = new TCanvas("c", "" , 700, 625);
+        // c->cd();
+        // bkgd_numer_rebin->Draw();
+        // bkgd_numer_rebin->GetXaxis()->SetTitleSize(0.03);
+        // bkgd_numer_rebin->GetXaxis()->SetLabelSize(0.025);
+        // bkgd_numer_rebin->GetYaxis()->SetTitleSize(0.03);
+        // bkgd_numer_rebin->GetYaxis()->SetLabelSize(0.025);
+        // bkgd_numer_rebin->GetXaxis()->SetTitleOffset(1.3);
+        // bkgd_numer_rebin->GetYaxis()->SetTitleOffset(1.5);
+        // bkgd_numer_rebin->Draw("SAME");
+        // string savename_mistag = savename +".png";
+        // c->SaveAs(savename_mistag.c_str());
 
       }
     }
