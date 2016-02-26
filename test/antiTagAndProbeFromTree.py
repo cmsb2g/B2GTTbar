@@ -64,23 +64,662 @@ print 'entries '+str(entries)
 
 #^ Make mistag plots
 
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive          = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive"            , "", 1400, 0, 7000 )
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag"                , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag"                , "", 1400, 0, 7000 ) 
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag"                , "", 1400, 0, 7000 ) 
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive          = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive"            , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag"                , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag"                , "", 1400, 0, 7000 )   
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag"                , "", 1400, 0, 7000 )
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive"   , "", 1400, 0, 7000 )
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag"       , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag"       , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag"       , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive"   , "", 1400, 0, 7000 )  
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag"       , "", 1400, 0, 7000 )     
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag"       , "", 1400, 0, 7000 )     
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag"       , "", 1400, 0, 7000 )  
-   
+# --- Antitag Tau32
+         
+# -- var = jet PT         
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive"                    , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_0btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_0btag"                        , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_1btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_1btag"                        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_2btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_2btag"                        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive"                    , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag"                        , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag"                        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag"                        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive"                    , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag"                        , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag"                        , "", 1400, 0, 7000 )   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag"                        , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive"           , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag"               , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag"               , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag"               , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive"           , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag"               , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag"               , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag"               , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive"           , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag"               , "", 1400, 0, 7000 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag"               , "", 1400, 0, 7000 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag"               , "", 1400, 0, 7000 )  
+         
+# -- var = jet P        
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_inclusive              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_inclusive"                    , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_0btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_0btag"                        , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_1btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_1btag"                        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_2btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_2btag"                        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_inclusive              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_inclusive"                    , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_0btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_0btag"                        , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_1btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_1btag"                        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_2btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_2btag"                        , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_inclusive              = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_inclusive"                    , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_0btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_0btag"                        , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_1btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_1btag"                        , "", 1400, 0, 7000 )   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_2btag                  = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_2btag"                        , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive"           , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag"               , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag"               , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag"               , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive"            , "", 1400, 0, 7000 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag"                , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag"                , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag"                , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive     = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive"            , "", 1400, 0, 7000 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag"                , "", 1400, 0, 7000 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag"                , "", 1400, 0, 7000 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag         = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag"                , "", 1400, 0, 7000 )  
+      
+# -- var = jet Rapidity
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive             = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive"                   , "", 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_0btag                 = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_0btag"                       , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_1btag                 = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_1btag"                       , "", 300, -3, 3 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_2btag                 = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_2btag"                       , "", 300, -3, 3 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive             = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive"                    , "", 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_0btag                 = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_0btag"                        , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_1btag                 = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_1btag"                        , "", 300, -3, 3 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_2btag                 = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_2btag"                        , "", 300, -3, 3 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive             = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive"                    , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_0btag                 = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_0btag"                        , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_1btag                 = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_1btag"                        , "", 300, -3, 3 )   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_2btag                 = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_2btag"                        , "", 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive    = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive"          , "", 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag        = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag"              , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag        = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag"              , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag        = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag"              , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive    = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive"           , "", 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag        = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag"               , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag        = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag"               , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag        = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag"               , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive    = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive"           , "", 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag        = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag"               , "", 300, -3, 3 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag        = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag"               , "", 300, -3, 3 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag        = ROOT.TH1D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag"               , "", 300, -3, 3 )  
+
+# -- var = jet pT VS jet rapidity            
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_inclusive                   = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_inclusive"                     , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_0btag                       = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_0btag"                         , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_1btag                       = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_1btag"                         , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_2btag                       = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_2btag"                         , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_inclusive                    = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_inclusive"                      , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_0btag                        = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_0btag"                          , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_1btag                        = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_1btag"                          , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_2btag                        = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_2btag"                          , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_inclusive                    = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_inclusive"                      , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_0btag                        = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_0btag"                          , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_1btag                        = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_1btag"                          , "", 700, 0, 7000, 300, -3, 3 )   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_2btag                        = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_2btag"                          , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive          = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive"            , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag              = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag"                , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag              = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag"                , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag              = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag"                , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive           = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive"             , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag               = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag               = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag               = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive           = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive"             , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag               = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag"                 , "", 700, 0, 7000, 300, -3, 3 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag               = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag"                 , "", 700, 0, 7000, 300, -3, 3 )     
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag               = ROOT.TH2D( "h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+          
+
+
+# --- Antitag minMass50
+
+# -- var = jet PT
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive              = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive"                , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_0btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_0btag"                    , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_1btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_1btag"                    , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_2btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_2btag"                    , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive               = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive"                 , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_0btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_0btag"                     , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_1btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_1btag"                     , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_2btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_2btag"                     , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive               = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive"                 , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_0btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_0btag"                     , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_1btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_1btag"                     , "", 1400, 0, 7000 )   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_2btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_2btag"                     , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive     = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive"       , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag"           , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag"           , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag"           , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive      = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive"        , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag"            , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag"            , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag"            , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive      = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive"        , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag"            , "", 1400, 0, 7000 )     
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag"            , "", 1400, 0, 7000 )     
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag"            , "", 1400, 0, 7000 )  
+
+# -- var = jet P
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_inclusive              = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_inclusive"                , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_0btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_0btag"                    , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_1btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_1btag"                    , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_2btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_2btag"                    , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_inclusive               = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_inclusive"                 , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_0btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_0btag"                     , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_1btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_1btag"                     , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_2btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_2btag"                     , "", 1400, 0, 7000 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_inclusive               = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_inclusive"                 , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_0btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_0btag"                     , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_1btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_1btag"                     , "", 1400, 0, 7000 )   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_2btag                   = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_2btag"                     , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive     = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive"       , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag"           , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag"           , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag"           , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive      = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive"        , "", 1400, 0, 7000 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag"            , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag"            , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag"            , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive      = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive"        , "", 1400, 0, 7000 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag"            , "", 1400, 0, 7000 )     
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag"            , "", 1400, 0, 7000 )     
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag          = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag"            , "", 1400, 0, 7000 )  
+      
+# -- var = jet Rapidity
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive             = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive"               , "", 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_0btag                 = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_0btag"                   , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_1btag                 = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_1btag"                   , "", 300, -3, 3 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_2btag                 = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_2btag"                   , "", 300, -3, 3 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive              = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive"                , "", 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_0btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_0btag"                    , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_1btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_1btag"                    , "", 300, -3, 3 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_2btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_2btag"                    , "", 300, -3, 3 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive              = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive"                , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_0btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_0btag"                    , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_1btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_1btag"                    , "", 300, -3, 3 )   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_2btag                  = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_2btag"                    , "", 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive    = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive"      , "", 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag        = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag"          , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag        = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag"          , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag        = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag"          , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive     = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive"       , "", 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag"           , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag"           , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag"           , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive     = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive"       , "", 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag"           , "", 300, -3, 3 )     
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag"           , "", 300, -3, 3 )     
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag         = ROOT.TH1D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag"           , "", 300, -3, 3 )  
+
+# -- var = jet pT VS jet rapidity          
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_inclusive                 = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_inclusive"                   , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_0btag                     = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_0btag"                       , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_1btag                     = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_1btag"                       , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_2btag                     = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_2btag"                       , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_inclusive                  = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_inclusive"                    , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_0btag                      = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_0btag"                        , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_1btag                      = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_1btag"                        , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_2btag                      = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_2btag"                        , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_inclusive                  = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_inclusive"                    , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_0btag                      = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_0btag"                        , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_1btag                      = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_1btag"                        , "", 700, 0, 7000, 300, -3, 3 )   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_2btag                      = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_2btag"                        , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive        = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive"          , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag            = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag"              , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag            = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag"              , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag            = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag"              , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive         = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive"           , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag             = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag"               , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag             = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag"               , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag             = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag"               , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive         = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive"           , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag             = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag"               , "", 700, 0, 7000, 300, -3, 3 )     
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag             = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag"               , "", 700, 0, 7000, 300, -3, 3 )     
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag             = ROOT.TH2D( "h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag"               , "", 700, 0, 7000, 300, -3, 3 )  
+                        
+
+
+
+# --- NoAntiTag
+
+# -- var = jet PT
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive                  = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive"                      , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_0btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_0btag"                          , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_1btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_1btag"                          , "", 1400, 0, 7000 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_2btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_2btag"                          , "", 1400, 0, 7000 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive                   = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive"                       , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_0btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_0btag"                           , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_1btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_1btag"                           , "", 1400, 0, 7000 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_2btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_2btag"                           , "", 1400, 0, 7000 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive                   = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive"                       , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_0btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_0btag"                           , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_1btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_1btag"                           , "", 1400, 0, 7000 )   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_2btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_2btag"                           , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive         = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive"             , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag"                 , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag"                 , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag"                 , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive          = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive"              , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag"                  , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag"                  , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag"                  , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive          = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive"              , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag"                  , "", 1400, 0, 7000 )     
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag"                  , "", 1400, 0, 7000 )     
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag"                  , "", 1400, 0, 7000 )  
+
+# -- var = jet P
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_inclusive                  = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_inclusive"                      , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_0btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_0btag"                          , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_1btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_1btag"                          , "", 1400, 0, 7000 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_2btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_2btag"                          , "", 1400, 0, 7000 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_inclusive                   = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_inclusive"                       , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_0btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_0btag"                           , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_1btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_1btag"                           , "", 1400, 0, 7000 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_2btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_2btag"                           , "", 1400, 0, 7000 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_inclusive                   = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_inclusive"                       , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_0btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_0btag"                           , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_1btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_1btag"                           , "", 1400, 0, 7000 )   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_2btag                       = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_2btag"                           , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive         = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive"             , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag"                 , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag"                 , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag"                 , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive          = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive"              , "", 1400, 0, 7000 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag"                  , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag"                  , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag"                  , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive          = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive"              , "", 1400, 0, 7000 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag"                  , "", 1400, 0, 7000 )     
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag"                  , "", 1400, 0, 7000 )     
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag              = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag"                  , "", 1400, 0, 7000 )  
+              
+# -- var = jet Rapidity    
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive                 = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive"                     , "", 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_0btag                     = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_0btag"                         , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_1btag                     = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_1btag"                         , "", 300, -3, 3 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_2btag                     = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_2btag"                         , "", 300, -3, 3 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive                  = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive"                      , "", 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_0btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_0btag"                          , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_1btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_1btag"                          , "", 300, -3, 3 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_2btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_2btag"                          , "", 300, -3, 3 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive                  = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive"                      , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_0btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_0btag"                          , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_1btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_1btag"                          , "", 300, -3, 3 )   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_2btag                      = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_2btag"                          , "", 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive        = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive"            , "", 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag            = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag"                , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag            = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag"                , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag            = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag"                , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive         = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive"             , "", 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag"                 , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag"                 , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag"                 , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive         = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive"             , "", 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag"                 , "", 300, -3, 3 )     
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag"                 , "", 300, -3, 3 )     
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag             = ROOT.TH1D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag"                 , "", 300, -3, 3 )  
+    
+# -- var = jet pT VS jet rapidity      
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_inclusive                     = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_inclusive"                         , "", 700, 0, 7000, 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_0btag                         = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_0btag"                             , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_1btag                         = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_1btag"                             , "", 700, 0, 7000, 300, -3, 3 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_2btag                         = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_2btag"                             , "", 700, 0, 7000, 300, -3, 3 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_inclusive                      = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_inclusive"                          , "", 700, 0, 7000, 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_0btag                          = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_0btag"                              , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_1btag                          = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_1btag"                              , "", 700, 0, 7000, 300, -3, 3 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_2btag                          = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_2btag"                              , "", 700, 0, 7000, 300, -3, 3 ) 
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_inclusive                      = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_inclusive"                          , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_0btag                          = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_0btag"                              , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_1btag                          = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_1btag"                              , "", 700, 0, 7000, 300, -3, 3 )   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_2btag                          = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_2btag"                              , "", 700, 0, 7000, 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive            = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive"                , "", 700, 0, 7000, 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag                = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag"                    , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag                = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag"                    , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag                = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag"                    , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive             = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive"                 , "", 700, 0, 7000, 300, -3, 3 )
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag                 = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag"                     , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag                 = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag"                     , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag                 = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag"                     , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive             = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag                 = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag"                     , "", 700, 0, 7000, 300, -3, 3 )     
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag                 = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag"                     , "", 700, 0, 7000, 300, -3, 3 )     
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag                 = ROOT.TH2D( "h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag"                     , "", 700, 0, 7000, 300, -3, 3 )  
+          
+
+
+
+# --- NoAntiTag
+
+# -- var = jet PT
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_inclusive                  = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_inclusive"                      , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_0btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_0btag"                          , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_1btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_1btag"                          , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_2btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_2btag"                          , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_inclusive                   = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_inclusive"                       , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_0btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_0btag"                           , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_1btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_1btag"                           , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_2btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_2btag"                           , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_inclusive                   = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_inclusive"                       , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_0btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_0btag"                           , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_1btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_1btag"                           , "", 1400, 0, 7000 )   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_2btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_2btag"                           , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_inclusive         = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_inclusive"             , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_0btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_0btag"                 , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_1btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_1btag"                 , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_2btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_2btag"                 , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_inclusive          = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_inclusive"              , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_0btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_0btag"                  , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_1btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_1btag"                  , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_2btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_2btag"                  , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_inclusive          = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_inclusive"              , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_0btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_0btag"                  , "", 1400, 0, 7000 )     
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_1btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_1btag"                  , "", 1400, 0, 7000 )     
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_2btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_2btag"                  , "", 1400, 0, 7000 )  
+
+# -- var = jet P
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_inclusive                  = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_inclusive"                      , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_0btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_0btag"                          , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_1btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_1btag"                          , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_2btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_2btag"                          , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_inclusive                   = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_inclusive"                       , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_0btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_0btag"                           , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_1btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_1btag"                           , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_2btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_2btag"                           , "", 1400, 0, 7000 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_inclusive                   = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_inclusive"                       , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_0btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_0btag"                           , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_1btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_1btag"                           , "", 1400, 0, 7000 )   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_2btag                       = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_2btag"                           , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_inclusive         = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_inclusive"             , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_0btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_0btag"                 , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_1btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_1btag"                 , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_2btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_2btag"                 , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_inclusive          = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_inclusive"              , "", 1400, 0, 7000 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_0btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_0btag"                  , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_1btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_1btag"                  , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_2btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_2btag"                  , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_inclusive          = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_inclusive"              , "", 1400, 0, 7000 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_0btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_0btag"                  , "", 1400, 0, 7000 )     
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_1btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_1btag"                  , "", 1400, 0, 7000 )     
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_2btag              = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_2btag"                  , "", 1400, 0, 7000 )  
+              
+# -- var = jet Rapidity    
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_inclusive                 = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_inclusive"                     , "", 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_0btag                     = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_0btag"                         , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_1btag                     = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_1btag"                         , "", 300, -3, 3 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_2btag                     = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_2btag"                         , "", 300, -3, 3 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_inclusive                  = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_inclusive"                      , "", 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_0btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_0btag"                          , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_1btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_1btag"                          , "", 300, -3, 3 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_2btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_2btag"                          , "", 300, -3, 3 ) 
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_inclusive                  = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_inclusive"                      , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_0btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_0btag"                          , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_1btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_1btag"                          , "", 300, -3, 3 )   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_2btag                      = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_2btag"                          , "", 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_inclusive        = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_inclusive"            , "", 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_0btag            = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_0btag"                , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_1btag            = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_1btag"                , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_2btag            = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_2btag"                , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_inclusive         = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_inclusive"             , "", 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_0btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_0btag"                 , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_1btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_1btag"                 , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_2btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_2btag"                 , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_inclusive         = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_inclusive"             , "", 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_0btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_0btag"                 , "", 300, -3, 3 )     
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_1btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_1btag"                 , "", 300, -3, 3 )     
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_2btag             = ROOT.TH1D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_2btag"                 , "", 300, -3, 3 )  
+    
+# -- var = jet pT VS jet rapidity      
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_inclusive                     = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_inclusive"                         , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_0btag                         = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_0btag"                             , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_1btag                         = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_1btag"                             , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_2btag                         = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_2btag"                             , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_inclusive                      = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_inclusive"                          , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_0btag                          = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_0btag"                              , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_1btag                          = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_1btag"                              , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_2btag                          = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_2btag"                              , "", 700, 0, 7000, 300, -3, 3 ) 
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_inclusive                      = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_inclusive"                          , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_0btag                          = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_0btag"                              , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_1btag                          = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_1btag"                              , "", 700, 0, 7000, 300, -3, 3 )   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_2btag                          = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_2btag"                              , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_inclusive            = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_inclusive"                , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_0btag                = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_0btag"                    , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_1btag                = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_1btag"                    , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_2btag                = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_2btag"                    , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_inclusive             = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_inclusive"                 , "", 700, 0, 7000, 300, -3, 3 )
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_0btag                 = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_0btag"                     , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_1btag                 = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_1btag"                     , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_2btag                 = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_2btag"                     , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_inclusive             = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_inclusive"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_0btag                 = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_0btag"                     , "", 700, 0, 7000, 300, -3, 3 )     
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_1btag                 = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_1btag"                     , "", 700, 0, 7000, 300, -3, 3 )     
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_2btag                 = ROOT.TH2D( "h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_2btag"                     , "", 700, 0, 7000, 300, -3, 3 )  
+          
+
+
+
+# --- Tag odd events 
+         
+# -- var = jet PT         
+h_TagOdd_Probe_jetPt_dRapIn_inclusive              = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapIn_inclusive"                    , "", 1400, 0, 7000 )
+h_TagOdd_Probe_jetPt_dRapIn_0btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapIn_0btag"                        , "", 1400, 0, 7000 )  
+h_TagOdd_Probe_jetPt_dRapIn_1btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapIn_1btag"                        , "", 1400, 0, 7000 ) 
+h_TagOdd_Probe_jetPt_dRapIn_2btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapIn_2btag"                        , "", 1400, 0, 7000 ) 
+h_TagOdd_Probe_jetPt_dRapHi_inclusive               = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapHi_inclusive"                     , "", 1400, 0, 7000 )
+h_TagOdd_Probe_jetPt_dRapHi_0btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapHi_0btag"                         , "", 1400, 0, 7000 )  
+h_TagOdd_Probe_jetPt_dRapHi_1btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapHi_1btag"                         , "", 1400, 0, 7000 ) 
+h_TagOdd_Probe_jetPt_dRapHi_2btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapHi_2btag"                         , "", 1400, 0, 7000 ) 
+h_TagOdd_Probe_jetPt_dRapLo_inclusive               = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapLo_inclusive"                     , "", 1400, 0, 7000 )  
+h_TagOdd_Probe_jetPt_dRapLo_0btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapLo_0btag"                         , "", 1400, 0, 7000 )  
+h_TagOdd_Probe_jetPt_dRapLo_1btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapLo_1btag"                         , "", 1400, 0, 7000 )   
+h_TagOdd_Probe_jetPt_dRapLo_2btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetPt_dRapLo_2btag"                         , "", 1400, 0, 7000 )
+h_TagOdd_TagMassSDTau32_jetPt_dRapIn_inclusive     = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapIn_inclusive"           , "", 1400, 0, 7000 )
+h_TagOdd_TagMassSDTau32_jetPt_dRapIn_0btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapIn_0btag"               , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetPt_dRapIn_1btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapIn_1btag"               , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetPt_dRapIn_2btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapIn_2btag"               , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetPt_dRapHi_inclusive      = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapHi_inclusive"            , "", 1400, 0, 7000 )
+h_TagOdd_TagMassSDTau32_jetPt_dRapHi_0btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapHi_0btag"                , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetPt_dRapHi_1btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapHi_1btag"                , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetPt_dRapHi_2btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapHi_2btag"                , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetPt_dRapLo_inclusive      = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapLo_inclusive"            , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetPt_dRapLo_0btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapLo_0btag"                , "", 1400, 0, 7000 )     
+h_TagOdd_TagMassSDTau32_jetPt_dRapLo_1btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapLo_1btag"                , "", 1400, 0, 7000 )     
+h_TagOdd_TagMassSDTau32_jetPt_dRapLo_2btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetPt_dRapLo_2btag"                , "", 1400, 0, 7000 )  
+         
+# -- var = jet P        
+h_TagOdd_Probe_jetP_dRapIn_inclusive              = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapIn_inclusive"                    , "", 1400, 0, 7000 )
+h_TagOdd_Probe_jetP_dRapIn_0btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapIn_0btag"                        , "", 1400, 0, 7000 )  
+h_TagOdd_Probe_jetP_dRapIn_1btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapIn_1btag"                        , "", 1400, 0, 7000 ) 
+h_TagOdd_Probe_jetP_dRapIn_2btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapIn_2btag"                        , "", 1400, 0, 7000 ) 
+h_TagOdd_Probe_jetP_dRapHi_inclusive               = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapHi_inclusive"                     , "", 1400, 0, 7000 )
+h_TagOdd_Probe_jetP_dRapHi_0btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapHi_0btag"                         , "", 1400, 0, 7000 )  
+h_TagOdd_Probe_jetP_dRapHi_1btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapHi_1btag"                         , "", 1400, 0, 7000 ) 
+h_TagOdd_Probe_jetP_dRapHi_2btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapHi_2btag"                         , "", 1400, 0, 7000 ) 
+h_TagOdd_Probe_jetP_dRapLo_inclusive               = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapLo_inclusive"                     , "", 1400, 0, 7000 )  
+h_TagOdd_Probe_jetP_dRapLo_0btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapLo_0btag"                         , "", 1400, 0, 7000 )  
+h_TagOdd_Probe_jetP_dRapLo_1btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapLo_1btag"                         , "", 1400, 0, 7000 )   
+h_TagOdd_Probe_jetP_dRapLo_2btag                   = ROOT.TH1D( "h_TagOdd_Probe_jetP_dRapLo_2btag"                         , "", 1400, 0, 7000 )
+h_TagOdd_TagMassSDTau32_jetP_dRapIn_inclusive     = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapIn_inclusive"           , "", 1400, 0, 7000 )
+h_TagOdd_TagMassSDTau32_jetP_dRapIn_0btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapIn_0btag"               , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetP_dRapIn_1btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapIn_1btag"               , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetP_dRapIn_2btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapIn_2btag"               , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetP_dRapHi_inclusive      = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapHi_inclusive"            , "", 1400, 0, 7000 )
+h_TagOdd_TagMassSDTau32_jetP_dRapHi_0btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapHi_0btag"                , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetP_dRapHi_1btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapHi_1btag"                , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetP_dRapHi_2btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapHi_2btag"                , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetP_dRapLo_inclusive      = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapLo_inclusive"            , "", 1400, 0, 7000 )  
+h_TagOdd_TagMassSDTau32_jetP_dRapLo_0btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapLo_0btag"                , "", 1400, 0, 7000 )     
+h_TagOdd_TagMassSDTau32_jetP_dRapLo_1btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapLo_1btag"                , "", 1400, 0, 7000 )     
+h_TagOdd_TagMassSDTau32_jetP_dRapLo_2btag          = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetP_dRapLo_2btag"                , "", 1400, 0, 7000 )  
+      
+# -- var = jet Rapidity
+h_TagOdd_Probe_jetRap_dRapIn_inclusive             = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapIn_inclusive"                   , "", 300, -3, 3 )
+h_TagOdd_Probe_jetRap_dRapIn_0btag                 = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapIn_0btag"                       , "", 300, -3, 3 )  
+h_TagOdd_Probe_jetRap_dRapIn_1btag                 = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapIn_1btag"                       , "", 300, -3, 3 ) 
+h_TagOdd_Probe_jetRap_dRapIn_2btag                 = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapIn_2btag"                       , "", 300, -3, 3 ) 
+h_TagOdd_Probe_jetRap_dRapHi_inclusive              = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapHi_inclusive"                    , "", 300, -3, 3 )
+h_TagOdd_Probe_jetRap_dRapHi_0btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapHi_0btag"                        , "", 300, -3, 3 )  
+h_TagOdd_Probe_jetRap_dRapHi_1btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapHi_1btag"                        , "", 300, -3, 3 ) 
+h_TagOdd_Probe_jetRap_dRapHi_2btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapHi_2btag"                        , "", 300, -3, 3 ) 
+h_TagOdd_Probe_jetRap_dRapLo_inclusive              = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapLo_inclusive"                    , "", 300, -3, 3 )  
+h_TagOdd_Probe_jetRap_dRapLo_0btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapLo_0btag"                        , "", 300, -3, 3 )  
+h_TagOdd_Probe_jetRap_dRapLo_1btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapLo_1btag"                        , "", 300, -3, 3 )   
+h_TagOdd_Probe_jetRap_dRapLo_2btag                  = ROOT.TH1D( "h_TagOdd_Probe_jetRap_dRapLo_2btag"                        , "", 300, -3, 3 )
+h_TagOdd_TagMassSDTau32_jetRap_dRapIn_inclusive    = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapIn_inclusive"          , "", 300, -3, 3 )
+h_TagOdd_TagMassSDTau32_jetRap_dRapIn_0btag        = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapIn_0btag"              , "", 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_jetRap_dRapIn_1btag        = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapIn_1btag"              , "", 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_jetRap_dRapIn_2btag        = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapIn_2btag"              , "", 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_jetRap_dRapHi_inclusive     = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapHi_inclusive"           , "", 300, -3, 3 )
+h_TagOdd_TagMassSDTau32_jetRap_dRapHi_0btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapHi_0btag"               , "", 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_jetRap_dRapHi_1btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapHi_1btag"               , "", 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_jetRap_dRapHi_2btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapHi_2btag"               , "", 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_jetRap_dRapLo_inclusive     = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapLo_inclusive"           , "", 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_jetRap_dRapLo_0btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapLo_0btag"               , "", 300, -3, 3 )     
+h_TagOdd_TagMassSDTau32_jetRap_dRapLo_1btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapLo_1btag"               , "", 300, -3, 3 )     
+h_TagOdd_TagMassSDTau32_jetRap_dRapLo_2btag         = ROOT.TH1D( "h_TagOdd_TagMassSDTau32_jetRap_dRapLo_2btag"               , "", 300, -3, 3 )  
+
+# -- var = jet pT VS jet rapidity            
+h_TagOdd_Probe_2D_dRapIn_inclusive                   = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapIn_inclusive"                     , "", 700, 0, 7000, 300, -3, 3 )
+h_TagOdd_Probe_2D_dRapIn_0btag                       = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapIn_0btag"                         , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_Probe_2D_dRapIn_1btag                       = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapIn_1btag"                         , "", 700, 0, 7000, 300, -3, 3 ) 
+h_TagOdd_Probe_2D_dRapIn_2btag                       = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapIn_2btag"                         , "", 700, 0, 7000, 300, -3, 3 ) 
+h_TagOdd_Probe_2D_dRapHi_inclusive                    = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapHi_inclusive"                      , "", 700, 0, 7000, 300, -3, 3 )
+h_TagOdd_Probe_2D_dRapHi_0btag                        = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapHi_0btag"                          , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_Probe_2D_dRapHi_1btag                        = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapHi_1btag"                          , "", 700, 0, 7000, 300, -3, 3 ) 
+h_TagOdd_Probe_2D_dRapHi_2btag                        = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapHi_2btag"                          , "", 700, 0, 7000, 300, -3, 3 ) 
+h_TagOdd_Probe_2D_dRapLo_inclusive                    = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapLo_inclusive"                      , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_Probe_2D_dRapLo_0btag                        = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapLo_0btag"                          , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_Probe_2D_dRapLo_1btag                        = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapLo_1btag"                          , "", 700, 0, 7000, 300, -3, 3 )   
+h_TagOdd_Probe_2D_dRapLo_2btag                        = ROOT.TH2D( "h_TagOdd_Probe_2D_dRapLo_2btag"                          , "", 700, 0, 7000, 300, -3, 3 )
+h_TagOdd_TagMassSDTau32_2D_dRapIn_inclusive          = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapIn_inclusive"            , "", 700, 0, 7000, 300, -3, 3 )
+h_TagOdd_TagMassSDTau32_2D_dRapIn_0btag              = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapIn_0btag"                , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_2D_dRapIn_1btag              = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapIn_1btag"                , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_2D_dRapIn_2btag              = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapIn_2btag"                , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_2D_dRapHi_inclusive           = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapHi_inclusive"             , "", 700, 0, 7000, 300, -3, 3 )
+h_TagOdd_TagMassSDTau32_2D_dRapHi_0btag               = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapHi_0btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_2D_dRapHi_1btag               = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapHi_1btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_2D_dRapHi_2btag               = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapHi_2btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_2D_dRapLo_inclusive           = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapLo_inclusive"             , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagOdd_TagMassSDTau32_2D_dRapLo_0btag               = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapLo_0btag"                 , "", 700, 0, 7000, 300, -3, 3 )     
+h_TagOdd_TagMassSDTau32_2D_dRapLo_1btag               = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapLo_1btag"                 , "", 700, 0, 7000, 300, -3, 3 )     
+h_TagOdd_TagMassSDTau32_2D_dRapLo_2btag               = ROOT.TH2D( "h_TagOdd_TagMassSDTau32_2D_dRapLo_2btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+          
+
+
+
+
+
+
+# --- Tag even events 
+         
+# -- var = jet PT         
+h_TagEven_Probe_jetPt_dRapIn_inclusive              = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapIn_inclusive"                    , "", 1400, 0, 7000 )
+h_TagEven_Probe_jetPt_dRapIn_0btag                  = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapIn_0btag"                        , "", 1400, 0, 7000 )  
+h_TagEven_Probe_jetPt_dRapIn_1btag                  = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapIn_1btag"                        , "", 1400, 0, 7000 ) 
+h_TagEven_Probe_jetPt_dRapIn_2btag                  = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapIn_2btag"                        , "", 1400, 0, 7000 ) 
+h_TagEven_Probe_jetPt_dRapHi_inclusive               = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapHi_inclusive"                     , "", 1400, 0, 7000 )
+h_TagEven_Probe_jetPt_dRapHi_0btag                   = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapHi_0btag"                         , "", 1400, 0, 7000 )  
+h_TagEven_Probe_jetPt_dRapHi_1btag                   = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapHi_1btag"                         , "", 1400, 0, 7000 ) 
+h_TagEven_Probe_jetPt_dRapHi_2btag                   = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapHi_2btag"                         , "", 1400, 0, 7000 ) 
+h_TagEven_Probe_jetPt_dRapLo_inclusive               = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapLo_inclusive"                     , "", 1400, 0, 7000 )  
+h_TagEven_Probe_jetPt_dRapLo_0btag                   = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapLo_0btag"                         , "", 1400, 0, 7000 )  
+h_TagEven_Probe_jetPt_dRapLo_1btag                   = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapLo_1btag"                         , "", 1400, 0, 7000 )   
+h_TagEven_Probe_jetPt_dRapLo_2btag                   = ROOT.TH1D( "h_TagEven_Probe_jetPt_dRapLo_2btag"                         , "", 1400, 0, 7000 )
+h_TagEven_TagMassSDTau32_jetPt_dRapIn_inclusive     = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapIn_inclusive"           , "", 1400, 0, 7000 )
+h_TagEven_TagMassSDTau32_jetPt_dRapIn_0btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapIn_0btag"               , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetPt_dRapIn_1btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapIn_1btag"               , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetPt_dRapIn_2btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapIn_2btag"               , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetPt_dRapHi_inclusive      = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapHi_inclusive"            , "", 1400, 0, 7000 )
+h_TagEven_TagMassSDTau32_jetPt_dRapHi_0btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapHi_0btag"                , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetPt_dRapHi_1btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapHi_1btag"                , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetPt_dRapHi_2btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapHi_2btag"                , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetPt_dRapLo_inclusive      = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapLo_inclusive"            , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetPt_dRapLo_0btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapLo_0btag"                , "", 1400, 0, 7000 )     
+h_TagEven_TagMassSDTau32_jetPt_dRapLo_1btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapLo_1btag"                , "", 1400, 0, 7000 )     
+h_TagEven_TagMassSDTau32_jetPt_dRapLo_2btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetPt_dRapLo_2btag"                , "", 1400, 0, 7000 )  
+         
+# -- var = jet P        
+h_TagEven_Probe_jetP_dRapIn_inclusive              = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapIn_inclusive"                    , "", 1400, 0, 7000 )
+h_TagEven_Probe_jetP_dRapIn_0btag                  = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapIn_0btag"                        , "", 1400, 0, 7000 )  
+h_TagEven_Probe_jetP_dRapIn_1btag                  = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapIn_1btag"                        , "", 1400, 0, 7000 ) 
+h_TagEven_Probe_jetP_dRapIn_2btag                  = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapIn_2btag"                        , "", 1400, 0, 7000 ) 
+h_TagEven_Probe_jetP_dRapHi_inclusive               = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapHi_inclusive"                     , "", 1400, 0, 7000 )
+h_TagEven_Probe_jetP_dRapHi_0btag                   = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapHi_0btag"                         , "", 1400, 0, 7000 )  
+h_TagEven_Probe_jetP_dRapHi_1btag                   = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapHi_1btag"                         , "", 1400, 0, 7000 ) 
+h_TagEven_Probe_jetP_dRapHi_2btag                   = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapHi_2btag"                         , "", 1400, 0, 7000 ) 
+h_TagEven_Probe_jetP_dRapLo_inclusive               = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapLo_inclusive"                     , "", 1400, 0, 7000 )  
+h_TagEven_Probe_jetP_dRapLo_0btag                   = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapLo_0btag"                         , "", 1400, 0, 7000 )  
+h_TagEven_Probe_jetP_dRapLo_1btag                   = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapLo_1btag"                         , "", 1400, 0, 7000 )   
+h_TagEven_Probe_jetP_dRapLo_2btag                   = ROOT.TH1D( "h_TagEven_Probe_jetP_dRapLo_2btag"                         , "", 1400, 0, 7000 )
+h_TagEven_TagMassSDTau32_jetP_dRapIn_inclusive     = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapIn_inclusive"           , "", 1400, 0, 7000 )
+h_TagEven_TagMassSDTau32_jetP_dRapIn_0btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapIn_0btag"               , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetP_dRapIn_1btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapIn_1btag"               , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetP_dRapIn_2btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapIn_2btag"               , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetP_dRapHi_inclusive      = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapHi_inclusive"            , "", 1400, 0, 7000 )
+h_TagEven_TagMassSDTau32_jetP_dRapHi_0btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapHi_0btag"                , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetP_dRapHi_1btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapHi_1btag"                , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetP_dRapHi_2btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapHi_2btag"                , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetP_dRapLo_inclusive      = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapLo_inclusive"            , "", 1400, 0, 7000 )  
+h_TagEven_TagMassSDTau32_jetP_dRapLo_0btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapLo_0btag"                , "", 1400, 0, 7000 )     
+h_TagEven_TagMassSDTau32_jetP_dRapLo_1btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapLo_1btag"                , "", 1400, 0, 7000 )     
+h_TagEven_TagMassSDTau32_jetP_dRapLo_2btag          = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetP_dRapLo_2btag"                , "", 1400, 0, 7000 )  
+      
+# -- var = jet Rapidity
+h_TagEven_Probe_jetRap_dRapIn_inclusive             = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapIn_inclusive"                   , "", 300, -3, 3 )
+h_TagEven_Probe_jetRap_dRapIn_0btag                 = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapIn_0btag"                       , "", 300, -3, 3 )  
+h_TagEven_Probe_jetRap_dRapIn_1btag                 = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapIn_1btag"                       , "", 300, -3, 3 ) 
+h_TagEven_Probe_jetRap_dRapIn_2btag                 = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapIn_2btag"                       , "", 300, -3, 3 ) 
+h_TagEven_Probe_jetRap_dRapHi_inclusive              = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapHi_inclusive"                    , "", 300, -3, 3 )
+h_TagEven_Probe_jetRap_dRapHi_0btag                  = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapHi_0btag"                        , "", 300, -3, 3 )  
+h_TagEven_Probe_jetRap_dRapHi_1btag                  = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapHi_1btag"                        , "", 300, -3, 3 ) 
+h_TagEven_Probe_jetRap_dRapHi_2btag                  = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapHi_2btag"                        , "", 300, -3, 3 ) 
+h_TagEven_Probe_jetRap_dRapLo_inclusive              = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapLo_inclusive"                    , "", 300, -3, 3 )  
+h_TagEven_Probe_jetRap_dRapLo_0btag                  = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapLo_0btag"                        , "", 300, -3, 3 )  
+h_TagEven_Probe_jetRap_dRapLo_1btag                  = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapLo_1btag"                        , "", 300, -3, 3 )   
+h_TagEven_Probe_jetRap_dRapLo_2btag                  = ROOT.TH1D( "h_TagEven_Probe_jetRap_dRapLo_2btag"                        , "", 300, -3, 3 )
+h_TagEven_TagMassSDTau32_jetRap_dRapIn_inclusive    = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapIn_inclusive"          , "", 300, -3, 3 )
+h_TagEven_TagMassSDTau32_jetRap_dRapIn_0btag        = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapIn_0btag"              , "", 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_jetRap_dRapIn_1btag        = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapIn_1btag"              , "", 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_jetRap_dRapIn_2btag        = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapIn_2btag"              , "", 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_jetRap_dRapHi_inclusive     = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapHi_inclusive"           , "", 300, -3, 3 )
+h_TagEven_TagMassSDTau32_jetRap_dRapHi_0btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapHi_0btag"               , "", 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_jetRap_dRapHi_1btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapHi_1btag"               , "", 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_jetRap_dRapHi_2btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapHi_2btag"               , "", 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_jetRap_dRapLo_inclusive     = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapLo_inclusive"           , "", 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_jetRap_dRapLo_0btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapLo_0btag"               , "", 300, -3, 3 )     
+h_TagEven_TagMassSDTau32_jetRap_dRapLo_1btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapLo_1btag"               , "", 300, -3, 3 )     
+h_TagEven_TagMassSDTau32_jetRap_dRapLo_2btag         = ROOT.TH1D( "h_TagEven_TagMassSDTau32_jetRap_dRapLo_2btag"               , "", 300, -3, 3 )  
+
+# -- var = jet pT VS jet rapidity            
+h_TagEven_Probe_2D_dRapIn_inclusive                   = ROOT.TH2D( "h_TagEven_Probe_2D_dRapIn_inclusive"                     , "", 700, 0, 7000, 300, -3, 3 )
+h_TagEven_Probe_2D_dRapIn_0btag                       = ROOT.TH2D( "h_TagEven_Probe_2D_dRapIn_0btag"                         , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_Probe_2D_dRapIn_1btag                       = ROOT.TH2D( "h_TagEven_Probe_2D_dRapIn_1btag"                         , "", 700, 0, 7000, 300, -3, 3 ) 
+h_TagEven_Probe_2D_dRapIn_2btag                       = ROOT.TH2D( "h_TagEven_Probe_2D_dRapIn_2btag"                         , "", 700, 0, 7000, 300, -3, 3 ) 
+h_TagEven_Probe_2D_dRapHi_inclusive                    = ROOT.TH2D( "h_TagEven_Probe_2D_dRapHi_inclusive"                      , "", 700, 0, 7000, 300, -3, 3 )
+h_TagEven_Probe_2D_dRapHi_0btag                        = ROOT.TH2D( "h_TagEven_Probe_2D_dRapHi_0btag"                          , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_Probe_2D_dRapHi_1btag                        = ROOT.TH2D( "h_TagEven_Probe_2D_dRapHi_1btag"                          , "", 700, 0, 7000, 300, -3, 3 ) 
+h_TagEven_Probe_2D_dRapHi_2btag                        = ROOT.TH2D( "h_TagEven_Probe_2D_dRapHi_2btag"                          , "", 700, 0, 7000, 300, -3, 3 ) 
+h_TagEven_Probe_2D_dRapLo_inclusive                    = ROOT.TH2D( "h_TagEven_Probe_2D_dRapLo_inclusive"                      , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_Probe_2D_dRapLo_0btag                        = ROOT.TH2D( "h_TagEven_Probe_2D_dRapLo_0btag"                          , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_Probe_2D_dRapLo_1btag                        = ROOT.TH2D( "h_TagEven_Probe_2D_dRapLo_1btag"                          , "", 700, 0, 7000, 300, -3, 3 )   
+h_TagEven_Probe_2D_dRapLo_2btag                        = ROOT.TH2D( "h_TagEven_Probe_2D_dRapLo_2btag"                          , "", 700, 0, 7000, 300, -3, 3 )
+h_TagEven_TagMassSDTau32_2D_dRapIn_inclusive          = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapIn_inclusive"            , "", 700, 0, 7000, 300, -3, 3 )
+h_TagEven_TagMassSDTau32_2D_dRapIn_0btag              = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapIn_0btag"                , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_2D_dRapIn_1btag              = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapIn_1btag"                , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_2D_dRapIn_2btag              = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapIn_2btag"                , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_2D_dRapHi_inclusive           = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapHi_inclusive"             , "", 700, 0, 7000, 300, -3, 3 )
+h_TagEven_TagMassSDTau32_2D_dRapHi_0btag               = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapHi_0btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_2D_dRapHi_1btag               = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapHi_1btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_2D_dRapHi_2btag               = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapHi_2btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_2D_dRapLo_inclusive           = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapLo_inclusive"             , "", 700, 0, 7000, 300, -3, 3 )  
+h_TagEven_TagMassSDTau32_2D_dRapLo_0btag               = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapLo_0btag"                 , "", 700, 0, 7000, 300, -3, 3 )     
+h_TagEven_TagMassSDTau32_2D_dRapLo_1btag               = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapLo_1btag"                 , "", 700, 0, 7000, 300, -3, 3 )     
+h_TagEven_TagMassSDTau32_2D_dRapLo_2btag               = ROOT.TH2D( "h_TagEven_TagMassSDTau32_2D_dRapLo_2btag"                 , "", 700, 0, 7000, 300, -3, 3 )  
+          
+
+
+
 
 count = 0
 maxJet0Ht = 0
@@ -306,7 +945,6 @@ for event in Tree:
   topTag0MassFatMinMassTau32         = topTag0MassFat and topTag0MinMass and topTag0Tau32
   topTag1MassFatMinMassTau32         = topTag1MassFat and topTag1MinMass and topTag1Tau32
   
-
   # Many anti-tag definitions
   antiTag0minMass50                       = event.Jet0CMSminMass < 50 
   antiTag1minMass50                       = event.Jet1CMSminMass < 50
@@ -329,6 +967,15 @@ for event in Tree:
   antiTag0Tau32_ReqTopMassFat             = topTag0MassFat and antiTag0Tau32
   antiTag1Tau32_ReqTopMassFat             = topTag1MassFat and antiTag1Tau32
   
+  evenEvent = False
+  oddEvent = False
+  if event.AllHadEventNum % 2 == 0 :
+    evenEvent = True
+  else:
+    oddEvent = True
+
+  # print " event.AllHadEventNum "+str( event.AllHadEventNum)+" oddEvent "+str(oddEvent)
+
   # Scale factor modifications
 
   # official AK4 b-tagging scale-factor
@@ -355,151 +1002,2621 @@ for event in Tree:
   rand_mistag  = rand1.Uniform(0,1.0)
 
   if rand_mistag < 0.5 :
-    #----------anti-tag tau32, keep jet in SD mass window
-    if antiTag0Tau32_ReqTopMassSD:
-        #if event.DijetDeltaRap > 1:
-        #inclusive
-        h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive  .Fill( event.Jet1Pt, evWeight )
-        #2btag
-        if newbtagjet0 and newbtagjet1:
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag  .Fill( event.Jet1Pt, evWeight )
-        #1btag
-        if (newbtagjet0 and not newbtagjet1):
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
-        if (newbtagjet1 and not newbtagjet0):
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
-        #0btag
-        if not newbtagjet0 and not newbtagjet1:
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag  .Fill( event.Jet1Pt, evWeight )
-        # if event.DijetDeltaRap < 1:
-        #     #inclusive
-        #     h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive     .Fill( event.Jet1Pt, evWeight )
-        #     #2btag
-        #     if newbtagjet0 and newbtagjet1:
-        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag     .Fill( event.Jet1Pt, evWeight )
-        #     #1btag
-        #     if (newbtagjet0 and not newbtagjet1):
-        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
-        #     if (newbtagjet1 and not newbtagjet0):
-        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
-        #     #0btag
-        #     if not newbtagjet0 and not newbtagjet1:
-        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag     .Fill( event.Jet1Pt, evWeight )
-        
-        if topTag1MassSDTau32    : 
-            #if event.DijetDeltaRap > 1 :
-            #inclusive
-            h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive  .Fill( event.Jet1Pt, evWeight )
-            #2btag
-            if newbtagjet0 and newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag  .Fill( event.Jet1Pt, evWeight )
-            #1btag
-            if (newbtagjet0 and not newbtagjet1):
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
-            if (newbtagjet1 and not newbtagjet0):
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet1Pt, evWeight )
-            #0btag
-            if not newbtagjet0 and not newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag  .Fill( event.Jet1Pt, evWeight )
-            # if event.DijetDeltaRap < 1 :
-            #     #inclusive
-            #     h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive     .Fill( event.Jet1Pt, evWeight )
-            #     #2btag
-            #     if newbtagjet0 and newbtagjet1:
-            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag     .Fill( event.Jet1Pt, evWeight )
-            #     #1btag
-            #     if (newbtagjet0 and not newbtagjet1):
-            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
-            #     if (newbtagjet1 and not newbtagjet0):
-            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag     .Fill( event.Jet1Pt, evWeight )
-            #     #0btag
-            #     if not newbtagjet0 and not newbtagjet1:
-            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag     .Fill( event.Jet1Pt, evWeight )
-        
-    
+      #----------anti-tag tau32, keep jet in SD mass window
+      if antiTag0Tau32_ReqTopMassSD:
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+          h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+          h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+          h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag1MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                 
+
+      #----------anti-tag minMass<50, keep jet in SD mass window
+      if antiTag0minMass50_ReqTopMassSD:
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+          h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+          h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+          h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag1MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+      
+
+      #----------no anti-tag, keep jet in SD mass window
+      if topTag0MassSD:
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+          h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+          h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+          h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag1MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+      
+      #-----------anti-tag tau32, no mass requirement
+      if antiTag0Tau32:
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+          h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+          h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+          h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag1MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+      
+      #----------tag odd events and probe
+      if topTag0MassSDTau32 and oddEvent :
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_TagOdd_Probe_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+          h_TagOdd_Probe_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+          h_TagOdd_Probe_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+          h_TagOdd_Probe_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_TagOdd_Probe_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_TagOdd_Probe_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_TagOdd_Probe_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_TagOdd_Probe_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagOdd_Probe_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagOdd_Probe_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagOdd_Probe_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_TagOdd_Probe_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagOdd_Probe_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagOdd_Probe_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagOdd_Probe_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag1MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_TagOdd_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagOdd_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_TagOdd_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagOdd_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+      
+
+      #----------tag even events and probe
+      if topTag0MassSDTau32 and evenEvent :
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_TagEven_Probe_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+          h_TagEven_Probe_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+          h_TagEven_Probe_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+          h_TagEven_Probe_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_TagEven_Probe_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_TagEven_Probe_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_TagEven_Probe_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_TagEven_Probe_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagEven_Probe_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagEven_Probe_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagEven_Probe_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_TagEven_Probe_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagEven_Probe_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagEven_Probe_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagEven_Probe_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag1MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_TagEven_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+              h_TagEven_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet1P4.P()        , evWeight )
+              h_TagEven_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+              h_TagEven_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagEven_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagEven_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagEven_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_TagEven_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_TagEven_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_TagEven_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_TagEven_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_TagEven_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet1P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet1P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet1P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_TagEven_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_TagEven_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_TagEven_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet1P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet1P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet1P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet1P4.Perp()     , jet1P4.Rapidity() , evWeight )
+      
 
   if rand_mistag >= 0.5 :
-    #----------anti-tag tau32, keep jet in SD mass window
-    if antiTag1Tau32_ReqTopMassSD:
-        #if event.DijetDeltaRap > 1:
-        #inclusive
-        h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive  .Fill( event.Jet0Pt, evWeight )
-        #2btag
-        if newbtagjet0 and newbtagjet1:
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag  .Fill( event.Jet0Pt, evWeight )
-        #1btag
-        if (newbtagjet0 and not newbtagjet1):
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight )
-        if (newbtagjet1 and not newbtagjet0):
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight )
-        #0btag
-        if not newbtagjet0 and not newbtagjet1:
-            h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag  .Fill( event.Jet0Pt, evWeight )
-        # if event.DijetDeltaRap < 1: 
-        #     #inclusive
-        #     h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive     .Fill( event.Jet0Pt, evWeight )
-        #     #2btag
-        #     if newbtagjet0 and newbtagjet1:
-        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag     .Fill( event.Jet0Pt, evWeight )
-        #     #1btag
-        #     if (newbtagjet0 and not newbtagjet1):
-        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet0Pt, evWeight )
-        #     if (newbtagjet1 and not newbtagjet0):
-        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag     .Fill( event.Jet0Pt, evWeight )
-        #     #0btag
-        #     if not newbtagjet0 and not newbtagjet1:
-        #         h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag     .Fill( event.Jet0Pt, evWeight )   
-        
-        if topTag0MassSDTau32    : 
-            #if event.DijetDeltaRap > 1 :
-            #inclusive
-            h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive  .Fill( event.Jet0Pt, evWeight )
-            #2btag
-            if newbtagjet0 and newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag  .Fill( event.Jet0Pt, evWeight )
-            #1btag
-            if (newbtagjet0 and not newbtagjet1):
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight )
-            if (newbtagjet1 and not newbtagjet0):
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag  .Fill( event.Jet0Pt, evWeight ) 
-            #0btag
-            if not newbtagjet0 and not newbtagjet1:
-                h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag  .Fill( event.Jet0Pt, evWeight )
-            # if event.DijetDeltaRap < 1 :
-            #     #inclusive
-            #     h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive  .Fill( event.Jet0Pt, evWeight )
-            #     #2btag
-            #     if newbtagjet0 and newbtagjet1:
-            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag  .Fill( event.Jet0Pt, evWeight )
-            #     #1btag
-            #     if (newbtagjet0 and not newbtagjet1):
-            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag  .Fill( event.Jet0Pt, evWeight )
-            #     if (newbtagjet1 and not newbtagjet0):
-            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag  .Fill( event.Jet0Pt, evWeight )
-            #     #0btag
-            #     if not newbtagjet0 and not newbtagjet1:
-            #         h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag  .Fill( event.Jet0Pt, evWeight )
     
+      #----------anti-tag tau32, keep jet in SD mass window
+      if antiTag1Tau32_ReqTopMassSD:
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+          h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+          h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+          h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag0MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                 
+
+      #----------anti-tag minMass<50, keep jet in SD mass window
+      if antiTag1minMass50_ReqTopMassSD:
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+          h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+          h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+          h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag0MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+      
+
+      #----------no anti-tag, keep jet in SD mass window
+      if topTag1MassSD:
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+          h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+          h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+          h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag0MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+      
+
+      #-----------anti-tag tau32, no mass requirement
+      if antiTag1Tau32:
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+          h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+          h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+          h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag0MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+      
+
+      #----------tag odd events and probe
+      if topTag1MassSDTau32 and oddEvent :
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_TagOdd_Probe_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+          h_TagOdd_Probe_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+          h_TagOdd_Probe_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+          h_TagOdd_Probe_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_TagOdd_Probe_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_TagOdd_Probe_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_TagOdd_Probe_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_TagOdd_Probe_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagOdd_Probe_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagOdd_Probe_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagOdd_Probe_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_TagOdd_Probe_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagOdd_Probe_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_TagOdd_Probe_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagOdd_Probe_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagOdd_Probe_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagOdd_Probe_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagOdd_Probe_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_Probe_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_Probe_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_Probe_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag0MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_TagOdd_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagOdd_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_TagOdd_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagOdd_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_TagOdd_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_TagOdd_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagOdd_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_TagOdd_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagOdd_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagOdd_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+        
+      #----------tag odd events and probe
+      if topTag1MassSDTau32 and evenEvent :
+
+          # --- Fill Probe distributions
+
+          # -- no Delta Rapidity cut
+          #inclusive
+          h_TagEven_Probe_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+          h_TagEven_Probe_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+          h_TagEven_Probe_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+          h_TagEven_Probe_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #2btag
+          if newbtagjet0 and newbtagjet1:
+              h_TagEven_Probe_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #1btag
+          if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+              h_TagEven_Probe_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+          #0btag
+          if not newbtagjet0 and not newbtagjet1:
+              h_TagEven_Probe_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+         
+          # -- Delta Rapidity >1
+          if event.DijetDeltaRap > 1:
+              #inclusive
+              h_TagEven_Probe_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagEven_Probe_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagEven_Probe_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagEven_Probe_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+          # -- Delta Rapidity <1
+          if event.DijetDeltaRap <= 1:
+              #inclusive
+              h_TagEven_Probe_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagEven_Probe_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_TagEven_Probe_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagEven_Probe_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagEven_Probe_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagEven_Probe_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagEven_Probe_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_Probe_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_Probe_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_Probe_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+
+          # --- Fill Tag distributions
+
+          if topTag0MassSDTau32    : 
+
+              # -- no Delta Rapidity cut
+              #inclusive
+              h_TagEven_TagMassSDTau32_jetPt_dRapIn_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+              h_TagEven_TagMassSDTau32_jetP_dRapIn_inclusive    .Fill( jet0P4.P()        , evWeight )
+              h_TagEven_TagMassSDTau32_jetRap_dRapIn_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+              h_TagEven_TagMassSDTau32_2D_dRapIn_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #2btag
+              if newbtagjet0 and newbtagjet1:
+                  h_TagEven_TagMassSDTau32_jetPt_dRapIn_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapIn_2btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapIn_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapIn_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #1btag
+              if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                  h_TagEven_TagMassSDTau32_jetPt_dRapIn_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapIn_1btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapIn_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapIn_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+              #0btag
+              if not newbtagjet0 and not newbtagjet1:
+                  h_TagEven_TagMassSDTau32_jetPt_dRapIn_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapIn_0btag    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapIn_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapIn_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+             
+              # -- Delta Rapidity >1
+              if event.DijetDeltaRap > 1:
+                  #inclusive
+                  h_TagEven_TagMassSDTau32_jetPt_dRapHi_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapHi_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapHi_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapHi_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_TagEven_TagMassSDTau32_jetPt_dRapHi_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapHi_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapHi_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapHi_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_TagEven_TagMassSDTau32_jetPt_dRapHi_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapHi_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapHi_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapHi_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_TagEven_TagMassSDTau32_jetPt_dRapHi_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapHi_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapHi_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapHi_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                 
+              # -- Delta Rapidity <1
+              if event.DijetDeltaRap <= 1:
+                  #inclusive
+                  h_TagEven_TagMassSDTau32_jetPt_dRapLo_inclusive   .Fill( jet0P4.Perp()     , evWeight )
+                  h_TagEven_TagMassSDTau32_jetP_dRapLo_inclusive    .Fill( jet0P4.P()        , evWeight )
+                  h_TagEven_TagMassSDTau32_jetRap_dRapLo_inclusive  .Fill( jet0P4.Rapidity() , evWeight )
+                  h_TagEven_TagMassSDTau32_2D_dRapLo_inclusive      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #2btag
+                  if newbtagjet0 and newbtagjet1:
+                      h_TagEven_TagMassSDTau32_jetPt_dRapLo_2btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapLo_2btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapLo_2btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapLo_2btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #1btag
+                  if ( (newbtagjet0 and not newbtagjet1) or (newbtagjet1 and not newbtagjet0) ) :
+                      h_TagEven_TagMassSDTau32_jetPt_dRapLo_1btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapLo_1btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapLo_1btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapLo_1btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+                  #0btag
+                  if not newbtagjet0 and not newbtagjet1:
+                      h_TagEven_TagMassSDTau32_jetPt_dRapLo_0btag   .Fill( jet0P4.Perp()     , evWeight )
+                      h_TagEven_TagMassSDTau32_jetP_dRapLo_0btag    .Fill( jet0P4.P()        , evWeight )
+                      h_TagEven_TagMassSDTau32_jetRap_dRapLo_0btag  .Fill( jet0P4.Rapidity() , evWeight )
+                      h_TagEven_TagMassSDTau32_2D_dRapLo_0btag      .Fill( jet0P4.Perp()     , jet0P4.Rapidity() , evWeight )
+      
+    
+
+
+
 
 
 OUT.cd()
 
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive         .Write()
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag             .Write()
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag             .Write()
-h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag             .Write()
-# h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive         .Write()
-# h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag             .Write()
-# h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag             .Write()
-# h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag             .Write()
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive.Write()
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag    .Write() 
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag    .Write()
-h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag    .Write()
-# h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive.Write()
-# h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag    .Write()
-# h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag    .Write()
-# h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag    .Write()
+# --- Antitag Tau32
+# -- var = jet PT
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive                 .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_0btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_1btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapIn_2btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive                  .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_0btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_1btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapHi_2btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive                  .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_0btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_1btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetPt_dRapLo_2btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive        .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive         .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive         .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag             .Write()   
+# -- var = jet P
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_inclusive                 .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_0btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_1btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapIn_2btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_inclusive                  .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_0btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_1btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapHi_2btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_inclusive                  .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_0btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_1btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetP_dRapLo_2btag                      .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive        .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive         .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive         .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag             .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag             .Write()   
+    
+# -- var = jet Rapidity
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive                .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_0btag                    .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_1btag                    .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapIn_2btag                    .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive                 .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_0btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_1btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapHi_2btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive                 .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_0btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_1btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_jetRap_dRapLo_2btag                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive       .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag           .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag           .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag           .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive        .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive        .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag            .Write()   
+# -- var = jet pT VS jet rapidity  
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_inclusive                    .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_0btag                        .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_1btag                        .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapIn_2btag                        .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_inclusive                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_0btag                         .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_1btag                         .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapHi_2btag                         .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_inclusive                     .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_0btag                         .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_1btag                         .Write()   
+h_AntiTagTau32_ReqTopMassSD_Probe_2D_dRapLo_2btag                         .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive           .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag               .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag               .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag               .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag                .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag                .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag                .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive            .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag                .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag                .Write()   
+h_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag                .Write()   
+          
+# --- Antitag minMass50
+# -- var = jet PT
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive               .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_0btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_1btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapIn_2btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive                .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_0btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_1btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapHi_2btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive                .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_0btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_1btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetPt_dRapLo_2btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive      .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag           .Write()   
+# -- var = jet P
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_inclusive               .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_0btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_1btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapIn_2btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_inclusive                .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_0btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_1btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapHi_2btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_inclusive                .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_0btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_1btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetP_dRapLo_2btag                    .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive      .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag           .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag           .Write()   
+     
+# -- var = jet Rapidity
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive              .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_0btag                  .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_1btag                  .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapIn_2btag                  .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive               .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_0btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_1btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapHi_2btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive               .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_0btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_1btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_jetRap_dRapLo_2btag                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive     .Write()  
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag         .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag         .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag         .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive      .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive      .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag          .Write()   
+# -- var = jet pT VS jet rapidity  
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_inclusive                  .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_0btag                      .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_1btag                      .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapIn_2btag                      .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_inclusive                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_0btag                       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_1btag                       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapHi_2btag                       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_inclusive                   .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_0btag                       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_1btag                       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_Probe_2D_dRapLo_2btag                       .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive         .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag             .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag             .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag             .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag              .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag              .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag              .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive          .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag              .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag              .Write()   
+h_AntiTagMinMass_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag              .Write()   
+                
+# --- NoAntiTag
+# -- var = jet PT
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_inclusive                    .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_0btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_1btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapIn_2btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_inclusive                     .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_0btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_1btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapHi_2btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_inclusive                     .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_0btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_1btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetPt_dRapLo_2btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_inclusive           .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_0btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_1btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapIn_2btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_inclusive            .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_0btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_1btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapHi_2btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_inclusive            .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_0btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_1btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetPt_dRapLo_2btag                .Write()   
+# -- var = jet P
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_inclusive                    .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_0btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_1btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapIn_2btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_inclusive                     .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_0btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_1btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapHi_2btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_inclusive                     .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_0btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_1btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetP_dRapLo_2btag                         .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive           .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive            .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive            .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag                .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag                .Write()   
+            
+# -- var = jet Rapidity    
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_inclusive                   .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_0btag                       .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_1btag                       .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapIn_2btag                       .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_inclusive                    .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_0btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_1btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapHi_2btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_inclusive                    .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_0btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_1btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_jetRap_dRapLo_2btag                        .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_inclusive          .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_0btag              .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_1btag              .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapIn_2btag              .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_inclusive           .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_0btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_1btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapHi_2btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_inclusive           .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_0btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_1btag               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_jetRap_dRapLo_2btag               .Write()   
+    
+# -- var = jet pT VS jet rapidity      
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_inclusive                       .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_0btag                           .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_1btag                           .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapIn_2btag                           .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_inclusive                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_0btag                            .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_1btag                            .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapHi_2btag                            .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_inclusive                        .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_0btag                            .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_1btag                            .Write()   
+h_NoAntiTag_ReqTopMassSD_Probe_2D_dRapLo_2btag                            .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_inclusive              .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_0btag                  .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_1btag                  .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapIn_2btag                  .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_inclusive               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_0btag                   .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_1btag                   .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapHi_2btag                   .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_inclusive               .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_0btag                   .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_1btag                   .Write()   
+h_NoAntiTag_ReqTopMassSD_TagMassSDTau32_2D_dRapLo_2btag                   .Write()   
+
+
+
+
+           
+# --- _AntiTagTau32_NoMassReq
+# -- var = jet PT
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_inclusive                    .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_0btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_1btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapIn_2btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_inclusive                     .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_0btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_1btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapHi_2btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_inclusive                     .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_0btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_1btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetPt_dRapLo_2btag                         .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_inclusive           .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_0btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_1btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapIn_2btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_inclusive            .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_0btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_1btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapHi_2btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_inclusive            .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_0btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_1btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetPt_dRapLo_2btag                .Write()   
+# -- var = jet P
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_inclusive                    .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_0btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_1btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapIn_2btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_inclusive                     .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_0btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_1btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapHi_2btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_inclusive                     .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_0btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_1btag                         .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetP_dRapLo_2btag                         .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_inclusive           .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_0btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_1btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapIn_2btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_inclusive            .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_0btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_1btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapHi_2btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_inclusive            .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_0btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_1btag                .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetP_dRapLo_2btag                .Write()   
+            
+# -- var = jet Rapidity    
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_inclusive                   .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_0btag                       .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_1btag                       .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapIn_2btag                       .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_inclusive                    .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_0btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_1btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapHi_2btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_inclusive                    .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_0btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_1btag                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_jetRap_dRapLo_2btag                        .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_inclusive          .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_0btag              .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_1btag              .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapIn_2btag              .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_inclusive           .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_0btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_1btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapHi_2btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_inclusive           .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_0btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_1btag               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_jetRap_dRapLo_2btag               .Write()   
+    
+# -- var = jet pT VS jet rapidity      
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_inclusive                       .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_0btag                           .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_1btag                           .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapIn_2btag                           .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_inclusive                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_0btag                            .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_1btag                            .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapHi_2btag                            .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_inclusive                        .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_0btag                            .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_1btag                            .Write()   
+h_AntiTagTau32_NoMassReq_Probe_2D_dRapLo_2btag                            .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_inclusive              .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_0btag                  .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_1btag                  .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapIn_2btag                  .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_inclusive               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_0btag                   .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_1btag                   .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapHi_2btag                   .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_inclusive               .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_0btag                   .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_1btag                   .Write()   
+h_AntiTagTau32_NoMassReq_TagMassSDTau32_2D_dRapLo_2btag                   .Write()   
+
+
+
+
+# --- TagOdd
+# -- var = jet PT
+h_TagOdd_Probe_jetPt_dRapIn_inclusive                 .Write()   
+h_TagOdd_Probe_jetPt_dRapIn_0btag                     .Write()   
+h_TagOdd_Probe_jetPt_dRapIn_1btag                     .Write()   
+h_TagOdd_Probe_jetPt_dRapIn_2btag                     .Write()   
+h_TagOdd_Probe_jetPt_dRapHi_inclusive                  .Write()   
+h_TagOdd_Probe_jetPt_dRapHi_0btag                      .Write()   
+h_TagOdd_Probe_jetPt_dRapHi_1btag                      .Write()   
+h_TagOdd_Probe_jetPt_dRapHi_2btag                      .Write()   
+h_TagOdd_Probe_jetPt_dRapLo_inclusive                  .Write()   
+h_TagOdd_Probe_jetPt_dRapLo_0btag                      .Write()   
+h_TagOdd_Probe_jetPt_dRapLo_1btag                      .Write()   
+h_TagOdd_Probe_jetPt_dRapLo_2btag                      .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapIn_inclusive        .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapIn_0btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapIn_1btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapIn_2btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapHi_inclusive         .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapHi_0btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapHi_1btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapHi_2btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapLo_inclusive         .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapLo_0btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapLo_1btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetPt_dRapLo_2btag             .Write()   
+# -- var = jet P
+h_TagOdd_Probe_jetP_dRapIn_inclusive                 .Write()   
+h_TagOdd_Probe_jetP_dRapIn_0btag                     .Write()   
+h_TagOdd_Probe_jetP_dRapIn_1btag                     .Write()   
+h_TagOdd_Probe_jetP_dRapIn_2btag                     .Write()   
+h_TagOdd_Probe_jetP_dRapHi_inclusive                  .Write()   
+h_TagOdd_Probe_jetP_dRapHi_0btag                      .Write()   
+h_TagOdd_Probe_jetP_dRapHi_1btag                      .Write()   
+h_TagOdd_Probe_jetP_dRapHi_2btag                      .Write()   
+h_TagOdd_Probe_jetP_dRapLo_inclusive                  .Write()   
+h_TagOdd_Probe_jetP_dRapLo_0btag                      .Write()   
+h_TagOdd_Probe_jetP_dRapLo_1btag                      .Write()   
+h_TagOdd_Probe_jetP_dRapLo_2btag                      .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapIn_inclusive        .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapIn_0btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapIn_1btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapIn_2btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapHi_inclusive         .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapHi_0btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapHi_1btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapHi_2btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapLo_inclusive         .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapLo_0btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapLo_1btag             .Write()   
+h_TagOdd_TagMassSDTau32_jetP_dRapLo_2btag             .Write()   
+    
+# -- var = jet Rapidity
+h_TagOdd_Probe_jetRap_dRapIn_inclusive                .Write()   
+h_TagOdd_Probe_jetRap_dRapIn_0btag                    .Write()   
+h_TagOdd_Probe_jetRap_dRapIn_1btag                    .Write()   
+h_TagOdd_Probe_jetRap_dRapIn_2btag                    .Write()   
+h_TagOdd_Probe_jetRap_dRapHi_inclusive                 .Write()   
+h_TagOdd_Probe_jetRap_dRapHi_0btag                     .Write()   
+h_TagOdd_Probe_jetRap_dRapHi_1btag                     .Write()   
+h_TagOdd_Probe_jetRap_dRapHi_2btag                     .Write()   
+h_TagOdd_Probe_jetRap_dRapLo_inclusive                 .Write()   
+h_TagOdd_Probe_jetRap_dRapLo_0btag                     .Write()   
+h_TagOdd_Probe_jetRap_dRapLo_1btag                     .Write()   
+h_TagOdd_Probe_jetRap_dRapLo_2btag                     .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapIn_inclusive       .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapIn_0btag           .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapIn_1btag           .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapIn_2btag           .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapHi_inclusive        .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapHi_0btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapHi_1btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapHi_2btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapLo_inclusive        .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapLo_0btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapLo_1btag            .Write()   
+h_TagOdd_TagMassSDTau32_jetRap_dRapLo_2btag            .Write()   
+# -- var = jet pT VS jet rapidity  
+h_TagOdd_Probe_2D_dRapIn_inclusive                    .Write()   
+h_TagOdd_Probe_2D_dRapIn_0btag                        .Write()   
+h_TagOdd_Probe_2D_dRapIn_1btag                        .Write()   
+h_TagOdd_Probe_2D_dRapIn_2btag                        .Write()   
+h_TagOdd_Probe_2D_dRapHi_inclusive                     .Write()   
+h_TagOdd_Probe_2D_dRapHi_0btag                         .Write()   
+h_TagOdd_Probe_2D_dRapHi_1btag                         .Write()   
+h_TagOdd_Probe_2D_dRapHi_2btag                         .Write()   
+h_TagOdd_Probe_2D_dRapLo_inclusive                     .Write()   
+h_TagOdd_Probe_2D_dRapLo_0btag                         .Write()   
+h_TagOdd_Probe_2D_dRapLo_1btag                         .Write()   
+h_TagOdd_Probe_2D_dRapLo_2btag                         .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapIn_inclusive           .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapIn_0btag               .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapIn_1btag               .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapIn_2btag               .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapHi_inclusive            .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapHi_0btag                .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapHi_1btag                .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapHi_2btag                .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapLo_inclusive            .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapLo_0btag                .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapLo_1btag                .Write()   
+h_TagOdd_TagMassSDTau32_2D_dRapLo_2btag                .Write()   
+          
+
+
+# --- TagEven
+# -- var = jet PT
+h_TagEven_Probe_jetPt_dRapIn_inclusive                 .Write()   
+h_TagEven_Probe_jetPt_dRapIn_0btag                     .Write()   
+h_TagEven_Probe_jetPt_dRapIn_1btag                     .Write()   
+h_TagEven_Probe_jetPt_dRapIn_2btag                     .Write()   
+h_TagEven_Probe_jetPt_dRapHi_inclusive                  .Write()   
+h_TagEven_Probe_jetPt_dRapHi_0btag                      .Write()   
+h_TagEven_Probe_jetPt_dRapHi_1btag                      .Write()   
+h_TagEven_Probe_jetPt_dRapHi_2btag                      .Write()   
+h_TagEven_Probe_jetPt_dRapLo_inclusive                  .Write()   
+h_TagEven_Probe_jetPt_dRapLo_0btag                      .Write()   
+h_TagEven_Probe_jetPt_dRapLo_1btag                      .Write()   
+h_TagEven_Probe_jetPt_dRapLo_2btag                      .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapIn_inclusive        .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapIn_0btag            .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapIn_1btag            .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapIn_2btag            .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapHi_inclusive         .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapHi_0btag             .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapHi_1btag             .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapHi_2btag             .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapLo_inclusive         .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapLo_0btag             .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapLo_1btag             .Write()   
+h_TagEven_TagMassSDTau32_jetPt_dRapLo_2btag             .Write()   
+# -- var = jet P
+h_TagEven_Probe_jetP_dRapIn_inclusive                 .Write()   
+h_TagEven_Probe_jetP_dRapIn_0btag                     .Write()   
+h_TagEven_Probe_jetP_dRapIn_1btag                     .Write()   
+h_TagEven_Probe_jetP_dRapIn_2btag                     .Write()   
+h_TagEven_Probe_jetP_dRapHi_inclusive                  .Write()   
+h_TagEven_Probe_jetP_dRapHi_0btag                      .Write()   
+h_TagEven_Probe_jetP_dRapHi_1btag                      .Write()   
+h_TagEven_Probe_jetP_dRapHi_2btag                      .Write()   
+h_TagEven_Probe_jetP_dRapLo_inclusive                  .Write()   
+h_TagEven_Probe_jetP_dRapLo_0btag                      .Write()   
+h_TagEven_Probe_jetP_dRapLo_1btag                      .Write()   
+h_TagEven_Probe_jetP_dRapLo_2btag                      .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapIn_inclusive        .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapIn_0btag            .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapIn_1btag            .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapIn_2btag            .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapHi_inclusive         .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapHi_0btag             .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapHi_1btag             .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapHi_2btag             .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapLo_inclusive         .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapLo_0btag             .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapLo_1btag             .Write()   
+h_TagEven_TagMassSDTau32_jetP_dRapLo_2btag             .Write()   
+    
+# -- var = jet Rapidity
+h_TagEven_Probe_jetRap_dRapIn_inclusive                .Write()   
+h_TagEven_Probe_jetRap_dRapIn_0btag                    .Write()   
+h_TagEven_Probe_jetRap_dRapIn_1btag                    .Write()   
+h_TagEven_Probe_jetRap_dRapIn_2btag                    .Write()   
+h_TagEven_Probe_jetRap_dRapHi_inclusive                 .Write()   
+h_TagEven_Probe_jetRap_dRapHi_0btag                     .Write()   
+h_TagEven_Probe_jetRap_dRapHi_1btag                     .Write()   
+h_TagEven_Probe_jetRap_dRapHi_2btag                     .Write()   
+h_TagEven_Probe_jetRap_dRapLo_inclusive                 .Write()   
+h_TagEven_Probe_jetRap_dRapLo_0btag                     .Write()   
+h_TagEven_Probe_jetRap_dRapLo_1btag                     .Write()   
+h_TagEven_Probe_jetRap_dRapLo_2btag                     .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapIn_inclusive       .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapIn_0btag           .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapIn_1btag           .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapIn_2btag           .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapHi_inclusive        .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapHi_0btag            .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapHi_1btag            .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapHi_2btag            .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapLo_inclusive        .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapLo_0btag            .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapLo_1btag            .Write()   
+h_TagEven_TagMassSDTau32_jetRap_dRapLo_2btag            .Write()   
+# -- var = jet pT VS jet rapidity  
+h_TagEven_Probe_2D_dRapIn_inclusive                    .Write()   
+h_TagEven_Probe_2D_dRapIn_0btag                        .Write()   
+h_TagEven_Probe_2D_dRapIn_1btag                        .Write()   
+h_TagEven_Probe_2D_dRapIn_2btag                        .Write()   
+h_TagEven_Probe_2D_dRapHi_inclusive                     .Write()   
+h_TagEven_Probe_2D_dRapHi_0btag                         .Write()   
+h_TagEven_Probe_2D_dRapHi_1btag                         .Write()   
+h_TagEven_Probe_2D_dRapHi_2btag                         .Write()   
+h_TagEven_Probe_2D_dRapLo_inclusive                     .Write()   
+h_TagEven_Probe_2D_dRapLo_0btag                         .Write()   
+h_TagEven_Probe_2D_dRapLo_1btag                         .Write()   
+h_TagEven_Probe_2D_dRapLo_2btag                         .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapIn_inclusive           .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapIn_0btag               .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapIn_1btag               .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapIn_2btag               .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapHi_inclusive            .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapHi_0btag                .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapHi_1btag                .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapHi_2btag                .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapLo_inclusive            .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapLo_0btag                .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapLo_1btag                .Write()   
+h_TagEven_TagMassSDTau32_2D_dRapLo_2btag                .Write()   
+          
 
 
 OUT.Write()
