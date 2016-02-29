@@ -1,4 +1,4 @@
-void plotLimit(){
+void plotLimit_wide(){
 
 
 
@@ -8,14 +8,14 @@ TGraph * limit_obs = new TGraph();
   TGraphAsymmErrors * band_exp2 = new TGraphAsymmErrors();
 
 TGraph *theory = new TGraph();
- theory->SetPoint(0, 1000, 1.3*3.02095);
- theory->SetPoint(1, 1500, 1.3*0.58069);
- theory->SetPoint(2, 2000, 1.3*0.14501);
- theory->SetPoint(3, 2500, 1.3*0.04234);
- theory->SetPoint(4, 3000, 1.3*0.01384);
- theory->SetPoint(5, 4000, 1.3*0.00184);
+ theory->SetPoint(0, 1000, 1.3*28.15545);
+ theory->SetPoint(1, 1500, 1.3*5.26650);
+ theory->SetPoint(2, 2000, 1.3*1.33656);
+ theory->SetPoint(3, 2500, 1.3*0.39633);
+ theory->SetPoint(4, 3000, 1.3*0.12921);
+ theory->SetPoint(5, 4000, 1.3*0.01716);
 
-ifstream infile("limits_2016.txt");
+ifstream infile("limits_wide_2016.txt");
 
 gROOT->LoadMacro("CMS_lumi.C");
 
@@ -48,7 +48,7 @@ while (!infile.eof()){
 
 double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
 
-  TCanvas *canvas = new TCanvas("limit set ZPN","limit set ZPN", 500,500);
+  TCanvas *canvas = new TCanvas("limit set ZPW","limit set ZPW", 500,500);
 
   limit_exp->SetMinimum(0.01);
   limit_exp->Draw("AL");
@@ -118,8 +118,8 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   canvas->SetLogy(1);
   CMS_lumi(canvas, 4, 10);
 
-  canvas->Print("ZPN_limit.pdf");
-  canvas->Print("ZPN_limit.root");
+  canvas->Print("ZPW_limit.pdf");
+  canvas->Print("ZPW_limit.root");
 
 }
 

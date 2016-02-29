@@ -1,6 +1,9 @@
-void makeSystPlot(string process, string systematic, string label){
+void makeSystPlot(string file, string outname, string process, string systematic, string label){
 
-	TFile *inFile = new TFile("templates.root", "READ");
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(0000000000); //this clears all the boxes and crap 
+  
+  TFile *inFile = new TFile(Form("%s",file.c_str()), "READ");
 
 	TH1F *upShape_0btagH = (TH1F *) inFile->Get( Form("btag0__%s__%s__plus", process.c_str(), systematic.c_str()) );
 	TH1F *upShape_1btagH = (TH1F *) inFile->Get( Form("btag1__%s__%s__plus", process.c_str(), systematic.c_str()) );
@@ -93,7 +96,7 @@ void makeSystPlot(string process, string systematic, string label){
 	c1_2->SetLeftMargin(0.1);
 	c1_2->SetFillStyle(0);
 
-
+	nomShape->SetTitle("");
 	nomShape->GetYaxis()->SetTitle("Events");
 	nomShape->GetXaxis()->SetLabelSize(0);
 	nomShape->SetMaximum(TMath::Max(upShape->GetMaximum(), dnShape->GetMaximum())*1.30);
@@ -115,14 +118,15 @@ void makeSystPlot(string process, string systematic, string label){
 
 
 	TLatex *cmsLabel = new TLatex();
-	cmsLabel.SetNDC();
-	//cmsLabel.DrawLatex(0.1, 0.93, "QCD MC");
-	if (systematic == "jec") cmsLabel.DrawLatex(0.6,0.93, "Jet Energy Scale");
-	if (systematic == "pdf") cmsLabel.DrawLatex(0.6,0.93, "PDF");
-	if (systematic == "q2") cmsLabel.DrawLatex(0.6,0.93, "Q^{2} Scale");
-	if (systematic == "btag") cmsLabel.DrawLatex(0.6,0.93, "b-Tagging");
-	if (systematic == "jer") cmsLabel.DrawLatex(0.6,0.93, "Jet Energy Resolution");
-	if (systematic == "misErr") cmsLabel.DrawLatex(0.6,0.93, "NTMJ Estimate");
+	cmsLabel->SetNDC();
+	//cmsLabel->DrawLatex(0.1, 0.93, "QCD MC");
+	if (systematic == "jec") cmsLabel->DrawLatex(0.6,0.93, "Jet Energy Scale");
+	if (systematic == "pdf") cmsLabel->DrawLatex(0.6,0.93, "PDF");
+	if (systematic == "q2") cmsLabel->DrawLatex(0.6,0.93, "Q^{2} Scale");
+	if (systematic == "btag") cmsLabel->DrawLatex(0.6,0.93, "b-Tagging");
+	if (systematic == "jer") cmsLabel->DrawLatex(0.6,0.93, "Jet Energy Resolution");
+	if (systematic == "modMass") cmsLabel->DrawLatex(0.6,0.93, "Modified Mass");
+	if (systematic == "closure") cmsLabel->DrawLatex(0.6,0.93, "Closure Test");
 
 	c1_1->cd();
 	c1_1->SetTopMargin(0.01);
@@ -140,6 +144,7 @@ void makeSystPlot(string process, string systematic, string label){
 	upRatio->Divide(nomShape);
 	dnRatio->Divide(nomShape);
 
+	upRatio->SetTitle("");
 	upRatio->GetYaxis()->SetRangeUser(0.,2.5);
 	upRatio->GetYaxis()->SetTitle("Ratio to Nominal");
 	upRatio->GetYaxis()->SetTitleOffset(0.4);
@@ -156,7 +161,7 @@ void makeSystPlot(string process, string systematic, string label){
 	line->Draw("same");
 
 
-	c1->SaveAs( Form("Syst_%s_%s_%dbtags.pdf", systematic.c_str(), process.c_str(), nTags) );
+	c1->SaveAs( Form("SystPlots/Syst_%s_%s_%dbtags.pdf", systematic.c_str(), outname.c_str(), nTags) );
 
 
 	}//nTags Loop

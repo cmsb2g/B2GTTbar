@@ -1,114 +1,159 @@
 {
 
-makeSystPlot("Zprime1000", "jec", "Narrow Z' (1 TeV)");
-makeSystPlot("Zprime1500", "jec", "Narrow Z' (1.5 TeV)");
-makeSystPlot("Zprime2000", "jec", "Narrow Z' (2 TeV)");
-makeSystPlot("Zprime2500", "jec", "Narrow Z' (2.5 TeV)");
-makeSystPlot("Zprime3000", "jec", "Narrow Z' (3 TeV)");
-makeSystPlot("Zprime3500", "jec", "Narrow Z' (3.5 TeV)");
-makeSystPlot("Zprime4000", "jec", "Narrow Z' (4 TeV)");
+  /*makeSystPlot("../templates_constantBinning.root", "Zprime1000","Zprime1000", "jec", "Narrow Z' (1 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1250", "Zprime1250", "jec", "Narrow Z' (1.25 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1500", "Zprime1500", "jec", "Narrow Z' (1.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime2000", "Zprime2000", "jec", "Narrow Z' (2 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime2500", "Zprime2500", "jec", "Narrow Z' (2.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime3000", "Zprime3000", "jec", "Narrow Z' (3 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime3500", "Zprime3500", "jec", "Narrow Z' (3.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime4000", "Zprime4000", "jec", "Narrow Z' (4 TeV)");
 
-makeSystPlot("Zprime1000", "jer", "Narrow Z' (1 TeV)");
-makeSystPlot("Zprime1500", "jer", "Narrow Z' (1.5 TeV)");
-makeSystPlot("Zprime2000", "jer", "Narrow Z' (2 TeV)");
-makeSystPlot("Zprime2500", "jer", "Narrow Z' (2.5 TeV)");
-makeSystPlot("Zprime3000", "jer", "Narrow Z' (3 TeV)");
-makeSystPlot("Zprime3500", "jer", "Narrow Z' (3.5 TeV)");
-makeSystPlot("Zprime4000", "jer", "Narrow Z' (4 TeV)");
-/*
-makeSystPlot("Zprime1000", "pileup", "Narrow Z' (1 TeV)");
-makeSystPlot("Zprime1500", "pileup", "Narrow Z' (1.5 TeV)");
-makeSystPlot("Zprime2000", "pileup", "Narrow Z' (2 TeV)");
-makeSystPlot("Zprime3000", "pileup", "Narrow Z' (3 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1000","Zprime1000", "jer", "Narrow Z' (1 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1250", "Zprime1250", "jer", "Narrow Z' (1.25 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1500", "Zprime1500", "jer", "Narrow Z' (1.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime2000", "Zprime2000", "jer", "Narrow Z' (2 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime2500", "Zprime2500", "jer", "Narrow Z' (2.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime3000", "Zprime3000", "jer", "Narrow Z' (3 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime3500", "Zprime3500", "jer", "Narrow Z' (3.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime4000", "Zprime4000", "jer", "Narrow Z' (4 TeV)");
 
-makeSystPlot("Zprime1000", "pdf", "Narrow Z' (1 TeV)");
-makeSystPlot("Zprime1500", "pdf", "Narrow Z' (1.5 TeV)");
-makeSystPlot("Zprime2000", "pdf", "Narrow Z' (2 TeV)");
-makeSystPlot("Zprime3000", "pdf", "Narrow Z' (3 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1000","Zprime1000", "btag", "Narrow Z' (1 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1250", "Zprime1250", "btag", "Narrow Z' (1.25 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1500", "Zprime1500", "btag", "Narrow Z' (1.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime2000", "Zprime2000", "btag", "Narrow Z' (2 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime2500", "Zprime2500", "btag", "Narrow Z' (2.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime3000", "Zprime3000", "btag", "Narrow Z' (3 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime3500", "Zprime3500", "btag", "Narrow Z' (3.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime4000", "Zprime4000", "btag", "Narrow Z' (4 TeV)");
 
-makeSystPlot("Zprime1000", "subjbtag", "Narrow Z' (1 TeV)");
-makeSystPlot("Zprime1500", "subjbtag", "Narrow Z' (1.5 TeV)");
-makeSystPlot("Zprime2000", "subjbtag", "Narrow Z' (2 TeV)");
-makeSystPlot("Zprime3000", "subjbtag", "Narrow Z' (3 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1000","Zprime1000", "pdf", "Narrow Z' (1 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1250", "Zprime1250", "pdf", "Narrow Z' (1.25 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime1500", "Zprime1500", "pdf", "Narrow Z' (1.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime2000", "Zprime2000", "pdf", "Narrow Z' (2 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime2500", "Zprime2500", "pdf", "Narrow Z' (2.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime3000", "Zprime3000", "pdf", "Narrow Z' (3 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime3500", "Zprime3500", "pdf", "Narrow Z' (3.5 TeV)");
+makeSystPlot("../templates_constantBinning.root", "Zprime4000", "Zprime4000", "pdf", "Narrow Z' (4 TeV)");*/
 
-makeSystPlot("Zprime1000", "jer", "Narrow Z' (1 TeV)");
-makeSystPlot("Zprime1500", "jer", "Narrow Z' (1.5 TeV)");
-makeSystPlot("Zprime2000", "jer", "Narrow Z' (2 TeV)");
-makeSystPlot("Zprime3000", "jer", "Narrow Z' (3 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1000", "Zprime1000", "jec", "Wide Z' (1 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1250", "Zprime1250", "jec", "Wide Z' (1.25 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1500", "Zprime1500", "jec", "Wide Z' (1.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide2000", "Zprime2000", "jec", "Wide Z' (2 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide2500", "Zprime2500", "jec", "Wide Z' (2.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide3000", "Zprime3000", "jec", "Wide Z' (3 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide3500", "Zprime3500", "jec", "Wide Z' (3.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide4000", "Zprime4000", "jec", "Wide Z' (4 TeV)");
 
-makeSystPlot("ZprimeWide1000", "jec", "Wide Z' (1 TeV)");
-makeSystPlot("ZprimeWide1500", "jec", "Wide Z' (1.5 TeV)");
-makeSystPlot("ZprimeWide2000", "jec", "Wide Z' (2 TeV)");
-makeSystPlot("ZprimeWide3000", "jec", "Wide Z' (3 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1000", "Zprime1000", "jer", "Wide Z' (1 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1250", "Zprime1250", "jer", "Wide Z' (1.25 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1500", "Zprime1500", "jer", "Wide Z' (1.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide2000", "Zprime2000", "jer", "Wide Z' (2 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide2500", "Zprime2500", "jer", "Wide Z' (2.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide3000", "Zprime3000", "jer", "Wide Z' (3 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide3500", "Zprime3500", "jer", "Wide Z' (3.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide4000", "Zprime4000", "jer", "Wide Z' (4 TeV)");
 
-makeSystPlot("ZprimeWide1000", "pileup", "Wide Z' (1 TeV)");
-makeSystPlot("ZprimeWide1500", "pileup", "Wide Z' (1.5 TeV)");
-makeSystPlot("ZprimeWide2000", "pileup", "Wide Z' (2 TeV)");
-makeSystPlot("ZprimeWide3000", "pileup", "Wide Z' (3 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1000", "Zprime1000", "btag", "Wide Z' (1 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1250", "Zprime1250", "btag", "Wide Z' (1.25 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1500", "Zprime1500", "btag", "Wide Z' (1.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide2000", "Zprime2000", "btag", "Wide Z' (2 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide2500", "Zprime2500", "btag", "Wide Z' (2.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide3000", "Zprime3000", "btag", "Wide Z' (3 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide3500", "Zprime3500", "btag", "Wide Z' (3.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide4000", "Zprime4000", "btag", "Wide Z' (4 TeV)");
 
-makeSystPlot("ZprimeWide1000", "subjbtag", "Wide Z' (1 TeV)");
-makeSystPlot("ZprimeWide1500", "subjbtag", "Wide Z' (1.5 TeV)");
-makeSystPlot("ZprimeWide2000", "subjbtag", "Wide Z' (2 TeV)");
-makeSystPlot("ZprimeWide3000", "subjbtag", "Wide Z' (3 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1000", "Zprime1000", "pdf", "Wide Z' (1 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1250", "Zprime1250", "pdf", "Wide Z' (1.25 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide1500", "Zprime1500", "pdf", "Wide Z' (1.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide2000", "Zprime2000", "pdf", "Wide Z' (2 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide2500", "Zprime2500", "pdf", "Wide Z' (2.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide3000", "Zprime3000", "pdf", "Wide Z' (3 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide3500", "Zprime3500", "pdf", "Wide Z' (3.5 TeV)");
+makeSystPlot("../templates_wide_constantBinning.root", "ZprimeWide4000", "Zprime4000", "pdf", "Wide Z' (4 TeV)");
 
-makeSystPlot("ZprimeWide1000", "jer", "Wide Z' (1 TeV)");
-makeSystPlot("ZprimeWide1500", "jer", "Wide Z' (1.5 TeV)");
-makeSystPlot("ZprimeWide2000", "jer", "Wide Z' (2 TeV)");
-makeSystPlot("ZprimeWide3000", "jer", "Wide Z' (3 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1000", "Zprime1000", "jec", "Extra Wide Z' (1 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1250", "Zprime1250", "jec", "Extra Wide Z' (1.25 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1500", "Zprime1500", "jec", "Extra Wide Z' (1.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide2000", "Zprime2000", "jec", "Extra Wide Z' (2 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide2500", "Zprime2500", "jec", "Extra Wide Z' (2.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide3000", "Zprime3000", "jec", "Extra Wide Z' (3 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide3500", "Zprime3500", "jec", "Extra Wide Z' (3.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide4000", "Zprime4000", "jec", "Extra Wide Z' (4 TeV)");
 
-makeSystPlot("ZprimeWide1000", "pdf", "Wide Z' (1 TeV)");
-makeSystPlot("ZprimeWide1500", "pdf", "Wide Z' (1.5 TeV)");
-makeSystPlot("ZprimeWide2000", "pdf", "Wide Z' (2 TeV)");
-makeSystPlot("ZprimeWide3000", "pdf", "Wide Z' (3 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1000", "Zprime1000", "jer", "Extra Wide Z' (1 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1250", "Zprime1250", "jer", "Extra Wide Z' (1.25 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1500", "Zprime1500", "jer", "Extra Wide Z' (1.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide2000", "Zprime2000", "jer", "Extra Wide Z' (2 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide2500", "Zprime2500", "jer", "Extra Wide Z' (2.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide3000", "Zprime3000", "jer", "Extra Wide Z' (3 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide3500", "Zprime3500", "jer", "Extra Wide Z' (3.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide4000", "Zprime4000", "jer", "Extra Wide Z' (4 TeV)");
 
-makeSystPlot("RSgluon1000", "jec", "RS Gluon (1 TeV)");
-makeSystPlot("RSgluon1500", "jec", "RS Gluon (1.5 TeV)");
-makeSystPlot("RSgluon2000", "jec", "RS Gluon (2 TeV)");
-makeSystPlot("RSgluon3000", "jec", "RS Gluon (3 TeV)");
-makeSystPlot("RSgluon1400", "jec", "RS Gluon (1.4 TeV)");
-makeSystPlot("RSgluon1800", "jec", "RS Gluon (1.8 TeV)");
-makeSystPlot("RSgluon2500", "jec", "RS Gluon (2.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1000", "Zprime1000", "btag", "Extra Wide Z' (1 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1250", "Zprime1250", "btag", "Extra Wide Z' (1.25 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1500", "Zprime1500", "btag", "Extra Wide Z' (1.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide2000", "Zprime2000", "btag", "Extra Wide Z' (2 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide2500", "Zprime2500", "btag", "Extra Wide Z' (2.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide3000", "Zprime3000", "btag", "Extra Wide Z' (3 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide3500", "Zprime3500", "btag", "Extra Wide Z' (3.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide4000", "Zprime4000", "btag", "Extra Wide Z' (4 TeV)");
 
-makeSystPlot("RSgluon1000", "jer", "RS Gluon (1 TeV)");
-makeSystPlot("RSgluon1500", "jer", "RS Gluon (1.5 TeV)");
-makeSystPlot("RSgluon2000", "jer", "RS Gluon (2 TeV)");
-makeSystPlot("RSgluon3000", "jer", "RS Gluon (3 TeV)");
-makeSystPlot("RSgluon1400", "jer", "RS Gluon (1.4 TeV)");
-makeSystPlot("RSgluon1800", "jer", "RS Gluon (1.8 TeV)");
-makeSystPlot("RSgluon2500", "jer", "RS Gluon (2.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1000", "Zprime1000", "pdf", "Extra Wide Z' (1 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1250", "Zprime1250", "pdf", "Extra Wide Z' (1.25 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide1500", "Zprime1500", "pdf", "Extra Wide Z' (1.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide2000", "Zprime2000", "pdf", "Extra Wide Z' (2 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide2500", "Zprime2500", "pdf", "Extra Wide Z' (2.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide3000", "Zprime3000", "pdf", "Extra Wide Z' (3 TeV)");
+//makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide3500", "Zprime3500", "pdf", "Extra Wide Z' (3.5 TeV)");
+makeSystPlot("../templates_extrawide_constantBinning.root", "ZprimeExtraWide4000", "Zprime4000", "pdf", "Extra Wide Z' (4 TeV)");
 
-makeSystPlot("RSgluon1000", "pileup", "RS Gluon (1 TeV)");
-makeSystPlot("RSgluon1500", "pileup", "RS Gluon (1.5 TeV)");
-makeSystPlot("RSgluon2000", "pileup", "RS Gluon (2 TeV)");
-makeSystPlot("RSgluon3000", "pileup", "RS Gluon (3 TeV)");
-makeSystPlot("RSgluon1400", "pileup", "RS Gluon (1.4 TeV)");
-makeSystPlot("RSgluon1800", "pileup", "RS Gluon (1.8 TeV)");
-makeSystPlot("RSgluon2500", "pileup", "RS Gluon (2.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1000", "Zprime1000", "jec", "RS Gluon (1 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1250", "Zprime1250", "jec", "RS Gluon (1.25 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1500", "Zprime1500", "jec", "RS Gluon (1.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon2000", "Zprime2000", "jec", "RS Gluon (2 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon2500", "Zprime2500", "jec", "RS Gluon (2.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon3000", "Zprime3000", "jec", "RS Gluon (3 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon3500", "Zprime3500", "jec", "RS Gluon (3.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon4000", "Zprime4000", "jec", "RS Gluon (4 TeV)");
 
-makeSystPlot("RSgluon1000", "pdf", "RS Gluon (1 TeV)");
-makeSystPlot("RSgluon1500", "pdf", "RS Gluon (1.5 TeV)");
-makeSystPlot("RSgluon2000", "pdf", "RS Gluon (2 TeV)");
-makeSystPlot("RSgluon3000", "pdf", "RS Gluon (3 TeV)");
-makeSystPlot("RSgluon1400", "pdf", "RS Gluon (1.4 TeV)");
-makeSystPlot("RSgluon1800", "pdf", "RS Gluon (1.8 TeV)");
-makeSystPlot("RSgluon2500", "pdf", "RS Gluon (2.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1000", "Zprime1000", "jer", "RS Gluon (1 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1250", "Zprime1250", "jer", "RS Gluon (1.25 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1500", "Zprime1500", "jer", "RS Gluon (1.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon2000", "Zprime2000", "jer", "RS Gluon (2 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon2500", "Zprime2500", "jer", "RS Gluon (2.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon3000", "Zprime3000", "jer", "RS Gluon (3 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon3500", "Zprime3500", "jer", "RS Gluon (3.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon4000", "Zprime4000", "jer", "RS Gluon (4 TeV)");
 
-makeSystPlot("RSgluon1000", "subjbtag", "RS Gluon (1 TeV)");
-makeSystPlot("RSgluon1500", "subjbtag", "RS Gluon (1.5 TeV)");
-makeSystPlot("RSgluon2000", "subjbtag", "RS Gluon (2 TeV)");
-makeSystPlot("RSgluon3000", "subjbtag", "RS Gluon (3 TeV)");
-makeSystPlot("RSgluon1400", "subjbtag", "RS Gluon (1.4 TeV)");
-makeSystPlot("RSgluon1800", "subjbtag", "RS Gluon (1.8 TeV)");
-makeSystPlot("RSgluon2500", "subjbtag", "RS Gluon (2.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1000", "Zprime1000", "btag", "RS Gluon (1 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1250", "Zprime1250", "btag", "RS Gluon (1.25 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1500", "Zprime1500", "btag", "RS Gluon (1.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon2000", "Zprime2000", "btag", "RS Gluon (2 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon2500", "Zprime2500", "btag", "RS Gluon (2.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon3000", "Zprime3000", "btag", "RS Gluon (3 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon3500", "Zprime3500", "btag", "RS Gluon (3.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon4000", "Zprime4000", "btag", "RS Gluon (4 TeV)");
 
-makeSystPlot("qcd", "misErr", "QCD");
-*/
-makeSystPlot("ttbar", "jec", "t#bar{t}");
-makeSystPlot("ttbar", "jer", "t#bar{t}");
-//makeSystPlot("ttbar", "q2", "t#bar{t}");
-//makeSystPlot("ttbar", "subjbtag", "t#bar{t}");
-//makeSystPlot("ttbar", "pdf", "t#bar{t}");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1000", "Zprime1000", "pdf", "RS Gluon (1 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1250", "Zprime1250", "pdf", "RS Gluon (1.25 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon1500", "Zprime1500", "pdf", "RS Gluon (1.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon2000", "Zprime2000", "pdf", "RS Gluon (2 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon2500", "Zprime2500", "pdf", "RS Gluon (2.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon3000", "Zprime3000", "pdf", "RS Gluon (3 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon3500", "Zprime3500", "pdf", "RS Gluon (3.5 TeV)");
+makeSystPlot("../templates_RSGluon_constantBinning.root", "RSGluon4000", "Zprime4000", "pdf", "RS Gluon (4 TeV)");
 
+
+/*makeSystPlot("../templates_constantBinning.root", "ttbar", "ttbar", "jec", "t#bar{t}");
+makeSystPlot("../templates_constantBinning.root", "ttbar", "ttbar", "jer", "t#bar{t}");
+makeSystPlot("../templates_constantBinning.root", "ttbar", "ttbar", "q2", "t#bar{t}");
+makeSystPlot("../templates_constantBinning.root", "ttbar", "ttbar", "btag", "t#bar{t}");
+makeSystPlot("../templates_constantBinning.root", "ttbar", "ttbar", "pdf", "t#bar{t}");*/
+
+
+/*makeSystPlot("../templates_constantBinning.root", "qcd", "qcd", "modMass", "QCD");
+ makeSystPlot("../templates_constantBinning.root", "qcd", "qcd", "closure", "QCD");*/
 }
 
 

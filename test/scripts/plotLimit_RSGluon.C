@@ -1,4 +1,4 @@
-void plotLimit(){
+void plotLimit_RSGluon(){
 
 
 
@@ -7,15 +7,15 @@ TGraph * limit_obs = new TGraph();
   TGraphAsymmErrors * band_exp1 = new TGraphAsymmErrors();
   TGraphAsymmErrors * band_exp2 = new TGraphAsymmErrors();
 
-TGraph *theory = new TGraph();
+  /*TGraph *theory = new TGraph();
  theory->SetPoint(0, 1000, 1.3*3.02095);
  theory->SetPoint(1, 1500, 1.3*0.58069);
  theory->SetPoint(2, 2000, 1.3*0.14501);
  theory->SetPoint(3, 2500, 1.3*0.04234);
  theory->SetPoint(4, 3000, 1.3*0.01384);
- theory->SetPoint(5, 4000, 1.3*0.00184);
+ theory->SetPoint(5, 4000, 1.3*0.00184);*/
 
-ifstream infile("limits_2016.txt");
+ifstream infile("limits_RSGluon_2016.txt");
 
 gROOT->LoadMacro("CMS_lumi.C");
 
@@ -48,7 +48,7 @@ while (!infile.eof()){
 
 double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
 
-  TCanvas *canvas = new TCanvas("limit set ZPN","limit set ZPN", 500,500);
+  TCanvas *canvas = new TCanvas("limit set RSG","limit set RSG", 500,500);
 
   limit_exp->SetMinimum(0.01);
   limit_exp->Draw("AL");
@@ -86,9 +86,9 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   double x2 = 905;
   double y2 = 1.0;
   TLine * line = new TLine(x1, y1, x2, y2);
-  theory->SetLineColor(2);
+  /*theory->SetLineColor(2);
   theory->SetLineWidth(2);
-  theory->Draw("same");
+  theory->Draw("same");*/
 
   
 
@@ -100,7 +100,7 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   l->AddEntry(limit_exp,"Expected", "L");
   l->AddEntry(band_exp1,"#pm1 #sigma Exp.", "F");
   l->AddEntry(band_exp2,"#pm2 #sigma Exp.", "F");
-  l->AddEntry(theory, "13 TeV Z'", "L");
+  //l->AddEntry(theory, "13 TeV Z'", "L");
   l->SetFillColor(0);
   l->SetLineColor(0);
   l->Draw();
@@ -118,8 +118,8 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   canvas->SetLogy(1);
   CMS_lumi(canvas, 4, 10);
 
-  canvas->Print("ZPN_limit.pdf");
-  canvas->Print("ZPN_limit.root");
+  canvas->Print("RSG_limit.pdf");
+  canvas->Print("RSG_limit.root");
 
 }
 

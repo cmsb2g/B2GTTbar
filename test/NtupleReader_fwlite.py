@@ -1622,47 +1622,47 @@ ROOT.gSystem.Load('libCondFormatsJetMETObjects')
 
 if options.isMC : 
     print 'Getting L3 for AK4 MC'
-    L3JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_MC_L3Absolute_AK4PFchs.txt");
+    L3JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_MC_L3Absolute_AK4PFchs.txt");
     print 'Getting L2 for AK4 MC'
-    L2JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_MC_L2Relative_AK4PFchs.txt");
+    L2JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_MC_L2Relative_AK4PFchs.txt");
     print 'Getting L1 for AK4 MC'
-    L1JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_MC_L1FastJet_AK4PFchs.txt");
+    L1JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_MC_L1FastJet_AK4PFchs.txt");
     print 'Getting Uncertainty for AK4 MC'
-    UncertJetAK4  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV6_MC_Uncertainty_AK4PFchs.txt");
+    UncertJetAK4  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV7_MC_Uncertainty_AK4PFchs.txt");
 
 
     print 'Getting L3 for AK8 MC'
-    L3JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_MC_L3Absolute_AK8PFchs.txt");
+    L3JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_MC_L3Absolute_AK8PFchs.txt");
     print 'Getting L2 for AK8 MC'
-    L2JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_MC_L2Relative_AK8PFchs.txt");
+    L2JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_MC_L2Relative_AK8PFchs.txt");
     print 'Getting L1 for AK8 MC'
-    L1JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_MC_L1FastJet_AK8PFchs.txt");
+    L1JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_MC_L1FastJet_AK8PFchs.txt");
     print 'Getting Uncertainty for AK8 MC'
-    UncertJetAK8  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV6_MC_Uncertainty_AK8PFchs.txt");
+    UncertJetAK8  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV7_MC_Uncertainty_AK8PFchs.txt");
 else :
     print 'Getting L3 for AK4 DATA'
-    L3JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_DATA_L3Absolute_AK4PFchs.txt");
+    L3JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_DATA_L3Absolute_AK4PFchs.txt");
     print 'Getting L2 for AK4 DATA'
-    L2JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_DATA_L2Relative_AK4PFchs.txt");
+    L2JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_DATA_L2Relative_AK4PFchs.txt");
     print 'Getting L1 for AK4 DATA'
-    L1JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_DATA_L1FastJet_AK4PFchs.txt");
+    L1JetParAK4  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_DATA_L1FastJet_AK4PFchs.txt");
     # for data only :
     print 'Getting L2L3Residual for AK4 DATA'
-    ResJetParAK4 = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_DATA_L2L3Residual_AK4PFchs.txt");
+    ResJetParAK4 = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_DATA_L2L3Residual_AK4PFchs.txt");
     print 'Getting Uncertainty for AK4 DATA'
-    UncertJetAK4  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV6_DATA_Uncertainty_AK4PFchs.txt");
+    UncertJetAK4  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV7_DATA_Uncertainty_AK4PFchs.txt");
 
     print 'Getting L3 for AK8 DATA'
-    L3JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_DATA_L3Absolute_AK8PFchs.txt");
+    L3JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_DATA_L3Absolute_AK8PFchs.txt");
     print 'Getting L2 for AK8 DATA'
-    L2JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_DATA_L2Relative_AK8PFchs.txt");
+    L2JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_DATA_L2Relative_AK8PFchs.txt");
     print 'Getting L1 for AK8 DATA'
-    L1JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_DATA_L1FastJet_AK8PFchs.txt");
+    L1JetParAK8  = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_DATA_L1FastJet_AK8PFchs.txt");
     # for data only :
     print 'Getting L2L3Residual for AK8 DATA'
-    ResJetParAK8 = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV6_DATA_L2L3Residual_AK8PFchs.txt");
+    ResJetParAK8 = ROOT.JetCorrectorParameters("JECs/Summer15_25nsV7_DATA_L2L3Residual_AK8PFchs.txt");
     print 'Getting Uncertainty for AK8 DATA'
-    UncertJetAK8  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV6_DATA_Uncertainty_AK8PFchs.txt");
+    UncertJetAK8  = ROOT.JetCorrectionUncertainty("JECs/Summer15_25nsV7_DATA_Uncertainty_AK8PFchs.txt");
 
 
 # uncertSources = ["Absolute", "HighPtExtra",  "SinglePionECAL", "SinglePionHCAL",
