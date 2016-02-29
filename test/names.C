@@ -100,8 +100,12 @@ enum  { DATA,
         TT_BTAGUP,
         TT_BTAGDN,
         TT,
+        TT_SUBTRACT,
+        TT_SUBTRACTSYST,
         QCD,
         QCD_SYST,
+        QCDMC,
+        QCDMC_SYST,
         NUM_PROCS
         };
 };
