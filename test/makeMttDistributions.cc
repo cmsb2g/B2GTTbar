@@ -549,7 +549,7 @@ void makeMttDistributions(){
       float btagErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_BTAGUP][tag]->GetBinContent(i_bin));
       float btagErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_BTAGDN][tag]->GetBinContent(i_bin));
       float btagErr = max(btagErrUp,btagErrDn);
-      float qcdSystErr = abs( histos[names::QCD][tag]->GetBinContent(i_bin) - histos[names::QCD_SYST][tag]->GetBinContent(i_bin) );
+      float qcdSystErr = 0.5*abs( histos[names::QCD][tag]->GetBinContent(i_bin) - histos[names::QCD_SYST][tag]->GetBinContent(i_bin) );
 
       float diffClose = 0.0;
       if (histos[names::QCDMC][tag]->GetBinContent(i_bin) != 0){

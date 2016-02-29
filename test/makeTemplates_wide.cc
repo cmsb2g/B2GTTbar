@@ -32,7 +32,7 @@
 using namespace std;
 using namespace names;
 
-int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
+int makeTemplates_wide(bool constantBinning = 0){
 
 
 
@@ -40,9 +40,9 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 
   int numProcs = names::NUM_PROCS;
 
-
-  TFile *outFile = new TFile("templates_wide_constantBinning.root", "RECREATE");
-
+  string file = "templates_wide.root";
+  if (constantBinning) file = "templates_wide_constantBinning.root";
+  TFile *outFile = new TFile(Form("%s",file.c_str()),"RECREATE");
 
 
   TString labels[100];
@@ -346,8 +346,8 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
       histos[proc][6]->Rebin(rebin_factor);
     }    
 
-    else{
-      /*Double_t xbins[257]  = {   0,  10,  20,  30,  40,  50,  60,  70,  80,  90,
+    else if (!constantBinning){
+      Double_t xbins[257]  = {   0,  10,  20,  30,  40,  50,  60,  70,  80,  90,
 
                                  200, 210, 220, 230, 240, 250, 260, 270, 280, 290,
 
@@ -405,8 +405,10 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
       histos[proc][3] = (TH1F *) histos[proc][3]->Rebin(256, "h3", xbins);//rebin_factor);
       histos[proc][4] = (TH1F *) histos[proc][4]->Rebin(256, "h4", xbins);//rebin_factor);
       histos[proc][5] = (TH1F *) histos[proc][5]->Rebin(256, "h5", xbins);//rebin_factor);
-      histos[proc][6] = (TH1F *) histos[proc][6]->Rebin(256, "h6", xbins);//rebin_factor);*/
+      histos[proc][6] = (TH1F *) histos[proc][6]->Rebin(256, "h6", xbins);//rebin_factor);
+    }
 
+    else if (constantBinning){
       histos[proc][0]->Rebin(10);
       histos[proc][1]->Rebin(10);
       histos[proc][2]->Rebin(10);
@@ -414,9 +416,10 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
       histos[proc][4]->Rebin(10);
       histos[proc][5]->Rebin(10);
       histos[proc][6]->Rebin(10);
-    }
+    }    
 
     cout << histos[proc][0]->GetNbinsX() << endl;
+
   }
 
   float lumi = 2592.3;
@@ -534,7 +537,7 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
 
     for (int i = 0; i < histos[names::QCD][tag]->GetNbinsX(); i++){
 
-      float diff = abs( histos[names::QCD][tag]->GetBinContent(i) - histos[names::QCD_SYST][tag]->GetBinContent(i) );
+      float diff = 0.5*abs( histos[names::QCD][tag]->GetBinContent(i) - histos[names::QCD_SYST][tag]->GetBinContent(i) );
       qcdShapeSyst_Up->AddBinContent(i, diff);
       qcdShapeSyst_Dn->AddBinContent(i, -1*diff);
       if (qcdShapeSyst_Dn->GetBinContent(i) < 0.0){
@@ -596,8 +599,6 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
     histos[names::TT_Q2DN][tag]->Write( Form("btag%d__ttbar__q2__minus", tag) );
     
 
-    bool writeZPN = ZPNflag;
-    if (writeZPN){
     histos[names::ZPN10][tag]->Write( Form("btag%d__Zprime1000", tag));
     histos[names::ZPN12p5][tag]->Write( Form("btag%d__Zprime1250", tag));
     histos[names::ZPN15][tag]->Write( Form("btag%d__Zprime1500", tag) );
@@ -691,10 +692,6 @@ int makeTemplates(bool ZPNflag, bool ZPWflag, bool ZPXWflag, bool RSGflag){
     histos[names::ZPN30_BTAGDN][tag]->Write( Form("btag%d__Zprime3000__btag__minus", tag) );
     histos[names::ZPN35_BTAGDN][tag]->Write( Form("btag%d__Zprime3500__btag__minus", tag) );  
     histos[names::ZPN40_BTAGDN][tag]->Write( Form("btag%d__Zprime4000__btag__minus", tag) );  
-
-
-
-    }
 
 
   }
