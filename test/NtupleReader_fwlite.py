@@ -272,7 +272,22 @@ parser.add_option('--job', type='int', action='store',
 parser.add_option('--puFile', type='string', action='store',
                   default="pileup_reweight.root",
                   dest='puFile',
-                  help='Name of Pileup File')
+                  help='Name of Pileup Reweighting File')
+
+parser.add_option('--puDistNOM', type='string', action='store',
+                  default="MyDataPileupHistogram.root",
+                  dest='puDistNOM',
+                  help='Name of Pileup Distribution File - Nominal')
+
+parser.add_option('--puDistUP', type='string', action='store',
+                  default="MyDataPileupHistogramUP.root",
+                  dest='puDistUP',
+                  help='Name of Pileup Distribution File - 5% Up')
+
+parser.add_option('--puDistDN', type='string', action='store',
+                  default="MyDataPileupHistogramDN.root",
+                  dest='puDistDN',
+                  help='Name of Pileup Distribution File - 5% Down')
 
 parser.add_option('--showEvents', type='int', action='store',
                   default=None,
@@ -818,9 +833,19 @@ ROOT.SetOwnership( h_mistag_vs_jetPt_TagMassFatMinMass , False )
 
 
 #@ Pileup reweighting
-if options.isMC and options.puFile != None :
-    fPU = ROOT.TFile(options.puFile)
-    hPU = fPU.Get("h_NPVert")
+if options.isMC:
+    if options.puFile != None:
+        fPU = ROOT.TFile(options.puFile)
+        hPU = fPU.Get("h_NPVert")
+    if options.puDistNOM != None:
+        fPU_NOM = ROOT.TFile(options.puDistNOM)
+        hPU_NOM = fPU_NOM.Get("pileup")
+    if options.puDistUP != None:
+        fPU_UP = ROOT.TFile(options.puDistUP)
+        hPU_UP = fPU_UP.Get("pileup")
+    if options.puDistDN != None:
+        fPU_DN = ROOT.TFile(options.puDistDN)
+        hPU_DN = fPU_DN.Get("pileup")
 
 
 #@ Reweight top function
@@ -1247,6 +1272,9 @@ if options.writeTree  and options.selection == 2 :
     NNPDF3weight_CorrDn     = array('f', [-1.])
     NNPDF3weight_CorrUp     = array('f', [-1.])
     
+    PU_CorrDn           = array('f', [-1.])
+    PU_CorrUp           = array('f', [-1.])
+
     AllHadRunNum        = array('f', [-1.])   
     AllHadLumiBlock     = array('f', [-1.])   
     AllHadEventNum      = array('f', [-1.])   
@@ -1417,6 +1445,9 @@ if options.writeTree  and options.selection == 2 :
 
     TreeAllHad.Branch('NNPDF3weight_CorrDn'   ,  NNPDF3weight_CorrDn       ,  'NNPDF3weight_CorrDn/F'          )
     TreeAllHad.Branch('NNPDF3weight_CorrUp'   ,  NNPDF3weight_CorrUp       ,  'NNPDF3weight_CorrUp/F'          )
+
+    TreeAllHad.Branch('PU_CorrDn'         ,  PU_CorrDn       ,  'PU_CorrDn/F'          )
+    TreeAllHad.Branch('PU_CorrUp'         ,  PU_CorrUp       ,  'PU_CorrUp/F'          )
 
     TreeAllHad.Branch('AllHadRunNum'         ,  AllHadRunNum       ,  'AllHadRunNum/F'          )
     TreeAllHad.Branch('AllHadLumiBlock'      ,  AllHadLumiBlock    ,  'AllHadLumiBlock/F'       )
@@ -1910,22 +1941,22 @@ if options.selection == 2:
             ]
     else :
         trigsToRun = [
-            "HLT_PFHT200_v",
-            "HLT_PFHT250_v",
-            "HLT_PFHT300_v",
-            "HLT_PFHT350_v",
-            "HLT_PFHT400_v",
-            "HLT_PFHT475_v",
-            "HLT_PFHT600_v",
-            "HLT_PFHT650_v",
+            #"HLT_PFHT200_v",
+            #"HLT_PFHT250_v",
+            #"HLT_PFHT300_v",
+            #"HLT_PFHT350_v",
+            #"HLT_PFHT400_v",
+            #"HLT_PFHT475_v",
+            #"HLT_PFHT600_v",
+            #"HLT_PFHT650_v",
             "HLT_PFHT800_v",
-            "HLT_PFJet140_v",
-            "HLT_PFJet200_v",
-            "HLT_PFJet260_v",
-            "HLT_PFJet320_v",
-            "HLT_PFJet400_v",
-            "HLT_PFJet450_v",
-            "HLT_PFJet500_v"
+            #"HLT_PFJet140_v",
+            #"HLT_PFJet200_v",
+            #"HLT_PFJet260_v",
+            #"HLT_PFJet320_v",
+            #"HLT_PFJet400_v",
+            #"HLT_PFJet450_v",
+            #"HLT_PFJet500_v"
             ]
 
 # loop over files
@@ -2205,6 +2236,21 @@ for ifile in files : #{ Loop over root files
             evWeight *= hPU.GetBinContent( hPU.GetXaxis().FindBin( NPV) )
             if options.verbose :
                 print 'after purw, evWeight is : ' + str(evWeight)
+
+            #@ PU errors
+            #instructions to generate root files: https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData#2015_Pileup_JSON_Files
+            pu_nom = hPU_NOM.GetBinContent( hPU_NOM.GetXaxis().FindBin( NPV) )
+            pu_up = hPU_UP.GetBinContent( hPU_UP.GetXaxis().FindBin( NPV) )
+            pu_dn = hPU_DN.GetBinContent( hPU_DN.GetXaxis().FindBin( NPV) )
+            puWeight = hPU.GetXaxis().FindBin( NPV)
+
+            if pu_nom == 0.:
+                PU_CorrUp[0] = 0.
+                PU_CorrDn[0] = 0.
+            else:
+                PU_CorrUp[0] = pu_up/pu_nom
+                PU_CorrDn[0] = pu_dn/pu_nom
+            
 
         if options.isZprime or options.isttbar:
             #@Event weight errors
