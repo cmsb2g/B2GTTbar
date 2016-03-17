@@ -7,13 +7,20 @@ TGraph * limit_obs = new TGraph();
   TGraphAsymmErrors * band_exp1 = new TGraphAsymmErrors();
   TGraphAsymmErrors * band_exp2 = new TGraphAsymmErrors();
 
-  /*TGraph *theory = new TGraph();
- theory->SetPoint(0, 1000, 1.3*3.02095);
- theory->SetPoint(1, 1500, 1.3*0.58069);
- theory->SetPoint(2, 2000, 1.3*0.14501);
- theory->SetPoint(3, 2500, 1.3*0.04234);
- theory->SetPoint(4, 3000, 1.3*0.01384);
- theory->SetPoint(5, 4000, 1.3*0.00184);*/
+  TGraph *theory = new TGraph();
+  theory->SetPoint(0,  1000, 1.3*20.05);
+  theory->SetPoint(1,  1250, 1.3*7.92);
+  theory->SetPoint(2,  1500, 1.3*3.519);
+  //theory->SetPoint(3,  1750, 1.3*);
+  theory->SetPoint(3,  2000, 1.3*0.9528);
+  //theory->SetPoint(5,  2250, 1.3*);
+  theory->SetPoint(4,  2500, 1.3*0.3136);
+  //theory->SetPoint(7,  2750, 1.3*);
+  theory->SetPoint(5,  3000, 1.3*0.1289);
+  //theory->SetPoint(9,  3250, 1.3*);
+  theory->SetPoint(6, 3500, 1.3*0.05452);
+  //theory->SetPoint(11, 3750, 1.3*);
+  theory->SetPoint(7, 4000, 1.3*0.02807);
 
 ifstream infile("limits_RSGluon_2016.txt");
 
@@ -52,11 +59,11 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
 
   limit_exp->SetMinimum(0.01);
   limit_exp->Draw("AL");
-  /*limit_exp->GetXaxis()->SetTitle("M_{g_{KK}} [GeV]");
-    limit_exp->GetYaxis()->SetTitle("95 % CL limit on #sigma(g_{KK}) [pb]");*/
-  limit_exp->GetXaxis()->SetTitle("M_{Z'} [GeV]");
-  limit_exp->GetYaxis()->SetTitle("95 % CL limit on #sigma(Z'}) [pb]");
+  limit_exp->GetXaxis()->SetTitle("M_{g_{KK}} [GeV]");
+  limit_exp->GetYaxis()->SetTitle("95 % CL Limit on #sigma(g_{KK}) [pb]");
+  limit_exp->GetYaxis()->SetTitleOffset(1.2);
   limit_exp->GetYaxis()->SetRangeUser(0.01,2000);
+  
 
   band_exp2->SetFillColor(5);
   band_exp2->SetLineColor(0);
@@ -86,9 +93,9 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   double x2 = 905;
   double y2 = 1.0;
   TLine * line = new TLine(x1, y1, x2, y2);
-  /*theory->SetLineColor(2);
+  theory->SetLineColor(2);
   theory->SetLineWidth(2);
-  theory->Draw("same");*/
+  theory->Draw("same");
 
   
 
@@ -100,13 +107,13 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   l->AddEntry(limit_exp,"Expected", "L");
   l->AddEntry(band_exp1,"#pm1 #sigma Exp.", "F");
   l->AddEntry(band_exp2,"#pm2 #sigma Exp.", "F");
-  //l->AddEntry(theory, "13 TeV Z'", "L");
+  l->AddEntry(theory, "RS Gluon (LO #times 1.3)", "L");
   l->SetFillColor(0);
   l->SetLineColor(0);
   l->Draw();
 
-  TLatex * label = new TLatex();
-  label->SetNDC();
+  //TLatex * label = new TLatex();
+  //label->SetNDC();
   //label->DrawLatex(0.2,0.86,"CMS Preliminary, 19.7 fb^{-1}");
   //label->DrawLatex(0.2,0.80,"#sqrt{s} = 8 TeV");
   //label->DrawLatex(0.6,0.80, Form("BR(b'#rightarrow %s) = 1", channel.Data()));

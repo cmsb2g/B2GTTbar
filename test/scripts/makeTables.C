@@ -1,6 +1,6 @@
 {
 
-TFile *f = new TFile("../templates_RSGluon.root", "READ");
+TFile *f = new TFile("../templates.root", "READ");
 
 f->cd();
 

@@ -8,12 +8,20 @@ TGraph * limit_obs = new TGraph();
   TGraphAsymmErrors * band_exp2 = new TGraphAsymmErrors();
 
 TGraph *theory = new TGraph();
- theory->SetPoint(0, 1000, 1.3*28.15545);
- theory->SetPoint(1, 1500, 1.3*5.26650);
- theory->SetPoint(2, 2000, 1.3*1.33656);
- theory->SetPoint(3, 2500, 1.3*0.39633);
- theory->SetPoint(4, 3000, 1.3*0.12921);
- theory->SetPoint(5, 4000, 1.3*0.01716);
+ theory->SetPoint(0,  1000, 42.24246);
+ theory->SetPoint(1,  1250, 17.03858);
+ theory->SetPoint(2,  1500, 7.74129);
+ theory->SetPoint(3,  1750, 3.82201);
+ theory->SetPoint(4,  2000, 2.00723);
+ theory->SetPoint(5,  2250, 1.10600);
+ theory->SetPoint(6,  2500, 0.63398);
+ theory->SetPoint(7,  2750, 0.37621);
+ theory->SetPoint(8,  3000, 0.23030);
+ theory->SetPoint(9,  3250, 0.14504);
+ theory->SetPoint(10, 3500, 0.09387);
+ theory->SetPoint(11, 3750, 0.06237);
+ theory->SetPoint(12, 4000, 0.04254);
+
 
 ifstream infile("limits_wide_2016.txt");
 
@@ -52,10 +60,9 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
 
   limit_exp->SetMinimum(0.01);
   limit_exp->Draw("AL");
-  /*limit_exp->GetXaxis()->SetTitle("M_{g_{KK}} [GeV]");
-    limit_exp->GetYaxis()->SetTitle("95 % CL limit on #sigma(g_{KK}) [pb]");*/
   limit_exp->GetXaxis()->SetTitle("M_{Z'} [GeV]");
-  limit_exp->GetYaxis()->SetTitle("95 % CL limit on #sigma(Z'}) [pb]");
+  limit_exp->GetYaxis()->SetTitle("95 % CL limit on #sigma(Z') [pb]");
+  limit_exp->GetYaxis()->SetTitleOffset(1.2);
   limit_exp->GetYaxis()->SetRangeUser(0.01,2000);
 
   band_exp2->SetFillColor(5);
@@ -100,13 +107,13 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   l->AddEntry(limit_exp,"Expected", "L");
   l->AddEntry(band_exp1,"#pm1 #sigma Exp.", "F");
   l->AddEntry(band_exp2,"#pm2 #sigma Exp.", "F");
-  l->AddEntry(theory, "13 TeV Z'", "L");
+  l->AddEntry(theory, "Z' 10% Width (NLO)", "L");
   l->SetFillColor(0);
   l->SetLineColor(0);
   l->Draw();
 
-  TLatex * label = new TLatex();
-  label->SetNDC();
+  //TLatex * label = new TLatex();
+  //label->SetNDC();
   //label->DrawLatex(0.2,0.86,"CMS Preliminary, 19.7 fb^{-1}");
   //label->DrawLatex(0.2,0.80,"#sqrt{s} = 8 TeV");
   //label->DrawLatex(0.6,0.80, Form("BR(b'#rightarrow %s) = 1", channel.Data()));
