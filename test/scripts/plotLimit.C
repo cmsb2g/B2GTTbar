@@ -3,17 +3,25 @@ void plotLimit(){
 
 
 TGraph * limit_obs = new TGraph();
-  TGraph * limit_exp = new TGraph();
-  TGraphAsymmErrors * band_exp1 = new TGraphAsymmErrors();
-  TGraphAsymmErrors * band_exp2 = new TGraphAsymmErrors();
+TGraph * limit_exp = new TGraph();
+TGraphAsymmErrors * band_exp1 = new TGraphAsymmErrors();
+TGraphAsymmErrors * band_exp2 = new TGraphAsymmErrors();
 
 TGraph *theory = new TGraph();
- theory->SetPoint(0, 1000, 1.3*3.02095);
- theory->SetPoint(1, 1500, 1.3*0.58069);
- theory->SetPoint(2, 2000, 1.3*0.14501);
- theory->SetPoint(3, 2500, 1.3*0.04234);
- theory->SetPoint(4, 3000, 1.3*0.01384);
- theory->SetPoint(5, 4000, 1.3*0.00184);
+ theory->SetPoint(0,  1000, 4.24671);
+ theory->SetPoint(1,  1250, 1.67078);
+ theory->SetPoint(2,  1500, 0.74006);
+ theory->SetPoint(3,  1750, 0.35479);
+ theory->SetPoint(4,  2000, 0.17980);
+ theory->SetPoint(5,  2250, 0.09496);
+ theory->SetPoint(6,  2500, 0.05178);
+ theory->SetPoint(7,  2750, 0.02896);
+ theory->SetPoint(8,  3000, 0.01659);
+ theory->SetPoint(9,  3250, 0.00961);
+ theory->SetPoint(10, 3500, 0.00566);
+ theory->SetPoint(11, 3750, 0.00337);
+ theory->SetPoint(12, 4000, 0.00203);
+
 
 ifstream infile("limits_2016.txt");
 
@@ -52,10 +60,9 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
 
   limit_exp->SetMinimum(0.01);
   limit_exp->Draw("AL");
-  /*limit_exp->GetXaxis()->SetTitle("M_{g_{KK}} [GeV]");
-    limit_exp->GetYaxis()->SetTitle("95 % CL limit on #sigma(g_{KK}) [pb]");*/
   limit_exp->GetXaxis()->SetTitle("M_{Z'} [GeV]");
-  limit_exp->GetYaxis()->SetTitle("95 % CL limit on #sigma(Z'}) [pb]");
+  limit_exp->GetYaxis()->SetTitle("95% CL Limit on #sigma(Z') [pb]");
+  limit_exp->GetYaxis()->SetTitleOffset(1.2);
   limit_exp->GetYaxis()->SetRangeUser(0.01,2000);
 
   band_exp2->SetFillColor(5);
@@ -100,13 +107,13 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   l->AddEntry(limit_exp,"Expected", "L");
   l->AddEntry(band_exp1,"#pm1 #sigma Exp.", "F");
   l->AddEntry(band_exp2,"#pm2 #sigma Exp.", "F");
-  l->AddEntry(theory, "13 TeV Z'", "L");
+  l->AddEntry(theory, "Z' 1% Width (NLO)", "L");
   l->SetFillColor(0);
   l->SetLineColor(0);
   l->Draw();
 
-  TLatex * label = new TLatex();
-  label->SetNDC();
+  //TLatex * label = new TLatex();
+  //label->SetNDC();
   //label->DrawLatex(0.2,0.86,"CMS Preliminary, 19.7 fb^{-1}");
   //label->DrawLatex(0.2,0.80,"#sqrt{s} = 8 TeV");
   //label->DrawLatex(0.6,0.80, Form("BR(b'#rightarrow %s) = 1", channel.Data()));
