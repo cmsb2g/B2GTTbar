@@ -68,6 +68,8 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
   labels[names::TT_Q2DN] = "ttbar_q2_dn";
   labels[names::TT_PDFUP] = "ttbar_pdf_up";
   labels[names::TT_PDFDN] = "ttbar_pdf_dn";
+  labels[names::TT_PSHUP] = "ttbar_psh_up";
+  labels[names::TT_PSHDN] = "ttbar_psh_dn";
   labels[names::ZPN10] = "ZpN10";
   labels[names::ZPN12p5] = "ZpN12p5";
   labels[names::ZPN15] = "ZpN15";
@@ -172,7 +174,7 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
   TString dir = "/uscms_data/d3/maral87/ttbarResonances/B2GAnaFW/CMSSW_7_4_12/src/Analysis/B2GTTbar/test/runs/run_020516/";
   TString dir1 = "/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/runs/";
   //TString dir2="/uscms_data/d3/maral87/ttbarResonances/B2GAnaFW/CMSSW_7_4_12/src/Analysis/B2GTTbar/test/runs/run_022316/";
-  TString dir2 = "/uscms_data/d3/maral87/ttbarResonances/B2GAnaFW/CMSSW_7_4_12/src/Analysis/B2GTTbar/test/";
+  TString dir2 = "/uscms_data/d3/maral87/ttbarResonances/B2GAnaFW/CMSSW_7_4_12/src/Analysis/B2GTTbar/test/runs/run_030716/";
 
   TString files[100];
   /*files[names::DATA]          = dir2 +  "outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_030716_nom.root";
@@ -208,6 +210,8 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
   files[names::TT_SCALEDN]    = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_jec_dn.root";
   files[names::TT_PDFUP]      = dir1 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_021816_pdf_up.root";
   files[names::TT_PDFDN]      = dir1 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_021816_pdf_dn.root";
+  files[names::TT_PSHUP]      = "outBkgdEst_TT_PSup_03162016_nom.root";
+  files[names::TT_PSHDN]      = "outBkgdEst_TT_PSdown_03162016_nom.root";
   files[names::TT_Q2UP]       = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_q2_up.root";
   files[names::TT_Q2DN]       = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_q2_dn.root";
   files[names::TT_BTAGUP]     = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_bTag_up.root";
@@ -647,7 +651,7 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
 				 2500, 2510, 2520, 2530, 2540, 2550, 2560, 2570, 2580, 2590,
 
 				 2600, 2800, 3000, 3500, 4000, 5000, 7000 };
-
+/*
       histos[proc][0] = (TH1F *) histos[proc][0]->Rebin(256, "h0", xbins);//rebin_factor);
       histos[proc][1] = (TH1F *) histos[proc][1]->Rebin(256, "h1", xbins);//rebin_factor);
       histos[proc][2] = (TH1F *) histos[proc][2]->Rebin(256, "h2", xbins);//rebin_factor);
@@ -655,14 +659,14 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
       histos[proc][4] = (TH1F *) histos[proc][4]->Rebin(256, "h4", xbins);//rebin_factor);
       histos[proc][5] = (TH1F *) histos[proc][5]->Rebin(256, "h5", xbins);//rebin_factor);
       histos[proc][6] = (TH1F *) histos[proc][6]->Rebin(256, "h6", xbins);//rebin_factor);
-
-      /*histos[proc][0]->Rebin(10);
+*/
+      histos[proc][0]->Rebin(10);
       histos[proc][1]->Rebin(10);
       histos[proc][2]->Rebin(10);
       histos[proc][3]->Rebin(10);
       histos[proc][4]->Rebin(10);
       histos[proc][5]->Rebin(10);
-      histos[proc][6]->Rebin(10);*/
+      histos[proc][6]->Rebin(10);
 
     }
     cout << histos[proc][0]->GetNbinsX() << endl;
@@ -684,6 +688,8 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     histos[names::TT_JERDN][tag]   ->Scale( 831.76 * ttSF * lumi * kfactor / nttbar );
     histos[names::TT_PDFUP][tag]   ->Scale( 831.76 * ttSF * lumi * kfactor / nttbar );
     histos[names::TT_PDFDN][tag]   ->Scale( 831.76 * ttSF * lumi * kfactor / nttbar );
+    histos[names::TT_PSHUP][tag]   ->Scale( 831.76 * ttSF * lumi * kfactor / 9921174. );
+    histos[names::TT_PSHDN][tag]   ->Scale( 831.76 * ttSF * lumi * kfactor / 9860774.  );
     histos[names::TT_Q2UP][tag]    ->Scale( 831.76 * ttSF * lumi * kfactor / nttbar );
     histos[names::TT_Q2DN][tag]    ->Scale( 831.76 * ttSF * lumi * kfactor / nttbar );
     histos[names::TT_BTAGUP][tag]  ->Scale( 831.76 * ttSF * lumi * kfactor / nttbar );
@@ -1382,6 +1388,8 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     histos[names::TT_BTAGDN][tag]->Write( Form("btag%d__ttbar__btag__minus", tag) );
     histos[names::TT_Q2UP][tag]->Write( Form("btag%d__ttbar__q2__plus", tag) );
     histos[names::TT_Q2DN][tag]->Write( Form("btag%d__ttbar__q2__minus", tag) );
+    histos[names::TT_PSHUP][tag]->Write( Form("btag%d__ttbar__parSho__plus", tag) );
+    histos[names::TT_PSHDN][tag]->Write( Form("btag%d__ttbar__parSho__minus", tag) );
     
 
     histos[names::ZPN10][tag]->Write( Form("btag%d__Zprime1000", tag));
