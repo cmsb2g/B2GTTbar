@@ -1045,7 +1045,10 @@ for event in Tree:
 
 
 
-  evWeight = 1
+  if (options.isData): 
+     evWeight = 1.0
+  else:
+     evWeight = event.AllHadEventWeight
   if (options.Syst == 4):
      evWeight *= event.NNPDF3weight_CorrUp
   if (options.Syst == -4):
