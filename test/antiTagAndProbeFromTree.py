@@ -997,7 +997,12 @@ for event in Tree:
   newbtagjet1 = bool( applySF ( topTag1MaxBdiscM , sf1_bTag , Btag_eff = 0.7) )
 
 
-  evWeight = 1
+  if (options.isData): 
+     evWeight = 1.0
+  else:
+     evWeight = event.AllHadEventWeight
+  
+
   rand1 =  ROOT.TRandom3(0)
   rand_mistag  = rand1.Uniform(0,1.0)
 
