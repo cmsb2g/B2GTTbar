@@ -43,7 +43,7 @@ parser.add_option('--isData', action='store_true',
 (options, args) = parser.parse_args()
 argv = []
 
-#Syst = 0  # jerDn = -2; jecDn = -1; jecNom = 0; jecUp = +1; jerUp = +2; bTagUp = +3; bTagDn = -3; pdfUp = +4; pdfDn = -4; q2Up = +5; q2Dn = -5 
+#Syst = 0  # jerDn = -2; jecDn = -1; jecNom = 0; jecUp = +1; jerUp = +2; bTagUp = +3; bTagDn = -3; pdfUp = +4; pdfDn = -4; q2Up = +5; q2Dn = -5; puUp = +6; puDN = -6
 verbose = False
 
 if options.Syst == 0:
@@ -68,6 +68,10 @@ elif options.Syst == 5:
   systType = "q2_up"
 elif options.Syst == -5:
   systType = "q2_dn"
+elif options.Syst == 6:
+  systType = "PU_up"
+elif options.Syst == -6:
+  systType = "PU_dn"
 print 'systType '+systType
 
 #OUT =  ROOT.TFile("outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_"+date+"_"+systType+".root","RECREATE");
@@ -158,13 +162,13 @@ print "h_modMass_SD_jet1  integral  " + str( h_modMass_SD_jet1 .Integral() )
 #Fmistag = ROOT.TFile("MistagRate_nbins_121615_8_ttbar_nom__Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121615_jec_nom.root")
 # Fmistag = ROOT.TFile(options.mistagFile)
 
-Fmistag           = ROOT.TFile("MistagRate_nbins_032416_27_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root")
+Fmistag           = ROOT.TFile("MistagRate_nbins_040416_27_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
 # mistag_jetP_0bTag = "MistagRate_nbins_032416_13_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root"
 # mistag_jetP_1bTag = "MistagRate_nbins_032416_10_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root"
 # mistag_jetP_2bTag = "MistagRate_nbins_032416_6_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root"
-Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_032416_13_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root")
-Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_032416_10_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root")
-Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_032416_6_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root")
+Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_040416_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
+Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_040416_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
+Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_040416_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
 
 
 
@@ -1056,7 +1060,7 @@ for event in Tree:
       maxJetHt = event.HT
   elif options.isData == False:
       # nom, pdf_up, pdf_dn, q2_up, q2_dn
-      if (options.Syst == 0 or abs(options.Syst) == 4 or abs(options.Syst) == 5):
+      if (options.Syst == 0 or abs(options.Syst) == 4 or abs(options.Syst) == 5 or abs(options.Syst) == 6):
           jet0P4 = jet0P4Raw * Jet0CorrFactor * Jet0PtSmearFactor
           jet1P4 = jet1P4Raw * Jet1CorrFactor * Jet1PtSmearFactor
           sf0_MassTau32     = sf0_MassTau32_nom
@@ -1295,7 +1299,10 @@ for event in Tree:
      evWeight *= event.Q2weight_CorrUp
   if (options.Syst == -5):
      evWeight *= event.Q2weight_CorrDn
-
+  if (options.Syst == 6):
+     evWeight *= event.PU_CorrUp
+  if (options.Syst == -6):
+     evWeight *= event.PU_CorrDn
 
 
   #^ fill double tagged dijet distributions
