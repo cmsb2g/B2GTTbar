@@ -23,12 +23,13 @@ TGraph *theory = new TGraph();
  theory->SetPoint(12, 4000, 0.00203);
 
 
-ifstream infile("limits_2016.txt");
+ifstream infile("limits_2016_30pRebin0329Files.txt");
 
 gROOT->LoadMacro("CMS_lumi.C");
 
 double mass, exp, obs, up1, up2, dn1, dn2;
 int point = 0;
+int lastCount = 0;
 
 while (!infile.eof()){
 
@@ -37,6 +38,31 @@ while (!infile.eof()){
 
   infile >> mass >> exp >>  dn2 >> up2 >> dn1 >> up1 >> obs;
 
+  if (mass == 2500){
+    exp = exp/100;
+    dn2 = dn2/100;
+    up2 = up2/100;
+    dn1 = dn1/100;
+    up1 = up1/100;
+    obs = obs/100;
+  }
+  else if (mass == 3000){
+    exp = exp/1000;
+    dn2 = dn2/1000;
+    up2 = up2/1000;
+    dn1 = dn1/1000;
+    up1 = up1/1000;
+    obs = obs/1000;
+  }
+  else if ((mass == 3500 || mass == 4000) && lastCount < 2){
+    exp = exp/10000;
+    dn2 = dn2/10000;
+    up2 = up2/10000;
+    dn1 = dn1/10000;
+    up1 = up1/10000;
+    obs = obs/10000;
+    lastCount++;
+  }
 
   cout << mass << " & " << obs << " & " << exp << " & " << "["<<dn1<<", "<<up1<<"] & ["<<dn2<<", "<<up2<<"] \\" << endl;
 
@@ -125,8 +151,8 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   canvas->SetLogy(1);
   CMS_lumi(canvas, 4, 10);
 
-  canvas->Print("ZPN_limit.pdf");
-  canvas->Print("ZPN_limit.root");
+  canvas->Print("ZPN_limit_30pRebin0329Files.pdf");
+  canvas->Print("ZPN_limit_30pRebin0329Files.root");
 
 }
 
