@@ -190,44 +190,6 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
   TString dir4 = "/uscms_data/d3/pilot/MINIAOD/CMSSW_7_4_1/src/B2GTTbar/test/";
 
   TString files[150];
-  /*files[names::DATA]          = dir2 +  "outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_030716_nom.root";
-  files[names::QCD]           = files[names::DATA];
-  files[names::QCD_SYST]      = files[names::DATA];
-  files[names::QCDMC]         = dir2 + "outBkgdEst_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_pDep_030716_nom_scaled.root";
-  files[names::QCDMC_SYST]    = files[names::QCDMC];
-  files[names::TT]            = dir2 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_nom.root";
-  files[names::TT_SUBTRACT]   = dir2 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_nom.root";
-  files[names::TT_SUBTRACTSYST]   = dir2 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_nom.root";
-  files[names::TT_JERUP]      = dir2+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_jer_up.root";
-  files[names::TT_JERDN]      = dir2+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_jer_dn.root";
-  files[names::TT_SCALEUP]    = dir2+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_jec_up.root";
-  files[names::TT_SCALEDN]    = dir2+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_jec_dn.root";
-  files[names::TT_PDFUP]      = dir2 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_pdf_up.root";
-  files[names::TT_PDFDN]      = dir2 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_pdf_dn.root";
-  files[names::TT_Q2UP]       = dir2+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_q2_up.root";
-  files[names::TT_Q2DN]       = dir2+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_q2_dn.root";
-  files[names::TT_BTAGUP]     = dir2+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_bTag_up.root";
-  files[names::TT_BTAGDN]     = dir2+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_bTag_dn.root";
-
-  files[names::DATA]          = dir2 +  "outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_030716_nom.root";
-  files[names::QCD]           = files[names::DATA];
-  files[names::QCD_SYST]      = files[names::DATA];
-  files[names::QCDMC]         = dir2 + "outBkgdEst_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_pDep_030716_nom_scaled.root";
-  files[names::QCDMC_SYST]    = files[names::QCDMC];
-  files[names::TT]            = dir +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_nom.root";
-  files[names::TT_SUBTRACT]   = dir2 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_nom.root";
-  files[names::TT_SUBTRACTSYST]   = dir2 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_030716_nom.root";
-  files[names::TT_JERUP]      = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_jer_up.root";
-  files[names::TT_JERDN]      = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_jer_dn.root";
-  files[names::TT_SCALEUP]    = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_jec_up.root";
-  files[names::TT_SCALEDN]    = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_jec_dn.root";
-  files[names::TT_PDFUP]      = dir1 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_021816_pdf_up.root";
-  files[names::TT_PDFDN]      = dir1 +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_021816_pdf_dn.root";
-  files[names::TT_Q2UP]       = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_q2_up.root";
-  files[names::TT_Q2DN]       = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_q2_dn.root";
-  files[names::TT_BTAGUP]     = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_bTag_up.root";
-  files[names::TT_BTAGDN]     = dir+  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_all_020516_bTag_dn.root";*/
-
   files[names::DATA]          = dir3 +  "outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032916_nom.root";
   files[names::QCD]           = files[names::DATA];
   files[names::QCD_SYST]      = files[names::DATA];
@@ -589,18 +551,6 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     cout << "Processing " << labels[proc] << endl;
 
     TFile *infile = new TFile(files[proc], "READ");
-
-    /*if (proc == names::DATA or proc == names::QCDMC){  //or proc == names::TT or proc == names::TT_JERUP or proc == names::TT_JERDN  or proc == names::TT_SCALEUP or proc == names::TT_SCALEDN or proc == names::TT_PDFUP or proc == names::TT_PDFDN or proc == names::TT_Q2UP or proc == names::TT_Q2DN or proc == names::TT_BTAGUP or proc == names::TT_BTAGDN){
-
-      histos[proc][0] = (TH1F *) infile->Get("mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag");
-      histos[proc][1] = (TH1F *) infile->Get("mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag");
-      histos[proc][2] = (TH1F *) infile->Get("mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag");
-      histos[proc][3] = (TH1F *) infile->Get("mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag");
-      histos[proc][4] = (TH1F *) infile->Get("mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag");
-      histos[proc][5] = (TH1F *) infile->Get("mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag");
-      histos[proc][6] = (TH1F *) infile->Get("mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive");
-     
-      }*/
 
     if (proc == names::QCD or proc == names::TT_SUBTRACT or proc == names::QCDMC_SYST){
       
