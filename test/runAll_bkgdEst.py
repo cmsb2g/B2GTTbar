@@ -79,9 +79,64 @@ path_ttbar = [
     # ttbar q2Dn
     #"python bkgdEst.py --file="+options.treedir+"tree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e.root --outname=outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65 --Syst=-5 --date="+options.date+" &" , 
     # ttbar puUp
-    "python bkgdEst.py --file="+options.treedir+"tree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e.root --outname=outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65 --Syst=+6 --date="+options.date+" &" ,
+    #"python bkgdEst.py --file="+options.treedir+"tree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e.root --outname=outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65 --Syst=+6 --date="+options.date+" &" ,
     # ttbar puDn
-    "python bkgdEst.py --file="+options.treedir+"tree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e.root --outname=outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65 --Syst=-6 --date="+options.date+" "  
+    #"python bkgdEst.py --file="+options.treedir+"tree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e.root --outname=outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65 --Syst=-6 --date="+options.date+" "  
+    
+    # High-mass ttbar samples; M_1000
+    # ttbar nom
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=0  --date="+options.date+" &" ,
+    # ttbar jecUp
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=+1 --date="+options.date+" &" ,
+    # ttbar jecDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=-1 --date="+options.date+" &" ,    
+    # ttbar jerUp
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=+2 --date="+options.date+" &" ,
+    # ttbar jerDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=-2 --date="+options.date+" &" ,
+    # ttbar btagup
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=+3 --date="+options.date+" &" ,
+    # ttbar btagDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=-3 --date="+options.date+" &" 
+    # ttbar pdfUp
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=+4 --date="+options.date+" &" ,
+    # ttbar pdfDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=-4 --date="+options.date+" &" ,
+    # ttbar q2Up
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=+5 --date="+options.date+" &" ,
+    # ttbar q2Dn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=-5 --date="+options.date+" &" , 
+    # ttbar puUp
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=+6 --date="+options.date+" &" ,
+    # ttbar puDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M1000.root --outname=outBkgdEst_ttbar_M1000 --Syst=-6 --date="+options.date+" &" ,  
+    
+    # High-mass ttbar samples; M_700
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=0  --date="+options.date+" &" ,
+    # ttbar jecUp
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=+1 --date="+options.date+" &" ,
+    # ttbar jecDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=-1 --date="+options.date+" &" ,    
+    # ttbar jerUp
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=+2 --date="+options.date+" &" ,
+    # ttbar jerDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=-2 --date="+options.date+" &" ,
+    # ttbar btagup
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=+3 --date="+options.date+" &" ,
+    # ttbar btagDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=-3 --date="+options.date+" &" 
+    # ttbar pdfUp
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=+4 --date="+options.date+" &" ,
+    # ttbar pdfDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=-4 --date="+options.date+" &" ,
+    # ttbar q2Up
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=+5 --date="+options.date+" &" ,
+    # ttbar q2Dn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=-5 --date="+options.date+" &" , 
+    # ttbar puUp
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=+6 --date="+options.date+" &" ,
+    # ttbar puDn
+    "python bkgdEst.py --file="+options.treedir+"ttbar_M700.root --outname=outBkgdEst_ttbar_M700 --Syst=-6 --date="+options.date+" "  
 
 ]
 
@@ -675,9 +730,9 @@ path_RSGluon = [
     # RSGluonToTT_M-1000 q2Dn
     #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1000_B2Gv8p4_reader603e --Syst=-5 --date="+options.date+" &",
     # RSGluonToTT_M-1000 puUp
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1000_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1000_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
     # RSGluonToTT_M-1000 puDn
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1000_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1000_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
 
 
     # RSGluonToTT_M-1250 nom 
@@ -703,9 +758,9 @@ path_RSGluon = [
     # RSGluonToTT_M-1250 q2Dn 
     #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1250_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1250_B2Gv8p4_reader603e --Syst=-5 --date="+options.date+" &",
     # RSGluonToTT_M-1250 puUp 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1250_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1250_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1250_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1250_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
     # RSGluonToTT_M-1250 puDn 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1250_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1250_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1250_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1250_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
 
 
     # RSGluonToTT_M-1500 nom 
@@ -731,9 +786,9 @@ path_RSGluon = [
     # RSGluonToTT_M-1500 q2Dn 
     #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1500_B2Gv8p4_reader603e --Syst=-5 --date="+options.date+" &",
     # RSGluonToTT_M-1500 puUp 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1500_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1500_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
     # RSGluonToTT_M-1500 puDn 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1500_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-1500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-1500_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
 
 
     # RSGluonToTT_M-2000 nom 
@@ -759,9 +814,9 @@ path_RSGluon = [
     # RSGluonToTT_M-2000 q2Dn 
     #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2000_B2Gv8p4_reader603e --Syst=-5 --date="+options.date+" &",
     # RSGluonToTT_M-2000 puUp 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2000_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2000_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
     # RSGluonToTT_M-2000 puDn 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2000_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2000_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
 
 
     # RSGluonToTT_M-2500 nom 
@@ -787,9 +842,9 @@ path_RSGluon = [
     # RSGluonToTT_M-2500 q2Dn 
     #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2500_B2Gv8p4_reader603e --Syst=-5 --date="+options.date+" &",
     # RSGluonToTT_M-2500 puUp 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2500_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2500_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
     # RSGluonToTT_M-2500 puDn 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2500_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-2500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-2500_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
 
 
     # RSGluonToTT_M-3000 nom 
@@ -815,9 +870,9 @@ path_RSGluon = [
     # RSGluonToTT_M-3000 q2Dn 
     #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3000_B2Gv8p4_reader603e --Syst=-5 --date="+options.date+" &",
     # RSGluonToTT_M-3000 puUp 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3000_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3000_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
     # RSGluonToTT_M-3000 puDn 
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3000_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3000_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &",
 
 
     # RSGluonToTT_M-3500 nom
@@ -841,11 +896,38 @@ path_RSGluon = [
     # RSGluonToTT_M-3500 q2Up
     #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3500_B2Gv8p4_reader603e --Syst=+5 --date="+options.date+" &",
     # RSGluonToTT_M-3500 q2Dn
-    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3500_B2Gv8p4_reader603e --Syst=-5 --date="+options.date+" &" ,,
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3500_B2Gv8p4_reader603e --Syst=-5 --date="+options.date+" &",
     # RSGluonToTT_M-3500 puUp
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3500_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3500_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
     # RSGluonToTT_M-3500 puDn
-    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3500_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" " 
+    #"python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-3500_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-3500_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" &", 
+
+    # RSGluonToTT_M-4000 nom
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=0  --date="+options.date+" &",
+    # RSGluonToTT_M-4000 jecUp
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=+1 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 jecDn
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=-1 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 jerUp
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=+2 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 jerDn
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=-2 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 btagUp
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=+3 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 btagDn
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=-3 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 pdfUp
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=+4 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 pdfDn
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=-4 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 q2Up
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=+5 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 q2Dn
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=-5 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 puUp
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=+6 --date="+options.date+" &",
+    # RSGluonToTT_M-4000 puDn
+    "python bkgdEst.py --file="+options.treedir+"tree_RSGluonToTT_M-4000_B2Gv8p4_reader603e.root --outname=outBkgdEst_RSGluonToTT_M-4000_B2Gv8p4_reader603e --Syst=-6 --date="+options.date+" " 
 
 
 ]
