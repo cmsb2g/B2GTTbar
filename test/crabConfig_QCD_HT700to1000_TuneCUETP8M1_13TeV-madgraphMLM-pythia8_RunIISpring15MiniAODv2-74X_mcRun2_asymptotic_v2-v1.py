@@ -2,14 +2,14 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'QCDAnaTrees_QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_noTrigger'
+config.General.requestName = 'QCDAnaTrees_QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_noTrigger_20160318'
 config.General.workArea = 'QCDAnaRunII'
 config.General.transferLogs = True
 
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'PSet.py'
-config.JobType.inputFiles = ['FrameworkJobReport.xml', 'execute_for_crab_qcd.py', 'NtupleReader_fwlite.py', 'leptonic_nu_z_component.py', 'JECs', 'ModMass_2015_09_22.root', 'MistagRate_2015_09_25.root', 'pileup_reweight.root']
+config.JobType.inputFiles = ['FrameworkJobReport.xml', 'execute_for_crab_qcd.py', 'NtupleReader_fwlite.py', 'leptonic_nu_z_component.py', 'JECs', 'ModMass_2015_09_22.root', 'MistagRate_2015_09_25.root', 'PUweight20160316.root', 'MyDataPileupHistogram.root', 'MyDataPileupHistogramUP.root', 'MyDataPileupHistogramDN.root']
 config.JobType.outputFiles = ['outplots.root']
 config.JobType.scriptExe = 'execute_for_crab_qcd.sh'
 

@@ -17,7 +17,7 @@ parser.add_option('--isRSGluon', action='store_true',
 argv = []
 
 path_Zprime = [
-    "python NtupleReader_fwlite.py --files=FileLists/B2GanaFWv8p4/FileList_ZprimeToTT_M-1000_W-10_miniv2_B2Gv8p4_25ns.txt  --selection=2 --writeTree --quickSelect --minAK8Pt=350 --isMC --isZprime --outname=Trees/JECv7/tree_ZprimeToTT_M-1000_W-10_B2Gv8p4_reader603e.root &",
+    #"python NtupleReader_fwlite.py --files=FileLists/B2GanaFWv8p4/FileList_ZprimeToTT_M-1000_W-10_miniv2_B2Gv8p4_25ns.txt  --selection=2 --writeTree --quickSelect --minAK8Pt=350 --isMC --isZprime --outname=Trees/JECv7/tree_ZprimeToTT_M-1000_W-10_B2Gv8p4_reader603e.root &",
     "python NtupleReader_fwlite.py --files=FileLists/B2GanaFWv8p4/FileList_ZprimeToTT_M-1250_W-12p5_miniv2_B2Gv8p4_25ns.txt  --selection=2 --writeTree --quickSelect --minAK8Pt=350 --isMC --isZprime --outname=Trees/JECv7/tree_ZprimeToTT_M-1250_W-12p5_B2Gv8p4_reader603e.root &",
     "python NtupleReader_fwlite.py --files=FileLists/B2GanaFWv8p4/FileList_ZprimeToTT_M-1500_W-15_miniv2_B2Gv8p4_25ns.txt  --selection=2 --writeTree --quickSelect --minAK8Pt=350 --isMC --isZprime --outname=Trees/JECv7/tree_ZprimeToTT_M-1500_W-15_B2Gv8p4_reader603e.root &",
     "python NtupleReader_fwlite.py --files=FileLists/B2GanaFWv8p4/FileList_ZprimeToTT_M-2000_W-20_miniv2_B2Gv8p4_25ns.txt  --selection=2 --writeTree --quickSelect --minAK8Pt=350 --isMC --isZprime --outname=Trees/JECv7/tree_ZprimeToTT_M-2000_W-20_B2Gv8p4_reader603e.root &",
