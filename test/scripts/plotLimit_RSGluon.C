@@ -1,4 +1,4 @@
-void plotLimit_RSGluon(){
+void plotLimit_RSGluon(string filename){
 
 
 
@@ -22,7 +22,7 @@ TGraph * limit_obs = new TGraph();
   //theory->SetPoint(11, 3750, 1.3*);
   theory->SetPoint(7, 4000, 1.3*0.02807);
 
-ifstream infile("limits_RSGluon_2016.txt");
+ifstream infile(filename);
 
 gROOT->LoadMacro("CMS_lumi.C");
 
@@ -39,17 +39,26 @@ while (!infile.eof()){
 
   cout << mass << " & " << obs << " & " << exp << " & " << "["<<dn1<<", "<<up1<<"] & ["<<dn2<<", "<<up2<<"] \\" << endl;
 
+  double sf = 1.0;
+  if (mass == 2500) sf = 0.01;
+  if (mass == 3000) sf = 0.001;
+  if (mass == 3500) sf = 0.0001;
+  if (mass == 4000) sf = 0.0001;
 
-  limit_obs->SetPoint(point, mass, obs);
-  limit_exp->SetPoint(point, mass, exp);
-  band_exp1->SetPoint(point, mass, exp);
-  band_exp2->SetPoint(point, mass, exp);
+
+  limit_obs->SetPoint(point, mass, obs*sf);
+  limit_exp->SetPoint(point, mass, exp*sf);
+  band_exp1->SetPoint(point, mass, exp*sf);
+  band_exp2->SetPoint(point, mass, exp*sf);
   
-  band_exp1->SetPointEYhigh(point, up1 - exp);
-  band_exp1->SetPointEYlow(point, exp - dn1);
-  band_exp2->SetPointEYhigh(point, up2 - exp);
-  band_exp2->SetPointEYlow(point, exp - dn2);
+  band_exp1->SetPointEYhigh(point, up1*sf - exp*sf);
+  band_exp1->SetPointEYlow(point, exp*sf - dn1*sf);
+  band_exp2->SetPointEYhigh(point, up2*sf - exp*sf);
+  band_exp2->SetPointEYlow(point, exp*sf - dn2*sf);
   point++;
+
+
+
 
 }
 

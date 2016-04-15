@@ -1,1 +1,1 @@
-/uscmst1b_scratch/lpc1/3DayLifetime/pilot/out_2000.root
+root://cmsxrootd.fnal.gov//store/user/pilot/tree_RSGluon_2000.root

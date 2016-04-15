@@ -43,7 +43,7 @@ parser.add_option('--isData', action='store_true',
 (options, args) = parser.parse_args()
 argv = []
 
-#Syst = 0  # jerDn = -2; jecDn = -1; jecNom = 0; jecUp = +1; jerUp = +2; bTagUp = +3; bTagDn = -3; pdfUp = +4; pdfDn = -4; q2Up = +5; q2Dn = -5 
+#Syst = 0  # jerDn = -2; jecDn = -1; jecNom = 0; jecUp = +1; jerUp = +2; bTagUp = +3; bTagDn = -3; pdfUp = +4; pdfDn = -4; q2Up = +5; q2Dn = -5; puUp = +6; puDN = -6
 verbose = False
 
 if options.Syst == 0:
@@ -68,6 +68,10 @@ elif options.Syst == 5:
   systType = "q2_up"
 elif options.Syst == -5:
   systType = "q2_dn"
+elif options.Syst == 6:
+  systType = "PU_up"
+elif options.Syst == -6:
+  systType = "PU_dn"
 print 'systType '+systType
 
 #OUT =  ROOT.TFile("outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_"+date+"_"+systType+".root","RECREATE");
@@ -158,9 +162,13 @@ print "h_modMass_SD_jet1  integral  " + str( h_modMass_SD_jet1 .Integral() )
 #Fmistag = ROOT.TFile("MistagRate_nbins_121615_8_ttbar_nom__Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121615_jec_nom.root")
 # Fmistag = ROOT.TFile(options.mistagFile)
 
-Fmistag      = ROOT.TFile("MistagRate_nbins_021816_27_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_021816.root")
-Fmistag_jetP = ROOT.TFile("MistagRate_nbins_021816_13_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_021816.root")
-
+Fmistag           = ROOT.TFile("MistagRate_nbins_040416_27_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
+# mistag_jetP_0bTag = "MistagRate_nbins_032416_13_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root"
+# mistag_jetP_1bTag = "MistagRate_nbins_032416_10_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root"
+# mistag_jetP_2bTag = "MistagRate_nbins_032416_6_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root"
+Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_040416_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
+Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_040416_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
+Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_040416_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
 
 
 
@@ -178,7 +186,18 @@ post2 = [ "_jetP_dRapHi_0btag" ,  "_jetP_dRapHi_1btag" ,  "_jetP_dRapHi_2btag" ,
 
 
 h_mistag_vs_jetPt_TagMassSDTau32 = []
-h_mistag_vs_jetP_TagMassSDTau32 = []
+# h_mistag_vs_jetP_TagMassSDTau32_0btag = []
+# h_mistag_vs_jetP_TagMassSDTau32_1btag = []
+# h_mistag_vs_jetP_TagMassSDTau32_2btag = []
+# h_mistag_vs_jetP_TagMassSDTau32_inclusive = []
+# h_mistag_vs_jetP_TagMassSDTau32_0btag_OddEvent = []
+# h_mistag_vs_jetP_TagMassSDTau32_1btag_OddEvent = []
+# h_mistag_vs_jetP_TagMassSDTau32_2btag_OddEvent = []
+# h_mistag_vs_jetP_TagMassSDTau32_inclusive_OddEvent = []
+# h_mistag_vs_jetP_TagMassSDTau32_0btag_EvenEvent = []
+# h_mistag_vs_jetP_TagMassSDTau32_1btag_EvenEvent = []
+# h_mistag_vs_jetP_TagMassSDTau32_2btag_EvenEvent = []
+# h_mistag_vs_jetP_TagMassSDTau32_inclusive_EvenEvent = []
 h_mistag_vs_jetPt_TagMassSDTau32_OddEvent = []
 h_mistag_vs_jetPt_TagMassSDTau32_EvenEvent = []
 h_mistag_vs_jetPt_TagMassSDTau32_AntiTagMinMass = []
@@ -212,10 +231,243 @@ for i in xrange(len(post)):
     h_mistag_vs_jetPt_TagMassSDTau32_AntiTagTau32_NoMassReq[i]      .SetName("h_mistag_AntiTagTau32_NoMassReq_TagMassSDTau32"+ post[i]    )
 
 
-for i in xrange(len(post2)):    
-    h_mistag_vs_jetP_TagMassSDTau32.append( Fmistag_jetP.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]).Clone())
-    ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32[i]    , False )
-    h_mistag_vs_jetP_TagMassSDTau32[i]      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]    )
+
+# jet P 
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag     = Fmistag_jetP_0bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[0]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[0]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag     = Fmistag_jetP_1bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[1]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[1]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag     = Fmistag_jetP_2bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[2]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[2]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive = Fmistag_jetP_0bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[3]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[3]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag     = Fmistag_jetP_0bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[4]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[4]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag     = Fmistag_jetP_1bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[5]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[5]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag     = Fmistag_jetP_2bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[6]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[6]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive = Fmistag_jetP_0bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[7]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[7]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag     = Fmistag_jetP_0bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[8]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[8]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag     = Fmistag_jetP_1bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[9]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[9]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag     = Fmistag_jetP_2bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[10]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[10]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive = Fmistag_jetP_0bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[11]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[11]    )
+
+
+# jet P Odd
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_OddEvent     = Fmistag_jetP_0bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[0]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[0]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_OddEvent     = Fmistag_jetP_1bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[1]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[1]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_OddEvent     = Fmistag_jetP_2bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[2]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[2]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_OddEvent = Fmistag_jetP_0bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[3]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[3]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_OddEvent     = Fmistag_jetP_0bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[4]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[4]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_OddEvent     = Fmistag_jetP_1bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[5]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[5]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_OddEvent     = Fmistag_jetP_2bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[6]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[6]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_OddEvent = Fmistag_jetP_0bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[7]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[7]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_OddEvent     = Fmistag_jetP_0bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[8]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[8]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_OddEvent     = Fmistag_jetP_1bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[9]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[9]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_OddEvent     = Fmistag_jetP_2bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[10]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[10]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_OddEvent = Fmistag_jetP_0bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[11]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_OddEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_OddEvent      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[11]    )
+
+
+# jet P Even
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_EvenEvent     = Fmistag_jetP_0bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[0]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[0]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_EvenEvent     = Fmistag_jetP_1bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[1]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[1]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_EvenEvent     = Fmistag_jetP_2bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[2]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[2]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_EvenEvent = Fmistag_jetP_0bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[3]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[3]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_EvenEvent     = Fmistag_jetP_0bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[4]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[4]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_EvenEvent     = Fmistag_jetP_1bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[5]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[5]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_EvenEvent     = Fmistag_jetP_2bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[6]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[6]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_EvenEvent = Fmistag_jetP_0bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[7]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[7]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_EvenEvent     = Fmistag_jetP_0bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[8]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[8]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_EvenEvent     = Fmistag_jetP_1bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[9]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[9]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_EvenEvent     = Fmistag_jetP_2bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[10]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[10]    )
+
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_EvenEvent = Fmistag_jetP_0bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[11]).Clone()
+ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_EvenEvent    , False )
+h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_EvenEvent      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[11]    )
+
+
+
+
+
+# j_0btag = 0
+# j_1btag = 0
+# j_2btag = 0
+# j_inclusive = 0
+
+# for i in xrange(len(post2)): 
+
+#     if ( post2[i]=="_jetP_dRapHi_0btag" or post2[i]=="_jetP_dRapLo_0btag" or post2[i]=="_jetP_dRapIn_0btag" ):
+#       Fmistag_jetP_0bTag = ROOT.TFile(mistag_jetP_0bTag)
+#       print "Getting "+mistag_jetP_0bTag+" for "+post2[i]
+#       h_mistag_vs_jetP_TagMassSDTau32_0btag.append( Fmistag_jetP_0bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_0btag[j_0btag]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_0btag[j_0btag]      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]    )
+
+#       h_mistag_vs_jetP_TagMassSDTau32_0btag_OddEvent.append( Fmistag_jetP_0bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_0btag_OddEvent[j_0btag]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_0btag_OddEvent[j_0btag]      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]    )
+    
+#       h_mistag_vs_jetP_TagMassSDTau32_0btag_EvenEvent.append( Fmistag_jetP_0bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_0btag_EvenEvent[j_0btag]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_0btag_EvenEvent[j_0btag]      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[i]    )
+#       j_0btag+=1
+
+#     elif ( post2[i]=="_jetP_dRapHi_1btag" or post2[i]=="_jetP_dRapLo_1btag" or post2[i]=="_jetP_dRapIn_1btag" ):
+#       Fmistag_jetP_1bTag = ROOT.TFile(mistag_jetP_1bTag)
+#       print "Getting "+mistag_jetP_1bTag+" for "+post2[i]
+#       h_mistag_vs_jetP_TagMassSDTau32_1btag.append( Fmistag_jetP_1bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_1btag[j_1btag]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_1btag[j_1btag]      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]    )
+
+#       h_mistag_vs_jetP_TagMassSDTau32_1btag_OddEvent.append( Fmistag_jetP_1bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_1btag_OddEvent[j_1btag]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_1btag_OddEvent[j_1btag]      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]    )
+      
+#       h_mistag_vs_jetP_TagMassSDTau32_1btag_EvenEvent.append( Fmistag_jetP_1bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_1btag_EvenEvent[j_1btag]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_1btag_EvenEvent[j_1btag]      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[i]    )
+#       j_1btag+=1
+
+#     elif ( post2[i]=="_jetP_dRapHi_2btag" or post2[i]=="_jetP_dRapLo_2btag" or post2[i]=="_jetP_dRapIn_2btag" ):
+#       Fmistag_jetP_2bTag = ROOT.TFile(mistag_jetP_2bTag)
+#       print "Getting "+mistag_jetP_2bTag+" for "+post2[i]
+#       h_mistag_vs_jetP_TagMassSDTau32_2btag.append( Fmistag_jetP_2bTag.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_2btag[j_2btag]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_2btag[j_2btag]      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]    )
+  
+#       h_mistag_vs_jetP_TagMassSDTau32_2btag_OddEvent.append( Fmistag_jetP_2bTag.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_2btag_OddEvent[j_2btag]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_2btag_OddEvent[j_2btag]      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]    )
+      
+#       h_mistag_vs_jetP_TagMassSDTau32_2btag_EvenEvent.append( Fmistag_jetP_2bTag.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_2btag_EvenEvent[j_2btag]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_2btag_EvenEvent[j_2btag]      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[i]    )
+#       j_2btag+=1
+
+#     else:
+#       Fmistag_jetP_inclusive = ROOT.TFile(mistag_jetP_0bTag)
+#       print "Getting "+mistag_jetP_0bTag+" for "+post2[i]
+#       h_mistag_vs_jetP_TagMassSDTau32_inclusive.append( Fmistag_jetP_inclusive.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_inclusive[j_inclusive]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_inclusive[j_inclusive]      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]    )
+  
+#       h_mistag_vs_jetP_TagMassSDTau32_inclusive_OddEvent.append( Fmistag_jetP_inclusive.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_inclusive_OddEvent[j_inclusive]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_inclusive_OddEvent[j_inclusive]      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]    )
+      
+#       h_mistag_vs_jetP_TagMassSDTau32_inclusive_EvenEvent.append( Fmistag_jetP_inclusive.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[i]).Clone())
+#       ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_inclusive_EvenEvent[j_inclusive]    , False )
+#       h_mistag_vs_jetP_TagMassSDTau32_inclusive_EvenEvent[j_inclusive]      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[i]    )
+#       j_inclusive+=1
+
+
+    # h_mistag_vs_jetP_TagMassSDTau32.append( Fmistag_jetP.Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]).Clone())
+    # ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32[i]    , False )
+    # h_mistag_vs_jetP_TagMassSDTau32[i]      .SetName("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32"+ post2[i]    )
+
+    # h_mistag_vs_jetP_TagMassSDTau32_OddEvent.append( Fmistag_jetP.Get("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]).Clone())
+    # ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_OddEvent[i]    , False )
+    # h_mistag_vs_jetP_TagMassSDTau32_OddEvent[i]      .SetName("h_mistag_TagOdd_TagMassSDTau32"+ post2[i]    )
+    
+    # h_mistag_vs_jetP_TagMassSDTau32_EvenEvent.append( Fmistag_jetP.Get("h_mistag_TagEven_TagMassSDTau32"+ post2[i]).Clone())
+    # ROOT.SetOwnership( h_mistag_vs_jetP_TagMassSDTau32_EvenEvent[i]    , False )
+    # h_mistag_vs_jetP_TagMassSDTau32_EvenEvent[i]      .SetName("h_mistag_vs_jetP_TagMassSDTau32_EvenEvent_TagMassSDTau32"+ post2[i]    )
         
 
 
@@ -342,120 +594,119 @@ mttPredDist_tagMassSDTau32_dRapIn_bDisc_inclusive                          = ROO
 
 
 #^ Predicted Distribution - Background estimation 
-mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[0],  "mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag"          , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[1],  "mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag"          , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[2],  "mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag"          , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[3],  "mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive"      , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[4],  "mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag"          , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[5],  "mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag"          , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[6],  "mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag"          , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[7],  "mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive"      , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[8],  "mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag"          , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[9],  "mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag"          , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[10], "mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag"          , "mTT Mass", 700, 0, 7000)
-mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[11], "mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive,  "mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive,  "mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive,  "mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive"      , "mTT Mass", 700, 0, 7000)
 
 
-mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[0], "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag"        , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[0], "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag"          , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[0], "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag"            , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[0], "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag"      , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[0], "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag"     , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[0], "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag"            , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[0], "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag"            , "bDisc"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag"        , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag"          , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag"            , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag"      , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag"     , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag"            , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag"            , "bDisc"        , 500,  0,    1 )
 
-mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[1], "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag"        , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[1], "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag"          , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[1], "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag"            , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[1], "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag"      , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[1], "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag"     , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[1], "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag"            , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[1], "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag"            , "bDisc"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag"        , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag"          , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag"            , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag"      , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag"     , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag"            , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag"            , "bDisc"        , 500,  0,    1 )
 
-mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[2], "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag"        , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[2], "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag"          , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[2], "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag"            , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[2], "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag"      , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[2], "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag"     , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[2], "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag"            , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[2], "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag"            , "bDisc"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag"        , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag"          , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag"            , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag"      , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag"     , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag"            , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag"            , "bDisc"        , 500,  0,    1 )
 
-mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive                      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[3], "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive"    , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[3], "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive"      , "Jet Mass"     , 500,  0,  500 ) 
-mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[3], "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive"        , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive                    = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[3], "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive"  , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive                   = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[3], "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive" , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[3], "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive"        , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[3], "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive"        , "bDisc"        , 500,  0,    1 )
-
-
-mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[4], "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag"        , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[4], "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag"          , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[4], "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag"            , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[4], "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag"      , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[4], "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag"     , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[4], "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag"            , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[4], "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag"            , "bDisc"        , 500,  0,    1 )
-
-mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[5], "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag"        , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[5], "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag"          , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[5], "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag"            , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[5], "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag"      , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[5], "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag"     , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[5], "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag"            , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[5], "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag"            , "bDisc"        , 500,  0,    1 )
-
-mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[6], "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag"        , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[6], "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag"          , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[6], "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag"            , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[6], "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag"      , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[6], "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag"     , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[6], "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag"            , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[6], "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag"            , "bDisc"        , 500,  0,    1 )
-
-mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive                      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[7], "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive"    , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[7], "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive"      , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[7], "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive"        , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive                    = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[7], "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive"  , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive                   = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[7], "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive" , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[7], "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive"        , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[7], "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive"        , "bDisc"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive                      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive"    , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive"      , "Jet Mass"     , 500,  0,  500 ) 
+mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive"        , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive                    = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive"  , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive                   = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive" , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive"        , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive"        , "bDisc"        , 500,  0,    1 )
 
 
-mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[8], "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag"        , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[8], "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag"          , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[8], "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag"            , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[8], "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag"      , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[8], "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag"     , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[8], "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag"            , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[8], "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag"            , "bDisc"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag"        , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag"          , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag"            , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag"      , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag"     , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag"            , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag"            , "bDisc"        , 500,  0,    1 )
 
-mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[9], "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag"        , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[9], "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag"          , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[9], "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag"            , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[9], "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag"      , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[9], "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag"     , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[9], "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag"            , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[9], "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag"            , "bDisc"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag"        , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag"          , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag"            , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag"      , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag"     , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag"            , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag"            , "bDisc"        , 500,  0,    1 )
 
-mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[10], "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag"        , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[10], "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag"          , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[10], "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag"            , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[10], "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag"      , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[10], "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag"     , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[10], "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag"            , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[10], "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag"            , "bDisc"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag"        , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag"          , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag"            , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag"      , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag"     , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag"            , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag"            , "bDisc"        , 500,  0,    1 )
 
-mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive                      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[11], "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive"    , "mTT Mass"     , 700,  0, 7000 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[11], "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive"      , "Jet Mass"     , 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[11], "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive"        , "Jet pT"       , 400,  0, 4000 )
-mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive                    = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[11], "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive"  , "Jet Rapidity" , 600, -3,    3 )
-mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive                   = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[11], "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive" , "SoftDrop Mass", 500,  0,  500 )
-mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[11], "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive"        , "Tau32"        , 500,  0,    1 )
-mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32[11], "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive"        , "bDisc"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive                      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive"    , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive"      , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive"        , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive                    = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive"  , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive                   = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive" , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive"        , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive"        , "bDisc"        , 500,  0,    1 )
 
 
+mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag"        , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag"          , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag"            , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag"      , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag"     , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag"            , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag"            , "bDisc"        , 500,  0,    1 )
 
+mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag"        , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag"          , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag"            , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag"      , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag"     , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag"            , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag"            , "bDisc"        , 500,  0,    1 )
+
+mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag"        , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag                            = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag"          , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag"            , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag"      , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag                       = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag"     , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag"            , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag                              = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag"            , "bDisc"        , 500,  0,    1 )
+
+mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive                      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive"    , "mTT Mass"     , 700,  0, 7000 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive                        = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive"      , "Jet Mass"     , 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive"        , "Jet pT"       , 400,  0, 4000 )
+mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive                    = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive"  , "Jet Rapidity" , 600, -3,    3 )
+mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive                   = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive" , "SoftDrop Mass", 500,  0,  500 )
+mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive"        , "Tau32"        , 500,  0,    1 )
+mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive                          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive"        , "bDisc"        , 500,  0,    1 )
+
+                                     
 mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32_EvenEvent[0],  "mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag"          , "mTT Mass", 700, 0, 7000)
 mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32_EvenEvent[1],  "mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag"          , "mTT Mass", 700, 0, 7000)
 mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32_EvenEvent[2],  "mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag"          , "mTT Mass", 700, 0, 7000)
@@ -511,6 +762,60 @@ mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag   
 mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32_OddEvent[11], "mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive"      , "mTT Mass", 700, 0, 7000)
 
 
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_EvenEvent,  "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_EvenEvent,  "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_EvenEvent,  "mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive"      , "mTT Mass", 700, 0, 7000)
+
+
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_EvenEvent,  "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_EvenEvent,   "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_EvenEvent,      "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_EvenEvent,  "mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive"      , "mTT Mass", 700, 0, 7000)
+
+
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_OddEvent,  "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_OddEvent,  "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_OddEvent,  "mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive"      , "mTT Mass", 700, 0, 7000)
+
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive_OddEvent,  "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive_OddEvent,  "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive"      , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag          = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag_OddEvent,      "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag"          , "mTT Mass", 700, 0, 7000)
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive      = ROOT.PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive_OddEvent,  "mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive"      , "mTT Mass", 700, 0, 7000)
+
 
 mttPredDist_AntiTagMinMass_modMass_tagMassSDTau32_dRapHi_0btag                  = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32_AntiTagMinMass[0],  "mttPredDist_AntiTagMinMass_modMass_tagMassSDTau32_dRapHi_0btag"          , "mTT Mass", 700, 0, 7000)
 mttPredDist_AntiTagMinMass_modMass_tagMassSDTau32_dRapHi_1btag                  = ROOT.PredictedDistribution( h_mistag_vs_jetPt_TagMassSDTau32_AntiTagMinMass[1],  "mttPredDist_AntiTagMinMass_modMass_tagMassSDTau32_dRapHi_1btag"          , "mTT Mass", 700, 0, 7000)
@@ -558,7 +863,7 @@ mttPredDist_AntiTagTau32_NoMassReq_modMass_tagMassSDTau32_dRapIn_inclusive      
 # ROOT.SetOwnership( mttPredDist_tagMassSDTau32    , False )
 
 
-count = 0
+count_events = 0
 n_topTag0MaxBdiscM_True  = 0
 n_topTag0MaxBdiscM_False = 0
 n_topTag1MaxBdiscM_True  = 0
@@ -568,7 +873,9 @@ n_newbtagjet0_False = 0
 n_newbtagjet1_True  = 0
 n_newbtagjet1_False = 0
 
-
+count = 0
+countOdd  = 0
+countEven = 0
 
 def applySF ( isBTagged, Btag_SF, Btag_eff):
 
@@ -607,9 +914,16 @@ count_topTag1MassSDTau32=0
 count_newtopTag1MassSDTau32=0
 
 for event in Tree:
+  count_events +=1
+  if count_events%1000 ==0:
+    print str(count_events)+" / "+str(entries)
+
   count +=1
   if count%1000 ==0:
     print str(count)+" / "+str(entries)
+
+  # if count_events > 20000:
+  #   break
   
   Jet0MassSoftDrop = event.Jet0MassSoftDrop
   Jet1MassSoftDrop = event.Jet1MassSoftDrop
@@ -746,7 +1060,7 @@ for event in Tree:
       maxJetHt = event.HT
   elif options.isData == False:
       # nom, pdf_up, pdf_dn, q2_up, q2_dn
-      if (options.Syst == 0 or abs(options.Syst) == 4 or abs(options.Syst) == 5):
+      if (options.Syst == 0 or abs(options.Syst) == 4 or abs(options.Syst) == 5 or abs(options.Syst) == 6):
           jet0P4 = jet0P4Raw * Jet0CorrFactor * Jet0PtSmearFactor
           jet1P4 = jet1P4Raw * Jet1CorrFactor * Jet1PtSmearFactor
           sf0_MassTau32     = sf0_MassTau32_nom
@@ -841,12 +1155,23 @@ for event in Tree:
   if maxJetHt < 1000:
     continue
 
-  EvenEvent = False
-  OddEvent = False
-  if event.AllHadEventNum % 2 == 0 :
-    EvenEvent = True
+  evenEvent = False
+  oddEvent = False
+  # if event.AllHadEventNum % 2 == 0 :
+  if count % 2 == 0 :
+    evenEvent = True
   else:
-    OddEvent = True
+    oddEvent = True
+
+  if oddEvent:
+     countOdd+=1  
+  if evenEvent:
+     countEven+=1
+
+
+  
+
+
 
   maxBdisc_jet0_ = event.Jet0SDbdisc0
   maxBdisc_jet1_ = event.Jet0SDbdisc1
@@ -962,7 +1287,10 @@ for event in Tree:
 
 
 
-  evWeight = 1
+  if (options.isData): 
+     evWeight = 1.0
+  else:
+     evWeight = event.AllHadEventWeight
   if (options.Syst == 4):
      evWeight *= event.NNPDF3weight_CorrUp
   if (options.Syst == -4):
@@ -971,7 +1299,10 @@ for event in Tree:
      evWeight *= event.Q2weight_CorrUp
   if (options.Syst == -5):
      evWeight *= event.Q2weight_CorrDn
-
+  if (options.Syst == 6):
+     evWeight *= event.PU_CorrUp
+  if (options.Syst == -6):
+     evWeight *= event.PU_CorrDn
 
 
   #^ fill double tagged dijet distributions
@@ -1643,37 +1974,53 @@ for event in Tree:
                   ROOT.SetOwnership( mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag    , False )
 
       # 
-      if topTag0MassSDTau32 and OddEvent :
+      if topTag0MassSDTau32 and oddEvent :
           mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
           ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive   , False )
+          mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )
+          ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive   , False )
 
           mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
           ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive   , False )
+          mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )
+          ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive   , False )
           
           if newbtagjet0 and newbtagjet1:
               #2btag
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag    , False )
 
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag    , False )
 
           if (newbtagjet0 and not newbtagjet1):
               #1btag
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    , False )
               
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
                  
 
           if (newbtagjet1 and not newbtagjet0):
 
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    , False )
 
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
 
               
 
@@ -1681,119 +2028,182 @@ for event in Tree:
 
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag    , False )
 
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag    , False )
 
 
           if event.DijetDeltaRap > 1 :
               
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive    , False )
               
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive    , False )
               
 
               if newbtagjet0 and newbtagjet1:
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass , jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag   , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass , jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag   , False )
               
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag   , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag   , False )
               
 
               if (newbtagjet0 and not newbtagjet1):
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    , False )
               
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    , False )
               
               if (newbtagjet1 and not newbtagjet0):
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag   , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag   , False )
 
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag   , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag   , False )
 
                   
               if not newbtagjet0 and not newbtagjet1:
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag    , False )
           
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag    , False )
+          
           if event.DijetDeltaRap < 1:
               #inclusive
+
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
               ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive   , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )
+              ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive   , False )
+              
+
               if newbtagjet0 and newbtagjet1:
 
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag    , False )
 
 
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag    , False )
 
                   
 
               if (newbtagjet0 and not newbtagjet1):
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    , False )
               
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
               
 
               if (newbtagjet1 and not newbtagjet0):
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    , False )
 
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
 
                   
 
               if not newbtagjet0 and not newbtagjet1:
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag    , False )
                  
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag    , False )
+
                  
-      if topTag0MassSDTau32 and EvenEvent :
+      if topTag0MassSDTau32 and evenEvent :
           mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
           ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive   , False )
+          mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )
+          ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive   , False )
 
           mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
           ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive   , False )
+          mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )
+          ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive   , False )
           
           if newbtagjet0 and newbtagjet1:
               #2btag
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag    , False )
 
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag    , False )
 
           if (newbtagjet0 and not newbtagjet1):
               #1btag
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    , False )
               
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
                  
 
           if (newbtagjet1 and not newbtagjet0):
 
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    , False )
 
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
 
               
 
@@ -1801,87 +2211,128 @@ for event in Tree:
 
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag    , False )
 
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag    , False )
 
 
           if event.DijetDeltaRap > 1 :
               
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive    , False )
               
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive    , False )
               
 
               if newbtagjet0 and newbtagjet1:
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass , jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag   , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass , jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag   , False )
               
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag   , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag   , False )
               
 
               if (newbtagjet0 and not newbtagjet1):
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    , False )
               
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    , False )
               
               if (newbtagjet1 and not newbtagjet0):
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag   , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag   , False )
 
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag   , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag   , False )
 
                   
               if not newbtagjet0 and not newbtagjet1:
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag    , False )
           
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag    , False )
+          
           if event.DijetDeltaRap < 1:
               #inclusive
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )
               ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive   , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )
+              ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive   , False )
+              
               if newbtagjet0 and newbtagjet1:
-
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag    , False )
 
 
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag    , False )
 
                   
 
               if (newbtagjet0 and not newbtagjet1):
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    , False )
               
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
               
 
               if (newbtagjet1 and not newbtagjet0):
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    , False )
 
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
-
-                  
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )  
 
               if not newbtagjet0 and not newbtagjet1:
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag    , False )
                  
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.Perp(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass_modMass_jet1, jet1P4.P(), topTag1MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag    , False )
                  
 
 
@@ -2679,157 +3130,228 @@ for event in Tree:
                   ROOT.SetOwnership( mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag    , False )
 
 
-      if topTag1MassSDTau32 and OddEvent :
+      if topTag1MassSDTau32 and oddEvent :
           mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
           ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive   , False )
+          mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )
+          ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive   , False )
 
           mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
           ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive   , False )
+          mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )
+          ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive   , False )
           
           if newbtagjet0 and newbtagjet1:
               #2btag
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag    , False )
 
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag    , False )
 
           if (newbtagjet0 and not newbtagjet1):
               #1btag
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    , False )
               
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
                  
 
           if (newbtagjet1 and not newbtagjet0):
-
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag    , False )
 
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
 
               
 
           if not newbtagjet0 and not newbtagjet1:
-
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag    , False )
 
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag    , False )
 
 
-          if event.DijetDeltaRap > 1 :
-              
+          if event.DijetDeltaRap > 1 :    
               mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive    , False )
               
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
               ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive    , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )
+              ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive    , False )
               
 
               if newbtagjet0 and newbtagjet1:
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass , jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag   , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass , jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag   , False )
               
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag   , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag   , False )
               
 
               if (newbtagjet0 and not newbtagjet1):
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    , False )
               
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    , False )
               
               if (newbtagjet1 and not newbtagjet0):
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag   , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag   , False )
 
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag   , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag   , False )
 
                   
               if not newbtagjet0 and not newbtagjet1:
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag    , False )
           
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag    , False )
+          
           if event.DijetDeltaRap < 1:
               #inclusive
+            
+
               mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
               ROOT.SetOwnership(  mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive   , False )
+              mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )
+              ROOT.SetOwnership(  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive   , False )
+              
               if newbtagjet0 and newbtagjet1:
-
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag    , False )
 
 
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag    , False )
 
                   
-
               if (newbtagjet0 and not newbtagjet1):
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    , False )
               
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
               
 
               if (newbtagjet1 and not newbtagjet0):
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag    , False )
 
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
-
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
                   
 
               if not newbtagjet0 and not newbtagjet1:
                   mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag    , False )
                  
                   mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag    , False )
+                  mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag    , False )
                  
-      if topTag1MassSDTau32 and EvenEvent :
+      if topTag1MassSDTau32 and evenEvent :
           mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
           ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive   , False )
+          mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )
+          ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive   , False )
 
           mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
           ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive   , False )
+          mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )
+          ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive   , False )
           
           if newbtagjet0 and newbtagjet1:
               #2btag
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag    , False )
 
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag    , False )
 
           if (newbtagjet0 and not newbtagjet1):
               #1btag
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    , False )
               
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
                  
 
           if (newbtagjet1 and not newbtagjet0):
-
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag    , False )
 
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag    , False )
 
               
 
@@ -2837,88 +3359,131 @@ for event in Tree:
 
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag    , False )
 
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag    , False )
 
 
           if event.DijetDeltaRap > 1 :
               
               mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive    , False )
               
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
               ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive    , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )
+              ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive    , False )
               
 
               if newbtagjet0 and newbtagjet1:
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass , jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag   , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass , jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag   , False )
               
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag   , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag   , False )
               
 
               if (newbtagjet0 and not newbtagjet1):
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    , False )
               
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    , False )
               
               if (newbtagjet1 and not newbtagjet0):
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag   , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag   , False )
 
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag   , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag   , False )
 
                   
               if not newbtagjet0 and not newbtagjet1:
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag    , False )
           
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag    , False )
           
           if event.DijetDeltaRap < 1:
               #inclusive
+
               mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )
               ROOT.SetOwnership(  mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive   , False )
+              mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )
+              ROOT.SetOwnership(  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive   , False )
+              
               if newbtagjet0 and newbtagjet1:
-
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag    , False )
 
 
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )# * sf0_MassTau32bTag * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag    , False )
 
                   
 
               if (newbtagjet0 and not newbtagjet1):
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    , False )
               
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf0_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
               
 
               if (newbtagjet1 and not newbtagjet0):
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag    , False )
 
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight)# * sf0_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag    , False )
 
                   
 
               if not newbtagjet0 and not newbtagjet1:
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag    , False )
                  
                   mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.Perp(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
                   ROOT.SetOwnership( mttPredDist_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag    , False )
+                  mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag    .Accumulate( DijetMass_modMass_jet0, jet0P4.P(), topTag0MassSDTau32, evWeight )#* sf1_MassTau32 * sf1_MassTau32bTag )
+                  ROOT.SetOwnership( mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag    , False )
                  
 
 
@@ -3563,6 +4128,63 @@ mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag   
 mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetPredictedHist()   .Write()   
 
 
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive     .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_inclusive     .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive     .GetPredictedHist()   .Write() 
+
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive     .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive     .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetPredictedHist()   .Write() 
+
+
+
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive     .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_inclusive     .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive     .GetPredictedHist()   .Write()   
+
+
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive     .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive     .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag         .GetPredictedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetPredictedHist()   .Write()   
+
+
+
 mttPredDist_AntiTagMinMass_modMass_tagMassSDTau32_dRapHi_0btag             .GetPredictedHist()   .Write()   
 mttPredDist_AntiTagMinMass_modMass_tagMassSDTau32_dRapHi_1btag             .GetPredictedHist()   .Write()   
 mttPredDist_AntiTagMinMass_modMass_tagMassSDTau32_dRapHi_2btag             .GetPredictedHist()   .Write()   
@@ -3845,7 +4467,61 @@ mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusiv
 mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag         .GetObservedHist()   .Write()   
 mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag         .GetObservedHist()   .Write()   
 mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag         .GetObservedHist()   .Write()   
-mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetObservedHist()   .Write()   
+mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetObservedHist()   .Write()
+
+
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive     .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_inclusive     .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive     .GetObservedHist()   .Write()   
+
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive     .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive     .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetObservedHist()   .Write()   
+
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive     .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_inclusive     .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive     .GetObservedHist()   .Write()   
+
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive     .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive     .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag         .GetObservedHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetObservedHist()   .Write()
+
 
 
 mttPredDist_AntiTagMinMass_modMass_tagMassSDTau32_dRapHi_0btag             .GetObservedHist()   .Write()   
@@ -4133,6 +4809,60 @@ mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag   
 mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag         .GetTaggableHist()   .Write()   
 mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag         .GetTaggableHist()   .Write()   
 mttPredDist_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetTaggableHist()   .Write() 
+
+
+
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapHi_inclusive     .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapLo_inclusive     .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_tagMassSDTau32_dRapIn_inclusive     .GetTaggableHist()   .Write()
+
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapHi_inclusive     .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapLo_inclusive     .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_EvenPred_EvenMistag_EvenObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetTaggableHist()   .Write()
+
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapHi_inclusive     .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapLo_inclusive     .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_tagMassSDTau32_dRapIn_inclusive     .GetTaggableHist()   .Write() 
+
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapHi_inclusive     .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapLo_inclusive     .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_0btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_1btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_2btag         .GetTaggableHist()   .Write()   
+mttPredDist2_OddPred_OddMistag_OddObserved_modMass_tagMassSDTau32_dRapIn_inclusive     .GetTaggableHist()   .Write() 
 
 
 

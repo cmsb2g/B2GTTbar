@@ -26,7 +26,9 @@ void run(){
 
   // Define mistag rate bins
   vector <double> bins_small;
-  vector <double> bins_medium;
+  vector <double> bins_0btag;
+  vector <double> bins_1btag;
+  vector <double> bins_2btag;
   vector <double> bins_big;
   vector <double> bins_eta;
   int x;
@@ -43,15 +45,43 @@ void run(){
   }
   cout<<endl;
 
-  cout<<"Define medium bins: ";
+  //0 btag
+  cout<<"Define 0btag bins: ";
   x=400;
   while (x<=5000){
     cout<<" "<<x;
-    bins_medium.push_back(x);
+    bins_0btag.push_back(x);
     if ( x<1000) x+=100;
     else if (x<1200) x+=200;
     else if (x<1500) x+=300;
     else if (x<2000) x+=500;
+    else if (x<5000) x+=1000;
+    else x+=1000;
+  }
+  cout<<endl;
+
+  // 1 btag
+  cout<<"Define 1btag bins: ";
+  x=400;
+  while (x<=5000){
+    cout<<" "<<x;
+    bins_1btag.push_back(x);
+    if ( x<600) x+=100;
+    else if (x<1000) x+=200;
+    else if (x<1400) x+=400;
+    else if (x<2000) x+=600;
+    else if (x<5000) x+=1000;
+    else x+=1000;
+  }
+  cout<<endl;
+
+  // 2 btag
+  cout<<"Define 2btag bins: ";
+  x=400;
+  while (x<=5000){
+    cout<<" "<<x;
+    bins_2btag.push_back(x);
+    if ( x<600) x+=200;
     else if (x<5000) x+=1000;
     else x+=1000;
   }
@@ -92,9 +122,11 @@ void run(){
 
 
   // bool data, bool noSubtract, vector of bins
-  cout<<" makeHists(false, false, bins_small )"<<endl;   makeHists(true, false, bins_small );  // Monte Carlo  - small bins
-  cout<<" makeHists(false, false, bins_medium )"<<endl;  makeHists(true, false, bins_medium );  // Monte Carlo  - bins_medium
-  cout<<" makeHists(false, false, bins_eta)"<<endl;      makeHists(true, false, bins_eta );  // Monte Carlo  - bins_medium
+  cout<<" makeHists(true, false, bins_small )"<<endl;   makeHists(true, false, bins_small );  // Monte Carlo  - small bins
+  cout<<" makeHists(true, false, bins_0btag )"<<endl;  makeHists(true, false, bins_0btag );  // Monte Carlo  - bins_medium
+  cout<<" makeHists(true, false, bins_1btag )"<<endl;  makeHists(true, false, bins_1btag );  // Monte Carlo  - bins_medium
+  cout<<" makeHists(true, false, bins_2btag )"<<endl;  makeHists(true, false, bins_2btag );  // Monte Carlo  - bins_medium
+  cout<<" makeHists(true, false, bins_eta   )"<<endl;      makeHists(true, false, bins_eta );  // Monte Carlo  - bins_medium
   // cout<<" makeHists(false, false, bins_big   )"<<endl;  makeHists(false, false, bins_big   );  // Monte Carlo  - small bins
   // cout<<" makeHists(true , false, bins_medium   )"<<endl;  makeHists(true , false, bins_medium   );   // Data - subtract - medium bins
   // cout<<" makeHists(true ,  true, bins_medium   )"<<endl;  makeHists(true ,  true, bins_medium   );   // Data - no subtract - medium bins
@@ -114,15 +146,15 @@ void makeHists( bool data, bool noSubtract, vector<double> bins ){
   string infile_ttbar_name ;
 
   // QCD Monte Carlo Input (scaled) and Output files
-  if (!data) infile_name = "outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_021816_nom_scaled.root";
+  if (!data) infile_name = "outAntiTagExp_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_fix_030816_nom_scaled.root";
 
   if (data){
 
-    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_021816.root";
-    infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_021816.root";
+    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_030516.root";
+    infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_030716.root";
   } 
 
-  string date = "021816";
+  string date = "032116";
   //string syst = "jec_up";
   
   
@@ -135,7 +167,9 @@ void makeHists( bool data, bool noSubtract, vector<double> bins ){
   if (!noSubtract) subtractOrNot = "_Substract_";
   if (!data) subtractOrNot = "_MC_";
 
-  string outfile_name = "MistagRate_nbins_"+date+"_"+snbins+"_ttbar"+subtractOrNot+infile_name;
+  string outfile_name ;
+  if (data)  outfile_name = "MistagRate_nbins_"+date+"_"+snbins+"_ttbar"+subtractOrNot+infile_name;
+  if (!data) outfile_name = "MistagRate_nbins_"+date+"_"+snbins+subtractOrNot+infile_name;
 
   cout<<"Opening "<<infile_name<<endl;
   InFile        = new TFile(      infile_name.c_str()      );
