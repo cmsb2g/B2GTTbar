@@ -1341,13 +1341,15 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     c1_2->SetLeftMargin(0.1);
     c1_2->SetFillStyle(0);
 
-    if (tag == 2) histos[names::DATA][tag]->SetMaximum(3.0 * histos[names::DATA][tag]->GetMaximum() );
+    if (tag == 2 or tag == 5) histos[names::DATA][tag]->SetMaximum(3.0 * histos[names::DATA][tag]->GetMaximum() );
     else histos[names::DATA][tag]->SetMaximum(2.0 * histos[names::DATA][tag]->GetMaximum() );
     histos[names::DATA][tag]->GetYaxis()->SetTitle("Events");
     //histos[names::DATA][tag]->GetYaxis()->SetTitleSize(1.2);                                                                               
     histos[names::DATA][tag]->GetYaxis()->SetTitleOffset(1.1);
-    //if (tag == 2 or tag == 5) histos[names::DATA][tag]->GetXaxis()->SetRangeUser(600.,4600.);
-    //else histos[names::DATA][tag]->GetXaxis()->SetRangeUser(600.,6000.);
+    if (!forTHETA){
+      if (tag == 2 or tag == 5) histos[names::DATA][tag]->GetXaxis()->SetRangeUser(600.,4600.);
+      else histos[names::DATA][tag]->GetXaxis()->SetRangeUser(600.,6000.);
+    }
     histos[names::DATA][tag]->Draw("E");
 
     THStack *stack = new THStack();
@@ -1508,15 +1510,15 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     ratioErrH->SetFillColor(kGray);
     ratioErrH->Draw("E2 same");
 
-    TF1 *line = new TF1("line", "1", 0, 6000);
+    TF1 *line = new TF1("line", "1", 0, 7000);
     line->SetLineColor(kBlack);
     line->Draw("same");
     ratioH->Draw("E same");
 
     gPad->RedrawAxis();
 
-    string outEnd = "_forTHETA_30pRebin0329Files.";
-    if (!forTHETA)  outEnd = "_byEye0205ttbarFiles.";
+    string outEnd = "_forTHETA.";
+    if (!forTHETA)  outEnd = ".";
 
     if (signal == 0){//ZPN                                                                                                                   
       c1->SaveAs("Distributions/ZPN_errors"+tagLabels[tag]+outEnd+"pdf");
