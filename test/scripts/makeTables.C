@@ -1,6 +1,6 @@
 {
 
-TFile *f = new TFile("../templates.root", "READ");
+TFile *f = new TFile("../templates_extrawide.root", "READ");
 
 f->cd();
 
@@ -16,6 +16,8 @@ double ttbar_JES[6][2];
 double ttbar_btag[6][2];
 double ttbar_Q2[6][2];
 double ttbar_PDF[6][2];
+double ttbar_PU[6][2];
+double ttbar_PSH[6][2];
 double ttbar_toppt[6][2];
 double qcd_modMass[6][2];
 double qcd_closure[6][2];
@@ -29,6 +31,9 @@ double RSG_btag[6][4][2];
 double ZpW_PDF[6][4][2];
 double ZpN_PDF[6][4][2];
 double RSG_PDF[6][4][2];
+double ZpW_PU[6][4][2];
+double ZpN_PU[6][4][2];
+double RSG_PU[6][4][2];
 double ZpW_JER[6][4][2];
 double ZpN_JER[6][4][2];
 double RSG_JER[6][4][2];
@@ -104,6 +109,31 @@ ttbar_PDF[3][1] = (btag3__ttbar__pdf__minus->Integral() - btag3__ttbar->Integral
 ttbar_PDF[4][1] = (btag4__ttbar__pdf__minus->Integral() - btag4__ttbar->Integral()) / btag4__ttbar->Integral();
 ttbar_PDF[5][1] = (btag5__ttbar__pdf__minus->Integral() - btag5__ttbar->Integral()) / btag5__ttbar->Integral();
 
+ttbar_PU[0][0] = (btag0__ttbar__pileup__plus->Integral() - btag0__ttbar->Integral()) / btag0__ttbar->Integral();
+ttbar_PU[1][0] = (btag1__ttbar__pileup__plus->Integral() - btag1__ttbar->Integral()) / btag1__ttbar->Integral();
+ttbar_PU[2][0] = (btag2__ttbar__pileup__plus->Integral() - btag2__ttbar->Integral()) / btag2__ttbar->Integral();
+ttbar_PU[3][0] = (btag3__ttbar__pileup__plus->Integral() - btag3__ttbar->Integral()) / btag3__ttbar->Integral();
+ttbar_PU[4][0] = (btag4__ttbar__pileup__plus->Integral() - btag4__ttbar->Integral()) / btag4__ttbar->Integral();
+ttbar_PU[5][0] = (btag5__ttbar__pileup__plus->Integral() - btag5__ttbar->Integral()) / btag5__ttbar->Integral();
+ttbar_PU[0][1] = (btag0__ttbar__pileup__minus->Integral() - btag0__ttbar->Integral()) / btag0__ttbar->Integral();
+ttbar_PU[1][1] = (btag1__ttbar__pileup__minus->Integral() - btag1__ttbar->Integral()) / btag1__ttbar->Integral();
+ttbar_PU[2][1] = (btag2__ttbar__pileup__minus->Integral() - btag2__ttbar->Integral()) / btag2__ttbar->Integral();
+ttbar_PU[3][1] = (btag3__ttbar__pileup__minus->Integral() - btag3__ttbar->Integral()) / btag3__ttbar->Integral();
+ttbar_PU[4][1] = (btag4__ttbar__pileup__minus->Integral() - btag4__ttbar->Integral()) / btag4__ttbar->Integral();
+ttbar_PU[5][1] = (btag5__ttbar__pileup__minus->Integral() - btag5__ttbar->Integral()) / btag5__ttbar->Integral();
+
+ttbar_PSH[0][0] = (btag0__ttbar__parSho__plus->Integral() - btag0__ttbar->Integral()) / btag0__ttbar->Integral();
+ttbar_PSH[1][0] = (btag1__ttbar__parSho__plus->Integral() - btag1__ttbar->Integral()) / btag1__ttbar->Integral();
+ttbar_PSH[2][0] = (btag2__ttbar__parSho__plus->Integral() - btag2__ttbar->Integral()) / btag2__ttbar->Integral();
+ttbar_PSH[3][0] = (btag3__ttbar__parSho__plus->Integral() - btag3__ttbar->Integral()) / btag3__ttbar->Integral();
+ttbar_PSH[4][0] = (btag4__ttbar__parSho__plus->Integral() - btag4__ttbar->Integral()) / btag4__ttbar->Integral();
+ttbar_PSH[5][0] = (btag5__ttbar__parSho__plus->Integral() - btag5__ttbar->Integral()) / btag5__ttbar->Integral();
+ttbar_PSH[0][1] = (btag0__ttbar__parSho__minus->Integral() - btag0__ttbar->Integral()) / btag0__ttbar->Integral();
+ttbar_PSH[1][1] = (btag1__ttbar__parSho__minus->Integral() - btag1__ttbar->Integral()) / btag1__ttbar->Integral();
+ttbar_PSH[2][1] = (btag2__ttbar__parSho__minus->Integral() - btag2__ttbar->Integral()) / btag2__ttbar->Integral();
+ttbar_PSH[3][1] = (btag3__ttbar__parSho__minus->Integral() - btag3__ttbar->Integral()) / btag3__ttbar->Integral();
+ttbar_PSH[4][1] = (btag4__ttbar__parSho__minus->Integral() - btag4__ttbar->Integral()) / btag4__ttbar->Integral();
+ttbar_PSH[5][1] = (btag5__ttbar__parSho__minus->Integral() - btag5__ttbar->Integral()) / btag5__ttbar->Integral();
 
 
 //ttbar_toppt[0][0] = (btag0__ttbar__toppt__plus->Integral() - btag0__ttbar->Integral()) / btag0__ttbar->Integral();
@@ -163,7 +193,7 @@ ZpN[3][0][1] = sqrt(btag3__Zprime1000->GetEntries()) / btag3__Zprime1000->GetEnt
 ZpN[4][0][1] = sqrt(btag4__Zprime1000->GetEntries()) / btag4__Zprime1000->GetEntries();
 ZpN[5][0][1] = sqrt(btag5__Zprime1000->GetEntries()) / btag5__Zprime1000->GetEntries();
 
-ZpN[0][1][0] = btag0__Zprime1500->Integral();
+/*ZpN[0][1][0] = btag0__Zprime1500->Integral();
 ZpN[1][1][0] = btag1__Zprime1500->Integral();
 ZpN[2][1][0] = btag2__Zprime1500->Integral();
 ZpN[3][1][0] = btag3__Zprime1500->Integral();
@@ -174,7 +204,7 @@ ZpN[1][1][1] = sqrt(btag1__Zprime1500->GetEntries()) / btag1__Zprime1500->GetEnt
 ZpN[2][1][1] = sqrt(btag2__Zprime1500->GetEntries()) / btag2__Zprime1500->GetEntries();
 ZpN[3][1][1] = sqrt(btag3__Zprime1500->GetEntries()) / btag3__Zprime1500->GetEntries();
 ZpN[4][1][1] = sqrt(btag4__Zprime1500->GetEntries()) / btag4__Zprime1500->GetEntries();
-ZpN[5][1][1] = sqrt(btag5__Zprime1500->GetEntries()) / btag5__Zprime1500->GetEntries();
+ZpN[5][1][1] = sqrt(btag5__Zprime1500->GetEntries()) / btag5__Zprime1500->GetEntries();*/
 
 ZpN[0][2][0] = btag0__Zprime2000->Integral();
 ZpN[1][2][0] = btag1__Zprime2000->Integral();
@@ -216,7 +246,7 @@ ZpN_JES[3][0][1] = (btag3__Zprime1000__jec__minus->Integral() - btag3__Zprime100
 ZpN_JES[4][0][1] = (btag4__Zprime1000__jec__minus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
 ZpN_JES[5][0][1] = (btag5__Zprime1000__jec__minus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
 
-ZpN_JES[0][1][0] = (btag0__Zprime1500__jec__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+/*ZpN_JES[0][1][0] = (btag0__Zprime1500__jec__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
 ZpN_JES[1][1][0] = (btag1__Zprime1500__jec__plus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
 ZpN_JES[2][1][0] = (btag2__Zprime1500__jec__plus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
 ZpN_JES[3][1][0] = (btag3__Zprime1500__jec__plus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
@@ -227,7 +257,7 @@ ZpN_JES[1][1][1] = (btag1__Zprime1500__jec__minus->Integral() - btag1__Zprime150
 ZpN_JES[2][1][1] = (btag2__Zprime1500__jec__minus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
 ZpN_JES[3][1][1] = (btag3__Zprime1500__jec__minus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
 ZpN_JES[4][1][1] = (btag4__Zprime1500__jec__minus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
-ZpN_JES[5][1][1] = (btag5__Zprime1500__jec__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();
+ZpN_JES[5][1][1] = (btag5__Zprime1500__jec__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();*/
 
 ZpN_JES[0][2][0] = (btag0__Zprime2000__jec__plus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
 ZpN_JES[1][2][0] = (btag1__Zprime2000__jec__plus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
@@ -269,7 +299,7 @@ ZpN_PDF[3][0][1] = (btag3__Zprime1000__pdf__minus->Integral() - btag3__Zprime100
 ZpN_PDF[4][0][1] = (btag4__Zprime1000__pdf__minus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
 ZpN_PDF[5][0][1] = (btag5__Zprime1000__pdf__minus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
 
-ZpN_PDF[0][1][0] = (btag0__Zprime1500__pdf__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+/*ZpN_PDF[0][1][0] = (btag0__Zprime1500__pdf__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
 ZpN_PDF[1][1][0] = (btag1__Zprime1500__pdf__plus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
 ZpN_PDF[2][1][0] = (btag2__Zprime1500__pdf__plus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
 ZpN_PDF[3][1][0] = (btag3__Zprime1500__pdf__plus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
@@ -280,7 +310,111 @@ ZpN_PDF[1][1][1] = (btag1__Zprime1500__pdf__minus->Integral() - btag1__Zprime150
 ZpN_PDF[2][1][1] = (btag2__Zprime1500__pdf__minus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
 ZpN_PDF[3][1][1] = (btag3__Zprime1500__pdf__minus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
 ZpN_PDF[4][1][1] = (btag4__Zprime1500__pdf__minus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
-ZpN_PDF[5][1][1] = (btag5__Zprime1500__pdf__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();
+ZpN_PDF[5][1][1] = (btag5__Zprime1500__pdf__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();*/
+
+ZpN_PDF[0][2][0] = (btag0__Zprime2000__pdf__plus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
+ZpN_PDF[1][2][0] = (btag1__Zprime2000__pdf__plus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
+ZpN_PDF[2][2][0] = (btag2__Zprime2000__pdf__plus->Integral() - btag2__Zprime2000->Integral()) / btag2__Zprime2000->Integral();
+ZpN_PDF[3][2][0] = (btag3__Zprime2000__pdf__plus->Integral() - btag3__Zprime2000->Integral()) / btag3__Zprime2000->Integral();
+ZpN_PDF[4][2][0] = (btag4__Zprime2000__pdf__plus->Integral() - btag4__Zprime2000->Integral()) / btag4__Zprime2000->Integral();
+ZpN_PDF[5][2][0] = (btag5__Zprime2000__pdf__plus->Integral() - btag5__Zprime2000->Integral()) / btag5__Zprime2000->Integral();
+ZpN_PDF[0][2][1] = (btag0__Zprime2000__pdf__minus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
+ZpN_PDF[1][2][1] = (btag1__Zprime2000__pdf__minus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
+ZpN_PDF[2][2][1] = (btag2__Zprime2000__pdf__minus->Integral() - btag2__Zprime2000->Integral()) / btag2__Zprime2000->Integral();
+ZpN_PDF[3][2][1] = (btag3__Zprime2000__pdf__minus->Integral() - btag3__Zprime2000->Integral()) / btag3__Zprime2000->Integral();
+ZpN_PDF[4][2][1] = (btag4__Zprime2000__pdf__minus->Integral() - btag4__Zprime2000->Integral()) / btag4__Zprime2000->Integral();
+ZpN_PDF[5][2][1] = (btag5__Zprime2000__pdf__minus->Integral() - btag5__Zprime2000->Integral()) / btag5__Zprime2000->Integral();
+
+ZpN_PDF[0][3][0] = (btag0__Zprime3000__pdf__plus->Integral() - btag0__Zprime3000->Integral()) / btag0__Zprime3000->Integral();
+ZpN_PDF[1][3][0] = (btag1__Zprime3000__pdf__plus->Integral() - btag1__Zprime3000->Integral()) / btag1__Zprime3000->Integral();
+ZpN_PDF[2][3][0] = (btag2__Zprime3000__pdf__plus->Integral() - btag2__Zprime3000->Integral()) / btag2__Zprime3000->Integral();
+ZpN_PDF[3][3][0] = (btag3__Zprime3000__pdf__plus->Integral() - btag3__Zprime3000->Integral()) / btag3__Zprime3000->Integral();
+ZpN_PDF[4][3][0] = (btag4__Zprime3000__pdf__plus->Integral() - btag4__Zprime3000->Integral()) / btag4__Zprime3000->Integral();
+ZpN_PDF[5][3][0] = (btag5__Zprime3000__pdf__plus->Integral() - btag5__Zprime3000->Integral()) / btag5__Zprime3000->Integral();
+ZpN_PDF[0][3][1] = (btag0__Zprime3000__pdf__minus->Integral() - btag0__Zprime3000->Integral()) / btag0__Zprime3000->Integral();
+ZpN_PDF[1][3][1] = (btag1__Zprime3000__pdf__minus->Integral() - btag1__Zprime3000->Integral()) / btag1__Zprime3000->Integral();
+ZpN_PDF[2][3][1] = (btag2__Zprime3000__pdf__minus->Integral() - btag2__Zprime3000->Integral()) / btag2__Zprime3000->Integral();
+ZpN_PDF[3][3][1] = (btag3__Zprime3000__pdf__minus->Integral() - btag3__Zprime3000->Integral()) / btag3__Zprime3000->Integral();
+ZpN_PDF[4][3][1] = (btag4__Zprime3000__pdf__minus->Integral() - btag4__Zprime3000->Integral()) / btag4__Zprime3000->Integral();
+ZpN_PDF[5][3][1] = (btag5__Zprime3000__pdf__minus->Integral() - btag5__Zprime3000->Integral()) / btag5__Zprime3000->Integral();
+
+ZpN_PDF[0][0][0] = (btag0__Zprime1000__pdf__plus->Integral() - btag0__Zprime1000->Integral()) / btag0__Zprime1000->Integral();
+ZpN_PDF[1][0][0] = (btag1__Zprime1000__pdf__plus->Integral() - btag1__Zprime1000->Integral()) / btag1__Zprime1000->Integral();
+ZpN_PDF[2][0][0] = (btag2__Zprime1000__pdf__plus->Integral() - btag2__Zprime1000->Integral()) / btag2__Zprime1000->Integral();
+ZpN_PDF[3][0][0] = (btag3__Zprime1000__pdf__plus->Integral() - btag3__Zprime1000->Integral()) / btag3__Zprime1000->Integral();
+ZpN_PDF[4][0][0] = (btag4__Zprime1000__pdf__plus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
+ZpN_PDF[5][0][0] = (btag5__Zprime1000__pdf__plus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
+ZpN_PDF[0][0][1] = (btag0__Zprime1000__pdf__minus->Integral() - btag0__Zprime1000->Integral()) / btag0__Zprime1000->Integral();
+ZpN_PDF[1][0][1] = (btag1__Zprime1000__pdf__minus->Integral() - btag1__Zprime1000->Integral()) / btag1__Zprime1000->Integral();
+ZpN_PDF[2][0][1] = (btag2__Zprime1000__pdf__minus->Integral() - btag2__Zprime1000->Integral()) / btag2__Zprime1000->Integral();
+ZpN_PDF[3][0][1] = (btag3__Zprime1000__pdf__minus->Integral() - btag3__Zprime1000->Integral()) / btag3__Zprime1000->Integral();
+ZpN_PDF[4][0][1] = (btag4__Zprime1000__pdf__minus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
+ZpN_PDF[5][0][1] = (btag5__Zprime1000__pdf__minus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
+
+/*ZpN_PDF[0][1][0] = (btag0__Zprime1500__pdf__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+ZpN_PDF[1][1][0] = (btag1__Zprime1500__pdf__plus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
+ZpN_PDF[2][1][0] = (btag2__Zprime1500__pdf__plus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
+ZpN_PDF[3][1][0] = (btag3__Zprime1500__pdf__plus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
+ZpN_PDF[4][1][0] = (btag4__Zprime1500__pdf__plus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
+ZpN_PDF[5][1][0] = (btag5__Zprime1500__pdf__plus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();
+ZpN_PDF[0][1][1] = (btag0__Zprime1500__pdf__minus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+ZpN_PDF[1][1][1] = (btag1__Zprime1500__pdf__minus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
+ZpN_PDF[2][1][1] = (btag2__Zprime1500__pdf__minus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
+ZpN_PDF[3][1][1] = (btag3__Zprime1500__pdf__minus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
+ZpN_PDF[4][1][1] = (btag4__Zprime1500__pdf__minus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
+ZpN_PDF[5][1][1] = (btag5__Zprime1500__pdf__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();*/
+
+ZpN_PDF[0][2][0] = (btag0__Zprime2000__pdf__plus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
+ZpN_PDF[1][2][0] = (btag1__Zprime2000__pdf__plus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
+ZpN_PDF[2][2][0] = (btag2__Zprime2000__pdf__plus->Integral() - btag2__Zprime2000->Integral()) / btag2__Zprime2000->Integral();
+ZpN_PDF[3][2][0] = (btag3__Zprime2000__pdf__plus->Integral() - btag3__Zprime2000->Integral()) / btag3__Zprime2000->Integral();
+ZpN_PDF[4][2][0] = (btag4__Zprime2000__pdf__plus->Integral() - btag4__Zprime2000->Integral()) / btag4__Zprime2000->Integral();
+ZpN_PDF[5][2][0] = (btag5__Zprime2000__pdf__plus->Integral() - btag5__Zprime2000->Integral()) / btag5__Zprime2000->Integral();
+ZpN_PDF[0][2][1] = (btag0__Zprime2000__pdf__minus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
+ZpN_PDF[1][2][1] = (btag1__Zprime2000__pdf__minus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
+ZpN_PDF[2][2][1] = (btag2__Zprime2000__pdf__minus->Integral() - btag2__Zprime2000->Integral()) / btag2__Zprime2000->Integral();
+ZpN_PDF[3][2][1] = (btag3__Zprime2000__pdf__minus->Integral() - btag3__Zprime2000->Integral()) / btag3__Zprime2000->Integral();
+ZpN_PDF[4][2][1] = (btag4__Zprime2000__pdf__minus->Integral() - btag4__Zprime2000->Integral()) / btag4__Zprime2000->Integral();
+ZpN_PDF[5][2][1] = (btag5__Zprime2000__pdf__minus->Integral() - btag5__Zprime2000->Integral()) / btag5__Zprime2000->Integral();
+
+ZpN_PDF[0][3][0] = (btag0__Zprime3000__pdf__plus->Integral() - btag0__Zprime3000->Integral()) / btag0__Zprime3000->Integral();
+ZpN_PDF[1][3][0] = (btag1__Zprime3000__pdf__plus->Integral() - btag1__Zprime3000->Integral()) / btag1__Zprime3000->Integral();
+ZpN_PDF[2][3][0] = (btag2__Zprime3000__pdf__plus->Integral() - btag2__Zprime3000->Integral()) / btag2__Zprime3000->Integral();
+ZpN_PDF[3][3][0] = (btag3__Zprime3000__pdf__plus->Integral() - btag3__Zprime3000->Integral()) / btag3__Zprime3000->Integral();
+ZpN_PDF[4][3][0] = (btag4__Zprime3000__pdf__plus->Integral() - btag4__Zprime3000->Integral()) / btag4__Zprime3000->Integral();
+ZpN_PDF[5][3][0] = (btag5__Zprime3000__pdf__plus->Integral() - btag5__Zprime3000->Integral()) / btag5__Zprime3000->Integral();
+ZpN_PDF[0][3][1] = (btag0__Zprime3000__pdf__minus->Integral() - btag0__Zprime3000->Integral()) / btag0__Zprime3000->Integral();
+ZpN_PDF[1][3][1] = (btag1__Zprime3000__pdf__minus->Integral() - btag1__Zprime3000->Integral()) / btag1__Zprime3000->Integral();
+ZpN_PDF[2][3][1] = (btag2__Zprime3000__pdf__minus->Integral() - btag2__Zprime3000->Integral()) / btag2__Zprime3000->Integral();
+ZpN_PDF[3][3][1] = (btag3__Zprime3000__pdf__minus->Integral() - btag3__Zprime3000->Integral()) / btag3__Zprime3000->Integral();
+ZpN_PDF[4][3][1] = (btag4__Zprime3000__pdf__minus->Integral() - btag4__Zprime3000->Integral()) / btag4__Zprime3000->Integral();
+ZpN_PDF[5][3][1] = (btag5__Zprime3000__pdf__minus->Integral() - btag5__Zprime3000->Integral()) / btag5__Zprime3000->Integral();
+
+ZpN_PDF[0][0][0] = (btag0__Zprime1000__pdf__plus->Integral() - btag0__Zprime1000->Integral()) / btag0__Zprime1000->Integral();
+ZpN_PDF[1][0][0] = (btag1__Zprime1000__pdf__plus->Integral() - btag1__Zprime1000->Integral()) / btag1__Zprime1000->Integral();
+ZpN_PDF[2][0][0] = (btag2__Zprime1000__pdf__plus->Integral() - btag2__Zprime1000->Integral()) / btag2__Zprime1000->Integral();
+ZpN_PDF[3][0][0] = (btag3__Zprime1000__pdf__plus->Integral() - btag3__Zprime1000->Integral()) / btag3__Zprime1000->Integral();
+ZpN_PDF[4][0][0] = (btag4__Zprime1000__pdf__plus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
+ZpN_PDF[5][0][0] = (btag5__Zprime1000__pdf__plus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
+ZpN_PDF[0][0][1] = (btag0__Zprime1000__pdf__minus->Integral() - btag0__Zprime1000->Integral()) / btag0__Zprime1000->Integral();
+ZpN_PDF[1][0][1] = (btag1__Zprime1000__pdf__minus->Integral() - btag1__Zprime1000->Integral()) / btag1__Zprime1000->Integral();
+ZpN_PDF[2][0][1] = (btag2__Zprime1000__pdf__minus->Integral() - btag2__Zprime1000->Integral()) / btag2__Zprime1000->Integral();
+ZpN_PDF[3][0][1] = (btag3__Zprime1000__pdf__minus->Integral() - btag3__Zprime1000->Integral()) / btag3__Zprime1000->Integral();
+ZpN_PDF[4][0][1] = (btag4__Zprime1000__pdf__minus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
+ZpN_PDF[5][0][1] = (btag5__Zprime1000__pdf__minus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
+
+/*ZpN_PDF[0][1][0] = (btag0__Zprime1500__pdf__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+ZpN_PDF[1][1][0] = (btag1__Zprime1500__pdf__plus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
+ZpN_PDF[2][1][0] = (btag2__Zprime1500__pdf__plus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
+ZpN_PDF[3][1][0] = (btag3__Zprime1500__pdf__plus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
+ZpN_PDF[4][1][0] = (btag4__Zprime1500__pdf__plus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
+ZpN_PDF[5][1][0] = (btag5__Zprime1500__pdf__plus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();
+ZpN_PDF[0][1][1] = (btag0__Zprime1500__pdf__minus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+ZpN_PDF[1][1][1] = (btag1__Zprime1500__pdf__minus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
+ZpN_PDF[2][1][1] = (btag2__Zprime1500__pdf__minus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
+ZpN_PDF[3][1][1] = (btag3__Zprime1500__pdf__minus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
+ZpN_PDF[4][1][1] = (btag4__Zprime1500__pdf__minus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
+ZpN_PDF[5][1][1] = (btag5__Zprime1500__pdf__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();*/
 
 ZpN_PDF[0][2][0] = (btag0__Zprime2000__pdf__plus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
 ZpN_PDF[1][2][0] = (btag1__Zprime2000__pdf__plus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
@@ -309,6 +443,57 @@ ZpN_PDF[4][3][1] = (btag4__Zprime3000__pdf__minus->Integral() - btag4__Zprime300
 ZpN_PDF[5][3][1] = (btag5__Zprime3000__pdf__minus->Integral() - btag5__Zprime3000->Integral()) / btag5__Zprime3000->Integral();
 
 
+ZpN_PU[0][0][0] = (btag0__Zprime1000__pileup__plus->Integral() - btag0__Zprime1000->Integral()) / btag0__Zprime1000->Integral();
+ZpN_PU[1][0][0] = (btag1__Zprime1000__pileup__plus->Integral() - btag1__Zprime1000->Integral()) / btag1__Zprime1000->Integral();
+ZpN_PU[2][0][0] = (btag2__Zprime1000__pileup__plus->Integral() - btag2__Zprime1000->Integral()) / btag2__Zprime1000->Integral();
+ZpN_PU[3][0][0] = (btag3__Zprime1000__pileup__plus->Integral() - btag3__Zprime1000->Integral()) / btag3__Zprime1000->Integral();
+ZpN_PU[4][0][0] = (btag4__Zprime1000__pileup__plus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
+ZpN_PU[5][0][0] = (btag5__Zprime1000__pileup__plus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
+ZpN_PU[0][0][1] = (btag0__Zprime1000__pileup__minus->Integral() - btag0__Zprime1000->Integral()) / btag0__Zprime1000->Integral();
+ZpN_PU[1][0][1] = (btag1__Zprime1000__pileup__minus->Integral() - btag1__Zprime1000->Integral()) / btag1__Zprime1000->Integral();
+ZpN_PU[2][0][1] = (btag2__Zprime1000__pileup__minus->Integral() - btag2__Zprime1000->Integral()) / btag2__Zprime1000->Integral();
+ZpN_PU[3][0][1] = (btag3__Zprime1000__pileup__minus->Integral() - btag3__Zprime1000->Integral()) / btag3__Zprime1000->Integral();
+ZpN_PU[4][0][1] = (btag4__Zprime1000__pileup__minus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
+ZpN_PU[5][0][1] = (btag5__Zprime1000__pileup__minus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
+
+/*ZpN_PU[0][1][0] = (btag0__Zprime1500__pileup__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+ZpN_PU[1][1][0] = (btag1__Zprime1500__pileup__plus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
+ZpN_PU[2][1][0] = (btag2__Zprime1500__pileup__plus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
+ZpN_PU[3][1][0] = (btag3__Zprime1500__pileup__plus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
+ZpN_PU[4][1][0] = (btag4__Zprime1500__pileup__plus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
+ZpN_PU[5][1][0] = (btag5__Zprime1500__pileup__plus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();
+ZpN_PU[0][1][1] = (btag0__Zprime1500__pileup__minus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+ZpN_PU[1][1][1] = (btag1__Zprime1500__pileup__minus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
+ZpN_PU[2][1][1] = (btag2__Zprime1500__pileup__minus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
+ZpN_PU[3][1][1] = (btag3__Zprime1500__pileup__minus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
+ZpN_PU[4][1][1] = (btag4__Zprime1500__pileup__minus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
+ZpN_PU[5][1][1] = (btag5__Zprime1500__pileup__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();*/
+
+ZpN_PU[0][2][0] = (btag0__Zprime2000__pileup__plus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
+ZpN_PU[1][2][0] = (btag1__Zprime2000__pileup__plus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
+ZpN_PU[2][2][0] = (btag2__Zprime2000__pileup__plus->Integral() - btag2__Zprime2000->Integral()) / btag2__Zprime2000->Integral();
+ZpN_PU[3][2][0] = (btag3__Zprime2000__pileup__plus->Integral() - btag3__Zprime2000->Integral()) / btag3__Zprime2000->Integral();
+ZpN_PU[4][2][0] = (btag4__Zprime2000__pileup__plus->Integral() - btag4__Zprime2000->Integral()) / btag4__Zprime2000->Integral();
+ZpN_PU[5][2][0] = (btag5__Zprime2000__pileup__plus->Integral() - btag5__Zprime2000->Integral()) / btag5__Zprime2000->Integral();
+ZpN_PU[0][2][1] = (btag0__Zprime2000__pileup__minus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
+ZpN_PU[1][2][1] = (btag1__Zprime2000__pileup__minus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
+ZpN_PU[2][2][1] = (btag2__Zprime2000__pileup__minus->Integral() - btag2__Zprime2000->Integral()) / btag2__Zprime2000->Integral();
+ZpN_PU[3][2][1] = (btag3__Zprime2000__pileup__minus->Integral() - btag3__Zprime2000->Integral()) / btag3__Zprime2000->Integral();
+ZpN_PU[4][2][1] = (btag4__Zprime2000__pileup__minus->Integral() - btag4__Zprime2000->Integral()) / btag4__Zprime2000->Integral();
+ZpN_PU[5][2][1] = (btag5__Zprime2000__pileup__minus->Integral() - btag5__Zprime2000->Integral()) / btag5__Zprime2000->Integral();
+
+ZpN_PU[0][3][0] = (btag0__Zprime3000__pileup__plus->Integral() - btag0__Zprime3000->Integral()) / btag0__Zprime3000->Integral();
+ZpN_PU[1][3][0] = (btag1__Zprime3000__pileup__plus->Integral() - btag1__Zprime3000->Integral()) / btag1__Zprime3000->Integral();
+ZpN_PU[2][3][0] = (btag2__Zprime3000__pileup__plus->Integral() - btag2__Zprime3000->Integral()) / btag2__Zprime3000->Integral();
+ZpN_PU[3][3][0] = (btag3__Zprime3000__pileup__plus->Integral() - btag3__Zprime3000->Integral()) / btag3__Zprime3000->Integral();
+ZpN_PU[4][3][0] = (btag4__Zprime3000__pileup__plus->Integral() - btag4__Zprime3000->Integral()) / btag4__Zprime3000->Integral();
+ZpN_PU[5][3][0] = (btag5__Zprime3000__pileup__plus->Integral() - btag5__Zprime3000->Integral()) / btag5__Zprime3000->Integral();
+ZpN_PU[0][3][1] = (btag0__Zprime3000__pileup__minus->Integral() - btag0__Zprime3000->Integral()) / btag0__Zprime3000->Integral();
+ZpN_PU[1][3][1] = (btag1__Zprime3000__pileup__minus->Integral() - btag1__Zprime3000->Integral()) / btag1__Zprime3000->Integral();
+ZpN_PU[2][3][1] = (btag2__Zprime3000__pileup__minus->Integral() - btag2__Zprime3000->Integral()) / btag2__Zprime3000->Integral();
+ZpN_PU[3][3][1] = (btag3__Zprime3000__pileup__minus->Integral() - btag3__Zprime3000->Integral()) / btag3__Zprime3000->Integral();
+ZpN_PU[4][3][1] = (btag4__Zprime3000__pileup__minus->Integral() - btag4__Zprime3000->Integral()) / btag4__Zprime3000->Integral();
+ZpN_PU[5][3][1] = (btag5__Zprime3000__pileup__minus->Integral() - btag5__Zprime3000->Integral()) / btag5__Zprime3000->Integral();
 
 
 
@@ -326,7 +511,7 @@ ZpN_btag[3][0][1] = (btag3__Zprime1000__btag__minus->Integral() - btag3__Zprime1
 ZpN_btag[4][0][1] = (btag4__Zprime1000__btag__minus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
 ZpN_btag[5][0][1] = (btag5__Zprime1000__btag__minus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
 
-ZpN_btag[0][1][0] = (btag0__Zprime1500__btag__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+/*ZpN_btag[0][1][0] = (btag0__Zprime1500__btag__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
 ZpN_btag[1][1][0] = (btag1__Zprime1500__btag__plus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
 ZpN_btag[2][1][0] = (btag2__Zprime1500__btag__plus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
 ZpN_btag[3][1][0] = (btag3__Zprime1500__btag__plus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
@@ -337,7 +522,7 @@ ZpN_btag[1][1][1] = (btag1__Zprime1500__btag__minus->Integral() - btag1__Zprime1
 ZpN_btag[2][1][1] = (btag2__Zprime1500__btag__minus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
 ZpN_btag[3][1][1] = (btag3__Zprime1500__btag__minus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
 ZpN_btag[4][1][1] = (btag4__Zprime1500__btag__minus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
-ZpN_btag[5][1][1] = (btag5__Zprime1500__btag__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();
+ZpN_btag[5][1][1] = (btag5__Zprime1500__btag__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();*/
 
 ZpN_btag[0][2][0] = (btag0__Zprime2000__btag__plus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
 ZpN_btag[1][2][0] = (btag1__Zprime2000__btag__plus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
@@ -394,7 +579,7 @@ ZpN_JER[3][0][1] = (btag3__Zprime1000__jer__minus->Integral() - btag3__Zprime100
 ZpN_JER[4][0][1] = (btag4__Zprime1000__jer__minus->Integral() - btag4__Zprime1000->Integral()) / btag4__Zprime1000->Integral();
 ZpN_JER[5][0][1] = (btag5__Zprime1000__jer__minus->Integral() - btag5__Zprime1000->Integral()) / btag5__Zprime1000->Integral();
 
-ZpN_JER[0][1][0] = (btag0__Zprime1500__jer__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
+/*ZpN_JER[0][1][0] = (btag0__Zprime1500__jer__plus->Integral() - btag0__Zprime1500->Integral()) / btag0__Zprime1500->Integral();
 ZpN_JER[1][1][0] = (btag1__Zprime1500__jer__plus->Integral() - btag1__Zprime1500->Integral()) / btag1__Zprime1500->Integral();
 ZpN_JER[2][1][0] = (btag2__Zprime1500__jer__plus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
 ZpN_JER[3][1][0] = (btag3__Zprime1500__jer__plus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
@@ -405,7 +590,7 @@ ZpN_JER[1][1][1] = (btag1__Zprime1500__jer__minus->Integral() - btag1__Zprime150
 ZpN_JER[2][1][1] = (btag2__Zprime1500__jer__minus->Integral() - btag2__Zprime1500->Integral()) / btag2__Zprime1500->Integral();
 ZpN_JER[3][1][1] = (btag3__Zprime1500__jer__minus->Integral() - btag3__Zprime1500->Integral()) / btag3__Zprime1500->Integral();
 ZpN_JER[4][1][1] = (btag4__Zprime1500__jer__minus->Integral() - btag4__Zprime1500->Integral()) / btag4__Zprime1500->Integral();
-ZpN_JER[5][1][1] = (btag5__Zprime1500__jer__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();
+ZpN_JER[5][1][1] = (btag5__Zprime1500__jer__minus->Integral() - btag5__Zprime1500->Integral()) / btag5__Zprime1500->Integral();*/
 
 ZpN_JER[0][2][0] = (btag0__Zprime2000__jer__plus->Integral() - btag0__Zprime2000->Integral()) / btag0__Zprime2000->Integral();
 ZpN_JER[1][2][0] = (btag1__Zprime2000__jer__plus->Integral() - btag1__Zprime2000->Integral()) / btag1__Zprime2000->Integral();
@@ -1036,6 +1221,8 @@ for (int cat = 0; cat < 6; cat++){
 	
 	cout << std::fixed << "\\ttbar $Q^2$ Scale & " << "$^{" << 100*ttbar_Q2[cat][0] << "}_{" << 100*ttbar_Q2[cat][1] << "}$  & & & & & & & & & & & & & \\\\ [0.5ex]" << endl;
 
+	cout << std::fixed << "\\Parton Shower & " << "$^{" << 100*ttbar_PSH[cat][0] << "}_{" << 100*ttbar_PSH[cat][1] << "}$  & & & & & & & & & & & & & \\\\ [0.5ex]" << endl;
+
 	cout << std::fixed << "Luminosity & " << " 2.7 & & 2.7 & 2.7 & 2.7 & 2.7  \\\\ [0.5ex]" << endl;
 
 //	cout << std::fixed << "Trigger Efficiency & " << " 2 & & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 & 2 \\\\ [0.5ex]" << endl;
@@ -1048,6 +1235,15 @@ for (int cat = 0; cat < 6; cat++){
 							"$^{" << 100*ZpN_PDF[cat][1][0] << "}_{" << 100*(ZpN_PDF[cat][1][1]) <<  "}$ & " <<
 							"$^{" << 100*ZpN_PDF[cat][2][0] << "}_{" << 100*(ZpN_PDF[cat][2][1]) <<  "}$ & " <<
 							"$^{" << 100*ZpN_PDF[cat][3][0] << "}_{" << 100*(ZpN_PDF[cat][3][1]) <<  "}$  " <<
+							  " \\\\ [0.5ex]" << endl;
+
+	cout << std::fixed << "Pileup & " <<
+							"$^{" << 100*ttbar_PU[cat][0] << "}_{" << 100*(ttbar_PU[cat][1]) <<  "}$ & " <<
+							" & " <<
+							"$^{" << 100*ZpN_PU[cat][0][0] << "}_{" << 100*(ZpN_PU[cat][0][1]) <<  "}$ & " <<
+							"$^{" << 100*ZpN_PU[cat][1][0] << "}_{" << 100*(ZpN_PU[cat][1][1]) <<  "}$ & " <<
+							"$^{" << 100*ZpN_PU[cat][2][0] << "}_{" << 100*(ZpN_PU[cat][2][1]) <<  "}$ & " <<
+							"$^{" << 100*ZpN_PU[cat][3][0] << "}_{" << 100*(ZpN_PU[cat][3][1]) <<  "}$  " <<
 							  " \\\\ [0.5ex]" << endl;
 
 	cout << std::fixed << " Modified Mass & " << "  & " << "$^{" << 100*qcd_modMass[cat][0] << "}_{" << 100*qcd_modMass[cat][1] <<  "}$ &  &  &  &   \\\\ [0.5ex]" << endl; 

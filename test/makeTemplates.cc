@@ -42,10 +42,13 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
 
   int numProcs = names::NUM_PROCS;
 
-  string file = "templates_narrow.root";//ZPN
-  if (signal == 1) file = "templates_wide.root";
-  else if (signal == 2) file = "templates_extrawide.root";
-  else if (signal == 3) file = "templates_RSGluon.root";
+  string outEnd = "_forTHETA.";
+  if (!forTHETA)  outEnd = ".";
+
+  string file = Form("templates_narrow%sroot", outEnd.c_str());//ZPN
+  if (signal == 1) file = Form("templates_wide%sroot", outEnd.c_str());
+  else if (signal == 2) file = Form("templates_extrawide%sroot", outEnd.c_str());
+  else if (signal == 3) file = Form("templates_RSGluon%sroot", outEnd.c_str());
 
   TFile *outFile = new TFile(Form("%s",file.c_str()),"RECREATE");
 
@@ -1516,9 +1519,6 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     ratioH->Draw("E same");
 
     gPad->RedrawAxis();
-
-    string outEnd = "_forTHETA.";
-    if (!forTHETA)  outEnd = ".";
 
     if (signal == 0){//ZPN                                                                                                                   
       c1->SaveAs("Distributions/ZPN_errors"+tagLabels[tag]+outEnd+"pdf");
