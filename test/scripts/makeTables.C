@@ -1219,9 +1219,9 @@ for (int cat = 0; cat < 6; cat++){
 
 	cout << std::fixed << "\\ttbar Cross Section & " << " 15 & & & & & \\\\ [0.5ex]" << endl;
 	
-	cout << std::fixed << "\\ttbar $Q^2$ Scale & " << "$^{" << 100*ttbar_Q2[cat][0] << "}_{" << 100*ttbar_Q2[cat][1] << "}$  & & & & & & & & & & & & & \\\\ [0.5ex]" << endl;
+	cout << std::fixed << "\\ttbar $Q^2$ Scale & " << "$^{" << 100*ttbar_Q2[cat][0] << "}_{" << 100*ttbar_Q2[cat][1] << "}$  & & & & & \\\\ [0.5ex]" << endl;
 
-	cout << std::fixed << "\\Parton Shower & " << "$^{" << 100*ttbar_PSH[cat][0] << "}_{" << 100*ttbar_PSH[cat][1] << "}$  & & & & & & & & & & & & & \\\\ [0.5ex]" << endl;
+	cout << std::fixed << "Parton Shower & " << "$^{" << 100*ttbar_PSH[cat][0] << "}_{" << 100*ttbar_PSH[cat][1] << "}$  & & & & & \\\\ [0.5ex]" << endl;
 
 	cout << std::fixed << "Luminosity & " << " 2.7 & & 2.7 & 2.7 & 2.7 & 2.7  \\\\ [0.5ex]" << endl;
 
