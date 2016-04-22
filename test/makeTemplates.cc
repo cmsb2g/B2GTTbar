@@ -668,65 +668,6 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
       histos[proc][6]->Rebin(rebin_factor);
     }
     else{
-      /*Double_t xbins[257]  = {   0,  10,  20,  30,  40,  50,  60,  70,  80,  90,
-
-                                 200, 210, 220, 230, 240, 250, 260, 270, 280, 290,
-
-                                 300, 310, 320, 330, 340, 350, 360, 370, 380, 390,
-
-                                 400, 410, 420, 430, 440, 450, 460, 470, 480, 490,
-
-                                 500, 510, 520, 530, 540, 550, 560, 570, 580, 590,
-
-                                 600, 610, 620, 630, 640, 650, 660, 670, 680, 690,
-
-                                 700, 710, 720, 730, 740, 750, 760, 770, 780, 790,
-
-                                 800, 810, 820, 830, 840, 850, 860, 870, 880, 890,
-
-                                 900, 910, 920, 930, 940, 950, 960, 970, 980, 990,
-
-                                 1000, 1010, 1020, 1030, 1040, 1050, 1060, 1070, 1080, 1090,
-
-				 1100, 1110, 1120, 1130, 1140, 1150, 1160, 1170, 1180, 1190,
-				 
-				 1200, 1210, 1220, 1230, 1240, 1250, 1260, 1270, 1280, 1290,
-				 
-				 1300, 1310, 1320, 1330, 1340, 1350, 1360, 1370, 1380, 1390,
-				 
-				 1400, 1410, 1420, 1430, 1440, 1450, 1460, 1470, 1480, 1490,
-				 
-				 1500, 1510, 1520, 1530, 1540, 1550, 1560, 1570, 1580, 1590,
-				 
-				 1600, 1610, 1620, 1630, 1640, 1650, 1660, 1670, 1680, 1690,
-				 
-				 1700, 1710, 1720, 1730, 1740, 1750, 1760, 1770, 1780, 1790,
-				 
-				 1800, 1810, 1820, 1830, 1840, 1850, 1860, 1870, 1880, 1890,
-
-				 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990,
-
-				 2000, 2010, 2020, 2030, 2040, 2050, 2060, 2070, 2080, 2090,
-
-				 2100, 2110, 2120, 2130, 2140, 2150, 2160, 2170, 2180, 2190,
-
-				 2200, 2210, 2220, 2230, 2240, 2250, 2260, 2270, 2280, 2290,
-
-				 2300, 2310, 2320, 2330, 2340, 2350, 2360, 2370, 2380, 2390,
-
-				 2400, 2410, 2420, 2430, 2440, 2450, 2460, 2470, 2480, 2490,
-
-				 2500, 2510, 2520, 2530, 2540, 2550, 2560, 2570, 2580, 2590,
-
-				 2600, 2800, 3000, 3500, 4000, 5000, 7000 };
-
-      histos[proc][0] = (TH1F *) histos[proc][0]->Rebin(256, "h0", xbins);//rebin_factor);
-      histos[proc][1] = (TH1F *) histos[proc][1]->Rebin(256, "h1", xbins);//rebin_factor);
-      histos[proc][2] = (TH1F *) histos[proc][2]->Rebin(256, "h2", xbins);//rebin_factor);
-      histos[proc][3] = (TH1F *) histos[proc][3]->Rebin(256, "h3", xbins);//rebin_factor);
-      histos[proc][4] = (TH1F *) histos[proc][4]->Rebin(256, "h4", xbins);//rebin_factor);
-      histos[proc][5] = (TH1F *) histos[proc][5]->Rebin(256, "h5", xbins);//rebin_factor);
-      histos[proc][6] = (TH1F *) histos[proc][6]->Rebin(256, "h6", xbins);//rebin_factor);*/
 
       histos[proc][0]->Rebin(10);
       histos[proc][1]->Rebin(10);
@@ -1205,122 +1146,13 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
         }
       }
       
-      //rebinning the tail
-      /*int nBins = 20;
-	if (tag == 0) nBins = 20;
-	else if (tag == 1) nBins = 13;
-	else if (tag == 2) nBins = 6;
-	else if (tag == 3) nBins = 42;
-	else if (tag == 4) nBins = 20;
-	else if (tag == 5) nBins = 4;
-	
-	Double_t xbins_btag0[21] = {0.,800.,900.,1000.,1100.,1200.,1300.,1400.,1500.,1600.,1700.,1800.,1900.,2000.,2100.,2200.,2300.,2400.,2600.,3500.,7000.};
-	Double_t xbins_btag1[14] = {0.,800.,900.,1000.,1100.,1200.,1300.,1400.,1500.,1600.,1700.,1900.,3050.,7000.};
-	Double_t xbins_btag2[7] = {0.,900.,1100.,1200.,1300.,2650.,7000.};
-	Double_t xbins_btag3[43] = {0.,900.,1000.,1100.,1200.,1300.,1400.,1500.,1600.,1700.,1800.,1900.,2000.,2100.,2200.,2300.,2400.,2500.,2600.,2700.,2800.,2900.,3000.,3100.,3200.,3300.,3400.,3500.,3600.,3700.,3800.,3900.,4000.,4100.,4300.,4400.,4500.,4700.,4900.,5100.,5400.,6200.,7000.};
-	Double_t xbins_btag4[21] = {0.,1100.,1200.,1300.,1400.,1500.,1600.,1700.,1800.,1900.,2000.,2100.,2200.,2300.,2400.,2600.,2800.,3100.,3600.,4000.,7000.};
-	Double_t xbins_btag5[5] = {0.,1300.,1600.,2800.,7000.};
-      */
       for (int proc = 0; proc < names::NUM_PROCS; proc++){
 	if (proc != names::TT_SUBTRACT && proc != names::TT_SUBTRACTSYST && proc != names::QCDMC && proc != names::QCDMC_SYST){
 	  cout << "Processing " << labels[proc] << endl;
-	  /*if (tag == 0) histos[proc][tag] = (TH1F *) histos[proc][tag]->Rebin(nBins, "h", xbins_btag0);
-	  else if (tag == 1) histos[proc][tag] = (TH1F *) histos[proc][tag]->Rebin(nBins, "h", xbins_btag1);
-	  else if (tag == 2) histos[proc][tag] = (TH1F *) histos[proc][tag]->Rebin(nBins, "h", xbins_btag2);
-	  else if (tag == 3) histos[proc][tag] = (TH1F *) histos[proc][tag]->Rebin(nBins, "h", xbins_btag3);
-	  else if (tag == 4) histos[proc][tag] = (TH1F *) histos[proc][tag]->Rebin(nBins, "h", xbins_btag4);
-	  else if (tag == 5) histos[proc][tag] = (TH1F *) histos[proc][tag]->Rebin(nBins, "h", xbins_btag5);*/
 	  histos[proc][tag] = (TH1F *) histos[proc][tag]->Rebin(nBinsNew, "h", xbins);
 	  cout << histos[proc][tag]->GetNbinsX() << endl;
 	}
       }
-
-      TH1F *h_TTstat = (TH1F *) histos[names::TT][tag]->Clone("h_TTstat");
-      TH1F *h_ZPN15stat = (TH1F *) histos[names::ZPN15][tag]->Clone("h_ZPN15stat");
-      TH1F *h_ZPN35stat = (TH1F *) histos[names::ZPN35][tag]->Clone("h_ZPN35stat");
-
-      //changing QCD statistical error to sqrt(N) up to 2500 GeV
-      int nbinsQCD = histos[names::QCD][tag]->GetNbinsX();
-      cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
-      cout<<"btag "<<tag<<endl;
-      for (int i_qcd = 1; i_qcd < (nbinsQCD+1); i_qcd++){
-	//histos[names::QCD][tag]->SetBinError(i_qcd,0.0);
-	float TTbinContent = abs(histos[names::TT][tag]->GetBinContent(i_qcd)); 
-	float TTbinError = abs(histos[names::TT][tag]->GetBinError(i_qcd)); 
-	if (TTbinContent == 0) h_TTstat->SetBinContent(i_qcd,0.0);
-	else h_TTstat->SetBinContent(i_qcd,(TTbinError/TTbinContent));
-	cout<<""<<endl;
-	cout<<"t#bar{t} Bin " << i_qcd << " Percent Error: " <<  h_TTstat->GetBinContent(i_qcd)<<endl;
-	cout<<"t#bar{t} Bin Error: "<<histos[names::TT][tag]->GetBinError(i_qcd)<<endl;
-	cout<<"t#bar{t} Bin Content: "<<histos[names::TT][tag]->GetBinContent(i_qcd)<<endl;
-	//cout<<"t#bar{t} Poisson Bin Error: "<<sqrt(TTbinContent)<<endl;
-
-	float ZPN15binContent = abs(histos[names::ZPN15][tag]->GetBinContent(i_qcd)); 
-	float ZPN15binError = abs(histos[names::ZPN15][tag]->GetBinError(i_qcd)); 
-	if (ZPN15binContent == 0) h_ZPN15stat->SetBinContent(i_qcd,0.0);
-	else h_ZPN15stat->SetBinContent(i_qcd,(ZPN15binError/ZPN15binContent));
-	cout<<""<<endl;
-	cout<<"ZPN 15 Bin " << i_qcd << " Percent Error: " <<  h_ZPN15stat->GetBinContent(i_qcd)<<endl;
-	cout<<"ZPN 15 Bin Error: "<<histos[names::ZPN15][tag]->GetBinError(i_qcd)<<endl;
-	cout<<"ZPN 15 Bin Content: "<<histos[names::ZPN15][tag]->GetBinContent(i_qcd)<<endl;
-	//cout<<"ZPN 15 Poisson Bin Error: "<<sqrt(ZPN15binContent)<<endl;
-
-	float ZPN35binContent = abs(histos[names::ZPN35][tag]->GetBinContent(i_qcd)); 
-	float ZPN35binError = abs(histos[names::ZPN35][tag]->GetBinError(i_qcd)); 
-	if (ZPN35binContent == 0) h_ZPN35stat->SetBinContent(i_qcd,0.0);
-	else h_ZPN35stat->SetBinContent(i_qcd,(ZPN35binError/ZPN35binContent));
-	cout<<""<<endl;
-	cout<<"ZPN 35 Bin " << i_qcd << " Percent Error: " <<  h_ZPN35stat->GetBinContent(i_qcd)<<endl;
-	cout<<"ZPN 35 Bin Error: "<<histos[names::ZPN35][tag]->GetBinError(i_qcd)<<endl;
-	cout<<"ZPN 35 Bin Content: "<<histos[names::ZPN35][tag]->GetBinContent(i_qcd)<<endl;
-	//cout<<"ZPN 35 Poisson Bin Error: "<<sqrt(ZPN35binContent)<<endl;
-
-	histos[names::TT][tag]->SetBinError(i_qcd,0.0);
-	histos[names::ZPN10][tag]->SetBinError(i_qcd,0.0);
-	histos[names::ZPN12p5][tag]->SetBinError(i_qcd,0.0);
-	histos[names::ZPN15][tag]->SetBinError(i_qcd,0.0);
-	histos[names::ZPN20][tag]->SetBinError(i_qcd,0.0);
-	histos[names::ZPN25][tag]->SetBinError(i_qcd,0.0);
-	histos[names::ZPN30][tag]->SetBinError(i_qcd,0.0);
-	histos[names::ZPN35][tag]->SetBinError(i_qcd,0.0);
-	histos[names::ZPN40][tag]->SetBinError(i_qcd,0.0);
-	
-	/*float QCDbinLowEdge = histos[names::QCD][tag]->GetBinLowEdge(i_qcd);
-	cout<<"Bin "<<i_qcd<<", Low Edge = "<<QCDbinLowEdge<<endl;
-	if (QCDbinLowEdge >= 2500.){
-	  cout<<"Adjusting Bin Error!"<<endl;
-	  cout<<"Old Bin Error: "<<histos[names::QCD][tag]->GetBinError(i_qcd)<<endl;
-	  cout<<"Bin Content: "<<histos[names::QCD][tag]->GetBinContent(i_qcd)<<endl;
-	  float QCDbinContent = abs(histos[names::QCD][tag]->GetBinContent(i_qcd));
-	  histos[names::QCD][tag]->SetBinError(i_qcd,sqrt(QCDbinContent));
-	  cout<<"New Bin Error: "<<histos[names::QCD][tag]->GetBinError(i_qcd)<<endl;
-	  }*/
-      }
-      cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
-
-      TCanvas *cStat = new TCanvas();
-      h_TTstat->SetLineColor(kRed);
-      h_ZPN15stat->SetLineColor(kBlue);
-      h_ZPN35stat->SetLineColor(kViolet);
-      h_ZPN35stat->SetLineWidth(2);
-      h_TTstat->SetLineWidth(2);
-      h_ZPN35stat->SetLineWidth(2);
-
-      h_ZPN35stat->Draw("hist");
-      h_TTstat->Draw("histSAME");
-      h_ZPN15stat->Draw("histSAME");
-
-      TLegend *legStat = new TLegend(0.7, 0.4, 0.94, 0.83);
-      legStat->AddEntry(h_TTstat, "Top", "L");
-      legStat->AddEntry(h_ZPN15stat, "1.5 TeV Narrow Z'", "L");
-      legStat->AddEntry(h_ZPN35stat, "3.5 TeV Narrow Z'", "L");
-
-      legStat->SetFillColor(0);
-      legStat->SetLineColor(0);
-      legStat->Draw("same");
-
-      cStat->SaveAs("ZPN_statPercentError_30pRebin0329Files_"+tagLabels[tag]+".pdf");
-      cStat->SaveAs("ZPN_statPercentError_30pRebin0329Files_"+tagLabels[tag]+".root");
     }
 
     //Mtt plots
