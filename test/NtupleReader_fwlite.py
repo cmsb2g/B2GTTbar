@@ -43,13 +43,18 @@ parser.add_option('--maxevents', type='int', action='store',
                   dest='maxevents',
                   help='Number of events to run. -1 is all events')
 
+parser.add_option('--puMethod', type='string', action='store',
+                  default="CHS",
+                  dest='puMethod',
+                  help='Pileup method, "CHS" or "Puppi"')
+
 parser.add_option('--maxjets', type='int', action='store',
                   default=1,
                   dest='maxjets',
                   help='Number of jets to plot. To plot all jets, set to a big number like 999')
 
 parser.add_option('--bdisc', type='string', action='store',
-                  default=0.605,
+                  default='combinedInclusiveSecondaryVertexV2BJetTags',
                   dest='bdisc',
                   help='combinedInclusiveSecondaryVertexV2BJetTags')
 
@@ -395,9 +400,9 @@ l_elEta = ("electrons" , "elEta")
 h_elPhi = Handle("std::vector<float>")
 l_elPhi = ("electrons" , "elPhi")
 h_elTight = Handle("std::vector<float>")
-l_elTight = ("electrons" , "elisTight" )
+l_elTight = ("electrons" , "elvidTight" )
 h_elLoose = Handle("std::vector<float>")
-l_elLoose = ("electrons" , "elisLoose" )
+l_elLoose = ("electrons" , "elvidLoose" )
 h_eldEtaIn = Handle("std::vector<float>")
 l_eldEtaIn = ( "electrons" , "eldEtaIn" )
 h_eldPhiIn = Handle("std::vector<float>")
@@ -423,7 +428,7 @@ l_elooEmooP = ( "electrons" , "elooEmooP" )
 h_elMass = Handle("std::vector<float>")
 l_elMass = ( "electrons" , "elMass" )
 h_elscEta = Handle("std::vector<float>")
-l_elscEta = ( "electrons" , "elscEta" )
+l_elscEta = ( "electrons" , "elSCEta" )
 h_elCharge = Handle("std::vector<float>")
 l_elCharge = ( "electrons" , "elCharge" )
 
@@ -432,23 +437,23 @@ l_elKey = ( "electronKeys" )
 
 #AK4 Jet Label and Handles
 h_jetsAK4Pt = Handle("std::vector<float>")
-l_jetsAK4Pt = ("jetsAK4" , "jetAK4Pt") #
+l_jetsAK4Pt = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "Pt") #
 h_jetsAK4Eta = Handle("std::vector<float>")
-l_jetsAK4Eta = ("jetsAK4" , "jetAK4Eta")
+l_jetsAK4Eta = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "Eta")
 h_jetsAK4Phi = Handle("std::vector<float>")
-l_jetsAK4Phi = ("jetsAK4" , "jetAK4Phi")
+l_jetsAK4Phi = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "Phi")
 h_jetsAK4Mass = Handle("std::vector<float>")
-l_jetsAK4Mass = ("jetsAK4" , "jetAK4Mass")
+l_jetsAK4Mass = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "Mass")
 h_jetsAK4Energy = Handle("std::vector<float>")
-l_jetsAK4Energy = ("jetsAK4" , "jetAK4E") 
+l_jetsAK4Energy = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "E") 
 h_jetsAK4JEC = Handle("std::vector<float>")
-l_jetsAK4JEC = ("jetsAK4" , "jetAK4jecFactor0") 
+l_jetsAK4JEC = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "jecFactor0") 
 h_jetsAK4CSV = Handle("std::vector<float>")
-l_jetsAK4CSV = ("jetsAK4" , "jetAK4CSV")
+l_jetsAK4CSV = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "CSVv2")
 h_jetsAK4NumDaughters = Handle("std::vector<float>")
-l_jetsAK4NumDaughters = ( "jetsAK4" , "jetAK4numberOfDaughters" )
+l_jetsAK4NumDaughters = ( "jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "numberOfDaughters" )
 h_jetsAK4Area = Handle("std::vector<float>")
-l_jetsAK4Area = ( "jetsAK4" , "jetAK4jetArea" )
+l_jetsAK4Area = ( "jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "jetArea" )
 
 h_pv_chi = Handle("std::vector<float>")
 l_pv_chi = ( "vertexInfo", "chi" )
@@ -463,24 +468,24 @@ h_puNtrueInt = Handle("std::int")
 l_puNtrueInt = ( "eventUserData" , "puNtrueInt" )
 
 h_jetsAK4Keys = Handle("std::vector<std::vector<int> >")
-l_jetsAK4Keys = ( "jetKeysAK4" , "" )
+l_jetsAK4Keys = ( "jetKeysAK4" + options.puMethod , "" )
 
 h_jetsAK4nHadEnergy = Handle("std::vector<float>")
-l_jetsAK4nHadEnergy = ("jetsAK4" , "jetAK4neutralHadronEnergy")
+l_jetsAK4nHadEnergy = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "neutralHadronEnergy")
 h_jetsAK4nEMEnergy = Handle("std::vector<float>")
-l_jetsAK4nEMEnergy = ("jetsAK4" , "jetAK4neutralEmEnergy")
+l_jetsAK4nEMEnergy = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "neutralEmEnergy")
 h_jetsAK4HFHadronEnergy = Handle("std::vector<float>")
-l_jetsAK4HFHadronEnergy = ("jetsAK4" , "jetAK4HFHadronEnergy")
+l_jetsAK4HFHadronEnergy = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "HFHadronEnergy")
 h_jetsAK4cHadEnergy = Handle("std::vector<float>")
-l_jetsAK4cHadEnergy = ("jetsAK4" , "jetAK4chargedHadronEnergy")
+l_jetsAK4cHadEnergy = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "chargedHadronEnergy")
 h_jetsAK4cEMEnergy = Handle("std::vector<float>")
-l_jetsAK4cEMEnergy = ("jetsAK4" , "jetAK4chargedEmEnergy")
+l_jetsAK4cEMEnergy = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "chargedEmEnergy")
 h_jetsAK4numDaughters = Handle("std::vector<float>")
-l_jetsAK4numDaughters = ("jetsAK4" , "jetAK4numberOfDaughters")
+l_jetsAK4numDaughters = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "numberOfDaughters")
 h_jetsAK4cMultip = Handle("std::vector<float>")
-l_jetsAK4cMultip = ("jetsAK4" , "jetAK4chargedMultiplicity")
+l_jetsAK4cMultip = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "chargedMultiplicity")
 h_jetsAK4Y = Handle("std::vector<float>")
-l_jetsAK4Y = ("jetsAK4" , "jetAK4Y")
+l_jetsAK4Y = ("jetsAK4" + options.puMethod , "jetAK4" + options.puMethod + "Y")
 
 #Rho
 h_rho = Handle("double")
@@ -488,13 +493,13 @@ l_rho = ("fixedGridRhoFastjetAll", "")
 
 #MET label and Handles
 h_metPt = Handle("std::vector<float>")
-l_metPt = ("metNoHF" , "metNoHFPt")
+l_metPt = ("metFull" , "metFullPt")
 h_metPx = Handle("std::vector<float>")
-l_metPx = ("metNoHF" , "metNoHFPx")
+l_metPx = ("metFull" , "metFullPx")
 h_metPy = Handle("std::vector<float>")
-l_metPy = ("metNoHF" , "metNoHFPy")
+l_metPy = ("metFull" , "metFullPy")
 h_metPhi = Handle("std::vector<float>")
-l_metPhi = ("metNoHF" , "metNoHFPhi")
+l_metPhi = ("metFull" , "metFullPhi")
 
 
 # vector<float>             "metFull"                   "metFullPhi"      "b2gEDMNtuples"
@@ -504,13 +509,13 @@ l_metPhi = ("metNoHF" , "metNoHFPhi")
 # vector<float>             "metFull"                   "metFulluncorPhi"   "b2gEDMNtuples"
 # vector<float>             "metFull"                   "metFulluncorPt"   "b2gEDMNtuples"
 # vector<float>             "metFull"                   "metFulluncorSumEt"   "b2gEDMNtuples"
-# vector<float>             "metNoHF"                   "metNoHFPhi"      "b2gEDMNtuples"
-# vector<float>             "metNoHF"                   "metNoHFPt"       "b2gEDMNtuples"
-# vector<float>             "metNoHF"                   "metNoHFPx"       "b2gEDMNtuples"
-# vector<float>             "metNoHF"                   "metNoHFPy"       "b2gEDMNtuples"
-# vector<float>             "metNoHF"                   "metNoHFuncorPhi"   "b2gEDMNtuples"
-# vector<float>             "metNoHF"                   "metNoHFuncorPt"   "b2gEDMNtuples"
-# vector<float>             "metNoHF"                   "metNoHFuncorSumEt"   "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFullPhi"      "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFullPt"       "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFullPx"       "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFullPy"       "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFulluncorPhi"   "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFulluncorPt"   "b2gEDMNtuples"
+# vector<float>             "metFull"                   "metFulluncorSumEt"   "b2gEDMNtuples"
 
 # Generator info
 if options.isMC :
@@ -521,210 +526,159 @@ if options.isMC :
     
 #AK8 Jets label and Handles
 h_jetsAK8Pt = Handle("std::vector<float>")
-l_jetsAK8Pt = ("jetsAK8" , "jetAK8Pt") #
+l_jetsAK8Pt = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "Pt") #
 h_jetsAK8Eta = Handle("std::vector<float>")
-l_jetsAK8Eta = ("jetsAK8" , "jetAK8Eta")
+l_jetsAK8Eta = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "Eta")
 h_jetsAK8Phi = Handle("std::vector<float>")
-l_jetsAK8Phi = ("jetsAK8" , "jetAK8Phi")
+l_jetsAK8Phi = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "Phi")
 h_jetsAK8Mass = Handle("std::vector<float>")
-l_jetsAK8Mass = ("jetsAK8" , "jetAK8Mass")
+l_jetsAK8Mass = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "Mass")
 h_jetsAK8Energy = Handle("std::vector<float>")
-l_jetsAK8Energy = ("jetsAK8" , "jetAK8E") 
+l_jetsAK8Energy = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "E") 
 h_jetsAK8Y = Handle("std::vector<float>")
-l_jetsAK8Y = ("jetsAK8" , "jetAK8Y")
+l_jetsAK8Y = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "Y")
 
 h_jetsAK8JEC = Handle("std::vector<float>")
-l_jetsAK8JEC = ("jetsAK8" , "jetAK8jecFactor0")
+l_jetsAK8JEC = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "jecFactor0")
 
 h_jetsAK8JERup   = Handle("std::vector<float>")
-l_jetsAK8JERup   = ("jetsAK8" , "jetAK8JERup")
+l_jetsAK8JERup   = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "JERSFUp")
 h_jetsAK8JERdown = Handle("std::vector<float>")
-l_jetsAK8JERdown = ("jetsAK8" , "jetAK8JERdown")
+l_jetsAK8JERdown = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "JERSFDown")
 
 h_jetsAK8SmearedE = Handle("std::vector<float>")
-l_jetsAK8SmearedE = ("jetsAK8" , "jetAK8SmearedE")
+l_jetsAK8SmearedE = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "SmearedE")
 h_jetsAK8SmearedEta = Handle("std::vector<float>")
-l_jetsAK8SmearedEta = ("jetsAK8" , "jetAK8SmearedPEta")
+l_jetsAK8SmearedEta = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "SmearedPEta")
 h_jetsAK8SmearedPhi = Handle("std::vector<float>")
-l_jetsAK8SmearedPhi = ("jetsAK8" , "jetAK8SmearedPhi")
+l_jetsAK8SmearedPhi = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "SmearedPhi")
 h_jetsAK8SmearedPt = Handle("std::vector<float>")
-l_jetsAK8SmearedPt = ("jetsAK8" , "jetAK8SmearedPt")
+l_jetsAK8SmearedPt = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "SmearedPt")
 
 
 h_jetsAK8GenJetE = Handle("std::vector<float>")
-l_jetsAK8GenJetE = ("jetsAK8" , "jetAK8GenJetE")
+l_jetsAK8GenJetE = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "GenJetE")
 h_jetsAK8GenJetEta = Handle("std::vector<float>")
-l_jetsAK8GenJetEta = ("jetsAK8" , "jetAK8GenJetEta")
+l_jetsAK8GenJetEta = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "GenJetEta")
 h_jetsAK8GenJetPhi = Handle("std::vector<float>")
-l_jetsAK8GenJetPhi = ("jetsAK8" , "jetAK8GenJetPhi")
+l_jetsAK8GenJetPhi = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "GenJetPhi")
 h_jetsAK8GenJetPt = Handle("std::vector<float>")
-l_jetsAK8GenJetPt = ("jetsAK8" , "jetAK8GenJetPt")
+l_jetsAK8GenJetPt = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "GenJetPt")
 h_jetsAK8GenJetY = Handle("std::vector<float>")
-l_jetsAK8GenJetY = ("jetsAK8" , "jetAK8GenJetY")
+l_jetsAK8GenJetY = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "GenJetY")
 
 
 h_jetsAK8nHadEnergy = Handle("std::vector<float>")
-l_jetsAK8nHadEnergy = ("jetsAK8" , "jetAK8neutralHadronEnergy")
+l_jetsAK8nHadEnergy = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "neutralHadronEnergy")
 h_jetsAK8nEMEnergy = Handle("std::vector<float>")
-l_jetsAK8nEMEnergy = ("jetsAK8" , "jetAK8neutralEmEnergy")
+l_jetsAK8nEMEnergy = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "neutralEmEnergy")
 h_jetsAK8HFHadronEnergy = Handle("std::vector<float>")
-l_jetsAK8HFHadronEnergy = ("jetsAK8" , "jetAK8HFHadronEnergy")
+l_jetsAK8HFHadronEnergy = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "HFHadronEnergy")
 h_jetsAK8cHadEnergy = Handle("std::vector<float>")
-l_jetsAK8cHadEnergy = ("jetsAK8" , "jetAK8chargedHadronEnergy")
+l_jetsAK8cHadEnergy = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "chargedHadronEnergy")
 h_jetsAK8cEMEnergy = Handle("std::vector<float>")
-l_jetsAK8cEMEnergy = ("jetsAK8" , "jetAK8chargedEmEnergy")
+l_jetsAK8cEMEnergy = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "chargedEmEnergy")
 
 h_jetsAK8nHadEnergyFrac = Handle("std::vector<float>")
-l_jetsAK8nHadEnergyFrac = ("jetsAK8" , "jetAK8neutralHadronEnergyFrac")
+l_jetsAK8nHadEnergyFrac = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "neutralHadronEnergyFrac")
 h_jetsAK8nEMEnergyFrac = Handle("std::vector<float>")
-l_jetsAK8nEMEnergyFrac = ("jetsAK8" , "jetAK8neutralEmEnergyFrac")
+l_jetsAK8nEMEnergyFrac = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "neutralEmEnergyFrac")
 h_jetsAK8HFHadronEnergyFrac = Handle("std::vector<float>")
-l_jetsAK8HFHadronEnergyFrac = ("jetsAK8" , "jetAK8HFHadronEnergyFrac")
+l_jetsAK8HFHadronEnergyFrac = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "HFHadronEnergyFrac")
 h_jetsAK8cHadEnergyFrac = Handle("std::vector<float>")
-l_jetsAK8cHadEnergyFrac = ("jetsAK8" , "jetAK8chargedHadronEnergyFrac")
+l_jetsAK8cHadEnergyFrac = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "chargedHadronEnergyFrac")
 h_jetsAK8cEMEnergyFrac = Handle("std::vector<float>")
-l_jetsAK8cEMEnergyFrac = ("jetsAK8" , "jetAK8chargedEmEnergyFrac")
+l_jetsAK8cEMEnergyFrac = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "chargedEmEnergyFrac")
 
 h_jetsAK8numDaughters = Handle("std::vector<float>")
-l_jetsAK8numDaughters = ("jetsAK8" , "jetAK8numberOfDaughters")
+l_jetsAK8numDaughters = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "numberOfDaughters")
 h_jetsAK8cMultip = Handle("std::vector<float>")
-l_jetsAK8cMultip = ("jetsAK8" , "jetAK8chargedMultiplicity")
+l_jetsAK8cMultip = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "chargedMultiplicity")
 h_jetsAK8nMultip = Handle("std::vector<float>")
-l_jetsAK8nMultip = ("jetsAK8" , "jetAK8neutralMultiplicity")
-l_jetsAK8numDaughters = ("jetsAK8" , "jetAK8numberOfDaughters")
+l_jetsAK8nMultip = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "neutralMultiplicity")
+l_jetsAK8numDaughters = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "numberOfDaughters")
 h_jetsAK8cHadMultip = Handle("std::vector<float>")
-l_jetsAK8cHadMultip = ("jetsAK8" , "jetAK8chargedHadronMultiplicity")
+l_jetsAK8cHadMultip = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "chargedHadronMultiplicity")
 h_jetsAK8nHadMultip = Handle("std::vector<float>")
-l_jetsAK8nHadMultip = ("jetsAK8" , "jetAK8neutralHadronMultiplicity")
+l_jetsAK8nHadMultip = ("jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "neutralHadronMultiplicity")
 
 
 h_jetsAK8Keys = Handle("std::vector<std::vector<int> >")
-l_jetsAK8Keys = ( "jetKeysAK8" , "" )
+l_jetsAK8Keys = ( "jetKeysAK8" + options.puMethod , "" )
 
 h_jetsAK8TrimMass = Handle("std::vector<float>")
-l_jetsAK8TrimMass = ("jetsAK8", "jetAK8trimmedMass" )
+l_jetsAK8TrimMass = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "trimmedMass" )
 h_jetsAK8PrunMass = Handle("std::vector<float>")
-l_jetsAK8PrunMass = ("jetsAK8", "jetAK8prunedMass" )
+l_jetsAK8PrunMass = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "prunedMass" )
 h_jetsAK8FiltMass = Handle("std::vector<float>")
-l_jetsAK8FiltMass = ("jetsAK8", "jetAK8filteredMass" )
+l_jetsAK8FiltMass = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "filteredMass" )
 h_jetsAK8SoftDropMass = Handle("std::vector<float>")
-l_jetsAK8SoftDropMass = ("jetsAK8", "jetAK8softDropMass" )
+l_jetsAK8SoftDropMass = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "softDropMass" )
 h_jetsAK8Tau1 = Handle("std::vector<float>")
-l_jetsAK8Tau1 = ("jetsAK8", "jetAK8tau1" )
+l_jetsAK8Tau1 = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "tau1" )
 h_jetsAK8Tau2 = Handle("std::vector<float>")
-l_jetsAK8Tau2 = ("jetsAK8", "jetAK8tau2" )
+l_jetsAK8Tau2 = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "tau2" )
 h_jetsAK8Tau3 = Handle("std::vector<float>")
-l_jetsAK8Tau3 = ("jetsAK8", "jetAK8tau3" )
-h_jetsAK8nSubJets = Handle("std::vector<float>")
-l_jetsAK8nSubJets = ("jetsAK8", "jetAK8nSubJets" )
-h_jetsAK8minmass = Handle("std::vector<float>")
-l_jetsAK8minmass = ("jetsAK8", "jetAK8minmass" )
+l_jetsAK8Tau3 = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "tau3" )
 h_jetsAK8Area = Handle("std::vector<float>")
-l_jetsAK8Area = ( "jetsAK8" , "jetAK8jetArea" )
+l_jetsAK8Area = ( "jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "jetArea" )
 
 
 h_jetsAK8CSV = Handle("std::vector<float>")               # use this ***
-l_jetsAK8CSV = ( "jetsAK8" , "jetAK8CSV" )
+l_jetsAK8CSV = ( "jetsAK8" + options.puMethod , "jetAK8" + options.puMethod + "CSVv2" )
 
 #CMSTT W mass
 #h_jetsAK8wMass = Handle("std::vector<float>")
-#l_jetsAK8wMass = ("jetsAK8", "jetAK8wMass")
-
-h_jetsAK8CmsTopTagSubjetIndex0       = Handle("std::vector<float>")
-l_jetsAK8CmsTopTagSubjetIndex0       = ("jetsAK8", "jetAK8topSubjetIndex0")
-h_jetsAK8CmsTopTagSubjetIndex1       = Handle("std::vector<float>")
-l_jetsAK8CmsTopTagSubjetIndex1       = ("jetsAK8", "jetAK8topSubjetIndex1")
-h_jetsAK8CmsTopTagSubjetIndex2       = Handle("std::vector<float>")
-l_jetsAK8CmsTopTagSubjetIndex2       = ("jetsAK8", "jetAK8topSubjetIndex2")
-h_jetsAK8CmsTopTagSubjetIndex3       = Handle("std::vector<float>")
-l_jetsAK8CmsTopTagSubjetIndex3       = ("jetsAK8", "jetAK8topSubjetIndex3")
-
-h_subjetsCmsTopTagBDisc        = Handle( "std::vector<float>")
-l_subjetsCmsTopTagBDisc        = ("subjetsCmsTopTag", "subjetCmsTopTagCSV") 
-h_subjetsCmsTopTagPt           = Handle( "std::vector<float>")
-l_subjetsCmsTopTagPt           = ("subjetsCmsTopTag", "subjetCmsTopTagPt")
-h_subjetsCmsTopTagEta          = Handle( "std::vector<float>")
-l_subjetsCmsTopTagEta          = ("subjetsCmsTopTag", "subjetCmsTopTagEta")
-h_subjetsCmsTopTagPhi          = Handle( "std::vector<float>")
-l_subjetsCmsTopTagPhi          = ("subjetsCmsTopTag", "subjetCmsTopTagPhi")
-h_subjetsCmsTopTagMass         = Handle( "std::vector<float>")
-l_subjetsCmsTopTagMass         = ("subjetsCmsTopTag", "subjetCmsTopTagMass")
-h_subjetsCmsTopTagArea         = Handle( "std::vector<float>")
-l_subjetsCmsTopTagArea         = ("subjetsCmsTopTag", "subjetCmsTopTagjetArea")
-h_subjetsCmsTopTagnumDaughters = Handle( "std::vector<float>")
-l_subjetsCmsTopTagnumDaughters = ("subjetsCmsTopTag", "subjetCmsTopTagnumberOfDaughters")
-h_subjetsCmsTopTagY            = Handle( "std::vector<float>")
-l_subjetsCmsTopTagY            = ("subjetsCmsTopTag", "subjetCmsTopTagY")
-
-h_subjetsCmsTopTagJEC0         = Handle( "std::vector<float>")
-l_subjetsCmsTopTagJEC0         = ("subjetsCmsTopTag", "subjetCmsTopTagjecFactor0")
-h_subjetsCmsTopTagJERup        = Handle( "std::vector<float>")
-l_subjetsCmsTopTagJERup        = ("subjetsCmsTopTag", "subjetCmsTopTagJERup")
-h_subjetsCmsTopTagJERdown      = Handle( "std::vector<float>")
-l_subjetsCmsTopTagJERdown      = ("subjetsCmsTopTag", "subjetCmsTopTagJERdown")
-
-h_subjetsCmsTopTagSmearedE     = Handle("std::vector<float>")
-l_subjetsCmsTopTagSmearedE     = ("subjetsCmsTopTag" , "subjetCmsTopTagSmearedE")
-h_subjetsCmsTopTagSmearedEta   = Handle("std::vector<float>")
-l_subjetsCmsTopTagSmearedEta   = ("subjetsCmsTopTag" , "subjetCmsTopTagSmearedPEta")
-h_subjetsCmsTopTagSmearedPhi   = Handle("std::vector<float>")
-l_subjetsCmsTopTagSmearedPhi   = ("subjetsCmsTopTag" , "subjetCmsTopTagSmearedPhi")
-h_subjetsCmsTopTagSmearedPt    = Handle("std::vector<float>")
-l_subjetsCmsTopTagSmearedPt    = ("subjetsCmsTopTag" , "subjetCmsTopTagSmearedPt")
-
+#l_jetsAK8wMass = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "wMass")
 
 
 h_jetsAK8SoftDropSubjetIndex0    = Handle("std::vector<float>")
-l_jetsAK8SoftDropSubjetIndex0    = ("jetsAK8", "jetAK8vSubjetIndex0")
+l_jetsAK8SoftDropSubjetIndex0    = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "vSubjetIndex0")
 h_jetsAK8SoftDropSubjetIndex1    = Handle("std::vector<float>")
-l_jetsAK8SoftDropSubjetIndex1    = ("jetsAK8", "jetAK8vSubjetIndex1")
+l_jetsAK8SoftDropSubjetIndex1    = ("jetsAK8" + options.puMethod, "jetAK8" + options.puMethod + "vSubjetIndex1")
 
 h_subjetsSoftDropBDisc           = Handle( "std::vector<float>")
-l_subjetsSoftDropBDisc           = ("subjetsAK8", "subjetAK8CSV") 
+l_subjetsSoftDropBDisc           = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "CSVv2") 
 h_subjetsSoftDropPt              = Handle( "std::vector<float>")
-l_subjetsSoftDropPt              = ("subjetsAK8", "subjetAK8Pt")
+l_subjetsSoftDropPt              = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "Pt")
 h_subjetsSoftDropEta             = Handle( "std::vector<float>")
-l_subjetsSoftDropEta             = ("subjetsAK8", "subjetAK8Eta")
+l_subjetsSoftDropEta             = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "Eta")
 h_subjetsSoftDropPhi             = Handle( "std::vector<float>")
-l_subjetsSoftDropPhi             = ("subjetsAK8", "subjetAK8Phi")
+l_subjetsSoftDropPhi             = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "Phi")
 h_subjetsSoftDropMass            = Handle( "std::vector<float>")
-l_subjetsSoftDropMass            = ("subjetsAK8", "subjetAK8Mass")
+l_subjetsSoftDropMass            = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "Mass")
 h_subjetsSoftDropArea            = Handle( "std::vector<float>")
-l_subjetsSoftDropArea            = ("subjetsAK8", "subjetAK8jetArea")
+l_subjetsSoftDropArea            = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "jetArea")
 h_subjetsSoftDropnumDaughters    = Handle( "std::vector<float>")
-l_subjetsSoftDropnumDaughters    = ("subjetsAK8", "subjetAK8numberOfDaughters")
+l_subjetsSoftDropnumDaughters    = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "numberOfDaughters")
 h_subjetsSoftDropY               = Handle( "std::vector<float>")
-l_subjetsSoftDropY               = ("subjetsAK8", "subjetAK8Y")
+l_subjetsSoftDropY               = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "Y")
+
+h_subjetsSoftDroptau1               = Handle( "std::vector<float>")
+l_subjetsSoftDroptau1               = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "tau1")
+h_subjetsSoftDroptau2               = Handle( "std::vector<float>")
+l_subjetsSoftDroptau2               = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "tau2")
+h_subjetsSoftDroptau3               = Handle( "std::vector<float>")
+l_subjetsSoftDroptau3               = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "tau3")
+
+
 
 h_subjetsSoftDropJEC0            = Handle( "std::vector<float>")
-l_subjetsSoftDropJEC0            = ("subjetsAK8", "subjetAK8jecFactor0")
-h_subjetsSoftDropJERup           = Handle( "std::vector<float>")
-l_subjetsSoftDropJERup           = ("subjetsAK8", "subjetAK8JERup")
-h_subjetsSoftDropJERdown         = Handle( "std::vector<float>")
-l_subjetsSoftDropJERdown         = ("subjetsAK8", "subjetAK8JERdown")
-
-h_subjetsSoftDropSmearedE        = Handle("std::vector<float>")
-l_subjetsSoftDropSmearedE        = ("subjetsAK8" , "subjetAK8SmearedE")
-h_subjetsSoftDropSmearedEta      = Handle("std::vector<float>")
-l_subjetsSoftDropSmearedEta      = ("subjetsAK8" , "subjetAK8SmearedPEta")
-h_subjetsSoftDropSmearedPhi      = Handle("std::vector<float>")
-l_subjetsSoftDropSmearedPhi      = ("subjetsAK8" , "subjetAK8SmearedPhi")
-h_subjetsSoftDropSmearedPt       = Handle("std::vector<float>")
-l_subjetsSoftDropSmearedPt       = ("subjetsAK8" , "subjetAK8SmearedPt")
+l_subjetsSoftDropJEC0            = ("subjetsAK8" + options.puMethod, "subjetAK8" + options.puMethod + "jecFactor0")
 
 h_subjetsSoftDropGenJetE         = Handle("std::vector<float>")
-l_subjetsSoftDropGenJetE         = ("subjetsAK8" , "subjetAK8GenJetE")
+l_subjetsSoftDropGenJetE         = ("subjetsAK8" + options.puMethod , "subjetAK8" + options.puMethod + "GenJetE")
 h_subjetsSoftDropGenJetEta       = Handle("std::vector<float>")
-l_subjetsSoftDropGenJetEta       = ("subjetsAK8" , "subjetAK8GenJetEta")
+l_subjetsSoftDropGenJetEta       = ("subjetsAK8" + options.puMethod , "subjetAK8" + options.puMethod + "GenJetEta")
 h_subjetsSoftDropGenJetPhi       = Handle("std::vector<float>")
-l_subjetsSoftDropGenJetPhi       = ("subjetsAK8" , "subjetAK8GenJetPhi")
+l_subjetsSoftDropGenJetPhi       = ("subjetsAK8" + options.puMethod , "subjetAK8" + options.puMethod + "GenJetPhi")
 h_subjetsSoftDropGenJetPt        = Handle("std::vector<float>")
-l_subjetsSoftDropGenJetPt        = ("subjetsAK8" , "subjetAK8GenJetPt")
+l_subjetsSoftDropGenJetPt        = ("subjetsAK8" + options.puMethod , "subjetAK8" + options.puMethod + "GenJetPt")
 
 h_subjetsSoftDropJetArea         = Handle("std::vector<float>")
-l_subjetsSoftDropJetArea         = ("subjetsAK8" , "subjetAK8jetArea")
+l_subjetsSoftDropJetArea         = ("subjetsAK8" + options.puMethod , "subjetAK8" + options.puMethod + "jetArea")
 h_subjetsSoftDropPartonFlavour   = Handle("std::vector<float>")
-l_subjetsSoftDropPartonFlavour   = ("subjetsAK8" , "subjetAK8PartonFlavour")
+l_subjetsSoftDropPartonFlavour   = ("subjetsAK8" + options.puMethod , "subjetAK8" + options.puMethod + "PartonFlavour")
 
 
 
@@ -925,9 +879,15 @@ if options.writeTree  and options.selection == 1 :
     FatJetSDsubjetWpt   = array('f', [-1.])
     FatJetSDsubjetWmass = array('f', [-1.])
     FatJetSDsubjetWp4   = array('f', [-1.])
+    FatJetSDsubjetWtau1 = array('f', [-1.])
+    FatJetSDsubjetWtau2 = array('f', [-1.])
+    FatJetSDsubjetWtau3 = array('f', [-1.])
     FatJetSDsubjetBpt   = array('f', [-1.])
     FatJetSDsubjetBmass = array('f', [-1.])
     FatJetSDsubjetBp4   = array('f', [-1.])
+    FatJetSDsubjetBtau1 = array('f', [-1.])
+    FatJetSDsubjetBtau2 = array('f', [-1.])
+    FatJetSDsubjetBtau3 = array('f', [-1.])
     FatJetCMSmaxbdisc   = array('f', [-1.])
     FatJetCMSnsubjets   = array('f', [-1.])
     FatJetCMSminMass    = array('f', [-1.])
@@ -943,11 +903,17 @@ if options.writeTree  and options.selection == 1 :
     FatJetSDsubjet0pt   = array('f', [-1.])   
     FatJetSDsubjet0mass = array('f', [-1.])   
     FatJetSDsubjet0area = array('f', [-1.])   
-    FatJetSDsubjet0flav = array('f', [-1.])   
+    FatJetSDsubjet0flav = array('f', [-1.])
+    FatJetSDsubjet0tau1 = array('f', [-1.])
+    FatJetSDsubjet0tau2 = array('f', [-1.])
+    FatJetSDsubjet0tau3 = array('f', [-1.])   
     FatJetSDsubjet1pt   = array('f', [-1.])   
     FatJetSDsubjet1mass = array('f', [-1.])   
     FatJetSDsubjet1area = array('f', [-1.])   
-    FatJetSDsubjet1flav = array('f', [-1.])   
+    FatJetSDsubjet1flav = array('f', [-1.])
+    FatJetSDsubjet1tau1 = array('f', [-1.])
+    FatJetSDsubjet1tau2 = array('f', [-1.])
+    FatJetSDsubjet1tau3 = array('f', [-1.])   
     BJetbDisc           = array('f', [-1.])
     BJetPt              = array('f', [-1.])
     BJetEta             = array('f', [-1.])
@@ -984,6 +950,10 @@ if options.writeTree  and options.selection == 1 :
     NearestAK4JetPhi    = array('f', [-1.])
     NearestAK4JetMass   = array('f', [-1.])
 
+    PU_CorrDn           = array('f', [-1.])
+    PU_CorrUp           = array('f', [-1.])
+
+    
     SemiLeptRunNum        = array('f', [-1.])   
     SemiLeptLumiBlock     = array('f', [-1.])   
     SemiLeptEventNum      = array('f', [-1.])   
@@ -1041,17 +1011,29 @@ if options.writeTree  and options.selection == 1 :
     TreeSemiLept.Branch('FatJetSDsubjetWpt'   , FatJetSDsubjetWpt   ,  'FatJetSDsubjetWpt/F'   )
     TreeSemiLept.Branch('FatJetSDsubjetWmass' , FatJetSDsubjetWmass ,  'FatJetSDsubjetWmass/F' )
     TreeSemiLept.Branch('FatJetSDsubjetWp4'   , FatJetSDsubjetWp4   ,  'FatJetSDsubjetWp4/F'   )
+    TreeSemiLept.Branch('FatJetSDsubjetWtau1' , FatJetSDsubjetWtau1 ,  'FatJetSDsubjetWtau1/F' )
+    TreeSemiLept.Branch('FatJetSDsubjetWtau2' , FatJetSDsubjetWtau2 ,  'FatJetSDsubjetWtau2/F' )
+    TreeSemiLept.Branch('FatJetSDsubjetWtau3' , FatJetSDsubjetWtau3 ,  'FatJetSDsubjetWtau3/F' )
     TreeSemiLept.Branch('FatJetSDsubjetBpt'   , FatJetSDsubjetBpt   ,  'FatJetSDsubjetBpt/F'   )
     TreeSemiLept.Branch('FatJetSDsubjetBmass' , FatJetSDsubjetBmass ,  'FatJetSDsubjetBmass/F' )
     TreeSemiLept.Branch('FatJetSDsubjetBp4'   , FatJetSDsubjetBp4   ,  'FatJetSDsubjetBp4/F'   )
+    TreeSemiLept.Branch('FatJetSDsubjetBtau1' , FatJetSDsubjetBtau1 ,  'FatJetSDsubjetBtau1/F' )
+    TreeSemiLept.Branch('FatJetSDsubjetBtau2' , FatJetSDsubjetBtau2 ,  'FatJetSDsubjetBtau2/F' )
+    TreeSemiLept.Branch('FatJetSDsubjetBtau3' , FatJetSDsubjetBtau3 ,  'FatJetSDsubjetBtau3/F' )
     TreeSemiLept.Branch('FatJetSDsubjet0pt'   , FatJetSDsubjet0pt   ,  'FatJetSDsubjet0pt/F'   ) 
     TreeSemiLept.Branch('FatJetSDsubjet0mass' , FatJetSDsubjet0mass ,  'FatJetSDsubjet0mass/F' ) 
     TreeSemiLept.Branch('FatJetSDsubjet0area' , FatJetSDsubjet0area ,  'FatJetSDsubjet0area/F' ) 
-    TreeSemiLept.Branch('FatJetSDsubjet0flav' , FatJetSDsubjet0flav ,  'FatJetSDsubjet0flav/F' ) 
+    TreeSemiLept.Branch('FatJetSDsubjet0flav' , FatJetSDsubjet0flav ,  'FatJetSDsubjet0flav/F' )
+    TreeSemiLept.Branch('FatJetSDsubjet0tau1' , FatJetSDsubjet0tau1 ,  'FatJetSDsubjet0tau1/F' )
+    TreeSemiLept.Branch('FatJetSDsubjet0tau2' , FatJetSDsubjet0tau2 ,  'FatJetSDsubjet0tau2/F' )
+    TreeSemiLept.Branch('FatJetSDsubjet0tau3' , FatJetSDsubjet0tau3 ,  'FatJetSDsubjet0tau3/F' ) 
     TreeSemiLept.Branch('FatJetSDsubjet1pt'   , FatJetSDsubjet1pt   ,  'FatJetSDsubjet1pt/F'   ) 
     TreeSemiLept.Branch('FatJetSDsubjet1mass' , FatJetSDsubjet1mass ,  'FatJetSDsubjet1mass/F' ) 
     TreeSemiLept.Branch('FatJetSDsubjet1area' , FatJetSDsubjet1area ,  'FatJetSDsubjet1area/F' ) 
-    TreeSemiLept.Branch('FatJetSDsubjet1flav' , FatJetSDsubjet1flav ,  'FatJetSDsubjet1flav/F' ) 
+    TreeSemiLept.Branch('FatJetSDsubjet1flav' , FatJetSDsubjet1flav ,  'FatJetSDsubjet1flav/F' )
+    TreeSemiLept.Branch('FatJetSDsubjet1tau1' , FatJetSDsubjet1tau1 ,  'FatJetSDsubjet1tau1/F' )
+    TreeSemiLept.Branch('FatJetSDsubjet1tau2' , FatJetSDsubjet1tau2 ,  'FatJetSDsubjet1tau2/F' )
+    TreeSemiLept.Branch('FatJetSDsubjet1tau3' , FatJetSDsubjet1tau3 ,  'FatJetSDsubjet1tau3/F' ) 
     TreeSemiLept.Branch('FatJetCMSmaxbdisc'   , FatJetCMSmaxbdisc   ,  'FatJetCMSmaxbdisc/F'   )
     TreeSemiLept.Branch('FatJetCMSnsubjets'   , FatJetCMSnsubjets   ,  'FatJetCMSnsubjets/F'   )
     TreeSemiLept.Branch('FatJetCMSminMass'    , FatJetCMSminMass    ,  'FatJetCMSminMass/F'    )
@@ -1096,6 +1078,10 @@ if options.writeTree  and options.selection == 1 :
     TreeSemiLept.Branch('NearestAK4JetPhi'    ,NearestAK4JetPhi     ,  'NearestAK4JetPhi/F'    )
     TreeSemiLept.Branch('NearestAK4JetMass'   ,NearestAK4JetMass    ,  'NearestAK4JetMass/F'   )
 
+    TreeSemiLept.Branch('PU_CorrDn'         ,  PU_CorrDn       ,  'PU_CorrDn/F'          )
+    TreeSemiLept.Branch('PU_CorrUp'         ,  PU_CorrUp       ,  'PU_CorrUp/F'          )
+
+    
     TreeSemiLept.Branch('SemiLeptRunNum'         ,  SemiLeptRunNum       ,  'SemiLeptRunNum/F'          )
     TreeSemiLept.Branch('SemiLeptLumiBlock'      ,  SemiLeptLumiBlock    ,  'SemiLeptLumiBlock/F'       )
     TreeSemiLept.Branch('SemiLeptEventNum'       ,  SemiLeptEventNum     ,  'SemiLeptEventNum/F'        )
@@ -3484,33 +3470,10 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_jetsAK8Tau1, h_jetsAK8Tau1 )
             event.getByLabel ( l_jetsAK8Tau2, h_jetsAK8Tau2 )
             event.getByLabel ( l_jetsAK8Tau3, h_jetsAK8Tau3 )
-            event.getByLabel ( l_jetsAK8nSubJets, h_jetsAK8nSubJets )
-            event.getByLabel ( l_jetsAK8minmass, h_jetsAK8minmass )
             event.getByLabel ( l_jetsAK8Area, h_jetsAK8Area )
             event.getByLabel ( l_jetsAK8CSV, h_jetsAK8CSV )
 
             
-            event.getByLabel ( l_jetsAK8CmsTopTagSubjetIndex0 , h_jetsAK8CmsTopTagSubjetIndex0  )
-            event.getByLabel ( l_jetsAK8CmsTopTagSubjetIndex1 , h_jetsAK8CmsTopTagSubjetIndex1  )
-            event.getByLabel ( l_jetsAK8CmsTopTagSubjetIndex2 , h_jetsAK8CmsTopTagSubjetIndex2  )
-            event.getByLabel ( l_jetsAK8CmsTopTagSubjetIndex3 , h_jetsAK8CmsTopTagSubjetIndex3  )
-
-            event.getByLabel ( l_subjetsCmsTopTagBDisc        , h_subjetsCmsTopTagBDisc         )
-            event.getByLabel ( l_subjetsCmsTopTagPt           , h_subjetsCmsTopTagPt            )
-            event.getByLabel ( l_subjetsCmsTopTagEta          , h_subjetsCmsTopTagEta           )
-            event.getByLabel ( l_subjetsCmsTopTagPhi          , h_subjetsCmsTopTagPhi           )
-            event.getByLabel ( l_subjetsCmsTopTagMass         , h_subjetsCmsTopTagMass          )            
-            event.getByLabel ( l_subjetsCmsTopTagArea         , h_subjetsCmsTopTagArea          )            
-            event.getByLabel ( l_subjetsCmsTopTagnumDaughters , h_subjetsCmsTopTagnumDaughters  )            
-            event.getByLabel ( l_subjetsCmsTopTagY            , h_subjetsCmsTopTagY             )            
-            event.getByLabel ( l_subjetsCmsTopTagJEC0         , h_subjetsCmsTopTagJEC0          )            
-            event.getByLabel ( l_subjetsCmsTopTagJERup        , h_subjetsCmsTopTagJERup         )            
-            event.getByLabel ( l_subjetsCmsTopTagJERdown      , h_subjetsCmsTopTagJERdown       )            
-            event.getByLabel ( l_subjetsCmsTopTagSmearedE     , h_subjetsCmsTopTagSmearedE      )            
-            event.getByLabel ( l_subjetsCmsTopTagSmearedEta   , h_subjetsCmsTopTagSmearedEta    )            
-            event.getByLabel ( l_subjetsCmsTopTagSmearedPhi   , h_subjetsCmsTopTagSmearedPhi    )            
-            event.getByLabel ( l_subjetsCmsTopTagSmearedPt    , h_subjetsCmsTopTagSmearedPt     )            
-         
 
             
             event.getByLabel ( l_jetsAK8SoftDropSubjetIndex0  , h_jetsAK8SoftDropSubjetIndex0   )
@@ -3525,12 +3488,7 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_subjetsSoftDropnumDaughters , h_subjetsSoftDropnumDaughters  )            
             event.getByLabel ( l_subjetsSoftDropY            , h_subjetsSoftDropY             )            
             event.getByLabel ( l_subjetsSoftDropJEC0         , h_subjetsSoftDropJEC0          )            
-            event.getByLabel ( l_subjetsSoftDropJERup        , h_subjetsSoftDropJERup         )            
-            event.getByLabel ( l_subjetsSoftDropJERdown      , h_subjetsSoftDropJERdown       )            
-            event.getByLabel ( l_subjetsSoftDropSmearedE     , h_subjetsSoftDropSmearedE      )            
-            event.getByLabel ( l_subjetsSoftDropSmearedEta   , h_subjetsSoftDropSmearedEta    )            
-            event.getByLabel ( l_subjetsSoftDropSmearedPhi   , h_subjetsSoftDropSmearedPhi    )            
-            event.getByLabel ( l_subjetsSoftDropSmearedPt    , h_subjetsSoftDropSmearedPt     )            
+
                    
             event.getByLabel ( l_subjetsSoftDropGenJetE          , h_subjetsSoftDropGenJetE       )            
             event.getByLabel ( l_subjetsSoftDropGenJetEta        , h_subjetsSoftDropGenJetEta     )            
@@ -3540,7 +3498,9 @@ for ifile in files : #{ Loop over root files
             event.getByLabel ( l_subjetsSoftDropPartonFlavour    , h_subjetsSoftDropPartonFlavour )            
 
 
-            
+            event.getByLabel ( l_subjetsSoftDroptau1             , h_subjetsSoftDroptau1          )
+            event.getByLabel ( l_subjetsSoftDroptau2             , h_subjetsSoftDroptau2          )
+            event.getByLabel ( l_subjetsSoftDroptau3             , h_subjetsSoftDroptau3          )
                 
             ak8JetsGood = []
             ak8JetsGoodRaw      = []
@@ -3565,10 +3525,6 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodNC  = []
             ak8JetsGoodNCH = []
             ak8JetsGoodCSV = []
-            ak8JetsGoodCMSTTsubjetIndex0 = []
-            ak8JetsGoodCMSTTsubjetIndex1 = []
-            ak8JetsGoodCMSTTsubjetIndex2 = []
-            ak8JetsGoodCMSTTsubjetIndex3 = []            
             ak8JetsGoodSDsubjetIndex0 = []            
             ak8JetsGoodSDsubjetIndex1 = []   
             ak8JetsGoodSDsubjet0Mass = []            
@@ -3578,8 +3534,14 @@ for ifile in files : #{ Loop over root files
             ak8JetsGoodSDsubjet0Pt = []            
             ak8JetsGoodSDsubjet1Pt = [] 
             ak8JetsGoodSDsubjet0P4 = []            
-            ak8JetsGoodSDsubjet1P4 = []      
-
+            ak8JetsGoodSDsubjet1P4 = []
+            ak8JetsGoodSDsubjet0Tau1 = []            
+            ak8JetsGoodSDsubjet1Tau1 = []
+            ak8JetsGoodSDsubjet0Tau2 = []            
+            ak8JetsGoodSDsubjet1Tau2 = []
+            ak8JetsGoodSDsubjet0Tau3 = []            
+            ak8JetsGoodSDsubjet1Tau3 = []
+            
             ak8JetsGoodJetMassCorrFactor = []
             ak8JetsGoodJetMassCorrFactorUp = []
             ak8JetsGoodJetMassCorrFactorDn = []
@@ -3646,8 +3608,6 @@ for ifile in files : #{ Loop over root files
                 AK8Tau1            = h_jetsAK8Tau1               .product()
                 AK8Tau2            = h_jetsAK8Tau2               .product()
                 AK8Tau3            = h_jetsAK8Tau3               .product()
-                AK8nSubJets        = h_jetsAK8nSubJets           .product()
-                AK8minmass         = h_jetsAK8minmass            .product()
                 AK8Area            = h_jetsAK8Area               .product()
 
                 AK8TrimmedM = []
@@ -3656,63 +3616,6 @@ for ifile in files : #{ Loop over root files
                 AK8SDropM = []
                 
 
-                # Get CMSTT subjets and re-correct them
-                AK8CMSTTsubjetIndex0         = h_jetsAK8CmsTopTagSubjetIndex0 .product()
-                AK8CMSTTsubjetIndex1         = h_jetsAK8CmsTopTagSubjetIndex1 .product()
-                AK8CMSTTsubjetIndex2         = h_jetsAK8CmsTopTagSubjetIndex2 .product()
-                AK8CMSTTsubjetIndex3         = h_jetsAK8CmsTopTagSubjetIndex3 .product()
-                
-                CMSTTsubjetBDisc        =[]  
-                CMSTTsubjetPtRaw        =[]
-                CMSTTsubjetPt           =[]
-                CMSTTsubjetEta          =[]  
-                CMSTTsubjetPhi          =[]  
-                CMSTTsubjetMassRaw      =[]
-                CMSTTsubjetMass         =[]
-                CMSTTsubjetArea         =[]  
-                CMSTTsubjetnumDaughters =[]  
-                CMSTTsubjetY            =[]  
-                CMSTTsubjetJEC0         =[]  
-                CMSTTsubjetJERup        =[]  
-                CMSTTsubjetJERdown      =[]  
-                CMSTTsubjetSmearedE     =[]  
-                CMSTTsubjetSmearedEta   =[]  
-                CMSTTsubjetSmearedPhi   =[] 
-
-                if len(h_subjetsCmsTopTagBDisc.product() ) > 0 :
-                    CMSTTsubjetBDisc          = h_subjetsCmsTopTagBDisc          .product()
-                    CMSTTsubjetPtRaw          = h_subjetsCmsTopTagPt             .product()
-                    CMSTTsubjetEta            = h_subjetsCmsTopTagEta            .product()
-                    CMSTTsubjetPhi            = h_subjetsCmsTopTagPhi            .product()
-                    CMSTTsubjetMassRaw        = h_subjetsCmsTopTagMass           .product()
-                    CMSTTsubjetArea           = h_subjetsCmsTopTagArea           .product()
-                    CMSTTsubjetnumDaughters   = h_subjetsCmsTopTagnumDaughters   .product()
-                    CMSTTsubjetY              = h_subjetsCmsTopTagY              .product()
-                    CMSTTsubjetJEC0           = h_subjetsCmsTopTagJEC0           .product()
-                    CMSTTsubjetJERup          = h_subjetsCmsTopTagJERup          .product()
-                    CMSTTsubjetJERdown        = h_subjetsCmsTopTagJERdown        .product()
-                    CMSTTsubjetSmearedE       = h_subjetsCmsTopTagSmearedE       .product()
-                    CMSTTsubjetSmearedEta     = h_subjetsCmsTopTagSmearedEta     .product()
-                    CMSTTsubjetSmearedPhi     = h_subjetsCmsTopTagSmearedPhi     .product()
-                    CMSTTsubjetSmearedPt      = h_subjetsCmsTopTagSmearedPt      .product()
-
-
-                    for isubjet in xrange( len(CMSTTsubjetPtRaw) ) :
-                        spt  = CMSTTsubjetJEC0[isubjet] * CMSTTsubjetPtRaw[isubjet]
-                        seta = CMSTTsubjetEta[isubjet]
-                        sphi = CMSTTsubjetPhi[isubjet]
-                        smass= CMSTTsubjetJEC0[isubjet] * CMSTTsubjetMassRaw[isubjet]
-                        subjetP4Raw = ROOT.TLorentzVector()
-                        subjetP4Raw.SetPtEtaPhiM( spt, seta, sphi, smass)
-                        ak4JetCorrectorForMass.setJetEta( subjetP4Raw.Eta() )
-                        ak4JetCorrectorForMass.setJetPt ( subjetP4Raw.Perp() )
-                        ak4JetCorrectorForMass.setJetE  ( subjetP4Raw.E() )
-                        ak4JetCorrectorForMass.setRho   ( rho )
-                        ak4JetCorrectorForMass.setNPV   ( NPV )
-                        newJEC = ak4JetCorrectorForMass.getCorrection()
-                        subjetP4 = subjetP4Raw * newJEC
-                        CMSTTsubjetPt.append( subjetP4.Perp() )
-                        CMSTTsubjetMass.append( subjetP4.M() )
 
 
                 # Get SoftDrop subjets and re-correct them        
@@ -3725,15 +3628,12 @@ for ifile in files : #{ Loop over root files
                 SDsubjetPhi           = []
                 SDsubjetMass          = []
                 SDsubjetArea          = []
+                SDsubjetTau1          = []
+                SDsubjetTau2          = []
+                SDsubjetTau3          = []
                 SDsubjetnumDaughters  = []
                 SDsubjetY             = []
                 SDsubjetJEC0          = []
-                SDsubjetJERup         = []
-                SDsubjetJERdown       = []
-                SDsubjetSmearedE      = []
-                SDsubjetSmearedEta    = []
-                SDsubjetSmearedPhi    = []
-                SDsubjetSmearedPt     = []
                 SDsubjetP4corr        = []
                 SDsubjetP4raw         = []
                 SDsubjetP4corrUp      = []
@@ -3752,15 +3652,12 @@ for ifile in files : #{ Loop over root files
                     SDsubjetPhi            = h_subjetsSoftDropPhi            .product()
                     SDsubjetMassOrig       = h_subjetsSoftDropMass           .product()
                     SDsubjetArea           = h_subjetsSoftDropArea           .product()
+                    SDsubjetTau1           = h_subjetsSoftDroptau1           .product()
+                    SDsubjetTau2           = h_subjetsSoftDroptau2           .product()
+                    SDsubjetTau3           = h_subjetsSoftDroptau3           .product()
                     SDsubjetnumDaughters   = h_subjetsSoftDropnumDaughters   .product()
                     SDsubjetY              = h_subjetsSoftDropY              .product()
                     SDsubjetJEC0           = h_subjetsSoftDropJEC0           .product()
-                    SDsubjetJERup          = h_subjetsSoftDropJERup          .product()
-                    SDsubjetJERdown        = h_subjetsSoftDropJERdown        .product()
-                    SDsubjetSmearedE       = h_subjetsSoftDropSmearedE       .product()
-                    SDsubjetSmearedEta     = h_subjetsSoftDropSmearedEta     .product()
-                    SDsubjetSmearedPhi     = h_subjetsSoftDropSmearedPhi     .product()
-                    SDsubjetSmearedPt      = h_subjetsSoftDropSmearedPt      .product()
                     SDsubjetGenJetE        = h_subjetsSoftDropGenJetE        .product()
                     SDsubjetGenJetEta      = h_subjetsSoftDropGenJetEta      .product()
                     SDsubjetGenJetPhi      = h_subjetsSoftDropGenJetPhi      .product()
@@ -4039,8 +3936,6 @@ for ifile in files : #{ Loop over root files
                             print "smear                "  + str( smear   )
                             print "smearUp              "  + str( smearUp )
                             print "smearDn              "  + str( smearDn )
-                            print "AK8JERup             "  + str( AK8JERup        [i] )
-                            print "AK8JERdown           "  + str( AK8JERdown      [i] )
                             print "AK8SmearedE          "  + str( AK8SmearedE     [i] )  
                             print "AK8SmearedPhi        "  + str( AK8SmearedPhi   [i] )  
                             print "AK8SmearedEta        "  + str( AK8SmearedEta   [i] )  
@@ -4121,15 +4016,8 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodTau1.append( AK8Tau1[i])
                             ak8JetsGoodTau2.append( AK8Tau2[i])
                             ak8JetsGoodTau3.append( AK8Tau3[i])
-                            ak8JetsGoodNSubJets.append( AK8nSubJets[i])
-                            ak8JetsGoodMinMass.append( AK8minmass[i] )
+
                             ak8JetsGoodNHadE.append( AK8nHadE[i]   )
-                            #ak8JetsGoodTopSubjetMass.append(  CMSTTsubjetMass[ int(AK8CMSTTsubjetIndex0[i]) ]  )
-                            #ak8JetsGoodTopSubjetbDisc.append(  CMSTTsubjetBDisc[ int(AK8CMSTTsubjetIndex0[i]) ]  )
-                            ak8JetsGoodCMSTTsubjetIndex0.append( AK8CMSTTsubjetIndex0[i] )
-                            ak8JetsGoodCMSTTsubjetIndex1.append( AK8CMSTTsubjetIndex1[i] )
-                            ak8JetsGoodCMSTTsubjetIndex2.append( AK8CMSTTsubjetIndex2[i] )
-                            ak8JetsGoodCMSTTsubjetIndex3.append( AK8CMSTTsubjetIndex3[i] )
                             ak8JetsGoodSDsubjetIndex0.append( AK8SDsubjetIndex0[i] )
                             ak8JetsGoodSDsubjetIndex1.append( AK8SDsubjetIndex1[i] )
                             if len(SDsubjetMass) >= 2:
@@ -4139,6 +4027,12 @@ for ifile in files : #{ Loop over root files
                                 ak8JetsGoodSDsubjet1Pt.append( SDsubjetPt[int(AK8SDsubjetIndex1[i])] )
                                 ak8JetsGoodSDsubjet0Bdisc.append( SDsubjetBDisc[int(AK8SDsubjetIndex0[i])] )
                                 ak8JetsGoodSDsubjet1Bdisc.append( SDsubjetBDisc[int(AK8SDsubjetIndex1[i])] )
+                                ak8JetsGoodSDsubjet0Tau1.append( SDsubjetTau1[int(AK8SDsubjetIndex0[i])] )
+                                ak8JetsGoodSDsubjet1Tau1.append( SDsubjetTau1[int(AK8SDsubjetIndex1[i])] )
+                                ak8JetsGoodSDsubjet0Tau2.append( SDsubjetTau2[int(AK8SDsubjetIndex0[i])] )
+                                ak8JetsGoodSDsubjet1Tau2.append( SDsubjetTau2[int(AK8SDsubjetIndex1[i])] )
+                                ak8JetsGoodSDsubjet0Tau3.append( SDsubjetTau3[int(AK8SDsubjetIndex0[i])] )
+                                ak8JetsGoodSDsubjet1Tau3.append( SDsubjetTau3[int(AK8SDsubjetIndex1[i])] )
                             else :
                                 ak8JetsGoodSDsubjet0Mass.append( 0 )
                                 ak8JetsGoodSDsubjet1Mass.append( 0 )
@@ -4146,6 +4040,12 @@ for ifile in files : #{ Loop over root files
                                 ak8JetsGoodSDsubjet1Pt.append( 0 )
                                 ak8JetsGoodSDsubjet0Bdisc.append( 0 )
                                 ak8JetsGoodSDsubjet1Bdisc.append( 0 )
+                                ak8JetsGoodSDsubjet0Tau1.append( 0 )
+                                ak8JetsGoodSDsubjet1Tau1.append( 0 )
+                                ak8JetsGoodSDsubjet0Tau2.append( 0 )
+                                ak8JetsGoodSDsubjet1Tau2.append( 0 )
+                                ak8JetsGoodSDsubjet0Tau3.append( 0 )
+                                ak8JetsGoodSDsubjet1Tau3.append( 0 )                                
 
                             ak8JetsGoodNHF.append( nhf )
                             ak8JetsGoodCHF.append( chf )
@@ -4160,14 +4060,6 @@ for ifile in files : #{ Loop over root files
                             ak8JetsGoodCorrDnFactor.append( corrDn )
                     #$ Cuts for Hadronic channel
                     else : 
-                        if options.verbose:
-                            print 'N AK8 CMSTT Subjet B discriminators, Hadronic = ' + str( len(CMSTTsubjetBDisc) )
-                            print 'N AK8 SD Subjet B discriminators, Hadronic = ' + str( len(SDsubjetBDisc) )
-                            print 'AK8SDropM[i]  '+str(AK8SDropM[i] )
-                            print 'AK8CMSTTsubjetIndex0[i] '+str(AK8CMSTTsubjetIndex0[i] )
-                            print 'AK8CMSTTsubjetIndex1[i] '+str(AK8CMSTTsubjetIndex1[i] )
-                            print 'AK8CMSTTsubjetIndex2[i] '+str(AK8CMSTTsubjetIndex2[i] )
-                            print 'AK8CMSTTsubjetIndex3[i] '+str(AK8CMSTTsubjetIndex3[i] )
 
                         ak8JetsGood             .append( AK8P4Corr       )
                         ak8JetsGoodRaw          .append( AK8P4Raw        )
@@ -4180,13 +4072,7 @@ for ifile in files : #{ Loop over root files
                         ak8JetsGoodTau1         .append( AK8Tau1[i]      )
                         ak8JetsGoodTau2         .append( AK8Tau2[i]      )
                         ak8JetsGoodTau3         .append( AK8Tau3[i]      )
-                        ak8JetsGoodNSubJets     .append( AK8nSubJets[i]  )
-                        ak8JetsGoodMinMass      .append( AK8minmass[i]   )
 
-                        ak8JetsGoodCMSTTsubjetIndex0.append( AK8CMSTTsubjetIndex0[i] )
-                        ak8JetsGoodCMSTTsubjetIndex1.append( AK8CMSTTsubjetIndex1[i] )
-                        ak8JetsGoodCMSTTsubjetIndex2.append( AK8CMSTTsubjetIndex2[i] )
-                        ak8JetsGoodCMSTTsubjetIndex3.append( AK8CMSTTsubjetIndex3[i] )  
                         ak8JetsGoodSDsubjetIndex0.append( AK8SDsubjetIndex0[i] )
                         ak8JetsGoodSDsubjetIndex1.append( AK8SDsubjetIndex1[i] )
                         #ak8JetsGoodTopSubjetMass.append(  CMSTTsubjetMass[ int(AK8CMSTTsubjetIndex0[i]) ]  )
@@ -4429,11 +4315,6 @@ for ifile in files : #{ Loop over root files
                     print '   Subjet indices : %6d %6d' % (ak8JetsGoodSDsubjetIndex0[0],
                                                                    ak8JetsGoodSDsubjetIndex1[0])
 
-                    for index in [ak8JetsGoodCMSTTsubjetIndex0[0],
-                                  ak8JetsGoodCMSTTsubjetIndex1[0] ] :
-                        if index > len(SDsubjetBDisc) :
-                            print "Problem! Subjet indices are wrong!"
-                            exit(1)
 
 
                     print '   -subjet0pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_sd_s0_pt, jet0_sd_s0_eta, jet0_sd_s0_phi, jet0_sd_s0_bdisc )
@@ -4577,180 +4458,14 @@ for ifile in files : #{ Loop over root files
                     print 'jet1_sd_maxbdisc '+str(jet1_sd_maxbdisc)
 
 
-                # Jet 0 CMSTT subjets
-                jet0_cmstt_s0_bdisc = -1.
-                jet0_cmstt_s1_bdisc = -1.
-                jet0_cmstt_s2_bdisc = -1.
-                jet0_cmstt_s3_bdisc = -1.
-                jet0_cmstt_s0_pt    = -1.
-                jet0_cmstt_s1_pt    = -1.
-                jet0_cmstt_s2_pt    = -1.
-                jet0_cmstt_s3_pt    = -1.
-                jet0_cmstt_s0_eta   = -1.
-                jet0_cmstt_s1_eta   = -1.
-                jet0_cmstt_s2_eta   = -1.
-                jet0_cmstt_s3_eta   = -1.
-                jet0_cmstt_s0_phi   = -1.
-                jet0_cmstt_s1_phi   = -1.
-                jet0_cmstt_s2_phi   = -1.
-                jet0_cmstt_s3_phi   = -1.
-                jet0_cmstt_s0_m     = -1.
-                jet0_cmstt_s1_m     = -1.
-                jet0_cmstt_s2_m     = -1.
-                jet0_cmstt_s3_m     = -1.
-
-                if ak8JetsGoodCMSTTsubjetIndex0[0] > -1 :
-                    jet0_cmstt_s0_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
-                    jet0_cmstt_s0_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
-                    jet0_cmstt_s0_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
-                    jet0_cmstt_s0_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
-                    jet0_cmstt_s0_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex0[0]) ]
-
-                if ak8JetsGoodCMSTTsubjetIndex1[0] > -1 :
-                    jet0_cmstt_s1_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
-                    jet0_cmstt_s1_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
-                    jet0_cmstt_s1_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
-                    jet0_cmstt_s1_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
-                    jet0_cmstt_s1_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex1[0]) ]
-
-                if ak8JetsGoodCMSTTsubjetIndex2[0] > -1 :
-                    jet0_cmstt_s2_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
-                    jet0_cmstt_s2_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
-                    jet0_cmstt_s2_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
-                    jet0_cmstt_s2_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
-                    jet0_cmstt_s2_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex2[0]) ]
-
-                if ak8JetsGoodCMSTTsubjetIndex3[0] > -1 :
-                    jet0_cmstt_s3_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
-                    jet0_cmstt_s3_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
-                    jet0_cmstt_s3_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
-                    jet0_cmstt_s3_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
-                    jet0_cmstt_s3_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex3[0]) ]
 
                 jet0_bdiscs =[jet0_cmstt_s0_bdisc, jet0_cmstt_s1_bdisc, jet0_cmstt_s2_bdisc, jet0_cmstt_s3_bdisc] 
                 jet0_cmstt_maxbdisc = max(jet0_bdiscs)
-                
-                jet0_cmstt_s0 = ROOT.TLorentzVector()
-                jet0_cmstt_s1 = ROOT.TLorentzVector()
-                jet0_cmstt_s2 = ROOT.TLorentzVector()
-                jet0_cmstt_s0.SetPtEtaPhiM( jet0_cmstt_s0_pt , jet0_cmstt_s0_eta, jet0_cmstt_s0_phi, jet0_cmstt_s0_m )
-                jet0_cmstt_s1.SetPtEtaPhiM( jet0_cmstt_s1_pt , jet0_cmstt_s1_eta, jet0_cmstt_s1_phi, jet0_cmstt_s1_m )
-                jet0_cmstt_s2.SetPtEtaPhiM( jet0_cmstt_s2_pt , jet0_cmstt_s2_eta, jet0_cmstt_s2_phi, jet0_cmstt_s2_m )
-                jet0_cmstt_m01 = (jet0_cmstt_s0 + jet0_cmstt_s1 ).M()
-                jet0_cmstt_m02 = (jet0_cmstt_s0 + jet0_cmstt_s2 ).M()
-                jet0_cmstt_m12 = (jet0_cmstt_s1 + jet0_cmstt_s2 ).M()
-
-                if options.verbose:
-                    print 'Top tag candidate : '+str(0)
-                    print '   top jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
-                        ak8JetsGood[0].Perp(), ak8JetsGood[0].Rapidity(), ak8JetsGood[0].Phi(), ak8JetsGood[0].M() )                 
-
-                    print '   Subjet indices : %6d %6d %6d %6d' % (ak8JetsGoodCMSTTsubjetIndex0[0],
-                                                                   ak8JetsGoodCMSTTsubjetIndex1[0],
-                                                                   ak8JetsGoodCMSTTsubjetIndex2[0],
-                                                                   ak8JetsGoodCMSTTsubjetIndex3[0])
-
-                    for index in [ak8JetsGoodCMSTTsubjetIndex0[0],
-                                  ak8JetsGoodCMSTTsubjetIndex1[0],
-                                  ak8JetsGoodCMSTTsubjetIndex2[0],
-                                  ak8JetsGoodCMSTTsubjetIndex3[0] ] :
-                        if index > len(CMSTTsubjetBDisc) :
-                            print "Problem! Subjet indices are wrong!"
-                            exit(1)
-
-                    print '   -subjet0pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_s0_pt, jet0_cmstt_s0_eta, jet0_cmstt_s0_phi, jet0_cmstt_s0_bdisc )
-                    print '   -subjet1pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_s1_pt, jet0_cmstt_s1_eta, jet0_cmstt_s1_phi, jet0_cmstt_s1_bdisc )
-                    print '   -subjet2pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_s2_pt, jet0_cmstt_s2_eta, jet0_cmstt_s2_phi, jet0_cmstt_s2_bdisc )
-                    print '   -subjet3pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet0_cmstt_s3_pt, jet0_cmstt_s3_eta, jet0_cmstt_s3_phi, jet0_cmstt_s3_bdisc )                 
-                    print 'jet0_cmstt_maxbdisc '+str(jet0_cmstt_maxbdisc)
-
-                 # Jet 0 CMSTT subjets
-                jet1_cmstt_s0_bdisc = -1.
-                jet1_cmstt_s1_bdisc = -1.
-                jet1_cmstt_s2_bdisc = -1.
-                jet1_cmstt_s3_bdisc = -1.
-                jet1_cmstt_s0_pt    = -1.
-                jet1_cmstt_s1_pt    = -1.
-                jet1_cmstt_s2_pt    = -1.
-                jet1_cmstt_s3_pt    = -1.
-                jet1_cmstt_s0_eta   = -1.
-                jet1_cmstt_s1_eta   = -1.
-                jet1_cmstt_s2_eta   = -1.
-                jet1_cmstt_s3_eta   = -1.
-                jet1_cmstt_s0_phi   = -1.
-                jet1_cmstt_s1_phi   = -1.
-                jet1_cmstt_s2_phi   = -1.
-                jet1_cmstt_s3_phi   = -1.
-                jet1_cmstt_s0_m     = -1.
-                jet1_cmstt_s1_m     = -1.
-                jet1_cmstt_s2_m     = -1.
-                jet1_cmstt_s3_m     = -1.
-
-                if ak8JetsGoodCMSTTsubjetIndex0[1] > -1 :
-                    jet1_cmstt_s0_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
-                    jet1_cmstt_s0_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
-                    jet1_cmstt_s0_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
-                    jet1_cmstt_s0_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
-                    jet1_cmstt_s0_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex0[1]) ]
-
-                if ak8JetsGoodCMSTTsubjetIndex1[1] > -1 :
-                    jet1_cmstt_s1_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
-                    jet1_cmstt_s1_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
-                    jet1_cmstt_s1_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
-                    jet1_cmstt_s1_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
-                    jet1_cmstt_s1_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex1[1]) ]
-
-                if ak8JetsGoodCMSTTsubjetIndex2[1] > -1 :
-                    jet1_cmstt_s2_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
-                    jet1_cmstt_s2_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
-                    jet1_cmstt_s2_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
-                    jet1_cmstt_s2_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
-                    jet1_cmstt_s2_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex2[1]) ]
-
-                if ak8JetsGoodCMSTTsubjetIndex3[1] > -1 :
-                    jet1_cmstt_s3_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
-                    jet1_cmstt_s3_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
-                    jet1_cmstt_s3_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
-                    jet1_cmstt_s3_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
-                    jet1_cmstt_s3_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex3[1]) ]
-
-                jet1_bdiscs =[jet1_cmstt_s0_bdisc, jet1_cmstt_s1_bdisc, jet1_cmstt_s2_bdisc, jet1_cmstt_s3_bdisc] 
-                jet1_cmstt_maxbdisc = max(jet1_bdiscs)
-                
-                jet1_cmstt_s0 = ROOT.TLorentzVector()
-                jet1_cmstt_s1 = ROOT.TLorentzVector()
-                jet1_cmstt_s2 = ROOT.TLorentzVector()
-                jet1_cmstt_s0.SetPtEtaPhiM( jet1_cmstt_s0_pt , jet1_cmstt_s0_eta, jet1_cmstt_s0_phi, jet1_cmstt_s0_m )
-                jet1_cmstt_s1.SetPtEtaPhiM( jet1_cmstt_s1_pt , jet1_cmstt_s1_eta, jet1_cmstt_s1_phi, jet1_cmstt_s1_m )
-                jet1_cmstt_s2.SetPtEtaPhiM( jet1_cmstt_s2_pt , jet1_cmstt_s2_eta, jet1_cmstt_s2_phi, jet1_cmstt_s2_m )
-                jet1_cmstt_m01 = (jet1_cmstt_s0 + jet1_cmstt_s1 ).M()
-                jet1_cmstt_m02 = (jet1_cmstt_s0 + jet1_cmstt_s2 ).M()
-                jet1_cmstt_m12 = (jet1_cmstt_s1 + jet1_cmstt_s2 ).M()
-
 
                 if options.verbose:
                     print 'Top tag candidate : '+str(0)
                     print '   top jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
                         ak8JetsGood[1].Perp(), ak8JetsGood[1].Rapidity(), ak8JetsGood[1].Phi(), ak8JetsGood[1].M() )                 
-
-                    print '   Subjet indices : %6d %6d %6d %6d' % (ak8JetsGoodCMSTTsubjetIndex0[1],
-                                                                   ak8JetsGoodCMSTTsubjetIndex1[1],
-                                                                   ak8JetsGoodCMSTTsubjetIndex2[1],
-                                                                   ak8JetsGoodCMSTTsubjetIndex3[1])
-
-                    for index in [ak8JetsGoodCMSTTsubjetIndex0[1],
-                                  ak8JetsGoodCMSTTsubjetIndex1[1],
-                                  ak8JetsGoodCMSTTsubjetIndex2[1],
-                                  ak8JetsGoodCMSTTsubjetIndex3[1] ] :
-                        if index > len(CMSTTsubjetBDisc) :
-                            print "Problem! Subjet indices are wrong!"
-                            exit(1)
-
-                    print '   -subjet1pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet1_cmstt_s0_pt, jet1_cmstt_s0_eta, jet1_cmstt_s0_phi, jet1_cmstt_s0_bdisc )
-                    print '   -subjet1pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet1_cmstt_s1_pt, jet1_cmstt_s1_eta, jet1_cmstt_s1_phi, jet1_cmstt_s1_bdisc )
-                    print '   -subjet2pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet1_cmstt_s2_pt, jet1_cmstt_s2_eta, jet1_cmstt_s2_phi, jet1_cmstt_s2_bdisc )
-                    print '   -subjet3pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jet1_cmstt_s3_pt, jet1_cmstt_s3_eta, jet1_cmstt_s3_phi, jet1_cmstt_s3_bdisc )                 
-                    print 'jet1_cmstt_maxbdisc '+str(jet1_cmstt_maxbdisc)
 
 
                 #@ ALL-HADRONIC BACKGROUND ESTIMATION 
@@ -4871,12 +4586,6 @@ for ifile in files : #{ Loop over root files
                     Jet0SDsubjet1mass              [0] =  jet0_sd_s1_p4corr.M()
                     Jet0SDsubjet1area              [0] =  jet0_sd_s1_area
                     Jet0SDsubjet1flav              [0] =  jet0_sd_s1_flavour
-                    Jet0CMSmaxbdisc                [0] =  jet0_cmstt_maxbdisc
-                    Jet0CMSnsubjets                [0] =  ak8JetsGoodNSubJets[0]
-                    Jet0CMSminMass                 [0] =  ak8JetsGoodMinMass[0]
-                    Jet0CMSm01                     [0] =  jet0_cmstt_m01
-                    Jet0CMSm02                     [0] =  jet0_cmstt_m02
-                    Jet0CMSm12                     [0] =  jet0_cmstt_m12
                     Jet0NHF                        [0] =  ak8JetsGoodNHF[0]
                     Jet0CHF                        [0] =  ak8JetsGoodCHF[0]
                     Jet0NEF                        [0] =  ak8JetsGoodNEF[0]
@@ -4967,12 +4676,6 @@ for ifile in files : #{ Loop over root files
                     Jet1SDsubjet1mass              [0] =  jet1_sd_s1_p4corr.M()
                     Jet1SDsubjet1area              [0] =  jet1_sd_s1_area
                     Jet1SDsubjet1flav              [0] =  jet1_sd_s1_flavour
-                    Jet1CMSmaxbdisc                [0] =  jet1_cmstt_maxbdisc
-                    Jet1CMSnsubjets                [0] =  ak8JetsGoodNSubJets[1]
-                    Jet1CMSminMass                 [0] =  ak8JetsGoodMinMass[1]
-                    Jet1CMSm01                     [0] =  jet1_cmstt_m01
-                    Jet1CMSm02                     [0] =  jet1_cmstt_m02
-                    Jet1CMSm12                     [0] =  jet1_cmstt_m12
                     Jet1NHF                        [0] =  ak8JetsGoodNHF[0]
                     Jet1CHF                        [0] =  ak8JetsGoodCHF[0]
                     Jet1NEF                        [0] =  ak8JetsGoodNEF[0]
@@ -5049,7 +4752,6 @@ for ifile in files : #{ Loop over root files
                 mAK8Trimmed = ak8JetsGoodTrimMass[tagCand]
                 mAK8SDrop = ak8JetsGoodSDropMass[tagCand]
                 # Make sure there are top tags if we want to plot them
-                minMass = ak8JetsGoodMinMass[tagCand]
                 if ak8JetsGoodSDsubjet0Bdisc[tagCand] > ak8JetsGoodSDsubjet1Bdisc[tagCand] :
                     subjetBdiscW = ak8JetsGoodSDsubjet1Bdisc[tagCand]   
                     subjetBdiscB = ak8JetsGoodSDsubjet0Bdisc[tagCand]  
@@ -5058,6 +4760,12 @@ for ifile in files : #{ Loop over root files
                     subjetBMass  = ak8JetsGoodSDsubjet0Mass[tagCand]  
                     subjetWPt  = ak8JetsGoodSDsubjet1Pt[tagCand] 
                     subjetBPt  = ak8JetsGoodSDsubjet0Pt[tagCand]
+                    subjetWTau1= ak8JetsGoodSDsubjet1Tau1[tagCand]
+                    subjetBTau1= ak8JetsGoodSDsubjet0Tau1[tagCand]
+                    subjetWTau2= ak8JetsGoodSDsubjet1Tau2[tagCand]
+                    subjetBTau2= ak8JetsGoodSDsubjet0Tau2[tagCand]
+                    subjetWTau3= ak8JetsGoodSDsubjet1Tau3[tagCand]
+                    subjetBTau3= ak8JetsGoodSDsubjet0Tau3[tagCand]
                 else :                    
                     subjetBdiscW = ak8JetsGoodSDsubjet0Bdisc[tagCand]   
                     subjetBdiscB = ak8JetsGoodSDsubjet1Bdisc[tagCand]  
@@ -5066,8 +4774,13 @@ for ifile in files : #{ Loop over root files
                     subjetBMass  = ak8JetsGoodSDsubjet1Mass[tagCand] 
                     subjetWPt  = ak8JetsGoodSDsubjet0Pt[tagCand] 
                     subjetBPt  = ak8JetsGoodSDsubjet1Pt[tagCand]     
+                    subjetWTau1= ak8JetsGoodSDsubjet0Tau1[tagCand]
+                    subjetBTau1= ak8JetsGoodSDsubjet1Tau1[tagCand]
+                    subjetWTau2= ak8JetsGoodSDsubjet0Tau2[tagCand]
+                    subjetBTau2= ak8JetsGoodSDsubjet1Tau2[tagCand]
+                    subjetWTau3= ak8JetsGoodSDsubjet0Tau3[tagCand]
+                    subjetBTau3= ak8JetsGoodSDsubjet1Tau3[tagCand]
 
-                nsubjets = ak8JetsGoodNSubJets[tagCand]
                 tau1 = ak8JetsGoodTau1[tagCand]  
                 tau2 = ak8JetsGoodTau2[tagCand] 
                 tau3 = ak8JetsGoodTau3[tagCand]
@@ -5130,7 +4843,10 @@ for ifile in files : #{ Loop over root files
                     jetFat_sd_s0_p4raw      = SDsubjetP4raw          [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
                     jetFat_sd_s0_p4corrUp   = SDsubjetP4corrUp       [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
                     jetFat_sd_s0_p4corrDn   = SDsubjetP4corrDn       [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
-                    jetFat_sd_s0_area       = SDsubjetJetArea        [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]       
+                    jetFat_sd_s0_area       = SDsubjetJetArea        [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_tau1       = SDsubjetTau1           [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_tau2       = SDsubjetTau2           [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
+                    jetFat_sd_s0_tau3       = SDsubjetTau3           [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]       
                     if options.isMC:
                         jetFat_sd_s0_smear      = SDsubjetSmearFactor    [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
                         jetFat_sd_s0_smearUp    = SDsubjetSmearFactorUp  [ int(ak8JetsGoodSDsubjetIndex0[tagCand]) ]
@@ -5151,7 +4867,10 @@ for ifile in files : #{ Loop over root files
                     jetFat_sd_s1_p4raw      = SDsubjetP4raw          [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
                     jetFat_sd_s1_p4corrUp   = SDsubjetP4corrUp       [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
                     jetFat_sd_s1_p4corrDn   = SDsubjetP4corrDn       [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
-                    jetFat_sd_s1_area       = SDsubjetJetArea        [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]       
+                    jetFat_sd_s1_area       = SDsubjetJetArea        [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_tau1       = SDsubjetTau1           [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_tau2       = SDsubjetTau2           [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
+                    jetFat_sd_s1_tau3       = SDsubjetTau3           [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]                           
                     if options.isMC:
                         jetFat_sd_s1_smear      = SDsubjetSmearFactor    [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
                         jetFat_sd_s1_smearUp    = SDsubjetSmearFactorUp  [ int(ak8JetsGoodSDsubjetIndex1[tagCand]) ]
@@ -5183,99 +4902,6 @@ for ifile in files : #{ Loop over root files
 
 
 
-
-
-                # AK8 jet CMSTT subjets
-                jetFat_cmstt_s0_bdisc = -1.
-                jetFat_cmstt_s1_bdisc = -1.
-                jetFat_cmstt_s2_bdisc = -1.
-                jetFat_cmstt_s3_bdisc = -1.
-                jetFat_cmstt_s0_pt    = -1.
-                jetFat_cmstt_s1_pt    = -1.
-                jetFat_cmstt_s2_pt    = -1.
-                jetFat_cmstt_s3_pt    = -1.
-                jetFat_cmstt_s0_eta   = -1.
-                jetFat_cmstt_s1_eta   = -1.
-                jetFat_cmstt_s2_eta   = -1.
-                jetFat_cmstt_s3_eta   = -1.
-                jetFat_cmstt_s0_phi   = -1.
-                jetFat_cmstt_s1_phi   = -1.
-                jetFat_cmstt_s2_phi   = -1.
-                jetFat_cmstt_s3_phi   = -1.
-                jetFat_cmstt_s0_m     = -1.
-                jetFat_cmstt_s1_m     = -1.
-                jetFat_cmstt_s2_m     = -1.
-                jetFat_cmstt_s3_m     = -1.
-
-                if ak8JetsGoodCMSTTsubjetIndex0[0] > -1 :
-                    jetFat_cmstt_s0_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex0[tagCand]) ]
-                    jetFat_cmstt_s0_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex0[tagCand]) ]
-                    jetFat_cmstt_s0_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex0[tagCand]) ]
-                    jetFat_cmstt_s0_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex0[tagCand]) ]
-                    jetFat_cmstt_s0_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex0[tagCand]) ]
-
-                if ak8JetsGoodCMSTTsubjetIndex1[0] > -1 :
-                    jetFat_cmstt_s1_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex1[tagCand]) ]
-                    jetFat_cmstt_s1_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex1[tagCand]) ]
-                    jetFat_cmstt_s1_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex1[tagCand]) ]
-                    jetFat_cmstt_s1_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex1[tagCand]) ]
-                    jetFat_cmstt_s1_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex1[tagCand]) ]
-
-                if ak8JetsGoodCMSTTsubjetIndex2[0] > -1 :
-                    jetFat_cmstt_s2_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex2[tagCand]) ]
-                    jetFat_cmstt_s2_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex2[tagCand]) ]
-                    jetFat_cmstt_s2_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex2[tagCand]) ]
-                    jetFat_cmstt_s2_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex2[tagCand]) ]
-                    jetFat_cmstt_s2_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex2[tagCand]) ]
-
-                if ak8JetsGoodCMSTTsubjetIndex3[0] > -1 :
-                    jetFat_cmstt_s3_bdisc = CMSTTsubjetBDisc[ int(ak8JetsGoodCMSTTsubjetIndex3[tagCand]) ]
-                    jetFat_cmstt_s3_pt    = CMSTTsubjetPt   [ int(ak8JetsGoodCMSTTsubjetIndex3[tagCand]) ]
-                    jetFat_cmstt_s3_eta   = CMSTTsubjetEta  [ int(ak8JetsGoodCMSTTsubjetIndex3[tagCand]) ]
-                    jetFat_cmstt_s3_phi   = CMSTTsubjetPhi  [ int(ak8JetsGoodCMSTTsubjetIndex3[tagCand]) ]
-                    jetFat_cmstt_s3_m     = CMSTTsubjetMass [ int(ak8JetsGoodCMSTTsubjetIndex3[tagCand]) ]
-
-                jetFat_bdiscs =[jetFat_cmstt_s0_bdisc, jetFat_cmstt_s1_bdisc, jetFat_cmstt_s2_bdisc, jetFat_cmstt_s3_bdisc] 
-                jetFat_cmstt_maxbdisc = max(jetFat_bdiscs)
-                
-                jetFat_cmstt_s0 = ROOT.TLorentzVector()
-                jetFat_cmstt_s1 = ROOT.TLorentzVector()
-                jetFat_cmstt_s2 = ROOT.TLorentzVector()
-                jetFat_cmstt_s0.SetPtEtaPhiM( jetFat_cmstt_s0_pt , jetFat_cmstt_s0_eta, jetFat_cmstt_s0_phi, jetFat_cmstt_s0_m )
-                jetFat_cmstt_s1.SetPtEtaPhiM( jetFat_cmstt_s1_pt , jetFat_cmstt_s1_eta, jetFat_cmstt_s1_phi, jetFat_cmstt_s1_m )
-                jetFat_cmstt_s2.SetPtEtaPhiM( jetFat_cmstt_s2_pt , jetFat_cmstt_s2_eta, jetFat_cmstt_s2_phi, jetFat_cmstt_s2_m )
-                jetFat_cmstt_m01 = (jetFat_cmstt_s0 + jetFat_cmstt_s1 ).M()
-                jetFat_cmstt_m02 = (jetFat_cmstt_s0 + jetFat_cmstt_s2 ).M()
-                jetFat_cmstt_m12 = (jetFat_cmstt_s1 + jetFat_cmstt_s2 ).M()
-
-                if options.verbose:
-                    print 'Top tag candidate : '+str(0)
-                    print '   top jet pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, m = {3:6.2f}'.format (
-                        ak8JetsGood[0].Perp(), ak8JetsGood[0].Rapidity(), ak8JetsGood[0].Phi(), ak8JetsGood[0].M() )                 
-
-                    print '   Subjet indices : %6d %6d %6d %6d' % (ak8JetsGoodCMSTTsubjetIndex0[tagCand],
-                                                                   ak8JetsGoodCMSTTsubjetIndex1[tagCand],
-                                                                   ak8JetsGoodCMSTTsubjetIndex2[tagCand],
-                                                                   ak8JetsGoodCMSTTsubjetIndex3[tagCand])
-
-                    for index in [ak8JetsGoodCMSTTsubjetIndex0[tagCand],
-                                  ak8JetsGoodCMSTTsubjetIndex1[tagCand],
-                                  ak8JetsGoodCMSTTsubjetIndex2[tagCand],
-                                  ak8JetsGoodCMSTTsubjetIndex3[tagCand] ] :
-                        if index > len(CMSTTsubjetBDisc) :
-                            print "Problem! Subjet indices are wrong!"
-                            exit(1)
-
-                    print '   -subjetFatpt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jetFat_cmstt_s0_pt, jetFat_cmstt_s0_eta, jetFat_cmstt_s0_phi, jetFat_cmstt_s0_bdisc )
-                    print '   -subjet1pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jetFat_cmstt_s1_pt, jetFat_cmstt_s1_eta, jetFat_cmstt_s1_phi, jetFat_cmstt_s1_bdisc )
-                    print '   -subjet2pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jetFat_cmstt_s2_pt, jetFat_cmstt_s2_eta, jetFat_cmstt_s2_phi, jetFat_cmstt_s2_bdisc )
-                    print '   -subjet3pt = {0:6.2f}, y = {1:6.2f}, phi = {2:6.2f}, B = {3:6.2f}'.format ( jetFat_cmstt_s3_pt, jetFat_cmstt_s3_eta, jetFat_cmstt_s3_phi, jetFat_cmstt_s3_bdisc )                 
-                    print 'jetFat_cmstt_maxbdisc '+str(jetFat_cmstt_maxbdisc)
-
-
-   
-
-
                 wtagCand = None # type 2 -w boson jet                               
                 btagCand = None # type 2 -b quark 
 
@@ -5301,19 +4927,7 @@ for ifile in files : #{ Loop over root files
                     mAK8Trimmed  = ak8JetsGoodTrimMass[wtagCand]
                     mAK8SDrop    = ak8JetsGoodSDropMass[wtagCand]
                     # Make sure there are top tags if we want to plot them
-                    minMass      = ak8JetsGoodMinMass[wtagCand]
 
-
-                    subjetBdiscW = 0  
-                    subjetBdiscB = 0  
-                    subjetBdiscMax = 0  
-
-                    subjetWMass  = 0  
-                    subjetBMass  = 0  
-                    subjetWPt  = 0  
-                    subjetBPt = 0 
-
-                    nsubjets = ak8JetsGoodNSubJets[wtagCand]
                     tau1 = ak8JetsGoodTau1[wtagCand]  
                     tau2 = ak8JetsGoodTau2[wtagCand] 
                     tau3 = ak8JetsGoodTau3[wtagCand]
@@ -5397,7 +5011,8 @@ for ifile in files : #{ Loop over root files
                         ry = 0.
                         rmass = 0.
 
-                    print 'candToPlot '+str(candToPlot)
+                    if options.verbose: 
+                        print 'candToPlot '+str(candToPlot)
 
 
                     #~ Fill SemiLeptonic tree 
@@ -5445,30 +5060,47 @@ for ifile in files : #{ Loop over root files
                     FatJetTau3          [0] = tau3
                     FatJetTau32         [0] = tau32
                     FatJetTau21         [0] = tau21
-                    FatJetSDnsubjets    [0] = nsubjets                 
                     FatJetSDbdiscW      [0] = subjetBdiscW
                     FatJetSDbdiscB      [0] = subjetBdiscB
                     FatJetSDmaxbdisc    [0] = subjetBdiscMax
-                    FatJetSDsubjetWpt   [0] = subjetWPt
-                    FatJetSDsubjetWmass [0] = subjetWMass
-                    FatJetSDsubjetBpt   [0] = subjetBPt 
-                    FatJetSDsubjetBmass [0] = subjetBMass
+                    if subjetWPt != None : 
+                        FatJetSDsubjetWpt   [0] = subjetWPt
+                        FatJetSDsubjetWmass [0] = subjetWMass
+                        FatJetSDsubjetWtau1 [0] = subjetWTau1
+                        FatJetSDsubjetWtau2 [0] = subjetWTau2
+                        FatJetSDsubjetWtau3 [0] = subjetWTau3
+                        FatJetSDsubjetBpt   [0] = subjetBPt 
+                        FatJetSDsubjetBmass [0] = subjetBMass
+                        FatJetSDsubjetBtau1 [0] = subjetBTau1
+                        FatJetSDsubjetBtau2 [0] = subjetBTau2
+                        FatJetSDsubjetBtau3 [0] = subjetBTau3
+                    else :
+                        FatJetSDsubjetWpt   [0] = 0
+                        FatJetSDsubjetWmass [0] = 0
+                        FatJetSDsubjetWtau1 [0] = 0
+                        FatJetSDsubjetWtau2 [0] = 0
+                        FatJetSDsubjetWtau3 [0] = 0
+                        FatJetSDsubjetBpt   [0] = 0
+                        FatJetSDsubjetBmass [0] = 0
+                        FatJetSDsubjetBtau1 [0] = 0
+                        FatJetSDsubjetBtau2 [0] = 0
+                        FatJetSDsubjetBtau3 [0] = 0
                     # Adding these also to reuse code from All-had
                     FatJetSDsubjet0pt   [0] = jetFat_sd_s0_p4corr.Perp() 
                     FatJetSDsubjet0mass [0] = jetFat_sd_s0_p4corr.M() 
                     FatJetSDsubjet0area [0] = jetFat_sd_s0_area
                     FatJetSDsubjet0flav [0] = jetFat_sd_s0_flavour
+                    FatJetSDsubjet0tau1 [0] = jetFat_sd_s0_tau1
+                    FatJetSDsubjet0tau2 [0] = jetFat_sd_s0_tau2
+                    FatJetSDsubjet0tau3 [0] = jetFat_sd_s0_tau3
                     FatJetSDsubjet1pt   [0] = jetFat_sd_s1_p4corr.Perp() 
                     FatJetSDsubjet1mass [0] = jetFat_sd_s1_p4corr.M() 
                     FatJetSDsubjet1area [0] = jetFat_sd_s1_area
                     FatJetSDsubjet1flav [0] = jetFat_sd_s1_flavour
-
-                    FatJetCMSmaxbdisc   [0] = jetFat_cmstt_maxbdisc
-                    FatJetCMSnsubjets   [0] = nsubjets
-                    FatJetCMSminMass    [0] = minMass
-                    FatJetCMSm01        [0] = jetFat_cmstt_m01
-                    FatJetCMSm02        [0] = jetFat_cmstt_m02
-                    FatJetCMSm12        [0] = jetFat_cmstt_m12
+                    FatJetSDsubjet1tau1 [0] = jetFat_sd_s1_tau1
+                    FatJetSDsubjet1tau2 [0] = jetFat_sd_s1_tau2
+                    FatJetSDsubjet1tau3 [0] = jetFat_sd_s1_tau3
+                    
                     FatJetNHF           [0] = ak8JetsGoodNHF[0]
                     FatJetCHF           [0] = ak8JetsGoodCHF[0]
                     FatJetNEF           [0] = ak8JetsGoodNEF[0]
@@ -5524,7 +5156,6 @@ for ifile in files : #{ Loop over root files
             for i in range(0,len(ak8JetsGood)):#{ Loop over Fat jets that passed cuts for t tagging
             
                 mAK8SDrop = ak8JetsGoodSDropMass[i]
-                minMass = ak8JetsGoodMinMass[i]
                 tau1 = ak8JetsGoodTau1[i]  
                 tau2 = ak8JetsGoodTau2[i] 
                 tau3 = ak8JetsGoodTau3[i]
@@ -5539,10 +5170,6 @@ for ifile in files : #{ Loop over root files
                     tau32 = -1.0
 
 
-                if minMass > options.minMassCut:
-                    NPasstMinMassCut = NPasstMinMassCut + 1
-                else:
-                    continue
                 if mAK8SDrop > options.mAK8GroomedMinCut:
                     NPasstMAK8GroomedMinCut = NPasstMAK8GroomedMinCut + 1
                 else:

@@ -3,7 +3,7 @@ import PSet
 files = []
 outfile = file( 'filesToProcess.txt', 'w')
 for ifile in PSet.process.source.fileNames :    
-    outfile.write('root://xrootd.unl.edu/' + ifile + '\n' )
+    outfile.write('root://cmsxrootd.fnal.gov/' + ifile + '\n' )
 
 
 outfile.close()
