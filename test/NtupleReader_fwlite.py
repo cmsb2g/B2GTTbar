@@ -2306,12 +2306,13 @@ for ifile in files : #{ Loop over root files
                 print "************************"
                 
             #Making sure central PDF isn't zero
-            if PDFcentral == 0:
+            if PDFcentral == 0 or len(lhe.weights()) < PDFend :
                 if options.verbose :
                     print "Unphysical: central PDF weight is zero!"
             else:
                 for i_lhePDF in range(PDFstart,PDFend):
                     NNPDF3wgt = lhe.weights()[i_lhePDF].wgt
+
                     NNPDF3wgt_frac = NNPDF3wgt/(PDFcentral)
                     NNPDF3wgtAvg += NNPDF3wgt_frac
                     if options.verbose:
@@ -3742,14 +3743,21 @@ for ifile in files : #{ Loop over root files
                             etasmearfactor = 0.1
                             recoeta = subjetP4.Eta()
                             geneta  = SDsubjetGenJetEta[isubjet]
-                            deltaeta = (recoeta-geneta)*etasmearfactor 
-                            etascale = max(0.0, (recoeta+deltaeta)/recoeta  )
+                            deltaeta = (recoeta-geneta)*etasmearfactor
+                            if abs(recoeta) > 0.00001 : 
+                                etascale = max(0.0, (recoeta+deltaeta)/recoeta  )
+                            else :
+                                etascale = 0.0
 
                             phismearfactor = 0.1
                             recophi = subjetP4.Phi()
                             genphi  = SDsubjetGenJetPhi[isubjet]
-                            deltaphi = (recophi-genphi)*phismearfactor 
-                            phiscale = max(0.0, (recophi+deltaphi)/recophi  )
+                            deltaphi = (recophi-genphi)*phismearfactor
+                            if abs(recophi) > 0.00001 : 
+                                phiscale = max(0.0, (recophi+deltaphi)/recophi  )
+                            else :
+                                phiscale = 0.0                                
+                                
                             
                             SDsubjetScaleEta .append( etascale )
                             SDsubjetScalePhi .append( phiscale )
@@ -4830,6 +4838,12 @@ for ifile in files : #{ Loop over root files
                 jetFat_sd_s1_area      = -1.
                 jetFat_sd_s0_flavour   = -1.
                 jetFat_sd_s1_flavour   = -1.
+                jetFat_sd_s0_tau1  = -1.
+                jetFat_sd_s0_tau2  = -1.
+                jetFat_sd_s0_tau3  = -1.
+                jetFat_sd_s1_tau1  = -1.
+                jetFat_sd_s1_tau2  = -1.
+                jetFat_sd_s1_tau3  = -1.
 
 
                 if ak8JetsGoodSDsubjetIndex0[0] > -1 :
