@@ -1091,8 +1091,8 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
       float totalBinContent = 0.0;
       float totalStatErr = 0.0;
 
-      //calculating the number of new bins
-      for (int i_bin = 0; i_bin < (nBinsOriginal-1); i_bin++){
+      //calculating the number of new bins; x_min = 900
+      for (int i_bin = 0; i_bin < (nBinsOriginal-9); i_bin++){
 	int j_bin = nBinsOriginal - i_bin;
 	float statErr = h_background->GetBinError(j_bin);
 	cout << "StatErr: " << statErr << endl;
@@ -1118,15 +1118,15 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
 
       cout << "New Bin Count: " << nBinsNew << endl;
 
-      //setting the bin array
+      //setting the bin array; x_min = 900
       Double_t xbins[nBinsNew+1];
-      xbins[0]=0.0;
+      xbins[0]=800.0;
       xbins[nBinsNew]=7000.;
       lastBinLowEdge = 7000.;
       totalBinContent = 0.0;
       totalStatErr = 0.0;
       int binCount = 0;
-      for (int i_bin = 0; i_bin < (nBinsOriginal-1); i_bin++){
+      for (int i_bin = 0; i_bin < (nBinsOriginal-9); i_bin++){
 	int j_bin = nBinsOriginal - i_bin;
 	float statErr = h_background->GetBinError(j_bin);
 	totalStatErr = sqrt(totalStatErr*totalStatErr + statErr*statErr);
