@@ -3,7 +3,7 @@ config = Configuration()
 
 config.section_("General")
 config.General.requestName = 'SemiLepAnaTrees_SingleMuon_B2GAnaFW_76X_V1p2_silverJSON'
-config.General.workArea = 'ZprimeAnaRunIISemiLep'
+config.General.workArea = 'ZprimeAnaRunIISemiLepPuppi'
 config.General.transferLogs = True
 
 config.section_("JobType")

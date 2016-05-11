@@ -257,7 +257,7 @@ parser.add_option('--quickSelect', action='store_true',
 
 
 parser.add_option('--quickSelectminAK8Pt', type='float', action='store',
-                  default=350.,
+                  default=150.,
                   dest='quickSelectminAK8Pt',
                   help='Minimum PT for quick select using AK8 jets')
 
@@ -3922,14 +3922,21 @@ for ifile in files : #{ Loop over root files
                         etasmearfactor = 0.1
                         recoeta = AK8P4Corr.Eta()
                         geneta  = AK8GenJetEta[i]
-                        deltaeta = (recoeta-geneta)*etasmearfactor 
-                        etascale = max(0.0, (recoeta+deltaeta)/recoeta  )
+                        deltaeta = (recoeta-geneta)*etasmearfactor
+                        if abs(recoeta) > 0.00001 : 
+                            etascale = max(0.0, (recoeta+deltaeta)/recoeta  )
+                        else :
+                            etascale = 0.0                            
+                        
 
                         phismearfactor = 0.1
                         recophi = AK8P4Corr.Phi()
                         genphi  = AK8GenJetPhi[i]
                         deltaphi = (recophi-genphi)*phismearfactor 
-                        phiscale = max(0.0, (recophi+deltaphi)/recophi  )
+                        if abs(recophi) > 0.00001 : 
+                            phiscale = max(0.0, (recophi+deltaphi)/recophi  )
+                        else :
+                            phiscale = 0.0
 
 
                         if options.verbose > 3 :
