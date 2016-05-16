@@ -683,16 +683,25 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
   }
 
   for (int h = 0; h < names::NUM_PROCS; h++){
-    histos[h][0]->Sumw2();
-    histos[h][1]->Sumw2();
-    histos[h][2]->Sumw2();
-    histos[h][3]->Sumw2();
-    histos[h][4]->Sumw2();
-    histos[h][5]->Sumw2();
-    histos[h][6]->Sumw2();
+    if (h == names::DATA){
+      histos[h][0]->Sumw2(kFALSE);
+      histos[h][1]->Sumw2(kFALSE);
+      histos[h][2]->Sumw2(kFALSE);
+      histos[h][3]->Sumw2(kFALSE);
+      histos[h][4]->Sumw2(kFALSE);
+      histos[h][5]->Sumw2(kFALSE);
+      histos[h][6]->Sumw2(kFALSE);
+    }
+    else{
+      histos[h][0]->Sumw2();
+      histos[h][1]->Sumw2();
+      histos[h][2]->Sumw2();
+      histos[h][3]->Sumw2();
+      histos[h][4]->Sumw2();
+      histos[h][5]->Sumw2();
+      histos[h][6]->Sumw2();
+      }
   }
-
-
 
   float lumi = 2592.3;
   float nttbar = 96834559.;//19665194.;
@@ -1179,13 +1188,15 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     if (tag == 2 or tag == 5) histos[names::DATA][tag]->SetMaximum(3.0 * histos[names::DATA][tag]->GetMaximum() );
     else histos[names::DATA][tag]->SetMaximum(2.0 * histos[names::DATA][tag]->GetMaximum() );
     histos[names::DATA][tag]->GetYaxis()->SetTitle("Events");
+    histos[names::DATA][tag]->GetYaxis()->SetTitleSize(0.042);
     //histos[names::DATA][tag]->GetYaxis()->SetTitleSize(1.2);                                                                               
-    histos[names::DATA][tag]->GetYaxis()->SetTitleOffset(1.1);
+    histos[names::DATA][tag]->GetYaxis()->SetTitleOffset(0.95);
     if (!forTHETA){
       if (tag == 2 or tag == 5) histos[names::DATA][tag]->GetXaxis()->SetRangeUser(600.,4600.);
       else histos[names::DATA][tag]->GetXaxis()->SetRangeUser(600.,6000.);
     }
-    histos[names::DATA][tag]->Draw("E");
+    histos[names::DATA][tag]->SetBinErrorOption(TH1::kPoisson);
+    histos[names::DATA][tag]->Draw("E0");
 
     THStack *stack = new THStack();
     stack->Add(histos[names::TT][tag]);
@@ -1207,7 +1218,6 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     int n_xbins = totalH->GetNbinsX();
 
     for (int i_bin = 1; i_bin < (n_xbins+1); i_bin++){
-
       float statErr = totalH->GetBinError(i_bin);
       float scaleErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_SCALEUP][tag]->GetBinContent(i_bin));
       float scaleErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_SCALEDN][tag]->GetBinContent(i_bin));
@@ -1249,7 +1259,7 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     totalH->SetFillColor(kGray+1);
     totalH->Draw("E2 same");
 
-    histos[names::DATA][tag]->Draw("E same");
+    histos[names::DATA][tag]->Draw("E0 same");
 
     histos[names::ZPN10][tag]->SetLineColor(kBlue);
     histos[names::ZPN20][tag]->SetLineColor(kGreen+1);
@@ -1331,15 +1341,15 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     c1_1->SetFillStyle(0);
 
     ratioH->GetYaxis()->SetRangeUser(0.01,1.99);
-    ratioH->GetYaxis()->SetTitle("Data / BG Ratio");
-    ratioH->GetYaxis()->SetTitleOffset(0.4);
-    ratioH->GetYaxis()->SetTitleSize(0.11);
+    ratioH->GetYaxis()->SetTitle("Data / BG");
+    ratioH->GetYaxis()->SetTitleOffset(0.3);
+    ratioH->GetYaxis()->SetTitleSize(0.13);
     ratioH->GetYaxis()->SetNdivisions(205);
     ratioH->GetYaxis()->SetLabelSize(0.11);
     ratioH->GetXaxis()->SetLabelSize(0.11);
-    ratioH->GetXaxis()->SetTitleSize(0.11);
+    ratioH->GetXaxis()->SetTitleSize(0.13);
     ratioH->GetXaxis()->SetTitle( "t#bar{t} Invariant Mass [GeV]");
-    ratioH->Draw("E");
+    ratioH->Draw("E0");
 
     ratioErrH->SetFillStyle(1001);
     ratioErrH->SetFillColor(kGray);
@@ -1348,7 +1358,7 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     TF1 *line = new TF1("line", "1", 0, 7000);
     line->SetLineColor(kBlack);
     line->Draw("same");
-    ratioH->Draw("E same");
+    ratioH->Draw("E0 same");
 
     gPad->RedrawAxis();
 
