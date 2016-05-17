@@ -1187,6 +1187,7 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
 
     if (tag == 2 or tag == 5) histos[names::DATA][tag]->SetMaximum(3.0 * histos[names::DATA][tag]->GetMaximum() );
     else histos[names::DATA][tag]->SetMaximum(2.0 * histos[names::DATA][tag]->GetMaximum() );
+    //histos[names::DATA][tag]->SetMaximum(10.0 * histos[names::DATA][tag]->GetMaximum() );
     histos[names::DATA][tag]->GetYaxis()->SetTitle("Events");
     histos[names::DATA][tag]->GetYaxis()->SetTitleSize(0.042);
     //histos[names::DATA][tag]->GetYaxis()->SetTitleSize(1.2);                                                                               
@@ -1211,6 +1212,9 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     float xsErr_top = 0.15;
     float lumiErr_top = 0.027;
     float topTagErr_top = 2*(0.09/0.89);
+    float totalTopErr = 0.0;
+    float totalQCDErr = 0.0;
+    float totalHistErr = 0.0;
 
     TH1F *totalH = (TH1F *) histos[names::QCD][tag]->Clone("totalH");
     totalH->Add(histos[names::TT][tag]);
@@ -1218,6 +1222,8 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     int n_xbins = totalH->GetNbinsX();
 
     for (int i_bin = 1; i_bin < (n_xbins+1); i_bin++){
+      float statErr_QCD = histos[names::QCD][tag]->GetBinError(i_bin);
+      float statErr_top = histos[names::TT][tag]->GetBinError(i_bin);
       float statErr = totalH->GetBinError(i_bin);
       float scaleErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_SCALEUP][tag]->GetBinContent(i_bin));
       float scaleErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_SCALEDN][tag]->GetBinContent(i_bin));
@@ -1252,8 +1258,16 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
 
       float TOTALErr = sqrt(statErr*statErr + scaleErr*scaleErr + jerErr*jerErr + pdfErr*pdfErr + q2Err*q2Err + btagErr*btagErr + qcdSystErr*qcdSystErr + xsErr*xsErr + lumiErr*lumiErr + topTagErr*topTagErr + closeErr*closeErr + PUErr+PUErr);
       totalH->SetBinError(i_bin,TOTALErr);
+      
+      totalQCDErr = sqrt(statErr_QCD*statErr_QCD + qcdSystErr*qcdSystErr + closeErr*closeErr + totalQCDErr*totalQCDErr);
+      totalTopErr = sqrt(statErr_top*statErr_top + scaleErr*scaleErr + jerErr*jerErr + pdfErr*pdfErr + q2Err*q2Err + btagErr*btagErr + xsErr*xsErr + lumiErr*lumiErr + topTagErr*topTagErr + PUErr+PUErr + totalTopErr*totalTopErr);
+      totalHistErr = sqrt(TOTALErr*TOTALErr + totalHistErr*totalHistErr);
       //cout << "Bin " << i_bin << ": Content = " << totalH->GetBinContent(i_bin) << ", Error = " << TOTALErr << ", Percent Error = " << TOTALErr/(totalH->GetBinContent(i_bin)) << endl;
     }
+
+    cout << "Region " << tag << " Total QCD: " << histos[names::QCD][tag]->Integral() << " +/- " << totalQCDErr <<endl;
+    cout << "Region " << tag << " Total ttbar: " << histos[names::TT][tag]->Integral() << " +/- " << totalTopErr <<endl;
+    cout << "Region " << tag << " Total background: " << totalH->Integral() << " +/- " << totalHistErr <<endl;
 
     totalH->SetFillStyle(3001);
     totalH->SetFillColor(kGray+1);
@@ -1280,10 +1294,10 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     categoryLabel->SetTextFont(62);
 
     if (tag == 0) categoryLabel->DrawLatex(0.7, 0.85, "0 b-tags, |#Deltay| < 1.0");
-    if (tag == 1) categoryLabel->DrawLatex(0.7, 0.85, "1 b-tags, |#Deltay| < 1.0");
+    if (tag == 1) categoryLabel->DrawLatex(0.7, 0.85, "1 b-tag, |#Deltay| < 1.0");
     if (tag == 2) categoryLabel->DrawLatex(0.7, 0.85, "2 b-tags, |#Deltay| < 1.0");
     if (tag == 3) categoryLabel->DrawLatex(0.7, 0.85, "0 b-tags, |#Deltay| > 1.0");
-    if (tag == 4) categoryLabel->DrawLatex(0.7, 0.85, "1 b-tags, |#Deltay| > 1.0");
+    if (tag == 4) categoryLabel->DrawLatex(0.7, 0.85, "1 b-tag, |#Deltay| > 1.0");
     if (tag == 5) categoryLabel->DrawLatex(0.7, 0.85, "2 b-tags, |#Deltay| > 1.0");
     if (tag == 6) categoryLabel->DrawLatex(0.7, 0.85, "All Signal Regions");
 
@@ -1294,7 +1308,7 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
     TLegend *leg = new TLegend(0.7, 0.4, 0.94, 0.83);
     leg->AddEntry(histos[names::DATA][tag], "Data", "lp");
     leg->AddEntry(histos[names::QCD][tag], "Non-Top Multijet", "f");
-    leg->AddEntry(histos[names::TT][tag], "Top", "f");
+    leg->AddEntry(histos[names::TT][tag], "SM t#bar{t}", "f");
     if (signal == 0){//ZPN                                                                                                                   
       leg->AddEntry(histos[names::ZPN10][tag], "1 TeV Narrow Z'", "l");
       leg->AddEntry(histos[names::ZPN20][tag], "2 TeV Narrow Z'", "l");
