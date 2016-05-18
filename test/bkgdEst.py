@@ -1173,8 +1173,8 @@ for event in Tree:
 
 
 
-  maxBdisc_jet0_ = event.Jet0SDbdisc0
-  maxBdisc_jet1_ = event.Jet0SDbdisc1
+  maxBdisc_jet0_ = event.Jet0SDmaxbdisc
+  maxBdisc_jet1_ = event.Jet1SDmaxbdisc
   
 
   # Only necessary if using official AK4 b-tagging SF
