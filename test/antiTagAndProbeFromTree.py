@@ -916,8 +916,8 @@ for event in Tree:
   if maxJetHt < 1000:
     continue
 
-  maxBdisc_jet0_ = event.Jet0SDbdisc0
-  maxBdisc_jet1_ = event.Jet0SDbdisc1
+  maxBdisc_jet0_ = event.Jet0SDmaxbdisc
+  maxBdisc_jet1_ = event.Jet1SDmaxbdisc
 
   # define tags - make sure they are the same as what was used to calculate the mistag
   topTag0MassFat                     = event.Jet0Mass > 140 and event.Jet1Mass< 250
