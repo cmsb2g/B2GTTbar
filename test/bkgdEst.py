@@ -40,6 +40,13 @@ parser.add_option('--isData', action='store_true',
                   dest='isData',
                   help='is it Data?')
 
+parser.add_option('--minAK8Pt', type='float', action='store',
+                  default=500.,
+                  dest='minAK8Pt',
+                  help='Minimum PT for AK8 jets')
+
+
+
 (options, args) = parser.parse_args()
 argv = []
 
@@ -1149,7 +1156,7 @@ for event in Tree:
   DijetMass = (jet0P4 + jet1P4).M()
 
 
-  if jet0P4.Perp() < 400 or jet1P4.Perp() < 400:
+  if jet0P4.Perp() < options.minAK8Pt or jet1P4.Perp() < options.minAK8Pt:
     continue
 
   if maxJetHt < 1000:
