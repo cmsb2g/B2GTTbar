@@ -82,7 +82,7 @@ elif options.Syst == -6:
 print 'systType '+systType
 
 #OUT =  ROOT.TFile("outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_"+date+"_"+systType+".root","RECREATE");
-OUT =  ROOT.TFile(options.outname+"_"+options.date+"_"+systType+".root","RECREATE");
+OUT =  ROOT.TFile(options.outname+"_"+options.date+"_"+systType+"_pt"+str(options.minAK8Pt)+".root","RECREATE");
 #F1   =  ROOT.TFile("/eos/uscms/store/user/jdolen/B2GAnaFW/Trees/JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65.root");
 F1   =  ROOT.TFile.Open(options.file);
 Tree = F1.Get("TreeAllHad");
@@ -169,14 +169,17 @@ print "h_modMass_SD_jet1  integral  " + str( h_modMass_SD_jet1 .Integral() )
 #Fmistag = ROOT.TFile("MistagRate_nbins_121615_8_ttbar_nom__Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_121615_jec_nom.root")
 # Fmistag = ROOT.TFile(options.mistagFile)
 
-Fmistag           = ROOT.TFile("MistagRate_nbins_040416_27_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
+#Fmistag           = ROOT.TFile("MistagRate_nbins_051916_27_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
 # mistag_jetP_0bTag = "MistagRate_nbins_032416_13_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root"
 # mistag_jetP_1bTag = "MistagRate_nbins_032416_10_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root"
 # mistag_jetP_2bTag = "MistagRate_nbins_032416_6_ttbar_Substract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_032416.root"
-Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_040416_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
-Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_040416_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
-Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_040416_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
-
+#Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_051916_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
+#Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_051916_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
+#Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_051916_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
+Fmistag = ROOT.TFile("MistagRate_nbins_052016_27_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
+Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_052016_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
+Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_052016_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
+Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_052016_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
 
 
 post = [ "_jetPt_dRapHi_0btag" ,  "_jetPt_dRapHi_1btag" ,  "_jetPt_dRapHi_2btag" , "_jetPt_dRapHi_inclusive" ,   
