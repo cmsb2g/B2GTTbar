@@ -150,8 +150,12 @@ void makeHists( bool data, bool noSubtract, vector<double> bins ){
 
   if (data){
 
-    infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_030516.root";
-    infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_030716.root";
+   // infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_030516.root";
+   // infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_030716.root";
+      infile_name       = "outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root";
+      infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring15MiniAODv2-74X_20160318_051816.root";
+  } 
+
   } 
 
   string date = "032116";
@@ -422,7 +426,3 @@ void makeHists( bool data, bool noSubtract, vector<double> bins ){
   // OutFile->Write();
   OutFile->Close();
 }
-
-
-
-
