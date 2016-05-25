@@ -1401,6 +1401,7 @@ int makeTemplates(int signal = 0, bool forTHETA = 1){
       c1->SaveAs("Distributions/ZPN_errors"+tagLabels[tag]+outEnd+"png");
       c1_2->cd();
       histos[names::DATA][tag]->SetMaximum(100.0 * histos[names::DATA][tag]->GetMaximum() );
+      if (tag == 0 || tag == 1 || tag == 5) histos[names::DATA][tag]->SetMaximum(50.0 * histos[names::DATA][tag]->GetMaximum() );
       c1_2->SetLogy(1);
       c1->SaveAs("Distributions/ZPN_errors"+tagLabels[tag]+"_log"+outEnd+"pdf");
       c1->SaveAs("Distributions/ZPN_errors"+tagLabels[tag]+"_log"+outEnd+"png");
