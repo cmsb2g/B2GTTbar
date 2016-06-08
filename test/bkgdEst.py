@@ -90,6 +90,161 @@ entries = Tree.GetEntries();
 print 'entries '+str(entries)  
 
 
+# Diagnostic plots
+        
+h_HT                                = ROOT.TH1D("h_HT"                                   , "", 800,   0, 8000 )           
+h_DijetMass                         = ROOT.TH1D("h_DijetMass"                            , "", 700,   0, 7000 )
+h_DijetMass_modMass_jet0            = ROOT.TH1D("h_DijetMass_modMass_jet0"               , "", 700,   0, 7000 )   
+h_DijetMass_modMass_jet1            = ROOT.TH1D("h_DijetMass_modMass_jet1"               , "", 700,   0, 7000 )    
+h_DeltaRap                          = ROOT.TH1D("h_DeltaRap"                             , "", 500,   0,    5 )    
+h_jet0rap                           = ROOT.TH1D("h_jet0rap"                              , "", 600,  -3,    3 )     
+h_jet0massSD                        = ROOT.TH1D("h_jet0massSD"                           , "", 500,   0,  500 )                        
+h_jet0tau32                         = ROOT.TH1D("h_jet0tau32"                            , "", 200,   0,    1 )    
+h_jet0tau21                         = ROOT.TH1D("h_jet0tau21"                            , "", 200,   0,    1 )    
+h_jet0tau1                          = ROOT.TH1D("h_jet0tau1"                             , "", 200,   0,    1 )    
+h_jet0tau2                          = ROOT.TH1D("h_jet0tau2"                             , "", 200,   0,    1 )    
+h_jet0tau3                          = ROOT.TH1D("h_jet0tau3"                             , "", 200,   0,    1 )    
+h_jet0subjet0pt                     = ROOT.TH1D("h_jet0subjet0pt"                        , "", 400,   0, 2000 )
+h_jet0subjet1pt                     = ROOT.TH1D("h_jet0subjet1pt"                        , "", 400,   0, 2000 )
+h_jet0pt                            = ROOT.TH1D("h_jet0pt"                               , "", 400, 400, 4400 )
+h_jet0pt_jet0subjet0pt              = ROOT.TH2D("h_jet0pt_jet0subjet0pt"                 , "", 400, 400, 4400 , 400,   0, 2000 )
+h_jet0pt_jet0subjet1pt              = ROOT.TH2D("h_jet0pt_jet0subjet1pt"                 , "", 400, 400, 4400 , 400,   0, 2000 )
+h_jet0subjet0pt_jet0subjet1pt       = ROOT.TH2D("h_jet0subjet0pt_jet0subjet1pt"          , "", 400,   0, 2000 , 400,   0, 2000 )
+h_jet0subjet0mass_jet0subjet1mass   = ROOT.TH2D("h_jet0subjet0mass_jet0subjet1mass"      , "", 400,   0,  400 , 400,   0,  400 )
+h_jet0subjet0bdisc_jet0subjet1bdisc = ROOT.TH2D("h_jet0subjet0bdisc_jet0subjet1bdisc"    , "", 100,   0,    1 , 100,   0,    1 )
+h_jet0subjet0flav_jet0subjet1flav   = ROOT.TH2D("h_jet0subjet0flav_jet0subjet1flav"      , "",  30,   0,   30 ,  30,   0,   30 )
+h_jet0subjet0mass                   = ROOT.TH1D("h_jet0subjet0mass"                      , "", 400,   0,  400 )
+h_jet0subjet1mass                   = ROOT.TH1D("h_jet0subjet1mass"                      , "", 400,   0,  400 )
+h_jet0subjet0bdisc                  = ROOT.TH1D("h_jet0subjet0bdisc"                     , "", 100,   0,    1 )
+h_jet0subjet1bdisc                  = ROOT.TH1D("h_jet0subjet1bdisc"                     , "", 100,   0,    1 )
+h_jet0subjet0flav                   = ROOT.TH1D("h_jet0subjet0flav"                      , "",  30,   0,   30 )
+h_jet0subjet1flav                   = ROOT.TH1D("h_jet0subjet1flav"                      , "",  30,   0,   30 )
+h_jet0maxBdisc                      = ROOT.TH1D("h_jet0maxBdisc"                         , "", 100,   0,    1 )
+h_jet0maxBdiscflav                  = ROOT.TH1D("h_jet0maxBdiscflav"                     , "",  30,   0,   30 )
+h_jet1rap                           = ROOT.TH1D("h_jet1rap"                              , "", 600,  -3,    3 )     
+h_jet1massSD                        = ROOT.TH1D("h_jet1massSD"                           , "", 500,   0,  500 )                        
+h_jet1tau32                         = ROOT.TH1D("h_jet1tau32"                            , "", 200,   0,    1 )    
+h_jet1tau21                         = ROOT.TH1D("h_jet1tau21"                            , "", 200,   0,    1 )    
+h_jet1tau1                          = ROOT.TH1D("h_jet1tau1"                             , "", 200,   0,    1 )    
+h_jet1tau2                          = ROOT.TH1D("h_jet1tau2"                             , "", 200,   0,    1 )    
+h_jet1tau3                          = ROOT.TH1D("h_jet1tau3"                             , "", 200,   0,    1 )    
+h_jet1subjet0pt                     = ROOT.TH1D("h_jet1subjet0pt"                        , "", 400,   0, 2000 )
+h_jet1subjet1pt                     = ROOT.TH1D("h_jet1subjet1pt"                        , "", 400,   0, 2000 )
+h_jet1pt                            = ROOT.TH1D("h_jet1pt"                               , "", 400, 400, 4400 )
+h_jet1pt_jet1subjet0pt              = ROOT.TH2D("h_jet1pt_jet0subjet0pt"                 , "", 400, 400, 4400 , 400,   0, 2000 )
+h_jet1pt_jet1subjet1pt              = ROOT.TH2D("h_jet1pt_jet0subjet1pt"                 , "", 400, 400, 4400 , 400,   0, 2000 )
+h_jet1subjet0pt_jet1subjet1pt       = ROOT.TH2D("h_jet1subjet0pt_jet1subjet1pt"          , "", 400,   0, 2000 , 400,   0, 2000 )
+h_jet1subjet0mass_jet1subjet1mass   = ROOT.TH2D("h_jet1subjet0mass_jet1subjet1mass"      , "", 400,   0,  400 , 400,   0,  400 )
+h_jet1subjet0bdisc_jet1subjet1bdisc = ROOT.TH2D("h_jet1subjet0bdisc_jet1subjet1bdisc"    , "", 100,   0,    1 , 100,   0,    1 )
+h_jet1subjet0flav_jet1subjet1flav   = ROOT.TH2D("h_jet1subjet0flav_jet1subjet1flav"      , "",  30,   0,   30 ,  30,   0,   30 )
+h_jet1subjet0mass                   = ROOT.TH1D("h_jet1subjet0mass"                      , "", 400,   0,  400 )
+h_jet1subjet1mass                   = ROOT.TH1D("h_jet1subjet1mass"                      , "", 400,   0,  400 )
+h_jet1subjet0bdisc                  = ROOT.TH1D("h_jet1subjet0bdisc"                     , "", 100,   0,    1 )
+h_jet1subjet1bdisc                  = ROOT.TH1D("h_jet1subjet1bdisc"                     , "", 100,   0,    1 )
+h_jet1subjet0flav                   = ROOT.TH1D("h_jet1subjet0flav"                      , "",  30,   0,   30 )
+h_jet1subjet1flav                   = ROOT.TH1D("h_jet1subjet1flav"                      , "",  30,   0,   30 )
+h_jet1maxBdisc                      = ROOT.TH1D("h_jet1maxBdisc"                         , "", 100,   0,    1 )
+h_jet1maxBdiscflav                  = ROOT.TH1D("h_jet1maxBdiscflav"                     , "",  30,   0,   30 )
+
+
+h_2btag_DijetMass                         = ROOT.TH1D("h_2btag_DijetMass"                            , "", 700,   0, 7000 )                         
+h_2btag_DeltaRap                          = ROOT.TH1D("h_2btag_DeltaRap"                             , "", 500,   0,    5 )                    
+h_2btag_jet0massSD                        = ROOT.TH1D("h_2btag_jet0massSD"                           , "", 500,   0,  500 )     
+h_2btag_jet0tau32                         = ROOT.TH1D("h_2btag_jet0tau32"                            , "", 200,   0,    1 )     
+h_2btag_jet0tau21                         = ROOT.TH1D("h_2btag_jet0tau21"                            , "", 200,   0,    1 )     
+h_2btag_jet0tau1                          = ROOT.TH1D("h_2btag_jet0tau1"                             , "", 200,   0,    1 )     
+h_2btag_jet0tau2                          = ROOT.TH1D("h_2btag_jet0tau2"                             , "", 200,   0,    1 )     
+h_2btag_jet0tau3                          = ROOT.TH1D("h_2btag_jet0tau3"                             , "", 200,   0,    1 )     
+h_2btag_jet0subjet0mass                   = ROOT.TH1D("h_2btag_jet0subjet0mass"                      , "", 400,   0,  400 )     
+h_2btag_jet0subjet1mass                   = ROOT.TH1D("h_2btag_jet0subjet1mass"                      , "", 400,   0,  400 )     
+h_2btag_jet0subjet0mass_jet0subjet1mass   = ROOT.TH2D("h_2btag_jet0subjet0mass_jet0subjet1mass"      , "", 400,   0,  400 , 400,   0,  400 )
+h_2btag_jet0subjet0bdisc_jet0subjet1bdisc = ROOT.TH2D("h_2btag_jet0subjet0bdisc_jet0subjet1bdisc"    , "", 100,   0,    1 , 100,   0,    1 )
+h_2btag_jet1massSD                        = ROOT.TH1D("h_2btag_jet1massSD"                           , "", 500,   0,  500 )     
+h_2btag_jet1tau32                         = ROOT.TH1D("h_2btag_jet1tau32"                            , "", 200,   0,    1 )     
+h_2btag_jet1tau21                         = ROOT.TH1D("h_2btag_jet1tau21"                            , "", 200,   0,    1 )     
+h_2btag_jet1tau1                          = ROOT.TH1D("h_2btag_jet1tau1"                             , "", 200,   0,    1 )     
+h_2btag_jet1tau2                          = ROOT.TH1D("h_2btag_jet1tau2"                             , "", 200,   0,    1 )     
+h_2btag_jet1tau3                          = ROOT.TH1D("h_2btag_jet1tau3"                             , "", 200,   0,    1 )     
+h_2btag_jet1subjet0mass                   = ROOT.TH1D("h_2btag_jet1subjet0mass"                      , "", 400,   0,  400 )     
+h_2btag_jet1subjet1mass                   = ROOT.TH1D("h_2btag_jet1subjet1mass"                      , "", 400,   0,  400 )     
+h_2btag_jet1subjet0mass_jet1subjet1mass   = ROOT.TH2D("h_2btag_jet1subjet0mass_jet1subjet1mass"      , "", 400,   0,  400 , 400,   0,  400 )
+h_2btag_jet1subjet0bdisc_jet1subjet1bdisc = ROOT.TH2D("h_2btag_jet1subjet0bdisc_jet1subjet1bdisc"    , "", 100,   0,    1 , 100,   0,    1 )
+
+h_2btag_jet1ttag_jet0massSD                          = ROOT.TH1D("h_2btag_jet1ttag_jet0massSD"                           , "", 500,   0,  500 )                  
+h_2btag_jet1ttag_jet0tau32                           = ROOT.TH1D("h_2btag_jet1ttag_jet0tau32"                            , "", 200,   0,    1 )                  
+h_2btag_jet1ttag_jet0tau21                           = ROOT.TH1D("h_2btag_jet1ttag_jet0tau21"                            , "", 200,   0,    1 )                  
+h_2btag_jet1ttag_jet0tau1                            = ROOT.TH1D("h_2btag_jet1ttag_jet0tau1"                             , "", 200,   0,    1 )                  
+h_2btag_jet1ttag_jet0tau2                            = ROOT.TH1D("h_2btag_jet1ttag_jet0tau2"                             , "", 200,   0,    1 )                  
+h_2btag_jet1ttag_jet0tau3                            = ROOT.TH1D("h_2btag_jet1ttag_jet0tau3"                             , "", 200,   0,    1 )                  
+h_2btag_jet1ttag_jet0subjet0mass                     = ROOT.TH1D("h_2btag_jet1ttag_jet0subjet0mass"                      , "", 400,   0,  400 )     
+h_2btag_jet1ttag_jet0subjet1mass                     = ROOT.TH1D("h_2btag_jet1ttag_jet0subjet1mass"                      , "", 400,   0,  400 )     
+h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass     = ROOT.TH2D("h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass"      , "", 400,   0,  400 , 400,   0,  400 )
+h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc   = ROOT.TH2D("h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc"    , "", 100,   0,    1 , 100,   0,    1 )
+
+
+h_2btag_jet0ttag_jet1massSD                          = ROOT.TH1D("h_2btag_jet0ttag_jet1massSD"                           , "", 500,   0,  500 )                  
+h_2btag_jet0ttag_jet1tau32                           = ROOT.TH1D("h_2btag_jet0ttag_jet1tau32"                            , "", 200,   0,    1 )                  
+h_2btag_jet0ttag_jet1tau21                           = ROOT.TH1D("h_2btag_jet0ttag_jet1tau21"                            , "", 200,   0,    1 )                  
+h_2btag_jet0ttag_jet1tau1                            = ROOT.TH1D("h_2btag_jet0ttag_jet1tau1"                             , "", 200,   0,    1 )                  
+h_2btag_jet0ttag_jet1tau2                            = ROOT.TH1D("h_2btag_jet0ttag_jet1tau2"                             , "", 200,   0,    1 )                  
+h_2btag_jet0ttag_jet1tau3                            = ROOT.TH1D("h_2btag_jet0ttag_jet1tau3"                             , "", 200,   0,    1 )                  
+h_2btag_jet0ttag_jet1subjet0mass                     = ROOT.TH1D("h_2btag_jet0ttag_jet1subjet0mass"                      , "", 400,   0,  400 )     
+h_2btag_jet0ttag_jet1subjet1mass                     = ROOT.TH1D("h_2btag_jet0ttag_jet1subjet1mass"                      , "", 400,   0,  400 )     
+h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass     = ROOT.TH2D("h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass"      , "", 400,   0,  400 , 400,   0,  400 )
+h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc   = ROOT.TH2D("h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc"    , "", 100,   0,    1 , 100,   0,    1 )
+
+h_2btag_jet1ttag_jet0tautag_jet0massSD    = ROOT.TH1D("h_2btag_jet1ttag_jet0tautag_jet0massSD"                          , "", 500,   0,  500 )         
+h_2btag_jet1ttag_jet0masstag_jet0tau32    = ROOT.TH1D("h_2btag_jet1ttag_jet0masstag_jet0tau32"                          , "", 200,   0,    1 )         
+h_2btag_jet1ttag_jet0masstag_jet0tau21    = ROOT.TH1D("h_2btag_jet1ttag_jet0masstag_jet0tau21"                          , "", 200,   0,    1 )         
+h_2btag_jet1ttag_jet0masstag_jet0tau1     = ROOT.TH1D("h_2btag_jet1ttag_jet0masstag_jet0tau1"                           , "", 200,   0,    1 )         
+h_2btag_jet1ttag_jet0masstag_jet0tau2     = ROOT.TH1D("h_2btag_jet1ttag_jet0masstag_jet0tau2"                           , "", 200,   0,    1 )         
+h_2btag_jet1ttag_jet0masstag_jet0tau3     = ROOT.TH1D("h_2btag_jet1ttag_jet0masstag_jet0tau3"                           , "", 200,   0,    1 )         
+h_2btag_jet0ttag_jet1tautag_jet1massSD    = ROOT.TH1D("h_2btag_jet0ttag_jet1tautag_jet1massSD"                          , "", 500,   0,  500 )         
+h_2btag_jet0ttag_jet1masstag_jet1tau32    = ROOT.TH1D("h_2btag_jet0ttag_jet1masstag_jet1tau32"                          , "", 200,   0,    1 )         
+h_2btag_jet0ttag_jet1masstag_jet1tau21    = ROOT.TH1D("h_2btag_jet0ttag_jet1masstag_jet1tau21"                          , "", 200,   0,    1 )         
+h_2btag_jet0ttag_jet1masstag_jet1tau1     = ROOT.TH1D("h_2btag_jet0ttag_jet1masstag_jet1tau1"                           , "", 200,   0,    1 )         
+h_2btag_jet0ttag_jet1masstag_jet1tau2     = ROOT.TH1D("h_2btag_jet0ttag_jet1masstag_jet1tau2"                           , "", 200,   0,    1 )         
+h_2btag_jet0ttag_jet1masstag_jet1tau3     = ROOT.TH1D("h_2btag_jet0ttag_jet1masstag_jet1tau3"                           , "", 200,   0,    1 )         
+
+
+
+h_topTag_jet0subjet0pt                     = ROOT.TH1D("h_topTag_jet0subjet0pt"                        , "", 400,   0, 2000 )
+h_topTag_jet0subjet1pt                     = ROOT.TH1D("h_topTag_jet0subjet1pt"                        , "", 400,   0, 2000 )
+h_topTag_jet0pt                            = ROOT.TH1D("h_topTag_jet0pt"                               , "", 400, 400, 4400 )
+h_topTag_jet0pt_jet0subjet0pt              = ROOT.TH2D("h_topTag_jet0pt_jet0subjet0pt"                 , "", 400, 400, 4400 , 400,   0, 2000 )
+h_topTag_jet0pt_jet0subjet1pt              = ROOT.TH2D("h_topTag_jet0pt_jet0subjet1pt"                 , "", 400, 400, 4400 , 400,   0, 2000 )
+h_topTag_jet0subjet0pt_jet0subjet1pt       = ROOT.TH2D("h_topTag_jet0subjet0pt_jet0subjet1pt"          , "", 400,   0, 2000 , 400,   0, 2000 )
+h_topTag_jet0subjet0mass_jet0subjet1mass   = ROOT.TH2D("h_topTag_jet0subjet0mass_jet0subjet1mass"      , "", 400,   0,  400 , 400,   0,  400 )
+h_topTag_jet0subjet0bdisc_jet0subjet1bdisc = ROOT.TH2D("h_topTag_jet0subjet0bdisc_jet0subjet1bdisc"    , "", 100,   0,    1 , 100,   0,    1 )
+h_topTag_jet0subjet0flav_jet0subjet1flav   = ROOT.TH2D("h_topTag_jet0subjet0flav_jet0subjet1flav"      , "",  30,   0,   30 ,  30,   0,   30 )
+h_topTag_jet0subjet0mass                   = ROOT.TH1D("h_topTag_jet0subjet0mass"                      , "", 400,   0,  400 )
+h_topTag_jet0subjet1mass                   = ROOT.TH1D("h_topTag_jet0subjet1mass"                      , "", 400,   0,  400 )
+h_topTag_jet0subjet0bdisc                  = ROOT.TH1D("h_topTag_jet0subjet0bdisc"                     , "", 100,   0,    1 )
+h_topTag_jet0subjet1bdisc                  = ROOT.TH1D("h_topTag_jet0subjet1bdisc"                     , "", 100,   0,    1 )
+h_topTag_jet0subjet0flav                   = ROOT.TH1D("h_topTag_jet0subjet0flav"                      , "",  30,   0,   30 )
+h_topTag_jet0subjet1flav                   = ROOT.TH1D("h_topTag_jet0subjet1flav"                      , "",  30,   0,   30 )
+h_topTag_jet0maxBdisc                      = ROOT.TH1D("h_topTag_jet0maxBdisc"                         , "", 100,   0,    1 )
+h_topTag_jet0maxBdiscflav                  = ROOT.TH1D("h_topTag_jet0maxBdiscflav"                     , "",  30,   0,   30 )
+
+      
+h_topTagbTag_jet0subjet0pt                     = ROOT.TH1D("h_topTagbTag_jet0subjet0pt"                        , "", 400,   0, 2000 )
+h_topTagbTag_jet0subjet1pt                     = ROOT.TH1D("h_topTagbTag_jet0subjet1pt"                        , "", 400,   0, 2000 )
+h_topTagbTag_jet0pt                            = ROOT.TH1D("h_topTagbTag_jet0pt"                               , "", 400, 400, 4400 )
+h_topTagbTag_jet0pt_jet0subjet0pt              = ROOT.TH2D("h_topTagbTag_jet0pt_jet0subjet0pt"                 , "", 400, 400, 4400 , 400,   0, 2000 )
+h_topTagbTag_jet0pt_jet0subjet1pt              = ROOT.TH2D("h_topTagbTag_jet0pt_jet0subjet1pt"                 , "", 400, 400, 4400 , 400,   0, 2000 )
+h_topTagbTag_jet0subjet0pt_jet0subjet1pt       = ROOT.TH2D("h_topTagbTag_jet0subjet0pt_jet0subjet1pt"          , "", 400,   0, 2000 , 400,   0, 2000 )
+h_topTagbTag_jet0subjet0mass_jet0subjet1mass   = ROOT.TH2D("h_topTagbTag_jet0subjet0mass_jet0subjet1mass"      , "", 400,   0,  400 , 400,   0,  400 )
+h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc = ROOT.TH2D("h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc"    , "", 100,   0,    1 , 100,   0,    1 )
+h_topTagbTag_jet0subjet0flav_jet0subjet1flav   = ROOT.TH2D("h_topTagbTag_jet0subjet0flav_jet0subjet1flav"      , "",  30,   0,   30 ,  30,   0,   30 )
+h_topTagbTag_jet0subjet0mass                   = ROOT.TH1D("h_topTagbTag_jet0subjet0mass"                      , "", 400,   0,  400 )
+h_topTagbTag_jet0subjet1mass                   = ROOT.TH1D("h_topTagbTag_jet0subjet1mass"                      , "", 400,   0,  400 )
+h_topTagbTag_jet0subjet0bdisc                  = ROOT.TH1D("h_topTagbTag_jet0subjet0bdisc"                     , "", 100,   0,    1 )
+h_topTagbTag_jet0subjet1bdisc                  = ROOT.TH1D("h_topTagbTag_jet0subjet1bdisc"                     , "", 100,   0,    1 )
+h_topTagbTag_jet0subjet0flav                   = ROOT.TH1D("h_topTagbTag_jet0subjet0flav"                      , "",  30,   0,   30 )
+h_topTagbTag_jet0subjet1flav                   = ROOT.TH1D("h_topTagbTag_jet0subjet1flav"                      , "",  30,   0,   30 )
+h_topTagbTag_jet0maxBdisc                      = ROOT.TH1D("h_topTagbTag_jet0maxBdisc"                         , "", 100,   0,    1 )
+h_topTagbTag_jet0maxBdiscflav                  = ROOT.TH1D("h_topTagbTag_jet0maxBdiscflav"                     , "",  30,   0,   30 )
+
 
 
 
@@ -176,10 +331,14 @@ print "h_modMass_SD_jet1  integral  " + str( h_modMass_SD_jet1 .Integral() )
 #Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_051916_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
 #Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_051916_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
 #Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_051916_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root")
-Fmistag = ROOT.TFile("MistagRate_nbins_052016_27_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
-Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_052016_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
-Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_052016_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
-Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_052016_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
+# Fmistag = ROOT.TFile("MistagRate_nbins_052016_27_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
+# Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_052016_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
+# Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_052016_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
+# Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_052016_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
+Fmistag = ROOT.TFile("MistagRate_nbins_051916_27_ttbar_Substract_outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root");
+Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_051916_13_ttbar_Substract_outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root");
+Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_051916_10_ttbar_Substract_outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root");
+Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_051916_6_ttbar_Substract_outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root");
 
 
 post = [ "_jetPt_dRapHi_0btag" ,  "_jetPt_dRapHi_1btag" ,  "_jetPt_dRapHi_2btag" , "_jetPt_dRapHi_inclusive" ,   
@@ -929,8 +1088,8 @@ for event in Tree:
     print str(count_events)+" / "+str(entries)
 
   count +=1
-  if count%1000 ==0:
-    print str(count)+" / "+str(entries)
+  # if count%1000 ==0:
+  #   print str(count)+" / "+str(entries)
 
   # if count_events > 20000:
   #   break
@@ -1315,6 +1474,187 @@ for event in Tree:
      evWeight *= event.PU_CorrDn
 
 
+
+
+  j0massSD     = event.Jet0MassSoftDrop
+  j0tau32      = event.Jet0Tau32
+  j0tau21      = event.Jet0Tau21
+  j0tau1       = event.Jet0Tau1
+  j0tau2       = event.Jet0Tau2
+  j0tau3       = event.Jet0Tau3
+
+  j0s0bdisc   = event.Jet0SDbdisc0        
+  j0s0pt      = event.Jet0SDsubjet0pt     
+  j0s0mass    = event.Jet0SDsubjet0mass   
+  j0s0area    = event.Jet0SDsubjet0area   
+  j0s0flav    = event.Jet0SDsubjet0flav   
+  
+  j0s1bdisc   = event.Jet0SDbdisc1        
+  j0s1pt      = event.Jet0SDsubjet1pt     
+  j0s1mass    = event.Jet0SDsubjet1mass   
+  j0s1area    = event.Jet0SDsubjet1area   
+  j0s1flav    = event.Jet0SDsubjet1flav   
+  
+  j1massSD     = event.Jet1MassSoftDrop
+  j1tau32      = event.Jet1Tau32
+  j1tau21      = event.Jet1Tau21
+  j1tau1       = event.Jet1Tau1
+  j1tau2       = event.Jet1Tau2
+  j1tau3       = event.Jet1Tau3
+
+  j1s0bdisc   = event.Jet1SDbdisc0        
+  j1s0pt      = event.Jet1SDsubjet0pt     
+  j1s0mass    = event.Jet1SDsubjet0mass   
+  j1s0area    = event.Jet1SDsubjet0area   
+  j1s0flav    = event.Jet1SDsubjet0flav   
+  
+  j1s1bdisc   = event.Jet1SDbdisc1        
+  j1s1pt      = event.Jet1SDsubjet1pt     
+  j1s1mass    = event.Jet1SDsubjet1mass   
+  j1s1area    = event.Jet1SDsubjet1area   
+  j1s1flav    = event.Jet1SDsubjet1flav   
+  
+  maxBdisc_jet0_       = event.Jet0SDmaxbdisc
+  maxBdisc_jet1_       = event.Jet1SDmaxbdisc
+  maxbdiscflav_jet0_   = event.Jet0SDmaxbdiscflav  
+  maxbdiscflav_jet1_   = event.Jet1SDmaxbdiscflav 
+
+  #-----
+  h_HT                                .Fill( maxJetHt                  , evWeight )          
+  h_DijetMass                         .Fill( DijetMass                 , evWeight )           
+  h_DijetMass_modMass_jet0            .Fill( DijetMass_modMass_jet0    , evWeight )                        
+  h_DijetMass_modMass_jet1            .Fill( DijetMass_modMass_jet1    , evWeight )                        
+  h_DeltaRap                          .Fill( event.DijetDeltaRap       , evWeight )
+
+  h_jet0pt                            .Fill( jet0P4.Perp()             , evWeight )
+  h_jet0rap                           .Fill( jet0P4.Rapidity()         , evWeight )
+  h_jet0massSD                        .Fill( j0massSD                  , evWeight )
+  h_jet0tau32                         .Fill( j0tau32                   , evWeight )
+  h_jet0tau21                         .Fill( j0tau21                   , evWeight )
+  h_jet0tau1                          .Fill( j0tau1                    , evWeight )
+  h_jet0tau2                          .Fill( j0tau2                    , evWeight )
+  h_jet0tau3                          .Fill( j0tau3                    , evWeight )
+
+  h_jet0subjet0pt                     .Fill( j0s0pt                    , evWeight )
+  h_jet0subjet0mass                   .Fill( j0s0mass                  , evWeight )
+  h_jet0subjet0bdisc                  .Fill( j0s0bdisc                 , evWeight )
+  h_jet0subjet0flav                   .Fill( abs(j0s0flav)             , evWeight )
+  
+  h_jet0subjet1pt                     .Fill( j0s1pt                    , evWeight )
+  h_jet0subjet1mass                   .Fill( j0s1mass                  , evWeight )
+  h_jet0subjet1bdisc                  .Fill( j0s1bdisc                 , evWeight )
+  h_jet0subjet1flav                   .Fill( abs(j0s1flav)             , evWeight )
+    
+  h_jet0maxBdisc                      .Fill( maxBdisc_jet0_            , evWeight )
+  h_jet0maxBdiscflav                  .Fill( abs(maxbdiscflav_jet0_)   , evWeight )
+
+  h_jet0pt_jet0subjet0pt              .Fill( jet0P4.Perp()  ,      j0s0pt   , evWeight ) 
+  h_jet0pt_jet0subjet1pt              .Fill( jet0P4.Perp()  ,      j0s1pt   , evWeight ) 
+  h_jet0subjet0pt_jet0subjet1pt       .Fill( j0s0pt         ,      j0s1pt   , evWeight ) 
+  h_jet0subjet0mass_jet0subjet1mass   .Fill( j0s0mass       ,      j0s1mass , evWeight ) 
+  h_jet0subjet0flav_jet0subjet1flav   .Fill( abs(j0s0flav)  , abs(j0s1flav) , evWeight ) 
+  h_jet0subjet0bdisc_jet0subjet1bdisc .Fill( j0s0bdisc      ,     j0s1bdisc , evWeight ) 
+ 
+  h_jet1pt                            .Fill( jet1P4.Perp()             , evWeight )
+  h_jet1rap                           .Fill( jet1P4.Rapidity()         , evWeight )
+  h_jet1massSD                        .Fill( j1massSD           , evWeight )
+  h_jet1tau32                         .Fill( j1tau32            , evWeight )
+  h_jet1tau21                         .Fill( j1tau21            , evWeight )
+  h_jet1tau1                          .Fill( j1tau1             , evWeight )
+  h_jet1tau2                          .Fill( j1tau2             , evWeight )
+  h_jet1tau3                          .Fill( j1tau3             , evWeight )
+
+  h_jet1subjet0pt                     .Fill( j1s0pt                    , evWeight )
+  h_jet1subjet0mass                   .Fill( j1s0mass                  , evWeight )
+  h_jet1subjet0bdisc                  .Fill( j1s0bdisc                 , evWeight )
+  h_jet1subjet0flav                   .Fill( abs(j1s0flav)             , evWeight )
+  
+  h_jet1subjet1pt                     .Fill( j1s1pt                    , evWeight )
+  h_jet1subjet1mass                   .Fill( j1s1mass                  , evWeight )
+  h_jet1subjet1bdisc                  .Fill( j1s1bdisc                 , evWeight )
+  h_jet1subjet1flav                   .Fill( abs(j1s1flav)             , evWeight )
+    
+  h_jet1maxBdisc                      .Fill( maxBdisc_jet1_            , evWeight )
+  h_jet1maxBdiscflav                  .Fill( abs(maxbdiscflav_jet1_)   , evWeight )
+
+  h_jet1pt_jet1subjet0pt              .Fill( jet1P4.Perp()  ,      j1s0pt   , evWeight ) 
+  h_jet1pt_jet1subjet1pt              .Fill( jet1P4.Perp()  ,      j1s1pt   , evWeight ) 
+  h_jet1subjet0pt_jet1subjet1pt       .Fill( j1s0pt         ,      j1s1pt   , evWeight ) 
+  h_jet1subjet0mass_jet1subjet1mass   .Fill( j1s0mass       ,      j1s1mass , evWeight ) 
+  h_jet1subjet0flav_jet1subjet1flav   .Fill( abs(j1s0flav)  , abs(j1s1flav) , evWeight ) 
+  h_jet1subjet0bdisc_jet1subjet1bdisc .Fill( j1s0bdisc      ,     j1s1bdisc , evWeight ) 
+ 
+  if newbtagjet0 and newbtagjet1:
+      h_2btag_DijetMass                         .Fill( DijetMass                 , evWeight )           
+      h_2btag_DeltaRap                          .Fill( event.DijetDeltaRap       , evWeight )
+      h_2btag_jet0massSD                        .Fill( j0massSD                  , evWeight )
+      h_2btag_jet0tau32                         .Fill( j0tau32                   , evWeight )
+      h_2btag_jet0tau21                         .Fill( j0tau21                   , evWeight )
+      h_2btag_jet0tau1                          .Fill( j0tau1                    , evWeight )
+      h_2btag_jet0tau2                          .Fill( j0tau2                    , evWeight )
+      h_2btag_jet0tau3                          .Fill( j0tau3                    , evWeight )
+      h_2btag_jet0subjet0mass                   .Fill( j0s0mass                  , evWeight )
+      h_2btag_jet0subjet1mass                   .Fill( j0s1mass                  , evWeight )
+      h_2btag_jet0subjet0mass_jet0subjet1mass   .Fill( j0s0mass       ,      j0s1mass , evWeight ) 
+      h_2btag_jet0subjet0bdisc_jet0subjet1bdisc .Fill( j0s0bdisc      ,     j0s1bdisc , evWeight ) 
+      h_2btag_jet1massSD                        .Fill( j1massSD                  , evWeight )
+      h_2btag_jet1tau32                         .Fill( j1tau32                   , evWeight )
+      h_2btag_jet1tau21                         .Fill( j1tau21                   , evWeight )
+      h_2btag_jet1tau1                          .Fill( j1tau1                    , evWeight )
+      h_2btag_jet1tau2                          .Fill( j1tau2                    , evWeight )
+      h_2btag_jet1tau3                          .Fill( j1tau3                    , evWeight )
+      h_2btag_jet1subjet0mass                   .Fill( j1s0mass                  , evWeight )
+      h_2btag_jet1subjet1mass                   .Fill( j1s1mass                  , evWeight )
+      h_2btag_jet1subjet0mass_jet1subjet1mass   .Fill( j1s0mass       ,      j1s1mass , evWeight ) 
+      h_2btag_jet1subjet0bdisc_jet1subjet1bdisc .Fill( j1s0bdisc      ,     j1s1bdisc , evWeight ) 
+
+      if topTag1MassSDTau32:
+          h_2btag_jet1ttag_jet0massSD                        .Fill( j0massSD                  , evWeight )
+          h_2btag_jet1ttag_jet0tau32                         .Fill( j0tau32                   , evWeight )
+          h_2btag_jet1ttag_jet0tau21                         .Fill( j0tau21                   , evWeight )
+          h_2btag_jet1ttag_jet0tau1                          .Fill( j0tau1                    , evWeight )
+          h_2btag_jet1ttag_jet0tau2                          .Fill( j0tau2                    , evWeight )
+          h_2btag_jet1ttag_jet0tau3                          .Fill( j0tau3                    , evWeight )
+          h_2btag_jet1ttag_jet0subjet0mass                   .Fill( j0s0mass                  , evWeight )
+          h_2btag_jet1ttag_jet0subjet1mass                   .Fill( j0s1mass                  , evWeight )
+          h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass   .Fill( j0s0mass       ,      j0s1mass , evWeight ) 
+          h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc .Fill( j0s0bdisc      ,     j0s1bdisc , evWeight ) 
+          if topTag0Tau32:
+              h_2btag_jet1ttag_jet0tautag_jet0massSD           .Fill( j0massSD                  , evWeight )
+          if topTag0MassSD:
+              h_2btag_jet1ttag_jet0masstag_jet0tau32                         .Fill( j0tau32                   , evWeight )
+              h_2btag_jet1ttag_jet0masstag_jet0tau21                         .Fill( j0tau21                   , evWeight )
+              h_2btag_jet1ttag_jet0masstag_jet0tau1                          .Fill( j0tau1                    , evWeight )
+              h_2btag_jet1ttag_jet0masstag_jet0tau2                          .Fill( j0tau2                    , evWeight )
+              h_2btag_jet1ttag_jet0masstag_jet0tau3                          .Fill( j0tau3                    , evWeight )
+
+
+      if topTag0MassSDTau32:
+          h_2btag_jet0ttag_jet1massSD                        .Fill( j1massSD                  , evWeight )
+          h_2btag_jet0ttag_jet1tau32                         .Fill( j1tau32                   , evWeight )
+          h_2btag_jet0ttag_jet1tau21                         .Fill( j1tau21                   , evWeight )
+          h_2btag_jet0ttag_jet1tau1                          .Fill( j1tau1                    , evWeight )
+          h_2btag_jet0ttag_jet1tau2                          .Fill( j1tau2                    , evWeight )
+          h_2btag_jet0ttag_jet1tau3                          .Fill( j1tau3                    , evWeight )
+          h_2btag_jet0ttag_jet1subjet0mass                   .Fill( j1s0mass                  , evWeight )
+          h_2btag_jet0ttag_jet1subjet1mass                   .Fill( j1s1mass                  , evWeight )
+          h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass   .Fill( j1s0mass       ,      j1s1mass , evWeight ) 
+          h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc .Fill( j1s0bdisc      ,     j1s1bdisc , evWeight ) 
+          if topTag1Tau32:
+              h_2btag_jet0ttag_jet1tautag_jet1massSD           .Fill( j1massSD                  , evWeight )
+          if topTag1MassSD:
+              h_2btag_jet0ttag_jet1masstag_jet1tau32                         .Fill( j1tau32                   , evWeight )
+              h_2btag_jet0ttag_jet1masstag_jet1tau21                         .Fill( j1tau21                   , evWeight )
+              h_2btag_jet0ttag_jet1masstag_jet1tau1                          .Fill( j1tau1                    , evWeight )
+              h_2btag_jet0ttag_jet1masstag_jet1tau2                          .Fill( j1tau2                    , evWeight )
+              h_2btag_jet0ttag_jet1masstag_jet1tau3                          .Fill( j1tau3                    , evWeight )
+
+#   if topTag0MassSDTau32 and topTag1MassSDTau32:
+#       if newbtagjet0 and newbtagjet1:
+# print 'AllHadRunNum      '+event.AllHadRunNum         
+# print 'AllHadLumiBlock   '+event.AllHadLumiBlock      
+# print 'AllHadEventNum    '+event.AllHadEventNum       
+
   #^ fill double tagged dijet distributions
   if topTag0MassSDTau32 and topTag1MassSDTau32:
       if event.DijetDeltaRap > 1 :
@@ -1346,7 +1686,52 @@ for event in Tree:
                 #0btag
                 h_mttMass_tagMassSDTau32_dRapLo_0btag.Fill( DijetMass   , evWeight )#* sf0_MassTau32 * sf1_MassTau32 )
   
+      h_topTag_jet0subjet0pt                     .Fill( j0s0pt         , evWeight )
+      h_topTag_jet0subjet0mass                   .Fill( j0s0mass       , evWeight )
+      h_topTag_jet0subjet0bdisc                  .Fill( j0s0bdisc      , evWeight )
+      h_topTag_jet0subjet0flav                   .Fill( abs(j0s0flav)  , evWeight )
+      
+      h_topTag_jet0subjet1pt                     .Fill( j0s1pt         , evWeight )
+      h_topTag_jet0subjet1mass                   .Fill( j0s1mass       , evWeight )
+      h_topTag_jet0subjet1bdisc                  .Fill( j0s1bdisc      , evWeight )
+      h_topTag_jet0subjet1flav                   .Fill( abs(j0s1flav)  , evWeight )
+        
+      h_topTag_jet0maxBdisc                      .Fill( maxBdisc_jet0_            , evWeight )
+      h_topTag_jet0maxBdiscflav                  .Fill( abs(maxbdiscflav_jet0_)   , evWeight )
 
+      h_topTag_jet0pt                            .Fill( jet0P4.Perp()             , evWeight )
+
+      h_topTag_jet0pt_jet0subjet0pt              .Fill( jet0P4.Perp()  ,      j0s0pt   , evWeight ) 
+      h_topTag_jet0pt_jet0subjet1pt              .Fill( jet0P4.Perp()  ,      j0s1pt   , evWeight ) 
+      h_topTag_jet0subjet0pt_jet0subjet1pt       .Fill( j0s0pt         ,      j0s1pt   , evWeight ) 
+      h_topTag_jet0subjet0mass_jet0subjet1mass   .Fill( j0s0mass       ,      j0s1mass , evWeight ) 
+      h_topTag_jet0subjet0flav_jet0subjet1flav   .Fill( abs(j0s0flav)  , abs(j0s1flav) , evWeight ) 
+      h_topTag_jet0subjet0bdisc_jet0subjet1bdisc .Fill( j0s0bdisc      ,     j0s1bdisc , evWeight ) 
+     
+
+      if newbtagjet0:
+          h_topTagbTag_jet0subjet0pt                     .Fill( j0s0pt         , evWeight )
+          h_topTagbTag_jet0subjet0mass                   .Fill( j0s0mass       , evWeight )
+          h_topTagbTag_jet0subjet0bdisc                  .Fill( j0s0bdisc      , evWeight )
+          h_topTagbTag_jet0subjet0flav                   .Fill( abs(j0s0flav)  , evWeight )
+          
+          h_topTagbTag_jet0subjet1pt                     .Fill( j0s1pt         , evWeight )
+          h_topTagbTag_jet0subjet1mass                   .Fill( j0s1mass       , evWeight )
+          h_topTagbTag_jet0subjet1bdisc                  .Fill( j0s1bdisc      , evWeight )
+          h_topTagbTag_jet0subjet1flav                   .Fill( abs(j0s1flav)  , evWeight )
+          
+          h_topTagbTag_jet0maxBdisc                      .Fill( maxBdisc_jet0_            , evWeight )
+          h_topTagbTag_jet0maxBdiscflav                  .Fill( abs(maxbdiscflav_jet0_)   , evWeight )
+
+          h_topTagbTag_jet0pt                            .Fill( jet0P4.Perp()             , evWeight )
+
+          h_topTagbTag_jet0pt_jet0subjet0pt              .Fill( jet0P4.Perp()  ,      j0s0pt   , evWeight ) 
+          h_topTagbTag_jet0pt_jet0subjet1pt              .Fill( jet0P4.Perp()  ,      j0s1pt   , evWeight ) 
+          h_topTagbTag_jet0subjet0pt_jet0subjet1pt       .Fill( j0s0pt         ,      j0s1pt   , evWeight ) 
+          h_topTagbTag_jet0subjet0mass_jet0subjet1mass   .Fill( j0s0mass       ,      j0s1mass , evWeight ) 
+          h_topTagbTag_jet0subjet0flav_jet0subjet1flav   .Fill( abs(j0s0flav)  , abs(j0s1flav) , evWeight ) 
+          h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc .Fill( j0s0bdisc      ,     j0s1bdisc , evWeight ) 
+         
 
   
   rand1 =  ROOT.TRandom3(0)
@@ -4913,6 +5298,159 @@ mttPredDist_AntiTagTau32_NoMassReq_modMass_tagMassSDTau32_dRapIn_1btag     .GetT
 mttPredDist_AntiTagTau32_NoMassReq_modMass_tagMassSDTau32_dRapIn_2btag     .GetTaggableHist()   .Write()   
 mttPredDist_AntiTagTau32_NoMassReq_modMass_tagMassSDTau32_dRapIn_inclusive .GetTaggableHist()   .Write()   
 
+
+h_HT                                  .Write()
+h_DijetMass                           .Write()
+h_DijetMass_modMass_jet0              .Write()
+h_DijetMass_modMass_jet1              .Write()
+h_DeltaRap                            .Write()
+h_jet0rap                             .Write()
+h_jet0massSD                          .Write()
+h_jet0tau32                           .Write()
+h_jet0tau21                           .Write()
+h_jet0tau1                            .Write()
+h_jet0tau2                            .Write()
+h_jet0tau3                            .Write()
+h_jet0subjet0pt                       .Write()
+h_jet0subjet1pt                       .Write()
+h_jet0pt                              .Write()
+h_jet0pt_jet0subjet0pt                .Write()
+h_jet0pt_jet0subjet1pt                .Write()
+h_jet0subjet0pt_jet0subjet1pt         .Write()
+h_jet0subjet0mass_jet0subjet1mass     .Write()
+h_jet0subjet0bdisc_jet0subjet1bdisc   .Write()
+h_jet0subjet0flav_jet0subjet1flav     .Write()
+h_jet0subjet0mass                     .Write()
+h_jet0subjet1mass                     .Write()
+h_jet0subjet0bdisc                    .Write()
+h_jet0subjet1bdisc                    .Write()
+h_jet0subjet0flav                     .Write()
+h_jet0subjet1flav                     .Write()
+h_jet0maxBdisc                        .Write()
+h_jet0maxBdiscflav                    .Write()
+h_jet1rap                             .Write()
+h_jet1massSD                          .Write()
+h_jet1tau32                           .Write()
+h_jet1tau21                           .Write()
+h_jet1tau1                            .Write()
+h_jet1tau2                            .Write()
+h_jet1tau3                            .Write()
+h_jet1subjet0pt                       .Write()
+h_jet1subjet1pt                       .Write()
+h_jet1pt                              .Write()
+h_jet1pt_jet1subjet0pt                .Write()
+h_jet1pt_jet1subjet1pt                .Write()
+h_jet1subjet0pt_jet1subjet1pt         .Write()
+h_jet1subjet0mass_jet1subjet1mass     .Write()
+h_jet1subjet0bdisc_jet1subjet1bdisc   .Write()
+h_jet1subjet0flav_jet1subjet1flav     .Write()
+h_jet1subjet0mass                     .Write()
+h_jet1subjet1mass                     .Write()
+h_jet1subjet0bdisc                    .Write()
+h_jet1subjet1bdisc                    .Write()
+h_jet1subjet0flav                     .Write()
+h_jet1subjet1flav                     .Write()
+h_jet1maxBdisc                        .Write()
+h_jet1maxBdiscflav                    .Write()
+
+
+h_2btag_DijetMass                           .Write()
+h_2btag_DeltaRap                            .Write()
+h_2btag_jet0massSD                          .Write()
+h_2btag_jet0tau32                           .Write()
+h_2btag_jet0tau21                           .Write()
+h_2btag_jet0tau1                            .Write()
+h_2btag_jet0tau2                            .Write()
+h_2btag_jet0tau3                            .Write()
+h_2btag_jet0subjet0mass                     .Write()
+h_2btag_jet0subjet1mass                     .Write()
+h_2btag_jet0subjet0mass_jet0subjet1mass     .Write()
+h_2btag_jet0subjet0bdisc_jet0subjet1bdisc   .Write()
+h_2btag_jet1massSD                          .Write()
+h_2btag_jet1tau32                           .Write()
+h_2btag_jet1tau21                           .Write()
+h_2btag_jet1tau1                            .Write()
+h_2btag_jet1tau2                            .Write()
+h_2btag_jet1tau3                            .Write()
+h_2btag_jet1subjet0mass                     .Write()
+h_2btag_jet1subjet1mass                     .Write()
+h_2btag_jet1subjet0mass_jet1subjet1mass     .Write()
+h_2btag_jet1subjet0bdisc_jet1subjet1bdisc   .Write()
+
+h_2btag_jet1ttag_jet0massSD                         .Write()
+h_2btag_jet1ttag_jet0tau32                          .Write()
+h_2btag_jet1ttag_jet0tau21                          .Write()
+h_2btag_jet1ttag_jet0tau1                           .Write()
+h_2btag_jet1ttag_jet0tau2                           .Write()
+h_2btag_jet1ttag_jet0tau3                           .Write()
+h_2btag_jet1ttag_jet0subjet0mass                    .Write()
+h_2btag_jet1ttag_jet0subjet1mass                    .Write()
+h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass    .Write()
+h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc  .Write()
+h_2btag_jet0ttag_jet1massSD                         .Write()
+h_2btag_jet0ttag_jet1tau32                          .Write()
+h_2btag_jet0ttag_jet1tau21                          .Write()
+h_2btag_jet0ttag_jet1tau1                           .Write()
+h_2btag_jet0ttag_jet1tau2                           .Write()
+h_2btag_jet0ttag_jet1tau3                           .Write()
+h_2btag_jet0ttag_jet1subjet0mass                    .Write()
+h_2btag_jet0ttag_jet1subjet1mass                    .Write()
+h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass    .Write()
+h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc  .Write()
+
+h_2btag_jet1ttag_jet0tautag_jet0massSD      .Write()
+h_2btag_jet1ttag_jet0masstag_jet0tau32      .Write()
+h_2btag_jet1ttag_jet0masstag_jet0tau21      .Write()
+h_2btag_jet1ttag_jet0masstag_jet0tau1       .Write()
+h_2btag_jet1ttag_jet0masstag_jet0tau2       .Write()
+h_2btag_jet1ttag_jet0masstag_jet0tau3       .Write()
+h_2btag_jet0ttag_jet1tautag_jet1massSD      .Write()
+h_2btag_jet0ttag_jet1masstag_jet1tau32      .Write()
+h_2btag_jet0ttag_jet1masstag_jet1tau21      .Write()
+h_2btag_jet0ttag_jet1masstag_jet1tau1       .Write()
+h_2btag_jet0ttag_jet1masstag_jet1tau2       .Write()
+h_2btag_jet0ttag_jet1masstag_jet1tau3       .Write()
+
+h_topTag_jet0subjet0pt                       .Write()
+h_topTag_jet0subjet0mass                     .Write()
+h_topTag_jet0subjet0bdisc                    .Write()
+h_topTag_jet0subjet0flav                     .Write()
+
+h_topTag_jet0subjet1pt                       .Write()
+h_topTag_jet0subjet1mass                     .Write()
+h_topTag_jet0subjet1bdisc                    .Write()
+h_topTag_jet0subjet1flav                     .Write()
+
+h_topTag_jet0maxBdisc                        .Write()
+h_topTag_jet0maxBdiscflav                    .Write()
+h_topTag_jet0pt                              .Write()
+h_topTag_jet0pt_jet0subjet0pt                .Write()
+h_topTag_jet0pt_jet0subjet1pt                .Write()
+h_topTag_jet0subjet0pt_jet0subjet1pt         .Write()
+h_topTag_jet0subjet0mass_jet0subjet1mass     .Write()
+h_topTag_jet0subjet0flav_jet0subjet1flav     .Write()
+h_topTag_jet0subjet0bdisc_jet0subjet1bdisc   .Write()
+
+
+h_topTagbTag_jet0subjet0pt                       .Write()
+h_topTagbTag_jet0subjet0mass                     .Write()
+h_topTagbTag_jet0subjet0bdisc                    .Write()
+h_topTagbTag_jet0subjet0flav                     .Write()
+
+h_topTagbTag_jet0subjet1pt                       .Write()
+h_topTagbTag_jet0subjet1mass                     .Write()
+h_topTagbTag_jet0subjet1bdisc                    .Write()
+h_topTagbTag_jet0subjet1flav                     .Write()
+
+h_topTagbTag_jet0maxBdisc                        .Write()
+h_topTagbTag_jet0maxBdiscflav                    .Write()
+h_topTagbTag_jet0pt                              .Write()
+h_topTagbTag_jet0pt_jet0subjet0pt                .Write()
+h_topTagbTag_jet0pt_jet0subjet1pt                .Write()
+h_topTagbTag_jet0subjet0pt_jet0subjet1pt         .Write()
+h_topTagbTag_jet0subjet0mass_jet0subjet1mass     .Write()
+h_topTagbTag_jet0subjet0flav_jet0subjet1flav     .Write()
+h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc   .Write()
 
 
 
