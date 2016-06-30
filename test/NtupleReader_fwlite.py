@@ -275,19 +275,19 @@ parser.add_option('--puFile', type='string', action='store',
                   help='Name of Pileup Reweighting File')
 
 parser.add_option('--puDistNOM', type='string', action='store',
-                  default="MyDataPileupHistogram.root",
+                  default="MyDataPileupHistogram_72mb2015.root",
                   dest='puDistNOM',
-                  help='Name of Pileup Distribution File - Nominal')
+                  help='Name of Pileup Distribution File - Nominal')#To be consistent with semileptonic, file changed from MyDataPileupHistogram.root, which was using 69 mb minbias xs (recommended).
 
 parser.add_option('--puDistUP', type='string', action='store',
-                  default="MyDataPileupHistogramUP.root",
+                  default="MyDataPileupHistogramUP_75p6mb2015.root",
                   dest='puDistUP',
-                  help='Name of Pileup Distribution File - 5% Up')
+                  help='Name of Pileup Distribution File - 5% Up')#To be consistent with semileptonic, file changed from MyDataPileupHistogramUP.root, which was using 69 + 5% mb minbias xs (recommended).
 
 parser.add_option('--puDistDN', type='string', action='store',
-                  default="MyDataPileupHistogramDN.root",
+                  default="MyDataPileupHistogramDN_68p4mb2015.root",
                   dest='puDistDN',
-                  help='Name of Pileup Distribution File - 5% Down')
+                  help='Name of Pileup Distribution File - 5% Down')#To be consistent with semileptonic, file changed from MyDataPileupHistogramDN.root, which was using 69 - 5% mb minbias xs (recommended).
 
 parser.add_option('--showEvents', type='int', action='store',
                   default=None,
@@ -2261,6 +2261,7 @@ for ifile in files : #{ Loop over root files
 
             #@ PU errors
             #instructions to generate root files: https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData#2015_Pileup_JSON_Files
+            #To be consistent with semileptonic, we changed from 69 mb minbias xs (recommended) to 72 mb.
             pu_nom = hPU_NOM.GetBinContent( hPU_NOM.GetXaxis().FindBin( puNTrueInt) )
             pu_up  = hPU_UP.GetBinContent( hPU_UP.GetXaxis().FindBin( puNTrueInt) )
             pu_dn  = hPU_DN.GetBinContent( hPU_DN.GetXaxis().FindBin( puNTrueInt) )

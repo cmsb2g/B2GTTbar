@@ -2,14 +2,14 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'ZprimeAnaTrees_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring15MiniAODv2-74X_20160318'
+config.General.requestName = 'ZprimeAnaTrees_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring15MiniAODv2-74X_20160630Combo'
 config.General.workArea = 'ZprimeAnaRunII'
 config.General.transferLogs = True
 
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'PSet.py'
-config.JobType.inputFiles = ['FrameworkJobReport.xml', 'execute_for_crab.py', 'NtupleReader_fwlite.py', 'leptonic_nu_z_component.py', 'JECs', 'ModMass_2015_09_22.root', 'MistagRate_2015_09_25.root', 'PUweight20160316.root', 'MyDataPileupHistogram.root', 'MyDataPileupHistogramUP.root', 'MyDataPileupHistogramDN.root']
+config.JobType.inputFiles = ['FrameworkJobReport.xml', 'execute_for_crab.py', 'NtupleReader_fwlite.py', 'leptonic_nu_z_component.py', 'JECs', 'ModMass_2015_09_22.root', 'MistagRate_2015_09_25.root', 'PUweight20160316.root', 'MyDataPileupHistogram_72mb2015.root', 'MyDataPileupHistogramUP_75p6mb2015.root', 'MyDataPileupHistogramDN_68p4mb2015.root']
 config.JobType.outputFiles = ['outplots.root']
 config.JobType.scriptExe = 'execute_for_crab_ttbar.sh'
 
