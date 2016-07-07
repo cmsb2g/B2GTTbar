@@ -17,6 +17,19 @@ process.source = cms.Source("PoolSource",
     )
 )
 
+process.load('Configuration.StandardSequences.Services_cff')
+process.load('RecoMET.METFilters.BadChargedCandidateFilter_cfi')
+process.load('RecoMET.METFilters.BadPFMuonFilter_cfi')
+## for miniAOD running
+process.BadChargedCandidateFilter.muons = cms.InputTag("slimmedMuons")
+process.BadChargedCandidateFilter.PFCandidates = cms.InputTag("packedPFCandidates")
+process.BadChargedCandidateFilter.debug = cms.bool(False)
+process.BadPFMuonFilter.muons = cms.InputTag("slimmedMuons")
+process.BadPFMuonFilter.PFCandidates = cms.InputTag("packedPFCandidates")
+process.BadPFMuonFilter.debug = cms.bool(False)
+
+
+
 process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     jecPayloadsAK8chs = cms.vstring([
                                     'JECs/Spring16_25nsV6_MC_L1FastJet_AK8PFchs.txt',
@@ -55,4 +68,8 @@ process.TFileService = cms.Service("TFileService",
       closeFileFast = cms.untracked.bool(True)
   )
 
-process.p = cms.Path(process.ana)
+process.p = cms.Path(
+  process.BadChargedCandidateFilter*
+  process.BadPFMuonFilter*
+  process.ana
+)

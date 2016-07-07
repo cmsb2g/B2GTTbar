@@ -93,6 +93,8 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       edm::EDGetTokenT<std::vector<reco::Vertex> > vtxToken_;
       edm::EDGetTokenT<edm::TriggerResults> triggerResultsMETFilterToken_;
       edm::EDGetTokenT<edm::TriggerResults> triggerResultsHLTToken_;
+      edm::EDGetTokenT<bool> badMuonFilterToken_;
+      edm::EDGetTokenT<bool> badChargedCandidateFilterToken_;
 
       std::vector<std::string>  jecPayloadsAK4chs_;
       std::vector<std::string>  jecPayloadsAK8chs_;
@@ -113,7 +115,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       TH1D * h_ak8puppi_softDropMass ;
 
       TTree *TreeAllHad;
-
+      Bool_t  PassMETFilters                        ;
       Float_t Jet0PtRaw                             ;
       Float_t Jet0EtaRaw                            ;
       Float_t Jet0PhiRaw                            ;
@@ -373,6 +375,8 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
     vtxToken_(consumes<std::vector<reco::Vertex> >(edm::InputTag("offlineSlimmedPrimaryVertices"))),
     triggerResultsMETFilterToken_(consumes<edm::TriggerResults>(edm::InputTag("TriggerResults", "", "RECO"))),  //"PAT"
     triggerResultsHLTToken_(consumes<edm::TriggerResults>(edm::InputTag("TriggerResults", "", "HLT"))),
+    badMuonFilterToken_(consumes<bool>(edm::InputTag("BadPFMuonFilter",""))),
+    badChargedCandidateFilterToken_(consumes<bool>(edm::InputTag("BadChargedCandidateFilter",""))),
     jecPayloadsAK4chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4chs")),
     jecPayloadsAK8chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK8chs")),
     jecPayloadsAK4pup_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4pup")),
@@ -386,6 +390,9 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   h_ak8puppi_softDropMass =  fs->make<TH1D>("h_ak8puppi_softDropMass"      ,"",200,0,400);
 
   TreeAllHad = new TTree("TreeAllHad","TreeAllHad"); 
+ 
+
+  TreeAllHad->Branch("PassMETFilters"                        , & PassMETFilters                     ,    "PassMETFilters/B"                               );                                  
   TreeAllHad->Branch("Jet0PtRaw"                             , & Jet0PtRaw                          ,    "Jet0PtRaw/F"                               );                                  
   TreeAllHad->Branch("Jet0EtaRaw"                            , & Jet0EtaRaw                         ,    "Jet0EtaRaw/F"                              );                                   
   TreeAllHad->Branch("Jet0PhiRaw"                            , & Jet0PhiRaw                         ,    "Jet0PhiRaw/F"                              );                                   
@@ -656,48 +663,67 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //------------------------------------
   // MET Noise Filters 
   //------------------------------------
-
+  bool passMETfilters=false;
   if ( iEvent.isRealData() ) {
     edm::Handle < edm::TriggerResults > metFilters;
     iEvent.getByToken(triggerResultsMETFilterToken_, metFilters);
     edm::TriggerNames const& filterTriggerNames = iEvent.triggerNames(*metFilters);
-    // const edm::TriggerNames &names = iEvent.triggerNames(*metFilters);
 
     int nMETfilters = metFilters->size();
-    cout<<"nMETfilters "<<nMETfilters<<endl;
+    if (verbose) cout<<"nMETfilters "<<nMETfilters<<endl;
+
+    //https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#MiniAOD_8011_ICHEP_dataset
+    // Flag_HBHENoiseFilter TO BE USED
+    // Flag_HBHENoiseIsoFilter TO BE USED
+    // Flag_EcalDeadCellTriggerPrimitiveFilter TO BE USED
+    // Flag_goodVertices TO BE USED
+    // Flag_eeBadScFilter TO BE USED
+    // Flag_globalTightHalo2016Filter NEW TO BE USED
+    // badMuon (NEW not available in 80X miniAOD v2, see snippet below) TO BE USED
+    // badCharged hadron (NEW not available in 80X miniAOD v2, see snippet below) TO BE USED 
 
     vector <string> filterFlags;
     filterFlags.push_back("Flag_HBHENoiseFilter");
     filterFlags.push_back("Flag_HBHENoiseIsoFilter");
-    filterFlags.push_back("Flag_CSCTightHalo2015Filter");
     filterFlags.push_back("Flag_EcalDeadCellTriggerPrimitiveFilter");
     filterFlags.push_back("Flag_goodVertices");
     filterFlags.push_back("Flag_eeBadScFilter");
+    filterFlags.push_back("Flag_globalTightHalo2016Filter");
 
-   
-   for (int itrig = 0; itrig != nMETfilters; ++itrig){
+    unsigned int count_matched_accept = 0;
+    for (int itrig = 0; itrig != nMETfilters; ++itrig){
      std::string trigName = filterTriggerNames.triggerName(itrig);
       bool accept = metFilters->accept(itrig);
-      cout<<trigName<<"  "<<accept<<endl;
-       if ( std::find( filterFlags.begin(), filterFlags.end(), trigName ) != filterFlags.end() ) {
-           cout<<"found "<<trigName<<endl;
-       }
+      if (verbose) cout<<trigName<<"  "<<accept;
+      if ( std::find( filterFlags.begin(), filterFlags.end(), trigName ) != filterFlags.end() ) {
+          if (verbose) cout<<"  -> matches filterFlags list ("<<trigName<<")"<<endl;
+          if (accept) count_matched_accept++;
       }
-
-
-    // bool event_pass_METfilter = false;
-
-    // for ( unsigned int i = 0; i < metFilters->size(); ++i) {
-    //   if ( std::find( filterFlags.begin(), filterFlags.end(), names.triggerName(i) ) != filterFlags.end() ) {
-
-    //     bool passFilter = metFilters->accept( i );
-    //      cout << "METfilter " << names.triggerName(i) << ". Pass? "<< passFilter << endl;
-
-    //     event_pass_METfilter = event_pass_METfilter && passFilter;
-    //     // metFilters->push_back( metFilters->accept( i ) );
-    //   }
-    // }
+      else { if (verbose) cout<<endl;}
+    }
+    if (verbose) cout<<"filterFlags.size() "<<filterFlags.size()<<" count_matched_accept "<<count_matched_accept<<endl;
+    if ( count_matched_accept==filterFlags.size() ){
+      passMETfilters=true;
+    }
+    if (verbose) cout<<"miniAOD Flags pass? "<<passMETfilters<<endl;
   }
+  else{
+    passMETfilters=true;
+  }
+
+  // RECO problemes -> apply to both data and MC
+  Handle<bool> ifilterbadChCand;
+  iEvent.getByToken(badChargedCandidateFilterToken_ , ifilterbadChCand);
+  bool  filterbadChCandidate = *ifilterbadChCand;
+  if (verbose) cout <<"filterbadChCandidate "<<filterbadChCandidate<<endl;
+
+  Handle<bool> ifilterbadPFMuon;
+  iEvent.getByToken(badMuonFilterToken_, ifilterbadPFMuon);
+  bool filterbadPFMuon = *ifilterbadPFMuon;
+  if (verbose) cout <<"filterbadPFMuon "<<filterbadPFMuon<<endl;
+
+  passMETfilters = passMETfilters && filterbadChCandidate && filterbadPFMuon;
+  if (verbose) cout<<"passMETfilters = "<< passMETfilters <<endl;
 
   //------------------------------------
   // JECs 
@@ -781,7 +807,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   TLorentzVector GenJetMatched1;
   for (const pat::Jet &ijet : *AK8MINI) {  
     if (count_AK8MINI>1) break;
-
+    if (count_AK8MINI==0 && ijet.pt()<250) break;
     //------------------------------------
     // AK8CHS JEC correction 
     //------------------------------------
@@ -795,7 +821,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     double corr = JetCorrectorAK8chs->getCorrection();
 
     reco::Candidate::LorentzVector corrJet = corr * uncorrJet;
-    cout<<"uncorrected AK8 jet pt "<<uncorrJet.pt()<<" corrected jet pt "<<corrJet.pt()<<endl;
+    if (verbose) cout<<"uncorrected AK8 jet pt "<<uncorrJet.pt()<<" corrected jet pt "<<corrJet.pt()<<endl;
     
     if(count_AK8MINI==0) AK8jet0_P4corr.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
     if(count_AK8MINI==1) AK8jet1_P4corr.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
@@ -1462,15 +1488,16 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   Q2weight_CorrUp      = 1 ;              
   NNPDF3weight_CorrDn  = 1 ;              
   NNPDF3weight_CorrUp  = 1 ;              
-  AllHadRunNum         = 1 ;              
-  AllHadLumiBlock      = 1 ;              
-  AllHadEventNum       = 1 ;              
+  AllHadRunNum         = iEvent.id().run() ;              
+  AllHadLumiBlock      = iEvent.id().luminosityBlock() ;              
+  AllHadEventNum       = iEvent.id().event() ;              
+  PassMETFilters       = passMETfilters;
 
   //------------------------------------
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
   //------------------------------------
 
-  if (AK8jet0_P4corr.Perp()>200 && AK8jet0_P4corr.Perp()> 200  && fabs( AK8jet0_P4corr.Eta() ) <2.4  && fabs( AK8jet1_P4corr.Eta() ) <2.4 ){
+  if (AK8jet0_P4corr.Perp()>300 && AK8jet1_P4corr.Perp()> 300  && fabs( AK8jet0_P4corr.Eta() ) <2.4  && fabs( AK8jet1_P4corr.Eta() ) <2.4 ){
     TreeAllHad -> Fill();
   } 
 

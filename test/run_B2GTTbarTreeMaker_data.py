@@ -4,7 +4,7 @@ process = cms.Process("Ana")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50) )
 
 process.source = cms.Source("PoolSource",
     # replace 'myfile.root' with the source file you want to use
@@ -14,6 +14,18 @@ process.source = cms.Source("PoolSource",
       'file:root://cmsxrootd.fnal.gov///store/data/Run2016C/JetHT/MINIAOD/PromptReco-v2/000/275/657/00000/0ED91D8C-913B-E611-8C29-02163E0142F6.root'
     )
 )
+
+process.load('Configuration.StandardSequences.Services_cff')
+process.load('RecoMET.METFilters.BadChargedCandidateFilter_cfi')
+process.load('RecoMET.METFilters.BadPFMuonFilter_cfi')
+## for miniAOD running
+process.BadChargedCandidateFilter.muons = cms.InputTag("slimmedMuons")
+process.BadChargedCandidateFilter.PFCandidates = cms.InputTag("packedPFCandidates")
+process.BadChargedCandidateFilter.debug = cms.bool(False)
+process.BadPFMuonFilter.muons = cms.InputTag("slimmedMuons")
+process.BadPFMuonFilter.PFCandidates = cms.InputTag("packedPFCandidates")
+process.BadPFMuonFilter.debug = cms.bool(False)
+
 
 process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     jecPayloadsAK8chs = cms.vstring([
@@ -53,4 +65,8 @@ process.TFileService = cms.Service("TFileService",
       closeFileFast = cms.untracked.bool(True)
   )
 
-process.p = cms.Path(process.ana)
+process.p = cms.Path(
+  process.BadChargedCandidateFilter*
+  process.BadPFMuonFilter*
+  process.ana
+)
