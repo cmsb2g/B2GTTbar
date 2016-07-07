@@ -10,4 +10,5 @@
   <use   name="CommonTools/UtilAlgos"/>
   <use   name="DataFormats/PatCandidates"/>
   <use   name="root"/>
+  <use name="JetMETCorrections/Modules"/>
 </library>
