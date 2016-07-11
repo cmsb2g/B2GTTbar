@@ -583,7 +583,7 @@ void run(){
 
 
 
-    TFile * OutFile = new TFile("outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_040416_nom_scaled.root" , "RECREATE");
+    TFile * OutFile = new TFile("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_20160706_nom_scaled.root" , "RECREATE");
 
     const double lumi = 2530 ; // pb-1
     double mcscales[nPt] = {
@@ -602,8 +602,8 @@ void run(){
     TFile* fQCD[nPt];
     TH1D* Check;
     for (int iPt=0; iPt<nPt; iPt++) {
-            cout<<"outAntiTag_QCD_HT"+pT_range[iPt]+"_B2Gv8p4_reader603e_notrig_040416.root"<<endl;
-            fQCD[iPt]=new TFile("outAntiTag_QCD_HT"+pT_range[iPt]+"_B2Gv8p4_reader603e_notrig_040416.root","READ");
+            cout<<"outAntiTag_QCD_HT"+pT_range[iPt]+"_B2Gv8p4_reader603e_20160706.root"<<endl;
+            fQCD[iPt]=new TFile("/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/outAntiTag_QCD_HT"+pT_range[iPt]+"_B2Gv8p4_reader603e_20160706.root","READ");
             }
 
     for (int iPt=0; iPt<nPt; iPt++) {

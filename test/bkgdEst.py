@@ -41,7 +41,7 @@ parser.add_option('--isData', action='store_true',
                   help='is it Data?')
 
 parser.add_option('--minAK8Pt', type='float', action='store',
-                  default=500.,
+                  default=500,
                   dest='minAK8Pt',
                   help='Minimum PT for AK8 jets')
 
@@ -335,10 +335,14 @@ print "h_modMass_SD_jet1  integral  " + str( h_modMass_SD_jet1 .Integral() )
 # Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_052016_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
 # Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_052016_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
 # Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_052016_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_052016_nom_scaled.root");
-Fmistag = ROOT.TFile("MistagRate_nbins_051916_27_ttbar_Substract_outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root");
-Fmistag_jetP_0bTag = ROOT.TFile("MistagRate_nbins_051916_13_ttbar_Substract_outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root");
-Fmistag_jetP_1bTag = ROOT.TFile("MistagRate_nbins_051916_10_ttbar_Substract_outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root");
-Fmistag_jetP_2bTag = ROOT.TFile("MistagRate_nbins_051916_6_ttbar_Substract_outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root");
+#Fmistag = ROOT.TFile("/uscms_data/d3/camclean/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_20160706_27_ttbar_Subtract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_20160706.root");
+#Fmistag_jetP_0bTag = ROOT.TFile("/uscms_data/d3/camclean/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_20160706_13_ttbar_Subtract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_20160706.root");
+#Fmistag_jetP_1bTag = ROOT.TFile("/uscms_data/d3/camclean/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_20160706_10_ttbar_Subtract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_20160706.root");
+#Fmistag_jetP_2bTag = ROOT.TFile("/uscms_data/d3/camclean/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_20160706_6_ttbar_Subtract_outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_20160706.root");
+Fmistag = ROOT.TFile("/uscms_data/d3/camclean/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_20160706_27_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_20160706_nom_scaled.root");
+Fmistag_jetP_0bTag = ROOT.TFile("/uscms_data/d3/camclean/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_20160706_13_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_20160706_nom_scaled.root");
+Fmistag_jetP_1bTag = ROOT.TFile("/uscms_data/d3/camclean/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_20160706_10_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_20160706_nom_scaled.root");
+Fmistag_jetP_2bTag = ROOT.TFile("/uscms_data/d3/camclean/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_20160706_6_MC_outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_20160706_nom_scaled.root");
 
 
 post = [ "_jetPt_dRapHi_0btag" ,  "_jetPt_dRapHi_1btag" ,  "_jetPt_dRapHi_2btag" , "_jetPt_dRapHi_inclusive" ,   
