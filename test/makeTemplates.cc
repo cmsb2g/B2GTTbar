@@ -733,8 +733,17 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1){
 
   float lumi = 2592.3;
   float nttbar = 96834559.;//19665194.;
-  float kfactor = 0.94;
-  float ttSF = 0.89*0.89;
+
+  float kfactor = 1.0;
+  float ttSF = 1.0;
+  
+  if (!pt500){
+    kfactor = 0.94;
+    ttSF = 0.89*0.89;
+  }
+
+  cout << kfactor << " " << ttSF << endl;
+
 
   for (int tag = 0; tag < nTagCats; tag++){
     cout<<"start of loop"<<endl;
