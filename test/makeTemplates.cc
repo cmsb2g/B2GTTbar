@@ -43,9 +43,9 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
   int numProcs = names::NUM_PROCS;
 
   string outEnd = "_forTHETA.";
-  if (!forTHETA || postFit)  outEnd = ".";
+  if (!forTHETA)  outEnd = ".";
   if (pt500) outEnd = Form("_pt500%s",outEnd.c_str());
-  if (postFit) outEnd = Form("_postFit_%s",outEnd.c_str());
+  if (postFit) outEnd = Form("_postFit%s",outEnd.c_str());
 
   string file = Form("templates_narrow%sroot", outEnd.c_str());//ZPN
   if (signal == 1) file = Form("templates_wide%sroot", outEnd.c_str());
@@ -58,12 +58,10 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
   TString labels[200];
   labels[names::DATA] = "data";
   labels[names::QCD]  = "qcd";
-  labels[names::QCD_POSTFIT]  = "qcd_postfit";
   labels[names::QCD_SYST]  = "qcdsyst";
   labels[names::QCDMC]  = "qcdmc";
   labels[names::QCDMC_SYST]  = "qcdmcsyst";
   labels[names::TT] = "ttbar";
-  labels[names::TT_POSTFIT]  = "ttbar_postfit";
   labels[names::TT_SUBTRACT] = "ttbar_subtract";
   labels[names::TT_SUBTRACTSYST] = "ttbar_subtractsyst";
   labels[names::TT_SCALEUP] = "ttbar_jes_up";
@@ -191,7 +189,6 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
   }
 
   TString dir = "/uscms_data/d3/camclean/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/";
-  TString dirPostFit = "/uscms/home/camclean/nobackup/theta_dir/CMSSW_5_3_5/src/ZprimeCombo13TeV/runCombo/";
   TString pt = "500.0";
   TString histFileDate = "20160706";
   TString ZPNFileDate  = "20160706";
@@ -205,13 +202,11 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
   TString files[200];
   files[names::DATA]          = dir +  "outBkgdEst_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_"+histFileDate+"_nom_pt"+pt+".root";
   files[names::QCD]           = files[names::DATA];
-  files[names::QCD_POSTFIT]   = dirPostFit + "histos-mle.root";
   files[names::QCD_SYST]      = files[names::DATA];
   files[names::QCDMC]         = dir + "outBkgdEst_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_20160706_nom_pt500_scaled.root";//FIX!!!!!s
   if (!pt500) files[names::QCDMC] = "/uscms_data/d3/maral87/ttbarResonances/B2GAnaFW/CMSSW_7_4_12/src/Analysis/B2GTTbar/test/runs/run_030716/outBkgdEst_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_pDep_030716_nom_scaled.root";
   files[names::QCDMC_SYST]    = files[names::QCDMC];
   files[names::TT]            = dir +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_"+histFileDate+"_nom_pt"+pt+".root";
-  files[names::TT_POSTFIT]    = files[names::QCD_POSTFIT]; 
   files[names::TT_SUBTRACT]       = dir +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_"+histFileDate+"_nom_pt"+pt+".root";
   files[names::TT_SUBTRACTSYST]   = dir +  "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_"+histFileDate+"_nom_pt"+pt+".root";
   files[names::TT_JERUP]      = dir +   "outBkgdEst_TTpowheg_B2Gv8p4_reader5a85e65_"+histFileDate+"_jer_up_pt"+pt+".root";
@@ -678,36 +673,6 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
       histos[proc][6]->Add(histHI);
     }
 
-    else if (proc == names::QCD_POSTFIT){
-      histos[proc][0] = (TH1F *) infile->Get("btag0__qcd");
-      histos[proc][1] = (TH1F *) infile->Get("btag1__qcd");
-      histos[proc][2] = (TH1F *) infile->Get("btag2__qcd");
-      histos[proc][3] = (TH1F *) infile->Get("btag3__qcd");
-      histos[proc][4] = (TH1F *) infile->Get("btag4__qcd");
-      histos[proc][5] = (TH1F *) infile->Get("btag5__qcd");
-      histos[proc][6] = (TH1F *) infile->Get("btag5__qcd");
-      histos[proc][6]->Add(histos[proc][0]);
-      histos[proc][6]->Add(histos[proc][1]);
-      histos[proc][6]->Add(histos[proc][2]);
-      histos[proc][6]->Add(histos[proc][3]);
-      histos[proc][6]->Add(histos[proc][4]);
-    }
-
-    else if (proc == names::TT_POSTFIT){
-      histos[proc][0] = (TH1F *) infile->Get("btag0__ttbar");
-      histos[proc][1] = (TH1F *) infile->Get("btag1__ttbar");
-      histos[proc][2] = (TH1F *) infile->Get("btag2__ttbar");
-      histos[proc][3] = (TH1F *) infile->Get("btag3__ttbar");
-      histos[proc][4] = (TH1F *) infile->Get("btag4__ttbar");
-      histos[proc][5] = (TH1F *) infile->Get("btag5__ttbar");
-      histos[proc][6] = (TH1F *) infile->Get("btag5__ttbar");
-      histos[proc][6]->Add(histos[proc][0]);
-      histos[proc][6]->Add(histos[proc][1]);
-      histos[proc][6]->Add(histos[proc][2]);
-      histos[proc][6]->Add(histos[proc][3]);
-      histos[proc][6]->Add(histos[proc][4]);
-    }
-
     else {
     
       histos[proc][0] = (TH1F *) infile->Get("mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag");
@@ -732,7 +697,7 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
       histos[proc][5]->Rebin(rebin_factor);
       histos[proc][6]->Rebin(rebin_factor);
     }
-    else if (proc != names::TT_POSTFIT && proc != names::QCD_POSTFIT){
+    else{
 
       histos[proc][0]->Rebin(10);
       histos[proc][1]->Rebin(10);
@@ -1230,7 +1195,7 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
       }
       
       for (int proc = 0; proc < names::NUM_PROCS; proc++){
-	if (proc != names::TT_SUBTRACT && proc != names::TT_SUBTRACTSYST && proc != names::TT_POSTFIT && proc != names::QCDMC && proc != names::QCDMC_SYST && proc != names::QCD_POSTFIT){
+	if (proc != names::TT_SUBTRACT && proc != names::TT_SUBTRACTSYST && proc != names::QCDMC && proc != names::QCDMC_SYST){
 	  cout << "Processing " << labels[proc] << endl;
 	  histos[proc][tag] = (TH1F *) histos[proc][tag]->Rebin(nBinsNew, "h", xbins);
 	  cout << histos[proc][tag]->GetNbinsX() << endl;
@@ -1241,8 +1206,6 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
     //Mtt plots
     histos[names::TT][tag]->SetFillColor(kRed);
     histos[names::QCD][tag]->SetFillColor(kYellow);
-    histos[names::TT_POSTFIT][tag]->SetFillColor(kRed);
-    histos[names::QCD_POSTFIT][tag]->SetFillColor(kYellow);
 
     TCanvas *c1 = new TCanvas("c1", "c1",0,0,600,500);
     c1->Range(0,0,1,1);
@@ -1273,40 +1236,12 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
       else histos[names::DATA][tag]->GetXaxis()->SetRangeUser(600.,6000.);
     }
     histos[names::DATA][tag]->SetBinErrorOption(TH1::kPoisson);
-    histos[names::DATA][tag]->Draw("E0");
+    histos[names::DATA][tag]->Draw("E");
 
     int n_xbins = histos[names::DATA][tag]->GetNbinsX();
+
     
-    //setting proper bining postfit ttbar and qcd histos
-    TH1F *QCD_postFitRebinned = (TH1F *) histos[names::QCD][tag]->Clone("QCD_postFitRebinned");
-    TH1F *TT_postFitRebinned = (TH1F *) histos[names::TT][tag]->Clone("TT_postFitRebinned");
-    if (postFit){
-      for (int i_bin = 1; i_bin < (n_xbins+1); i_bin++){
-	float QCDbinContent = histos[names::QCD_POSTFIT][tag]->GetBinContent(i_bin);
-	QCD_postFitRebinned->SetBinContent(i_bin,QCDbinContent);
-	float TTbinContent = histos[names::TT_POSTFIT][tag]->GetBinContent(i_bin);
-	TT_postFitRebinned->SetBinContent(i_bin,TTbinContent);
-      }
-    }
-
-    THStack *stack = new THStack();
-    if (postFit){
-      stack->Add(TT_postFitRebinned);
-      stack->Add(QCD_postFitRebinned);
-    }
-    else{
-      stack->Add(histos[names::TT][tag]);
-      stack->Add(histos[names::QCD][tag]);
-    }
-    stack->Draw("hist same");
-    histos[names::DATA][tag]->SetMarkerStyle(20);
-    histos[names::DATA][tag]->SetMarkerSize(0.5);
-    histos[names::DATA][tag]->SetLineColor(kBlack);
-    histos[names::DATA][tag]->SetTitle("");
-
-    histos[names::DATA][tag]->Draw("E0same");
-
-    //errors                                                                                                                                
+    //errors and post-fit scaling
     float totalTopErr = 0.0;
     float totalQCDErr = 0.0;
     float totalHistErr = 0.0;
@@ -1314,62 +1249,42 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
     float lumiErr_top = 0.027;
     float xsErr_top = 0.15;
     float topTagErr_top = 2*(0.09/0.89);
-    float jecScale, jerScale, pdfScale, q2Scale, btagScale, PUScale, xsScale, lumiScale, topTagScale, modmassScale, closeScale, PSHScale = 1.0;
-
-    //postfit nuisance parameter scaling - from https://indico.cern.ch/event/557452/contributions/2246868/attachments/1311279/1962238/update_july18.pdf
     if (postFit){
       xsErr_top = 0.08;
       topTagErr_top = 0.50;
-      jecScale = 0.2417384116;
-      jerScale =  0.298777526289;
-      pdfScale = 0.419586463033;
-      q2Scale = 0.184708538631;
-      btagScale = 0.321500972597;
-      PUScale =  0.498250450121;
-      xsScale = 0.77424517359;
-      lumiScale =  0.943095783913;
-      topTagScale =  0.264334867765;
-      modmassScale =  0.478811424822;
-      closeScale =  0.232111904652;
-      PSHScale = 0.113155942116;
-    }
-
-    TH1F *totalH = (TH1F *) histos[names::QCD][tag]->Clone("totalH");
-    totalH->Add(histos[names::TT][tag]);
-    if (postFit){
-      totalH = (TH1F *) QCD_postFitRebinned->Clone("totalH");
-      totalH->Add(TT_postFitRebinned);
     }
 
     for (int i_bin = 1; i_bin < (n_xbins+1); i_bin++){
+      float QCDbinContent = histos[names::QCD][tag]->GetBinContent(i_bin);
+      float TTbinContent = histos[names::TT][tag]->GetBinContent(i_bin);
       float statErr_QCD = histos[names::QCD][tag]->GetBinError(i_bin);
       float statErr_top = histos[names::TT][tag]->GetBinError(i_bin);
-      float statErr = totalH->GetBinError(i_bin);
-      float scaleErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_SCALEUP][tag]->GetBinContent(i_bin));
-      float scaleErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_SCALEDN][tag]->GetBinContent(i_bin));
-      float scaleErr = max(scaleErrUp,scaleErrDn)*jecScale;
-      float jerErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_JERUP][tag]->GetBinContent(i_bin));
-      float jerErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_JERDN][tag]->GetBinContent(i_bin));
-      float jerErr = max(jerErrUp,jerErrDn)*jerScale;
-      float pdfErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_PDFUP][tag]->GetBinContent(i_bin));
-      float pdfErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_PDFDN][tag]->GetBinContent(i_bin));
-      float pdfErr = max(pdfErrUp,pdfErrDn)*pdfScale;
-      float q2ErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_Q2UP][tag]->GetBinContent(i_bin));
-      float q2ErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_Q2DN][tag]->GetBinContent(i_bin));
-      float q2Err = max(q2ErrUp,q2ErrDn)*q2Scale;
-      float btagErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_BTAGUP][tag]->GetBinContent(i_bin));
-      float btagErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_BTAGDN][tag]->GetBinContent(i_bin));
-      float btagErr = max(btagErrUp,btagErrDn)*btagScale;
-      float PUErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_PUUP][tag]->GetBinContent(i_bin));
-      float PUErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_PUDN][tag]->GetBinContent(i_bin));
-      float PUErr = max(PUErrUp,PUErrDn)*PUScale;
-      float PSHErrUp = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_PSHUP][tag]->GetBinContent(i_bin));
-      float PSHErrDn = abs(histos[names::TT][tag]->GetBinContent(i_bin) - histos[names::TT_PSHDN][tag]->GetBinContent(i_bin));
-      float PSHErr = max(PSHErrUp,PSHErrDn)*PSHScale;
-      float qcdSystErr = 0.5*abs( histos[names::QCD][tag]->GetBinContent(i_bin) - histos[names::QCD_SYST][tag]->GetBinContent(i_bin) )*modmassScale;
-      float xsErr = xsErr_top*(histos[names::TT][tag]->GetBinContent(i_bin))*xsScale;
-      float lumiErr = lumiErr_top*(histos[names::TT][tag]->GetBinContent(i_bin))*lumiScale;
-      float topTagErr = topTagErr_top*(histos[names::TT][tag]->GetBinContent(i_bin))*topTagScale;
+      float statErr = sqrt(statErr_QCD*statErr_QCD + statErr_top*statErr_top);
+      float scaleErrUp = abs(TTbinContent - histos[names::TT_SCALEUP][tag]->GetBinContent(i_bin));
+      float scaleErrDn = abs(TTbinContent - histos[names::TT_SCALEDN][tag]->GetBinContent(i_bin));
+      float scaleErr = max(scaleErrUp,scaleErrDn);
+      float jerErrUp = abs(TTbinContent - histos[names::TT_JERUP][tag]->GetBinContent(i_bin));
+      float jerErrDn = abs(TTbinContent - histos[names::TT_JERDN][tag]->GetBinContent(i_bin));
+      float jerErr = max(jerErrUp,jerErrDn);
+      float pdfErrUp = abs(TTbinContent - histos[names::TT_PDFUP][tag]->GetBinContent(i_bin));
+      float pdfErrDn = abs(TTbinContent - histos[names::TT_PDFDN][tag]->GetBinContent(i_bin));
+      float pdfErr = max(pdfErrUp,pdfErrDn);
+      float q2ErrUp = abs(TTbinContent - histos[names::TT_Q2UP][tag]->GetBinContent(i_bin));
+      float q2ErrDn = abs(TTbinContent - histos[names::TT_Q2DN][tag]->GetBinContent(i_bin));
+      float q2Err = max(q2ErrUp,q2ErrDn);
+      float btagErrUp = abs(TTbinContent - histos[names::TT_BTAGUP][tag]->GetBinContent(i_bin));
+      float btagErrDn = abs(TTbinContent - histos[names::TT_BTAGDN][tag]->GetBinContent(i_bin));
+      float btagErr = max(btagErrUp,btagErrDn);
+      float PUErrUp = abs(TTbinContent - histos[names::TT_PUUP][tag]->GetBinContent(i_bin));
+      float PUErrDn = abs(TTbinContent - histos[names::TT_PUDN][tag]->GetBinContent(i_bin));
+      float PUErr = max(PUErrUp,PUErrDn);
+      float PSHErrUp = abs(TTbinContent - histos[names::TT_PSHUP][tag]->GetBinContent(i_bin));
+      float PSHErrDn = abs(TTbinContent - histos[names::TT_PSHDN][tag]->GetBinContent(i_bin));
+      float PSHErr = max(PSHErrUp,PSHErrDn);
+      float qcdSystErr = 0.5*abs( QCDbinContent - histos[names::QCD_SYST][tag]->GetBinContent(i_bin) );
+      float xsErr = xsErr_top*(TTbinContent);
+      float lumiErr = lumiErr_top*(TTbinContent);
+      float topTagErr = topTagErr_top*(TTbinContent);
 
       float diffClose = 0.0;
       float QCDcenter = histos[names::QCD][tag]->GetBinCenter(i_bin);
@@ -1377,10 +1292,35 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
       if (histos[names::QCDMC][tag]->GetBinContent(j_bin) != 0){
 	diffClose = abs( histos[names::QCDMC][tag]->GetBinContent(j_bin) - histos[names::QCDMC_SYST][tag]->GetBinContent(j_bin) )/(histos[names::QCDMC][tag]->GetBinContent(j_bin));
       }
-      float closeErr = diffClose*(histos[names::QCD][tag]->GetBinContent(i_bin))*closeScale;
+      float closeErr = diffClose*(QCDbinContent);
+
+      //adjusting the background bin contents and errors with the postfit nuisance parameters - from https://indico.cern.ch/event/557452/contributions/2246868/attachments/1311279/1962238/update_july18.pdf
+      if (postFit){
+	float QCDpostFitBinContent = QCDbinContent + (qcdSystErr*-1.13659365675) + (closeErr*-0.220031592593);
+	histos[names::QCD][tag]->SetBinContent(i_bin, QCDpostFitBinContent);
+	float TTpostFitBinContent = TTbinContent + (scaleErr*0.439112914571) + (jerErr*-0.0895863766889) + (pdfErr*-0.134026920264) + (q2Err*-0.217576290897) + (btagErr*0.0675294259315) + (xsErr*-0.378266575878) + (lumiErr*0.78020704204) + (topTagErr*-0.0166162168857) + (PUErr*0.307540317129) + (PSHErr*-0.347530433585);
+	histos[names::TT][tag]->SetBinContent(i_bin, TTpostFitBinContent);
+
+	scaleErr *= 0.2417384116;
+	jerErr *= 0.298777526289;
+	pdfErr *= 0.419586463033;
+	q2Err *= 0.184708538631;
+	btagErr *= 0.321500972597;
+	qcdSystErr *=0.478811424822;
+	xsErr *= 0.77424517359;
+	lumiErr *= 0.943095783913;
+	topTagErr *= 0.264334867765;
+	closeErr *= 0.232111904652;
+	PUErr *= 0.498250450121;
+	PSHErr *= 0.113155942116;
+
+	float QCDbinErr = sqrt(statErr_QCD*statErr_QCD + qcdSystErr*qcdSystErr + closeErr*closeErr);
+	histos[names::QCD][tag]->SetBinError(i_bin, QCDbinErr);
+	float TTbinErr = sqrt(statErr_top*statErr_top + scaleErr*scaleErr + jerErr*jerErr + pdfErr*pdfErr + q2Err*q2Err + btagErr*btagErr + xsErr*xsErr + lumiErr*lumiErr + topTagErr*topTagErr + PUErr+PUErr + PSHErr*PSHErr);
+	histos[names::TT][tag]->SetBinError(i_bin, TTbinErr);
+      }
 
       float TOTALErr = sqrt(statErr*statErr + scaleErr*scaleErr + jerErr*jerErr + pdfErr*pdfErr + q2Err*q2Err + btagErr*btagErr + qcdSystErr*qcdSystErr + xsErr*xsErr + lumiErr*lumiErr + topTagErr*topTagErr + closeErr*closeErr + PUErr+PUErr + PSHErr*PSHErr);
-      totalH->SetBinError(i_bin,TOTALErr);
       
       totalQCDErr = sqrt(statErr_QCD*statErr_QCD + qcdSystErr*qcdSystErr + closeErr*closeErr + totalQCDErr*totalQCDErr);
       totalTopErr = sqrt(statErr_top*statErr_top + scaleErr*scaleErr + jerErr*jerErr + pdfErr*pdfErr + q2Err*q2Err + btagErr*btagErr + xsErr*xsErr + lumiErr*lumiErr + topTagErr*topTagErr + PUErr+PUErr + PSHErr*PSHErr + totalTopErr*totalTopErr);
@@ -1390,13 +1330,24 @@ int makeTemplates(int signal = 0, bool forTHETA = 1, bool pt500 = 1, bool postFi
 
     cout << "Region " << tag << " Total QCD: " << histos[names::QCD][tag]->Integral() << " +/- " << totalQCDErr <<endl;
     cout << "Region " << tag << " Total ttbar: " << histos[names::TT][tag]->Integral() << " +/- " << totalTopErr <<endl;
-    cout << "Region " << tag << " Total background: " << totalH->Integral() << " +/- " << totalHistErr <<endl;
 
+    THStack *stack = new THStack();
+    stack->Add(histos[names::TT][tag]);
+    stack->Add(histos[names::QCD][tag]);
+    
+    stack->Draw("hist same");
+    histos[names::DATA][tag]->SetMarkerStyle(20);
+    histos[names::DATA][tag]->SetMarkerSize(0.5);
+    histos[names::DATA][tag]->SetLineColor(kBlack);
+    histos[names::DATA][tag]->SetTitle("");
+
+    TH1F *totalH = (TH1F *) histos[names::QCD][tag]->Clone("totalH");
+    totalH->Add(histos[names::TT][tag]);
     totalH->SetFillStyle(3001);
     totalH->SetFillColor(kGray+1);
     totalH->Draw("E2 same");
 
-    histos[names::DATA][tag]->Draw("E0 same");
+    histos[names::DATA][tag]->Draw("E same");
 
     histos[names::ZPN10][tag]->SetLineColor(kBlue);
     histos[names::ZPN20][tag]->SetLineColor(kGreen+1);
