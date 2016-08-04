@@ -32,34 +32,34 @@ process.BadPFMuonFilter.debug = cms.bool(False)
 
 process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     jecPayloadsAK8chs = cms.vstring([
-                                    'JECs/Spring16_25nsV6_MC_L1FastJet_AK8PFchs.txt',
-                                    'JECs/Spring16_25nsV6_MC_L2Relative_AK8PFchs.txt',
-                                    'JECs/Spring16_25nsV6_MC_L3Absolute_AK8PFchs.txt',
-                                    'JECs/Spring16_25nsV6_MC_L2L3Residual_AK8PFchs.txt',
-                                    'JECs/Spring16_25nsV6_MC_Uncertainty_AK8PFchs.txt'
+                                    'Spring16_25nsV6_MC_L1FastJet_AK8PFchs.txt',
+                                    'Spring16_25nsV6_MC_L2Relative_AK8PFchs.txt',
+                                    'Spring16_25nsV6_MC_L3Absolute_AK8PFchs.txt',
+                                    'Spring16_25nsV6_MC_L2L3Residual_AK8PFchs.txt',
+                                    'Spring16_25nsV6_MC_Uncertainty_AK8PFchs.txt'
                                     ]),
     jecPayloadsAK4chs = cms.vstring([
-                                    'JECs/Spring16_25nsV6_MC_L1FastJet_AK4PFchs.txt',
-                                    'JECs/Spring16_25nsV6_MC_L2Relative_AK4PFchs.txt',
-                                    'JECs/Spring16_25nsV6_MC_L3Absolute_AK4PFchs.txt',
-                                    'JECs/Spring16_25nsV6_MC_L2L3Residual_AK4PFchs.txt',
-                                    'JECs/Spring16_25nsV6_MC_Uncertainty_AK4PFchs.txt'
+                                    'Spring16_25nsV6_MC_L1FastJet_AK4PFchs.txt',
+                                    'Spring16_25nsV6_MC_L2Relative_AK4PFchs.txt',
+                                    'Spring16_25nsV6_MC_L3Absolute_AK4PFchs.txt',
+                                    'Spring16_25nsV6_MC_L2L3Residual_AK4PFchs.txt',
+                                    'Spring16_25nsV6_MC_Uncertainty_AK4PFchs.txt'
                                     ]),
     jecPayloadsAK8pup = cms.vstring([
-                                    'JECs/Spring16_25nsV6_MC_L1FastJet_AK8PFPuppi.txt',
-                                    'JECs/Spring16_25nsV6_MC_L2Relative_AK8PFPuppi.txt',
-                                    'JECs/Spring16_25nsV6_MC_L3Absolute_AK8PFPuppi.txt',
-                                    'JECs/Spring16_25nsV6_MC_L2L3Residual_AK8PFPuppi.txt',
-                                    'JECs/Spring16_25nsV6_MC_Uncertainty_AK8PFPuppi.txt'
+                                    'Spring16_25nsV6_MC_L1FastJet_AK8PFPuppi.txt',
+                                    'Spring16_25nsV6_MC_L2Relative_AK8PFPuppi.txt',
+                                    'Spring16_25nsV6_MC_L3Absolute_AK8PFPuppi.txt',
+                                    'Spring16_25nsV6_MC_L2L3Residual_AK8PFPuppi.txt',
+                                    'Spring16_25nsV6_MC_Uncertainty_AK8PFPuppi.txt'
                                     ]),
     jecPayloadsAK4pup = cms.vstring([
-                                    'JECs/Spring16_25nsV6_MC_L1FastJet_AK4PFPuppi.txt',
-                                    'JECs/Spring16_25nsV6_MC_L2Relative_AK4PFPuppi.txt',
-                                    'JECs/Spring16_25nsV6_MC_L3Absolute_AK4PFPuppi.txt',
-                                    'JECs/Spring16_25nsV6_MC_L2L3Residual_AK4PFPuppi.txt',
-                                    'JECs/Spring16_25nsV6_MC_Uncertainty_AK4PFPuppi.txt'
+                                    'Spring16_25nsV6_MC_L1FastJet_AK4PFPuppi.txt',
+                                    'Spring16_25nsV6_MC_L2Relative_AK4PFPuppi.txt',
+                                    'Spring16_25nsV6_MC_L3Absolute_AK4PFPuppi.txt',
+                                    'Spring16_25nsV6_MC_L2L3Residual_AK4PFPuppi.txt',
+                                    'Spring16_25nsV6_MC_Uncertainty_AK4PFPuppi.txt'
                                     ]),
-    jerSFtext         = cms.string('JERs/Spring16_25nsV6_MC_SF_AK8PFchs.txt'
+    jerSFtext         = cms.string('Spring16_25nsV6_MC_SF_AK8PFchs.txt'
                                     )
 )
 
