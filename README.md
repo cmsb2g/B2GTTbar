@@ -1,5 +1,31 @@
 # B2GTTbar
 
+##2016 recipe:
+```
+cmsrel CMSSW_8_0_13
+cd CMSSW_8_0_13/src/
+cmsenv
+git cms-init
+git cms-merge-topic -u cms-met:CMSSW_8_0_X-METFilterUpdate
+git clone https://github.com/rappoccio/PredictedDistribution.git Analysis/PredictedDistribution
+git clone https://github.com/cmsb2g/B2GTTbar.git Analysis/B2GTTbar
+cd B2GTTbar/test/
+```
+for MC: 
+
+`cmsRun run_B2GTTbarTreeMaker_MC.py`
+
+for data: 
+
+`cmsRun run_B2GTTbarTreeMaker_data.py`
+
+The new miniOAD->TTree maker is here:
+
+https://github.com/cmsb2g/B2GTTbar/blob/master/plugins/B2GTTbarTreeMaker.cc
+
+
+##2015 recipe:
+
 From your CMSSW release area : 
 
 To use the "PredictedDistribution" class : 

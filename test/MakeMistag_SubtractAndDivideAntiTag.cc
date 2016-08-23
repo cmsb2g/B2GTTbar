@@ -122,11 +122,11 @@ void run(){
 
 
   // bool data, bool noSubtract, vector of bins
-  cout<<" makeHists(true, false, bins_small )"<<endl;   makeHists(true, false, bins_small );  // Monte Carlo  - small bins
-  cout<<" makeHists(true, false, bins_0btag )"<<endl;  makeHists(true, false, bins_0btag );  // Monte Carlo  - bins_medium
-  cout<<" makeHists(true, false, bins_1btag )"<<endl;  makeHists(true, false, bins_1btag );  // Monte Carlo  - bins_medium
-  cout<<" makeHists(true, false, bins_2btag )"<<endl;  makeHists(true, false, bins_2btag );  // Monte Carlo  - bins_medium
-  cout<<" makeHists(true, false, bins_eta   )"<<endl;      makeHists(true, false, bins_eta );  // Monte Carlo  - bins_medium
+  cout<<" makeHists(false, true, bins_small )"<<endl;   makeHists(false, true, bins_small );  // Monte Carlo  - small bins
+  cout<<" makeHists(false, true, bins_0btag )"<<endl;  makeHists(false, true, bins_0btag );  // Monte Carlo  - bins_medium
+  cout<<" makeHists(false, true, bins_1btag )"<<endl;  makeHists(false, true, bins_1btag );  // Monte Carlo  - bins_medium
+  cout<<" makeHists(false, true, bins_2btag )"<<endl;  makeHists(false, true, bins_2btag );  // Monte Carlo  - bins_medium
+  cout<<" makeHists(false, true, bins_eta   )"<<endl;      makeHists(false, true, bins_eta );  // Monte Carlo  - bins_medium
   // cout<<" makeHists(false, false, bins_big   )"<<endl;  makeHists(false, false, bins_big   );  // Monte Carlo  - small bins
   // cout<<" makeHists(true , false, bins_medium   )"<<endl;  makeHists(true , false, bins_medium   );   // Data - subtract - medium bins
   // cout<<" makeHists(true ,  true, bins_medium   )"<<endl;  makeHists(true ,  true, bins_medium   );   // Data - no subtract - medium bins
@@ -142,23 +142,26 @@ void makeHists( bool data, bool noSubtract, vector<double> bins ){
   TFile * OutFileBigBins;
   TFile * OutFile;
 
+  string infile_path = "/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/";
   string infile_name ;
   string infile_ttbar_name ;
 
   // QCD Monte Carlo Input (scaled) and Output files
-  if (!data) infile_name = "outAntiTagExp_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_fix_030816_nom_scaled.root";
+  if (!data) infile_name = "outAntiTag_QCD_HT700toInf_B2Gv8p4_reader603e_notrig_20160706_nom_scaled.root";
 
   if (data){
 
    // infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_030516.root";
    // infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_030716.root";
-      infile_name       = "outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root";
-      infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring15MiniAODv2-74X_20160318_051816.root";
+   //   infile_name       = "outAntiTag_JetHT_Run2015D_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_20160318_051816_BothParts.root";
+   //   infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring15MiniAODv2-74X_20160318_051816.root";
+    infile_name = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_20160706.root";
+    infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_20160706.root";
   } 
 
-  } 
 
-  string date = "032116";
+
+  string date = "20160706";
   //string syst = "jec_up";
   
   
@@ -167,18 +170,21 @@ void makeHists( bool data, bool noSubtract, vector<double> bins ){
   temp1 << nbins;
   string snbins = temp1 .str();
   string subtractOrNot = "";
-  if (noSubtract) subtractOrNot = "_noSubstract_";
-  if (!noSubtract) subtractOrNot = "_Substract_";
+  if (noSubtract) subtractOrNot = "_noSubtract_";
+  if (!noSubtract) subtractOrNot = "_Subtract_";
   if (!data) subtractOrNot = "_MC_";
 
   string outfile_name ;
-  if (data)  outfile_name = "MistagRate_nbins_"+date+"_"+snbins+"_ttbar"+subtractOrNot+infile_name;
-  if (!data) outfile_name = "MistagRate_nbins_"+date+"_"+snbins+subtractOrNot+infile_name;
+  if (data)  outfile_name = "/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_"+date+"_"+snbins+"_ttbar"+subtractOrNot+infile_name;
+  if (!data) outfile_name = "/uscms/home/camclean/nobackup/CMSSW_7_4_1/src/B2GTTbar/test/runs/run20160706/MistagRate_nbins_"+date+"_"+snbins+subtractOrNot+infile_name;
+
+  string infileFull = infile_path + infile_name;
+  string infilettbarFull = infile_path + infile_ttbar_name;
 
   cout<<"Opening "<<infile_name<<endl;
-  InFile        = new TFile(      infile_name.c_str()      );
+  InFile        = new TFile(      infileFull.c_str()      );
   OutFile       = new TFile(     outfile_name.c_str()        , "RECREATE");
-  if (data) InFileTTbar   = new TFile(infile_ttbar_name.c_str()     );
+  if (data) InFileTTbar   = new TFile(infilettbarFull.c_str()     );
 
   OutFile->cd();
 
