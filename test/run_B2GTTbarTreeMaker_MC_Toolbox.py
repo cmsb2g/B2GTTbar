@@ -135,6 +135,7 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     ak8puppiInput = cms.InputTag("selectedPatJetsAK8PFPuppi"),
     ak8chsSubjetsInput   = cms.InputTag("selectedPatJetsAK8PFCHSSoftDropPacked","SubJets"),
     ak8puppiSubjetsInput = cms.InputTag("selectedPatJetsAK8PFPuppiSoftDropPacked","SubJets"),
+    triggerBits   = cms.InputTag("TriggerResults", "", "HLT2"),
     jecPayloadsAK8chs = cms.vstring([
                                     'Spring16_25nsV6_MC_L1FastJet_AK8PFchs.txt',
                                     'Spring16_25nsV6_MC_L2Relative_AK8PFchs.txt',
