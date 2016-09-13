@@ -22,7 +22,7 @@ argv = []
 import ROOT
 import sys
 from DataFormats.FWLite import Runs, Handle
-ROOT.gROOT.Macro("rootlogon.C")
+#ROOT.gROOT.Macro("rootlogon.C")
 from leptonic_nu_z_component import solve_nu_tmass, solve_nu
 import copy
 from array import array
@@ -36,17 +36,18 @@ l_lheRun = ("externalLHEProducer", "")
     
 #@ RUN LOOP
 
-filelist = file( options.files )
-filesraw = filelist.readlines()
+#filelist = file( options.files )
+#filesraw = filelist.readlines()
 
 files = []
+files.append('root://cmsxrootd.fnal.gov///store/user/jdolen/B2G2016/ZprimeToTT_M-3000_W-30_TuneCUETP8M1_13TeV-madgraphMLM_RunIISpring16MiniAODv2-PUSpring16RAWAODSIM_reHLT_MINIAOD.root')
 #files.append('root://xrootd.unl.edu//store/mc/RunIISpring15DR74/ZprimeToTT_M-3000_W-900_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/Asympt25ns_MCRUN2_74_V9-v1/50000/02C3658C-8B08-E511-9624-AC853D9DACE3.root')
 Nruns = 0
-for ifile in filesraw : #{ Loop over text file and find root files linked
-    if len( ifile ) > 2 :
-        s = ifile.rstrip()
-        files.append( s )
-        print 'Added ' + s
+#for ifile in filesraw : #{ Loop over text file and find root files linked
+    #if len( ifile ) > 2 :
+        #s = ifile.rstrip()
+        #files.append( s )
+        #print 'Added ' + s
         #} End loop over txt file
 
 # loop over files

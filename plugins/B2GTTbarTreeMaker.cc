@@ -82,6 +82,9 @@
 // Pileup
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 
+//LHE weights
+#include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
+
 // Utilities
 #include "DataFormats/Math/interface/deltaR.h"
 #include "DataFormats/Math/interface/deltaPhi.h"
@@ -130,11 +133,14 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       edm::EDGetTokenT<pat::ElectronCollection> electronToken_;
       edm::EDGetTokenT<pat::METCollection> metToken_;
       edm::EDGetTokenT<std::vector<PileupSummaryInfo>> pileupInfoToken_;
+      edm::EDGetTokenT<LHEEventProduct> theSrc_;
       
       bool useToolbox_;
       bool verbose_;
       bool verboseGen_;
       bool runGenLoop_;
+      bool isZprime_;
+      bool isttbar_;
       std::vector<std::string>  jecPayloadsAK4chs_;
       std::vector<std::string>  jecPayloadsAK8chs_;
       std::vector<std::string>  jecPayloadsAK4pup_;
@@ -913,10 +919,13 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
     electronToken_(consumes<pat::ElectronCollection>(edm::InputTag("slimmedElectrons"))),
     metToken_(consumes<pat::METCollection>(edm::InputTag("slimmedMETs"))),
     pileupInfoToken_(consumes<std::vector<PileupSummaryInfo>>(edm::InputTag("slimmedAddPileupInfo"))),
+    theSrc_(consumes<LHEEventProduct>(iConfig.getParameter<edm::InputTag>("theSrc"))),
     useToolbox_(iConfig.getParameter<bool>  ("useToolbox")),
     verbose_(iConfig.getParameter<bool>  ("verbose")),
     verboseGen_(iConfig.getParameter<bool>  ("verboseGen")),
     runGenLoop_(iConfig.getParameter<bool>  ("runGenLoop")),
+    isZprime_(iConfig.getParameter<bool>  ("isZprime")),
+    isttbar_(iConfig.getParameter<bool>  ("isttbar")),
     jecPayloadsAK4chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4chs")),
     jecPayloadsAK8chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK8chs")),
     jecPayloadsAK4pup_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4pup")),
@@ -2268,6 +2277,39 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   h_NtrueIntPU ->Fill(nPU);
   h_NPV ->Fill(nvtx);
   h_NPVreweighted  ->Fill(nvtx,puweight);
+
+  //LHE Weight Uncertainties
+
+  //Q^2 uncertainties
+  double Q2wgt_up = 1;
+  double Q2wgt_down = 1;
+
+  if (isZprime_ || isttbar_){
+    if (verbose_) cout << "Calculating Q^2 uncertainties." << endl;
+    edm::Handle<LHEEventProduct> EvtHandle;
+    iEvent.getByToken(theSrc_, EvtHandle);
+
+    double maxQ2wgt_frac = 1;
+    double minQ2wgt_frac = 1;
+
+    if (EvtHandle.isValid()){
+      if (verbose_) cout << "Q^2 loop" <<endl;
+      for (unsigned int iLHE = 0; iLHE < 9; ++iLHE){
+	if (iLHE != 5 && iLHE != 7){
+	  double Q2wgt = EvtHandle->weights()[iLHE].wgt;
+	  if (verbose_) cout << "Q^2 Weight: " << Q2wgt << endl;
+	  double Q2wgt_frac = Q2wgt/(EvtHandle->weights()[0].wgt);
+	  if (verbose_) cout << "Fractional Q^2 Weight: " << Q2wgt_frac << endl;
+	  maxQ2wgt_frac = max(maxQ2wgt_frac, Q2wgt_frac);
+	  minQ2wgt_frac = min(minQ2wgt_frac, Q2wgt_frac);
+	}
+      }
+    }
+
+    Q2wgt_up = maxQ2wgt_frac;
+    Q2wgt_down = minQ2wgt_frac;
+
+  }
 
   // 
   // 8888888b.  888               
@@ -4360,8 +4402,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   HT_PtSmearNom        = HT_AK4_pt30_smearNom ;          
   HT_PtSmearUp         = HT_AK4_pt30_smearUp  ;               
   HT_PtSmearDn         = HT_AK4_pt30_smearDn  ;               
-  Q2weight_CorrDn      = 1 ;              
-  Q2weight_CorrUp      = 1 ;              
+  Q2weight_CorrDn      = Q2wgt_down ;              
+  Q2weight_CorrUp      = Q2wgt_up ;              
   NNPDF3weight_CorrDn  = 1 ;              
   NNPDF3weight_CorrUp  = 1 ;              
   AllHadRunNum         = iEvent.id().run() ;              
@@ -4420,8 +4462,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   ST_PtSmearNom        = htlep + HT_AK4_pt30_smearNom  ;                
   ST_PtSmearUp         = htlep + HT_AK4_pt30_smearUp   ;                
   ST_PtSmearDn         = htlep + HT_AK4_pt30_smearDn   ;                
-  SemiLeptQ2weight_CorrDn      = 1 ;              
-  SemiLeptQ2weight_CorrUp      = 1 ;              
+  SemiLeptQ2weight_CorrDn      = Q2wgt_down ;              
+  SemiLeptQ2weight_CorrUp      = Q2wgt_up ;              
   SemiLeptNNPDF3weight_CorrDn  = 1 ;              
   SemiLeptNNPDF3weight_CorrUp  = 1 ;              
   SemiLeptRunNum               = iEvent.id().run() ;              
