@@ -36,6 +36,7 @@
 #include <memory>
 #include <iostream>    
 #include <algorithm>   
+#include <bitset>   
 
 // user include files
 #include "FWCore/Framework/interface/Frameworkfwd.h"
@@ -70,6 +71,12 @@
 // JER
 #include "JetMETCorrections/Modules/interface/JetResolution.h"
 
+// Electron
+#include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
+#include "DataFormats/EgammaCandidates/interface/ConversionFwd.h"
+#include "DataFormats/EgammaCandidates/interface/Conversion.h"
+#include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
+
 // Trigger
 #include "FWCore/Common/interface/TriggerNames.h"
 #include "DataFormats/Common/interface/TriggerResults.h"
@@ -82,7 +89,7 @@
 // Pileup
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 
-//LHE weights
+// LHE weights
 #include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
 
 // Utilities
@@ -199,8 +206,11 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
       TTree *TreeAllHad;   
 
-      std::vector<std::string> *AllHadTrigNames     = new std::vector<std::string>;
+      // std::vector<std::string> *AllHadTrigNames     = new std::vector<std::string>;
       std::vector<int> *AllHadTrigPrescales = new std::vector<int>;
+      std::vector<bool> *AllHadTrigPass    = new std::vector<bool>;
+
+      std::string AllHadTrigAcceptBits;
 
       Int_t   PassMETFilters                            ;
       Float_t Jet0PtRaw                                 ;
@@ -642,8 +652,13 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       //                                                                888       
          
       TTree *TreeSemiLept;
-      std::vector<std::string> *SemiLeptTrigNames     = new std::vector<std::string>;
+      // std::vector<std::string> *SemiLeptTrigNames     = new std::vector<std::string>;
       std::vector<int> *SemiLeptTrigPrescales = new std::vector<int>;
+      std::vector<bool> *SemiLeptTrigPass    = new std::vector<bool>;
+
+
+
+      std::string SemiLeptTrigAcceptBits;
 
       Float_t JetPtRaw                               ;      
       Float_t JetEtaRaw                              ;
@@ -872,6 +887,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t AK4dRminPt                             ;
       Float_t AK4dRminEta                            ;
       Float_t AK4dRminPhi                            ;
+      Float_t AK4dRminMass                           ;
       Float_t AK4dRminBdisc                          ;
       Float_t AK4dRminLep                            ;
       Float_t AK4BtagdRminPt                         ;
@@ -892,6 +908,12 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Int_t   MuMedium                               ;
       Float_t DeltaRJetLep                           ; 
       Float_t DeltaPhiJetLep                         ; 
+      Float_t MuIso                                  ;
+      Float_t Elecron_absiso                         ;
+      Float_t Elecron_relIsoWithDBeta                ;
+      Float_t Elecron_absiso_EA                      ;
+      Float_t Elecron_relIsoWithEA                   ;
+
 
 };
 
@@ -962,8 +984,11 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad = new TTree("TreeAllHad","TreeAllHad"); 
 
 
-  TreeAllHad->Branch("AllHadTrigNames"    , "vector<std::string>", &AllHadTrigNames);
-  TreeAllHad->Branch("AllHadTrigPrescales", "vector<int>", &AllHadTrigPrescales);
+  // TreeAllHad->Branch("AllHadTrigNames"    , "vector<std::string>", &AllHadTrigNames);
+  TreeAllHad->Branch("AllHadTrigPrescales"   , "vector<int>", &AllHadTrigPrescales);
+  TreeAllHad->Branch("AllHadTrigPass"        , "vector<bool>", &AllHadTrigPass);
+  TreeAllHad->Branch("AllHadTrigAcceptBits"  , &AllHadTrigAcceptBits);
+
 
   TreeAllHad->Branch("PassMETFilters"                        , & PassMETFilters                     ,    "PassMETFilters/I"                          );                                  
   TreeAllHad->Branch("Jet0PtRaw"                             , & Jet0PtRaw                          ,    "Jet0PtRaw/F"                               );                                  
@@ -1412,8 +1437,12 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   
   TreeSemiLept = new TTree("TreeSemiLept","TreeSemiLept"); 
        
-  TreeSemiLept->Branch("SemiLeptTrigNames"    , "vector<std::string>", &SemiLeptTrigNames);
-  TreeSemiLept->Branch("SemiLeptTrigPrescales", "vector<int>", &SemiLeptTrigPrescales);
+  // TreeSemiLept->Branch("SemiLeptTrigNames"    , "vector<std::string>", &SemiLeptTrigNames);
+  TreeSemiLept->Branch("SemiLeptTrigPrescales" , "vector<int>",  &SemiLeptTrigPrescales);
+  TreeSemiLept->Branch("SemiLeptTrigPass"      , "vector<bool>", &SemiLeptTrigPass);
+  TreeSemiLept->Branch("SemiLeptTrigAcceptBits", &SemiLeptTrigAcceptBits);
+
+
 
   TreeSemiLept->Branch("JetPtRaw"                             , & JetPtRaw                          ,    "JetPtRaw/F"                               );                                  
   TreeSemiLept->Branch("JetEtaRaw"                            , & JetEtaRaw                         ,    "JetEtaRaw/F"                              );                                   
@@ -1653,11 +1682,12 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptRunNum"                       , & SemiLeptRunNum                    , "SemiLeptRunNum/F"                 );
   TreeSemiLept->Branch("SemiLeptLumiBlock"                    , & SemiLeptLumiBlock                 , "SemiLeptLumiBlock/F"              );
   TreeSemiLept->Branch("SemiLeptEventNum"                     , & SemiLeptEventNum                  , "SemiLeptEventNum/F"               );
-  TreeSemiLept->Branch("SemiLeptPassMETFilters"               , & SemiLeptPassMETFilters            , "SemiLeptPassMETFilters/F"         );
+  TreeSemiLept->Branch("SemiLeptPassMETFilters"               , & SemiLeptPassMETFilters            , "SemiLeptPassMETFilters/I"         );
  
   TreeSemiLept->Branch("AK4dRminPt"                           , & AK4dRminPt                        , "AK4dRminPt/F"                     );  
   TreeSemiLept->Branch("AK4dRminEta"                          , & AK4dRminEta                       , "AK4dRminEta/F"                    );  
   TreeSemiLept->Branch("AK4dRminPhi"                          , & AK4dRminPhi                       , "AK4dRminPhi/F"                    );  
+  TreeSemiLept->Branch("AK4dRminMass"                         , & AK4dRminMass                     , "AK4dRminMass/F"                    );  
   TreeSemiLept->Branch("AK4dRminBdisc"                        , & AK4dRminBdisc                     , "AK4dRminBdisc/F"                  );  
   TreeSemiLept->Branch("AK4dRminLep"                          , & AK4dRminLep                       , "AK4dRminLep/F"                    );  
   TreeSemiLept->Branch("AK4BtagdRminPt"                       , & AK4BtagdRminPt                    , "AK4BtagdRminPt/F"                 );  
@@ -1667,16 +1697,30 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("LepHemiContainsAK4BtagMedium"         , & LepHemiContainsAK4BtagMedium      , "LepHemiContainsAK4BtagMedium/I"   );  
   TreeSemiLept->Branch("LepHemiContainsAK4BtagTight"          , & LepHemiContainsAK4BtagTight       , "LepHemiContainsAK4BtagTight/I"    );  
 
-  TreeSemiLept->Branch("LeptonPhi"                            , &  LeptonPhi                        , "LeptonPhi/F"                          ); 
-  TreeSemiLept->Branch("LeptonPt"                             , &  LeptonPt                         , "LeptonPt/F"                           ); 
-  TreeSemiLept->Branch("LeptonEta"                            , &  LeptonEta                        , "LeptonEta/F"                          ); 
-  TreeSemiLept->Branch("LeptonMass"                           , &  LeptonMass                       , "LeptonMass/F"                         ); 
-  TreeSemiLept->Branch("PtRel"                                , &  PtRel                            , "PtRel/F"                              ); 
-  TreeSemiLept->Branch("LeptonIsMu"                           , &  LeptonIsMu                       , "LeptonIsMu/I"                         ); 
-  TreeSemiLept->Branch("MuMedium"                             , &  MuMedium                         , "MuMedium/I"                           ); 
-  TreeSemiLept->Branch("MuTight"                              , &  MuTight                          , "MuTight/I"                            ); 
-  TreeSemiLept->Branch("DeltaRJetLep"                         , &  DeltaRJetLep                     , "DeltaRJetLep/F"                       ); 
-  TreeSemiLept->Branch("DeltaPhiJetLep"                       , &  DeltaPhiJetLep                   , "DeltaPhiJetLep/F"                     ); 
+  TreeSemiLept->Branch("LeptonPhi"                            , &  LeptonPhi                        , "LeptonPhi/F"                      ); 
+  TreeSemiLept->Branch("LeptonPt"                             , &  LeptonPt                         , "LeptonPt/F"                       ); 
+  TreeSemiLept->Branch("LeptonEta"                            , &  LeptonEta                        , "LeptonEta/F"                      ); 
+  TreeSemiLept->Branch("LeptonMass"                           , &  LeptonMass                       , "LeptonMass/F"                     ); 
+  TreeSemiLept->Branch("PtRel"                                , &  PtRel                            , "PtRel/F"                          ); 
+  TreeSemiLept->Branch("LeptonIsMu"                           , &  LeptonIsMu                       , "LeptonIsMu/I"                     ); 
+  TreeSemiLept->Branch("MuMedium"                             , &  MuMedium                         , "MuMedium/I"                       ); 
+  TreeSemiLept->Branch("MuTight"                              , &  MuTight                          , "MuTight/I"                        ); 
+  TreeSemiLept->Branch("DeltaRJetLep"                         , &  DeltaRJetLep                     , "DeltaRJetLep/F"                   ); 
+  TreeSemiLept->Branch("DeltaPhiJetLep"                       , &  DeltaPhiJetLep                   , "DeltaPhiJetLep/F"                 ); 
+  
+
+  TreeSemiLept->Branch("MuIso"                                , &  MuIso                            , "MuIso/F"                          ); 
+  TreeSemiLept->Branch("Elecron_absiso"                       , &  Elecron_absiso                   , "Elecron_absiso/F"                 ); 
+  TreeSemiLept->Branch("Elecron_relIsoWithDBeta"              , &  Elecron_relIsoWithDBeta          , "Elecron_relIsoWithDBeta/F"        ); 
+  TreeSemiLept->Branch("Elecron_absiso_EA"                    , &  Elecron_absiso_EA                , "Elecron_absiso_EA/F"              ); 
+  TreeSemiLept->Branch("Elecron_relIsoWithEA"                 , &  Elecron_relIsoWithEA             , "Elecron_relIsoWithEA/F"           ); 
+
+ 
+ 
+ 
+ 
+  
+
   std::cout<<"Setup semi-lept tree"<<std::endl;
 
   std::cout<<"Finished constructor"<<std::endl;
@@ -2021,51 +2065,98 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     iEvent.getByToken(triggerObjects_, triggerObjects);
     iEvent.getByToken(triggerPrescales_, triggerPrescales);
 
+    vector<string> trigsToRun;
+    trigsToRun.push_back("HLT_PFHT300_v");
+    trigsToRun.push_back("HLT_PFHT350_v");
+    trigsToRun.push_back("HLT_PFHT400_v");
+    trigsToRun.push_back("HLT_PFHT475_v");
+    trigsToRun.push_back("HLT_PFHT600_v");
+    trigsToRun.push_back("HLT_PFHT650_v");
+    trigsToRun.push_back("HLT_PFHT800_v");
+    trigsToRun.push_back("HLT_PFHT900_v");
+    trigsToRun.push_back("HLT_PFJet320_v");
+    trigsToRun.push_back("HLT_PFJet400_v");
+    trigsToRun.push_back("HLT_PFJet450_v");
+    trigsToRun.push_back("HLT_PFJet500_v");
+    trigsToRun.push_back("HLT_AK8PFJet360_TrimMass30_v");
+    trigsToRun.push_back("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v");
+    trigsToRun.push_back("HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20_v");
+    trigsToRun.push_back("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v");
+    trigsToRun.push_back("HLT_Mu45_eta2p1_v");
+    trigsToRun.push_back("HLT_Mu50_v");
+    trigsToRun.push_back("HLT_Mu55_v");
+    trigsToRun.push_back("HLT_IsoMu22_eta2p1_v");
+    trigsToRun.push_back("HLT_IsoMu24_v");
+    trigsToRun.push_back("HLT_IsoMu27_v");
+    trigsToRun.push_back("HLT_Mu30_eta2p1_PFJet150_PFJet50_v");
+    trigsToRun.push_back("HLT_Mu40_eta2p1_PFJet200_PFJet50_v");
+    trigsToRun.push_back("HLT_Ele32_eta2p1_WPTight_Gsf_v");
+    trigsToRun.push_back("HLT_Ele35_WPLoose_Gsf_v");
+    trigsToRun.push_back("HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v");
+    trigsToRun.push_back("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet140_v");
+    trigsToRun.push_back("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165_v");
+    trigsToRun.push_back("HLT_Ele105_CaloIdVT_GsfTrkIdT_v");
 
-    // trigger strings (partial) to run
-    vector<string> partialStrings;
-    partialStrings.push_back("HLT_IsoMu");
-    partialStrings.push_back("HLT_Mu");
-    partialStrings.push_back("HLT_IsoMu");
-    partialStrings.push_back("HLT_Ele");
-    partialStrings.push_back("HLT_AK8");
-    partialStrings.push_back("HLT_PFHT");
-    partialStrings.push_back("HLT_DiPFJet");
-    partialStrings.push_back("HLT_HT");
-    partialStrings.push_back("HLT_PFJet");
+    const int ntrigs = trigsToRun.size();
+    if (verbose_) cout<<"trigsToRun size "<<ntrigs<<endl;
 
-    // vector<string> trigStrings;
-    // vector<int> trigAccept;
-    // vector<int> trigPrescale;
+    // do the same thing two different ways ( to test)
+    std::bitset<30> hltbit;
+    vector<bool> trigAccept;
 
-
-    AllHadTrigNames       ->clear();
-    SemiLeptTrigNames     ->clear();
+    // AllHadTrigNames       ->clear();
+    // SemiLeptTrigNames     ->clear();
     AllHadTrigPrescales   ->clear();
     SemiLeptTrigPrescales ->clear();
+    AllHadTrigPass        ->clear();
+    SemiLeptTrigPass      ->clear();
 
     const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
     if (verbose_) std::cout << "\n === TRIGGER PATHS === " << std::endl;
-    for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
-      bool found = false;
-      string name = names.triggerName(i);
-      for (unsigned int j=0; j<partialStrings.size(); j++){
-        if ( name.find(partialStrings[j]) !=std::string::npos ) found = true;
-        int accept = triggerBits->accept(i) ;
-        int prescale = triggerPrescales->getPrescaleForIndex(i)  ;
-        if (found &&  accept){
+    int counttrigs =0;
+    // for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
+    for (unsigned int j=0; j<trigsToRun.size(); j++){  // Running this loop first even though it is slow in order to preserve order (temporary solution)
+      if (verbose_) cout<<"try to find "<< trigsToRun[j]<<endl;
+      for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
+        string name = names.triggerName(i);
+        if (verbose_) cout<<" "<<name<<endl;
+        std::size_t found = name.find( trigsToRun[j] );
+        // cout<<" Check: "<<trigsToRun[j]  <<" = "<<name<< " ?" <<found<<endl;
+        if ( found !=std::string::npos ) {
+          int accept = triggerBits->accept(i) ;
+          bool pass = false;
+          if (accept ==1 ) pass = true;
+          int prescale = triggerPrescales->getPrescaleForIndex(i)  ;
+        
+          if (verbose_) std::cout << "  Found Trigger " << names.triggerName(i) << ", prescale " << triggerPrescales->getPrescaleForIndex(i) <<": " << (triggerBits->accept(i) ? "PASS" : "fail (or not run)") << std::endl; 
+          trigAccept.push_back(pass);
           // trigStrings.push_back(name);
-          // trigAccept.push_back(accept);
           // trigPrescale.push_back(prescale);
-          AllHadTrigNames       ->push_back(name);
-          SemiLeptTrigNames     ->push_back(name);
+          // AllHadTrigNames       ->push_back(name);
+          // SemiLeptTrigNames     ->push_back(name);
           AllHadTrigPrescales   ->push_back(prescale);
           SemiLeptTrigPrescales ->push_back(prescale);
-
+          AllHadTrigPass        ->push_back(pass);
+          SemiLeptTrigPass      ->push_back(pass);
+          if (pass)  hltbit[counttrigs]=1;  
+          counttrigs++;
+          break;
         }
       }
-      if (verbose_) std::cout << "Trigger " << names.triggerName(i) << ", prescale " << triggerPrescales->getPrescaleForIndex(i) <<": " << (triggerBits->accept(i) ? "PASS" : "fail (or not run)") <<" found: "<<found<< std::endl;
     }
+
+    if (verbose_) {
+      cout<<"trig accept size "<<trigAccept.size()<<endl;
+      for (unsigned int i=0; i< trigAccept.size(); i++){
+        cout<<trigAccept[trigAccept.size()-1-i];
+      }
+      cout<<endl;
+      cout<<"hlt bit"<<endl;
+      cout<<hltbit.to_string()<<endl;
+    }
+
+    AllHadTrigAcceptBits   = hltbit.to_string();
+    SemiLeptTrigAcceptBits = hltbit.to_string();
     
     // if (verbose_){
     //   cout<<"trigStrings "<<trigStrings.size()<<endl;
@@ -2343,9 +2434,12 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   TLorentzVector mu0_p4;
   bool mu0_isTight=false;
   bool mu0_isMedium=false;
+  double mu0_iso04=0;
   int count_mu=0;
   for (const pat::Muon &mu : *muons) {
       if (mu.pt() < 30 || !mu.isLooseMuon() || fabs( mu.eta() ) > 2.1) continue;
+
+
       if (count_mu==0){
         mu0_p4.SetPtEtaPhiM( mu.pt(), mu.eta(), mu.phi(), mu.mass() );
         if ( mu.isTightMuon(PV) ) mu0_isTight = true;
@@ -2360,7 +2454,16 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if ( isMedium ) mu0_isMedium = true;
 
 
-        if (verbose_) cout<<"Muon pT "<<mu.pt()<<endl;
+        // https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Accessing_PF_Isolation_from_reco
+        double sumChargedHadronPt = mu.pfIsolationR04().sumChargedHadronPt;
+        double sumNeutralHadronPt = mu.pfIsolationR04().sumNeutralHadronEt;
+        double sumPhotonPt        = mu.pfIsolationR04().sumPhotonEt;
+        double sumPUPt            = mu.pfIsolationR04().sumPUPt;
+        double pt                 = mu.pt();
+        double iso04 = (sumChargedHadronPt+TMath::Max(0.,sumNeutralHadronPt+sumPhotonPt-0.5*sumPUPt))/pt;
+        mu0_iso04 = iso04;
+
+        if (verbose_) cout<<"Muon pT "<<mu.pt()<<" iso04 "<<iso04<<endl;
       } 
       // printf("muon with pt %4.1f, dz(PV) %+5.3f, POG loose id %d, tight id %d\n",
       // mu.pt(), mu.muonBestTrack()->dz(PV.position()), mu.isLooseMuon(), mu.isTightMuon(PV));
@@ -2381,13 +2484,20 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   iEvent.getByToken(electronToken_, electrons);
 
   TLorentzVector el0_p4;
+  Float_t el0_absiso           =0;
+  Float_t el0_relIsoWithDBeta  =0;
+  Float_t el0_absiso_EA        =0;
+  Float_t el0_relIsoWithEA     =0;
   int count_el=0;
   for (const pat::Electron &el : *electrons) {
       if (el.pt() < 50 || fabs(el.eta())>2.4 ) continue;
 
-      // Crappy implemation of loose Quality cuts (need to study this and improve)
+      float eta = el.eta();
+      // Implemation of loose Quality cuts (need to study this and improve)
       // https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedElectronIdentificationRun2
-      // skipping  Rel. comb. PF iso with EA corr < . need to study and implement.
+      // Recomended isolation variables are stored separately and not included in the loose quality cut
+
+
       bool passLoose =false ;
       float ooEmooP_; 
       if( el.ecalEnergy() == 0 ){
@@ -2400,6 +2510,26 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         ooEmooP_ = fabs(1.0/el.ecalEnergy() - el.eSuperClusterOverP()/el.ecalEnergy() );
       }
       float missHits = el.gsfTrack()->hitPattern().numberOfLostTrackerHits(HitPattern::MISSING_INNER_HITS);
+      
+
+      GsfElectron::PflowIsolationVariables pfIso = el.pfIsolationVariables();
+      float absiso = pfIso.sumChargedHadronPt + max(0.0 , pfIso.sumNeutralHadronEt + pfIso.sumPhotonEt - 0.5 * pfIso.sumPUPt );
+      float relIsoWithDBeta = absiso/el.pt();
+
+      float effArea = 0.;
+      if(abs(eta)>0.0 && abs(eta)<=1.0) effArea = 0.1752;
+      if(abs(eta)>1.0 && abs(eta)<=1.479) effArea = 0.1862;
+      if(abs(eta)>1.479 && abs(eta)<=2.0) effArea = 0.1411;
+      if(abs(eta)>2.0 && abs(eta)<=2.2) effArea = 0.1534;
+      if(abs(eta)>2.2 && abs(eta)<=2.3) effArea = 0.1903;
+      if(abs(eta)>2.3 && abs(eta)<=2.4) effArea = 0.2243;
+      if(abs(eta)>2.4 && abs(eta)<=2.5) effArea = 0.2687;
+
+      float absiso_EA = pfIso.sumChargedHadronPt + max(0.0 , pfIso.sumNeutralHadronEt + pfIso.sumPhotonEt - rho * effArea );
+      float relIsoWithEA = absiso_EA/el.pt();
+
+
+
       if (fabs(el.eta())<1.479 ){
         if( el.full5x5_sigmaIetaIeta()                <      0.011      &&
             fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00477    &&
@@ -2424,6 +2554,12 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
       if (count_el==0){
         el0_p4.SetPtEtaPhiM( el.pt(), el.eta(), el.phi(), el.mass() );
+
+        el0_absiso           = absiso;
+        el0_relIsoWithDBeta  = relIsoWithDBeta;
+        el0_absiso_EA        = absiso_EA;
+        el0_relIsoWithEA     = relIsoWithEA;
+
         if (verbose_) cout<<"Electron pT "<<el.pt()<<endl;
       } 
       count_el++;
@@ -4475,6 +4611,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   AK4dRminPt        = AK4_dRMinLep_p4.Perp() ;
   AK4dRminEta       = AK4_dRMinLep_p4.Eta()  ;
   AK4dRminPhi       = AK4_dRMinLep_p4.Phi()  ;
+  AK4dRminMass      = AK4_dRMinLep_p4.M()    ;
   AK4dRminBdisc     = AK4_dRMinLep_bdisc     ;
   AK4dRminLep       = AK4_dRMinLep           ;
   
@@ -4498,13 +4635,16 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   else if (count_mu==0 && count_el==1) LeptonIsMu  = 0  ; 
   else LeptonIsMu =0;
 
-  PtRel = AK4_dRMinLep_p4.Perp( lep0_p4.Vect() );
+  PtRel  = AK4_dRMinLep_p4.Perp( lep0_p4.Vect() );
+  MuIso  = mu0_iso04;
 
+  Elecron_absiso            = el0_absiso           ;  
+  Elecron_relIsoWithDBeta   = el0_relIsoWithDBeta  ;  
+  Elecron_absiso_EA         = el0_absiso_EA        ;  
+  Elecron_relIsoWithEA      = el0_relIsoWithEA     ;  
 
   if(mu0_isMedium) MuMedium = 1   ;
   else             MuMedium = 0   ;
-
-
 
   if(mu0_isTight) MuTight = 1   ;
   else            MuTight = 0   ;
