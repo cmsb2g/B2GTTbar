@@ -206,7 +206,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
       TTree *TreeAllHad;   
 
-      // std::vector<std::string> *AllHadTrigNames     = new std::vector<std::string>;
+      std::vector<std::string> *AllHadTrigNames     = new std::vector<std::string>;
       std::vector<int> *AllHadTrigPrescales = new std::vector<int>;
       std::vector<bool> *AllHadTrigPass    = new std::vector<bool>;
 
@@ -652,7 +652,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       //                                                                888       
          
       TTree *TreeSemiLept;
-      // std::vector<std::string> *SemiLeptTrigNames     = new std::vector<std::string>;
+      std::vector<std::string> *SemiLeptTrigNames     = new std::vector<std::string>;
       std::vector<int> *SemiLeptTrigPrescales = new std::vector<int>;
       std::vector<bool> *SemiLeptTrigPass    = new std::vector<bool>;
 
@@ -984,7 +984,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad = new TTree("TreeAllHad","TreeAllHad"); 
 
 
-  // TreeAllHad->Branch("AllHadTrigNames"    , "vector<std::string>", &AllHadTrigNames);
+  TreeAllHad->Branch("AllHadTrigNames"    , "vector<std::string>", &AllHadTrigNames);
   TreeAllHad->Branch("AllHadTrigPrescales"   , "vector<int>", &AllHadTrigPrescales);
   TreeAllHad->Branch("AllHadTrigPass"        , "vector<bool>", &AllHadTrigPass);
   TreeAllHad->Branch("AllHadTrigAcceptBits"  , &AllHadTrigAcceptBits);
@@ -1437,7 +1437,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   
   TreeSemiLept = new TTree("TreeSemiLept","TreeSemiLept"); 
        
-  // TreeSemiLept->Branch("SemiLeptTrigNames"    , "vector<std::string>", &SemiLeptTrigNames);
+  TreeSemiLept->Branch("SemiLeptTrigNames"    , "vector<std::string>", &SemiLeptTrigNames);
   TreeSemiLept->Branch("SemiLeptTrigPrescales" , "vector<int>",  &SemiLeptTrigPrescales);
   TreeSemiLept->Branch("SemiLeptTrigPass"      , "vector<bool>", &SemiLeptTrigPass);
   TreeSemiLept->Branch("SemiLeptTrigAcceptBits", &SemiLeptTrigAcceptBits);
@@ -2104,8 +2104,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     std::bitset<30> hltbit;
     vector<bool> trigAccept;
 
-    // AllHadTrigNames       ->clear();
-    // SemiLeptTrigNames     ->clear();
+    AllHadTrigNames       ->clear();
+    SemiLeptTrigNames     ->clear();
     AllHadTrigPrescales   ->clear();
     SemiLeptTrigPrescales ->clear();
     AllHadTrigPass        ->clear();
@@ -2132,8 +2132,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           trigAccept.push_back(pass);
           // trigStrings.push_back(name);
           // trigPrescale.push_back(prescale);
-          // AllHadTrigNames       ->push_back(name);
-          // SemiLeptTrigNames     ->push_back(name);
+          AllHadTrigNames       ->push_back(name);
+          SemiLeptTrigNames     ->push_back(name);
           AllHadTrigPrescales   ->push_back(prescale);
           SemiLeptTrigPrescales ->push_back(prescale);
           AllHadTrigPass        ->push_back(pass);
@@ -2589,14 +2589,15 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   // 888       888 8888888888     888     
   //                                      
 
+  if (verbose_) cout<<"debug: about to grab met"<<endl;
   edm::Handle<pat::METCollection> mets;
   iEvent.getByToken(metToken_, mets);
   const pat::MET &met = mets->front();
   if (verbose_){
-    printf("MET: pt %5.1f, phi %+4.2f, sumEt (%.1f). genMET %.1f. MET with JES up/down: %.1f/%.1f\n",
-        met.pt(), met.phi(), met.sumEt(),
-        met.genMET()->pt(),
-        met.shiftedPt(pat::MET::JetEnUp), met.shiftedPt(pat::MET::JetEnDown));
+    cout<<"MET pt "<<met.pt()<<endl;
+    cout<<"MET phi "<<met.phi()<<endl;
+    cout<<"MET sumEt "<<met.sumEt()<<endl;
+    if (!iEvent.isRealData() )  cout<<"genMET "<< met.genMET()->pt()<<endl;
   }
   // 
   //        d8888 888    d8P      d8888       .d8888b.  888    888  .d8888b.         d8b          888             
@@ -2629,181 +2630,188 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   double HT_AK4_pt30_smearUp   = 0 ;
   double HT_AK4_pt30_smearDn   = 0 ;
 
-  // if (count_lep==1){  // don't need AK4 jets for all-hadronic  // nevermind use it for HT
+  edm::Handle<pat::JetCollection> AK4MINI;
+  iEvent.getByToken(ak4jetToken_, AK4MINI);
 
-    edm::Handle<pat::JetCollection> AK4MINI;
-    iEvent.getByToken(ak4jetToken_, AK4MINI);
+  edm::Handle<reco::GenJetCollection> AK4GENJET;  
+  iEvent.getByToken(ak4genjetToken_, AK4GENJET);
 
-    edm::Handle<reco::GenJetCollection> AK4GENJET;  
-    iEvent.getByToken(ak4genjetToken_, AK4GENJET);
+  if (verbose_) cout<<"debug: about to grab ak4 jets"<<endl;
 
-    for (const pat::Jet &ijet : *AK4MINI) {  
-      
-      if (ijet.pt()<30 || fabs(ijet.eta())>2.4) continue; 
+  for (const pat::Jet &ijet : *AK4MINI) {  
+    
+    if (ijet.pt()<30 || fabs(ijet.eta())>2.4) continue; 
 
-      //------------------------------------
-      // AK4CHS JEC correction 
-      //------------------------------------
-      reco::Candidate::LorentzVector uncorrJet = ijet.correctedP4(0);
-      JetCorrectorAK4chs->setJetEta( uncorrJet.eta() );
-      JetCorrectorAK4chs->setJetPt ( uncorrJet.pt() );
-      JetCorrectorAK4chs->setJetE  ( uncorrJet.energy() );
-      JetCorrectorAK4chs->setJetA  ( ijet.jetArea() );
-      JetCorrectorAK4chs->setRho   ( rho );
-      JetCorrectorAK4chs->setNPV   ( nvtx );
-      double corr = JetCorrectorAK4chs->getCorrection();
+    //------------------------------------
+    // Noise jet ID
+    //------------------------------------    
+    double NHF       = ijet.neutralHadronEnergyFraction();
+    double NEMF      = ijet.neutralEmEnergyFraction();
+    double CHF       = ijet.chargedHadronEnergyFraction();
+    // double MUF       = ijet.muonEnergyFraction();
+    double CEMF      = ijet.chargedEmEnergyFraction();
+    double NumConst  = ijet.chargedMultiplicity()+ijet.neutralMultiplicity();
+    double NM        = ijet.neutralMultiplicity();
+    double CM        = ijet.chargedMultiplicity(); 
+    double eta       = ijet.eta(); 
 
-      reco::Candidate::LorentzVector corrJet = corr * uncorrJet;
-      if (verbose_) cout<<"uncorrected AK4 jet pt "<<uncorrJet.pt()<<" corrected jet pt "<<corrJet.pt()<<endl;
-      
-      //------------------------------------
-      // AK4CHS JEC uncertainty
-      //------------------------------------
-      double corrDn = 1.0;
-      JetCorrUncertAK4chs->setJetPhi(  corrJet.phi()  );
-      JetCorrUncertAK4chs->setJetEta(  corrJet.eta()  );
-      JetCorrUncertAK4chs->setJetPt(   corrJet.pt()   );
-      corrDn = corr - JetCorrUncertAK4chs->getUncertainty(0);
-      double corrUp = 1.0;
-      JetCorrUncertAK4chs->setJetPhi(  corrJet.phi()  );
-      JetCorrUncertAK4chs->setJetEta(  corrJet.eta()  );
-      JetCorrUncertAK4chs->setJetPt(   corrJet.pt()   );
-      corrUp = corr + JetCorrUncertAK4chs->getUncertainty(1);
+    bool goodJet_looseJetID =  
+         ( fabs(eta) <= 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 && CHF > 0.0  && CM > 0 && CEMF < 0.99   ) 
+      || ( fabs(eta) <= 2.7 && fabs(eta) > 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 ) 
+      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NEMF < 0.9 && NM > 2 ) 
+      || ( fabs(eta)  > 3.0 && NEMF < 0.9 && NM > 10 );
+    if (verbose_) cout<<"  goodJet = "<<goodJet_looseJetID<<endl;
 
-      if (verbose_) cout<<"  corrDn "<<corrDn<<" corrUp "<< corrUp<<endl;
-
-      //------------------------------------
-      // GenJet  matched
-      //------------------------------------ 
-      double genpt = 0;
-      if (!iEvent.isRealData()){
-        const reco::GenJet* genJet = ijet.genJet();
-        if (genJet) {
-          genpt = genJet->pt();
-          if (verbose_) cout<<"  ak4 genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<endl;
-        }
-      }
-      //------------------------------------
-      // JER SF
-      //------------------------------------
-      double ptsmear   = 1;
-      double ptsmearUp = 1;
-      double ptsmearDn = 1;
-      if (!iEvent.isRealData()) {
-        double jer_sf    = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}});
-        double jer_sf_up = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}}, Variation::UP);
-        double jer_sf_dn = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}}, Variation::DOWN);
-        if (verbose_) std::cout << "  JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
-        double recopt    = corrJet.pt();
-        // double genpt     = GenJetMatched.Perp();
-        double deltapt   = (recopt-genpt)*(jer_sf-1.0);
-        double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
-        double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
-        ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
-        ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
-        ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
-      }
-
-      if (verbose_) cout<<"  ptsmear "<<ptsmear<<" ptsmearUp "<< ptsmearDn<<" ptsmearDn "<< ptsmearUp<<endl;
-
-
-      //------------------------------------
-      // AK4 variables 
-      //------------------------------------
-      double pt           = corrJet.pt();
-      double mass         = corrJet.mass();
-      double eta          = corrJet.eta();
-      double phi          = corrJet.phi();
-      //double rapidity     = ijet.rapidity();
-      //double ndau         = ijet.numberOfDaughters();
-      double bdisc        = ijet.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); 
-      //double puid         = ijet.userFloat("pileupJetId:fullDiscriminant");
-   
-      //------------------------------------
-      // HT calculation
-      //------------------------------------
-
-      if (corrJet.pt()>30)            HT_AK4_pt30           +=   pt;
-      if (corrUp * corrJet.pt()>30)   HT_AK4_pt30_corrUp    +=   corrUp * corrJet.pt();
-      if (corrDn * corrJet.pt()>30)   HT_AK4_pt30_corrDn    +=   corrDn * corrJet.pt();
-      if (ptsmear * corrJet.pt()>30)  HT_AK4_pt30_smearNom  +=   ptsmear * corrJet.pt();
-      if (ptsmearUp* corrJet.pt()>30) HT_AK4_pt30_smearUp   +=   ptsmearUp * corrJet.pt();
-      if (ptsmearDn* corrJet.pt()>30) HT_AK4_pt30_smearDn   +=   ptsmearDn * corrJet.pt();
-
-      //------------------------------------
-      // Noise jet ID
-      //------------------------------------    
-      double NHF       = ijet.neutralHadronEnergyFraction();
-      double NEMF      = ijet.neutralEmEnergyFraction();
-      double CHF       = ijet.chargedHadronEnergyFraction();
-      // double MUF       = ijet.muonEnergyFraction();
-      double CEMF      = ijet.chargedEmEnergyFraction();
-      // double NumConst  = ijet.chargedMultiplicity()+ijet.neutralMultiplicity();
-      double NM        = ijet.neutralMultiplicity();
-      double CM        = ijet.chargedMultiplicity(); 
-
-      bool goodJet_looseJetID =  
-        (fabs(eta) < 2.4 && CHF > 0.0 && NHF < 0.99 && CM > 0 && CEMF < 0.99 && NEMF < 0.99) 
-        || ( fabs(eta) >= 2.4 && fabs(eta) < 3.0 && NEMF < 0.9 && NM > 2 ) 
-        || ( fabs(eta) >= 3.0 && NEMF < 0.9 && NM > 10 );
-      if (verbose_) cout<<"  goodJet = "<<goodJet_looseJetID<<endl;
-
-      //------------------------------------
-      // Find AK4 jet closest to lepton
-      //------------------------------------ 
-      double deltaRlep = deltaR(corrJet.eta(), corrJet.phi(), lep0_p4.Eta(), lep0_p4.Phi() );
-
-      if (pt>40 && fabs(eta)<2.4 && goodJet_looseJetID){
-        if (deltaRlep<AK4_dRMinLep){
-          AK4_dRMinLep = deltaRlep;
-          AK4_dRMinLep_p4.SetPtEtaPhiM( pt, eta, phi, mass );
-          AK4_dRMinLep_bdisc = bdisc;
-        }
-      }
-
-
-
-      //------------------------------------
-      // Find Loose b-tagged AK4 jet closest to lepton
-      //------------------------------------ 
-      if (pt>40 && fabs(eta)<2.4 && goodJet_looseJetID && bdisc>0.460 ){
-        if (deltaRlep<AK4_btagged_dRMinLep){
-          AK4_btagged_dRMinLep = deltaRlep;
-          AK4_btagged_dRMinLep_p4.SetPtEtaPhiM( pt, eta, phi, mass );
-          AK4_btagged_dRMinLep_bdisc = bdisc;
-        }
-      }
-
-      //------------------------------------
-      // Check if there is a b-tagged AK4 jet in the lepton hemisphere
-      //------------------------------------ 
-      double deltaPhiLep = fabs( deltaPhi( phi,  lep0_p4.Phi() ));  
-      if (pt>40 && fabs(eta)<2.4 && goodJet_looseJetID){              
-        if (deltaPhiLep<  3.14/2.0)
-        {
-          if (bdisc>0.460 ) ak4_btag_loose  = true;
-          if (bdisc>0.800 ) ak4_btag_medium = true;
-          if (bdisc>0.935 ) ak4_btag_tight  = true;
-        }
-      }
-    } //end AK4 loop
-
-    if (verbose_) {
-      cout<<"AK4 summary:"<<endl;
-      cout<<"  closest ak4 jet to lepton:"<<endl;
-      cout<<"    pt =  "<<AK4_dRMinLep_p4.Perp()<<endl;
-      cout<<"    bdisc =  "<<AK4_dRMinLep_bdisc<<endl;
-      cout<<"    dR  = "<<AK4_dRMinLep<<endl;
-      cout<<"  closest loose b-tagged ak4 jet to lepton:"<<endl;
-      cout<<"    pt =  "<<AK4_btagged_dRMinLep_p4.Perp()<<endl;
-      cout<<"    bdisc =  "<<AK4_btagged_dRMinLep_bdisc<<endl;
-      cout<<"    dR  = "<<AK4_btagged_dRMinLep<<endl;
-      cout<<"  b-tagged jet in hemisphere around lepton?"<<endl;
-      cout<<"    ak4_btag_loose  "<<ak4_btag_loose  <<endl; 
-      cout<<"    ak4_btag_medium "<<ak4_btag_medium <<endl; 
-      cout<<"    ak4_btag_tight  "<<ak4_btag_tight  <<endl; 
+    if (!goodJet_looseJetID) {
+      if(verbose_) cout<<"  bad AK4 jet. skip.  ( pt "<<ijet.pt()<<" eta "<<ijet.eta()<<" NumConst "<<NumConst<<" )"<<endl;
+      continue;
     }
-  // }//end if 1 lepton
+
+    //------------------------------------
+    // AK4CHS JEC correction 
+    //------------------------------------
+    reco::Candidate::LorentzVector uncorrJet = ijet.correctedP4(0);
+    JetCorrectorAK4chs->setJetEta( uncorrJet.eta() );
+    JetCorrectorAK4chs->setJetPt ( uncorrJet.pt() );
+    JetCorrectorAK4chs->setJetE  ( uncorrJet.energy() );
+    JetCorrectorAK4chs->setJetA  ( ijet.jetArea() );
+    JetCorrectorAK4chs->setRho   ( rho );
+    JetCorrectorAK4chs->setNPV   ( nvtx );
+    double corr = JetCorrectorAK4chs->getCorrection();
+
+    reco::Candidate::LorentzVector corrJet = corr * uncorrJet;
+    if (verbose_) cout<<"uncorrected AK4 jet pt "<<uncorrJet.pt()<<" corrected jet pt "<<corrJet.pt()<<endl;
+    
+    //------------------------------------
+    // AK4CHS JEC uncertainty
+    //------------------------------------
+    double corrDn = 1.0;
+    JetCorrUncertAK4chs->setJetPhi(  corrJet.phi()  );
+    JetCorrUncertAK4chs->setJetEta(  corrJet.eta()  );
+    JetCorrUncertAK4chs->setJetPt(   corrJet.pt()   );
+    corrDn = corr - JetCorrUncertAK4chs->getUncertainty(0);
+    double corrUp = 1.0;
+    JetCorrUncertAK4chs->setJetPhi(  corrJet.phi()  );
+    JetCorrUncertAK4chs->setJetEta(  corrJet.eta()  );
+    JetCorrUncertAK4chs->setJetPt(   corrJet.pt()   );
+    corrUp = corr + JetCorrUncertAK4chs->getUncertainty(1);
+
+    if (verbose_) cout<<"  corrDn "<<corrDn<<" corrUp "<< corrUp<<endl;
+
+    //------------------------------------
+    // GenJet  matched
+    //------------------------------------ 
+    double genpt = 0;
+    if (!iEvent.isRealData()){
+      const reco::GenJet* genJet = ijet.genJet();
+      if (genJet) {
+        genpt = genJet->pt();
+        if (verbose_) cout<<"  ak4 genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<endl;
+      }
+    }
+    //------------------------------------
+    // JER SF
+    //------------------------------------
+    double ptsmear   = 1;
+    double ptsmearUp = 1;
+    double ptsmearDn = 1;
+    if (!iEvent.isRealData()) {
+      double jer_sf    = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}});
+      double jer_sf_up = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}}, Variation::UP);
+      double jer_sf_dn = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}}, Variation::DOWN);
+      if (verbose_) std::cout << "  JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
+      double recopt    = corrJet.pt();
+      // double genpt     = GenJetMatched.Perp();
+      double deltapt   = (recopt-genpt)*(jer_sf-1.0);
+      double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
+      double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
+      ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
+      ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
+      ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
+    }
+
+    if (verbose_) cout<<"  ptsmear "<<ptsmear<<" ptsmearUp "<< ptsmearDn<<" ptsmearDn "<< ptsmearUp<<endl;
+
+
+    //------------------------------------
+    // AK4 variables 
+    //------------------------------------
+    double pt           = corrJet.pt();
+    double mass         = corrJet.mass();
+    eta                 = corrJet.eta();
+    double phi          = corrJet.phi();
+    //double rapidity     = ijet.rapidity();
+    //double ndau         = ijet.numberOfDaughters();
+    double bdisc        = ijet.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); 
+    //double puid         = ijet.userFloat("pileupJetId:fullDiscriminant");
+ 
+    //------------------------------------
+    // HT calculation
+    //------------------------------------
+
+    if (corrJet.pt()>30)            HT_AK4_pt30           +=   pt;
+    if (corrUp * corrJet.pt()>30)   HT_AK4_pt30_corrUp    +=   corrUp * corrJet.pt();
+    if (corrDn * corrJet.pt()>30)   HT_AK4_pt30_corrDn    +=   corrDn * corrJet.pt();
+    if (ptsmear * corrJet.pt()>30)  HT_AK4_pt30_smearNom  +=   ptsmear * corrJet.pt();
+    if (ptsmearUp* corrJet.pt()>30) HT_AK4_pt30_smearUp   +=   ptsmearUp * corrJet.pt();
+    if (ptsmearDn* corrJet.pt()>30) HT_AK4_pt30_smearDn   +=   ptsmearDn * corrJet.pt();
+
+    //------------------------------------
+    // Find AK4 jet closest to lepton
+    //------------------------------------ 
+    double deltaRlep = deltaR(corrJet.eta(), corrJet.phi(), lep0_p4.Eta(), lep0_p4.Phi() );
+
+    if (pt>40 && fabs(eta)<2.4 && goodJet_looseJetID){
+      if (deltaRlep<AK4_dRMinLep){
+        AK4_dRMinLep = deltaRlep;
+        AK4_dRMinLep_p4.SetPtEtaPhiM( pt, eta, phi, mass );
+        AK4_dRMinLep_bdisc = bdisc;
+      }
+    }
+
+
+
+    //------------------------------------
+    // Find Loose b-tagged AK4 jet closest to lepton
+    //------------------------------------ 
+    if (pt>40 && fabs(eta)<2.4 && goodJet_looseJetID && bdisc>0.460 ){
+      if (deltaRlep<AK4_btagged_dRMinLep){
+        AK4_btagged_dRMinLep = deltaRlep;
+        AK4_btagged_dRMinLep_p4.SetPtEtaPhiM( pt, eta, phi, mass );
+        AK4_btagged_dRMinLep_bdisc = bdisc;
+      }
+    }
+
+    //------------------------------------
+    // Check if there is a b-tagged AK4 jet in the lepton hemisphere
+    //------------------------------------ 
+    double deltaPhiLep = fabs( deltaPhi( phi,  lep0_p4.Phi() ));  
+    if (pt>40 && fabs(eta)<2.4 && goodJet_looseJetID){              
+      if (deltaPhiLep<  3.14/2.0)
+      {
+        if (bdisc>0.460 ) ak4_btag_loose  = true;
+        if (bdisc>0.800 ) ak4_btag_medium = true;
+        if (bdisc>0.935 ) ak4_btag_tight  = true;
+      }
+    }
+  } //end AK4 loop
+
+  if (verbose_) {
+    cout<<"AK4 summary:"<<endl;
+    cout<<"  closest ak4 jet to lepton:"<<endl;
+    cout<<"    pt =  "<<AK4_dRMinLep_p4.Perp()<<endl;
+    cout<<"    bdisc =  "<<AK4_dRMinLep_bdisc<<endl;
+    cout<<"    dR  = "<<AK4_dRMinLep<<endl;
+    cout<<"  closest loose b-tagged ak4 jet to lepton:"<<endl;
+    cout<<"    pt =  "<<AK4_btagged_dRMinLep_p4.Perp()<<endl;
+    cout<<"    bdisc =  "<<AK4_btagged_dRMinLep_bdisc<<endl;
+    cout<<"    dR  = "<<AK4_btagged_dRMinLep<<endl;
+    cout<<"  b-tagged jet in hemisphere around lepton?"<<endl;
+    cout<<"    ak4_btag_loose  "<<ak4_btag_loose  <<endl; 
+    cout<<"    ak4_btag_medium "<<ak4_btag_medium <<endl; 
+    cout<<"    ak4_btag_tight  "<<ak4_btag_tight  <<endl; 
+  }
+
 
   //      
   //         d8888 888    d8P   .d8888b.       .d8888b.  888    888  .d8888b.         d8b          888             
@@ -2846,11 +2854,39 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   TLorentzVector GenJetMatched0;
   TLorentzVector GenJetMatched1;
+
+  if (verbose_) cout<<"debug: about to grab ak8 jets"<<endl;
+
   for (const pat::Jet &ijet : *AK8CHS) {  
     if (count_AK8CHS>1) break;
     if (count_AK8CHS==0 && ijet.pt()<250) break;
 
     if (verbose_) cout<<"\nJet "<<count_AK8CHS<<" with pT "<<ijet.pt()<<" sdMass "<<ijet.userFloat("ak8PFJetsCHSSoftDropMass")<<endl;
+
+    //------------------------------------
+    // Noise jet ID
+    //------------------------------------    
+    double NHF       = ijet.neutralHadronEnergyFraction();
+    double NEMF      = ijet.neutralEmEnergyFraction();
+    double CHF       = ijet.chargedHadronEnergyFraction();
+    // double MUF       = ijet.muonEnergyFraction();
+    double CEMF      = ijet.chargedEmEnergyFraction();
+    double NumConst  = ijet.chargedMultiplicity()+ijet.neutralMultiplicity();
+    double NM        = ijet.neutralMultiplicity();
+    double CM        = ijet.chargedMultiplicity(); 
+    double eta       = ijet.eta();
+
+    bool goodJet_looseJetID =  
+         ( fabs(eta) <= 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 && CHF > 0.0  && CM > 0 && CEMF < 0.99   ) 
+      || ( fabs(eta) <= 2.7 && fabs(eta) > 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 ) 
+      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NEMF < 0.9 && NM > 2 ) 
+      || ( fabs(eta)  > 3.0 && NEMF < 0.9 && NM > 10 );
+    if (verbose_) cout<<"  goodJet = "<<goodJet_looseJetID<<endl;
+
+    if (!goodJet_looseJetID) {
+      if(verbose_) cout<<"  bad AK8 jet. skip.  ( pt "<<ijet.pt()<<" eta "<<ijet.eta()<<" NumConst "<<NumConst<<" )"<<endl;
+      continue;
+    }
 
     //------------------------------------
     // AK8CHS JEC correction 
@@ -4555,7 +4591,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //------------------------------------
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
   //------------------------------------
-  if (AK8jet0_P4corr.Perp()>400 && AK8jet1_P4corr.Perp()>400 && fabs( AK8jet0_P4corr.Rapidity() ) <2.4 &&  fabs( AK8jet1_P4corr.Rapidity() ) <2.4  ){
+  if (AK8jet0_P4corr.Perp()>300 && AK8jet1_P4corr.Perp()>300 && fabs( AK8jet0_P4corr.Rapidity() ) <2.4 &&  fabs( AK8jet1_P4corr.Rapidity() ) <2.4  ){
     TreeAllHad -> Fill();
   } 
 
@@ -4674,8 +4710,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<" met "<<met.pt() <<endl;
     cout<<" ak4 pt "<<AK4_dRMinLep_p4.Perp() <<endl;
   } 
-  if (AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 
-    &&  lep0_p4.Perp()>40 && met.pt() > 40 && AK4_dRMinLep_p4.Perp() > 20  ){
+  if (count_lep ==1 && AK8jet_SemiLept_P4corr.Perp()>200 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 
+    &&  lep0_p4.Perp()>30 && met.pt() > 30 ){
     TreeSemiLept -> Fill();
   } 
 
