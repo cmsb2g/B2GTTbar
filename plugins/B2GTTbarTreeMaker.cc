@@ -18,7 +18,6 @@
 
 //--------------------------
 // To add:
-// - Q2weight
 // - NNPDF3weight  
 // - electron quality cuts
 // - trigger
@@ -2278,38 +2277,103 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   h_NPV ->Fill(nvtx);
   h_NPVreweighted  ->Fill(nvtx,puweight);
 
-  //LHE Weight Uncertainties
+  //  888      888    888 8888888888     888       888          d8b          888      888             
+  //  888      888    888 888            888   o   888          Y8P          888      888             
+  //  888      888    888 888            888  d8b  888                       888      888             
+  //  888      8888888888 8888888        888 d888b 888  .d88b.  888  .d88b.  88888b.  888888 .d8888b  
+  //  888      888    888 888            888d88888b888 d8P  Y8b 888 d88P"88b 888 "88b 888    88K      
+  //  888      888    888 888            88888P Y88888 88888888 888 888  888 888  888 888    "Y8888b. 
+  //  888      888    888 888            8888P   Y8888 Y8b.     888 Y88b 888 888  888 Y88b.       X88 
+  //  88888888 888    888 8888888888     888P     Y888  "Y8888  888  "Y88888 888  888  "Y888  88888P' 
+  //                                                                     888                          
+  //                                                                Y8b d88P                          
+  //                                                                 "Y88P"                           
 
-  //Q^2 uncertainties
-  double Q2wgt_up = 1;
-  double Q2wgt_down = 1;
+  double Q2wgt_up = -999;
+  double Q2wgt_down = -999;
+
+  double NNPDF3wgt_up = -999;
+  double NNPDF3wgt_down = -999;
 
   if (isZprime_ || isttbar_){
-    if (verbose_) cout << "Calculating Q^2 uncertainties." << endl;
     edm::Handle<LHEEventProduct> EvtHandle;
     iEvent.getByToken(theSrc_, EvtHandle);
 
-    double maxQ2wgt_frac = 1;
-    double minQ2wgt_frac = 1;
-
     if (EvtHandle.isValid()){
+      double centralWgt = EvtHandle->weights()[0].wgt;
+
+      //Q^2 uncertainties
+      if (verbose_) cout << "Calculating Q^2 uncertainties." << endl;
+      double maxQ2wgt_frac = 1;
+      double minQ2wgt_frac = 1;
+      
       if (verbose_) cout << "Q^2 loop" <<endl;
       for (unsigned int iLHE = 0; iLHE < 9; ++iLHE){
 	if (iLHE != 5 && iLHE != 7){
 	  double Q2wgt = EvtHandle->weights()[iLHE].wgt;
 	  if (verbose_) cout << "Q^2 Weight: " << Q2wgt << endl;
-	  double Q2wgt_frac = Q2wgt/(EvtHandle->weights()[0].wgt);
+	  double Q2wgt_frac = Q2wgt/(centralWgt);
 	  if (verbose_) cout << "Fractional Q^2 Weight: " << Q2wgt_frac << endl;
 	  maxQ2wgt_frac = max(maxQ2wgt_frac, Q2wgt_frac);
 	  minQ2wgt_frac = min(minQ2wgt_frac, Q2wgt_frac);
 	}
       }
+      
+      Q2wgt_up = maxQ2wgt_frac;
+      Q2wgt_down = minQ2wgt_frac;
+
+      //NNPDF3 uncertainties
+      if (verbose_) cout << "Calculating NNPDF3 uncertainties." << endl;
+      double NNPDF3wgtAvg = 0.0;
+      double NNPDF3wgtRMS = 0.0;
+      double NNPDF3wgt = 0.0;
+      double NNPDF3wgt_frac = 0.0;
+
+      //ttbar
+      unsigned int PDFstart = 9;
+      unsigned int PDFend = 109;
+
+      //Zprime
+      if (isZprime_){
+	PDFstart = 10;
+	PDFend = 110;
+      }
+
+      //Making sure central PDF isn't zero                                                                                              
+      if (centralWgt == 0){
+	NNPDF3wgt_up = 0.0;
+        NNPDF3wgt_down = 0.0;
+	if (verbose_) cout << "Unphysical: central PDF weight is zero!" << endl;
+      }
+      else{
+	for (unsigned int i_lhePDF = PDFstart; i_lhePDF < PDFend; ++i_lhePDF){
+	  NNPDF3wgt = EvtHandle->weights()[i_lhePDF].wgt;
+	  NNPDF3wgt_frac = NNPDF3wgt/(centralWgt);
+	  NNPDF3wgtAvg += NNPDF3wgt_frac;
+	  if (verbose_){
+	    cout << "-----" << endl;
+	    cout << i_lhePDF - PDFstart << endl;
+	    cout << "Fractional PDF weight: " << NNPDF3wgt_frac << endl;
+	    cout << "-----" << endl;
+	    cout << "" << endl;
+	  }
+	}
+
+	NNPDF3wgtAvg = NNPDF3wgtAvg/(PDFend - PDFstart);
+	if (verbose_) cout << NNPDF3wgtAvg;
+      
+	for (unsigned int i_lhePDF = PDFstart; i_lhePDF < PDFend; ++i_lhePDF){
+	  NNPDF3wgt = EvtHandle->weights()[i_lhePDF].wgt;
+	  NNPDF3wgt_frac = NNPDF3wgt/(centralWgt);
+	  NNPDF3wgtRMS += (NNPDF3wgt_frac - NNPDF3wgtAvg)*(NNPDF3wgt_frac - NNPDF3wgtAvg);
+	}
+	
+	NNPDF3wgtRMS = sqrt(NNPDF3wgtRMS/(PDFend - PDFstart - 1));
+	NNPDF3wgt_up = 1.0 + NNPDF3wgtRMS;
+        NNPDF3wgt_down = 1.0 - NNPDF3wgtRMS;
+      }
     }
-
-    Q2wgt_up = maxQ2wgt_frac;
-    Q2wgt_down = minQ2wgt_frac;
-
-  }
+  } 
 
   // 
   // 8888888b.  888               
@@ -4404,8 +4468,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   HT_PtSmearDn         = HT_AK4_pt30_smearDn  ;               
   Q2weight_CorrDn      = Q2wgt_down ;              
   Q2weight_CorrUp      = Q2wgt_up ;              
-  NNPDF3weight_CorrDn  = 1 ;              
-  NNPDF3weight_CorrUp  = 1 ;              
+  NNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
+  NNPDF3weight_CorrUp  = NNPDF3wgt_up ;              
   AllHadRunNum         = iEvent.id().run() ;              
   AllHadLumiBlock      = iEvent.id().luminosityBlock() ;              
   AllHadEventNum       = iEvent.id().event() ;  
@@ -4464,8 +4528,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   ST_PtSmearDn         = htlep + HT_AK4_pt30_smearDn   ;                
   SemiLeptQ2weight_CorrDn      = Q2wgt_down ;              
   SemiLeptQ2weight_CorrUp      = Q2wgt_up ;              
-  SemiLeptNNPDF3weight_CorrDn  = 1 ;              
-  SemiLeptNNPDF3weight_CorrUp  = 1 ;              
+  SemiLeptNNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
+  SemiLeptNNPDF3weight_CorrUp  = NNPDF3wgt_up ;              
   SemiLeptRunNum               = iEvent.id().run() ;              
   SemiLeptLumiBlock            = iEvent.id().luminosityBlock() ;              
   SemiLeptEventNum             = iEvent.id().event() ;              
@@ -4601,3 +4665,5 @@ B2GTTbarTreeMaker::fillDescriptions(edm::ConfigurationDescriptions& descriptions
 
 //define this as a plug-in
 DEFINE_FWK_MODULE(B2GTTbarTreeMaker);
+
+//  LocalWords:  NNPDF

@@ -16,11 +16,23 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 
 #----------------------------------------------------------------------------------------
 ### INPUT
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-      'file:root://cmsxrootd.fnal.gov///store/user/jdolen/B2G2016/ZprimeToTT_M-3000_W-30_TuneCUETP8M1_13TeV-madgraphMLM_RunIISpring16MiniAODv2-PUSpring16RAWAODSIM_reHLT_MINIAOD.root'
+      'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/0064B539-803A-E611-BDEA-002590D0B060.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/008796C3-B53A-E611-8853-0025905C42A6.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/00E165A2-C63A-E611-AA23-141877344134.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/00FBAFC2-B53A-E611-9F5D-0025904C641C.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/02098436-CC3A-E611-8C96-B083FED3EE25.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/0241AA22-AA3A-E611-9ECD-002590D9D9FC.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/024D71B6-703A-E611-ADA0-0090FAA576C0.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/028CEA43-D03A-E611-94F3-141877411D83.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/0405AA62-E03A-E611-988D-C81F66B7ED99.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/046EAFC4-B53A-E611-8B66-0025905C2CD0.root',
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/048BDC26-B93A-E611-9CAF-0025905C4264.root'
+      #'file:root://cmsxrootd.fnal.gov///store/user/jdolen/B2G2016/ZprimeToTT_M-3000_W-30_TuneCUETP8M1_13TeV-madgraphMLM_RunIISpring16MiniAODv2-PUSpring16RAWAODSIM_reHLT_MINIAOD.root'
       #'file:root://cmsxrootd.fnal.gov//store/mc/RunIISpring16MiniAODv2/ZprimeToTT_M-2000_W-20_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/90000/68594422-C039-E611-91D0-842B2B17F73D.root',
       #'file:root://cmsxrootd.fnal.gov//store/mc/RunIISpring16MiniAODv2/ZprimeToTT_M-2000_W-20_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/90000/78371B76-D439-E611-896B-B083FECF837B.root',
       #'file:root://cmsxrootd.fnal.gov//store/mc/RunIISpring16MiniAODv2/ZprimeToTT_M-2000_W-20_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/90000/847453B3-F739-E611-909C-90B11C0BCBC2.root',
@@ -131,8 +143,8 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     verbose       = cms.bool(False),
     verboseGen    = cms.bool(False),
     runGenLoop    = cms.bool(True),
-    isZprime      = cms.bool(True),
-    isttbar       = cms.bool(False),
+    isZprime      = cms.bool(False),
+    isttbar       = cms.bool(True),
     ak8chsInput   = cms.InputTag("selectedPatJetsAK8PFCHS"),   
     ak8puppiInput = cms.InputTag("selectedPatJetsAK8PFPuppi"),
     ak8chsSubjetsInput   = cms.InputTag("selectedPatJetsAK8PFCHSSoftDropPacked","SubJets"),
@@ -190,7 +202,7 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
 
 
 process.TFileService = cms.Service("TFileService",
-      fileName = cms.string("treeTool.root"),
+      fileName = cms.string("treeTool_ttbar.root"),
       closeFileFast = cms.untracked.bool(True)
   )
 
