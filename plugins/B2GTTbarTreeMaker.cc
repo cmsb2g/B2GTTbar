@@ -280,6 +280,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Jet0SDsubjet1tau1                         ;
       Float_t Jet0SDsubjet1tau2                         ;
       Float_t Jet0SDsubjet1tau3                         ;
+      Float_t Jet0PuppiP                                ;
       Float_t Jet0PuppiPt                               ;
       Float_t Jet0PuppiEta                              ;
       Float_t Jet0PuppiPhi                              ;
@@ -341,6 +342,14 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Jet0CEF                                   ;
       Float_t Jet0MF                                    ;
       Float_t Jet0Mult                                  ;
+      Float_t Jet0PuppiCHF                              ;
+      Float_t Jet0PuppiNHF                              ;
+      Float_t Jet0PuppiCM                               ;
+      Float_t Jet0PuppiNM                               ;
+      Float_t Jet0PuppiNEF                              ;
+      Float_t Jet0PuppiCEF                              ;
+      Float_t Jet0PuppiMF                               ;
+      Float_t Jet0PuppiMult                             ;
       Float_t Jet0MassCorrFactor                        ;
       Float_t Jet0MassCorrFactorUp                      ;
       Float_t Jet0MassCorrFactorDn                      ;
@@ -475,6 +484,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Jet1SDsubjet1tau1                         ;
       Float_t Jet1SDsubjet1tau2                         ;
       Float_t Jet1SDsubjet1tau3                         ;
+      Float_t Jet1PuppiP                                ;
       Float_t Jet1PuppiPt                               ;
       Float_t Jet1PuppiEta                              ;
       Float_t Jet1PuppiPhi                              ;
@@ -536,6 +546,14 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Jet1CEF                                   ;
       Float_t Jet1MF                                    ;
       Float_t Jet1Mult                                  ;
+      Float_t Jet1PuppiCHF                              ;
+      Float_t Jet1PuppiNHF                              ;
+      Float_t Jet1PuppiCM                               ;
+      Float_t Jet1PuppiNM                               ;
+      Float_t Jet1PuppiNEF                              ;
+      Float_t Jet1PuppiCEF                              ;
+      Float_t Jet1PuppiMF                               ;
+      Float_t Jet1PuppiMult                             ;
       Float_t Jet1MassCorrFactor                        ;
       Float_t Jet1MassCorrFactorUp                      ;
       Float_t Jet1MassCorrFactorDn                      ;
@@ -727,6 +745,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t JetSDsubjet1tau1                       ;
       Float_t JetSDsubjet1tau2                       ;
       Float_t JetSDsubjet1tau3                       ;
+      Float_t JetPuppiP                              ;
       Float_t JetPuppiPt                             ;
       Float_t JetPuppiEta                            ;
       Float_t JetPuppiPhi                            ;
@@ -786,6 +805,14 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t JetCEF                                 ;
       Float_t JetMF                                  ;
       Float_t JetMult                                ;
+      Float_t JetPuppiCHF                            ;
+      Float_t JetPuppiNHF                            ;
+      Float_t JetPuppiCM                             ;
+      Float_t JetPuppiNM                             ;
+      Float_t JetPuppiNEF                            ;
+      Float_t JetPuppiCEF                            ;
+      Float_t JetPuppiMF                             ;
+      Float_t JetPuppiMult                           ;
       Float_t JetMassCorrFactor                      ;
       Float_t JetMassCorrFactorUp                    ;
       Float_t JetMassCorrFactorDn                    ;
@@ -1058,6 +1085,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("Jet0SDsubjet1tau2"                     , & Jet0SDsubjet1tau2                  ,    "Jet0SDsubjet1tau2/F"                       );
   TreeAllHad->Branch("Jet0SDsubjet1tau3"                     , & Jet0SDsubjet1tau3                  ,    "Jet0SDsubjet1tau3/F"                       );  
   TreeAllHad->Branch("Jet0SDsubjet1bdisc"                    , & Jet0SDsubjet1bdisc                 ,    "Jet0SDsubjet1bdisc/F"                      );                                                                                    
+  TreeAllHad->Branch("Jet0PuppiP"                            , & Jet0PuppiP                         ,    "Jet0PuppiP/F"                              );                                    
   TreeAllHad->Branch("Jet0PuppiPt"                           , & Jet0PuppiPt                        ,    "Jet0PuppiPt/F"                             );                                    
   TreeAllHad->Branch("Jet0PuppiEta"                          , & Jet0PuppiEta                       ,    "Jet0PuppiEta/F"                            );                                     
   TreeAllHad->Branch("Jet0PuppiPhi"                          , & Jet0PuppiPhi                       ,    "Jet0PuppiPhi/F"                            );                                     
@@ -1119,6 +1147,17 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("Jet0CEF"                               , & Jet0CEF                            ,    "Jet0CEF/F"                                 );                                
   TreeAllHad->Branch("Jet0MF"                                , & Jet0MF                             ,    "Jet0MF/F"                                  );                               
   TreeAllHad->Branch("Jet0Mult"                              , & Jet0Mult                           ,    "Jet0Mult/F"                                );                                 
+
+
+  TreeAllHad->Branch("Jet0PuppiCHF"                         , & Jet0PuppiCHF                        ,    "Jet0PuppiCHF/F"                            );                                
+  TreeAllHad->Branch("Jet0PuppiNHF"                         , & Jet0PuppiNHF                        ,    "Jet0PuppiNHF/F"                            );                                
+  TreeAllHad->Branch("Jet0PuppiCM"                          , & Jet0PuppiCM                         ,    "Jet0PuppiCM/F"                             );                               
+  TreeAllHad->Branch("Jet0PuppiNM"                          , & Jet0PuppiNM                         ,    "Jet0PuppiNM/F"                             );                               
+  TreeAllHad->Branch("Jet0PuppiNEF"                         , & Jet0PuppiNEF                        ,    "Jet0PuppiNEF/F"                            );                                
+  TreeAllHad->Branch("Jet0PuppiCEF"                         , & Jet0PuppiCEF                        ,    "Jet0PuppiCEF/F"                            );                                
+  TreeAllHad->Branch("Jet0PuppiMF"                          , & Jet0PuppiMF                         ,    "Jet0PuppiMF/F"                             );                               
+  TreeAllHad->Branch("Jet0PuppiMult"                        , & Jet0PuppiMult                       ,    "Jet0PuppiMult/F"                           );  
+
   TreeAllHad->Branch("Jet0MassCorrFactor"                    , & Jet0MassCorrFactor                 ,    "Jet0MassCorrFactor/F"                      );                                           
   TreeAllHad->Branch("Jet0MassCorrFactorUp"                  , & Jet0MassCorrFactorUp               ,    "Jet0MassCorrFactorUp/F"                    );                                             
   TreeAllHad->Branch("Jet0MassCorrFactorDn"                  , & Jet0MassCorrFactorDn               ,    "Jet0MassCorrFactorDn/F"                    );                                             
@@ -1255,6 +1294,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("Jet1SDsubjet1tau2"                     , & Jet1SDsubjet1tau2                  ,    "Jet1SDsubjet1tau2/F"                       );
   TreeAllHad->Branch("Jet1SDsubjet1tau3"                     , & Jet1SDsubjet1tau3                  ,    "Jet1SDsubjet1tau3/F"                       ); 
   TreeAllHad->Branch("Jet1SDsubjet1bdisc"                    , & Jet1SDsubjet1bdisc                 ,    "Jet1SDsubjet1bdisc/F"                      );                                                                                    
+  TreeAllHad->Branch("Jet1PuppiP"                            , & Jet1PuppiP                         ,    "Jet1PuppiP/F"                              );                                    
   TreeAllHad->Branch("Jet1PuppiPt"                           , & Jet1PuppiPt                        ,    "Jet1PuppiPt/F"                             );                                    
   TreeAllHad->Branch("Jet1PuppiEta"                          , & Jet1PuppiEta                       ,    "Jet1PuppiEta/F"                            );                                     
   TreeAllHad->Branch("Jet1PuppiPhi"                          , & Jet1PuppiPhi                       ,    "Jet1PuppiPhi/F"                            );                                     
@@ -1315,7 +1355,15 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("Jet1NEF"                               , & Jet1NEF                            ,    "Jet1NEF/F"                                 );                                
   TreeAllHad->Branch("Jet1CEF"                               , & Jet1CEF                            ,    "Jet1CEF/F"                                 );                                
   TreeAllHad->Branch("Jet1MF"                                , & Jet1MF                             ,    "Jet1MF/F"                                  );                               
-  TreeAllHad->Branch("Jet1Mult"                              , & Jet1Mult                           ,    "Jet1Mult/F"                                );                                 
+  TreeAllHad->Branch("Jet1Mult"                              , & Jet1Mult                           ,    "Jet1Mult/F"                                ); 
+  TreeAllHad->Branch("Jet1PuppiCHF"                          , & Jet1PuppiCHF                       ,    "Jet1PuppiCHF/F"                            );                                
+  TreeAllHad->Branch("Jet1PuppiNHF"                          , & Jet1PuppiNHF                       ,    "Jet1PuppiNHF/F"                            );                                
+  TreeAllHad->Branch("Jet1PuppiCM"                           , & Jet1PuppiCM                        ,    "Jet1PuppiCM/F"                             );                               
+  TreeAllHad->Branch("Jet1PuppiNM"                           , & Jet1PuppiNM                        ,    "Jet1PuppiNM/F"                             );                               
+  TreeAllHad->Branch("Jet1PuppiNEF"                          , & Jet1PuppiNEF                       ,    "Jet1PuppiNEF/F"                            );                                
+  TreeAllHad->Branch("Jet1PuppiCEF"                          , & Jet1PuppiCEF                       ,    "Jet1PuppiCEF/F"                            );                                
+  TreeAllHad->Branch("Jet1PuppiMF"                           , & Jet1PuppiMF                        ,    "Jet1PuppiMF/F"                             );                               
+  TreeAllHad->Branch("Jet1PuppiMult"                         , & Jet1PuppiMult                      ,    "Jet1PuppiMult/F"                           );                                     
   TreeAllHad->Branch("Jet1MassCorrFactor"                    , & Jet1MassCorrFactor                 ,    "Jet1MassCorrFactor/F"                      );                                           
   TreeAllHad->Branch("Jet1MassCorrFactorUp"                  , & Jet1MassCorrFactorUp               ,    "Jet1MassCorrFactorUp/F"                    );                                             
   TreeAllHad->Branch("Jet1MassCorrFactorDn"                  , & Jet1MassCorrFactorDn               ,    "Jet1MassCorrFactorDn/F"                    );                                             
@@ -1515,6 +1563,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("JetSDsubjet1tau3"                     , & JetSDsubjet1tau3                  ,    "JetSDsubjet1tau3/F"                       );                                           
   TreeSemiLept->Branch("JetSDsubjet1bdisc"                    , & JetSDsubjet1bdisc                 ,    "JetSDsubjet1bdisc/F"                      );                                     
 
+  TreeSemiLept->Branch("JetPuppiP"                            , & JetPuppiP                         ,    "JetPuppiP/F"                              );                                    
   TreeSemiLept->Branch("JetPuppiPt"                           , & JetPuppiPt                        ,    "JetPuppiPt/F"                             );                                    
   TreeSemiLept->Branch("JetPuppiEta"                          , & JetPuppiEta                       ,    "JetPuppiEta/F"                            );                                     
   TreeSemiLept->Branch("JetPuppiPhi"                          , & JetPuppiPhi                       ,    "JetPuppiPhi/F"                            );                                     
@@ -1580,7 +1629,15 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("JetNEF"                               , & JetNEF                            ,    "JetNEF/F"                                 );                                
   TreeSemiLept->Branch("JetCEF"                               , & JetCEF                            ,    "JetCEF/F"                                 );                                
   TreeSemiLept->Branch("JetMF"                                , & JetMF                             ,    "JetMF/F"                                  );                               
-  TreeSemiLept->Branch("JetMult"                              , & JetMult                           ,    "JetMult/F"                                );                                 
+  TreeSemiLept->Branch("JetMult"                              , & JetMult                           ,    "JetMult/F"                                );
+  TreeSemiLept->Branch("JetPuppiCHF"                          , & JetPuppiCHF                       ,    "JetPuppiCHF/F"                            );                                
+  TreeSemiLept->Branch("JetPuppiNHF"                          , & JetPuppiNHF                       ,    "JetPuppiNHF/F"                            );                                
+  TreeSemiLept->Branch("JetPuppiCM"                           , & JetPuppiCM                        ,    "JetPuppiCM/F"                             );                               
+  TreeSemiLept->Branch("JetPuppiNM"                           , & JetPuppiNM                        ,    "JetPuppiNM/F"                             );                               
+  TreeSemiLept->Branch("JetPuppiNEF"                          , & JetPuppiNEF                       ,    "JetPuppiNEF/F"                            );                                
+  TreeSemiLept->Branch("JetPuppiCEF"                          , & JetPuppiCEF                       ,    "JetPuppiCEF/F"                            );                                
+  TreeSemiLept->Branch("JetPuppiMF"                           , & JetPuppiMF                        ,    "JetPuppiMF/F"                             );                               
+  TreeSemiLept->Branch("JetPuppiMult"                         , & JetPuppiMult                      ,    "JetPuppiMult/F"                           );                                  
   TreeSemiLept->Branch("JetMassCorrFactor"                    , & JetMassCorrFactor                 ,    "JetMassCorrFactor/F"                      );                                           
   TreeSemiLept->Branch("JetMassCorrFactorUp"                  , & JetMassCorrFactorUp               ,    "JetMassCorrFactorUp/F"                    );                                             
   TreeSemiLept->Branch("JetMassCorrFactorDn"                  , & JetMassCorrFactorDn               ,    "JetMassCorrFactorDn/F"                    );                                             
@@ -3085,6 +3142,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     double tau21        = 99;
     double tau32        = 99;
 
+    double puppi_p              = -1;     
     double puppi_pt             = -1;     
     double puppi_mass           = -1;     
     double puppi_eta            = -1;     
@@ -3096,6 +3154,15 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     // double puppi_prunedMass     = -1;     
     // double puppi_trimmedMass    = -1;     
     // double puppi_softDropMass   = -1;     
+
+    double puppi_CHF    = -1;
+    double puppi_NHF    = -1;
+    double puppi_CM     = -1;
+    double puppi_NM     = -1;
+    double puppi_NEF    = -1;
+    double puppi_CEF    = -1;
+    double puppi_MF     = -1;
+    double puppi_Mult   = -1;
  
     if (!useToolbox_){
       puppi_pt           = ijet.userFloat("ak8PFJetsPuppiValueMap:pt");
@@ -3111,6 +3178,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if (ipup.pt()<180) break;    
         double deltaRpup = deltaR(ijet.eta(), ijet.phi(), ipup.eta(), ipup.phi() );
         if (deltaRpup<0.8){
+          puppi_p            = ipup.p();
           puppi_pt           = ipup.pt();
           puppi_mass         = ipup.mass();
           puppi_eta          = ipup.eta();
@@ -3122,6 +3190,16 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           puppi_tau2         = ipup.userFloat("NjettinessAK8Puppi:tau2");
           puppi_tau3         = ipup.userFloat("NjettinessAK8Puppi:tau3");
           puppi_tau4         = ipup.userFloat("NjettinessAK8Puppi:tau4");
+
+          puppi_CHF          = ipup.chargedHadronEnergy() / ipup.correctedP4(0).E()  ;  
+          puppi_NHF          = ipup.neutralHadronEnergy() / ipup.correctedP4(0).E()  ;  
+          puppi_CM           = ipup.chargedMultiplicity()  ;                  
+          puppi_NM           = ipup.neutralMultiplicity()  ;                  
+          puppi_NEF          = ipup.neutralEmEnergy() / ipup.correctedP4(0).E()  ;      
+          puppi_CEF          = ipup.chargedEmEnergy() / ipup.correctedP4(0).E()  ;      
+          puppi_MF           = ipup.muonEnergy() / ipup.correctedP4(0).E()  ;           
+          puppi_Mult         = ipup.numberOfDaughters() ;   
+
         }
       }
     }
@@ -3900,6 +3978,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet0SDsubjet1tau2                      = sub1_tau2 ;  
       Jet0SDsubjet1tau3                      = sub1_tau3 ; 
 
+      Jet0PuppiP                             = puppi_p    ;                  
       Jet0PuppiPt                            = puppi_pt   ;                  
       Jet0PuppiEta                           = puppi_eta  ;                   
       Jet0PuppiPhi                           = puppi_phi  ;                  
@@ -3960,6 +4039,15 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet0CEF                                = ijet.chargedEmEnergy() / uncorrJet.E()  ;                          
       Jet0MF                                 = ijet.muonEnergy() / uncorrJet.E()  ;                         
       Jet0Mult                               = ijet.numberOfDaughters() ;   
+
+      Jet0PuppiCHF                                = puppi_CHF   ; 
+      Jet0PuppiNHF                                = puppi_NHF   ; 
+      Jet0PuppiCM                                 = puppi_CM    ; 
+      Jet0PuppiNM                                 = puppi_NM    ; 
+      Jet0PuppiNEF                                = puppi_NEF   ; 
+      Jet0PuppiCEF                                = puppi_CEF   ; 
+      Jet0PuppiMF                                 = puppi_MF    ; 
+      Jet0PuppiMult                               = puppi_Mult  ; 
 
       Jet0MassCorrFactor                     = corr_factor_L23res ;        
       Jet0MassCorrFactorUp                   = corrUp_L23 ;
@@ -4150,6 +4238,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet1SDsubjet1tau2                      = sub1_tau2 ;  
       Jet1SDsubjet1tau3                      = sub1_tau3 ;
 
+      Jet1PuppiP                             = puppi_p    ;                  
       Jet1PuppiPt                            = puppi_pt   ;                  
       Jet1PuppiEta                           = puppi_eta  ;                   
       Jet1PuppiPhi                           = puppi_phi  ;                  
@@ -4212,6 +4301,17 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet1CEF                                = ijet.chargedEmEnergy() / uncorrJet.E()      ;                          
       Jet1MF                                 = ijet.muonEnergy() / uncorrJet.E()           ;                         
       Jet1Mult                               = ijet.numberOfDaughters()                    ;   
+
+
+      Jet1PuppiCHF                                = puppi_CHF   ; 
+      Jet1PuppiNHF                                = puppi_NHF   ; 
+      Jet1PuppiCM                                 = puppi_CM    ; 
+      Jet1PuppiNM                                 = puppi_NM    ; 
+      Jet1PuppiNEF                                = puppi_NEF   ; 
+      Jet1PuppiCEF                                = puppi_CEF   ; 
+      Jet1PuppiMF                                 = puppi_MF    ; 
+      Jet1PuppiMult                               = puppi_Mult  ; 
+
 
       Jet1MassCorrFactor                     = corr_factor_L23res ;        
       Jet1MassCorrFactorUp                   = corrUp_L23 ;
@@ -4415,6 +4515,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
       AK8jet_SemiLept_P4corr.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
 
+      JetPuppiP                             = puppi_p    ;                  
       JetPuppiPt                            = puppi_pt   ;                  
       JetPuppiEta                           = puppi_eta  ;                   
       JetPuppiPhi                           = puppi_phi  ;                  
@@ -4477,6 +4578,16 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       JetCEF                                = ijet.chargedEmEnergy() / uncorrJet.E()  ;                          
       JetMF                                 = ijet.muonEnergy() / uncorrJet.E()  ;                         
       JetMult                               = ijet.numberOfDaughters() ;   
+
+
+      JetPuppiCHF                                = puppi_CHF   ; 
+      JetPuppiNHF                                = puppi_NHF   ; 
+      JetPuppiCM                                 = puppi_CM    ; 
+      JetPuppiNM                                 = puppi_NM    ; 
+      JetPuppiNEF                                = puppi_NEF   ; 
+      JetPuppiCEF                                = puppi_CEF   ; 
+      JetPuppiMF                                 = puppi_MF    ; 
+      JetPuppiMult                               = puppi_Mult  ; 
 
       JetMassCorrFactor                     = corr_factor_L23res ;        
       JetMassCorrFactorUp                   = corrUp_L23 ;
@@ -4731,7 +4842,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   LeptonPt    = lep0_p4.Perp() ;  
   LeptonEta   = lep0_p4.Eta()  ; 
   LeptonMass  = lep0_p4.M() ; 
-  if (count_mu==1 && count_el==0) LeptonIsMu  = 1  ; 
+
+
+  if (count_mu==1 && count_el==0)      LeptonIsMu  = 1  ; 
   else if (count_mu==0 && count_el==1) LeptonIsMu  = 0  ; 
   else LeptonIsMu =0;
 
