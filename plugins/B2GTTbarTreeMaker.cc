@@ -90,6 +90,8 @@
 
 // LHE weights
 #include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
+#include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
+#include "FWCore/ParameterSet/interface/ParameterSet.h"
 
 // Utilities
 #include "DataFormats/Math/interface/deltaR.h"
@@ -100,6 +102,19 @@
 #include "TH2.h"
 #include "TTree.h"
 #include "TLorentzVector.h"
+
+//RS gluon PDF weights
+namespace LHAPDF {
+  void initPDFSet(int nset, const std::string& filename, int member=0);
+  int numberPDF(int nset);
+  void usePDFMember(int nset, int member);
+  double xfx(int nset, double x, double Q, int fl);
+  double getXmin(int nset, int member);
+  double getXmax(int nset, int member);
+  double getQ2min(int nset, int member);
+  double getQ2max(int nset, int member);
+  void extrapolate(bool extrapolate=true);
+}
 
 //
 // class declaration
@@ -138,8 +153,9 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       edm::EDGetTokenT<pat::MuonCollection> muonToken_;
       edm::EDGetTokenT<pat::ElectronCollection> electronToken_;
       edm::EDGetTokenT<pat::METCollection> metToken_;
-      edm::EDGetTokenT<std::vector<PileupSummaryInfo>> pileupInfoToken_;
+      edm::EDGetTokenT<std::vector<PileupSummaryInfo> > pileupInfoToken_;
       edm::EDGetTokenT<LHEEventProduct> theSrc_;
+      edm::EDGetTokenT<GenEventInfoProduct> pdfToken_;
       
       bool useToolbox_;
       bool verbose_;
@@ -147,6 +163,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       bool runGenLoop_;
       bool isZprime_;
       bool isttbar_;
+      bool isRSG_;
       std::vector<std::string>  jecPayloadsAK4chs_;
       std::vector<std::string>  jecPayloadsAK8chs_;
       std::vector<std::string>  jecPayloadsAK4pup_;
@@ -968,12 +985,14 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
     metToken_(consumes<pat::METCollection>(edm::InputTag("slimmedMETs"))),
     pileupInfoToken_(consumes<std::vector<PileupSummaryInfo>>(edm::InputTag("slimmedAddPileupInfo"))),
     theSrc_(consumes<LHEEventProduct>(iConfig.getParameter<edm::InputTag>("theSrc"))),
+    pdfToken_(consumes<GenEventInfoProduct>(edm::InputTag("generator"))),
     useToolbox_(iConfig.getParameter<bool>  ("useToolbox")),
     verbose_(iConfig.getParameter<bool>  ("verbose")),
     verboseGen_(iConfig.getParameter<bool>  ("verboseGen")),
     runGenLoop_(iConfig.getParameter<bool>  ("runGenLoop")),
     isZprime_(iConfig.getParameter<bool>  ("isZprime")),
     isttbar_(iConfig.getParameter<bool>  ("isttbar")),
+    isRSG_(iConfig.getParameter<bool>  ("isRSG")),
     jecPayloadsAK4chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4chs")),
     jecPayloadsAK8chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK8chs")),
     jecPayloadsAK4pup_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4pup")),
@@ -982,7 +1001,11 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
 {
   std::cout<<"B2GTTbarTreeMaker::B2GTTbarTreeMaker"<<std::endl;
 
+  //RS gluon PDF weights
+  LHAPDF::initPDFSet(1, "NNPDF30_lo_as_0130");
+
   usesResource("TFileService");
+
   edm::Service<TFileService> fs;
 
   h_ak8puppi_softDropMass            =  fs->make<TH1D>("h_ak8puppi_softDropMass"           ,"",200,0,400);
@@ -1801,7 +1824,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   using namespace std;
   using namespace reco;
   using namespace pat;
-
+  using namespace LHAPDF;
   
   if (verbose_) {
     cout<<"----------------------------------------------------------------------------------------------------------"<<endl;
@@ -2521,7 +2544,53 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         NNPDF3wgt_down = 1.0 - NNPDF3wgtRMS;
       }
     }
-  } 
+  }
+
+  else if (isRSG_){
+    edm::Handle<GenEventInfoProduct> pdfstuff;
+    iEvent.getByToken(pdfToken_, pdfstuff);
+
+    LHAPDF::usePDFMember(1,0);
+
+    float q = pdfstuff->pdf()->scalePDF;
+
+    int id1 = pdfstuff->pdf()->id.first;
+    double x1 = pdfstuff->pdf()->x.first;
+    //double pdf1 = pdfstuff->pdf()->xPDF.first;                                                                                           
+
+    int id2 = pdfstuff->pdf()->id.second;
+    double x2 = pdfstuff->pdf()->x.second;
+    //double pdf2 = pdfstuff->pdf()->xPDF.second;                                                                                          
+
+    double xpdf1 = LHAPDF::xfx(1, x1, q, id1);
+    double xpdf2 = LHAPDF::xfx(1, x2, q, id2);
+    double w0 = xpdf1 * xpdf2;
+    double sumsq = 0.0;
+    for(int i=1; i <=100; ++i){
+      LHAPDF::usePDFMember(1,i);
+      double xpdf1_new = LHAPDF::xfx(1, x1, q, id1);
+      double xpdf2_new = LHAPDF::xfx(1, x2, q, id2);
+      double weight = xpdf1_new * xpdf2_new / w0;
+      sumsq += ( weight - w0 ) * (weight - w0);
+    }
+
+
+    double rmsWt = sqrt( (1./99.)*sumsq );
+
+    if ( rmsWt > 1.0){
+
+      NNPDF3wgt_up = rmsWt;
+      NNPDF3wgt_down = 2 - rmsWt;
+    }
+
+    if (rmsWt < 1.0){
+
+      NNPDF3wgt_down = rmsWt;
+      NNPDF3wgt_up = 2 - rmsWt;
+    }
+    
+  }
+
 
   // 
   // 8888888b.  888               
@@ -4900,7 +4969,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 void 
 B2GTTbarTreeMaker::beginJob()
 {
-
   fPUweight = new TFile("PUweight20160908.root") ;
   hPUweight      = (TH1D*) fPUweight->Get("PUweight_true");
   hPUweight_MBup = (TH1D*) fPUweight->Get("PUweight_true_MBup");

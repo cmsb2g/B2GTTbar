@@ -11,4 +11,5 @@
   <use   name="DataFormats/PatCandidates"/>
   <use   name="root"/>
   <use name="JetMETCorrections/Modules"/>
+  <use name="lhapdf"/>
 </library>

@@ -1,3 +1,5 @@
+#
+
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("Ana")
@@ -16,12 +18,13 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 
 #----------------------------------------------------------------------------------------
 ### INPUT
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-      'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/0064B539-803A-E611-BDEA-002590D0B060.root',
+       'root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/RSGluonToTT_M-1500_TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/70000/5A55B211-4938-E611-90DE-F832E4CC4EB1.root'
+      #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/0064B539-803A-E611-BDEA-002590D0B060.root',
       #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/008796C3-B53A-E611-8853-0025905C42A6.root',
       #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/00E165A2-C63A-E611-AA23-141877344134.root',
       #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/00FBAFC2-B53A-E611-9F5D-0025904C641C.root',
@@ -144,7 +147,8 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     verboseGen    = cms.bool(False),
     runGenLoop    = cms.bool(True),
     isZprime      = cms.bool(False),
-    isttbar       = cms.bool(True),
+    isttbar       = cms.bool(False),
+    isRSG         = cms.bool(True),
     ak8chsInput   = cms.InputTag("selectedPatJetsAK8PFCHS"),   
     ak8puppiInput = cms.InputTag("selectedPatJetsAK8PFPuppi"),
     ak8chsSubjetsInput   = cms.InputTag("selectedPatJetsAK8PFCHSSoftDropPacked","SubJets"),
@@ -202,7 +206,7 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
 
 
 process.TFileService = cms.Service("TFileService",
-      fileName = cms.string("treeTool_ttbar.root"),
+      fileName = cms.string("treeTool_RSG.root"),
       closeFileFast = cms.untracked.bool(True)
   )
 
