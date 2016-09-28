@@ -55,6 +55,8 @@ nev_wjets = [
     ]
 
 
+ROOT.gStyle.SetOptStat(000000)
+
 
 ttbarfile = ROOT.TFile('ttbar_outfile.root')
 datafile = ROOT.TFile('singlemu_run2016.root')
@@ -69,51 +71,66 @@ wjetsfiles = [
     ROOT.TFile('wjets2500toinf_outfile.root'),
     ]
 
-
-httbar = ttbarfile.Get(options.hist)
-httbar.Sumw2()
-httbar.Scale( xs_ttbar / nev_ttbar * lumi ) 
-httbar.SetFillColor(ROOT.kGreen + 2)
-
-
-hdata = datafile.Get(options.hist)
-hdata.SetMarkerStyle(20)
-
-cwjets = ROOT.TCanvas("cwjets", "cwjets")
-hwjets_list = []
-hwjets = None
-hwjets_stack = ROOT.THStack("hwjets_stack", "hwjets_stack")
-
 wjets_colors = [ 
-            ROOT.kWhite,ROOT.kRed - 9, ROOT.kRed - 7, ROOT.kRed - 4, ROOT.kRed, ROOT.kRed +1, ROOT.kRed +2   ]
+    ROOT.kWhite,ROOT.kRed - 9, ROOT.kRed - 7, ROOT.kRed - 4, ROOT.kRed, ROOT.kRed +1, ROOT.kRed +2   ]
 
-for iwjet in xrange(len(wjetsfiles)) :
-    htemp = wjetsfiles[iwjet].Get(options.hist)
-    htemp.Scale( xs_wjets[iwjet] / nev_wjets[iwjet] * lumi )
-    hwjets_list.append( htemp )
-    htemp.SetFillColor( wjets_colors[iwjet] )
-    if iwjet == 0 :
-        hwjets = htemp.Clone('hwjets')
-    else :
-        hwjets.Add( htemp )
-    hwjets_stack.Add( htemp )
-hwjets_stack.Draw("hist")
 
+objs = []
+
+for istage in xrange(11) : 
+    httbar = ttbarfile.Get(options.hist + str(istage))
+    httbar.Sumw2()
+    httbar.Scale( xs_ttbar / nev_ttbar * lumi ) 
+    httbar.SetFillColor(ROOT.kGreen + 2)
+
+
+    hdata = datafile.Get(options.hist + str(istage))
+    hdata.SetMarkerStyle(20)
+
+
+    hwjets_list = []
+    hwjets = None
+    hwjets_stack = ROOT.THStack("hwjets_stack", "hwjets_stack")
+
+    for iwjet in xrange(len(wjetsfiles)) :
+        htemp = wjetsfiles[iwjet].Get(options.hist + str(istage))
+        htemp.Scale( xs_wjets[iwjet] / nev_wjets[iwjet] * lumi )
+        hwjets_list.append( htemp )
+        htemp.SetFillColor( wjets_colors[iwjet] )
+        if iwjet == 0 :
+            hwjets = htemp.Clone('hwjets')
+        else :
+            hwjets.Add( htemp )
+        hwjets_stack.Add( htemp )
+    #hwjets_stack.Draw("hist")
+
+
+    hwjets.SetFillColor( ROOT.kRed )
+
+    hwjets.Rebin(10)
+    httbar.Rebin(10)
+    hdata.Rebin(10)
+
+    hstack = ROOT.THStack("bkgs", "")
+    hstack.Add( hwjets )
+    hstack.Add( httbar )
+
+
+    c1 = ROOT.TCanvas("c" + str(istage), "c" + str(istage) )
+    hdata.Draw("e")
+    hstack.Draw("hist same")
+    hdata.Draw("e same")
+
+    leg = ROOT.TLegend(0.8, 0.8, 1.0, 1.0)
+    leg.SetFillColor(0)
+    leg.SetBorderSize(0)
+    leg.AddEntry( hdata, 'Data', 'p')
+    leg.AddEntry( httbar, 't#bar{t}', 'f')
+    leg.AddEntry( hwjets, 'W+jets', 'f')
+    leg.Draw()
     
-hwjets.SetFillColor( ROOT.kRed )
+    c1.Update()
 
-hwjets.Rebin(10)
-httbar.Rebin(10)
-hdata.Rebin(10)
-    
-hstack = ROOT.THStack("bkgs", "")
-hstack.Add( hwjets )
-hstack.Add( httbar )
-
-
-c1 = ROOT.TCanvas("c1", "c1")
-hdata.Draw("e")
-hstack.Draw("hist same")
-hdata.Draw("e same")
-
-c1.Update()
+    c1.Print("plot_" + options.hist + str(istage) + ".pdf", "pdf")
+    c1.Print("plot_" + options.hist + str(istage) + ".png", "png")
+    objs.append( [hdata, httbar, hwjets, c1, hstack, leg] )
