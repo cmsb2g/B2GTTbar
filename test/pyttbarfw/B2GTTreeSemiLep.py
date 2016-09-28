@@ -255,6 +255,7 @@ class B2GTTreeSemiLep( ) :
             'LeptonIsMu':'i',
             'MuTight':'i',
             'MuMedium':'i',
+            'MuIso':'f',
             'DeltaRJetLep':'f',
             'DeltaPhiJetLep':'f',
           }
