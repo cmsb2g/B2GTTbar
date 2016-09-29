@@ -75,13 +75,13 @@ class B2GSelectSemiLepTTbar_Iso2D( ) :
         else :
             self.passed[1] = True
 
-        if not ( self.tree.LeptonIsMu[0] == 1 and self.leptonP4.Perp() > 45. and abs(self.leptonP4.Eta()) < 2.1 and self.tree.MuTight[0] ) : return self.passed
+        if not ( self.tree.LeptonIsMu[0] == 1 and self.leptonP4.Perp() > 50. and abs(self.leptonP4.Eta()) < 2.1 and self.tree.MuTight[0] ) : return self.passed
         self.passed[2] = True
         
-        if not (self.nuP4.Perp() > 40.) : return self.passed
+        if not (self.nuP4.Perp() > 50.) : return self.passed
         self.passed[3] = True
         
-        if not ( self.ak4Jet.Perp() > 30. and abs(self.ak4Jet.Eta()) < 2.4 and (self.tree.DeltaRJetLep[0] > 0.4 or self.tree.PtRel[0] > 40. ) ) : return self.passed
+        if not ( self.ak4Jet.Perp() > 50. and abs(self.ak4Jet.Eta()) < 2.4 and (self.tree.DeltaRJetLep[0] > 0.4 or self.tree.PtRel[0] > 20. ) ) : return self.passed
         self.passed[4] = True
         
         if not ( (self.leptonP4 + self.nuP4).Perp() > 200. ) : return self.passed
