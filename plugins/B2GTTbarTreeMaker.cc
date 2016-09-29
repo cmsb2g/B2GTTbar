@@ -2198,7 +2198,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       if (verbose_) cout<<"try to find "<< trigsToRun[j]<<endl;
       for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
         string name = names.triggerName(i);
-        if (verbose_) cout<<" "<<name<<endl;
+        //if (verbose_) cout<<" "<<name<<endl;
         std::size_t found = name.find( trigsToRun[j] );
         // cout<<" Check: "<<trigsToRun[j]  <<" = "<<name<< " ?" <<found<<endl;
         if ( found !=std::string::npos ) {
@@ -2626,6 +2626,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   bool mu0_isMedium=false;
   double mu0_iso04=0;
   int count_mu=0;
+
+  std::vector<reco::CandidatePtr> muFootprint;
+
   for (const pat::Muon &mu : *muons) {
       if (mu.pt() < 30 || !mu.isLooseMuon() || fabs( mu.eta() ) > 2.1) continue;
 
@@ -2653,6 +2656,12 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         double iso04 = (sumChargedHadronPt+TMath::Max(0.,sumNeutralHadronPt+sumPhotonPt-0.5*sumPUPt))/pt;
         mu0_iso04 = iso04;
 
+	for (unsigned int i = 0, n = mu.numberOfSourceCandidatePtrs(); i < n; ++i) {
+	  muFootprint.push_back(mu.sourceCandidatePtr(i));
+	}
+  
+
+
         if (verbose_) cout<<"Muon pT "<<mu.pt()<<" iso04 "<<iso04<<endl;
       } 
       // printf("muon with pt %4.1f, dz(PV) %+5.3f, POG loose id %d, tight id %d\n",
@@ -2679,6 +2688,11 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   Float_t el0_absiso_EA        =0;
   Float_t el0_relIsoWithEA     =0;
   int count_el=0;
+
+  std::vector<reco::CandidatePtr> elFootprint;
+
+
+
   for (const pat::Electron &el : *electrons) {
       if (el.pt() < 50 || fabs(el.eta())>2.4 ) continue;
 
@@ -2750,9 +2764,15 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         el0_absiso_EA        = absiso_EA;
         el0_relIsoWithEA     = relIsoWithEA;
 
+	for (unsigned int i = 0, n = el.numberOfSourceCandidatePtrs(); i < n; ++i) {
+	  elFootprint.push_back(el.sourceCandidatePtr(i));
+	}
+
+
         if (verbose_) cout<<"Electron pT "<<el.pt()<<endl;
       } 
       count_el++;
+
       //printf("elec with pt %4.1f, supercluster eta %+5.3f, sigmaIetaIeta %.3f (%.3f with full5x5 shower shapes), lost hits %d, pass conv veto %d\n",
       //              el.pt(), el.superCluster()->eta(), el.sigmaIetaIeta(), el.full5x5_sigmaIetaIeta(), el.gsfTrack()->trackerExpectedHitsInner().numberOfLostHits(), el.passConversionVeto());
   }
@@ -2830,7 +2850,39 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   for (const pat::Jet &ijet : *AK4MINI) {  
     
-    if (ijet.pt()<30 || fabs(ijet.eta())>2.4) continue; 
+    if (ijet.pt()<15 || fabs(ijet.eta())>3.0) continue; 
+
+
+
+    //------------------------------------
+    // Remove leptons from AK4 jets
+    //------------------------------------    
+    auto uncorrJetObj = ijet.correctedJet(0);
+    reco::Candidate::LorentzVector uncorrJet = ijet.correctedP4(0);
+    // now loop on pf candidates
+    //// Jet constituent indices for lepton matching
+    std::vector<int> constituentIndices;
+    auto jetConstituents = uncorrJetObj.daughterPtrVector();
+    if ( verbose_ ) cout << "debug: uncorr jet before lepton cleaning pt,eta,phi,m = " << uncorrJet.pt() << ", " << uncorrJet.eta() << ", " << uncorrJet.phi() << ", " << uncorrJet.mass() << endl;
+    for ( auto & constituent : jetConstituents ) {
+
+      // If this constituent is part of a muon, remove the constituent's four vector
+      if ( std::find(muFootprint.begin(), muFootprint.end(), constituent ) != muFootprint.end() ) {
+	uncorrJet -= constituent->p4();
+	if ( verbose_ ) cout << "debug: REMOVED part of muon" << endl;
+      }
+      // If this constituent is part of an electron, remove the constituent's four vector
+      if ( std::find(elFootprint.begin(), elFootprint.end(), constituent ) != elFootprint.end() ) {
+	uncorrJet -= constituent->p4();
+	if ( verbose_ ) cout << "debug: REMOVED part of electron" << endl;
+      }
+
+    }
+    if ( verbose_ ) cout << "debug: uncorr jet after lepton cleaning pt,eta,phi,m = " << uncorrJet.pt() << ", " << uncorrJet.eta() << ", " << uncorrJet.phi() << ", " << uncorrJet.mass() << endl;
+
+    
+
+
 
     //------------------------------------
     // Noise jet ID
@@ -2860,7 +2912,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     //------------------------------------
     // AK4CHS JEC correction 
     //------------------------------------
-    reco::Candidate::LorentzVector uncorrJet = ijet.correctedP4(0);
     JetCorrectorAK4chs->setJetEta( uncorrJet.eta() );
     JetCorrectorAK4chs->setJetPt ( uncorrJet.pt() );
     JetCorrectorAK4chs->setJetE  ( uncorrJet.energy() );
@@ -2951,7 +3002,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     //------------------------------------ 
     double deltaRlep = deltaR(corrJet.eta(), corrJet.phi(), lep0_p4.Eta(), lep0_p4.Phi() );
 
-    if (pt>40 && fabs(eta)<2.4 && goodJet_looseJetID){
+    if (pt>15 && fabs(eta)<3.0 && goodJet_looseJetID){
       if (deltaRlep<AK4_dRMinLep){
         AK4_dRMinLep = deltaRlep;
         AK4_dRMinLep_p4.SetPtEtaPhiM( pt, eta, phi, mass );
@@ -2964,7 +3015,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     //------------------------------------
     // Find Loose b-tagged AK4 jet closest to lepton
     //------------------------------------ 
-    if (pt>40 && fabs(eta)<2.4 && goodJet_looseJetID && bdisc>0.460 ){
+    if (pt>15. && fabs(eta)<3.0 && goodJet_looseJetID && bdisc>0.460 ){
       if (deltaRlep<AK4_btagged_dRMinLep){
         AK4_btagged_dRMinLep = deltaRlep;
         AK4_btagged_dRMinLep_p4.SetPtEtaPhiM( pt, eta, phi, mass );
@@ -2976,7 +3027,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     // Check if there is a b-tagged AK4 jet in the lepton hemisphere
     //------------------------------------ 
     double deltaPhiLep = fabs( deltaPhi( phi,  lep0_p4.Phi() ));  
-    if (pt>40 && fabs(eta)<2.4 && goodJet_looseJetID){              
+    if (pt>15. && fabs(eta)<3.0 && goodJet_looseJetID){              
       if (deltaPhiLep<  3.14/2.0)
       {
         if (bdisc>0.460 ) ak4_btag_loose  = true;
