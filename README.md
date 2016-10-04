@@ -14,11 +14,11 @@ cd B2GTTbar/test/
 ```
 for MC:
 
-`cmsRun run_B2GTTbarTreeMaker_MC_ToolboxUpdateJet.py`
+`cmsRun run_B2GTTbarTreeMaker_MC_Toolbox.py`
 
 for data:
 
-`cmsRun run_B2GTTbarTreeMaker_data_ToolboxUpdateJet.py`
+`cmsRun run_B2GTTbarTreeMaker_data_Toolbox.py`
 
 
 
