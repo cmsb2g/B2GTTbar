@@ -55,12 +55,29 @@ process.BadPFMuonFilter.muons = cms.InputTag("slimmedMuons")
 process.BadPFMuonFilter.PFCandidates = cms.InputTag("packedPFCandidates")
 process.BadPFMuonFilter.debug = cms.bool(False)
 
+
+#----------------------------------------------------------------------------------------
+### VID
+from PhysicsTools.SelectorUtils.tools.vid_id_tools import *
+dataFormat = DataFormat.MiniAOD
+switchOnVIDElectronIdProducer(process, dataFormat)
+my_id_modules = [
+    'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronHLTPreselecition_Summer16_V1_cff',
+    'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Summer16_80X_V1_cff',
+    'RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV60_cff'
+]
+
+for idmod in my_id_modules:
+    setupAllVIDIdsInModule(process,idmod,setupVIDElectronSelection)
+
+
+
 #----------------------------------------------------------------------------------------
 ### Puppi (https://twiki.cern.ch/twiki/bin/viewauth/CMS/PUPPI)
-process.load('CommonTools/PileupAlgos/Puppi_cff')
-process.puppi.candName = cms.InputTag('packedPFCandidates')
-process.puppi.vertexName = cms.InputTag('offlineSlimmedPrimaryVertices')
-process.puppi.useExistingWeights = cms.bool(True)
+#process.load('CommonTools/PileupAlgos/Puppi_cff')
+#process.puppi.candName = cms.InputTag('packedPFCandidates')
+#process.puppi.vertexName = cms.InputTag('offlineSlimmedPrimaryVertices')
+#process.puppi.useExistingWeights = cms.bool(True)
 #process.puppiOnTheFly = process.puppi.clone()
 #process.puppiOnTheFly.useExistingWeights = True
 
@@ -97,6 +114,8 @@ listBtagDiscriminatorsAK8 = [
 jetToolbox( process, 'ak8', 'ak8JetSubs', 'out', 
   runOnMC = isMC, 
   PUMethod='CHS', 
+  # updateCollection='slimmedJetsAK8', # can't run groomers on this yet
+  # JETCorrPayload='AK8PFchs', # needed for update collection
   addSoftDropSubjets = True, 
   addTrimming = True, rFiltTrim=0.2, ptFrac=0.05,
   addPruning = True, 
@@ -105,7 +124,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   addNsub = True, 
   bTagInfos = listBTagInfos, 
   bTagDiscriminators = listBtagDiscriminatorsAK8, 
-  addCMSTopTagger = False, 
+  addCMSTopTagger = True, 
   Cut = ak8Cut , 
   addNsubSubjets = True, 
   subjetMaxTau = 4 )
@@ -133,7 +152,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   addNsub = True, 
   bTagInfos = listBTagInfos, 
   bTagDiscriminators = listBtagDiscriminatorsAK8, 
-  addCMSTopTagger = False, 
+  addCMSTopTagger = True, 
   Cut = ak8Cut , 
   addNsubSubjets = True, 
   subjetMaxTau = 4 )
@@ -149,12 +168,17 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     isZprime      = cms.bool(False),
     isttbar       = cms.bool(False),
     isRSG         = cms.bool(True),
-    ak8chsInput   = cms.InputTag("selectedPatJetsAK8PFCHS"),   
-    ak8puppiInput = cms.InputTag("selectedPatJetsAK8PFPuppi"),
+    ak8chsInput          = cms.InputTag("selectedPatJetsAK8PFCHS"),   
+    ak8puppiInput        = cms.InputTag("selectedPatJetsAK8PFPuppi"),
     ak8chsSubjetsInput   = cms.InputTag("selectedPatJetsAK8PFCHSSoftDropPacked","SubJets"),
     ak8puppiSubjetsInput = cms.InputTag("selectedPatJetsAK8PFPuppiSoftDropPacked","SubJets"),
-    triggerBits   = cms.InputTag("TriggerResults", "", "HLT2"),
-    theSrc        = cms.InputTag("externalLHEProducer", "", "LHE"),
+    triggerBits          = cms.InputTag("TriggerResults", "", "HLT2"),
+    lheSrc               = cms.InputTag("externalLHEProducer", "", "LHE"),
+    eleIdFullInfoMapToken_HLTpre  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronHLTPreselection-Summer16-V1"),
+    eleIdFullInfoMapToken_Loose   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-loose"),
+    eleIdFullInfoMapToken_Medium  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-medium"),
+    eleIdFullInfoMapToken_Tight   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-tight"),
+    eleIdFullInfoMapToken_HEEP    = cms.InputTag("egmGsfElectronIDs:heepElectronID-HEEPV60"), 
     jecPayloadsAK8chs = cms.vstring([
                                     'Spring16_25nsV6_MC_L1FastJet_AK8PFchs.txt',
                                     'Spring16_25nsV6_MC_L2Relative_AK8PFchs.txt',
@@ -213,6 +237,7 @@ process.TFileService = cms.Service("TFileService",
 process.p = cms.Path(
   process.BadChargedCandidateFilter*
   process.BadPFMuonFilter*
+  process.egmGsfElectronIDSequence*
   process.ana
 )
 

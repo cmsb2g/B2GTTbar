@@ -52,6 +52,7 @@
 #include "DataFormats/PatCandidates/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/Electron.h"
 #include "DataFormats/PatCandidates/interface/MET.h"
+#include "DataFormats/Common/interface/ValueMap.h"
 
 // TFileService
 #include "FWCore/ServiceRegistry/interface/Service.h"
@@ -72,10 +73,11 @@
 
 // Electron
 #include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
+#include "DataFormats/PatCandidates/interface/Electron.h"
 #include "DataFormats/EgammaCandidates/interface/ConversionFwd.h"
 #include "DataFormats/EgammaCandidates/interface/Conversion.h"
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
-
+#include "DataFormats/PatCandidates/interface/VIDCutFlowResult.h"
 // Trigger
 #include "FWCore/Common/interface/TriggerNames.h"
 #include "DataFormats/Common/interface/TriggerResults.h"
@@ -96,6 +98,23 @@
 // Utilities
 #include "DataFormats/Math/interface/deltaR.h"
 #include "DataFormats/Math/interface/deltaPhi.h"
+
+// // CMS Top Tagger
+// #include "DataFormats/BTauReco/interface/CATopJetTagInfo.h"
+// #include "RecoJets/JetAlgorithms/interface/CATopJetHelper.h"
+
+// Fastjet
+// #include <fastjet/JetDefinition.hh>
+// #include <fastjet/PseudoJet.hh>
+// #include "fastjet/tools/Filter.hh"
+// #include <fastjet/ClusterSequence.hh>
+// #include <fastjet/ClusterSequenceArea.hh>
+// #include "fastjet/contrib/SoftDrop.hh"
+// #include "fastjet/contrib/EnergyCorrelator.hh"
+// #include <fastjet/Selector.hh>
+// #include "fastjet/tools/Pruner.hh"
+// #include "Nsubjettiness.hh"
+// #include "Njettiness.hh"
 
 // root
 #include "TH1.h"
@@ -133,6 +152,9 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
       virtual void endJob() override;
 
+
+      void printCutFlowResult(vid::CutFlowResult &cutflow);
+
       // ----------member data ---------------------------
       edm::EDGetTokenT<pat::JetCollection> ak4jetToken_;
       edm::EDGetTokenT<pat::JetCollection> ak8jetToken_;
@@ -151,12 +173,21 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       edm::EDGetTokenT<bool> badMuonFilterToken_;
       edm::EDGetTokenT<bool> badChargedCandidateFilterToken_;
       edm::EDGetTokenT<pat::MuonCollection> muonToken_;
-      edm::EDGetTokenT<pat::ElectronCollection> electronToken_;
+      edm::EDGetTokenT<edm::View<pat::Electron>> electronToken_;  //ElectronCollection
       edm::EDGetTokenT<pat::METCollection> metToken_;
       edm::EDGetTokenT<std::vector<PileupSummaryInfo> > pileupInfoToken_;
-      edm::EDGetTokenT<LHEEventProduct> theSrc_;
+      edm::EDGetTokenT<LHEEventProduct> lheSrc_;
       edm::EDGetTokenT<GenEventInfoProduct> pdfToken_;
-      
+      edm::EDGetTokenT<reco::BeamSpot> beamSpotToken_;
+      edm::EDGetTokenT<reco::ConversionCollection> conversionsToken_;
+
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_HLTpre_     ;
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_Loose_    ;
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_Medium_   ;
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_Tight_    ;
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_HEEP_     ;
+  
+
       bool useToolbox_;
       bool verbose_;
       bool verboseGen_;
@@ -164,10 +195,15 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       bool isZprime_;
       bool isttbar_;
       bool isRSG_;
+
       std::vector<std::string>  jecPayloadsAK4chs_;
       std::vector<std::string>  jecPayloadsAK8chs_;
       std::vector<std::string>  jecPayloadsAK4pup_;
       std::vector<std::string>  jecPayloadsAK8pup_;
+
+      std::string jerSFtext_;
+
+      
       boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK4chs;
       boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK8chs;
       boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK4pup;
@@ -177,12 +213,20 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       boost::shared_ptr<JetCorrectionUncertainty> JetCorrUncertAK4pup;
       boost::shared_ptr<JetCorrectionUncertainty> JetCorrUncertAK8pup;
       
-      std::string jerSFtext_;
-
       TFile* fPUweight;
       TH1D* hPUweight;
       TH1D* hPUweight_MBup;
       TH1D* hPUweight_MBdn;
+
+      TH1D * h_ak8puppi_softDropMass ;
+      TH1D * h_ak8chs_softDropMass   ;
+      TH1D * h_ak8chs_softDropMass_reweighted ;
+      TH1D * h_ak8chs_pt   ;
+      TH1D * h_ak8chs_pt_reweighted ;
+      TH1D * h_NtrueIntPU ;
+      TH1D * h_NPV           ;               
+      TH1D * h_NPVreweighted ;     
+
 
       int count_GenTruth_semileptonic ;
       int count_nMu_gt1 ; 
@@ -197,15 +241,6 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       int count_JetPt300Eta_muPt40_MET40 ; 
       int count_JetPt300Eta_muPt40_MET40_AK4 ; 
 
-
-      TH1D * h_ak8puppi_softDropMass ;
-      TH1D * h_ak8chs_softDropMass   ;
-      TH1D * h_ak8chs_softDropMass_reweighted ;
-      TH1D * h_ak8chs_pt   ;
-      TH1D * h_ak8chs_pt_reweighted ;
-      TH1D * h_NtrueIntPU ;
-      TH1D * h_NPV           ;               
-      TH1D * h_NPVreweighted ;                 
 
       //
       //       d8888 888 888        888    888               888     88888888888                           
@@ -958,8 +993,16 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Elecron_absiso_EA                      ;
       Float_t Elecron_relIsoWithEA                   ;
 
-      Int_t Electron_isMedium   ; 
-      Int_t Electron_isTight    ; 
+      Int_t Electron_iso_passHLTpre                  ;
+      Int_t Electron_iso_passLoose                   ;
+      Int_t Electron_iso_passMedium                  ;
+      Int_t Electron_iso_passTight                   ;
+      Int_t Electron_iso_passHEEP                    ;
+      Int_t Electron_noiso_passLoose                 ;
+      Int_t Electron_noiso_passMedium                ;
+      Int_t Electron_noiso_passTight                 ;
+      Int_t Electron_noiso_passHEEP                  ;
+
 
 };
 
@@ -984,11 +1027,18 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
     badMuonFilterToken_(consumes<bool>(edm::InputTag("BadPFMuonFilter",""))),
     badChargedCandidateFilterToken_(consumes<bool>(edm::InputTag("BadChargedCandidateFilter",""))),
     muonToken_(consumes<pat::MuonCollection>(edm::InputTag("slimmedMuons"))),
-    electronToken_(consumes<pat::ElectronCollection>(edm::InputTag("slimmedElectrons"))),
+    electronToken_(consumes<edm::View<pat::Electron>>(edm::InputTag("slimmedElectrons"))), //Collection
     metToken_(consumes<pat::METCollection>(edm::InputTag("slimmedMETs"))),
     pileupInfoToken_(consumes<std::vector<PileupSummaryInfo>>(edm::InputTag("slimmedAddPileupInfo"))),
-    theSrc_(consumes<LHEEventProduct>(iConfig.getParameter<edm::InputTag>("theSrc"))),
+    lheSrc_(consumes<LHEEventProduct>(iConfig.getParameter<edm::InputTag>("lheSrc"))),
     pdfToken_(consumes<GenEventInfoProduct>(edm::InputTag("generator"))),
+    beamSpotToken_(consumes<reco::BeamSpot>(edm::InputTag("offlineBeamSpot"))),
+    conversionsToken_(consumes<reco::ConversionCollection>(edm::InputTag("reducedEgamma:reducedConversions"))),
+    eleIdFullInfoMapToken_HLTpre_  (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_HLTpre"))),
+    eleIdFullInfoMapToken_Loose_ (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_Loose"))),
+    eleIdFullInfoMapToken_Medium_(consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_Medium"))),
+    eleIdFullInfoMapToken_Tight_ (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_Tight"))),
+    eleIdFullInfoMapToken_HEEP_  (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_HEEP"))),
     useToolbox_(iConfig.getParameter<bool>  ("useToolbox")),
     verbose_(iConfig.getParameter<bool>  ("verbose")),
     verboseGen_(iConfig.getParameter<bool>  ("verboseGen")),
@@ -1797,18 +1847,17 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("Elecron_relIsoWithDBeta"              , &  Elecron_relIsoWithDBeta          , "Elecron_relIsoWithDBeta/F"        ); 
   TreeSemiLept->Branch("Elecron_absiso_EA"                    , &  Elecron_absiso_EA                , "Elecron_absiso_EA/F"              ); 
   TreeSemiLept->Branch("Elecron_relIsoWithEA"                 , &  Elecron_relIsoWithEA             , "Elecron_relIsoWithEA/F"           ); 
-
-  TreeSemiLept->Branch("Electron_isMedium"                 , &  Electron_isMedium             , "Electron_isMedium/I"           ); 
-  TreeSemiLept->Branch("Electron_isTight"                  , &  Electron_isTight              , "Electron_isTight/I"            ); 
-
  
+  TreeSemiLept->Branch("Electron_iso_passHLTpre"      , & Electron_iso_passHLTpre   , "Electron_iso_passHLTpre/I"    );
+  TreeSemiLept->Branch("Electron_iso_passLoose"       , & Electron_iso_passLoose    , "Electron_iso_passLoose/I"     );
+  TreeSemiLept->Branch("Electron_iso_passMedium"      , & Electron_iso_passMedium   , "Electron_iso_passMedium/I"    );
+  TreeSemiLept->Branch("Electron_iso_passTight"       , & Electron_iso_passTight    , "Electron_iso_passTight/I"     );
+  TreeSemiLept->Branch("Electron_iso_passHEEP"        , & Electron_iso_passHEEP     , "Electron_iso_passHEEP/I"      );
+  TreeSemiLept->Branch("Electron_noiso_passLoose"     , & Electron_noiso_passLoose  , "Electron_noiso_passLoose/I"   );
+  TreeSemiLept->Branch("Electron_noiso_passMedium"    , & Electron_noiso_passMedium , "Electron_noiso_passMedium/I"  );
+  TreeSemiLept->Branch("Electron_noiso_passTight"     , & Electron_noiso_passTight  , "Electron_noiso_passTight/I"   );
+  TreeSemiLept->Branch("Electron_noiso_passHEEP"      , & Electron_noiso_passHEEP   , "Electron_noiso_passHEEP/I"    );
  
- 
- 
- 
- 
- 
-  
 
   std::cout<<"Setup semi-lept tree"<<std::endl;
 
@@ -2478,7 +2527,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   if (isZprime_ || isttbar_){
     edm::Handle<LHEEventProduct> EvtHandle;
-    iEvent.getByToken(theSrc_, EvtHandle);
+    iEvent.getByToken(lheSrc_, EvtHandle);
 
     if (EvtHandle.isValid()){
       double centralWgt = EvtHandle->weights()[0].wgt;
@@ -2692,143 +2741,153 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   // 888        888 Y8b.     Y88b.    Y88b.  888     Y88..88P 888  888 
   // 8888888888 888  "Y8888   "Y8888P  "Y888 888      "Y88P"  888  888 
   //                                                                   
-  edm::Handle<pat::ElectronCollection> electrons;
+  edm::Handle<edm::View<pat::Electron>> electrons; //Collection
   iEvent.getByToken(electronToken_, electrons);
+
+  // Get the conversions collection
+  edm::Handle<reco::ConversionCollection> conversions;
+  iEvent.getByToken(conversionsToken_, conversions);
+
+  // Get the electron ID data from the event stream.
+  // Note: this implies that the VID ID modules have been run upstream.
+  // If you need more info, check with the EGM group.
+  // edm::Handle<edm::ValueMap<bool> > ele_id_decisions;
+  // iEvent.getByToken(eleIdMapToken_ ,ele_id_decisions);
+ 
+  // Full cut flow info for one of the working points:
+  // edm::Handle<edm::ValueMap<vid::CutFlowResult> > ele_id_cutflow_data;
+  // iEvent.getByToken(eleIdFullInfoMapToken_,ele_id_cutflow_data);
+
+  // edm::Handle<edm::ValueMap<bool> > pass_eleId_HLTpre  ;
+  // edm::Handle<edm::ValueMap<bool> > pass_eleId_Loose   ;
+  // edm::Handle<edm::ValueMap<bool> > pass_eleId_Medium  ;
+  // edm::Handle<edm::ValueMap<bool> > pass_eleId_Tight   ;
+  // edm::Handle<edm::ValueMap<bool> > pass_eleId_HEEP    ;
+  // iEvent.getByToken(eleIdMapToken_HLTpre_   ,   pass_eleId_HLTpre  );
+  // iEvent.getByToken(eleIdMapToken_Loose_    ,   pass_eleId_Loose   );
+  // iEvent.getByToken(eleIdMapToken_Medium_   ,   pass_eleId_Medium  );
+  // iEvent.getByToken(eleIdMapToken_Tight_    ,   pass_eleId_Tight   );
+  // iEvent.getByToken(eleIdMapToken_HEEP_     ,   pass_eleId_HEEP    );
+
+  edm::Handle<edm::ValueMap<vid::CutFlowResult> > cutflow_eleId_HLTpre  ;
+  edm::Handle<edm::ValueMap<vid::CutFlowResult> > cutflow_eleId_Loose   ;
+  edm::Handle<edm::ValueMap<vid::CutFlowResult> > cutflow_eleId_Medium  ;
+  edm::Handle<edm::ValueMap<vid::CutFlowResult> > cutflow_eleId_Tight   ;
+  edm::Handle<edm::ValueMap<vid::CutFlowResult> > cutflow_eleId_HEEP    ;
+  iEvent.getByToken(eleIdFullInfoMapToken_HLTpre_   ,   cutflow_eleId_HLTpre   );
+  iEvent.getByToken(eleIdFullInfoMapToken_Loose_    ,   cutflow_eleId_Loose   );
+  iEvent.getByToken(eleIdFullInfoMapToken_Medium_   ,   cutflow_eleId_Medium  );
+  iEvent.getByToken(eleIdFullInfoMapToken_Tight_    ,   cutflow_eleId_Tight   );
+  iEvent.getByToken(eleIdFullInfoMapToken_HEEP_     ,   cutflow_eleId_HEEP    );
 
   TLorentzVector el0_p4;
   Float_t el0_absiso           =0;
   Float_t el0_relIsoWithDBeta  =0;
   Float_t el0_absiso_EA        =0;
   Float_t el0_relIsoWithEA     =0;
-  bool el0_isMedium     = false;
-  bool el0_isTight      = false;
+  int el0_iso_passHLTpre    = 0;
+  int el0_iso_passLoose     = 0;
+  int el0_iso_passMedium    = 0;
+  int el0_iso_passTight     = 0;
+  int el0_iso_passHEEP      = 0;
+  int el0_noiso_passLoose   = 0;
+  int el0_noiso_passMedium  = 0;
+  int el0_noiso_passTight   = 0;
+  int el0_noiso_passHEEP    = 0;
   int count_el=0;
 
   std::vector<reco::CandidatePtr> elFootprint;
 
 
+  for (size_t i = 0; i < electrons->size(); ++i){   
+    const auto el = electrons->ptrAt(i);          // easier if we use ptrs for the id
+    if (el->pt() < 50 || fabs(el->eta())>2.4 ) continue;
 
-  for (const pat::Electron &el : *electrons) {
-      if (el.pt() < 50 || fabs(el.eta())>2.4 ) continue;
+    // electron ID
+    vid::CutFlowResult full_cutflow_HLTpre = (*cutflow_eleId_HLTpre )[el];
+    vid::CutFlowResult full_cutflow_Loose  = (*cutflow_eleId_Loose  )[el];
+    vid::CutFlowResult full_cutflow_Medium = (*cutflow_eleId_Medium )[el];
+    vid::CutFlowResult full_cutflow_Tight  = (*cutflow_eleId_Tight  )[el];
+    vid::CutFlowResult full_cutflow_HEEP   = (*cutflow_eleId_HEEP   )[el];
 
-      float eta = el.eta();
-      // Implemation of loose Quality cuts (need to study this and improve)
-      // https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedElectronIdentificationRun2
-      // Recomended isolation variables are stored separately and not included in the loose quality cut
+    bool iso_passHLTpre   =  full_cutflow_HLTpre.cutFlowPassed();
+    bool iso_passLoose    =  full_cutflow_Loose .cutFlowPassed();
+    bool iso_passMedium   =  full_cutflow_Medium.cutFlowPassed();
+    bool iso_passTight    =  full_cutflow_Tight .cutFlowPassed();
+    bool iso_passHEEP     =  full_cutflow_HEEP  .cutFlowPassed();
 
+    // get electron ID without isolation cuts
+    vid::CutFlowResult masked_cutflow_Loose  = full_cutflow_Loose     .getCutFlowResultMasking(7); // 7 = GsfEleEffAreaPFIsoCut_0
+    vid::CutFlowResult masked_cutflow_Medium = full_cutflow_Medium    .getCutFlowResultMasking(7); // 7 = GsfEleEffAreaPFIsoCut_0
+    vid::CutFlowResult masked_cutflow_Tight  = full_cutflow_Tight     .getCutFlowResultMasking(7); // 7 = GsfEleEffAreaPFIsoCut_0
 
-      bool passLoose      = false;
-      bool passMedium     = false;
-      bool passTight      = false;
+    std::vector<std::string> maskCuts;
+    maskCuts.push_back("GsfEleTrkPtIsoCut_0"); 
+    maskCuts.push_back("GsfEleEmHadD1IsoRhoCut_0");
+    vid::CutFlowResult masked_cutflow_HEEP   = full_cutflow_HEEP      .getCutFlowResultMasking(maskCuts);
 
-      float ooEmooP_; 
-      if( el.ecalEnergy() == 0 ){
-        if(verbose_) printf("Electron energy is zero!\n");
-        ooEmooP_ = 999;
-      }else if( !std::isfinite(el.ecalEnergy())){
-        if(verbose_) printf("Electron energy is not finite!\n");
-        ooEmooP_ = 998;
-      }else{
-        ooEmooP_ = fabs(1.0/el.ecalEnergy() - el.eSuperClusterOverP()/el.ecalEnergy() );
-      }
-      float missHits = el.gsfTrack()->hitPattern().numberOfLostTrackerHits(HitPattern::MISSING_INNER_HITS);
-      
+    bool noiso_passLoose    =  masked_cutflow_Loose .cutFlowPassed();
+    bool noiso_passMedium   =  masked_cutflow_Medium.cutFlowPassed();
+    bool noiso_passTight    =  masked_cutflow_Tight .cutFlowPassed();
+    bool noiso_passHEEP     =  masked_cutflow_HEEP  .cutFlowPassed();
 
-      GsfElectron::PflowIsolationVariables pfIso = el.pfIsolationVariables();
-      float absiso = pfIso.sumChargedHadronPt + max(0.0 , pfIso.sumNeutralHadronEt + pfIso.sumPhotonEt - 0.5 * pfIso.sumPUPt );
-      float relIsoWithDBeta = absiso/el.pt();
-
-      float effArea = 0.;
-      if(abs(eta)>0.0 && abs(eta)<=1.0) effArea = 0.1752;
-      if(abs(eta)>1.0 && abs(eta)<=1.479) effArea = 0.1862;
-      if(abs(eta)>1.479 && abs(eta)<=2.0) effArea = 0.1411;
-      if(abs(eta)>2.0 && abs(eta)<=2.2) effArea = 0.1534;
-      if(abs(eta)>2.2 && abs(eta)<=2.3) effArea = 0.1903;
-      if(abs(eta)>2.3 && abs(eta)<=2.4) effArea = 0.2243;
-      if(abs(eta)>2.4 && abs(eta)<=2.5) effArea = 0.2687;
-
-      float absiso_EA = pfIso.sumChargedHadronPt + max(0.0 , pfIso.sumNeutralHadronEt + pfIso.sumPhotonEt - rho * effArea );
-      float relIsoWithEA = absiso_EA/el.pt();
+    if (verbose_){
+      cout<<"full_cutflow_Loose"<<endl;
+      printCutFlowResult(full_cutflow_Loose);
+      cout<<"masked_cutflow_Loose"<<endl;
+      printCutFlowResult(masked_cutflow_Loose);
+      cout<<"masked_cutflow_HEEP"<<endl;
+      printCutFlowResult(masked_cutflow_HEEP);
+    }
 
 
-      if (fabs(el.eta())<=1.479 ){
-        if( el.full5x5_sigmaIetaIeta()                <      0.011      &&
-            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00477    &&
-            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.222      &&
-            el.hadronicOverEm()                       <      0.298      &&
-            ooEmooP_                                  <      0.241      &&
-            missHits                                  <=     1           ){ 
-          passLoose =true ;
-        }
-        if( el.full5x5_sigmaIetaIeta()                <      0.00998     &&
-            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00311     &&
-            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.103       &&
-            el.hadronicOverEm()                       <      0.253       &&
-            ooEmooP_                                  <      0.134       &&
-            missHits                                  <=     1           ){ 
-          passMedium =true ;
-        }
-        if( el.full5x5_sigmaIetaIeta()                <      0.00998     &&
-            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00308     &&
-            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.0816      &&
-            el.hadronicOverEm()                       <      0.0414      &&
-            ooEmooP_                                  <      0.0129      &&
-            missHits                                  <=     1           ){ 
-          passTight =true ;
-        }
-      }
-      else { 
-        if( el.full5x5_sigmaIetaIeta()                <      0.0314     &&
-            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00868    &&
-            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.213      &&
-            el.hadronicOverEm()                       <      0.101      &&
-            ooEmooP_                                  <      0.14       &&
-            missHits                                  <=     1             ){ 
-          passLoose =true ;
-        }
-        if( el.full5x5_sigmaIetaIeta()                <      0.0298      &&
-            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00609     &&
-            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.045       &&
-            el.hadronicOverEm()                       <      0.0878      &&
-            ooEmooP_                                  <      0.13        &&
-            missHits                                  <=     1             ){ 
-          passMedium =true ;
-        }
-        if( el.full5x5_sigmaIetaIeta()                <      0.0292      &&
-            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00605     &&
-            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.0394      &&
-            el.hadronicOverEm()                       <      0.0641      &&
-            ooEmooP_                                  <      0.0129      &&
-            missHits                                  <=     1             ){ 
-          passTight =true ;
-        }
-      }
-
-
-
-      if (!passLoose) continue;
-
+    bool electronEvent = noiso_passLoose || noiso_passHEEP;
+    if (electronEvent){
       if (count_el==0){
-        el0_p4.SetPtEtaPhiM( el.pt(), el.eta(), el.phi(), el.mass() );
+        if (verbose_) cout<<"Electron pT "<<el->pt()<<endl;
 
+        //calculate isolation variables    
+        GsfElectron::PflowIsolationVariables pfIso = el->pfIsolationVariables();
+        float absiso = pfIso.sumChargedHadronPt + max(0.0 , pfIso.sumNeutralHadronEt + pfIso.sumPhotonEt - 0.5 * pfIso.sumPUPt );
+        float relIsoWithDBeta = absiso/el->pt();
+        float eta = el->eta();
+
+        float effArea = 0.;
+        if(abs(eta)>0.0 && abs(eta)<=1.0) effArea = 0.1752;
+        if(abs(eta)>1.0 && abs(eta)<=1.479) effArea = 0.1862;
+        if(abs(eta)>1.479 && abs(eta)<=2.0) effArea = 0.1411;
+        if(abs(eta)>2.0 && abs(eta)<=2.2) effArea = 0.1534;
+        if(abs(eta)>2.2 && abs(eta)<=2.3) effArea = 0.1903;
+        if(abs(eta)>2.3 && abs(eta)<=2.4) effArea = 0.2243;
+        if(abs(eta)>2.4 && abs(eta)<=2.5) effArea = 0.2687;
+
+        float absiso_EA = pfIso.sumChargedHadronPt + max(0.0 , pfIso.sumNeutralHadronEt + pfIso.sumPhotonEt - rho * effArea );
+        float relIsoWithEA = absiso_EA/el->pt();
+
+        el0_p4.SetPtEtaPhiM( el->pt(), el->eta(), el->phi(), el->mass() );
         el0_absiso           = absiso;
         el0_relIsoWithDBeta  = relIsoWithDBeta;
         el0_absiso_EA        = absiso_EA;
         el0_relIsoWithEA     = relIsoWithEA;
-        el0_isMedium         = passMedium;
-        el0_isTight          = passTight ;
 
-        for (unsigned int i = 0, n = el.numberOfSourceCandidatePtrs(); i < n; ++i) {
-          elFootprint.push_back(el.sourceCandidatePtr(i));
+        el0_iso_passHLTpre    = (int) iso_passHLTpre   ;
+        el0_iso_passLoose     = (int) iso_passLoose    ;
+        el0_iso_passMedium    = (int) iso_passMedium   ;
+        el0_iso_passTight     = (int) iso_passTight    ;
+        el0_iso_passHEEP      = (int) iso_passHEEP     ;
+        el0_noiso_passLoose   = (int) noiso_passLoose  ;
+        el0_noiso_passMedium  = (int) noiso_passMedium ;
+        el0_noiso_passTight   = (int) noiso_passTight  ;
+        el0_noiso_passHEEP    = (int) noiso_passHEEP   ;
+
+        for (unsigned int i = 0, n = el->numberOfSourceCandidatePtrs(); i < n; ++i) {
+          elFootprint.push_back(el->sourceCandidatePtr(i));
         }
-
-
-        if (verbose_) cout<<"Electron pT "<<el.pt()<<endl;
       } 
       count_el++;
-
-      //printf("elec with pt %4.1f, supercluster eta %+5.3f, sigmaIetaIeta %.3f (%.3f with full5x5 shower shapes), lost hits %d, pass conv veto %d\n",
-      //              el.pt(), el.superCluster()->eta(), el.sigmaIetaIeta(), el.full5x5_sigmaIetaIeta(), el.gsfTrack()->trackerExpectedHitsInner().numberOfLostHits(), el.passConversionVeto());
+    }
+    //printf("elec with pt %4.1f, supercluster eta %+5.3f, sigmaIetaIeta %.3f (%.3f with full5x5 shower shapes), lost hits %d, pass conv veto %d\n",
+    //              el.pt(), el.superCluster()->eta(), el.sigmaIetaIeta(), el.full5x5_sigmaIetaIeta(), el.gsfTrack()->trackerExpectedHitsInner().numberOfLostHits(), el.passConversionVeto());
   }
 
   TLorentzVector lep0_p4;
@@ -3634,8 +3693,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           if (verbose_) cout<<"  subjet corr: L1 "<<subjet_corr_factor_L1<<" L23 "<<subjet_corr_factor_L23<<" L23res "<<subjet_corr_factor_L23res<<" L123res "<<subjet_corr_factor_L123res<<endl;
           reco::Candidate::LorentzVector corrSubjetL23res   = subjet_corr_factor_L23res * uncorrSubjet;
           
-   cout<<"CHSsubjet area "<<isub.jetArea() <<endl;
-          
+
           //------------------------------------
           // subjet JEC uncertainty
           //------------------------------------
@@ -4061,6 +4119,21 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     h_ak8chs_softDropMass    ->Fill( sumSDsubjets_P4_uncorr.M()   );
     h_ak8puppi_softDropMass  ->Fill( sumPUPsubjets_P4_uncorr.M()  );
+
+    // //------------------------------------
+    // // CMS Top Tagger  // need to fix the toolbox
+    // //------------------------------------ 
+    
+    // reco::CATopJetTagInfo const * tagInfo =  dynamic_cast<reco::CATopJetTagInfo const *>( ijet.tagInfo("caTop"));
+    // double minMass    = 0;
+    // int nSubJetsCATop = 0;
+    // if ( tagInfo != 0 ) {
+    //   minMass = tagInfo->properties().minMass;
+    //   nSubJetsCATop = tagInfo->properties().nSubJets;
+    // }
+    // cout<<"minMass "<<minMass<<endl;
+    // cout<<"nSubJetsCATop "<<nSubJetsCATop<<endl;
+
 
     //------------------------------------
     // Gen particle info
@@ -4635,24 +4708,24 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       JetSDmass                             = softDropMass;                           // Full softDrop uncorrected 4-vector      
       JetSDmassRaw                          = sumSDsubjets_P4_uncorr          .M()    ; // Full softDrop uncorrected 4-vector     
       JetSDmassCorrL23                      = sumSDsubjets_P4_L23res          .M()    ;   
-      JetSDmassCorrL23Up                    = sumSDsubjets_P4_L23resCorrUp   .M()    ;   
-      JetSDmassCorrL23Dn                    = sumSDsubjets_P4_L23resCorrDn   .M()    ; 
+      JetSDmassCorrL23Up                    = sumSDsubjets_P4_L23resCorrUp    .M()    ;   
+      JetSDmassCorrL23Dn                    = sumSDsubjets_P4_L23resCorrDn    .M()    ; 
       JetSDmassCorrL123                     = sumSDsubjets_P4_L123res         .M()    ;  
-      JetSDmassCorrL123Up                   = sumSDsubjets_P4_L123resCorrUp  .M()    ;   
-      JetSDmassCorrL123Dn                   = sumSDsubjets_P4_L123resCorrDn  .M()    ;  
-      JetSDmassCorrL23Smear                    = sumSDsubjets_P4_L23resPtSmear   .M()    ;
-      JetSDmassCorrL23SmearUp                  = sumSDsubjets_P4_L23resPtSmearUp .M()    ;
-      JetSDmassCorrL23SmearDn                  = sumSDsubjets_P4_L23resPtSmearDn .M()    ;
+      JetSDmassCorrL123Up                   = sumSDsubjets_P4_L123resCorrUp   .M()    ;   
+      JetSDmassCorrL123Dn                   = sumSDsubjets_P4_L123resCorrDn   .M()    ;  
+      JetSDmassCorrL23Smear                 = sumSDsubjets_P4_L23resPtSmear   .M()    ;
+      JetSDmassCorrL23SmearUp               = sumSDsubjets_P4_L23resPtSmearUp .M()    ;
+      JetSDmassCorrL23SmearDn               = sumSDsubjets_P4_L23resPtSmearDn .M()    ;
       JetSDptRaw                            = sumSDsubjets_P4_uncorr          .Perp() ;  // Full softDrop uncorrected 4-vector 
       JetSDptCorrL23                        = sumSDsubjets_P4_L23res          .Perp() ;  
-      JetSDptCorrL23Up                      = sumSDsubjets_P4_L23resCorrUp   .Perp() ;  
-      JetSDptCorrL23Dn                      = sumSDsubjets_P4_L23resCorrDn   .Perp() ;  
+      JetSDptCorrL23Up                      = sumSDsubjets_P4_L23resCorrUp    .Perp() ;  
+      JetSDptCorrL23Dn                      = sumSDsubjets_P4_L23resCorrDn    .Perp() ;  
       JetSDptCorrL123                       = sumSDsubjets_P4_L123res         .Perp() ;  
-      JetSDptCorrL123Up                     = sumSDsubjets_P4_L123resCorrUp  .Perp() ;  
-      JetSDptCorrL123Dn                     = sumSDsubjets_P4_L123resCorrDn  .Perp() ;  
-      JetSDptCorrL23Smear                      = sumSDsubjets_P4_L23resPtSmear   .Perp() ;
-      JetSDptCorrL23SmearUp                    = sumSDsubjets_P4_L23resPtSmearUp .Perp() ;
-      JetSDptCorrL23SmearDn                    = sumSDsubjets_P4_L23resPtSmearDn .Perp() ;
+      JetSDptCorrL123Up                     = sumSDsubjets_P4_L123resCorrUp   .Perp() ;  
+      JetSDptCorrL123Dn                     = sumSDsubjets_P4_L123resCorrDn   .Perp() ;  
+      JetSDptCorrL23Smear                   = sumSDsubjets_P4_L23resPtSmear   .Perp() ;
+      JetSDptCorrL23SmearUp                 = sumSDsubjets_P4_L23resPtSmearUp .Perp() ;
+      JetSDptCorrL23SmearDn                 = sumSDsubjets_P4_L23resPtSmearDn .Perp() ;
       JetSDetaRaw                           = sumSDsubjets_P4_uncorr.Eta()     ;      // Full softDrop uncorrected 4-vector           
       JetSDphiRaw                           = sumSDsubjets_P4_uncorr.Phi()     ;      // Full softDrop uncorrected 4-vector   
       JetMassPruned                         = prunedMass ;     
@@ -4697,22 +4770,22 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       JetPuppiPhi                           = puppi_phi  ;                  
       JetPuppiMass                          = puppi_mass ;                  
 
-      Jet1PuppiSDmass                       = sumPUPsubjets_P4_uncorr           .M()   ;
-      Jet1PuppiSDmassCorr                   = sumPUPsubjets_P4_L23res           .M()   ;
-      Jet1PuppiSDmassCorrUp                 = sumPUPsubjets_P4_L23resCorrUp     .M()   ;
-      Jet1PuppiSDmassCorrDn                 = sumPUPsubjets_P4_L23resCorrDn     .M()   ;
-      Jet1PuppiSDmassCorrL23Smear           = sumPUPsubjets_P4_L23resPtSmear    .M()   ;
-      Jet1PuppiSDmassCorrL23SmearUp         = sumPUPsubjets_P4_L23resPtSmearUp  .M()   ;
-      Jet1PuppiSDmassCorrL23SmearDn         = sumPUPsubjets_P4_L23resPtSmearDn  .M()   ;
-      Jet1PuppiSDpt                         = sumPUPsubjets_P4_uncorr           .Perp();
-      Jet1PuppiSDptCorr                     = sumPUPsubjets_P4_L23res           .Perp();
-      Jet1PuppiSDptCorrUp                   = sumPUPsubjets_P4_L23resCorrUp     .Perp();
-      Jet1PuppiSDptCorrDn                   = sumPUPsubjets_P4_L23resCorrDn     .Perp();
-      Jet1PuppiSDptCorrL23Smear             = sumPUPsubjets_P4_L23resPtSmear    .Perp();
-      Jet1PuppiSDptCorrL23SmearUp           = sumPUPsubjets_P4_L23resPtSmearUp  .Perp();
-      Jet1PuppiSDptCorrL23SmearDn           = sumPUPsubjets_P4_L23resPtSmearDn  .Perp();
-      Jet1PuppiSDeta                        = sumPUPsubjets_P4_uncorr           .Eta() ;
-      Jet1PuppiSDphi                        = sumPUPsubjets_P4_uncorr           .Phi() ;
+      JetPuppiSDmass                       = sumPUPsubjets_P4_uncorr           .M()   ;
+      JetPuppiSDmassCorr                   = sumPUPsubjets_P4_L23res           .M()   ;
+      JetPuppiSDmassCorrUp                 = sumPUPsubjets_P4_L23resCorrUp     .M()   ;
+      JetPuppiSDmassCorrDn                 = sumPUPsubjets_P4_L23resCorrDn     .M()   ;
+      JetPuppiSDmassCorrL23Smear           = sumPUPsubjets_P4_L23resPtSmear    .M()   ;
+      JetPuppiSDmassCorrL23SmearUp         = sumPUPsubjets_P4_L23resPtSmearUp  .M()   ;
+      JetPuppiSDmassCorrL23SmearDn         = sumPUPsubjets_P4_L23resPtSmearDn  .M()   ;
+      JetPuppiSDpt                         = sumPUPsubjets_P4_uncorr           .Perp();
+      JetPuppiSDptCorr                     = sumPUPsubjets_P4_L23res           .Perp();
+      JetPuppiSDptCorrUp                   = sumPUPsubjets_P4_L23resCorrUp     .Perp();
+      JetPuppiSDptCorrDn                   = sumPUPsubjets_P4_L23resCorrDn     .Perp();
+      JetPuppiSDptCorrL23Smear             = sumPUPsubjets_P4_L23resPtSmear    .Perp();
+      JetPuppiSDptCorrL23SmearUp           = sumPUPsubjets_P4_L23resPtSmearUp  .Perp();
+      JetPuppiSDptCorrL23SmearDn           = sumPUPsubjets_P4_L23resPtSmearDn  .Perp();
+      JetPuppiSDeta                        = sumPUPsubjets_P4_uncorr           .Eta() ;
+      JetPuppiSDphi                        = sumPUPsubjets_P4_uncorr           .Phi() ;
 
       JetPuppiTau1                          = puppi_tau1       ;                  
       JetPuppiTau2                          = puppi_tau2       ;                  
@@ -5031,19 +5104,20 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   Elecron_relIsoWithDBeta   = el0_relIsoWithDBeta  ;  
   Elecron_absiso_EA         = el0_absiso_EA        ;  
   Elecron_relIsoWithEA      = el0_relIsoWithEA     ;  
-  if (el0_isMedium) Electron_isMedium  = 1         ;
-  else              Electron_isMedium  = 0;
-  if (el0_isTight)  Electron_isTight   = 1         ;
-  else              Electron_isTight   = 0;
 
-  if(mu0_isMedium) MuMedium = 1   ;
-  else             MuMedium = 0   ;
+  Electron_iso_passHLTpre   = el0_iso_passHLTpre  ;
+  Electron_iso_passLoose    = el0_iso_passLoose   ;
+  Electron_iso_passMedium   = el0_iso_passMedium  ;
+  Electron_iso_passTight    = el0_iso_passTight   ;
+  Electron_iso_passHEEP     = el0_iso_passHEEP    ;
+  Electron_noiso_passLoose  = el0_noiso_passLoose ;
+  Electron_noiso_passMedium = el0_noiso_passMedium;
+  Electron_noiso_passTight  = el0_noiso_passTight ;
+  Electron_noiso_passHEEP   = el0_noiso_passHEEP  ;
 
-  if(mu0_isTight) MuTight = 1   ;
-  else            MuTight = 0   ;
-
-  if(mu0_isHighPt) MuHighPt = 1   ;
-  else             MuHighPt = 0   ;
+  MuMedium = (int) mu0_isMedium   ;
+  MuTight  = (int) mu0_isTight    ;
+  MuHighPt = (int) mu0_isHighPt   ;
 
   //------------------------------------
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
@@ -5132,6 +5206,24 @@ B2GTTbarTreeMaker::fillDescriptions(edm::ConfigurationDescriptions& descriptions
   edm::ParameterSetDescription desc;
   desc.setUnknown();
   descriptions.addDefault(desc);
+}
+
+void 
+B2GTTbarTreeMaker::printCutFlowResult(vid::CutFlowResult &cutflow){
+
+  printf("    CutFlow name= %s    decision is %d\n", 
+   cutflow.cutFlowName().c_str(),
+   (int) cutflow.cutFlowPassed());
+  int ncuts = cutflow.cutFlowSize();
+  printf(" Index                               cut name              isMasked    value-cut-upon     pass?\n");
+  for(int icut = 0; icut<ncuts; icut++){
+    printf("  %2d      %50s    %d        %f          %d\n", icut,
+     cutflow.getNameAtIndex(icut).c_str(),
+     (int)cutflow.isCutMasked(icut),
+     cutflow.getValueCutUpon(icut),
+     (int)cutflow.getCutResultByIndex(icut));
+  }
+  
 }
 
 //define this as a plug-in
