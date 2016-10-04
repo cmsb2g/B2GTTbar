@@ -947,6 +947,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t LeptonMass                             ;
       Float_t PtRel                                  ;
       Int_t   LeptonIsMu                             ;
+      Int_t   MuHighPt                                ;
       Int_t   MuTight                                ;
       Int_t   MuMedium                               ;
       Float_t DeltaRJetLep                           ; 
@@ -957,6 +958,8 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Elecron_absiso_EA                      ;
       Float_t Elecron_relIsoWithEA                   ;
 
+      Int_t Electron_isMedium   ; 
+      Int_t Electron_isTight    ; 
 
 };
 
@@ -1784,6 +1787,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("LeptonIsMu"                           , &  LeptonIsMu                       , "LeptonIsMu/I"                     ); 
   TreeSemiLept->Branch("MuMedium"                             , &  MuMedium                         , "MuMedium/I"                       ); 
   TreeSemiLept->Branch("MuTight"                              , &  MuTight                          , "MuTight/I"                        ); 
+  TreeSemiLept->Branch("MuHighPt"                             , &  MuHighPt                         , "MuHighPt/I"                       ); 
   TreeSemiLept->Branch("DeltaRJetLep"                         , &  DeltaRJetLep                     , "DeltaRJetLep/F"                   ); 
   TreeSemiLept->Branch("DeltaPhiJetLep"                       , &  DeltaPhiJetLep                   , "DeltaPhiJetLep/F"                 ); 
   
@@ -1794,6 +1798,12 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("Elecron_absiso_EA"                    , &  Elecron_absiso_EA                , "Elecron_absiso_EA/F"              ); 
   TreeSemiLept->Branch("Elecron_relIsoWithEA"                 , &  Elecron_relIsoWithEA             , "Elecron_relIsoWithEA/F"           ); 
 
+  TreeSemiLept->Branch("Electron_isMedium"                 , &  Electron_isMedium             , "Electron_isMedium/I"           ); 
+  TreeSemiLept->Branch("Electron_isTight"                  , &  Electron_isTight              , "Electron_isTight/I"            ); 
+
+ 
+ 
+ 
  
  
  
@@ -2624,6 +2634,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   TLorentzVector mu0_p4;
   bool mu0_isTight=false;
   bool mu0_isMedium=false;
+  bool mu0_isHighPt = false;
   double mu0_iso04=0;
   int count_mu=0;
 
@@ -2646,6 +2657,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
                       muon::segmentCompatibility(mu) > (goodGlob ? 0.303 : 0.451); 
         if ( isMedium ) mu0_isMedium = true;
 
+        bool isHighPt = mu.isHighPtMuon(PV);
+        if ( isHighPt ) mu0_isHighPt = true;
 
         // https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Accessing_PF_Isolation_from_reco
         double sumChargedHadronPt = mu.pfIsolationR04().sumChargedHadronPt;
@@ -2656,10 +2669,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         double iso04 = (sumChargedHadronPt+TMath::Max(0.,sumNeutralHadronPt+sumPhotonPt-0.5*sumPUPt))/pt;
         mu0_iso04 = iso04;
 
-	for (unsigned int i = 0, n = mu.numberOfSourceCandidatePtrs(); i < n; ++i) {
-	  muFootprint.push_back(mu.sourceCandidatePtr(i));
-	}
-  
+        for (unsigned int i = 0, n = mu.numberOfSourceCandidatePtrs(); i < n; ++i) {
+          muFootprint.push_back(mu.sourceCandidatePtr(i));
+        }
+
 
 
         if (verbose_) cout<<"Muon pT "<<mu.pt()<<" iso04 "<<iso04<<endl;
@@ -2687,6 +2700,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   Float_t el0_relIsoWithDBeta  =0;
   Float_t el0_absiso_EA        =0;
   Float_t el0_relIsoWithEA     =0;
+  bool el0_isMedium     = false;
+  bool el0_isTight      = false;
   int count_el=0;
 
   std::vector<reco::CandidatePtr> elFootprint;
@@ -2702,7 +2717,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       // Recomended isolation variables are stored separately and not included in the loose quality cut
 
 
-      bool passLoose =false ;
+      bool passLoose      = false;
+      bool passMedium     = false;
+      bool passTight      = false;
+
       float ooEmooP_; 
       if( el.ecalEnergy() == 0 ){
         if(verbose_) printf("Electron energy is zero!\n");
@@ -2733,8 +2751,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       float relIsoWithEA = absiso_EA/el.pt();
 
 
-
-      if (fabs(el.eta())<1.479 ){
+      if (fabs(el.eta())<=1.479 ){
         if( el.full5x5_sigmaIetaIeta()                <      0.011      &&
             fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00477    &&
             fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.222      &&
@@ -2742,6 +2759,22 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
             ooEmooP_                                  <      0.241      &&
             missHits                                  <=     1           ){ 
           passLoose =true ;
+        }
+        if( el.full5x5_sigmaIetaIeta()                <      0.00998     &&
+            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00311     &&
+            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.103       &&
+            el.hadronicOverEm()                       <      0.253       &&
+            ooEmooP_                                  <      0.134       &&
+            missHits                                  <=     1           ){ 
+          passMedium =true ;
+        }
+        if( el.full5x5_sigmaIetaIeta()                <      0.00998     &&
+            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00308     &&
+            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.0816      &&
+            el.hadronicOverEm()                       <      0.0414      &&
+            ooEmooP_                                  <      0.0129      &&
+            missHits                                  <=     1           ){ 
+          passTight =true ;
         }
       }
       else { 
@@ -2753,7 +2786,26 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
             missHits                                  <=     1             ){ 
           passLoose =true ;
         }
+        if( el.full5x5_sigmaIetaIeta()                <      0.0298      &&
+            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00609     &&
+            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.045       &&
+            el.hadronicOverEm()                       <      0.0878      &&
+            ooEmooP_                                  <      0.13        &&
+            missHits                                  <=     1             ){ 
+          passMedium =true ;
+        }
+        if( el.full5x5_sigmaIetaIeta()                <      0.0292      &&
+            fabs(el.deltaEtaSuperClusterTrackAtVtx()) <      0.00605     &&
+            fabs(el.deltaPhiSuperClusterTrackAtVtx()) <      0.0394      &&
+            el.hadronicOverEm()                       <      0.0641      &&
+            ooEmooP_                                  <      0.0129      &&
+            missHits                                  <=     1             ){ 
+          passTight =true ;
+        }
       }
+
+
+
       if (!passLoose) continue;
 
       if (count_el==0){
@@ -2763,10 +2815,12 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         el0_relIsoWithDBeta  = relIsoWithDBeta;
         el0_absiso_EA        = absiso_EA;
         el0_relIsoWithEA     = relIsoWithEA;
+        el0_isMedium         = passMedium;
+        el0_isTight          = passTight ;
 
-	for (unsigned int i = 0, n = el.numberOfSourceCandidatePtrs(); i < n; ++i) {
-	  elFootprint.push_back(el.sourceCandidatePtr(i));
-	}
+        for (unsigned int i = 0, n = el.numberOfSourceCandidatePtrs(); i < n; ++i) {
+          elFootprint.push_back(el.sourceCandidatePtr(i));
+        }
 
 
         if (verbose_) cout<<"Electron pT "<<el.pt()<<endl;
@@ -3579,6 +3633,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           double subjet_corr_factor_L23res = subjet_corr_factor_L2 * subjet_corr_factor_L3 * subjet_corr_factor_res    ;
           if (verbose_) cout<<"  subjet corr: L1 "<<subjet_corr_factor_L1<<" L23 "<<subjet_corr_factor_L23<<" L23res "<<subjet_corr_factor_L23res<<" L123res "<<subjet_corr_factor_L123res<<endl;
           reco::Candidate::LorentzVector corrSubjetL23res   = subjet_corr_factor_L23res * uncorrSubjet;
+          
+   cout<<"CHSsubjet area "<<isub.jetArea() <<endl;
           
           //------------------------------------
           // subjet JEC uncertainty
@@ -4975,12 +5031,19 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   Elecron_relIsoWithDBeta   = el0_relIsoWithDBeta  ;  
   Elecron_absiso_EA         = el0_absiso_EA        ;  
   Elecron_relIsoWithEA      = el0_relIsoWithEA     ;  
+  if (el0_isMedium) Electron_isMedium  = 1         ;
+  else              Electron_isMedium  = 0;
+  if (el0_isTight)  Electron_isTight   = 1         ;
+  else              Electron_isTight   = 0;
 
   if(mu0_isMedium) MuMedium = 1   ;
   else             MuMedium = 0   ;
 
   if(mu0_isTight) MuTight = 1   ;
   else            MuTight = 0   ;
+
+  if(mu0_isHighPt) MuHighPt = 1   ;
+  else             MuHighPt = 0   ;
 
   //------------------------------------
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
