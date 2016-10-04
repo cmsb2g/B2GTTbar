@@ -5005,9 +5005,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   AllHadRunNum         = iEvent.id().run() ;              
   AllHadLumiBlock      = iEvent.id().luminosityBlock() ;              
   AllHadEventNum       = iEvent.id().event() ;  
-  if (passMETfilters) PassMETFilters       = 1;
-  else PassMETFilters                      = 0;
-
+  PassMETFilters = (int)  passMETfilters;
 
                  
 
@@ -5064,9 +5062,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   SemiLeptNNPDF3weight_CorrUp  = NNPDF3wgt_up ;              
   SemiLeptRunNum               = iEvent.id().run() ;              
   SemiLeptLumiBlock            = iEvent.id().luminosityBlock() ;              
-  SemiLeptEventNum             = iEvent.id().event() ;              
-  if(passMETfilters) SemiLeptPassMETFilters  = 1;
-  else SemiLeptPassMETFilters  = 0;
+  SemiLeptEventNum             = iEvent.id().event() ; 
+  SemiLeptPassMETFilters = (int) SemiLeptPassMETFilters;              
 
   AK4dRminPt        = AK4_dRMinLep_p4.Perp() ;
   AK4dRminEta       = AK4_dRMinLep_p4.Eta()  ;
@@ -5078,14 +5075,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   AK4BtagdRminPt    = AK4_btagged_dRMinLep_p4.Perp();
   AK4BtagdRminBdisc = AK4_btagged_dRMinLep_bdisc    ;
   AK4BtagdRminLep   = AK4_btagged_dRMinLep          ;
-
  
-  if (ak4_btag_loose)  LepHemiContainsAK4BtagLoose   = 1  ;
-  else                 LepHemiContainsAK4BtagLoose   = 0  ;
-  if (ak4_btag_medium) LepHemiContainsAK4BtagMedium  = 1  ;
-  else                 LepHemiContainsAK4BtagMedium  = 0  ;
-  if (ak4_btag_tight)  LepHemiContainsAK4BtagTight   = 1  ;
-  else                 LepHemiContainsAK4BtagTight   = 0  ;
+  LepHemiContainsAK4BtagLoose  = (int)  ak4_btag_loose;
+  LepHemiContainsAK4BtagMedium = (int)  ak4_btag_medium;
+  LepHemiContainsAK4BtagTight  = (int)  ak4_btag_tight;
 
   LeptonPhi   = lep0_p4.Phi()  ; 
   LeptonPt    = lep0_p4.Perp() ;  
