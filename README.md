@@ -1,6 +1,28 @@
 # B2GTTbar
 
-##2016 recipe:
+##B2G2016 TreeV3 recipe:
+```
+cmsrel CMSSW_8_0_20
+cmsenv
+git cms-init
+git cms-merge-topic -u cms-met:CMSSW_8_0_X-METFilterUpdate
+git cms-merge-topic ikrav:egm_id_80X_v1
+git clone https://github.com/rappoccio/PredictedDistribution.git Analysis/PredictedDistribution
+git clone https://github.com/cmsb2g/B2GTTbar.git Analysis/B2GTTbar
+git clone git@github.com:cms-jet/JetToolbox.git JMEAnalysis/JetToolbox -b jetToolbox_80X
+cd B2GTTbar/test/
+```
+for MC:
+
+`cmsRun run_B2GTTbarTreeMaker_MC_ToolboxUpdateJet.py`
+
+for data:
+
+`cmsRun run_B2GTTbarTreeMaker_data_ToolboxUpdateJet.py`
+
+
+
+##B2G2016 TreeV2 recipe:
 ```
 cmsrel CMSSW_8_0_13
 cd CMSSW_8_0_13/src/
