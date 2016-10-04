@@ -8,7 +8,7 @@ git cms-init
 git cms-merge-topic -u cms-met:CMSSW_8_0_X-METFilterUpdate
 git cms-merge-topic ikrav:egm_id_80X_v1
 git clone https://github.com/rappoccio/PredictedDistribution.git Analysis/PredictedDistribution
-git clone https://github.com/cmsb2g/B2GTTbar.git Analysis/B2GTTbar
+git clone https://github.com/cmsb2g/B2GTTbar.git Analysis/B2GTTbar -b TreeV3
 git clone git@github.com:cms-jet/JetToolbox.git JMEAnalysis/JetToolbox -b jetToolbox_80X
 cd B2GTTbar/test/
 ```
