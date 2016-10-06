@@ -16,20 +16,6 @@
 //
 //
 
-//--------------------------
-// To add:
-// - NNPDF3weight  
-// - electron quality cuts
-// - trigger
-//
-// Note. The following items should be applied at the tree reader level:
-// - MU ID (HIP)
-// -- TFile* f_muID = TFile::Open("MuonID_Z_RunBCD_prompt80X_7p65.root","read");
-// -- TH1F* h_muID = (TH1F*) f_muID->Get("MC_NUM_MediumID_DEN_genTracks_PAR_eta/eta_ratio")->Clone();
-// -- float SF_muID = h_muID->GetBinContent(h_muID->FindBin(eta););
-// - BTagCalibrationReader
-//--------------------------
-
 
 // system include files
 #include <memory>
@@ -226,6 +212,8 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       TH1D * h_NtrueIntPU ;
       TH1D * h_NPV           ;               
       TH1D * h_NPVreweighted ;     
+      TH1D * h_NPVgood          ;               
+      TH1D * h_NPVgoodreweighted ;     
 
 
       int count_GenTruth_semileptonic ;
@@ -705,6 +693,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t AllHadMETphi                              ;           
       Float_t AllHadMETsumET                            ;           
       Float_t AllHadNvtx                                ;           
+      Float_t AllHadNvtxGood                            ;           
       Float_t AllHadNPUtrue                             ;           
       Float_t AllHadRho                                 ;           
       Float_t AllHadEventWeight                         ;    
@@ -977,6 +966,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t SemiLeptMETphi                         ;
       Float_t SemiLeptMETsumET                       ;
       Float_t SemiLeptNvtx                           ;
+      Float_t SemiLeptNvtxGood                       ;
       Float_t SemiLeptNPUtrue                        ;
       Float_t SemiLeptRho                            ;
       Float_t SemiLeptEventWeight                    ;
@@ -1112,6 +1102,9 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   h_NtrueIntPU                       =  fs->make<TH1D>("h_NtrueIntPU"                      ,"",200,0,200);
   h_NPV                              =  fs->make<TH1D>("h_NPV"                             ,"",200,0,200);
   h_NPVreweighted                    =  fs->make<TH1D>("h_NPVreweighted"                   ,"",200,0,200);
+  h_NPVgood                          =  fs->make<TH1D>("h_NPVgood"                         ,"",200,0,200);
+  h_NPVgoodreweighted                =  fs->make<TH1D>("h_NPVgoodreweighted"               ,"",200,0,200);
+
 
 
 
@@ -1584,6 +1577,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("AllHadMETphi"                          , & AllHadMETphi                       ,    "AllHadMETphi/F"                            );                                     
   TreeAllHad->Branch("AllHadMETsumET"                        , & AllHadMETsumET                     ,    "AllHadMETsumET/F"                          );                                     
   TreeAllHad->Branch("AllHadNvtx"                            , & AllHadNvtx                         ,    "AllHadNvtx/F"                              );                                   
+  TreeAllHad->Branch("AllHadNvtxGood"                        , & AllHadNvtxGood                     ,    "AllHadNvtxGood/F"                          );                                   
   TreeAllHad->Branch("AllHadRho"                             , & AllHadRho                          ,    "AllHadRho/F"                               );                                  
   TreeAllHad->Branch("AllHadEventWeight"                     , & AllHadEventWeight                  ,    "AllHadEventWeight/F"                       );                                          
   TreeAllHad->Branch("AllHadPUweight"                        , & AllHadPUweight                     ,    "AllHadPUweight/F"                          );
@@ -1869,6 +1863,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptMETphi"                       , & SemiLeptMETphi                    , "SemiLeptMETphi/F"                 );
   TreeSemiLept->Branch("SemiLeptMETsumET"                     , & SemiLeptMETsumET                  , "SemiLeptMETsumET/F"               );
   TreeSemiLept->Branch("SemiLeptNvtx"                         , & SemiLeptNvtx                      , "SemiLeptNvtx/F"                   );
+  TreeSemiLept->Branch("SemiLeptNvtxGood"                     , & SemiLeptNvtxGood                  , "SemiLeptNvtxGood/F"               );
   TreeSemiLept->Branch("SemiLeptRho"                          , & SemiLeptRho                       , "SemiLeptRho/F"                    );
   TreeSemiLept->Branch("SemiLeptEventWeight"                  , & SemiLeptEventWeight               , "SemiLeptEventWeight/F"            );
   TreeSemiLept->Branch("SemiLeptPUweight"                  , & SemiLeptPUweight               , "SemiLeptPUweight/F"            );
@@ -2536,47 +2531,22 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //      Y8P      "Y8888  888      "Y888 888  "Y8888P  "Y8888   88888P' 
   //                                                                     
   //                                                                     
-  // cout<<endl;                                                                      
+                                                                     
   edm::Handle<std::vector<reco::Vertex> > vertices;
   iEvent.getByToken(vtxToken_, vertices);
   int nvtx = vertices->size();
   if (vertices->empty()) return; // skip the event if no PV found
   const reco::Vertex &PV = vertices->front();  // save PV for tight muon ID
-  // cout<<"front PV ndof "<<PV.ndof()<<endl;
 
-
-  // const reco::Vertex &firstGoodVertex = vertices->front();  // save PV for tight muon ID
-  // int nvtxgood =0 ;
-
-  //   for(std::vector<reco::Vertex>::const_iterator vtx = vertices->begin(); vtx != vertices->end(); ++vtx) {
-  //     cout<<"vtx->ndof() "<<vtx->ndof()<<endl;
-
-  //     bool isFake = vtx->isFake();
-  //     isFake = (vtx->chi2()==0 && vtx->ndof()==0);
-  //     // Check the goodness
-  //     if ( !isFake &&  vtx->ndof()>=4. && vtx->position().Rho()<=2.0 && fabs(vtx->position().Z())<=24.0) {
-  //       cout<<"found good vertex"<<endl;
-  //       nvtxgood++;
-  //       // firstGoodVertex = vtx;
-  //       // break;
-  //     }
-  //   }
-
-  // cout<<"nvtx "<<nvtx<<" nvtxgood "<<nvtxgood<<endl;
-
-  // if (nvtx!=nvtxgood) cout <<"FIRST VERTEX WAS NOT GOOD"<<endl;
-
-
-  // int nvtxgood =0 ;
-  // for (VertexCollection::const_iterator vtx = vertices->begin(); vtx != vertices->end(); ++vtx, ++firstGoodVertexIdx) {
-  //   // Replace isFake() for miniAOD because it requires tracks and miniAOD vertices don't have tracks:
-  //   // Vertex.h: bool isFake() const {return (chi2_==0 && ndof_==0 && tracks_.empty());}
-  //   bool isFake = (vtx->chi2()==0 && vtx->ndof()==0);
-  //   if ( !isFake &&  vtx->ndof()>=4. && vtx->position().Rho()<=2.0 && fabs(vtx->position().Z())<=24.0) {
-  //     nvtxgood++;
-  //   }
-  // }
-
+  int nvtxgood =0 ;
+  for(std::vector<reco::Vertex>::const_iterator vtx = vertices->begin(); vtx != vertices->end(); ++vtx) {
+    bool isFake = (vtx->chi2()==0 && vtx->ndof()==0);   //// bool isFake = vtx->isFake();  // for AOD
+    if ( !isFake &&  vtx->ndof()>=4. && vtx->position().Rho()<=2.0 && fabs(vtx->position().Z())<=24.0) {
+      cout<<"found good vertex"<<endl;
+      nvtxgood++;
+    }
+  }
+  if (verbose_) cout<<"nvtx "<<nvtx<<" nvtxgood "<<nvtxgood<<endl;
 
   //
   //  8888888b.  888     888     888       888          d8b          888      888    
@@ -2613,6 +2583,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   h_NtrueIntPU ->Fill(nPU);
   h_NPV ->Fill(nvtx);
   h_NPVreweighted  ->Fill(nvtx,puweight);
+  h_NPVgood ->Fill(nvtxgood);
+  h_NPVgoodreweighted  ->Fill(nvtxgood,puweight);
 
   //  888      888    888 8888888888     888       888          d8b          888      888             
   //  888      888    888 888            888   o   888          Y8P          888      888             
@@ -2646,14 +2618,14 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       
       if (verbose_) cout << "Q^2 loop" <<endl;
       for (unsigned int iLHE = 0; iLHE < 9; ++iLHE){
-	if (iLHE != 5 && iLHE != 7){
-	  double Q2wgt = EvtHandle->weights()[iLHE].wgt;
-	  if (verbose_) cout << "Q^2 Weight: " << Q2wgt << endl;
-	  double Q2wgt_frac = Q2wgt/(centralWgt);
-	  if (verbose_) cout << "Fractional Q^2 Weight: " << Q2wgt_frac << endl;
-	  maxQ2wgt_frac = max(maxQ2wgt_frac, Q2wgt_frac);
-	  minQ2wgt_frac = min(minQ2wgt_frac, Q2wgt_frac);
-	}
+        if (iLHE != 5 && iLHE != 7){
+          double Q2wgt = EvtHandle->weights()[iLHE].wgt;
+          if (verbose_) cout << "Q^2 Weight: " << Q2wgt << endl;
+          double Q2wgt_frac = Q2wgt/(centralWgt);
+          if (verbose_) cout << "Fractional Q^2 Weight: " << Q2wgt_frac << endl;
+          maxQ2wgt_frac = max(maxQ2wgt_frac, Q2wgt_frac);
+          minQ2wgt_frac = min(minQ2wgt_frac, Q2wgt_frac);
+        }
       }
       
       Q2wgt_up = maxQ2wgt_frac;
@@ -2672,41 +2644,41 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
       //Zprime
       if (isZprime_){
-	PDFstart = 10;
-	PDFend = 110;
+        PDFstart = 10;
+        PDFend = 110;
       }
 
       //Making sure central PDF isn't zero                                                                                              
       if (centralWgt == 0){
-	NNPDF3wgt_up = 0.0;
+        NNPDF3wgt_up = 0.0;
         NNPDF3wgt_down = 0.0;
-	if (verbose_) cout << "Unphysical: central PDF weight is zero!" << endl;
+        if (verbose_) cout << "Unphysical: central PDF weight is zero!" << endl;
       }
       else{
-	for (unsigned int i_lhePDF = PDFstart; i_lhePDF < PDFend; ++i_lhePDF){
-	  NNPDF3wgt = EvtHandle->weights()[i_lhePDF].wgt;
-	  NNPDF3wgt_frac = NNPDF3wgt/(centralWgt);
-	  NNPDF3wgtAvg += NNPDF3wgt_frac;
-	  if (verbose_){
-	    cout << "-----" << endl;
-	    cout << i_lhePDF - PDFstart << endl;
-	    cout << "Fractional PDF weight: " << NNPDF3wgt_frac << endl;
-	    cout << "-----" << endl;
-	    cout << "" << endl;
-	  }
-	}
+        for (unsigned int i_lhePDF = PDFstart; i_lhePDF < PDFend; ++i_lhePDF){
+          NNPDF3wgt = EvtHandle->weights()[i_lhePDF].wgt;
+          NNPDF3wgt_frac = NNPDF3wgt/(centralWgt);
+          NNPDF3wgtAvg += NNPDF3wgt_frac;
+          if (verbose_){
+            cout << "-----" << endl;
+            cout << i_lhePDF - PDFstart << endl;
+            cout << "Fractional PDF weight: " << NNPDF3wgt_frac << endl;
+            cout << "-----" << endl;
+            cout << "" << endl;
+          }
+        }
 
-	NNPDF3wgtAvg = NNPDF3wgtAvg/(PDFend - PDFstart);
-	if (verbose_) cout << NNPDF3wgtAvg;
-      
-	for (unsigned int i_lhePDF = PDFstart; i_lhePDF < PDFend; ++i_lhePDF){
-	  NNPDF3wgt = EvtHandle->weights()[i_lhePDF].wgt;
-	  NNPDF3wgt_frac = NNPDF3wgt/(centralWgt);
-	  NNPDF3wgtRMS += (NNPDF3wgt_frac - NNPDF3wgtAvg)*(NNPDF3wgt_frac - NNPDF3wgtAvg);
-	}
-	
-	NNPDF3wgtRMS = sqrt(NNPDF3wgtRMS/(PDFend - PDFstart - 1));
-	NNPDF3wgt_up = 1.0 + NNPDF3wgtRMS;
+        NNPDF3wgtAvg = NNPDF3wgtAvg/(PDFend - PDFstart);
+        if (verbose_) cout << NNPDF3wgtAvg;
+            
+        for (unsigned int i_lhePDF = PDFstart; i_lhePDF < PDFend; ++i_lhePDF){
+          NNPDF3wgt = EvtHandle->weights()[i_lhePDF].wgt;
+          NNPDF3wgt_frac = NNPDF3wgt/(centralWgt);
+          NNPDF3wgtRMS += (NNPDF3wgt_frac - NNPDF3wgtAvg)*(NNPDF3wgt_frac - NNPDF3wgtAvg);
+        }
+
+        NNPDF3wgtRMS = sqrt(NNPDF3wgtRMS/(PDFend - PDFstart - 1));
+        NNPDF3wgt_up = 1.0 + NNPDF3wgtRMS;
         NNPDF3wgt_down = 1.0 - NNPDF3wgtRMS;
       }
     }
@@ -5308,6 +5280,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   AllHadMETphi         = met.phi();                   
   AllHadMETsumET       = met.sumEt();                   
   AllHadNvtx           = nvtx;    
+  AllHadNvtxGood       = nvtxgood;    
   AllHadNPUtrue        = nPU;           
   AllHadRho            = rho ;               
   AllHadEventWeight    = 1 ;   
@@ -5369,6 +5342,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   SemiLeptMETphi               = met.phi();                   
   SemiLeptMETsumET             = met.sumEt();                   
   SemiLeptNvtx                 = nvtx;     
+  SemiLeptNvtxGood             = nvtxgood;     
   SemiLeptNPUtrue              = nPU;     
   SemiLeptRho                  = rho ;               
   SemiLeptEventWeight          = 1 ;              
