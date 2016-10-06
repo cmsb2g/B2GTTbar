@@ -12,13 +12,13 @@ process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
 process.load('Configuration.StandardSequences.MagneticField_38T_cff')
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
-process.GlobalTag.globaltag = '80X_mcRun2_asymptotic_2016_miniAODv2'
+process.GlobalTag.globaltag = '80X_mcRun2_asymptotic_2016_miniAODv2_v1'
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(False) )
 process.options.allowUnscheduled = cms.untracked.bool(True)
 
 #----------------------------------------------------------------------------------------
 ### INPUT
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
@@ -86,6 +86,7 @@ for idmod in my_id_modules:
 from JMEAnalysis.JetToolbox.jetToolbox_cff import jetToolbox
 
 ak8Cut = 'pt > 200 && abs(eta) < 2.5'
+ak8pupCut = 'pt > 150 && abs(eta) < 2.5'
 isMC   = True
 
 listBTagInfos = [
@@ -124,7 +125,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   addNsub = True, 
   bTagInfos = listBTagInfos, 
   bTagDiscriminators = listBtagDiscriminatorsAK8, 
-  addCMSTopTagger = True, 
+  addCMSTopTagger = False, 
   Cut = ak8Cut , 
   addNsubSubjets = True, 
   subjetMaxTau = 4 )
@@ -152,8 +153,8 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   addNsub = True, 
   bTagInfos = listBTagInfos, 
   bTagDiscriminators = listBtagDiscriminatorsAK8, 
-  addCMSTopTagger = True, 
-  Cut = ak8Cut , 
+  addCMSTopTagger = False, 
+  Cut = ak8pupCut , 
   addNsubSubjets = True, 
   subjetMaxTau = 4 )
 
@@ -230,7 +231,7 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
 
 
 process.TFileService = cms.Service("TFileService",
-      fileName = cms.string("treeTool_RSG.root"),
+      fileName = cms.string("small.root"),
       closeFileFast = cms.untracked.bool(True)
   )
 
