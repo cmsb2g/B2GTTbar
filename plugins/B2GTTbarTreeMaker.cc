@@ -39,6 +39,7 @@
 #include "DataFormats/PatCandidates/interface/Electron.h"
 #include "DataFormats/PatCandidates/interface/MET.h"
 #include "DataFormats/Common/interface/ValueMap.h"
+#include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
 
 // TFileService
 #include "FWCore/ServiceRegistry/interface/Service.h"
@@ -216,18 +217,18 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       TH1D * h_NPVgoodreweighted ;     
 
 
-      int count_GenTruth_semileptonic ;
-      int count_nMu_gt1 ; 
-      int count_nEl_gt1 ; 
-      int count_nMu_e1 ; 
-      int count_nEl_e1 ; 
-      int count_nLep_e1 ; 
-      int count_JetPt300 ; 
-      int count_JetPt300Eta ; 
-      int count_JetPt300Eta_AK4 ; 
-      int count_JetPt300Eta_muPt40 ; 
-      int count_JetPt300Eta_muPt40_MET40 ; 
-      int count_JetPt300Eta_muPt40_MET40_AK4 ; 
+      // int count_GenTruth_semileptonic ;
+      // int count_nMu_gt1 ; 
+      // int count_nEl_gt1 ; 
+      // int count_nMu_e1 ; 
+      // int count_nEl_e1 ; 
+      // int count_nLep_e1 ; 
+      // int count_JetPt300 ; 
+      // int count_JetPt300Eta ; 
+      // int count_JetPt300Eta_AK4 ; 
+      // int count_JetPt300Eta_muPt40 ; 
+      // int count_JetPt300Eta_muPt40_MET40 ; 
+      // int count_JetPt300Eta_muPt40_MET40_AK4 ; 
 
 
       //
@@ -2586,6 +2587,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   h_NPVgood ->Fill(nvtxgood);
   h_NPVgoodreweighted  ->Fill(nvtxgood,puweight);
 
+
+
   //  888      888    888 8888888888     888       888          d8b          888      888             
   //  888      888    888 888            888   o   888          Y8P          888      888             
   //  888      888    888 888            888  d8b  888                       888      888             
@@ -2729,6 +2732,28 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     
   }
 
+
+  edm::Handle<GenEventInfoProduct> genEventInfo;
+  iEvent.getByToken(pdfToken_, genEventInfo);
+  double evWeight = 1.0 ;
+  double qScale = 1.0 ;
+  double pthat = 1.0 ;
+  if (genEventInfo.isValid())
+  {
+    evWeight = genEventInfo->weight();
+    qScale   = genEventInfo->qScale();
+    // const std::vector<double>& binningValues = genEventInfo->binningValues(); // in case of Pythia6, this will be pypars/pari(17)
+    pthat    = (genEventInfo->hasBinningValues() ? (genEventInfo->binningValues())[0] : 0.0);
+    // std::vector<double>& evtWeights = genEventInfo->weights();
+    // if (evWeight < 0 ) cout<<"NEGATIVE"<<endl;
+
+    // I'll do this at the tree reading stage
+    // if (evWeight < 0 ){
+    //   if (verbose_) cout<<"evWeight < 0. evWeight *= -1.0"<<endl;;  
+    //   evWeight *= -1.0
+    // }
+    if(verbose_) cout<<"GenEventInfo: qScale = "<<qScale<<" pthat = "<<pthat<<" evWeight = "<<evWeight<<" 1/pow(pthat/15,4.5) "<<1/pow(pthat/15,4.5)<<endl;
+  }
 
   // 
   // 8888888b.  888               
@@ -5283,7 +5308,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   AllHadNvtxGood       = nvtxgood;    
   AllHadNPUtrue        = nPU;           
   AllHadRho            = rho ;               
-  AllHadEventWeight    = 1 ;   
+  AllHadEventWeight    = evWeight ;   
   AllHadPUweight       = puweight  ; 
   AllHadPUweight_MBup  = puweightUp ;
   AllHadPUweight_MBdn  = puweightDn  ;          
@@ -5345,7 +5370,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   SemiLeptNvtxGood             = nvtxgood;     
   SemiLeptNPUtrue              = nPU;     
   SemiLeptRho                  = rho ;               
-  SemiLeptEventWeight          = 1 ;              
+  SemiLeptEventWeight          = evWeight ;              
   SemiLeptPUweight             = puweight  ; 
   SemiLeptPUweight_MBup        = puweightUp ;
   SemiLeptPUweight_MBdn        = puweightDn  ;
@@ -5426,18 +5451,18 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //------------------------------------
 
 
-  if (GenTruth_semileptonic)  count_GenTruth_semileptonic ++;
-  if (count_mu  >=1 )  count_nMu_gt1 ++; 
-  if (count_el  >=1 )  count_nEl_gt1 ++; 
-  if (count_mu  ==1 )  count_nMu_e1 ++; 
-  if (count_el  ==1 )  count_nEl_e1 ++; 
-  if (count_lep ==1 )  count_nLep_e1 ++; 
-  if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300)  count_JetPt300 ++; 
-  if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 )  count_JetPt300Eta ++; 
-  if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 && AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_AK4 ++; 
-  if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40)  count_JetPt300Eta_muPt40 ++; 
-  if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40)  count_JetPt300Eta_muPt40_MET40 ++; 
-  if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40 &&  AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_muPt40_MET40_AK4 ++; 
+  // if (GenTruth_semileptonic)  count_GenTruth_semileptonic ++;
+  // if (count_mu  >=1 )  count_nMu_gt1 ++; 
+  // if (count_el  >=1 )  count_nEl_gt1 ++; 
+  // if (count_mu  ==1 )  count_nMu_e1 ++; 
+  // if (count_el  ==1 )  count_nEl_e1 ++; 
+  // if (count_lep ==1 )  count_nLep_e1 ++; 
+  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300)  count_JetPt300 ++; 
+  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 )  count_JetPt300Eta ++; 
+  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 && AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_AK4 ++; 
+  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40)  count_JetPt300Eta_muPt40 ++; 
+  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40)  count_JetPt300Eta_muPt40_MET40 ++; 
+  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40 &&  AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_muPt40_MET40_AK4 ++; 
 
   if (count_lep ==1  && verbose_){
     cout<<" ak8pt "<<AK8jet_SemiLept_P4corr.Perp()<<endl;
@@ -5467,18 +5492,18 @@ B2GTTbarTreeMaker::beginJob()
   std::cout<<"Test PU reweight file: "<<hPUweight->GetBinContent( hPUweight->GetXaxis()->FindBin( 30 ) )<<std::endl;
     
 
-  count_GenTruth_semileptonic =0;
-  count_nMu_gt1 =0; 
-  count_nEl_gt1 =0; 
-  count_nMu_e1 =0; 
-  count_nEl_e1 =0; 
-  count_nLep_e1 =0; 
-  count_JetPt300 =0; 
-  count_JetPt300Eta =0; 
-  count_JetPt300Eta_AK4 =0; 
-  count_JetPt300Eta_muPt40 =0; 
-  count_JetPt300Eta_muPt40_MET40 =0; 
-  count_JetPt300Eta_muPt40_MET40_AK4 =0; 
+  // count_GenTruth_semileptonic =0;
+  // count_nMu_gt1 =0; 
+  // count_nEl_gt1 =0; 
+  // count_nMu_e1 =0; 
+  // count_nEl_e1 =0; 
+  // count_nLep_e1 =0; 
+  // count_JetPt300 =0; 
+  // count_JetPt300Eta =0; 
+  // count_JetPt300Eta_AK4 =0; 
+  // count_JetPt300Eta_muPt40 =0; 
+  // count_JetPt300Eta_muPt40_MET40 =0; 
+  // count_JetPt300Eta_muPt40_MET40_AK4 =0; 
 
 }
 
@@ -5487,16 +5512,16 @@ void
 B2GTTbarTreeMaker::endJob() 
 {
 
-  std::cout<<" nEvents GenTruth semileptonic  :" <<count_GenTruth_semileptonic<<std::endl;
-  std::cout<<" nEvents nMu =1   :" <<count_nMu_e1 <<std::endl;
-  std::cout<<" nEvents nEl =1   :" <<count_nEl_e1 <<std::endl;
-  std::cout<<" nEvents nLepton =1   :" <<count_nLep_e1 <<std::endl;
-  std::cout<<" nEvents nLepton =1 && JetPt300   :" <<count_JetPt300 <<std::endl;
-  std::cout<<" nEvents nLepton =1 && JetPt300Eta   :" <<count_JetPt300Eta <<std::endl;
-  std::cout<<" nEvents nLepton =1 && JetPt300Eta && AK4pt>20   :" <<count_JetPt300Eta_AK4 <<std::endl;
-  std::cout<<" nEvents nLepton =1 && JetPt300Eta && muPt40   :" <<count_JetPt300Eta_muPt40 <<std::endl;
-  std::cout<<" nEvents nLepton =1 && JetPt300Eta && muPt40 && MET40   :" <<count_JetPt300Eta_muPt40_MET40 <<std::endl;
-  std::cout<<" nEvents nLepton =1 && JetPt300Eta && muPt40 && MET40 && AK4pt>20  :" <<count_JetPt300Eta_muPt40_MET40_AK4 <<std::endl;
+  // std::cout<<" nEvents GenTruth semileptonic  :" <<count_GenTruth_semileptonic<<std::endl;
+  // std::cout<<" nEvents nMu =1   :" <<count_nMu_e1 <<std::endl;
+  // std::cout<<" nEvents nEl =1   :" <<count_nEl_e1 <<std::endl;
+  // std::cout<<" nEvents nLepton =1   :" <<count_nLep_e1 <<std::endl;
+  // std::cout<<" nEvents nLepton =1 && JetPt300   :" <<count_JetPt300 <<std::endl;
+  // std::cout<<" nEvents nLepton =1 && JetPt300Eta   :" <<count_JetPt300Eta <<std::endl;
+  // std::cout<<" nEvents nLepton =1 && JetPt300Eta && AK4pt>20   :" <<count_JetPt300Eta_AK4 <<std::endl;
+  // std::cout<<" nEvents nLepton =1 && JetPt300Eta && muPt40   :" <<count_JetPt300Eta_muPt40 <<std::endl;
+  // std::cout<<" nEvents nLepton =1 && JetPt300Eta && muPt40 && MET40   :" <<count_JetPt300Eta_muPt40_MET40 <<std::endl;
+  // std::cout<<" nEvents nLepton =1 && JetPt300Eta && muPt40 && MET40 && AK4pt>20  :" <<count_JetPt300Eta_muPt40_MET40_AK4 <<std::endl;
 
 }
 

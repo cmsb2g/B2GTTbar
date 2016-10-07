@@ -19,7 +19,7 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 #----------------------------------------------------------------------------------------
 ### INPUT
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
-process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+process.MessageLogger.cerr.FwkReport.reportEvery = 10000
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
@@ -232,6 +232,24 @@ process.TFileService = cms.Service("TFileService",
       fileName = cms.string("tree.root"),
       closeFileFast = cms.untracked.bool(True)
   )
+
+
+#Adding SimpleMemoryCheck service:
+#process.SimpleMemoryCheck=cms.Service("SimpleMemoryCheck",
+#                                   ignoreTotal=cms.untracked.int32(0),
+#                                   oncePerEventMode=cms.untracked.bool(True)
+#)
+
+#process.Timing = cms.Service("Timing"
+##    ,summaryOnly = cms.untracked.bool(True)
+#)
+
+#process.ProfilerService = cms.Service("ProfilerService",
+#    lastEvent = cms.untracked.int32(10),
+#    firstEvent = cms.untracked.int32(1),
+#    paths = cms.untracked.vstring('p')
+#)
+ 
 
 process.p = cms.Path(
   process.BadChargedCandidateFilter*
