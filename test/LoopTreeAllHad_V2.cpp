@@ -15,6 +15,7 @@
 #include <iostream>
 #include <TTree.h>
 #include <TH1F.h>
+#include <TH2F.h>
 #include <sstream>
 #include <TFile.h>
 #include <TCanvas.h>
@@ -26,31 +27,39 @@
 #include <TRandom3.h>
 #include <cmath>
 #include "TMath.h"
+#include <TSystem.h>
+#include <TLorentzVector.h>
+#include <TVector3.h>
+#include "Analysis/PredictedDistribution/interface/PredictedDistribution.h"
 
 void looptree(string, string, string, string, string, bool, bool, bool, int, float);
 
 void run()
 {
-  string folder = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V2/";
-  
-  //void looptree(string input_folder, string input_file, bool isData, bool isFrozen )
-   looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
-   looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
-   looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
-   looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , false, false, true, 1, 400);   
-   looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
-   looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
-   looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
-   looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
-   looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , false, false, true, 1, 400); 
-   looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-   looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-   looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-   looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-   looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-   looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-   //looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "", "20161006", false, false, true, 1, 400);
-  //looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, true, 1, 400);
+  string folder = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V3/";
+  string mistag_file = "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root";
+
+  //--- Function def:
+  // looptree(string input_folder, string input_file, string mistagFile, string bkgdEstOutname, string date, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt);
+
+  looptree(folder,"b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "outBkgdEst_Zp2000_B2G2016", "20161010"    , false, false, true, 1, 400);
+  // looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
+  // looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
+  // looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
+  // looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , false, false, true, 1, 400);   
+  // looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
+  // looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
+  // looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
+  // looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
+  // looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , false, false, true, 1, 400); 
+  // looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+  // looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+  // looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+  // looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+  // looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+  // looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+  // looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "", "20161006", false, false, true, 1, 400);
+  // looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, true, 1, 400);
 }
 //b-tag scale factor
 bool applySF (bool isBTagged, float Btag_SF, float Btag_eff)
@@ -164,19 +173,19 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   Float_t Jet0PuppiMass                             ;
 
   Float_t Jet0PuppiSDmass                           ;
-  Float_t Jet0PuppiSDmassCorr                       ;
-  Float_t Jet0PuppiSDmassCorrUp                     ;
-  Float_t Jet0PuppiSDmassCorrDn                     ;
-  Float_t Jet0PuppiSDmassCorrL23Smear               ;
-  Float_t Jet0PuppiSDmassCorrL23SmearUp             ;
-  Float_t Jet0PuppiSDmassCorrL23SmearDn             ;
+  Float_t Jet0PuppiSDmassSubjetCorr                       ;
+  Float_t Jet0PuppiSDmassSubjetCorrUp                     ;
+  Float_t Jet0PuppiSDmassSubjetCorrDn                     ;
+  // Float_t Jet0PuppiSDmassSubjetCorrL23Smear               ;
+  // Float_t Jet0PuppiSDmassSubjetCorrL23SmearUp             ;
+  // Float_t Jet0PuppiSDmassSubjetCorrL23SmearDn             ;
   Float_t Jet0PuppiSDpt                             ;
-  Float_t Jet0PuppiSDptCorr                         ;
-  Float_t Jet0PuppiSDptCorrUp                       ;
-  Float_t Jet0PuppiSDptCorrDn                       ;
-  Float_t Jet0PuppiSDptCorrL23Smear                 ;
-  Float_t Jet0PuppiSDptCorrL23SmearUp               ;
-  Float_t Jet0PuppiSDptCorrL23SmearDn               ;
+  Float_t Jet0PuppiSDptSubjetCorr                         ;
+  Float_t Jet0PuppiSDptSubjetCorrUp                       ;
+  Float_t Jet0PuppiSDptSubjetCorrDn                       ;
+  // Float_t Jet0PuppiSDptSubjetCorrL23Smear                 ;
+  // Float_t Jet0PuppiSDptSubjetCorrL23SmearUp               ;
+  // Float_t Jet0PuppiSDptSubjetCorrL23SmearDn               ;
   Float_t Jet0PuppiSDeta                            ;
   Float_t Jet0PuppiSDphi                            ;
 
@@ -237,8 +246,8 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   Float_t Jet0PuppiPtSmearFactor                    ;
   Float_t Jet0PuppiPtSmearFactorUp                  ;
   Float_t Jet0PuppiPtSmearFactorDn                  ;
-  Float_t Jet0EtaScaleFactor                        ;
-  Float_t Jet0PhiScaleFactor                        ;
+  // Float_t Jet0EtaScaleFactor                        ;
+  // Float_t Jet0PhiScaleFactor                        ;
   // Float_t Jet0MatchedGenJetDR                       ;
   Float_t Jet0MatchedGenJetPt                       ;
   Float_t Jet0MatchedGenJetMass                     ;
@@ -359,19 +368,19 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   Float_t Jet1PuppiMass                             ;
 
   Float_t Jet1PuppiSDmass                           ;
-  Float_t Jet1PuppiSDmassCorr                       ;
-  Float_t Jet1PuppiSDmassCorrUp                     ;
-  Float_t Jet1PuppiSDmassCorrDn                     ;
-  Float_t Jet1PuppiSDmassCorrL23Smear               ;
-  Float_t Jet1PuppiSDmassCorrL23SmearUp             ;
-  Float_t Jet1PuppiSDmassCorrL23SmearDn             ;
+  Float_t Jet1PuppiSDmassSubjetCorr                       ;
+  Float_t Jet1PuppiSDmassSubjetCorrUp                     ;
+  Float_t Jet1PuppiSDmassSubjetCorrDn                     ;
+  // Float_t Jet1PuppiSDmassSubjetCorrL23Smear               ;
+  // Float_t Jet1PuppiSDmassSubjetCorrL23SmearUp             ;
+  // Float_t Jet1PuppiSDmassSubjetCorrL23SmearDn             ;
   Float_t Jet1PuppiSDpt                             ;
-  Float_t Jet1PuppiSDptCorr                         ;
-  Float_t Jet1PuppiSDptCorrUp                       ;
-  Float_t Jet1PuppiSDptCorrDn                       ;
-  Float_t Jet1PuppiSDptCorrL23Smear                 ;
-  Float_t Jet1PuppiSDptCorrL23SmearUp               ;
-  Float_t Jet1PuppiSDptCorrL23SmearDn               ;
+  Float_t Jet1PuppiSDptSubjetCorr                         ;
+  Float_t Jet1PuppiSDptSubjetCorrUp                       ;
+  Float_t Jet1PuppiSDptSubjetCorrDn                       ;
+  // Float_t Jet1PuppiSDptSubjetCorrL23Smear                 ;
+  // Float_t Jet1PuppiSDptSubjetCorrL23SmearUp               ;
+  // Float_t Jet1PuppiSDptSubjetCorrL23SmearDn               ;
   Float_t Jet1PuppiSDeta                            ;
   Float_t Jet1PuppiSDphi                            ;
 
@@ -432,8 +441,8 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   Float_t Jet1PuppiPtSmearFactor                    ;
   Float_t Jet1PuppiPtSmearFactorUp                  ;
   Float_t Jet1PuppiPtSmearFactorDn                  ;
-  Float_t Jet1EtaScaleFactor                        ;
-  Float_t Jet1PhiScaleFactor                        ;
+  // Float_t Jet1EtaScaleFactor                        ;
+  // Float_t Jet1PhiScaleFactor                        ;
   // Float_t Jet1MatchedGenJetDR                       ;
   Float_t Jet1MatchedGenJetPt                       ;
   Float_t Jet1MatchedGenJetMass                     ;
@@ -546,9 +555,9 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   T1->SetBranchAddress("Jet0SDmassCorrL123"                    , & Jet0SDmassCorrL123                  );                                                      
   T1->SetBranchAddress("Jet0SDmassCorrL123Up"                  , & Jet0SDmassCorrL123Up                );                                                        
   T1->SetBranchAddress("Jet0SDmassCorrL123Dn"                  , & Jet0SDmassCorrL123Dn                );                                                        
-  T1->SetBranchAddress("Jet0SDmassCorrL23Smear"                , & Jet0SDmassCorrL23Smear              );                                                     
-  T1->SetBranchAddress("Jet0SDmassCorrL23SmearUp"              , & Jet0SDmassCorrL23SmearUp            );                                                       
-  T1->SetBranchAddress("Jet0SDmassCorrL23SmearDn"              , & Jet0SDmassCorrL23SmearDn            );   
+  // T1->SetBranchAddress("Jet0SDmassCorrL23Smear"                , & Jet0SDmassCorrL23Smear              );                                                     
+  // T1->SetBranchAddress("Jet0SDmassCorrL23SmearUp"              , & Jet0SDmassCorrL23SmearUp            );                                                       
+  // T1->SetBranchAddress("Jet0SDmassCorrL23SmearDn"              , & Jet0SDmassCorrL23SmearDn            );   
   T1->SetBranchAddress("Jet0SDptRaw"                           , & Jet0SDptRaw                         );                                               
   T1->SetBranchAddress("Jet0SDptCorrL23"                       , & Jet0SDptCorrL23                     );                                                    
   T1->SetBranchAddress("Jet0SDptCorrL23Up"                     , & Jet0SDptCorrL23Up                   );                                                      
@@ -556,9 +565,9 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   T1->SetBranchAddress("Jet0SDptCorrL123"                      , & Jet0SDptCorrL123                    );                                                      
   T1->SetBranchAddress("Jet0SDptCorrL123Up"                    , & Jet0SDptCorrL123Up                  );                                                        
   T1->SetBranchAddress("Jet0SDptCorrL123Dn"                    , & Jet0SDptCorrL123Dn                  );                                                        
-  T1->SetBranchAddress("Jet0SDptCorrL23Smear"                  , & Jet0SDptCorrL23Smear                );                                                     
-  T1->SetBranchAddress("Jet0SDptCorrL23SmearUp"                , & Jet0SDptCorrL23SmearUp              );                                                       
-  T1->SetBranchAddress("Jet0SDptCorrL23SmearDn"                , & Jet0SDptCorrL23SmearDn              );                                                     
+  // T1->SetBranchAddress("Jet0SDptCorrL23Smear"                  , & Jet0SDptCorrL23Smear                );                                                     
+  // T1->SetBranchAddress("Jet0SDptCorrL23SmearUp"                , & Jet0SDptCorrL23SmearUp              );                                                       
+  // T1->SetBranchAddress("Jet0SDptCorrL23SmearDn"                , & Jet0SDptCorrL23SmearDn              );                                                     
   T1->SetBranchAddress("Jet0SDetaRaw"                          , & Jet0SDetaRaw                        );                                               
   T1->SetBranchAddress("Jet0SDphiRaw"                          , & Jet0SDphiRaw                        );                                               
   T1->SetBranchAddress("Jet0MassPruned"                        , & Jet0MassPruned                      );                                       
@@ -600,19 +609,19 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   T1->SetBranchAddress("Jet0PuppiMass"                         , & Jet0PuppiMass                       );                                      
 
   T1->SetBranchAddress("Jet0PuppiSDmass"                       , & Jet0PuppiSDmass                     );
-  T1->SetBranchAddress("Jet0PuppiSDmassCorr"                   , & Jet0PuppiSDmassCorr                 );
-  T1->SetBranchAddress("Jet0PuppiSDmassCorrUp"                 , & Jet0PuppiSDmassCorrUp               );
-  T1->SetBranchAddress("Jet0PuppiSDmassCorrDn"                 , & Jet0PuppiSDmassCorrDn               );
-  T1->SetBranchAddress("Jet0PuppiSDmassCorrL23Smear"           , & Jet0PuppiSDmassCorrL23Smear         );
-  T1->SetBranchAddress("Jet0PuppiSDmassCorrL23SmearUp"         , & Jet0PuppiSDmassCorrL23SmearUp       );
-  T1->SetBranchAddress("Jet0PuppiSDmassCorrL23SmearDn"         , & Jet0PuppiSDmassCorrL23SmearDn       );
+  T1->SetBranchAddress("Jet0PuppiSDmassSubjetCorr"                   , & Jet0PuppiSDmassSubjetCorr                 );
+  T1->SetBranchAddress("Jet0PuppiSDmassSubjetCorrUp"                 , & Jet0PuppiSDmassSubjetCorrUp               );
+  T1->SetBranchAddress("Jet0PuppiSDmassSubjetCorrDn"                 , & Jet0PuppiSDmassSubjetCorrDn               );
+  // T1->SetBranchAddress("Jet0PuppiSDmassSubjetCorrL23Smear"           , & Jet0PuppiSDmassSubjetCorrL23Smear         );
+  // T1->SetBranchAddress("Jet0PuppiSDmassSubjetCorrL23SmearUp"         , & Jet0PuppiSDmassSubjetCorrL23SmearUp       );
+  // T1->SetBranchAddress("Jet0PuppiSDmassSubjetCorrL23SmearDn"         , & Jet0PuppiSDmassSubjetCorrL23SmearDn       );
   T1->SetBranchAddress("Jet0PuppiSDpt"                         , & Jet0PuppiSDpt                       );
-  T1->SetBranchAddress("Jet0PuppiSDptCorr"                     , & Jet0PuppiSDptCorr                   );
-  T1->SetBranchAddress("Jet0PuppiSDptCorrUp"                   , & Jet0PuppiSDptCorrUp                 );
-  T1->SetBranchAddress("Jet0PuppiSDptCorrDn"                   , & Jet0PuppiSDptCorrDn                 );
-  T1->SetBranchAddress("Jet0PuppiSDptCorrL23Smear"             , & Jet0PuppiSDptCorrL23Smear           );
-  T1->SetBranchAddress("Jet0PuppiSDptCorrL23SmearUp"           , & Jet0PuppiSDptCorrL23SmearUp         );
-  T1->SetBranchAddress("Jet0PuppiSDptCorrL23SmearDn"           , & Jet0PuppiSDptCorrL23SmearDn         );
+  T1->SetBranchAddress("Jet0PuppiSDptSubjetCorr"                     , & Jet0PuppiSDptSubjetCorr                   );
+  T1->SetBranchAddress("Jet0PuppiSDptSubjetCorrUp"                   , & Jet0PuppiSDptSubjetCorrUp                 );
+  T1->SetBranchAddress("Jet0PuppiSDptSubjetCorrDn"                   , & Jet0PuppiSDptSubjetCorrDn                 );
+  // T1->SetBranchAddress("Jet0PuppiSDptSubjetCorrL23Smear"             , & Jet0PuppiSDptSubjetCorrL23Smear           );
+  // T1->SetBranchAddress("Jet0PuppiSDptSubjetCorrL23SmearUp"           , & Jet0PuppiSDptSubjetCorrL23SmearUp         );
+  // T1->SetBranchAddress("Jet0PuppiSDptSubjetCorrL23SmearDn"           , & Jet0PuppiSDptSubjetCorrL23SmearDn         );
   T1->SetBranchAddress("Jet0PuppiSDeta"                        , & Jet0PuppiSDeta                      );
   T1->SetBranchAddress("Jet0PuppiSDphi"                        , & Jet0PuppiSDphi                      );
                                                          
@@ -673,8 +682,8 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   T1->SetBranchAddress("Jet0PuppiPtSmearFactor"                , & Jet0PuppiPtSmearFactor              );                                               
   T1->SetBranchAddress("Jet0PuppiPtSmearFactorUp"              , & Jet0PuppiPtSmearFactorUp            );                                                 
   T1->SetBranchAddress("Jet0PuppiPtSmearFactorDn"              , & Jet0PuppiPtSmearFactorDn            );                                                 
-  T1->SetBranchAddress("Jet0EtaScaleFactor"                    , & Jet0EtaScaleFactor                  );                                           
-  T1->SetBranchAddress("Jet0PhiScaleFactor"                    , & Jet0PhiScaleFactor                  );                                           
+  // T1->SetBranchAddress("Jet0EtaScaleFactor"                    , & Jet0EtaScaleFactor                  );                                           
+  // T1->SetBranchAddress("Jet0PhiScaleFactor"                    , & Jet0PhiScaleFactor                  );                                           
   //  T1->SetBranchAddress("Jet0MatchedGenJetDR"                   , & Jet0MatchedGenJetDR                 );                                            
   T1->SetBranchAddress("Jet0MatchedGenJetPt"                   , & Jet0MatchedGenJetPt                 );                                            
   T1->SetBranchAddress("Jet0MatchedGenJetMass"                 , & Jet0MatchedGenJetMass               );  
@@ -797,19 +806,19 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   T1->SetBranchAddress("Jet1PuppiMass"                         , & Jet1PuppiMass                       );                                      
 
   T1->SetBranchAddress("Jet1PuppiSDmass"                       , & Jet1PuppiSDmass                     );
-  T1->SetBranchAddress("Jet1PuppiSDmassCorr"                   , & Jet1PuppiSDmassCorr                 );
-  T1->SetBranchAddress("Jet1PuppiSDmassCorrUp"                 , & Jet1PuppiSDmassCorrUp               );
-  T1->SetBranchAddress("Jet1PuppiSDmassCorrDn"                 , & Jet1PuppiSDmassCorrDn               );
-  T1->SetBranchAddress("Jet1PuppiSDmassCorrL23Smear"           , & Jet1PuppiSDmassCorrL23Smear         );
-  T1->SetBranchAddress("Jet1PuppiSDmassCorrL23SmearUp"         , & Jet1PuppiSDmassCorrL23SmearUp       );
-  T1->SetBranchAddress("Jet1PuppiSDmassCorrL23SmearDn"         , & Jet1PuppiSDmassCorrL23SmearDn       );
+  T1->SetBranchAddress("Jet1PuppiSDmassSubjetCorr"                   , & Jet1PuppiSDmassSubjetCorr                 );
+  T1->SetBranchAddress("Jet1PuppiSDmassSubjetCorrUp"                 , & Jet1PuppiSDmassSubjetCorrUp               );
+  T1->SetBranchAddress("Jet1PuppiSDmassSubjetCorrDn"                 , & Jet1PuppiSDmassSubjetCorrDn               );
+  // T1->SetBranchAddress("Jet1PuppiSDmassSubjetCorrL23Smear"           , & Jet1PuppiSDmassSubjetCorrL23Smear         );
+  // T1->SetBranchAddress("Jet1PuppiSDmassSubjetCorrL23SmearUp"         , & Jet1PuppiSDmassSubjetCorrL23SmearUp       );
+  // T1->SetBranchAddress("Jet1PuppiSDmassSubjetCorrL23SmearDn"         , & Jet1PuppiSDmassSubjetCorrL23SmearDn       );
   T1->SetBranchAddress("Jet1PuppiSDpt"                         , & Jet1PuppiSDpt                       );
-  T1->SetBranchAddress("Jet1PuppiSDptCorr"                     , & Jet1PuppiSDptCorr                   );
-  T1->SetBranchAddress("Jet1PuppiSDptCorrUp"                   , & Jet1PuppiSDptCorrUp                 );
-  T1->SetBranchAddress("Jet1PuppiSDptCorrDn"                   , & Jet1PuppiSDptCorrDn                 );
-  T1->SetBranchAddress("Jet1PuppiSDptCorrL23Smear"             , & Jet1PuppiSDptCorrL23Smear           );
-  T1->SetBranchAddress("Jet1PuppiSDptCorrL23SmearUp"           , & Jet1PuppiSDptCorrL23SmearUp         );
-  T1->SetBranchAddress("Jet1PuppiSDptCorrL23SmearDn"           , & Jet1PuppiSDptCorrL23SmearDn         );
+  T1->SetBranchAddress("Jet1PuppiSDptSubjetCorr"                     , & Jet1PuppiSDptSubjetCorr                   );
+  T1->SetBranchAddress("Jet1PuppiSDptSubjetCorrUp"                   , & Jet1PuppiSDptSubjetCorrUp                 );
+  T1->SetBranchAddress("Jet1PuppiSDptSubjetCorrDn"                   , & Jet1PuppiSDptSubjetCorrDn                 );
+  // T1->SetBranchAddress("Jet1PuppiSDptSubjetCorrL23Smear"             , & Jet1PuppiSDptSubjetCorrL23Smear           );
+  // T1->SetBranchAddress("Jet1PuppiSDptSubjetCorrL23SmearUp"           , & Jet1PuppiSDptSubjetCorrL23SmearUp         );
+  // T1->SetBranchAddress("Jet1PuppiSDptSubjetCorrL23SmearDn"           , & Jet1PuppiSDptSubjetCorrL23SmearDn         );
   T1->SetBranchAddress("Jet1PuppiSDeta"                        , & Jet1PuppiSDeta                      );
   T1->SetBranchAddress("Jet1PuppiSDphi"                        , & Jet1PuppiSDphi                      );
                        
@@ -870,8 +879,8 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   T1->SetBranchAddress("Jet1PuppiPtSmearFactor"                , & Jet1PuppiPtSmearFactor              );                                               
   T1->SetBranchAddress("Jet1PuppiPtSmearFactorUp"              , & Jet1PuppiPtSmearFactorUp            );                                                 
   T1->SetBranchAddress("Jet1PuppiPtSmearFactorDn"              , & Jet1PuppiPtSmearFactorDn            );                                                 
-  T1->SetBranchAddress("Jet1EtaScaleFactor"                    , & Jet1EtaScaleFactor                  );                                           
-  T1->SetBranchAddress("Jet1PhiScaleFactor"                    , & Jet1PhiScaleFactor                  );                                           
+  // T1->SetBranchAddress("Jet1EtaScaleFactor"                    , & Jet1EtaScaleFactor                  );                                           
+  // T1->SetBranchAddress("Jet1PhiScaleFactor"                    , & Jet1PhiScaleFactor                  );                                           
   //  T1->SetBranchAddress("Jet1MatchedGenJetDR"                   , & Jet1MatchedGenJetDR                 );                                            
   T1->SetBranchAddress("Jet1MatchedGenJetPt"                   , & Jet1MatchedGenJetPt                 );                                            
   T1->SetBranchAddress("Jet1MatchedGenJetMass"                 , & Jet1MatchedGenJetMass               ); 
