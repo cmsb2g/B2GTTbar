@@ -34,23 +34,23 @@ void run()
   string folder = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V2/";
   
   //void looptree(string input_folder, string input_file, bool isData, bool isFrozen )
-  // looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root"    , false, false);
-  // looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root"    , false, false);
-  // looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root"    , false, false);
-  // looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root"   , false, false);   
-  // looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root"  , false, false);  
-  // looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root"  , false, false);  
-  // looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root"  , false, false);  
-  // looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root"  , false, false);  
-  // looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root"   , false, false); 
-  // looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", true, true);
-  // looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", true, true);
-  // looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", true, true);
-  // looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", true, true);
-  // looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", true, true);
-  // looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", true, true);
-  //looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "", "20161006", false, false, true, 1, 400);
-  looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, true, 1, 400);
+   looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
+   looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
+   looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
+   looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , false, false, true, 1, 400);   
+   looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
+   looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
+   looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
+   looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
+   looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , false, false, true, 1, 400); 
+   looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+   looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+   looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+   looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+   looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+   looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
+   //looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "", "20161006", false, false, true, 1, 400);
+  //looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, true, 1, 400);
 }
 //b-tag scale factor
 bool applySF (bool isBTagged, float Btag_SF, float Btag_eff)
@@ -1694,8 +1694,8 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
     if (antiTag && !passMetFilt) continue;
 
     // Top-tagging bools
-    bool j0_tag_mass  = Jet0SDmass > 120 && Jet0SDmass < 220;
-    bool j1_tag_mass  = Jet1SDmass > 120 && Jet1SDmass < 220;
+    bool j0_tag_mass  = Jet0SDmass > 110 && Jet0SDmass < 210;
+    bool j1_tag_mass  = Jet1SDmass > 110 && Jet1SDmass < 210;
     bool j0_tag_tau32 = Jet0Tau32 < 0.7;
     bool j1_tag_tau32 = Jet1Tau32 < 0.7;
     bool j0_tag_t     = j0_tag_mass && j0_tag_tau32;
@@ -1705,8 +1705,8 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
     bool j0_tag_t_b   = j0_tag_t && j0_tag_b ;
     bool j1_tag_t_b   = j1_tag_t && j1_tag_b ;
 
-    bool j0_puptag_mass  = Jet0PuppiSDmass > 120 && Jet0PuppiSDmass < 220;
-    bool j1_puptag_mass  = Jet1PuppiSDmass > 120 && Jet1PuppiSDmass < 220;
+    bool j0_puptag_mass  = Jet0PuppiSDmass > 110 && Jet0PuppiSDmass < 210;
+    bool j1_puptag_mass  = Jet1PuppiSDmass > 110 && Jet1PuppiSDmass < 210;
     bool j0_puptag_tau32 = Jet0PuppiTau32 < 0.7;
     bool j1_puptag_tau32 = Jet1PuppiTau32 < 0.7;
     bool j0_puptag_t     = j0_puptag_mass && j0_puptag_tau32;
@@ -3016,7 +3016,7 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   }
 
   //Write histograms to file
-  string out_filename = "histsAllHad_"+date+"_"+input_file;
+  string out_filename = "runs/run"+date+"/histsAllHad_"+date+"_"+input_file;
   
   string minPt = "400";
   if (minAK8Pt == 500) minPt = "500";
