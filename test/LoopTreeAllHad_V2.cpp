@@ -50,7 +50,7 @@ void run()
   // looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", true, true);
   // looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", true, true);
   //looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "", "20161006", false, false, true, 1, 400);
-  looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, false, 1, 400);
+  looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, true, 1, 400);
 }
 //b-tag scale factor
 bool applySF (bool isBTagged, float Btag_SF, float Btag_eff)
@@ -509,8 +509,6 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   Float_t Q2weight_CorrUp                           ;           
   Float_t NNPDF3weight_CorrDn                       ;           
   Float_t NNPDF3weight_CorrUp                       ;           
-  Float_t PU_CorrDn                       ;           
-  Float_t PU_CorrUp                       ;           
   Float_t AllHadRunNum                              ;           
   Float_t AllHadLumiBlock                           ;           
   Float_t AllHadEventNum                            ;    
@@ -949,8 +947,6 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
   T1->SetBranchAddress("Q2weight_CorrUp"                       , & Q2weight_CorrUp                     ); 
   T1->SetBranchAddress("NNPDF3weight_CorrDn"                   , & NNPDF3weight_CorrDn                 ); 
   T1->SetBranchAddress("NNPDF3weight_CorrUp"                   , & NNPDF3weight_CorrUp                 ); 
-  T1->SetBranchAddress("PU_CorrDn"                             , & PU_CorrDn                           ); 
-  T1->SetBranchAddress("PU_CorrUp"                             , & PU_CorrUp                           ); 
   T1->SetBranchAddress("AllHadRunNum"                          , & AllHadRunNum                        ); 
   T1->SetBranchAddress("AllHadLumiBlock"                       , & AllHadLumiBlock                     ); 
   T1->SetBranchAddress("AllHadEventNum"                        , & AllHadEventNum                      );                                       
@@ -2564,8 +2560,8 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
 	   else if (Syst == -4) evWeight *= NNPDF3weight_CorrDn;
 	   else if (Syst == 5) evWeight *= Q2weight_CorrUp;
 	   else if (Syst == -5) evWeight *= Q2weight_CorrDn;
-	   else if (Syst == 6) evWeight *= PU_CorrUp;
-	   else if (Syst == -6) evWeight *= PU_CorrDn;
+	   else if (Syst == 6) evWeight *= AllHadPUweight_MBup;
+	   else if (Syst == -6) evWeight *= AllHadPUweight_MBdn;
 	 }
 
 	 //Plot some variables
