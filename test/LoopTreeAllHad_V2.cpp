@@ -1,10 +1,10 @@
+// ** Edit top-tag window if it has changed
 // root[] .L LoopTreeAllHad_V2.cpp++
 // root[] run(bool treeBool, bool bkgdEstBool)
 //treeBool: make antiTag file and fill kinematic histograms
 //bkgdEstBool: run background estimate
 
 //To-do:
-//Update modmass file
 //Update scale factors
 //Update b-tag efficiency
 //Update top-tag working points
@@ -32,7 +32,7 @@
 #include <TVector3.h>
 #include "Analysis/PredictedDistribution/interface/PredictedDistribution.h"
 
-void looptree(string, string, string, string, string, bool, bool, bool, int, float);
+void looptree(string, string, string, string, string, bool, bool, bool, bool, int, float);
 
 void run()
 {
@@ -40,26 +40,35 @@ void run()
   string mistag_file = "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root";
 
   //--- Function def:
-  // looptree(string input_folder, string input_file, string mistagFile, string bkgdEstOutname, string date, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt);
-
-  looptree(folder,"b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "outBkgdEst_Zp2000_B2G2016", "20161010"    , false, false, true, 1, 400);
-  // looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
-  // looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
-  // looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , false, false, true, 1, 400);
-  // looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , false, false, true, 1, 400);   
-  // looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
-  // looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
-  // looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
-  // looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , false, false, true, 1, 400);  
-  // looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , false, false, true, 1, 400); 
-  // looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-  // looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-  // looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-  // looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-  // looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-  // looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", true, true, true, 1, 400);
-  // looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "", "20161006", false, false, true, 1, 400);
-  // looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root", "/uscms_data/d2/jdolen/B2GAnaFW/CMSSW_8_0_19/src/Analysis/B2GTTbar/test/MistagRate_nbins_092516_14_ttbar_Substract_histsAllHad_Sept19_b2gtree_JetHT_combined.root", "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, true, 1, 400);
+  // looptree(string input_folder, string input_file, string mistagFile, string bkgdEstOutname, string date, bool isQCDMC, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt);
+  
+  //looptree(folder,"b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "outBkgdEst_ZPN2000_B2G2016", "20161010"    , false, false, false, true, 1, 400);
+  looptree(folder,"b2gtree_ZprimeToTT_M-3000_W-30_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "outBkgdEst_ZPN2000_B2G2016", "20161010"    , false, false, false, true, 1, 400);
+  looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 1, 400);
+  looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 1, 400);
+  looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 1, 400);
+  looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , true, false, false, true, 1, 400);   
+  looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 1, 400);  
+  looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "runs/run20161010/outBkgdEst_QCD_Pt_1400to1800_B2G2016", "20161010"  , true, false, false, true, 1, 400);  
+  looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 1, 400);  
+  looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 1, 400);  
+  looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , true, false, false, true, 1, 400); 
+  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0002.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  //looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  //looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  //looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0000.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0001.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  //looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 400);
+  looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_V3_99percentFinished_All.root", mistag_file, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, false, true, 1, 400);
 }
 //b-tag scale factor
 bool applySF (bool isBTagged, float Btag_SF, float Btag_eff)
@@ -88,7 +97,7 @@ bool applySF (bool isBTagged, float Btag_SF, float Btag_eff)
   }
   return bool(newBTag);
 }
-void looptree(string input_folder, string input_file, string mistagFile, string bkgdEstOutname, string date, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt){ 
+void looptree(string input_folder, string input_file, string mistagFile, string bkgdEstOutname, string date, bool isQCDMC, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt){ 
   //if antiTag is false, then background estimate is run
   gSystem->Load("libAnalysisPredictedDistribution");
 
@@ -1512,6 +1521,16 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
  TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_2btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapIn_2btag"        , "", 700, 0, 7000 );
 
  //MODMASS
+ TH1F *  h_mAK8_ModMass                = new TH1F("h_mAK8_ModMass",                 "", 200, 110, 210);
+ TH1F *  h_mAK8_ModMass_jet0           = new TH1F("h_mAK8_ModMass_jet0",            "", 200, 110, 210);
+ TH1F *  h_mAK8_ModMass_jet1           = new TH1F("h_mAK8_ModMass_jet1",            "", 200, 110, 210);
+ TH1F *  h_mSDropAK8_ModMass           = new TH1F("h_mSDropAK8_ModMass",            "", 200, 110, 210);
+ TH1F *  h_mSDropAK8_ModMass_jet0      = new TH1F("h_mSDropAK8_ModMass_jet0",       "", 200, 110, 210);
+ TH1F *  h_mSDropAK8_ModMass_jet1      = new TH1F("h_mSDropAK8_ModMass_jet1",       "", 200, 110, 210);
+ TH1F *  h_mPuppiSDropAK8_ModMass      = new TH1F("h_mPuppiSDropAK8_ModMass",       "", 200, 110, 210);
+ TH1F *  h_mPuppiSDropAK8_ModMass_jet0 = new TH1F("h_mPuppiSDropAK8_ModMass_jet0",  "", 200, 110, 210);
+ TH1F *  h_mPuppiSDropAK8_ModMass_jet1 = new TH1F("h_mPuppiSDropAK8_ModMass_jet1",  "", 200, 110, 210);
+
  TFile * FmodMass = new TFile("ModMass_2015_09_22.root");
  TH1F * h_modMass_Fat            = (TH1F *) FmodMass->Get( "h_mAK8_ModMass"           );
  TH1F * h_modMass_SD             = (TH1F *) FmodMass->Get( "h_mSDropAK8_ModMass"      );
@@ -1687,8 +1706,11 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
  int count_topTag1MassSDTau32=0;
  int count_newtopTag1MassSDTau32=0;
 
- 
-  for (int i=0; i<entries; i++ ){ //entries 
+ //top tag window
+ float ttagSDwindowLo = 110.;
+ float ttagSDwindowHi = 210.;
+
+   for (int i=0; i<entries; i++ ){ //entries 
     if (i%10000==0) cout<<i<<"  / "<<entries<<endl;
     T1->GetEntry(i);
     if (antiTag && (Jet0Pt <400 || Jet1Pt < 400)) continue;
@@ -1703,8 +1725,11 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
     if (antiTag && !passMetFilt) continue;
 
     // Top-tagging bools
-    bool j0_tag_mass  = Jet0SDmass > 110 && Jet0SDmass < 210;
-    bool j1_tag_mass  = Jet1SDmass > 110 && Jet1SDmass < 210;
+    bool j0_ungroomedtag_mass  = Jet0Mass > ttagSDwindowLo && Jet0Mass < ttagSDwindowHi;
+    bool j1_ungroomedtag_mass  = Jet1Mass > ttagSDwindowLo && Jet1Mass < ttagSDwindowHi;
+
+    bool j0_tag_mass  = Jet0SDmass > ttagSDwindowLo && Jet0SDmass < ttagSDwindowHi;
+    bool j1_tag_mass  = Jet1SDmass > ttagSDwindowLo && Jet1SDmass < ttagSDwindowHi;
     bool j0_tag_tau32 = Jet0Tau32 < 0.7;
     bool j1_tag_tau32 = Jet1Tau32 < 0.7;
     bool j0_tag_t     = j0_tag_mass && j0_tag_tau32;
@@ -1714,8 +1739,8 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
     bool j0_tag_t_b   = j0_tag_t && j0_tag_b ;
     bool j1_tag_t_b   = j1_tag_t && j1_tag_b ;
 
-    bool j0_puptag_mass  = Jet0PuppiSDmass > 110 && Jet0PuppiSDmass < 210;
-    bool j1_puptag_mass  = Jet1PuppiSDmass > 110 && Jet1PuppiSDmass < 210;
+    bool j0_puptag_mass  = Jet0PuppiSDmass > ttagSDwindowLo && Jet0PuppiSDmass < ttagSDwindowHi;
+    bool j1_puptag_mass  = Jet1PuppiSDmass > ttagSDwindowLo && Jet1PuppiSDmass < ttagSDwindowHi;
     bool j0_puptag_tau32 = Jet0PuppiTau32 < 0.7;
     bool j1_puptag_tau32 = Jet1PuppiTau32 < 0.7;
     bool j0_puptag_t     = j0_puptag_mass && j0_puptag_tau32;
@@ -1750,6 +1775,37 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
       if (!isData) evWeight = AllHadPUweight;
       TRandom3 rand1(0);
       double rand_mistag  = rand1.Uniform(0,1.0);
+
+      //Fill QCD MC distributions for modmass procedure
+      if (isQCDMC){
+	//Ungroomed
+	if (j0_ungroomedtag_mass){
+	  h_mAK8_ModMass_jet0 -> Fill( Jet0Mass, evWeight );
+	  h_mAK8_ModMass -> Fill( Jet0Mass, evWeight );
+	}
+	if (j1_ungroomedtag_mass){
+	  h_mAK8_ModMass_jet1 -> Fill( Jet1Mass, evWeight );
+	  h_mAK8_ModMass -> Fill( Jet1Mass, evWeight );
+	}
+	//Soft Drop
+	if (j0_tag_mass){
+	  h_mSDropAK8_ModMass_jet0 -> Fill( Jet0SDmass, evWeight );
+	  h_mSDropAK8_ModMass -> Fill( Jet0SDmass, evWeight );
+	}
+	if (j1_tag_mass){
+	  h_mSDropAK8_ModMass_jet1 -> Fill( Jet1SDmass, evWeight );
+	  h_mSDropAK8_ModMass -> Fill( Jet1SDmass, evWeight );
+	}
+	//PUPPI Soft Drop
+	if (j0_puptag_mass){
+	  h_mPuppiSDropAK8_ModMass_jet0 -> Fill( Jet0PuppiSDmass, evWeight );
+	  h_mPuppiSDropAK8_ModMass -> Fill( Jet0PuppiSDmass, evWeight );
+	}
+	if (j1_puptag_mass){
+	  h_mPuppiSDropAK8_ModMass_jet1 -> Fill( Jet1PuppiSDmass, evWeight );
+	  h_mPuppiSDropAK8_ModMass -> Fill( Jet1PuppiSDmass, evWeight );
+	}
+      }
       
       if (rand_mistag < 0.5){    // 50% of the time choose jet 0 to be the anti-tag and jet 1 to be the probe
       
@@ -2541,7 +2597,7 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
 
 	 // //sample from a uniform distribution in [110,210] 
 	 TRandom3 rand(0);
-	 double rand_mass = rand.Uniform(110,210);
+	 double rand_mass = rand.Uniform(ttagSDwindowLo,ttagSDwindowHi);
 
 	 TLorentzVector jet0P4_modMass_flat = jet0P4;
 	 p_vec_jet0 = TVector3( jet0P4_modMass_flat.Px(), jet0P4_modMass_flat.Py(), jet0P4_modMass_flat.Pz());
@@ -2552,12 +2608,12 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
 	 jet1P4_modMass_flat.SetVectM( p_vec_jet1, rand_mass );
 
 	 // if jet 0 is outside of the top mass window, force it to have mass in the window 
-	 if (Jet0SDmass < 110 or Jet0SDmass > 210){
+	 if (Jet0SDmass < ttagSDwindowLo || Jet0SDmass > ttagSDwindowHi){
 	   DijetMass_modMass_jet0 = (jet1P4 + jet0P4_modMass ).M();
 	   DijetMass_modMass_flat_jet0 = (jet1P4+ jet0P4_modMass_flat ).M();
 	 }
 	 // if jet 1 is outside of the top mass window, force it to have mass in the window 
-	 if (Jet1SDmass < 110 or Jet1SDmass > 210){
+	 if (Jet1SDmass < ttagSDwindowLo || Jet1SDmass > ttagSDwindowHi){
 	   DijetMass_modMass_jet1 = (jet1P4 + jet1P4_modMass ).M();
 	   DijetMass_modMass_flat_jet1 = (jet1P4+ jet1P4_modMass_flat ).M();
 	 }
@@ -3841,6 +3897,27 @@ void looptree(string input_folder, string input_file, string mistagFile, string 
     h_DijetMass_modMass_jet1                   ->Write();
   }
   Out->Close();
+
+  if (antiTag && isQCDMC){
+    string modMassOutName = "runs/run"+date+"/ModMass_"+date+"_"+input_file;
+
+    TFile * ModMassOut = new TFile(modMassOutName.c_str(),"RECREATE");
+    ModMassOut->cd();
+      
+    h_mAK8_ModMass->Write();
+    h_mAK8_ModMass_jet0->Write();
+    h_mAK8_ModMass_jet1->Write();
+
+    h_mSDropAK8_ModMass->Write();
+    h_mSDropAK8_ModMass_jet0->Write();
+    h_mSDropAK8_ModMass_jet1->Write();
+
+    h_mPuppiSDropAK8_ModMass->Write();
+    h_mPuppiSDropAK8_ModMass_jet0->Write();
+    h_mPuppiSDropAK8_ModMass_jet1->Write();
+
+    ModMassOut->Close();
+  }
 }
 
 
