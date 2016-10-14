@@ -118,11 +118,10 @@ void run(){
   makeHists(false, true, bins_1btag );  // Monte Carlo  - bins_medium
   makeHists(false, true, bins_2btag );  // Monte Carlo  - bins_medium
 
-  // makeHists(true, false, bins_small );  // data, subtract ttbar  - small bins
-  // makeHists(true, false, bins_0btag );  // data, subtract ttbar  - bins_medium
-  // makeHists(true, false, bins_1btag );  // data, subtract ttbar  - bins_medium
-  // makeHists(true, false, bins_2btag );  // data, subtract ttbar  - bins_medium
-
+   makeHists(true, false, bins_small );  // data, subtract ttbar  - small bins
+   makeHists(true, false, bins_0btag );  // data, subtract ttbar  - bins_medium
+   makeHists(true, false, bins_1btag );  // data, subtract ttbar  - bins_medium
+   makeHists(true, false, bins_2btag );  // data, subtract ttbar  - bins_medium
 }
 
 
@@ -136,21 +135,22 @@ void makeHists( bool data, bool noSubtract, vector<double> bins ){
 
   string infile_name ;
   string infile_ttbar_name ;
+  string infolder = "runs/run20161010/";
 
   // QCD Monte Carlo Input (scaled) and Output files
-  if (!data) infile_name = "histsAllHad_Sept19_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V2.root";
+  if (!data) infile_name = "histsAllHad_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
 
   if (data){
 
    // infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_030516.root";
    // infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_030716.root";
-      infile_name       = "histsAllHad_Sept19_b2gtree_JetHT_combined.root";
-      infile_ttbar_name = "histsAllHad_Sept19_b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_V2_99percentFinished_All.root";
+      infile_name       = "histsAllHad_Jetpt600HT1000_20161010_b2gtree_JetHT_combined.root";
+      infile_ttbar_name = "histsAllHad_Jetpt600HT1000_20161010_b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_V3_99percentFinished_All.root";
   } 
 
   
 
-  string date = "092516";
+  string date = "20161010";
   //string syst = "jec_up";
   
   
@@ -159,15 +159,18 @@ void makeHists( bool data, bool noSubtract, vector<double> bins ){
   temp1 << nbins;
   string snbins = temp1 .str();
   string subtractOrNot = "";
-  if (noSubtract) subtractOrNot = "_noSubstract_";
-  if (!noSubtract) subtractOrNot = "_Substract_";
+  if (noSubtract) subtractOrNot = "_noSubtract_";
+  if (!noSubtract) subtractOrNot = "_Subtract_";
   if (!data) subtractOrNot = "_MC_";
 
   string outfile_name ;
-  if (data)  outfile_name = "MistagRate_nbins_"+date+"_"+snbins+"_ttbar"+subtractOrNot+infile_name;
-  if (!data) outfile_name = "MistagRate_nbins_"+date+"_"+snbins+subtractOrNot+infile_name;
+  if (data)  outfile_name = "runs/run20161010/MistagRate_nbins_"+date+"_"+snbins+"_ttbar"+subtractOrNot+infile_name;
+  if (!data) outfile_name = "runs/run20161010/MistagRate_nbins_"+date+"_"+snbins+subtractOrNot+infile_name;
 
   cout<<"Opening "<<infile_name<<endl;
+  infile_name = infolder + infile_name;
+  infile_ttbar_name = infolder + infile_ttbar_name;
+  
   InFile        = new TFile(      infile_name.c_str()      );
   OutFile       = new TFile(     outfile_name.c_str()        , "RECREATE");
   if (data) InFileTTbar   = new TFile(infile_ttbar_name.c_str()     );
@@ -328,11 +331,11 @@ void makeHists( bool data, bool noSubtract, vector<double> bins ){
         if (data && !noSubtract){
 
           
-          double luminosity =  24570;  //2530;   //1263.890;  //166; pb-1
-          double nevents_dataset_ttbar  = 96834559;
+          double luminosity =  27220; //24570;  //2530;   //1263.890;  //166; pb-1
+          double nevents_dataset_ttbar  = 92925926; //96834559;
           double xsec_ttbar  =  831.76  ;
-          double kfactor = 0.93;
-          double toptagsf = 0.82;
+          double kfactor = 0.94;
+          double toptagsf = 0.89;
           double scale_ttbar= toptagsf * toptagsf * kfactor * xsec_ttbar * luminosity / nevents_dataset_ttbar;
           cout<<"scale_ttbar "<<scale_ttbar<<endl;
           ttbar_numer_rebin->Scale(scale_ttbar);
