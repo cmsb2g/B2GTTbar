@@ -44,33 +44,33 @@ void run()
   //--- Function def:
   // looptree(string input_folder, string input_file, string modmass file, string mistagFile, string bkgdEstOutname, string date, bool isQCDMC, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt, float minHT);
   
-  looptree(folder,"b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_data, "outBkgdEst_ZPN2000_B2G2016", "20161010"    , false, false, false, true, 1, 600, 1000);
-  looptree(folder,"b2gtree_ZprimeToTT_M-3000_W-30_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_data, "outBkgdEst_ZPN2000_B2G2016", "20161010"    , false, false, false, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , true, false, false, true, 1, 600, 1000);   
-  looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 1, 600, 1000);  
-  looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_QCD_Pt_1400to1800_B2G2016", "20161010"  , true, false, false, true, 1, 600, 1000);  
-  looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 1, 600, 1000);  
-  looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 1, 600, 1000);  
-  looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , true, false, false, true, 1, 600, 1000); 
-  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0002.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  //looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  //looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  /*looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  //looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  //looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 1, 600, 1000);
-  looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, false, true, 1, 600, 1000);*/
+  looptree(folder,"b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_data, "outBkgdEst_ZPN2000_B2G2016", "20161010"    , false, false, false, true, 0, 600, 1000);
+  looptree(folder,"b2gtree_ZprimeToTT_M-3000_W-30_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_data, "outBkgdEst_ZPN2000_B2G2016", "20161010"    , false, false, false, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , true, false, false, true, 0, 600, 1000);   
+  looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 0, 600, 1000);  
+  looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_QCD_Pt_1400to1800_B2G2016", "20161010"  , true, false, false, true, 0, 600, 1000);  
+  looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 0, 600, 1000);  
+  looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 0, 600, 1000);  
+  looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , true, false, false, true, 0, 600, 1000); 
+  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0002.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  //looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  //looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  /*looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  //looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  //looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
+  looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, false, true, 0, 600, 1000);*/
 }
 //b-tag scale factor
 bool applySF (bool isBTagged, float Btag_SF, float Btag_eff)
@@ -2632,7 +2632,7 @@ void looptree(string input_folder, string input_file, string modmassFile, string
 	 }
 
 	 //Plot some variables
-	 if (Syst == 1){
+	 if (Syst == 0){
 	     h_DijetMass_dRapIn                  ->Fill( DijetMass                 , evWeight );
 	     h_DijetMass_modMass_jet0            ->Fill( DijetMass_modMass_jet0    , evWeight );
 	     h_DijetMass_modMass_jet1            ->Fill( DijetMass_modMass_jet1    , evWeight );
