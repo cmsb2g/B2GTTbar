@@ -1002,6 +1002,15 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t AK4_dRminLep_Bdisc                          ;
       Float_t AK4_dRminLep_dRlep                          ;
       Float_t AK4_dRminLep_dRak8                          ;
+      Float_t AK4_dRminLep_PtSmear                        ;
+      Float_t AK4_dRminLep_PtSmearUp                      ;
+      Float_t AK4_dRminLep_PtSmearDn                      ;
+      Float_t AK4_dRminLep_PtUncorr                       ;
+      Float_t AK4_dRminLep_Corr                           ;
+      Float_t AK4_dRminLep_CorrUp                         ;
+      Float_t AK4_dRminLep_CorrDn                         ;
+       
+
       // Float_t AK4BtagdRminPt                         ;
       // Float_t AK4BtagdRminBdisc                      ;
       // Float_t AK4BtagdRminLep                        ;
@@ -1900,6 +1909,16 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("AK4_dRminLep_Bdisc"                        , & AK4_dRminLep_Bdisc                     , "AK4_dRminLep_Bdisc/F"                  );  
   TreeSemiLept->Branch("AK4_dRminLep_dRlep"                        , & AK4_dRminLep_dRlep                     , "AK4_dRminLep_dRlep/F"                  );  
   TreeSemiLept->Branch("AK4_dRminLep_dRak8"                        , & AK4_dRminLep_dRak8                     , "AK4_dRminLep_dRak8/F"                  );  
+  TreeSemiLept->Branch("AK4_dRminLep_PtSmear"                      , & AK4_dRminLep_PtSmear                   , "AK4_dRminLep_PtSmear/F"   );
+  TreeSemiLept->Branch("AK4_dRminLep_PtSmearUp"                    , & AK4_dRminLep_PtSmearUp                 , "AK4_dRminLep_PtSmearUp/F" );
+  TreeSemiLept->Branch("AK4_dRminLep_PtSmearDn"                    , & AK4_dRminLep_PtSmearDn                 , "AK4_dRminLep_PtSmearDn/F" );
+  TreeSemiLept->Branch("AK4_dRminLep_PtUncorr"                     , & AK4_dRminLep_PtUncorr                  , "AK4_dRminLep_PtUncorr/F"  );
+  TreeSemiLept->Branch("AK4_dRminLep_Corr"                         , & AK4_dRminLep_Corr                      , "AK4_dRminLep_Corr/F"    );                
+  TreeSemiLept->Branch("AK4_dRminLep_CorrUp"                       , & AK4_dRminLep_CorrUp                    , "AK4_dRminLep_CorrUp/F"  );                 
+  TreeSemiLept->Branch("AK4_dRminLep_CorrDn"                       , & AK4_dRminLep_CorrDn                    , "AK4_dRminLep_CorrDn/F"  );                  
+
+
+
   // TreeSemiLept->Branch("AK4BtagdRminPt"                       , & AK4BtagdRminPt                    , "AK4BtagdRminPt/F"                 );  
   // TreeSemiLept->Branch("AK4BtagdRminBdisc"                    , & AK4BtagdRminBdisc                 , "AK4BtagdRminBdisc/F"              );  
   // TreeSemiLept->Branch("AK4BtagdRminLep"                      , & AK4BtagdRminLep                   , "AK4BtagdRminLep/F"                );  
@@ -3046,6 +3065,15 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   double AK4_dRMinLep_deltaR  = 99;
   double AK4_btagged_dRMinLep = 99;
 
+
+  double AK4_dRMinLep_ptsmear    = 1; 
+  double AK4_dRMinLep_ptsmearUp  = 1; 
+  double AK4_dRMinLep_ptsmearDn  = 1; 
+  double AK4_dRMinLep_ptuncorr   = 0; 
+  double AK4_dRMinLep_corr       = 1;
+  double AK4_dRMinLep_corrUp     = 1;
+  double AK4_dRMinLep_corrDn     = 1;
+
   bool ak4_btag_loose  = false;
   bool ak4_btag_medium = false;
   bool ak4_btag_tight  = false;
@@ -3201,8 +3229,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     //------------------------------------
 
     if (corrJet.pt()>30)            HT_AK4_pt30           +=   pt;
-    if (corrUp * corrJet.pt()>30)   HT_AK4_pt30_corrUp    +=   corrUp * corrJet.pt();
-    if (corrDn * corrJet.pt()>30)   HT_AK4_pt30_corrDn    +=   corrDn * corrJet.pt();
+    if (corrUp * corrJet.pt()>30)   HT_AK4_pt30_corrUp    +=   corrUp * uncorrJet.pt();
+    if (corrDn * corrJet.pt()>30)   HT_AK4_pt30_corrDn    +=   corrDn * uncorrJet.pt();
     if (ptsmear * corrJet.pt()>30)  HT_AK4_pt30_smearNom  +=   ptsmear * corrJet.pt();
     if (ptsmearUp* corrJet.pt()>30) HT_AK4_pt30_smearUp   +=   ptsmearUp * corrJet.pt();
     if (ptsmearDn* corrJet.pt()>30) HT_AK4_pt30_smearDn   +=   ptsmearDn * corrJet.pt();
@@ -3217,6 +3245,14 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         AK4_dRMinLep_deltaR = deltaRlep;
         AK4_dRMinLep_p4.SetPtEtaPhiM( pt, eta, phi, mass );
         AK4_dRMinLep_bdisc = bdisc;
+        AK4_dRMinLep_ptsmear   = ptsmear;
+        AK4_dRMinLep_ptsmearUp = ptsmearUp;
+        AK4_dRMinLep_ptsmearDn = ptsmearDn;
+        AK4_dRMinLep_ptuncorr  = uncorrJet.pt();
+        AK4_dRMinLep_corr    = corr ;
+        AK4_dRMinLep_corrUp  = corrUp ;
+        AK4_dRMinLep_corrDn  = corrDn ;
+
       }
     }
 
@@ -5404,6 +5440,15 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   AK4_dRminLep_dRlep     = AK4_dRMinLep_deltaR    ;
   AK4_dRminLep_dRak8     = AK4_dRMinLep_p4.DeltaR( AK8jet_SemiLept_P4corr  ) ;
  
+  AK4_dRminLep_PtSmear   = AK4_dRMinLep_ptsmear    ;
+  AK4_dRminLep_PtSmearUp = AK4_dRMinLep_ptsmearUp  ;
+  AK4_dRminLep_PtSmearDn = AK4_dRMinLep_ptsmearDn  ;
+  AK4_dRminLep_PtUncorr  = AK4_dRMinLep_ptuncorr   ;
+
+  AK4_dRminLep_Corr      = AK4_dRMinLep_corr       ;
+  AK4_dRminLep_CorrUp    = AK4_dRMinLep_corrUp     ;
+  AK4_dRminLep_CorrDn    = AK4_dRMinLep_corrDn     ;
+
   // Closest b-tagged jet to the lepton
   // I don't think we need this 
   // AK4BtagdRminPt    = AK4_btagged_dRMinLep_p4.Perp();
