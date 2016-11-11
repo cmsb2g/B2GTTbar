@@ -32,7 +32,8 @@
 #include <TVector3.h>
 #include "Analysis/PredictedDistribution/interface/PredictedDistribution.h"
 
-void looptree(string, string, string, string, string, string, bool, bool, bool, bool, int, float, float);
+void looptree(string, string, string, string, string, string, bool, bool, bool, bool, int, float, float, float, float, float);
+void looptree_trig(string, string, string, string, float, float, float);
 
 void run()
 {
@@ -40,37 +41,59 @@ void run()
   string mistag_file_data = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/MistagRate_nbins_092516_14_ttbar_Subtract_histsAllHad_Jetpt600HT1000_20161010_b2gtree_JetHT_combined.root";
   string mistag_file_QCD = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/MistagRate_nbins_092516_14_MC_histsAllHad_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
   string modmass_file = "runs/run20161010/ModMass_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
+  //string date = "20161010";
+  //string date = "20161031";
+  string date = "20161109";
+  float ttagSDwindowLo = 110.;
+  float ttagSDwindowHi = 210.;
+  float ttagTau32cut = 0.69;
 
   //--- Function def:
-  // looptree(string input_folder, string input_file, string modmass file, string mistagFile, string bkgdEstOutname, string date, bool isQCDMC, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt, float minHT);
-  
-  looptree(folder,"b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_data, "outBkgdEst_ZPN2000_B2G2016", "20161010"    , false, false, false, true, 0, 600, 1000);
-  looptree(folder,"b2gtree_ZprimeToTT_M-3000_W-30_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_data, "outBkgdEst_ZPN2000_B2G2016", "20161010"    , false, false, false, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"    , true, false, false, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , true, false, false, true, 0, 600, 1000);   
-  looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 0, 600, 1000);  
-  looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_QCD_Pt_1400to1800_B2G2016", "20161010"  , true, false, false, true, 0, 600, 1000);  
-  looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 0, 600, 1000);  
-  looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"  , true, false, false, true, 0, 600, 1000);  
-  looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010"   , true, false, false, true, 0, 600, 1000); 
-  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0002.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  //looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  //looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  /*looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  //looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  //looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, true, true, true, 0, 600, 1000);
-  looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run20161010/outBkgdEst_TTpowheg_B2G2016", "20161010", false, false, false, true, 0, 600, 1000);*/
+  // looptree(string input_folder, string input_file, string modmass file, string mistagFile, string bkgdEstOutname, string date, bool isQCDMC, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt, float minHT, float topTagSDwindowLo, float topTagSDwindowHi, float topTagTau32cut);
+  //looptree_trig(string input_folder, string input_file, string date, string output_folder, float topTagSDwindowLo, float topTagSDwindowHi, float topTagTau32cut);
+
+  /*looptree(folder,"b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_ZPN2000_B2G2016", date    , false, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder,"b2gtree_ZprimeToTT_M-3000_W-30_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_ZPN3000_B2G2016", date    , false, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_QCD_Pt_300to470_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date    , true, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_QCD_Pt_470to600_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date    , true, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_QCD_Pt_600to800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date    , true, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_QCD_Pt_800to1000_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date   , true, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);   
+  looptree(folder, "b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date  , true, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);  
+  looptree(folder, "b2gtree_QCD_Pt_1400to1800_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run"+date+"/outBkgdEst_QCD_Pt_1400to1800_B2G2016", date  , true, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);  
+  looptree(folder, "b2gtree_QCD_Pt_1800to2400_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date  , true, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);  
+  looptree(folder, "b2gtree_QCD_Pt_2400to3200_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date  , true, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);  
+  looptree(folder, "b2gtree_QCD_Pt_3200toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root", modmass_file, mistag_file_QCD, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date   , true, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut); 
+  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0002.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  //looptree(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  //looptree(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  //looptree(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0000.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0001.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  //looptree(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, true, true, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree(folder, "b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_V3_99percentFinished_All.root", modmass_file, mistag_file_data, "runs/run"+date+"/outBkgdEst_TTpowheg_B2G2016", date, false, false, false, true, 0, 600, 1000, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);*/
+
+  //trigger efficiencies
+  looptree_trig(folder, "b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_ZprimeToTT_M-3000_W-30_RunIISpring16MiniAODv2_reHLT_V3.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0002.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0000.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
+  looptree_trig(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0001.root", date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
 }
 //b-tag scale factor
 bool applySF (bool isBTagged, float Btag_SF, float Btag_eff)
@@ -99,7 +122,166 @@ bool applySF (bool isBTagged, float Btag_SF, float Btag_eff)
   }
   return bool(newBTag);
 }
-void looptree(string input_folder, string input_file, string modmassFile, string mistagFile, string bkgdEstOutname, string date, bool isQCDMC, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt, float minHT){ 
+void looptree_trig(string input_folder, string input_file, string date, string output_folder, float topTagSDwindowLo, float topTagSDwindowHi, float topTagTau32cut){
+  string file_name =  input_folder+input_file;
+  TFile *F1   = new TFile(file_name.c_str() );
+  cout << file_name <<endl;
+
+  // Get Tree entries                                                                                                                        
+  Float_t Jet0SDmass         ;
+  Float_t Jet1SDmass         ;
+  Float_t Jet0Mass           ;
+  Float_t Jet1Mass           ;
+  Float_t Jet0Pt             ;
+  Float_t Jet1Pt             ;
+  Float_t Jet0Tau32          ;
+  Float_t Jet1Tau32          ;
+  std::string *AllHadTrigAcceptBits = new std::string;
+
+  TTree *T1    = (TTree*)  F1     ->Get("ana/TreeAllHad");
+
+  double entries = T1->GetEntries();
+  cout<<"entries = "<< entries <<endl;
+
+  T1->SetBranchAddress("Jet0SDmass"                                      , & Jet0SDmass                                    );
+  T1->SetBranchAddress("Jet1SDmass"                                      , & Jet1SDmass                                    );
+  T1->SetBranchAddress("Jet0Mass"                                        , & Jet0Mass                                      );
+  T1->SetBranchAddress("Jet1Mass"                                        , & Jet1Mass                                      );
+  T1->SetBranchAddress("Jet0Pt"                                          , & Jet0Pt                                        );
+  T1->SetBranchAddress("Jet1Pt"                                          , & Jet1Pt                                        );
+  T1->SetBranchAddress("Jet0Tau32"                                       , & Jet0Tau32                                     );
+  T1->SetBranchAddress("Jet1Tau32"                                       , & Jet1Tau32                                     );
+  T1->SetBranchAddress("AllHadTrigAcceptBits"                            , & AllHadTrigAcceptBits                          );
+
+  //ignore other branches                                                                                                                    
+  T1->SetBranchStatus("*",0);
+  T1->SetBranchStatus("Jet0SDmass",1)          ;
+  T1->SetBranchStatus("Jet1SDmass",1)          ;
+  T1->SetBranchStatus("Jet0Mass",1)            ;
+  T1->SetBranchStatus("Jet1Mass",1)            ;
+  T1->SetBranchStatus("Jet0Pt",1)              ;
+  T1->SetBranchStatus("Jet1Pt",1)              ;
+  T1->SetBranchStatus("Jet0Tau32",1)           ;
+  T1->SetBranchStatus("Jet1Tau32",1)           ;
+  T1->SetBranchStatus("AllHadTrigAcceptBits",1);
+
+  vector <string> xAxisLabels;
+  vector <string> cutCats;
+
+  vector <string> numLabels;
+  vector <string> numOrLabels;
+  vector <int> numTrig;
+  vector <int> numOrTrig;
+
+  xAxisLabels.push_back("sumJetPt");
+  xAxisLabels.push_back("Jet0Pt");
+  xAxisLabels.push_back("Jet0Mass");
+
+  cutCats.push_back("_");
+  cutCats.push_back("_2tagMass_");
+  cutCats.push_back("_2tagMass_2tagTau32_");
+
+  numLabels.push_back("PFHT700TrimMass50"); numTrig.push_back(13);
+  numLabels.push_back("PFHT800"); numTrig.push_back(6);
+  numLabels.push_back("PFHT900"); numTrig.push_back(7);
+
+  numOrLabels.push_back("PFJet450"); numOrTrig.push_back(10);
+  numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(12);
+  
+  //denominator histograms
+  TH1D *histos_passPFHT650denom[xAxisLabels.size()][cutCats.size()];
+
+  //numerator histograms
+  TH1D *histos_num[xAxisLabels.size()][cutCats.size()][numLabels.size()];
+  TH1D *histos_numOr[xAxisLabels.size()][cutCats.size()][numLabels.size()][numOrLabels.size()];
+
+  //naming histograms
+  for (int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+    for (int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+      histos_passPFHT650denom[i_xAxisLabels][i_cutCats] = new TH1D(Form("h_passPFHT650denom%s%s",cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+      for (int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	histos_num[i_xAxisLabels][i_cutCats][i_numLabels] = new TH1D(Form("h_pass%snumPFHT650denom%s%s",numLabels[i_numLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+	for (int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels] = new TH1D(Form("h_pass%sor%snumPFHT650denom%s%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+      }
+    }
+  }
+
+  for (int i=0; i<entries; i++ ){ //entries                                                                                                  
+    if (i%10000==0) cout<<i<<"  / "<<entries<<endl;
+
+    T1->GetEntry(i);
+
+    // Top-tagging bools                                                                                                                     
+    bool j0_tag_mass  = Jet0SDmass > topTagSDwindowLo && Jet0SDmass < topTagSDwindowHi;
+    bool j1_tag_mass  = Jet1SDmass > topTagSDwindowLo && Jet1SDmass < topTagSDwindowHi;
+    bool j0_tag_tau32 = Jet0Tau32 < topTagTau32cut;
+    bool j1_tag_tau32 = Jet1Tau32 < topTagTau32cut;
+    bool jets_tag_mass = j0_tag_mass && j1_tag_mass;
+    bool jets_top_tag = jets_tag_mass && j0_tag_tau32 && j1_tag_tau32;
+
+    float sumJetPt = Jet0Pt + Jet1Pt;
+    string trigBitsString = AllHadTrigAcceptBits->c_str();
+    int trigBits = std::stoi(trigBitsString,nullptr,2);
+
+    vector <float> xAxisVars;
+    vector <bool> cuts;
+
+    xAxisVars.push_back(sumJetPt);
+    xAxisVars.push_back(Jet0Pt);
+    xAxisVars.push_back(Jet0Mass);
+
+    cuts.push_back(1);
+    cuts.push_back(jets_tag_mass);
+    cuts.push_back(jets_top_tag);
+
+    //make sure vector lengths are consistent
+    if (xAxisVars.size() != xAxisLabels.size()){
+      break;
+      cout << "Incorrect length of x axis variable vector!" << endl;
+    }
+    if (cuts.size() != cutCats.size()){
+      break;
+      cout << "Incorrect length of cuts vector!" << endl;
+    }
+
+    //filling histograms
+    for (int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+      for (int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+	if (cuts[i_cutCats] && ((trigBits>>5)&1)){
+	  histos_passPFHT650denom[i_xAxisLabels][i_cutCats]->Fill(xAxisVars[i_xAxisLabels]);
+	  for (int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	    if ((trigBits>>numTrig[i_numLabels])&1) histos_num[i_xAxisLabels][i_cutCats][i_numLabels]->Fill(xAxisVars[i_xAxisLabels]);
+	    for (int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
+	      if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels]->Fill(xAxisVars[i_xAxisLabels]);
+	    }
+	  }
+	}
+      }
+    }
+    
+    xAxisVars.clear(); 
+    cuts.clear();
+  }
+
+  string outName = output_folder+"outRunTrigEff_"+date+"_"+input_file;
+  cout << outName << endl;
+  TFile * Out = new TFile(outName.c_str(),"RECREATE");
+  Out->cd();
+
+  //writing histograms
+  for (int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+    for (int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+      histos_passPFHT650denom[i_xAxisLabels][i_cutCats]->Write();
+      for (int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	histos_num[i_xAxisLabels][i_cutCats][i_numLabels]->Write();
+	for (int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels]->Write();
+      }
+    }
+  }
+  
+  Out->Close();
+}
+void looptree(string input_folder, string input_file, string modmassFile, string mistagFile, string bkgdEstOutname, string date, bool isQCDMC, bool isData, bool isFrozen, bool antiTag, int Syst, float minAK8Pt, float minHT, float topTagSDwindowLo, float topTagSDwindowHi, float topTagTau32cut){ 
   //if antiTag is false, then background estimate is run
   gSystem->Load("libAnalysisPredictedDistribution");
 
@@ -535,6 +717,7 @@ void looptree(string input_folder, string input_file, string modmassFile, string
 
   std::vector<std::string> *AllHadTrigNames;
   std::vector<int>         *AllHadTrigPrescales = 0;
+  std::string *AllHadTrigAcceptBits = new std::string;
 
   TTree *T1    = (TTree*)  F1     ->Get("ana/TreeAllHad");
 
@@ -970,7 +1153,437 @@ void looptree(string input_folder, string input_file, string modmassFile, string
   T1->SetBranchAddress("AllHadRunNum"                          , & AllHadRunNum                        ); 
   T1->SetBranchAddress("AllHadLumiBlock"                       , & AllHadLumiBlock                     ); 
   T1->SetBranchAddress("AllHadEventNum"                        , & AllHadEventNum                      );                                       
+  T1->SetBranchAddress("AllHadTrigAcceptBits"                  , & AllHadTrigAcceptBits                );
 
+  //ignore other branches                                                                                                                    
+  T1->SetBranchStatus("*",0);
+  T1->SetBranchStatus("PassMETFilters",1);
+  T1->SetBranchStatus("Jet0PtRaw",1);
+  T1->SetBranchStatus("Jet0EtaRaw",1);
+  T1->SetBranchStatus("Jet0PhiRaw",1);
+  T1->SetBranchStatus("Jet0MassRaw",1);
+  T1->SetBranchStatus("Jet0P",1);
+  T1->SetBranchStatus("Jet0Pt",1);
+  T1->SetBranchStatus("Jet0Eta",1);
+  T1->SetBranchStatus("Jet0Phi",1);
+  T1->SetBranchStatus("Jet0Rap",1);
+  T1->SetBranchStatus("Jet0Energy",1);
+  T1->SetBranchStatus("Jet0Mass",1);
+  T1->SetBranchStatus("Jet0Area",1);
+  T1->SetBranchStatus("Jet0SDmass",1);
+  T1->SetBranchStatus("Jet0SDmassRaw",1);
+  T1->SetBranchStatus("Jet0SDmassCorrL23",1); 
+  T1->SetBranchStatus("Jet0SDmassCorrL23Up",1); 
+  T1->SetBranchStatus("Jet0SDmassCorrL23Dn",1);  
+  T1->SetBranchStatus("Jet0SDmassCorrL23Smear",1); 
+  T1->SetBranchStatus("Jet0SDmassCorrL23SmearUp",1); 
+  T1->SetBranchStatus("Jet0SDmassCorrL23SmearDn",1);  
+  T1->SetBranchStatus("Jet0SDmassCorrL123",1); 
+  T1->SetBranchStatus("Jet0SDmassCorrL123Up",1); 
+  T1->SetBranchStatus("Jet0SDmassCorrL123Dn",1);  
+  T1->SetBranchStatus("Jet0SDptRaw",1); 
+  T1->SetBranchStatus("Jet0SDptCorrL23",1); 
+  T1->SetBranchStatus("Jet0SDptCorrL23Up",1); 
+  T1->SetBranchStatus("Jet0SDptCorrL23Dn",1); 
+  T1->SetBranchStatus("Jet0SDptCorrL123",1); 
+  T1->SetBranchStatus("Jet0SDptCorrL123Up",1); 
+  T1->SetBranchStatus("Jet0SDptCorrL123Dn",1); 
+  T1->SetBranchStatus("Jet0SDptCorrL23Smear",1); 
+  T1->SetBranchStatus("Jet0SDptCorrL23SmearUp",1); 
+  T1->SetBranchStatus("Jet0SDptCorrL23SmearDn",1); 
+  T1->SetBranchStatus("Jet0SDetaRaw",1); 
+  T1->SetBranchStatus("Jet0SDphiRaw",1); 
+  T1->SetBranchStatus("Jet0MassPruned",1);
+  T1->SetBranchStatus("Jet0MassTrimmed",1);
+  T1->SetBranchStatus("Jet0Tau1",1);
+  T1->SetBranchStatus("Jet0Tau2",1);
+  T1->SetBranchStatus("Jet0Tau3",1);
+  T1->SetBranchStatus("Jet0Tau4",1);
+  T1->SetBranchStatus("Jet0Tau32",1);
+  T1->SetBranchStatus("Jet0Tau21",1);
+  T1->SetBranchStatus("Jet0SDsubjet0bdisc",1);
+  T1->SetBranchStatus("Jet0SDsubjet1bdisc",1);
+  T1->SetBranchStatus("Jet0SDmaxbdisc",1);
+  T1->SetBranchStatus("Jet0SDmaxbdiscflavHadron",1);
+  T1->SetBranchStatus("Jet0SDmaxbdiscflavParton",1);
+  T1->SetBranchStatus("Jet0SDsubjet0pt",1);
+  T1->SetBranchStatus("Jet0SDsubjet0mass",1);
+  T1->SetBranchStatus("Jet0SDsubjet0eta",1);
+  T1->SetBranchStatus("Jet0SDsubjet0phi",1);
+  T1->SetBranchStatus("Jet0SDsubjet0area",1);
+  T1->SetBranchStatus("Jet0SDsubjet0flavHadron",1);
+  T1->SetBranchStatus("Jet0SDsubjet0flavParton",1);
+  T1->SetBranchStatus("Jet0SDsubjet0tau1",1);
+  T1->SetBranchStatus("Jet0SDsubjet0tau2",1);
+  T1->SetBranchStatus("Jet0SDsubjet0tau3",1);
+  T1->SetBranchStatus("Jet0SDsubjet1pt",1);
+  T1->SetBranchStatus("Jet0SDsubjet1mass",1);
+  T1->SetBranchStatus("Jet0SDsubjet1eta",1);
+  T1->SetBranchStatus("Jet0SDsubjet1phi",1);
+  T1->SetBranchStatus("Jet0SDsubjet1area",1);
+  T1->SetBranchStatus("Jet0SDsubjet1flavHadron",1);
+  T1->SetBranchStatus("Jet0SDsubjet1flavParton",1);
+  T1->SetBranchStatus("Jet0SDsubjet1tau1",1);
+  T1->SetBranchStatus("Jet0SDsubjet1tau2",1);
+  T1->SetBranchStatus("Jet0SDsubjet1tau3",1);
+  T1->SetBranchStatus("Jet0PuppiPt",1);
+  T1->SetBranchStatus("Jet0PuppiEta",1);
+  T1->SetBranchStatus("Jet0PuppiPhi",1);
+  T1->SetBranchStatus("Jet0PuppiMass",1);
+
+  T1->SetBranchStatus("Jet0PuppiSDmass",1);
+  T1->SetBranchStatus("Jet0PuppiSDmassSubjetCorr",1);
+  T1->SetBranchStatus("Jet0PuppiSDmassSubjetCorrUp",1);
+  T1->SetBranchStatus("Jet0PuppiSDmassSubjetCorrDn",1);
+  // T1->SetBranchStatus("Jet0PuppiSDmassSubjetCorrL23Smear",1);
+  // T1->SetBranchStatus("Jet0PuppiSDmassSubjetCorrL23SmearUp",1);
+  // T1->SetBranchStatus("Jet0PuppiSDmassSubjetCorrL23SmearDn",1);
+  T1->SetBranchStatus("Jet0PuppiSDpt",1);
+  T1->SetBranchStatus("Jet0PuppiSDptSubjetCorr",1);
+  T1->SetBranchStatus("Jet0PuppiSDptSubjetCorrUp",1);
+  T1->SetBranchStatus("Jet0PuppiSDptSubjetCorrDn",1);
+  // T1->SetBranchStatus("Jet0PuppiSDptSubjetCorrL23Smear",1);
+  // T1->SetBranchStatus("Jet0PuppiSDptSubjetCorrL23SmearUp",1);
+  // T1->SetBranchStatus("Jet0PuppiSDptSubjetCorrL23SmearDn",1);
+  T1->SetBranchStatus("Jet0PuppiSDeta",1);
+  T1->SetBranchStatus("Jet0PuppiSDphi",1);
+
+  T1->SetBranchStatus("Jet0PuppiTau1",1);
+  T1->SetBranchStatus("Jet0PuppiTau2",1);
+  T1->SetBranchStatus("Jet0PuppiTau3",1);
+  T1->SetBranchStatus("Jet0PuppiTau4",1);
+  T1->SetBranchStatus("Jet0PuppiTau32",1);
+  T1->SetBranchStatus("Jet0PuppiTau21",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0bdisc",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1bdisc",1);
+  T1->SetBranchStatus("Jet0PuppiSDmaxbdisc",1);
+  T1->SetBranchStatus("Jet0PuppiSDmaxbdiscflavHadron",1);
+  T1->SetBranchStatus("Jet0PuppiSDmaxbdiscflavParton",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0pt",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0mass",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0eta",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0phi",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0area",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0flavHadron",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0flavParton",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0tau1",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0tau2",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet0tau3",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1pt",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1mass",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1eta",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1phi",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1area",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1flavHadron",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1flavParton",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1tau1",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1tau2",1);
+  T1->SetBranchStatus("Jet0PuppiSDsubjet1tau3",1);
+  T1->SetBranchStatus("Jet0CHF",1);
+  T1->SetBranchStatus("Jet0NHF",1);
+  T1->SetBranchStatus("Jet0CM",1);
+  T1->SetBranchStatus("Jet0NM",1);
+  T1->SetBranchStatus("Jet0NEF",1);
+  T1->SetBranchStatus("Jet0CEF",1);
+  T1->SetBranchStatus("Jet0MF",1);
+  T1->SetBranchStatus("Jet0Mult",1);
+  T1->SetBranchStatus("Jet0MassCorrFactor",1);
+  T1->SetBranchStatus("Jet0MassCorrFactorUp",1);
+  T1->SetBranchStatus("Jet0MassCorrFactorDn",1);
+  T1->SetBranchStatus("Jet0CorrFactor",1);
+  T1->SetBranchStatus("Jet0CorrFactorUp",1);
+  T1->SetBranchStatus("Jet0CorrFactorDn",1);
+  T1->SetBranchStatus("Jet0PtSmearFactor",1);
+  T1->SetBranchStatus("Jet0PtSmearFactorUp",1);
+  T1->SetBranchStatus("Jet0PtSmearFactorDn",1);
+  T1->SetBranchStatus("Jet0PuppiMassCorrFactor",1);
+  T1->SetBranchStatus("Jet0PuppiMassCorrFactorUp",1);
+  T1->SetBranchStatus("Jet0PuppiMassCorrFactorDn",1);
+  T1->SetBranchStatus("Jet0PuppiCorrFactor",1);
+  T1->SetBranchStatus("Jet0PuppiCorrFactorUp",1);
+  T1->SetBranchStatus("Jet0PuppiCorrFactorDn",1);
+  T1->SetBranchStatus("Jet0PuppiPtSmearFactor",1);
+  T1->SetBranchStatus("Jet0PuppiPtSmearFactorUp",1);
+  T1->SetBranchStatus("Jet0PuppiPtSmearFactorDn",1);
+  // T1->SetBranchStatus("Jet0EtaScaleFactor",1);
+  // T1->SetBranchStatus("Jet0PhiScaleFactor",1);
+  // T1->SetBranchStatus("Jet0MatchedGenJetDR",1);
+  T1->SetBranchStatus("Jet0MatchedGenJetPt",1);
+  T1->SetBranchStatus("Jet0MatchedGenJetMass",1);
+
+  T1->SetBranchStatus("Jet0GenMatched_TopHadronic",1);
+  T1->SetBranchStatus("Jet0GenMatched_TopPt",1);
+  T1->SetBranchStatus("Jet0GenMatched_TopEta",1);
+  T1->SetBranchStatus("Jet0GenMatched_TopPhi",1);
+  T1->SetBranchStatus("Jet0GenMatched_TopMass",1);
+  T1->SetBranchStatus("Jet0GenMatched_bPt",1);
+  T1->SetBranchStatus("Jet0GenMatched_WPt",1);
+  T1->SetBranchStatus("Jet0GenMatched_Wd1Pt",1);
+  T1->SetBranchStatus("Jet0GenMatched_Wd2Pt",1);
+  T1->SetBranchStatus("Jet0GenMatched_Wd1ID",1);
+  T1->SetBranchStatus("Jet0GenMatched_Wd2ID",1);
+  T1->SetBranchStatus("Jet0GenMatched_MaxDeltaRPartonTop",1);
+  T1->SetBranchStatus("Jet0GenMatched_MaxDeltaRWPartonTop",1);
+  T1->SetBranchStatus("Jet0GenMatched_MaxDeltaRWPartonW",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_t_b",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_t_W",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_t_Wd1",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_t_Wd2",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_W_b1",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_W_Wd1",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_W_Wd2",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_Wd1_Wd2",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_Wd1_b",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_Wd2_b",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_jet_t",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_jet_W",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_jet_b",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_jet_Wd1",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_jet_Wd2",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_pup0_b",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_pup0_Wd1",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_pup0_Wd2",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_pup1_b",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_pup1_Wd1",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_pup1_Wd2",1);
+  T1->SetBranchStatus("Jet0GenMatched_partonPt",1);
+  T1->SetBranchStatus("Jet0GenMatched_partonEta",1);
+  T1->SetBranchStatus("Jet0GenMatched_partonPhi",1);
+  T1->SetBranchStatus("Jet0GenMatched_partonMass",1);
+  T1->SetBranchStatus("Jet0GenMatched_partonID",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaRjetParton",1);
+
+  T1->SetBranchStatus("Jet1PtRaw",1);
+  T1->SetBranchStatus("Jet1EtaRaw",1);
+  T1->SetBranchStatus("Jet1PhiRaw",1);
+  T1->SetBranchStatus("Jet1MassRaw",1);
+  T1->SetBranchStatus("Jet1P",1);
+  T1->SetBranchStatus("Jet1Pt",1);
+  T1->SetBranchStatus("Jet1Eta",1);
+  T1->SetBranchStatus("Jet1Phi",1);
+  T1->SetBranchStatus("Jet1Rap",1);
+  T1->SetBranchStatus("Jet1Energy",1);
+  T1->SetBranchStatus("Jet1Mass",1);
+  T1->SetBranchStatus("Jet1Area",1);
+  T1->SetBranchStatus("Jet1SDmass",1);
+  T1->SetBranchStatus("Jet1SDmassRaw",1);
+  T1->SetBranchStatus("Jet1SDmassCorrL23",1);
+  T1->SetBranchStatus("Jet1SDmassCorrL23Up",1);
+  T1->SetBranchStatus("Jet1SDmassCorrL23Dn",1);
+  T1->SetBranchStatus("Jet1SDmassCorrL123",1);
+  T1->SetBranchStatus("Jet1SDmassCorrL123Up",1);
+  T1->SetBranchStatus("Jet1SDmassCorrL123Dn",1);
+  T1->SetBranchStatus("Jet1SDmassCorrL23Smear",1);
+  T1->SetBranchStatus("Jet1SDmassCorrL23SmearUp",1);
+  T1->SetBranchStatus("Jet1SDmassCorrL23SmearDn",1);
+  T1->SetBranchStatus("Jet1SDptRaw",1);
+  T1->SetBranchStatus("Jet1SDptCorrL23",1);
+  T1->SetBranchStatus("Jet1SDptCorrL23Up",1);
+  T1->SetBranchStatus("Jet1SDptCorrL23Dn",1);
+  T1->SetBranchStatus("Jet1SDptCorrL123",1);
+  T1->SetBranchStatus("Jet1SDptCorrL123Up",1);
+  T1->SetBranchStatus("Jet1SDptCorrL123Dn",1);
+  T1->SetBranchStatus("Jet1SDptCorrL23Smear",1);
+  T1->SetBranchStatus("Jet1SDptCorrL23SmearUp",1);
+  T1->SetBranchStatus("Jet1SDptCorrL23SmearDn",1);
+  T1->SetBranchStatus("Jet1SDetaRaw",1);
+  T1->SetBranchStatus("Jet1SDphiRaw",1); 
+  T1->SetBranchStatus("Jet1MassPruned",1);
+  T1->SetBranchStatus("Jet1MassTrimmed",1);
+  T1->SetBranchStatus("Jet1Tau1",1);
+  T1->SetBranchStatus("Jet1Tau2",1);
+  T1->SetBranchStatus("Jet1Tau3",1);
+  T1->SetBranchStatus("Jet1Tau4",1);
+  T1->SetBranchStatus("Jet1Tau32",1);
+  T1->SetBranchStatus("Jet1Tau21",1);
+  T1->SetBranchStatus("Jet1SDsubjet0bdisc",1);
+  T1->SetBranchStatus("Jet1SDsubjet1bdisc",1);
+  T1->SetBranchStatus("Jet1SDmaxbdisc",1);
+  T1->SetBranchStatus("Jet1SDmaxbdiscflavHadron",1);
+  T1->SetBranchStatus("Jet1SDmaxbdiscflavParton",1);
+  T1->SetBranchStatus("Jet1SDsubjet0pt",1);
+  T1->SetBranchStatus("Jet1SDsubjet0eta",1);
+  T1->SetBranchStatus("Jet1SDsubjet0phi",1);
+  T1->SetBranchStatus("Jet1SDsubjet0mass",1);
+  T1->SetBranchStatus("Jet1SDsubjet0area",1);
+  T1->SetBranchStatus("Jet1SDsubjet0flavHadron",1);
+  T1->SetBranchStatus("Jet1SDsubjet0flavParton",1);
+  T1->SetBranchStatus("Jet1SDsubjet0tau1",1);
+  T1->SetBranchStatus("Jet1SDsubjet0tau2",1);
+  T1->SetBranchStatus("Jet1SDsubjet0tau3",1);
+  T1->SetBranchStatus("Jet1SDsubjet1pt",1);
+  T1->SetBranchStatus("Jet1SDsubjet1eta",1);
+  T1->SetBranchStatus("Jet1SDsubjet1phi",1);
+  T1->SetBranchStatus("Jet1SDsubjet1mass",1);
+  T1->SetBranchStatus("Jet1SDsubjet1area",1);
+  T1->SetBranchStatus("Jet1SDsubjet1flavHadron",1);
+  T1->SetBranchStatus("Jet1SDsubjet1flavParton",1);
+  T1->SetBranchStatus("Jet1SDsubjet1tau1",1);
+  T1->SetBranchStatus("Jet1SDsubjet1tau2",1);
+  T1->SetBranchStatus("Jet1SDsubjet1tau3",1);
+  T1->SetBranchStatus("Jet1PuppiPt",1);
+  T1->SetBranchStatus("Jet1PuppiEta",1);
+  T1->SetBranchStatus("Jet1PuppiPhi",1);
+  T1->SetBranchStatus("Jet1PuppiMass",1);
+
+  T1->SetBranchStatus("Jet1PuppiSDmass",1);
+  T1->SetBranchStatus("Jet1PuppiSDmassSubjetCorr",1);
+  T1->SetBranchStatus("Jet1PuppiSDmassSubjetCorrUp",1);
+  T1->SetBranchStatus("Jet1PuppiSDmassSubjetCorrDn",1);
+  // T1->SetBranchStatus("Jet1PuppiSDmassSubjetCorrL23Smear",1);
+  // T1->SetBranchStatus("Jet1PuppiSDmassSubjetCorrL23SmearUp",1);
+  // T1->SetBranchStatus("Jet1PuppiSDmassSubjetCorrL23SmearDn",1);
+  T1->SetBranchStatus("Jet1PuppiSDpt",1);
+  T1->SetBranchStatus("Jet1PuppiSDptSubjetCorr",1);
+  T1->SetBranchStatus("Jet1PuppiSDptSubjetCorrUp",1);
+  T1->SetBranchStatus("Jet1PuppiSDptSubjetCorrDn",1);
+  // T1->SetBranchStatus("Jet1PuppiSDptSubjetCorrL23Smear",1);
+  // T1->SetBranchStatus("Jet1PuppiSDptSubjetCorrL23SmearUp",1);
+  // T1->SetBranchStatus("Jet1PuppiSDptSubjetCorrL23SmearDn",1);
+  T1->SetBranchStatus("Jet1PuppiSDeta",1);
+  T1->SetBranchStatus("Jet1PuppiSDphi",1);
+
+  T1->SetBranchStatus("Jet1PuppiTau1",1);
+  T1->SetBranchStatus("Jet1PuppiTau2",1);
+  T1->SetBranchStatus("Jet1PuppiTau3",1);
+  T1->SetBranchStatus("Jet1PuppiTau4",1);
+  T1->SetBranchStatus("Jet1PuppiTau32",1);
+  T1->SetBranchStatus("Jet1PuppiTau21",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0bdisc",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1bdisc",1);
+  T1->SetBranchStatus("Jet1PuppiSDmaxbdisc",1);
+  T1->SetBranchStatus("Jet1PuppiSDmaxbdiscflavHadron",1);
+  T1->SetBranchStatus("Jet1PuppiSDmaxbdiscflavParton",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0pt",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0eta",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0phi",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0mass",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0area",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0flavHadron",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0flavParton",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0tau1",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0tau2",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet0tau3",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1pt",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1eta",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1phi",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1mass",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1area",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1flavHadron",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1flavParton",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1tau1",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1tau2",1);
+  T1->SetBranchStatus("Jet1PuppiSDsubjet1tau3",1);
+  T1->SetBranchStatus("Jet1CHF",1);
+  T1->SetBranchStatus("Jet1NHF",1);
+  T1->SetBranchStatus("Jet1CM",1);
+  T1->SetBranchStatus("Jet1NM",1);
+  T1->SetBranchStatus("Jet1NEF",1);
+  T1->SetBranchStatus("Jet1CEF",1);
+  T1->SetBranchStatus("Jet1MF",1);
+  T1->SetBranchStatus("Jet1Mult",1);
+  T1->SetBranchStatus("Jet1MassCorrFactor",1);
+  T1->SetBranchStatus("Jet1MassCorrFactorUp",1);
+  T1->SetBranchStatus("Jet1MassCorrFactorDn",1);
+  T1->SetBranchStatus("Jet1CorrFactor",1);
+  T1->SetBranchStatus("Jet1CorrFactorUp",1);
+  T1->SetBranchStatus("Jet1CorrFactorDn",1);
+  T1->SetBranchStatus("Jet1PtSmearFactor",1);
+  T1->SetBranchStatus("Jet1PtSmearFactorUp",1);
+  T1->SetBranchStatus("Jet1PtSmearFactorDn",1);
+  T1->SetBranchStatus("Jet1PuppiMassCorrFactor",1);
+  T1->SetBranchStatus("Jet1PuppiMassCorrFactorUp",1);
+  T1->SetBranchStatus("Jet1PuppiMassCorrFactorDn",1);
+  T1->SetBranchStatus("Jet1PuppiCorrFactor",1);
+  T1->SetBranchStatus("Jet1PuppiCorrFactorUp",1);
+  T1->SetBranchStatus("Jet1PuppiCorrFactorDn",1);
+  T1->SetBranchStatus("Jet1PuppiPtSmearFactor",1);
+  T1->SetBranchStatus("Jet1PuppiPtSmearFactorUp",1);
+  T1->SetBranchStatus("Jet1PuppiPtSmearFactorDn",1);
+  // T1->SetBranchStatus("Jet1EtaScaleFactor",1);
+  // T1->SetBranchStatus("Jet1PhiScaleFactor",1);
+  // T1->SetBranchStatus("Jet1MatchedGenJetDR",1);
+  T1->SetBranchStatus("Jet1MatchedGenJetPt",1);
+  T1->SetBranchStatus("Jet1MatchedGenJetMass",1);
+
+  T1->SetBranchStatus("Jet1GenMatched_TopHadronic",1);
+  T1->SetBranchStatus("Jet1GenMatched_TopPt",1);
+  T1->SetBranchStatus("Jet1GenMatched_TopEta",1);
+  T1->SetBranchStatus("Jet1GenMatched_TopPhi",1);
+  T1->SetBranchStatus("Jet1GenMatched_TopMass",1);
+  T1->SetBranchStatus("Jet1GenMatched_bPt",1);
+  T1->SetBranchStatus("Jet1GenMatched_WPt",1);
+  T1->SetBranchStatus("Jet1GenMatched_Wd1Pt",1);
+  T1->SetBranchStatus("Jet1GenMatched_Wd2Pt",1);
+  T1->SetBranchStatus("Jet1GenMatched_Wd1ID",1);
+  T1->SetBranchStatus("Jet1GenMatched_Wd2ID",1);
+  T1->SetBranchStatus("Jet1GenMatched_MaxDeltaRPartonTop",1);
+  T1->SetBranchStatus("Jet1GenMatched_MaxDeltaRWPartonTop",1);
+  T1->SetBranchStatus("Jet1GenMatched_MaxDeltaRWPartonW",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_t_b",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_t_W",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_t_Wd1",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_t_Wd2",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_W_b1",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_W_Wd1",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_W_Wd2",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_Wd1_Wd2",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_Wd1_b",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_Wd2_b",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_jet_t",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_jet_W",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_jet_b",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_jet_Wd1",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_jet_Wd2",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_pup0_b",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_pup0_Wd1",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_pup0_Wd2",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_pup1_b",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_pup1_Wd1",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_pup1_Wd2",1);
+  T1->SetBranchStatus("Jet1GenMatched_partonPt",1);
+  T1->SetBranchStatus("Jet1GenMatched_partonEta",1);
+  T1->SetBranchStatus("Jet1GenMatched_partonPhi",1);
+  T1->SetBranchStatus("Jet1GenMatched_partonMass",1);
+  T1->SetBranchStatus("Jet1GenMatched_partonID",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaRjetParton",1);
+
+  T1->SetBranchStatus("AllHadMETpx",1);  
+  T1->SetBranchStatus("AllHadMETpy",1);  
+  T1->SetBranchStatus("AllHadMETpt",1);  
+  T1->SetBranchStatus("AllHadMETphi",1);  
+  T1->SetBranchStatus("AllHadMETsumET",1);  
+  T1->SetBranchStatus("AllHadNvtx",1);  
+  T1->SetBranchStatus("AllHadNPUtrue",1);  
+  T1->SetBranchStatus("AllHadRho",1);  
+  T1->SetBranchStatus("AllHadEventWeight",1); 
+  T1->SetBranchStatus("AllHadPUweight",1); 
+  T1->SetBranchStatus("AllHadPUweight_MBup",1); 
+  T1->SetBranchStatus("AllHadPUweight_MBdn",1);  
+  T1->SetBranchStatus("DijetMass",1);  
+  T1->SetBranchStatus("DijetMassPuppi",1);  
+  T1->SetBranchStatus("DijetDeltaR",1);  
+  T1->SetBranchStatus("DijetDeltaPhi",1);  
+  T1->SetBranchStatus("DijetDeltaRap",1);  
+  T1->SetBranchStatus("DiGenJetMass",1);  
+  T1->SetBranchStatus("GenTTmass",1);  
+  T1->SetBranchStatus("HT",1);  
+  T1->SetBranchStatus("HT_CorrDn",1);  
+  T1->SetBranchStatus("HT_CorrUp",1);  
+  T1->SetBranchStatus("HT_PtSmearNom",1);  
+  T1->SetBranchStatus("HT_PtSmearUp",1);  
+  T1->SetBranchStatus("HT_PtSmearDn",1);  
+  T1->SetBranchStatus("Q2weight_CorrDn",1);  
+  T1->SetBranchStatus("Q2weight_CorrUp",1);  
+  T1->SetBranchStatus("NNPDF3weight_CorrDn",1);  
+  T1->SetBranchStatus("NNPDF3weight_CorrUp",1);  
+  T1->SetBranchStatus("AllHadRunNum",1);  
+  T1->SetBranchStatus("AllHadLumiBlock",1);  
+  T1->SetBranchStatus("AllHadEventNum",1); 
+
+  T1->SetBranchStatus("AllHadTrigNames",1);
+  T1->SetBranchStatus("AllHadTrigPrescales",1);
+  T1->SetBranchStatus("AllHadTrigAcceptBits",1);
 
   // TH1D *  h_DijetMass_dRapIn_2ttag_PassMETfilt     = new TH1D( "h_DijetMass_dRapIn_2ttag_PassMETfilt"    , "", 400, 0, 8000); 
   // TH1D *  h_DijetMass_dRapHi_2ttag_PassMETfilt     = new TH1D( "h_DijetMass_dRapHi_2ttag_PassMETfilt"    , "", 400, 0, 8000); 
@@ -1516,22 +2129,22 @@ void looptree(string input_folder, string input_file, string modmassFile, string
   TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_inclusive = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapLo_inclusive"    , "", 700, 0, 7000 );
   TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_0btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapLo_0btag"        , "", 700, 0, 7000 );
   TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_1btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapLo_1btag"        , "", 700, 0, 7000 );
- TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag"        , "", 700, 0, 7000 );
- TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_inclusive = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapIn_inclusive"    , "", 700, 0, 7000 );
- TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_0btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapIn_0btag"        , "", 700, 0, 7000 );
- TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_1btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapIn_1btag"        , "", 700, 0, 7000 );
- TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_2btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapIn_2btag"        , "", 700, 0, 7000 );
-
- //MODMASS
- TH1F *  h_mAK8_ModMass                = new TH1F("h_mAK8_ModMass",                 "", 200, 110, 210);
- TH1F *  h_mAK8_ModMass_jet0           = new TH1F("h_mAK8_ModMass_jet0",            "", 200, 110, 210);
- TH1F *  h_mAK8_ModMass_jet1           = new TH1F("h_mAK8_ModMass_jet1",            "", 200, 110, 210);
- TH1F *  h_mSDropAK8_ModMass           = new TH1F("h_mSDropAK8_ModMass",            "", 200, 110, 210);
- TH1F *  h_mSDropAK8_ModMass_jet0      = new TH1F("h_mSDropAK8_ModMass_jet0",       "", 200, 110, 210);
- TH1F *  h_mSDropAK8_ModMass_jet1      = new TH1F("h_mSDropAK8_ModMass_jet1",       "", 200, 110, 210);
- TH1F *  h_mPuppiSDropAK8_ModMass      = new TH1F("h_mPuppiSDropAK8_ModMass",       "", 200, 110, 210);
- TH1F *  h_mPuppiSDropAK8_ModMass_jet0 = new TH1F("h_mPuppiSDropAK8_ModMass_jet0",  "", 200, 110, 210);
- TH1F *  h_mPuppiSDropAK8_ModMass_jet1 = new TH1F("h_mPuppiSDropAK8_ModMass_jet1",  "", 200, 110, 210);
+  TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag"        , "", 700, 0, 7000 );
+  TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_inclusive = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapIn_inclusive"    , "", 700, 0, 7000 );
+  TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_0btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapIn_0btag"        , "", 700, 0, 7000 );
+  TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_1btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapIn_1btag"        , "", 700, 0, 7000 );
+  TH1D *  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_2btag     = new TH1D("h_bkgdEst_modMass_tagMassSDTau32_dRapIn_2btag"        , "", 700, 0, 7000 );
+  
+  //MODMASS
+  TH1F *  h_mAK8_ModMass                = new TH1F("h_mAK8_ModMass",                 "", 200, 110, 210);
+  TH1F *  h_mAK8_ModMass_jet0           = new TH1F("h_mAK8_ModMass_jet0",            "", 200, 110, 210);
+  TH1F *  h_mAK8_ModMass_jet1           = new TH1F("h_mAK8_ModMass_jet1",            "", 200, 110, 210);
+  TH1F *  h_mSDropAK8_ModMass           = new TH1F("h_mSDropAK8_ModMass",            "", 200, 110, 210);
+  TH1F *  h_mSDropAK8_ModMass_jet0      = new TH1F("h_mSDropAK8_ModMass_jet0",       "", 200, 110, 210);
+  TH1F *  h_mSDropAK8_ModMass_jet1      = new TH1F("h_mSDropAK8_ModMass_jet1",       "", 200, 110, 210);
+  TH1F *  h_mPuppiSDropAK8_ModMass      = new TH1F("h_mPuppiSDropAK8_ModMass",       "", 200, 110, 210);
+  TH1F *  h_mPuppiSDropAK8_ModMass_jet0 = new TH1F("h_mPuppiSDropAK8_ModMass_jet0",  "", 200, 110, 210);
+  TH1F *  h_mPuppiSDropAK8_ModMass_jet1 = new TH1F("h_mPuppiSDropAK8_ModMass_jet1",  "", 200, 110, 210);
 
  TFile * FmodMass = new TFile(modmassFile.c_str());
  TH1F * h_modMass_Fat            = (TH1F *) FmodMass->Get( "h_mAK8_ModMass"           );
@@ -1708,10 +2321,6 @@ void looptree(string input_folder, string input_file, string modmassFile, string
  int count_topTag1MassSDTau32=0;
  int count_newtopTag1MassSDTau32=0;
 
- //top tag window
- float ttagSDwindowLo = 110.;
- float ttagSDwindowHi = 210.;
-
    for (int i=0; i<entries; i++ ){ //entries 
     if (i%10000==0) cout<<i<<"  / "<<entries<<endl;
     T1->GetEntry(i);
@@ -1727,13 +2336,13 @@ void looptree(string input_folder, string input_file, string modmassFile, string
     if (antiTag && !passMetFilt) continue;
 
     // Top-tagging bools
-    bool j0_ungroomedtag_mass  = Jet0Mass > ttagSDwindowLo && Jet0Mass < ttagSDwindowHi;
-    bool j1_ungroomedtag_mass  = Jet1Mass > ttagSDwindowLo && Jet1Mass < ttagSDwindowHi;
+    bool j0_ungroomedtag_mass  = Jet0Mass > topTagSDwindowLo && Jet0Mass < topTagSDwindowHi;
+    bool j1_ungroomedtag_mass  = Jet1Mass > topTagSDwindowLo && Jet1Mass < topTagSDwindowHi;
 
-    bool j0_tag_mass  = Jet0SDmass > ttagSDwindowLo && Jet0SDmass < ttagSDwindowHi;
-    bool j1_tag_mass  = Jet1SDmass > ttagSDwindowLo && Jet1SDmass < ttagSDwindowHi;
-    bool j0_tag_tau32 = Jet0Tau32 < 0.7;
-    bool j1_tag_tau32 = Jet1Tau32 < 0.7;
+    bool j0_tag_mass  = Jet0SDmass > topTagSDwindowLo && Jet0SDmass < topTagSDwindowHi;
+    bool j1_tag_mass  = Jet1SDmass > topTagSDwindowLo && Jet1SDmass < topTagSDwindowHi;
+    bool j0_tag_tau32 = Jet0Tau32 < topTagTau32cut;
+    bool j1_tag_tau32 = Jet1Tau32 < topTagTau32cut;
     bool j0_tag_t     = j0_tag_mass && j0_tag_tau32;
     bool j1_tag_t     = j1_tag_mass && j1_tag_tau32;
     bool j0_tag_b     = Jet0SDmaxbdisc > 0.8;
@@ -1741,10 +2350,10 @@ void looptree(string input_folder, string input_file, string modmassFile, string
     bool j0_tag_t_b   = j0_tag_t && j0_tag_b ;
     bool j1_tag_t_b   = j1_tag_t && j1_tag_b ;
 
-    bool j0_puptag_mass  = Jet0PuppiSDmass > ttagSDwindowLo && Jet0PuppiSDmass < ttagSDwindowHi;
-    bool j1_puptag_mass  = Jet1PuppiSDmass > ttagSDwindowLo && Jet1PuppiSDmass < ttagSDwindowHi;
-    bool j0_puptag_tau32 = Jet0PuppiTau32 < 0.7;
-    bool j1_puptag_tau32 = Jet1PuppiTau32 < 0.7;
+    bool j0_puptag_mass  = Jet0PuppiSDmass > topTagSDwindowLo && Jet0PuppiSDmass < topTagSDwindowHi;
+    bool j1_puptag_mass  = Jet1PuppiSDmass > topTagSDwindowLo && Jet1PuppiSDmass < topTagSDwindowHi;
+    bool j0_puptag_tau32 = Jet0PuppiTau32 < topTagTau32cut;
+    bool j1_puptag_tau32 = Jet1PuppiTau32 < topTagTau32cut;
     bool j0_puptag_t     = j0_puptag_mass && j0_puptag_tau32;
     bool j1_puptag_t     = j1_puptag_mass && j1_puptag_tau32;
     bool j0_puptag_b     = Jet0PuppiSDmaxbdisc > 0.8;
@@ -1762,8 +2371,8 @@ void looptree(string input_folder, string input_file, string modmassFile, string
     bool double_puptag_t_single_puptag_b = double_puptag_t && ( (j0_puptag_b && !j1_puptag_b) || (!j0_puptag_b && j1_puptag_b) )  ;           
     bool double_puptag_t_no_b            = double_puptag_t && !j0_puptag_b && !j1_puptag_b ;           
 
-    bool j0_antitag_tau32     = Jet0Tau32 > 0.7;
-    bool j1_antitag_tau32     = Jet1Tau32 > 0.7;
+    bool j0_antitag_tau32     = Jet0Tau32 > topTagTau32cut;
+    bool j1_antitag_tau32     = Jet1Tau32 > topTagTau32cut;
     bool j0_antitag_tau32_tag_mass  =  j0_antitag_tau32 && j0_tag_mass ;
     bool j1_antitag_tau32_tag_mass  =  j1_antitag_tau32 && j1_tag_mass ;
   
@@ -2599,7 +3208,7 @@ void looptree(string input_folder, string input_file, string modmassFile, string
 
 	 // //sample from a uniform distribution in [110,210] 
 	 TRandom3 rand(0);
-	 double rand_mass = rand.Uniform(ttagSDwindowLo,ttagSDwindowHi);
+	 double rand_mass = rand.Uniform(topTagSDwindowLo,topTagSDwindowHi);
 
 	 TLorentzVector jet0P4_modMass_flat = jet0P4;
 	 p_vec_jet0 = TVector3( jet0P4_modMass_flat.Px(), jet0P4_modMass_flat.Py(), jet0P4_modMass_flat.Pz());
@@ -2610,12 +3219,12 @@ void looptree(string input_folder, string input_file, string modmassFile, string
 	 jet1P4_modMass_flat.SetVectM( p_vec_jet1, rand_mass );
 
 	 // if jet 0 is outside of the top mass window, force it to have mass in the window 
-	 if (Jet0SDmass < ttagSDwindowLo || Jet0SDmass > ttagSDwindowHi){
+	 if (Jet0SDmass < topTagSDwindowLo || Jet0SDmass > topTagSDwindowHi){
 	   DijetMass_modMass_jet0 = (jet1P4 + jet0P4_modMass ).M();
 	   DijetMass_modMass_flat_jet0 = (jet1P4+ jet0P4_modMass_flat ).M();
 	 }
 	 // if jet 1 is outside of the top mass window, force it to have mass in the window 
-	 if (Jet1SDmass < ttagSDwindowLo || Jet1SDmass > ttagSDwindowHi){
+	 if (Jet1SDmass < topTagSDwindowLo || Jet1SDmass > topTagSDwindowHi){
 	   DijetMass_modMass_jet1 = (jet0P4 + jet1P4_modMass ).M();
 	   DijetMass_modMass_flat_jet1 = (jet0P4+ jet1P4_modMass_flat ).M();
 	 }
