@@ -174,7 +174,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_Tight_    ;
       edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_HEEP_     ;
   
-
+      // Grab from configuration file
       bool useToolbox_;
       bool verbose_;
       bool verboseGen_;
@@ -190,7 +190,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
       std::string jerSFtext_;
 
-      
+      // JEC
       boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK4chs;
       boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK8chs;
       boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK4pup;
@@ -200,11 +200,13 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       boost::shared_ptr<JetCorrectionUncertainty> JetCorrUncertAK4pup;
       boost::shared_ptr<JetCorrectionUncertainty> JetCorrUncertAK8pup;
       
+      // PU weight
       TFile* fPUweight;
       TH1D* hPUweight;
       TH1D* hPUweight_MBup;
       TH1D* hPUweight_MBdn;
 
+      // A few basic histograms
       TH1D * h_ak8puppi_softDropMass ;
       TH1D * h_ak8chs_softDropMass   ;
       TH1D * h_ak8chs_softDropMass_reweighted ;
@@ -719,9 +721,9 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Q2weight_CorrUp                           ;           
       Float_t NNPDF3weight_CorrDn                       ;           
       Float_t NNPDF3weight_CorrUp                       ;           
-      Float_t AllHadRunNum                              ;           
-      Float_t AllHadLumiBlock                           ;           
-      Float_t AllHadEventNum                            ;    
+      Int_t   AllHadRunNum                               ;           
+      Int_t   AllHadLumiBlock                            ;           
+      Int_t   AllHadEventNum                             ;    
 
 
 
@@ -961,11 +963,27 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t JetGenMatched_partonMass               ;
       Float_t JetGenMatched_partonID                 ;
       Float_t JetGenMatched_DeltaRjetParton          ;
+
       Float_t SemiLeptMETpx                          ;
       Float_t SemiLeptMETpy                          ;
       Float_t SemiLeptMETpt                          ;
       Float_t SemiLeptMETphi                         ;
       Float_t SemiLeptMETsumET                       ;
+      Float_t SemiLeptMETgenMET                      ;
+      Float_t SemiLeptMETuncorPt                     ;
+
+      Float_t SemiLeptMETshiftedPtJetEnUp            ;
+      Float_t SemiLeptMETshiftedPtJetEnDn            ;
+      Float_t SemiLeptMETshiftedPtElEnUp             ;
+      Float_t SemiLeptMETshiftedPtElEnDn             ;
+      Float_t SemiLeptMETshiftedPtMuEnUp             ;
+      Float_t SemiLeptMETshiftedPtMuEnDn             ;
+      Float_t SemiLeptMETshiftedPtJetResUp           ;
+      Float_t SemiLeptMETshiftedPtJetResDn           ;
+      Float_t SemiLeptMETshiftedPtUnclEnUp           ;
+      Float_t SemiLeptMETshiftedPtUnclEnDn           ;
+
+
       Float_t SemiLeptNvtx                           ;
       Float_t SemiLeptNvtxGood                       ;
       Float_t SemiLeptNPUtrue                        ;
@@ -990,9 +1008,9 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t SemiLeptQ2weight_CorrUp                ;
       Float_t SemiLeptNNPDF3weight_CorrDn            ;
       Float_t SemiLeptNNPDF3weight_CorrUp            ;
-      Float_t SemiLeptRunNum                         ;
-      Float_t SemiLeptLumiBlock                      ;
-      Float_t SemiLeptEventNum                       ;
+      Int_t   SemiLeptRunNum                         ;
+      Int_t   SemiLeptLumiBlock                      ;
+      Int_t   SemiLeptEventNum                       ;
       Int_t   SemiLeptPassMETFilters                 ;       
         
       Float_t AK4_dRminLep_Pt                             ;
@@ -1071,7 +1089,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
     badChargedCandidateFilterToken_(consumes<bool>(edm::InputTag("BadChargedCandidateFilter",""))),
     muonToken_(consumes<pat::MuonCollection>(edm::InputTag("slimmedMuons"))),
     electronToken_(consumes<edm::View<pat::Electron>>(edm::InputTag("slimmedElectrons"))), //Collection
-    metToken_(consumes<pat::METCollection>(edm::InputTag("slimmedMETs"))),
+    metToken_(consumes<pat::METCollection>(edm::InputTag("slimmedMETs","","Ana"))),
     pileupInfoToken_(consumes<std::vector<PileupSummaryInfo>>(edm::InputTag("slimmedAddPileupInfo"))),
     lheSrc_(consumes<LHEEventProduct>(iConfig.getParameter<edm::InputTag>("lheSrc"))),
     pdfToken_(consumes<GenEventInfoProduct>(edm::InputTag("generator"))),
@@ -1132,7 +1150,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad = new TTree("TreeAllHad","TreeAllHad"); 
 
 
-  TreeAllHad->Branch("AllHadTrigNames"    , "vector<std::string>", &AllHadTrigNames);
+  TreeAllHad->Branch("AllHadTrigNames"       , "vector<std::string>", &AllHadTrigNames);
   TreeAllHad->Branch("AllHadTrigPrescales"   , "vector<int>", &AllHadTrigPrescales);
   TreeAllHad->Branch("AllHadTrigPass"        , "vector<bool>", &AllHadTrigPass);
   TreeAllHad->Branch("AllHadTrigAcceptBits"  , &AllHadTrigAcceptBits);
@@ -1600,7 +1618,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("DijetDeltaPhi"                         , & DijetDeltaPhi                      ,    "DijetDeltaPhi/F"                           );                                      
   TreeAllHad->Branch("DijetDeltaRap"                         , & DijetDeltaRap                      ,    "DijetDeltaRap/F"                           );                                      
   TreeAllHad->Branch("DiGenJetMass"                          , & DiGenJetMass                       ,    "DiGenJetMass/F"                            );                                     
-  TreeAllHad->Branch("CountLep"                              , & CountLep                           ,    "CountLep/F"                                );                                  
+  TreeAllHad->Branch("CountLep"                              , & CountLep                           ,    "CountLep/I"                                );                                  
   TreeAllHad->Branch("GenTTmass"                             , & GenTTmass                          ,    "GenTTmass/F"                               );                                  
   TreeAllHad->Branch("HT"                                    , & HT                                 ,    "HT/F"                                      );                           
   TreeAllHad->Branch("HT_CorrDn"                             , & HT_CorrDn                          ,    "HT_CorrDn/F"                               );                                  
@@ -1612,9 +1630,9 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("Q2weight_CorrUp"                       , & Q2weight_CorrUp                    ,    "Q2weight_CorrUp/F"                         );                                        
   TreeAllHad->Branch("NNPDF3weight_CorrDn"                   , & NNPDF3weight_CorrDn                ,    "NNPDF3weight_CorrDn/F"                     );                                            
   TreeAllHad->Branch("NNPDF3weight_CorrUp"                   , & NNPDF3weight_CorrUp                ,    "NNPDF3weight_CorrUp/F"                     );                                            
-  TreeAllHad->Branch("AllHadRunNum"                          , & AllHadRunNum                       ,    "AllHadRunNum/F"                            );                                     
-  TreeAllHad->Branch("AllHadLumiBlock"                       , & AllHadLumiBlock                    ,    "AllHadLumiBlock/F"                         );                                        
-  TreeAllHad->Branch("AllHadEventNum"                        , & AllHadEventNum                     ,    "AllHadEventNum/F"                          );                                       
+  TreeAllHad->Branch("AllHadRunNum"                          , & AllHadRunNum                       ,    "AllHadRunNum/I"                            );                                     
+  TreeAllHad->Branch("AllHadLumiBlock"                       , & AllHadLumiBlock                    ,    "AllHadLumiBlock/I"                         );                                        
+  TreeAllHad->Branch("AllHadEventNum"                        , & AllHadEventNum                     ,    "AllHadEventNum/I"                          );                                       
   
   std::cout<<"Setup all-had event tree"<<std::endl;
 
@@ -1872,6 +1890,20 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptMETpt"                        , & SemiLeptMETpt                     , "SemiLeptMETpt/F"                  );
   TreeSemiLept->Branch("SemiLeptMETphi"                       , & SemiLeptMETphi                    , "SemiLeptMETphi/F"                 );
   TreeSemiLept->Branch("SemiLeptMETsumET"                     , & SemiLeptMETsumET                  , "SemiLeptMETsumET/F"               );
+  TreeSemiLept->Branch("SemiLeptMETgenMET"                    , & SemiLeptMETgenMET                 , "SemiLeptMETgenMET/F"              );
+  TreeSemiLept->Branch("SemiLeptMETuncorPt"                   , & SemiLeptMETuncorPt                , "SemiLeptMETuncorPt/F"             );
+
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtJetEnUp"      , & SemiLeptMETshiftedPtJetEnUp   , "SemiLeptMETshiftedPtJetEnUp/F"     );
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtJetEnDn"      , & SemiLeptMETshiftedPtJetEnDn   , "SemiLeptMETshiftedPtJetEnDn/F"     );
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtElEnUp"       , & SemiLeptMETshiftedPtElEnUp    , "SemiLeptMETshiftedPtElEnUp/F"      );
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtElEnDn"       , & SemiLeptMETshiftedPtElEnDn    , "SemiLeptMETshiftedPtElEnDn/F"      );
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtMuEnUp"       , & SemiLeptMETshiftedPtMuEnUp    , "SemiLeptMETshiftedPtMuEnUp/F"      );
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtMuEnDn"       , & SemiLeptMETshiftedPtMuEnDn    , "SemiLeptMETshiftedPtMuEnDn/F"      );
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtJetResUp"     , & SemiLeptMETshiftedPtJetResUp  , "SemiLeptMETshiftedPtJetResUp/F"    );
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtJetResDn"     , & SemiLeptMETshiftedPtJetResDn  , "SemiLeptMETshiftedPtJetResDn/F"    );
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtUnclEnUp"     , & SemiLeptMETshiftedPtUnclEnUp  , "SemiLeptMETshiftedPtUnclEnUp/F"    );
+  TreeSemiLept->Branch("SemiLeptMETshiftedPtUnclEnDn"     , & SemiLeptMETshiftedPtUnclEnDn  , "SemiLeptMETshiftedPtUnclEnDn/F"    );
+
   TreeSemiLept->Branch("SemiLeptNvtx"                         , & SemiLeptNvtx                      , "SemiLeptNvtx/F"                   );
   TreeSemiLept->Branch("SemiLeptNvtxGood"                     , & SemiLeptNvtxGood                  , "SemiLeptNvtxGood/F"               );
   TreeSemiLept->Branch("SemiLeptRho"                          , & SemiLeptRho                       , "SemiLeptRho/F"                    );
@@ -1897,9 +1929,9 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptQ2weight_CorrUp"              , & SemiLeptQ2weight_CorrUp           , "SemiLeptQ2weight_CorrUp/F"        );
   TreeSemiLept->Branch("SemiLeptNNPDF3weight_CorrDn"          , & SemiLeptNNPDF3weight_CorrDn       , "SemiLeptNNPDF3weight_CorrDn/F"    );
   TreeSemiLept->Branch("SemiLeptNNPDF3weight_CorrUp"          , & SemiLeptNNPDF3weight_CorrUp       , "SemiLeptNNPDF3weight_CorrUp/F"    );
-  TreeSemiLept->Branch("SemiLeptRunNum"                       , & SemiLeptRunNum                    , "SemiLeptRunNum/F"                 );
-  TreeSemiLept->Branch("SemiLeptLumiBlock"                    , & SemiLeptLumiBlock                 , "SemiLeptLumiBlock/F"              );
-  TreeSemiLept->Branch("SemiLeptEventNum"                     , & SemiLeptEventNum                  , "SemiLeptEventNum/F"               );
+  TreeSemiLept->Branch("SemiLeptRunNum"                       , & SemiLeptRunNum                    , "SemiLeptRunNum/I"                 );
+  TreeSemiLept->Branch("SemiLeptLumiBlock"                    , & SemiLeptLumiBlock                 , "SemiLeptLumiBlock/I"              );
+  TreeSemiLept->Branch("SemiLeptEventNum"                     , & SemiLeptEventNum                  , "SemiLeptEventNum/I"               );
   TreeSemiLept->Branch("SemiLeptPassMETFilters"               , & SemiLeptPassMETFilters            , "SemiLeptPassMETFilters/I"         );
  
   TreeSemiLept->Branch("AK4_dRminLep_Pt"                           , & AK4_dRminLep_Pt                        , "AK4_dRminLep_Pt/F"                     );  
@@ -2300,6 +2332,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     iEvent.getByToken(triggerObjects_, triggerObjects);
     iEvent.getByToken(triggerPrescales_, triggerPrescales);
 
+
+
+
+
     vector<string> trigsToRun;
     trigsToRun.push_back("HLT_PFHT300_v");
     trigsToRun.push_back("HLT_PFHT350_v");
@@ -2331,12 +2367,18 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     trigsToRun.push_back("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet140_v");
     trigsToRun.push_back("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165_v");
     trigsToRun.push_back("HLT_Ele105_CaloIdVT_GsfTrkIdT_v");
+    trigsToRun.push_back("HLT_AK8PFJet450_v");
+    trigsToRun.push_back("HLT_AK8PFJet500_v");
+    trigsToRun.push_back("HLT_CaloJet500_NoJetID_v");
+
+
 
     const int ntrigs = trigsToRun.size();
+
     if (verbose_) cout<<"trigsToRun size "<<ntrigs<<endl;
 
     // do the same thing two different ways ( to test)
-    std::bitset<30> hltbit;
+    std::bitset<33> hltbit;
     vector<bool> trigAccept;
 
     AllHadTrigNames       ->clear();
@@ -2438,13 +2480,27 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     // badMuon (NEW not available in miniAOD v2, see snippet below)
     // badCharged hadron (NEW not available in miniAOD v2, see snippet below) 
 
+    //Check: MET filters November 10 2016
+
+    // filter                  location                data  MC(fullSim) 
+    // primary vertex filter   available in miniAOD v2 DONE  suggested   
+    // beam halo filter        available in miniAOD v2 DONE  suggested   
+    // HBHE noise filter       available in miniAOD v2 DONE  suggested   
+    // HBHEiso noise filter    available in miniAOD v2 DONE  suggested   
+    // ECAL TP filter          available in miniAOD v2 DONE  DONE        
+    // ee badSC noise filter   available in miniAOD v2 DONE  not         
+    // badMuon                 to be run on the fly    DONE  DONE        
+    // badCharged hadron       to be run on the fly    DONE  DONE        
+
+
+
     vector <string> filterFlags;
+    filterFlags.push_back("Flag_goodVertices");
+    filterFlags.push_back("Flag_globalTightHalo2016Filter");
     filterFlags.push_back("Flag_HBHENoiseFilter");
     filterFlags.push_back("Flag_HBHENoiseIsoFilter");
     filterFlags.push_back("Flag_EcalDeadCellTriggerPrimitiveFilter");
-    filterFlags.push_back("Flag_goodVertices");
     filterFlags.push_back("Flag_eeBadScFilter");
-    filterFlags.push_back("Flag_globalTightHalo2016Filter");
 
     unsigned int count_matched_accept = 0;
     for (int itrig = 0; itrig != nMETfilters; ++itrig){
@@ -5334,12 +5390,14 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //  d8888888888 888 888        888    888 888  888 Y88b 888         888     888     Y8b.     Y8b.     
   // d88P     888 888 888        888    888 "Y888888  "Y88888         888     888      "Y8888   "Y8888  
   //                                                                                                    
-         
+      
+  double dijetDeltaPhi = fabs( deltaPhi( AK8jet0_P4corr.Phi(),  AK8jet1_P4corr.Phi() ));
+
   AllHadMETpx          = met.px();                   
   AllHadMETpy          = met.py();                   
   AllHadMETpt          = met.pt();                   
   AllHadMETphi         = met.phi();                   
-  AllHadMETsumET       = met.sumEt();                   
+  AllHadMETsumET       = met.sumEt();                                  
   AllHadNvtx           = nvtx;    
   AllHadNvtxGood       = nvtxgood;    
   AllHadNPUtrue        = nPU;           
@@ -5351,7 +5409,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   DijetMass            = (AK8jet0_P4corr + AK8jet1_P4corr).M() ;                                                   
   DijetMassPuppi       = (PUPPIjet0_P4corr + PUPPIjet1_P4corr).M() ;                                                   
   DijetDeltaR          = deltaR( AK8jet0_P4corr.Eta(), AK8jet0_P4corr.Phi(), AK8jet1_P4corr.Eta(), AK8jet1_P4corr.Phi() );               
-  DijetDeltaPhi        = fabs( deltaPhi( AK8jet0_P4corr.Phi(),  AK8jet1_P4corr.Phi() ));                 
+  DijetDeltaPhi        = dijetDeltaPhi;                 
   DijetDeltaRap        = fabs(AK8jet0_P4corr.Rapidity() -  AK8jet1_P4corr.Rapidity() );
 
   CountLep             = count_lep ;
@@ -5378,7 +5436,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //------------------------------------
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
   //------------------------------------
-  if (AK8jet0_P4corr.Perp()>300 && AK8jet1_P4corr.Perp()>300 && fabs( AK8jet0_P4corr.Rapidity() ) <2.4 && fabs( AK8jet1_P4corr.Rapidity() ) <2.4  ){
+  if (AK8jet0_P4corr.Perp()>300 && AK8jet1_P4corr.Perp()>300 && fabs( AK8jet0_P4corr.Rapidity() ) <2.4 && fabs( AK8jet1_P4corr.Rapidity() ) <2.4 ){
     TreeAllHad -> Fill();
   } 
 
@@ -5401,7 +5459,49 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   SemiLeptMETpy                = met.py();                   
   SemiLeptMETpt                = met.pt();                   
   SemiLeptMETphi               = met.phi();                   
-  SemiLeptMETsumET             = met.sumEt();                   
+  SemiLeptMETsumET             = met.sumEt();   
+  
+  SemiLeptMETgenMET            = met.genMET()->pt();                   
+  SemiLeptMETuncorPt           = met.uncorPt();                    
+     
+  SemiLeptMETshiftedPtJetEnUp  = met.shiftedPt(pat::MET::JetEnUp            ) ;                    
+  SemiLeptMETshiftedPtJetEnDn  = met.shiftedPt(pat::MET::JetEnDown          ) ;                    
+  SemiLeptMETshiftedPtElEnUp   = met.shiftedPt(pat::MET::ElectronEnUp       ) ;                    
+  SemiLeptMETshiftedPtElEnDn   = met.shiftedPt(pat::MET::ElectronEnDown     ) ;                    
+  SemiLeptMETshiftedPtMuEnUp   = met.shiftedPt(pat::MET::MuonEnUp           ) ;                    
+  SemiLeptMETshiftedPtMuEnDn   = met.shiftedPt(pat::MET::MuonEnDown         ) ;                    
+  SemiLeptMETshiftedPtJetResUp = met.shiftedPt(pat::MET::JetResUp           ) ;                    
+  SemiLeptMETshiftedPtJetResDn = met.shiftedPt(pat::MET::JetResDown         ) ;                    
+  SemiLeptMETshiftedPtUnclEnUp = met.shiftedPt(pat::MET::UnclusteredEnUp    ) ;                    
+  SemiLeptMETshiftedPtUnclEnDn = met.shiftedPt(pat::MET::UnclusteredEnDown  ) ;                    
+
+
+  if (verbose_){
+    cout<<" met.pt() "<<   met.pt() <<endl;
+    cout<<" met.shiftedPt(pat::MET::JetEnUp)             "<<met.shiftedPt(pat::MET::JetEnUp)            <<endl;       
+    cout<<" met.shiftedPt(pat::MET::JetEnDown)           "<<met.shiftedPt(pat::MET::JetEnDown)          <<endl;               
+    cout<<" met.shiftedPt(pat::MET::ElectronEnUp)        "<<met.shiftedPt(pat::MET::ElectronEnUp)       <<endl;            
+    cout<<" met.shiftedPt(pat::MET::ElectronEnDown)      "<<met.shiftedPt(pat::MET::ElectronEnDown)     <<endl;                            
+    cout<<" met.shiftedPt(pat::MET::MuonEnUp)            "<<met.shiftedPt(pat::MET::MuonEnUp)           <<endl;        
+    cout<<" met.shiftedPt(pat::MET::MuonEnDown)          "<<met.shiftedPt(pat::MET::MuonEnDown)         <<endl;                      
+    cout<<" met.shiftedPt(pat::MET::JetResUp)            "<<met.shiftedPt(pat::MET::JetResUp)           <<endl;        
+    cout<<" met.shiftedPt(pat::MET::JetResDown)          "<<met.shiftedPt(pat::MET::JetResDown)         <<endl;               
+    cout<<" met.shiftedPt(pat::MET::UnclusteredEnUp)     "<<met.shiftedPt(pat::MET::UnclusteredEnUp)    <<endl;               
+    cout<<" met.shiftedPt(pat::MET::UnclusteredEnDown)   "<<met.shiftedPt(pat::MET::UnclusteredEnDown)  <<endl;                 
+    
+    cout<<" met.phi() "<<   met.phi() <<endl;
+    cout<<" met.shiftedPhi(pat::MET::UnclusteredEnUp)    "<<met.shiftedPhi(pat::MET::UnclusteredEnUp)   <<endl;                
+    cout<<" met.shiftedPhi(pat::MET::UnclusteredEnDown)  "<<met.shiftedPhi(pat::MET::UnclusteredEnDown) <<endl;                  
+    cout<<" met.shiftedPhi(pat::MET::JetEnUp)            "<<met.shiftedPhi(pat::MET::JetEnUp)           <<endl;        
+    cout<<" met.shiftedPhi(pat::MET::JetEnDown)          "<<met.shiftedPhi(pat::MET::JetEnDown)         <<endl; 
+    cout<<" met.shiftedPhi(pat::MET::ElectronEnUp)       "<<met.shiftedPhi(pat::MET::ElectronEnUp)      <<endl;             
+    cout<<" met.shiftedPhi(pat::MET::ElectronEnDown)     "<<met.shiftedPhi(pat::MET::ElectronEnDown)    <<endl; 
+    cout<<" met.shiftedPhi(pat::MET::MuonEnUp)           "<<met.shiftedPhi(pat::MET::MuonEnUp)          <<endl;         
+    cout<<" met.shiftedPhi(pat::MET::MuonEnDown)         "<<met.shiftedPhi(pat::MET::MuonEnDown)        <<endl;
+    cout<<" met.shiftedPhi(pat::MET::JetResUp)           "<<met.shiftedPhi(pat::MET::JetResUp)          <<endl;         
+    cout<<" met.shiftedPhi(pat::MET::JetResDown)         "<<met.shiftedPhi(pat::MET::JetResDown)        <<endl;    
+  }
+
   SemiLeptNvtx                 = nvtx;     
   SemiLeptNvtxGood             = nvtxgood;     
   SemiLeptNPUtrue              = nPU;     
@@ -5515,9 +5615,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<" el pt "<<el0_p4.Perp()<<endl;
     cout<<" met "<<met.pt() <<endl;
     cout<<" ak4 pt "<<AK4_dRMinLep_p4.Perp() <<endl;
-  } 
-  if (count_lep ==1 && AK8jet_SemiLept_P4corr.Perp()>200 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 
-    &&  lep0_p4.Perp()>30 && met.pt() > 30 ){
+  }  
+  if (count_lep ==1 && AK8jet_SemiLept_P4corr.Perp()>200 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4  ){
+    //&&  lep0_p4.Perp()>30 && met.pt() > 30 ){
     TreeSemiLept -> Fill();
   } 
 
@@ -5529,7 +5629,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 void 
 B2GTTbarTreeMaker::beginJob()
 {
-  fPUweight = new TFile("PUweight20160908.root") ;
+  fPUweight = new TFile("PUweight_Nov4JSON_Nov6PiileupJSON_Xsec72383_MCRunIISpring16MiniAODv2.root") ;
   hPUweight      = (TH1D*) fPUweight->Get("PUweight_true");
   hPUweight_MBup = (TH1D*) fPUweight->Get("PUweight_true_MBup");
   hPUweight_MBdn = (TH1D*) fPUweight->Get("PUweight_true_MBdn");
