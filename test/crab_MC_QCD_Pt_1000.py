@@ -1,13 +1,13 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = config()
-config.General.requestName = 'b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3'
+config.General.requestName = 'b2gtree_QCD_Pt_1000to1400_pythia8_RunIISpring16MiniAODv2_reHLT_V3'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 config.JobType.pluginName = 'Analysis'
-config.JobType.psetName = 'run_B2GTTbarTreeMaker_Zprime_Toolbox.py'
+config.JobType.psetName = 'run_B2GTTbarTreeMaker_QCD_Toolbox.py'
 config.JobType.maxJobRuntimeMin = 2750
-config.Data.inputDataset = '/ZprimeToTT_M-2000_W-20_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISpring16MiniAODv2-PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/MINIAODSIM'
+config.Data.inputDataset = '/QCD_Pt_1000to1400_TuneCUETP8M1_13TeV_pythia8/RunIISpring16MiniAODv2-PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/MINIAODSIM'
 config.Data.inputDBS = 'global'
 config.JobType.inputFiles = [
 'PUweight20160908.root',
@@ -34,7 +34,7 @@ config.JobType.inputFiles = [
 'Spring16_25nsV6_MC_SF_AK8PFchs.txt'
 ]
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 1
+config.Data.unitsPerJob = 3
 config.Data.outLFNDirBase = '/store/user/jdolen/B2G2016/'
 config.Data.publication = False
 config.Site.storageSite = 'T3_US_FNALLPC'
