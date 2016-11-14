@@ -16,8 +16,11 @@ cd B2GTTbar/test/
 for MC:
 
 `cmsRun run_B2GTTbarTreeMaker_MC_Toolbox.py`   # for QCD, Wjets
+
 `cmsRun run_B2GTTbarTreeMaker_Zprime_Toolbox.py`
+
 `cmsRun run_B2GTTbarTreeMaker_RSG_Toolbox.py`
+
 `cmsRun run_B2GTTbarTreeMaker_ttbar_Toolbox.py`
 
 for data:
