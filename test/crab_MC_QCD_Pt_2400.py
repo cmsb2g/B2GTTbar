@@ -10,7 +10,7 @@ config.JobType.maxJobRuntimeMin = 2750
 config.Data.inputDataset = '/QCD_Pt_2400to3200_TuneCUETP8M1_13TeV_pythia8/RunIISpring16MiniAODv2-PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/MINIAODSIM'
 config.Data.inputDBS = 'global'
 config.JobType.inputFiles = [
-'PUweight20160908.root',
+'PUweight_Nov4JSON_Nov6PiileupJSON_Xsec72383_MCRunIISpring16MiniAODv2.root',
 'Spring16_25nsV6_MC_L1FastJet_AK8PFchs.txt',
 'Spring16_25nsV6_MC_L2Relative_AK8PFchs.txt',
 'Spring16_25nsV6_MC_L3Absolute_AK8PFchs.txt',

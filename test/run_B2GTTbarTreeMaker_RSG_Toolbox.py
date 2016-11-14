@@ -16,6 +16,8 @@ process.GlobalTag.globaltag = '80X_mcRun2_asymptotic_2016_miniAODv2_v1'
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(False) )
 process.options.allowUnscheduled = cms.untracked.bool(True)
 
+isMC   = True
+
 #----------------------------------------------------------------------------------------
 ### INPUT
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
@@ -71,6 +73,23 @@ for idmod in my_id_modules:
     setupAllVIDIdsInModule(process,idmod,setupVIDElectronSelection)
 
 #----------------------------------------------------------------------------------------
+### MET   //https://twiki.cern.ch/twiki/bin/view/CMS/MissingETUncertaintyPrescription
+from PhysicsTools.PatUtils.tools.runMETCorrectionsAndUncertainties import runMetCorAndUncFromMiniAOD
+
+# If you only want to re-correct and get the proper uncertainties
+runMetCorAndUncFromMiniAOD(process,
+                       isData=not isMC,
+                       )
+
+# If you would like to re-cluster and get the proper uncertainties
+# runMetCorAndUncFromMiniAOD(process,
+#                        isData=True (or False),
+#                        pfCandColl=cms.InputTag("packedPFCandidates"),
+#                        recoMetFromPFCs=True,
+#                        )
+
+
+#----------------------------------------------------------------------------------------
 ### Puppi (https://twiki.cern.ch/twiki/bin/viewauth/CMS/PUPPI)
 #process.load('CommonTools/PileupAlgos/Puppi_cff')
 #process.puppi.candName = cms.InputTag('packedPFCandidates')
@@ -85,7 +104,7 @@ from JMEAnalysis.JetToolbox.jetToolbox_cff import jetToolbox
 
 ak8Cut = 'pt > 200 && abs(eta) < 2.5'
 ak8pupCut = 'pt > 150 && abs(eta) < 2.5'
-isMC   = True
+
 
 listBTagInfos = [
      'pfInclusiveSecondaryVertexFinderTagInfos',
@@ -237,6 +256,7 @@ process.p = cms.Path(
   process.BadChargedCandidateFilter*
   process.BadPFMuonFilter*
   process.egmGsfElectronIDSequence*
+  process.fullPatMetSequence*
   process.ana
 )
 

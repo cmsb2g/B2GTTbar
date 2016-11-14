@@ -1,7 +1,7 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = config()
-config.General.requestName = 'b2gtree_SingleMuon_Run2016C-PromptReco-v2_JSONsept30_V3'
+config.General.requestName = 'b2gtreeV4_SingleMuon_Run2016C-PromptReco-v2_JSONnov4'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 config.JobType.pluginName = 'Analysis'
@@ -10,7 +10,7 @@ config.JobType.maxJobRuntimeMin = 2750
 config.Data.inputDataset = '/SingleMuon/Run2016C-PromptReco-v2/MINIAOD'
 config.Data.inputDBS = 'global'
 config.JobType.inputFiles = [
-'PUweight20160908.root',
+'PUweight_Nov4JSON_Nov6PiileupJSON_Xsec72383_MCRunIISpring16MiniAODv2.root',
 'Spring16_25nsV6_DATA_L1FastJet_AK8PFchs.txt',
 'Spring16_25nsV6_DATA_L2Relative_AK8PFchs.txt',
 'Spring16_25nsV6_DATA_L3Absolute_AK8PFchs.txt',
@@ -35,7 +35,7 @@ config.JobType.inputFiles = [
 ]
 config.Data.splitting = 'LumiBased'
 config.Data.unitsPerJob = 20
-config.Data.lumiMask = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/Cert_271036-280385_13TeV_PromptReco_Collisions16_JSON_NoL1T_v2.txt'
+config.Data.lumiMask = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON_NoL1T.txt'
 #config.Data.runRange
 config.Data.outLFNDirBase = '/store/user/jdolen/B2G2016/'
 config.Data.publication = False
