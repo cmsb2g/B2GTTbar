@@ -3400,10 +3400,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   if (verbose_) cout<<"debug: about to grab ak8 jets"<<endl;
 
-  for (const pat::Jet &ijet : *AK8CHS) {  
+  for (const pat::Jet &ijet : *AK8CHS) {
     if (count_AK8CHS>1) break;
     if (count_AK8CHS==0 && ijet.pt()<250) break;
-
     if (verbose_) cout<<"\nJet "<<count_AK8CHS<<" with pT "<<ijet.pt()<<" sdMass "<<ijet.userFloat("ak8PFJetsCHSSoftDropMass")<<endl;
 
     //------------------------------------
@@ -5379,7 +5378,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     count_AK8CHS++;
   }
-
   //
   //        d8888 888 888        888    888               888     88888888888                           
   //       d88888 888 888        888    888               888         888                               
@@ -5390,53 +5388,52 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //  d8888888888 888 888        888    888 888  888 Y88b 888         888     888     Y8b.     Y8b.     
   // d88P     888 888 888        888    888 "Y888888  "Y88888         888     888      "Y8888   "Y8888  
   //                                                                                                    
-      
-  double dijetDeltaPhi = fabs( deltaPhi( AK8jet0_P4corr.Phi(),  AK8jet1_P4corr.Phi() ));
-
-  AllHadMETpx          = met.px();                   
-  AllHadMETpy          = met.py();                   
-  AllHadMETpt          = met.pt();                   
-  AllHadMETphi         = met.phi();                   
-  AllHadMETsumET       = met.sumEt();                                  
-  AllHadNvtx           = nvtx;    
-  AllHadNvtxGood       = nvtxgood;    
-  AllHadNPUtrue        = nPU;           
-  AllHadRho            = rho ;               
-  AllHadEventWeight    = evWeight ;   
-  AllHadPUweight       = puweight  ; 
-  AllHadPUweight_MBup  = puweightUp ;
-  AllHadPUweight_MBdn  = puweightDn  ;          
-  DijetMass            = (AK8jet0_P4corr + AK8jet1_P4corr).M() ;                                                   
-  DijetMassPuppi       = (PUPPIjet0_P4corr + PUPPIjet1_P4corr).M() ;                                                   
-  DijetDeltaR          = deltaR( AK8jet0_P4corr.Eta(), AK8jet0_P4corr.Phi(), AK8jet1_P4corr.Eta(), AK8jet1_P4corr.Phi() );               
-  DijetDeltaPhi        = dijetDeltaPhi;                 
-  DijetDeltaRap        = fabs(AK8jet0_P4corr.Rapidity() -  AK8jet1_P4corr.Rapidity() );
-
-  CountLep             = count_lep ;
-  DiGenJetMass         = (GenJetMatched0 + GenJetMatched1).M();                   
-  GenTTmass            = (t1_p4+t2_p4).M() ;               
-  HT                   = HT_AK4_pt30          ;                
-  HT_CorrDn            = HT_AK4_pt30_corrDn   ;                
-  HT_CorrUp            = HT_AK4_pt30_corrUp   ;  
-  HT_PtSmearNom        = HT_AK4_pt30_smearNom ;          
-  HT_PtSmearUp         = HT_AK4_pt30_smearUp  ;               
-  HT_PtSmearDn         = HT_AK4_pt30_smearDn  ;               
-  Q2weight_CorrDn      = Q2wgt_down ;              
-  Q2weight_CorrUp      = Q2wgt_up ;              
-  NNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
-  NNPDF3weight_CorrUp  = NNPDF3wgt_up ;              
-  AllHadRunNum         = iEvent.id().run() ;              
-  AllHadLumiBlock      = iEvent.id().luminosityBlock() ;              
-  AllHadEventNum       = iEvent.id().event() ;  
-  PassMETFilters       = (int)  passMETfilters;
-
-                 
-
+  
 
   //------------------------------------
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
   //------------------------------------
-  if (AK8jet0_P4corr.Perp()>300 && AK8jet1_P4corr.Perp()>300 && fabs( AK8jet0_P4corr.Rapidity() ) <2.4 && fabs( AK8jet1_P4corr.Rapidity() ) <2.4 ){
+  if (AK8jet0_P4corr.Perp()>300 && AK8jet1_P4corr.Perp()>300 && fabs( AK8jet0_P4corr.Rapidity() ) <2.4 && fabs( AK8jet1_P4corr.Rapidity() ) <2.4 ){    
+    
+    double dijetDeltaPhi = fabs( deltaPhi( AK8jet0_P4corr.Phi(),  AK8jet1_P4corr.Phi() ));
+
+    AllHadMETpx          = met.px();                   
+    AllHadMETpy          = met.py();                   
+    AllHadMETpt          = met.pt();                   
+    AllHadMETphi         = met.phi();                   
+    AllHadMETsumET       = met.sumEt();                                  
+    AllHadNvtx           = nvtx;    
+    AllHadNvtxGood       = nvtxgood;    
+    AllHadNPUtrue        = nPU;           
+    AllHadRho            = rho ;               
+    AllHadEventWeight    = evWeight ;   
+    AllHadPUweight       = puweight  ; 
+    AllHadPUweight_MBup  = puweightUp ;
+    AllHadPUweight_MBdn  = puweightDn  ;          
+    DijetMass            = (AK8jet0_P4corr + AK8jet1_P4corr).M() ;                                                   
+    DijetMassPuppi       = (PUPPIjet0_P4corr + PUPPIjet1_P4corr).M() ;                                                   
+    DijetDeltaR          = deltaR( AK8jet0_P4corr.Eta(), AK8jet0_P4corr.Phi(), AK8jet1_P4corr.Eta(), AK8jet1_P4corr.Phi() );               
+    DijetDeltaPhi        = dijetDeltaPhi;                 
+    DijetDeltaRap        = fabs(AK8jet0_P4corr.Rapidity() -  AK8jet1_P4corr.Rapidity() );
+
+    CountLep             = count_lep ;
+    DiGenJetMass         = (GenJetMatched0 + GenJetMatched1).M();                   
+    GenTTmass            = (t1_p4+t2_p4).M() ;               
+    HT                   = HT_AK4_pt30          ;                
+    HT_CorrDn            = HT_AK4_pt30_corrDn   ;                
+    HT_CorrUp            = HT_AK4_pt30_corrUp   ;  
+    HT_PtSmearNom        = HT_AK4_pt30_smearNom ;          
+    HT_PtSmearUp         = HT_AK4_pt30_smearUp  ;               
+    HT_PtSmearDn         = HT_AK4_pt30_smearDn  ;               
+    Q2weight_CorrDn      = Q2wgt_down ;              
+    Q2weight_CorrUp      = Q2wgt_up ;              
+    NNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
+    NNPDF3weight_CorrUp  = NNPDF3wgt_up ;              
+    AllHadRunNum         = iEvent.id().run() ;              
+    AllHadLumiBlock      = iEvent.id().luminosityBlock() ;              
+    AllHadEventNum       = iEvent.id().event() ;  
+    PassMETFilters       = (int)  passMETfilters;
+
     TreeAllHad -> Fill();
   } 
 
@@ -5455,159 +5452,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //                                                                888                                                       
   //                                                                888       
      
-  SemiLeptMETpx                = met.px();                   
-  SemiLeptMETpy                = met.py();                   
-  SemiLeptMETpt                = met.pt();                   
-  SemiLeptMETphi               = met.phi();                   
-  SemiLeptMETsumET             = met.sumEt();   
-  
-  SemiLeptMETgenMET            = met.genMET()->pt();                   
-  SemiLeptMETuncorPt           = met.uncorPt();                    
-     
-  SemiLeptMETshiftedPtJetEnUp  = met.shiftedPt(pat::MET::JetEnUp            ) ;                    
-  SemiLeptMETshiftedPtJetEnDn  = met.shiftedPt(pat::MET::JetEnDown          ) ;                    
-  SemiLeptMETshiftedPtElEnUp   = met.shiftedPt(pat::MET::ElectronEnUp       ) ;                    
-  SemiLeptMETshiftedPtElEnDn   = met.shiftedPt(pat::MET::ElectronEnDown     ) ;                    
-  SemiLeptMETshiftedPtMuEnUp   = met.shiftedPt(pat::MET::MuonEnUp           ) ;                    
-  SemiLeptMETshiftedPtMuEnDn   = met.shiftedPt(pat::MET::MuonEnDown         ) ;                    
-  SemiLeptMETshiftedPtJetResUp = met.shiftedPt(pat::MET::JetResUp           ) ;                    
-  SemiLeptMETshiftedPtJetResDn = met.shiftedPt(pat::MET::JetResDown         ) ;                    
-  SemiLeptMETshiftedPtUnclEnUp = met.shiftedPt(pat::MET::UnclusteredEnUp    ) ;                    
-  SemiLeptMETshiftedPtUnclEnDn = met.shiftedPt(pat::MET::UnclusteredEnDown  ) ;                    
-
-
-  if (verbose_){
-    cout<<" met.pt() "<<   met.pt() <<endl;
-    cout<<" met.shiftedPt(pat::MET::JetEnUp)             "<<met.shiftedPt(pat::MET::JetEnUp)            <<endl;       
-    cout<<" met.shiftedPt(pat::MET::JetEnDown)           "<<met.shiftedPt(pat::MET::JetEnDown)          <<endl;               
-    cout<<" met.shiftedPt(pat::MET::ElectronEnUp)        "<<met.shiftedPt(pat::MET::ElectronEnUp)       <<endl;            
-    cout<<" met.shiftedPt(pat::MET::ElectronEnDown)      "<<met.shiftedPt(pat::MET::ElectronEnDown)     <<endl;                            
-    cout<<" met.shiftedPt(pat::MET::MuonEnUp)            "<<met.shiftedPt(pat::MET::MuonEnUp)           <<endl;        
-    cout<<" met.shiftedPt(pat::MET::MuonEnDown)          "<<met.shiftedPt(pat::MET::MuonEnDown)         <<endl;                      
-    cout<<" met.shiftedPt(pat::MET::JetResUp)            "<<met.shiftedPt(pat::MET::JetResUp)           <<endl;        
-    cout<<" met.shiftedPt(pat::MET::JetResDown)          "<<met.shiftedPt(pat::MET::JetResDown)         <<endl;               
-    cout<<" met.shiftedPt(pat::MET::UnclusteredEnUp)     "<<met.shiftedPt(pat::MET::UnclusteredEnUp)    <<endl;               
-    cout<<" met.shiftedPt(pat::MET::UnclusteredEnDown)   "<<met.shiftedPt(pat::MET::UnclusteredEnDown)  <<endl;                 
-    
-    cout<<" met.phi() "<<   met.phi() <<endl;
-    cout<<" met.shiftedPhi(pat::MET::UnclusteredEnUp)    "<<met.shiftedPhi(pat::MET::UnclusteredEnUp)   <<endl;                
-    cout<<" met.shiftedPhi(pat::MET::UnclusteredEnDown)  "<<met.shiftedPhi(pat::MET::UnclusteredEnDown) <<endl;                  
-    cout<<" met.shiftedPhi(pat::MET::JetEnUp)            "<<met.shiftedPhi(pat::MET::JetEnUp)           <<endl;        
-    cout<<" met.shiftedPhi(pat::MET::JetEnDown)          "<<met.shiftedPhi(pat::MET::JetEnDown)         <<endl; 
-    cout<<" met.shiftedPhi(pat::MET::ElectronEnUp)       "<<met.shiftedPhi(pat::MET::ElectronEnUp)      <<endl;             
-    cout<<" met.shiftedPhi(pat::MET::ElectronEnDown)     "<<met.shiftedPhi(pat::MET::ElectronEnDown)    <<endl; 
-    cout<<" met.shiftedPhi(pat::MET::MuonEnUp)           "<<met.shiftedPhi(pat::MET::MuonEnUp)          <<endl;         
-    cout<<" met.shiftedPhi(pat::MET::MuonEnDown)         "<<met.shiftedPhi(pat::MET::MuonEnDown)        <<endl;
-    cout<<" met.shiftedPhi(pat::MET::JetResUp)           "<<met.shiftedPhi(pat::MET::JetResUp)          <<endl;         
-    cout<<" met.shiftedPhi(pat::MET::JetResDown)         "<<met.shiftedPhi(pat::MET::JetResDown)        <<endl;    
-  }
-
-  SemiLeptNvtx                 = nvtx;     
-  SemiLeptNvtxGood             = nvtxgood;     
-  SemiLeptNPUtrue              = nPU;     
-  SemiLeptRho                  = rho ;               
-  SemiLeptEventWeight          = evWeight ;              
-  SemiLeptPUweight             = puweight  ; 
-  SemiLeptPUweight_MBup        = puweightUp ;
-  SemiLeptPUweight_MBdn        = puweightDn  ;
-
-  SemiLeptGenTTmass            = (t1_p4+t2_p4).M() ; 
-    
-
-  double htlep = lep0_p4.Perp() + met.pt() ;
-  HTlep                = htlep ;
-  ST                   = htlep + HT_AK4_pt30           ;                
-  ST_CorrDn            = htlep + HT_AK4_pt30_corrDn    ;                
-  ST_CorrUp            = htlep + HT_AK4_pt30_corrUp    ;                
-  ST_PtSmearNom        = htlep + HT_AK4_pt30_smearNom  ;                
-  ST_PtSmearUp         = htlep + HT_AK4_pt30_smearUp   ;                
-  ST_PtSmearDn         = htlep + HT_AK4_pt30_smearDn   ;  
-
-  SemiLeptQ2weight_CorrDn      = Q2wgt_down ;              
-  SemiLeptQ2weight_CorrUp      = Q2wgt_up ;              
-  SemiLeptNNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
-  SemiLeptNNPDF3weight_CorrUp  = NNPDF3wgt_up ;              
-  SemiLeptRunNum               = iEvent.id().run() ;              
-  SemiLeptLumiBlock            = iEvent.id().luminosityBlock() ;              
-  SemiLeptEventNum             = iEvent.id().event() ; 
-  SemiLeptPassMETFilters       = (int) passMETfilters;              
-
-  AK4_dRminLep_Pt        = AK4_dRMinLep_p4.Perp() ;
-  AK4_dRminLep_Eta       = AK4_dRMinLep_p4.Eta()  ;
-  AK4_dRminLep_Phi       = AK4_dRMinLep_p4.Phi()  ;
-  AK4_dRminLep_Mass      = AK4_dRMinLep_p4.M()    ;
-  AK4_dRminLep_Bdisc     = AK4_dRMinLep_bdisc     ;
-  AK4_dRminLep_dRlep     = AK4_dRMinLep_deltaR    ;
-  AK4_dRminLep_dRak8     = AK4_dRMinLep_p4.DeltaR( AK8jet_SemiLept_P4corr  ) ;
- 
-  AK4_dRminLep_PtSmear   = AK4_dRMinLep_ptsmear    ;
-  AK4_dRminLep_PtSmearUp = AK4_dRMinLep_ptsmearUp  ;
-  AK4_dRminLep_PtSmearDn = AK4_dRMinLep_ptsmearDn  ;
-  AK4_dRminLep_PtUncorr  = AK4_dRMinLep_ptuncorr   ;
-
-  AK4_dRminLep_Corr      = AK4_dRMinLep_corr       ;
-  AK4_dRminLep_CorrUp    = AK4_dRMinLep_corrUp     ;
-  AK4_dRminLep_CorrDn    = AK4_dRMinLep_corrDn     ;
-
-  // Closest b-tagged jet to the lepton
-  // I don't think we need this 
-  // AK4BtagdRminPt    = AK4_btagged_dRMinLep_p4.Perp();
-  // AK4BtagdRminBdisc = AK4_btagged_dRMinLep_bdisc    ;
-  // AK4BtagdRminLep   = AK4_btagged_dRMinLep          ;
- 
-  LepHemiContainsAK4BtagLoose  = (int)  ak4_btag_loose;
-  LepHemiContainsAK4BtagMedium = (int)  ak4_btag_medium;
-  LepHemiContainsAK4BtagTight  = (int)  ak4_btag_tight;
-
-  LeptonPhi   = lep0_p4.Phi()  ; 
-  LeptonPt    = lep0_p4.Perp() ;  
-  LeptonEta   = lep0_p4.Eta()  ; 
-  LeptonMass  = lep0_p4.M() ; 
-
-
-  if      (count_mu==1 && count_el==0) LeptonIsMu  = 1  ; 
-  else if (count_mu==0 && count_el==1) LeptonIsMu  = 0  ; 
-  else                                 LeptonIsMu  = -1  ;
-
-  PtRel  = AK4_dRMinLep_p4.Perp( lep0_p4.Vect() );
-  MuIso  = mu0_iso04;
-
-  Elecron_absiso            = el0_absiso           ;  
-  Elecron_relIsoWithDBeta   = el0_relIsoWithDBeta  ;  
-  Elecron_absiso_EA         = el0_absiso_EA        ;  
-  Elecron_relIsoWithEA      = el0_relIsoWithEA     ;  
-
-  Electron_iso_passHLTpre   = el0_iso_passHLTpre  ;
-  Electron_iso_passLoose    = el0_iso_passLoose   ;
-  Electron_iso_passMedium   = el0_iso_passMedium  ;
-  Electron_iso_passTight    = el0_iso_passTight   ;
-  Electron_iso_passHEEP     = el0_iso_passHEEP    ;
-  Electron_noiso_passLoose  = el0_noiso_passLoose ;
-  Electron_noiso_passMedium = el0_noiso_passMedium;
-  Electron_noiso_passTight  = el0_noiso_passTight ;
-  Electron_noiso_passHEEP   = el0_noiso_passHEEP  ;
-
-  MuMedium = (int) mu0_isMedium   ;
-  MuTight  = (int) mu0_isTight    ;
-  MuHighPt = (int) mu0_isHighPt   ;
-
-  //------------------------------------
-  // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
-  //------------------------------------
-
-
-  // if (GenTruth_semileptonic)  count_GenTruth_semileptonic ++;
-  // if (count_mu  >=1 )  count_nMu_gt1 ++; 
-  // if (count_el  >=1 )  count_nEl_gt1 ++; 
-  // if (count_mu  ==1 )  count_nMu_e1 ++; 
-  // if (count_el  ==1 )  count_nEl_e1 ++; 
-  // if (count_lep ==1 )  count_nLep_e1 ++; 
-  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300)  count_JetPt300 ++; 
-  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 )  count_JetPt300Eta ++; 
-  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 && AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_AK4 ++; 
-  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40)  count_JetPt300Eta_muPt40 ++; 
-  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40)  count_JetPt300Eta_muPt40_MET40 ++; 
-  // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40 &&  AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_muPt40_MET40_AK4 ++; 
 
   if (count_lep ==1  && verbose_){
     cout<<" ak8pt "<<AK8jet_SemiLept_P4corr.Perp()<<endl;
@@ -5616,8 +5460,173 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<" met "<<met.pt() <<endl;
     cout<<" ak4 pt "<<AK4_dRMinLep_p4.Perp() <<endl;
   }  
+
+  //------------------------------------
+  // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
+  //------------------------------------
+
   if (count_lep ==1 && AK8jet_SemiLept_P4corr.Perp()>200 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4  ){
     //&&  lep0_p4.Perp()>30 && met.pt() > 30 ){
+       
+    SemiLeptMETpx                = met.px();                   
+    SemiLeptMETpy                = met.py();                   
+    SemiLeptMETpt                = met.pt();                   
+    SemiLeptMETphi               = met.phi();                   
+    SemiLeptMETsumET             = met.sumEt();   
+    
+    if ( !iEvent.isRealData() )  SemiLeptMETgenMET            = met.genMET()->pt();                   
+    SemiLeptMETuncorPt           = met.uncorPt();                    
+       
+    SemiLeptMETshiftedPtJetEnUp  = met.shiftedPt(pat::MET::JetEnUp            ) ;                    
+    SemiLeptMETshiftedPtJetEnDn  = met.shiftedPt(pat::MET::JetEnDown          ) ;                    
+    SemiLeptMETshiftedPtElEnUp   = met.shiftedPt(pat::MET::ElectronEnUp       ) ;                    
+    SemiLeptMETshiftedPtElEnDn   = met.shiftedPt(pat::MET::ElectronEnDown     ) ;                    
+    SemiLeptMETshiftedPtMuEnUp   = met.shiftedPt(pat::MET::MuonEnUp           ) ;                    
+    SemiLeptMETshiftedPtMuEnDn   = met.shiftedPt(pat::MET::MuonEnDown         ) ;                    
+    SemiLeptMETshiftedPtJetResUp = met.shiftedPt(pat::MET::JetResUp           ) ;                    
+    SemiLeptMETshiftedPtJetResDn = met.shiftedPt(pat::MET::JetResDown         ) ;                    
+    SemiLeptMETshiftedPtUnclEnUp = met.shiftedPt(pat::MET::UnclusteredEnUp    ) ;                    
+    SemiLeptMETshiftedPtUnclEnDn = met.shiftedPt(pat::MET::UnclusteredEnDown  ) ;                    
+
+
+    if (verbose_){
+      cout<<" met.pt() "<<   met.pt() <<endl;
+      cout<<" met.shiftedPt(pat::MET::JetEnUp)             "<<met.shiftedPt(pat::MET::JetEnUp)            <<endl;       
+      cout<<" met.shiftedPt(pat::MET::JetEnDown)           "<<met.shiftedPt(pat::MET::JetEnDown)          <<endl;               
+      cout<<" met.shiftedPt(pat::MET::ElectronEnUp)        "<<met.shiftedPt(pat::MET::ElectronEnUp)       <<endl;            
+      cout<<" met.shiftedPt(pat::MET::ElectronEnDown)      "<<met.shiftedPt(pat::MET::ElectronEnDown)     <<endl;                            
+      cout<<" met.shiftedPt(pat::MET::MuonEnUp)            "<<met.shiftedPt(pat::MET::MuonEnUp)           <<endl;        
+      cout<<" met.shiftedPt(pat::MET::MuonEnDown)          "<<met.shiftedPt(pat::MET::MuonEnDown)         <<endl;                      
+      cout<<" met.shiftedPt(pat::MET::JetResUp)            "<<met.shiftedPt(pat::MET::JetResUp)           <<endl;        
+      cout<<" met.shiftedPt(pat::MET::JetResDown)          "<<met.shiftedPt(pat::MET::JetResDown)         <<endl;               
+      cout<<" met.shiftedPt(pat::MET::UnclusteredEnUp)     "<<met.shiftedPt(pat::MET::UnclusteredEnUp)    <<endl;               
+      cout<<" met.shiftedPt(pat::MET::UnclusteredEnDown)   "<<met.shiftedPt(pat::MET::UnclusteredEnDown)  <<endl;                 
+      
+      cout<<" met.phi() "<<   met.phi() <<endl;
+      cout<<" met.shiftedPhi(pat::MET::UnclusteredEnUp)    "<<met.shiftedPhi(pat::MET::UnclusteredEnUp)   <<endl;                
+      cout<<" met.shiftedPhi(pat::MET::UnclusteredEnDown)  "<<met.shiftedPhi(pat::MET::UnclusteredEnDown) <<endl;                  
+      cout<<" met.shiftedPhi(pat::MET::JetEnUp)            "<<met.shiftedPhi(pat::MET::JetEnUp)           <<endl;        
+      cout<<" met.shiftedPhi(pat::MET::JetEnDown)          "<<met.shiftedPhi(pat::MET::JetEnDown)         <<endl; 
+      cout<<" met.shiftedPhi(pat::MET::ElectronEnUp)       "<<met.shiftedPhi(pat::MET::ElectronEnUp)      <<endl;             
+      cout<<" met.shiftedPhi(pat::MET::ElectronEnDown)     "<<met.shiftedPhi(pat::MET::ElectronEnDown)    <<endl; 
+      cout<<" met.shiftedPhi(pat::MET::MuonEnUp)           "<<met.shiftedPhi(pat::MET::MuonEnUp)          <<endl;         
+      cout<<" met.shiftedPhi(pat::MET::MuonEnDown)         "<<met.shiftedPhi(pat::MET::MuonEnDown)        <<endl;
+      cout<<" met.shiftedPhi(pat::MET::JetResUp)           "<<met.shiftedPhi(pat::MET::JetResUp)          <<endl;         
+      cout<<" met.shiftedPhi(pat::MET::JetResDown)         "<<met.shiftedPhi(pat::MET::JetResDown)        <<endl;    
+    }
+
+    SemiLeptNvtx                 = nvtx;     
+    SemiLeptNvtxGood             = nvtxgood;     
+    SemiLeptNPUtrue              = nPU;     
+    SemiLeptRho                  = rho ;               
+    if ( !iEvent.isRealData() ){
+      SemiLeptEventWeight          = evWeight ;              
+      SemiLeptPUweight             = puweight  ; 
+      SemiLeptPUweight_MBup        = puweightUp ;
+      SemiLeptPUweight_MBdn        = puweightDn  ;
+      SemiLeptGenTTmass            = (t1_p4+t2_p4).M() ; 
+      SemiLeptQ2weight_CorrDn      = Q2wgt_down ;              
+      SemiLeptQ2weight_CorrUp      = Q2wgt_up ;              
+      SemiLeptNNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
+      SemiLeptNNPDF3weight_CorrUp  = NNPDF3wgt_up ;    
+    }  
+    else{ 
+      SemiLeptEventWeight          = 1;    
+      SemiLeptPUweight             = 1;
+      SemiLeptPUweight_MBup        = 1;
+      SemiLeptPUweight_MBdn        = 1;
+      SemiLeptGenTTmass            = 0;
+      SemiLeptQ2weight_CorrDn      = 1;       
+      SemiLeptQ2weight_CorrUp      = 1;     
+      SemiLeptNNPDF3weight_CorrDn  = 1;           
+      SemiLeptNNPDF3weight_CorrUp  = 1;
+    }
+    double htlep = lep0_p4.Perp() + met.pt() ;
+    HTlep                = htlep ;
+    ST                   = htlep + HT_AK4_pt30           ;                
+    ST_CorrDn            = htlep + HT_AK4_pt30_corrDn    ;                
+    ST_CorrUp            = htlep + HT_AK4_pt30_corrUp    ;                
+    ST_PtSmearNom        = htlep + HT_AK4_pt30_smearNom  ;                
+    ST_PtSmearUp         = htlep + HT_AK4_pt30_smearUp   ;                
+    ST_PtSmearDn         = htlep + HT_AK4_pt30_smearDn   ;  
+          
+    SemiLeptRunNum               = iEvent.id().run() ;              
+    SemiLeptLumiBlock            = iEvent.id().luminosityBlock() ;              
+    SemiLeptEventNum             = iEvent.id().event() ; 
+    SemiLeptPassMETFilters       = (int) passMETfilters;              
+
+    AK4_dRminLep_Pt        = AK4_dRMinLep_p4.Perp() ;
+    AK4_dRminLep_Eta       = AK4_dRMinLep_p4.Eta()  ;
+    AK4_dRminLep_Phi       = AK4_dRMinLep_p4.Phi()  ;
+    AK4_dRminLep_Mass      = AK4_dRMinLep_p4.M()    ;
+    AK4_dRminLep_Bdisc     = AK4_dRMinLep_bdisc     ;
+    AK4_dRminLep_dRlep     = AK4_dRMinLep_deltaR    ;
+    AK4_dRminLep_dRak8     = AK4_dRMinLep_p4.DeltaR( AK8jet_SemiLept_P4corr  ) ;
+   
+    AK4_dRminLep_PtSmear   = AK4_dRMinLep_ptsmear    ;
+    AK4_dRminLep_PtSmearUp = AK4_dRMinLep_ptsmearUp  ;
+    AK4_dRminLep_PtSmearDn = AK4_dRMinLep_ptsmearDn  ;
+    AK4_dRminLep_PtUncorr  = AK4_dRMinLep_ptuncorr   ;
+
+    AK4_dRminLep_Corr      = AK4_dRMinLep_corr       ;
+    AK4_dRminLep_CorrUp    = AK4_dRMinLep_corrUp     ;
+    AK4_dRminLep_CorrDn    = AK4_dRMinLep_corrDn     ;
+
+    // Closest b-tagged jet to the lepton
+    // I don't think we need this 
+    // AK4BtagdRminPt    = AK4_btagged_dRMinLep_p4.Perp();
+    // AK4BtagdRminBdisc = AK4_btagged_dRMinLep_bdisc    ;
+    // AK4BtagdRminLep   = AK4_btagged_dRMinLep          ;
+   
+    LepHemiContainsAK4BtagLoose  = (int)  ak4_btag_loose;
+    LepHemiContainsAK4BtagMedium = (int)  ak4_btag_medium;
+    LepHemiContainsAK4BtagTight  = (int)  ak4_btag_tight;
+
+    LeptonPhi   = lep0_p4.Phi()  ; 
+    LeptonPt    = lep0_p4.Perp() ;  
+    LeptonEta   = lep0_p4.Eta()  ; 
+    LeptonMass  = lep0_p4.M() ; 
+
+
+    if      (count_mu==1 && count_el==0) LeptonIsMu  = 1  ; 
+    else if (count_mu==0 && count_el==1) LeptonIsMu  = 0  ; 
+    else                                 LeptonIsMu  = -1  ;
+
+    PtRel  = AK4_dRMinLep_p4.Perp( lep0_p4.Vect() );
+    MuIso  = mu0_iso04;
+
+    Elecron_absiso            = el0_absiso           ;  
+    Elecron_relIsoWithDBeta   = el0_relIsoWithDBeta  ;  
+    Elecron_absiso_EA         = el0_absiso_EA        ;  
+    Elecron_relIsoWithEA      = el0_relIsoWithEA     ;  
+
+    Electron_iso_passHLTpre   = el0_iso_passHLTpre  ;
+    Electron_iso_passLoose    = el0_iso_passLoose   ;
+    Electron_iso_passMedium   = el0_iso_passMedium  ;
+    Electron_iso_passTight    = el0_iso_passTight   ;
+    Electron_iso_passHEEP     = el0_iso_passHEEP    ;
+    Electron_noiso_passLoose  = el0_noiso_passLoose ;
+    Electron_noiso_passMedium = el0_noiso_passMedium;
+    Electron_noiso_passTight  = el0_noiso_passTight ;
+    Electron_noiso_passHEEP   = el0_noiso_passHEEP  ;
+
+    MuMedium = (int) mu0_isMedium   ;
+    MuTight  = (int) mu0_isTight    ;
+    MuHighPt = (int) mu0_isHighPt   ;
+
+    // if (GenTruth_semileptonic)  count_GenTruth_semileptonic ++;
+    // if (count_mu  >=1 )  count_nMu_gt1 ++; 
+    // if (count_el  >=1 )  count_nEl_gt1 ++; 
+    // if (count_mu  ==1 )  count_nMu_e1 ++; 
+    // if (count_el  ==1 )  count_nEl_e1 ++; 
+    // if (count_lep ==1 )  count_nLep_e1 ++; 
+    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300)  count_JetPt300 ++; 
+    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 )  count_JetPt300Eta ++; 
+    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 && AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_AK4 ++; 
+    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40)  count_JetPt300Eta_muPt40 ++; 
+    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40)  count_JetPt300Eta_muPt40_MET40 ++; 
+    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40 &&  AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_muPt40_MET40_AK4 ++; 
+
     TreeSemiLept -> Fill();
   } 
 
