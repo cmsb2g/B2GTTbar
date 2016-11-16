@@ -1,13 +1,13 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = config()
-config.General.requestName = 'b2gtreeV4_SingleMuon_Run2016B-PromptReco-v2_JSONnov14'
+config.General.requestName = 'b2gtreeV4_SingleMuon_Run2016H-PromptReco-v2_JSONnov14'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'run_B2GTTbarTreeMaker_data_Toolbox.py'
 config.JobType.maxJobRuntimeMin = 2750
-config.Data.inputDataset = '/SingleMuon/Run2016B-PromptReco-v2/MINIAOD'
+config.Data.inputDataset = '/SingleMuon/Run2016H-PromptReco-v2/MINIAOD'
 config.Data.inputDBS = 'global'
 config.JobType.inputFiles = [
 'PUweight_Nov4JSON_Nov6PiileupJSON_Xsec72383_MCRunIISpring16MiniAODv2.root',
