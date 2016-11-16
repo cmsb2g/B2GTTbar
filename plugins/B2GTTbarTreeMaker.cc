@@ -5530,7 +5530,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   SemiLeptRunNum               = iEvent.id().run() ;              
   SemiLeptLumiBlock            = iEvent.id().luminosityBlock() ;              
   SemiLeptEventNum             = iEvent.id().event() ; 
-  SemiLeptPassMETFilters       = (int) SemiLeptPassMETFilters;              
+  SemiLeptPassMETFilters       = (int) passMETfilters;              
 
   AK4_dRminLep_Pt        = AK4_dRMinLep_p4.Perp() ;
   AK4_dRminLep_Eta       = AK4_dRMinLep_p4.Eta()  ;
