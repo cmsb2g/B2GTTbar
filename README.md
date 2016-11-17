@@ -12,6 +12,11 @@ git clone https://github.com/rappoccio/PredictedDistribution.git Analysis/Predic
 git clone https://github.com/cmsb2g/B2GTTbar.git Analysis/B2GTTbar
 git clone git@github.com:cms-jet/JetToolbox.git JMEAnalysis/JetToolbox -b jetToolbox_80X
 cd B2GTTbar/test/
+cp JECs/Spring16_25nsV6*AK4PFchs* .
+cp JECs/Spring16_25nsV6*AK4PFPuppi* .
+cp JECs/Spring16_25nsV6*AK8PFchs* .
+cp JECs/Spring16_25nsV6*AK8PFPuppi* .
+cp JERs/* .
 ```
 for MC:
 
