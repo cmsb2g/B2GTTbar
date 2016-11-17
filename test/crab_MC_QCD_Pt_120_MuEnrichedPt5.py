@@ -1,7 +1,7 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = config()
-config.General.requestName = 'b2gtreeV4_QCD_Pt_120to170_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8_RunIISpring16MiniAODv2_reHLT'
+config.General.requestName = 'b2gtreeV4_QCD_Pt_120to170_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8_RunIISpring16MiniAODv2_reHLT_try2'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 config.JobType.pluginName = 'Analysis'

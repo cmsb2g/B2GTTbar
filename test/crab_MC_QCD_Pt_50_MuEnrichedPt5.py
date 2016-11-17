@@ -1,13 +1,13 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = config()
-config.General.requestName = 'b2gtreeV4_QCD_Pt_600to800_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8_RunIISpring16MiniAODv2_reHLT_try2'
+config.General.requestName = 'b2gtreeV4_QCD_Pt_50to80_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8_RunIISpring16MiniAODv2_reHLT_try3'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'run_B2GTTbarTreeMaker_MC_Toolbox.py'
 config.JobType.maxJobRuntimeMin = 2750
-config.Data.inputDataset = '/QCD_Pt-600to800_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8/RunIISpring16MiniAODv2-PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/MINIAODSIM'
+config.Data.inputDataset = '/QCD_Pt-50to80_MuEnrichedPt5_TuneCUETP8M1_13TeV_pythia8/RunIISpring16MiniAODv2-PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/MINIAODSIM'
 config.Data.inputDBS = 'global'
 config.JobType.inputFiles = [
 'PUweight_Nov4JSON_Nov6PiileupJSON_Xsec72383_MCRunIISpring16MiniAODv2.root',
