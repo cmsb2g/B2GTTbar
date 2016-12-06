@@ -20,15 +20,20 @@
 #include <vector>
 
 using namespace std;
-void makeHists(bool, bool, vector<double>);
+
+void makeHists( string , double , vector<double>);
 
 void run(){
 
+  string date = "20161203";
+  double lumi = 36220; //pb-1
+  
   // Define mistag rate bins
   vector <double> bins_small;
   vector <double> bins_0btag;
   vector <double> bins_1btag;
   vector <double> bins_2btag;
+  vector <double> bins_constant;
   vector <double> bins_big;
   vector <double> bins_eta;
   int x;
@@ -103,322 +108,207 @@ void run(){
   }
   cout<<endl;
 
-  // eta bins
-  cout<<"Define eta bins: ";
-  for (double i = -2.4; i<= 2.4; i+=0.2){
-      bins_eta.push_back(i);
-      cout<<" "<<i;
+  // bins_constant
+  cout<<"constant bins: ";
+  x=400;
+  while (x<=6000){
+    cout<<" "<<x;
+    bins_constant.push_back(x);
+    x+=200;
   }
   cout<<endl;
 
-
   // bool data, bool noSubtract, vector of bins            makeHists( bool data, bool noSubtract, vector<double> bins ){
-  makeHists(false, true, bins_small );  // Monte Carlo  - small bins
-  makeHists(false, true, bins_0btag );  // Monte Carlo  - bins_medium
-  makeHists(false, true, bins_1btag );  // Monte Carlo  - bins_medium
-  makeHists(false, true, bins_2btag );  // Monte Carlo  - bins_medium
+  makeHists( date, lumi, bins_small );     // Monte Carlo  - small bins
+  // makeHists( date, lumi, bins_0btag );     // Monte Carlo  - bins_medium
+  // makeHists( date, lumi, bins_1btag );     // Monte Carlo  - bins_medium
+  // makeHists( date, lumi, bins_2btag );     // Monte Carlo  - bins_medium
+  makeHists( date, lumi, bins_constant );  // Monte Carlo  - bins_medium
 
-   makeHists(true, false, bins_small );  // data, subtract ttbar  - small bins
-   makeHists(true, false, bins_0btag );  // data, subtract ttbar  - bins_medium
-   makeHists(true, false, bins_1btag );  // data, subtract ttbar  - bins_medium
-   makeHists(true, false, bins_2btag );  // data, subtract ttbar  - bins_medium
 }
 
 
 // void makeHists( bool data = false, bool noSubtract = false, vector<int> bins ){
-void makeHists( bool data, bool noSubtract, vector<double> bins ){
+void makeHists( string date, double luminosity, vector<double> bins ){
 	// Get input file and setup output file
   TFile * InFile;
-  TFile * InFileTTbar;
+  TFile * InFile2;
   TFile * OutFileBigBins;
   TFile * OutFile;
 
-  string infile_name ;
-  string infile_ttbar_name ;
-  string infolder = "runs/run20161010/";
+  string infolder = "/Users/jdolen/Nobackup/B2G2016/V4/runs/";
 
-  // QCD Monte Carlo Input (scaled) and Output files
-  if (!data) infile_name = "histsAllHad_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
-
-  if (data){
-
-   // infile_name       = "outAntiTag_JetHT_BothParts_B2GAnaFW_v74x_V8p4_25ns_Nov13silverJSON_reader5a85e65_030516.root";
-   // infile_ttbar_name = "outAntiTag_TT_TuneCUETP8M1_13TeV-powheg-pythia8_janos_B2Gv8p4_reader603e_030716.root";
-      infile_name       = "histsAllHad_Jetpt600HT1000_20161010_b2gtree_JetHT_combined.root";
-      infile_ttbar_name = "histsAllHad_Jetpt600HT1000_20161010_b2gtree_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_V3_99percentFinished_All.root";
-  } 
-
+  vector <string> primary_files;
+  primary_files.push_back("histsAntiTag_Jetpt500HT1000Syst0_20161202full_b2gtreeV4_JetHT_Run2016all_JSONnov14.root");
+  primary_files.push_back("histsAntiTag_Jetpt500HT1000Syst0_20161202full_b2gtreeV4_JetHT_Run2016all_JSONnov14.root");
+  // primary_files.push_back("histsAntiTag_Jetpt500HT1000Syst0_20161202fullNoPUreweight_b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_all.root");
+  // primary_files.push_back("ScaleQCDtest.root");
   
+  vector <string> secondary_files;
+  secondary_files.push_back("histsAntiTag_Jetpt500HT1000Syst0_20161202fullNoPUreweight_b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_all.root");
+  secondary_files.push_back("histsAntiTag_Jetpt500HT1000Syst0_20161202fullNoPUreweight_b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_all.root");
+  // secondary_files.push_back("histsAntiTag_Jetpt500HT1000Syst0_20161202fullNoPUreweight_b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_all.root");
+  // secondary_files.push_back("histsAntiTag_Jetpt500HT1000Syst0_20161202fullNoPUreweight_b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_all.root");
 
-  string date = "20161010";
-  //string syst = "jec_up";
-  
+  vector <bool> subtract_secondary;
+  subtract_secondary.push_back(true);
+  subtract_secondary.push_back(false);
+  // subtract_secondary.push_back(false);
+  // subtract_secondary.push_back(false);
+
+  vector <string> outfile_savename;
+  outfile_savename.push_back("data_subtract_ttbar");
+  outfile_savename.push_back("data_nosubtract_ttbar");
+  // outfile_savename.push_back("ttMC");
+  // outfile_savename.push_back("QCDMC");
+
   
   int nbins = bins.size();
   stringstream temp1;
   temp1 << nbins;
   string snbins = temp1 .str();
-  string subtractOrNot = "";
-  if (noSubtract) subtractOrNot = "_noSubtract_";
-  if (!noSubtract) subtractOrNot = "_Subtract_";
-  if (!data) subtractOrNot = "_MC_";
 
-  string outfile_name ;
-  if (data)  outfile_name = "runs/run20161010/MistagRate_nbins_"+date+"_"+snbins+"_ttbar"+subtractOrNot+infile_name;
-  if (!data) outfile_name = "runs/run20161010/MistagRate_nbins_"+date+"_"+snbins+subtractOrNot+infile_name;
+  cout<<"start file loop"<<endl;
+  for (unsigned int ii=0; ii<primary_files.size(); ii++){
+    cout<<endl;
+    string outfile_name ;
+    outfile_name = "MistagRate_nbins_"+snbins+"_"+date+"_"+outfile_savename[ii]+".root";
 
-  cout<<"Opening "<<infile_name<<endl;
-  infile_name = infolder + infile_name;
-  infile_ttbar_name = infolder + infile_ttbar_name;
-  
-  InFile        = new TFile(      infile_name.c_str()      );
-  OutFile       = new TFile(     outfile_name.c_str()        , "RECREATE");
-  if (data) InFileTTbar   = new TFile(infile_ttbar_name.c_str()     );
+    string primary_name = infolder + primary_files[ii];
+    string secondary_name = infolder + secondary_files[ii];;
+    cout<<"Opening "<<primary_name<<endl;
 
-  OutFile->cd();
+    InFile        = new TFile(      primary_name.c_str()      );
+    OutFile       = new TFile(      outfile_name.c_str()        , "RECREATE");
+    if (subtract_secondary[ii] ) InFile2  = new TFile(secondary_name.c_str()     );
 
-  // Loop over anti-tag and tag combinations and make mistag rate
-  vector <string> antitag_def;
-  vector <string> tag_def;
+    OutFile->cd();
 
-  //antitag_def.push_back("AntiTagMinMass30_ReqTopMassFat");
-  //antitag_def.push_back("AntiTagMinMass30_ReqTopMassSD");
-  //antitag_def.push_back("AntiTagMinMass50_ReqTopMassFat");
-  //antitag_def.push_back("AntiTagMinMass50_ReqTopMassSD");
-  //antitag_def.push_back("AntiTagTau32_ReqTopMassFat");
-  antitag_def.push_back("AntiTagTau32_ReqTopMassSD");
-  // antitag_def.push_back("AntiTagMinMass_ReqTopMassSD");
-  // antitag_def.push_back("NoAntiTag_ReqTopMassSD");
-  // antitag_def.push_back("AntiTagTau32_NoMassReq");
-  // antitag_def.push_back("TagOdd");
-  // antitag_def.push_back("TagEven");
+    // Loop over anti-tag and tag combinations and make mistag rate
+    vector <string> antitag_def;
+    vector <string> tag_def;
 
- 
-  //tag_def.push_back("_TagMassFatMinMass");
-  // tag_def.push_back("_TagMassSD"        );
-  // tag_def.push_back("_TagTau32"        );
-  tag_def.push_back("_TagMassSDTau32"   );
-  //tag_def.push_back("_TagMassSDMinMass" );
+    antitag_def.push_back("AntiTagTau32_ReqTopMassSD");
+    antitag_def.push_back("alt_AntiTagTau32_ReqTopMassSD");
 
-  //string pre = "AllHad/h_";
-  string pre = "h_";
-  string save_pre = "h_mistag_";
-  string probe = "_Probe";
-  vector <string> post;
-  // post.push_back("_jetPt_dRapIn_inclusive");
-  // post.push_back("_jetPt_dRapIn_0btag");
-  // post.push_back("_jetPt_dRapIn_1btag");
-  // post.push_back("_jetPt_dRapIn_2btag");
-  // post.push_back("_jetPt_dRapHi_inclusive");
-  // post.push_back("_jetPt_dRapHi_0btag");
-  // post.push_back("_jetPt_dRapHi_1btag");
-  // post.push_back("_jetPt_dRapHi_2btag");
-  // post.push_back("_jetPt_dRapLo_inclusive");
-  // post.push_back("_jetPt_dRapLo_0btag");
-  // post.push_back("_jetPt_dRapLo_1btag");
-  // post.push_back("_jetPt_dRapLo_2btag");
-  
-  post.push_back("_jetP_dRapIn_inclusive");
-  post.push_back("_jetP_dRapIn_0btag");
-  post.push_back("_jetP_dRapIn_1btag");
-  post.push_back("_jetP_dRapIn_2btag");
-  post.push_back("_jetP_dRapHi_inclusive");
-  post.push_back("_jetP_dRapHi_0btag");
-  post.push_back("_jetP_dRapHi_1btag");
-  post.push_back("_jetP_dRapHi_2btag");
-  post.push_back("_jetP_dRapLo_inclusive");
-  post.push_back("_jetP_dRapLo_0btag");
-  post.push_back("_jetP_dRapLo_1btag");
-  post.push_back("_jetP_dRapLo_2btag");
+    tag_def.push_back("_TagMassSDTau32"   );
 
-  // post.push_back("_jetRap_dRapIn_inclusive");
-  // post.push_back("_jetRap_dRapIn_0btag");
-  // post.push_back("_jetRap_dRapIn_1btag");
-  // post.push_back("_jetRap_dRapIn_2btag");
-  // post.push_back("_jetRap_dRapHi_inclusive");
-  // post.push_back("_jetRap_dRapHi_0btag");
-  // post.push_back("_jetRap_dRapHi_1btag");
-  // post.push_back("_jetRap_dRapHi_2btag");
-  // post.push_back("_jetRap_dRapLo_inclusive");
-  // post.push_back("_jetRap_dRapLo_0btag");
-  // post.push_back("_jetRap_dRapLo_1btag");
-  // post.push_back("_jetRap_dRapLo_2btag");
+    string pre = "h_";
+    string save_pre = "h_mistag_";
+    string probe = "_Probe";
+    vector <string> post;
+
+    post.push_back("_jetP_dRapIn_inclusive");
+    post.push_back("_jetP_dRapIn_0btag");
+    post.push_back("_jetP_dRapIn_1btag");
+    post.push_back("_jetP_dRapIn_2btag");
+    post.push_back("_jetP_dRapHi_inclusive");
+    post.push_back("_jetP_dRapHi_0btag");
+    post.push_back("_jetP_dRapHi_1btag");
+    post.push_back("_jetP_dRapHi_2btag");
+    post.push_back("_jetP_dRapLo_inclusive");
+    post.push_back("_jetP_dRapLo_0btag");
+    post.push_back("_jetP_dRapLo_1btag");
+    post.push_back("_jetP_dRapLo_2btag");
+
+    for (unsigned int i=0; i<antitag_def.size(); i++ ){
+      for (unsigned int j=0; j<tag_def.size(); j++ ){
+        for (unsigned int k=0; k<post.size(); k++ ){
+          string numer = pre + antitag_def[i] + tag_def[j] + post[k] ;
+          string denom = pre + antitag_def[i] + probe + post[k] ;
+          string savename  = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
+          cout <<"numer   : "<<numer<<endl;
+          cout <<"denom   : "<<denom<<endl;
 
 
-
-
-  // post.push_back("_2D_dRapAll_inclusive");
-  // post.push_back("_2D_dRapAll_0btag");
-  // post.push_back("_2D_dRapAll_1btag");
-  // post.push_back("_2D_dRapAll_2btag");
-  // post.push_back("_2D_dRapHi_inclusive");
-  // post.push_back("_2D_dRapHi_0btag");
-  // post.push_back("_2D_dRapHi_1btag");
-  // post.push_back("_2D_dRapHi_2btag");
-  // post.push_back("_2D_dRapLo_inclusive");
-  // post.push_back("_2D_dRapLo_0btag");
-  // post.push_back("_2D_dRapLo_1btag");
-  // post.push_back("_2D_dRapLo_2btag");
-
-  // post.push_back("_jetPt_dRapHi_inclusive");
-  // post.push_back("_jetPt_dRapHi_2btag");
-  // post.push_back("_jetPt_dRapHi_1btag");
-  // post.push_back("_jetPt_dRapHi_0btag");
-  // post.push_back("_jetPt_dRapLo_inclusive");
-  // post.push_back("_jetPt_dRapLo_2btag");
-  // post.push_back("_jetPt_dRapLo_1btag");
-  // post.push_back("_jetPt_dRapLo_0btag");
-  
-  
-  
-  for (unsigned int i=0; i<antitag_def.size(); i++ ){
-    for (unsigned int j=0; j<tag_def.size(); j++ ){
-      for (unsigned int k=0; k<post.size(); k++ ){
-        string numer = pre + antitag_def[i] + tag_def[j] + post[k] ;
-        cout <<"numer:"<<numer<<endl;
-        string denom = pre + antitag_def[i] + probe + post[k] ;
-        cout <<"denom:"<<denom<<endl;
-        string savename = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
-        string savename2 = save_pre + antitag_def[i] + tag_def[j] + post[k] ;
-        string savename3 = "teff_" + antitag_def[i] + tag_def[j] + post[k] ;
-
-        // cout<<numer<<"      "<<denom<<"     "<<
-        cout<<savename<<endl;
-
-        TH1D * bkgd_numer = (TH1D*)InFile->Get(numer.c_str());
-        TH1D * bkgd_denom = (TH1D*)InFile->Get(denom.c_str());
-        bkgd_numer  ->Sumw2();
-        bkgd_denom  ->Sumw2();
-        
-        TH1D *bkgd_numer_new =(TH1D*) bkgd_numer->Clone();
-        TH1D *bkgd_denom_new =(TH1D*) bkgd_denom->Clone();
-        bkgd_numer_new->Sumw2();
-        bkgd_denom_new->Sumw2();
-
-        // rebin with variable width bins
-        int nbins = bins.size();
-        double xbins[nbins];
-        for( unsigned int i = 0; i < bins.size(); i++) xbins[i] = bins[i];
-        for( unsigned int i = 0; i < bins.size(); i++) cout<<xbins[i]<<" ";
-        cout<<endl;
-        cout<<"nbins "<<nbins<<endl;
-        TH1D* bkgd_numer_rebin = (TH1D*)bkgd_numer_new->Rebin(nbins-1,"bkgd_numer_rebin",xbins);
-        TH1D* bkgd_denom_rebin = (TH1D*)bkgd_denom_new->Rebin(nbins-1,"bkgd_denom_rebin",xbins);
-        bkgd_numer_rebin->Sumw2(); 
-        bkgd_denom_rebin->Sumw2();
-
-        TH1D *ttbar_numer_rebin;
-        TH1D *ttbar_denom_rebin;
-        if (data){
-
-          TH1D * ttbar_numer = (TH1D*)InFileTTbar->Get(numer.c_str());
-          TH1D * ttbar_denom = (TH1D*)InFileTTbar->Get(denom.c_str());
-          ttbar_numer ->Sumw2();
-          ttbar_denom ->Sumw2();
-          TH1D *ttbar_numer_new;
-          TH1D *ttbar_denom_new;
-          ttbar_numer_new =(TH1D*) ttbar_numer->Clone();
-          ttbar_denom_new =(TH1D*) ttbar_denom->Clone();
-          ttbar_numer_new->Sumw2();
-          ttbar_denom_new->Sumw2(); 
-          ttbar_numer_rebin = (TH1D*)ttbar_numer_new->Rebin(nbins-1,"ttbar_numer_rebin",xbins);
-          ttbar_denom_rebin = (TH1D*)ttbar_denom_new->Rebin(nbins-1,"ttbar_denom_rebin",xbins);
-          ttbar_numer_rebin ->Sumw2();
-          ttbar_denom_rebin ->Sumw2(); 
-        }
-
-        // subtract ttbar contribution
-        if (data && !noSubtract){
-
+          TH1D * primary_numer = (TH1D*) InFile->Get(numer.c_str());
+          TH1D * primary_denom = (TH1D*) InFile->Get(denom.c_str());
+          primary_numer  ->Sumw2();
+          primary_denom  ->Sumw2();
           
-          double luminosity =  27220; //24570;  //2530;   //1263.890;  //166; pb-1
-          double nevents_dataset_ttbar  = 92925926; //96834559;
-          double xsec_ttbar  =  831.76  ;
-          double kfactor = 0.94;
-          double toptagsf = 0.89;
-          double scale_ttbar= toptagsf * toptagsf * kfactor * xsec_ttbar * luminosity / nevents_dataset_ttbar;
-          cout<<"scale_ttbar "<<scale_ttbar<<endl;
-          ttbar_numer_rebin->Scale(scale_ttbar);
-          ttbar_denom_rebin->Scale(scale_ttbar);
+          TH1D *primary_numer_new =(TH1D*) primary_numer->Clone();
+          TH1D *primary_denom_new =(TH1D*) primary_denom->Clone();
+          // primary_numer_new->Sumw2();
+          // primary_denom_new->Sumw2();
 
-          string ttbar_numer_name = "check_"+antitag_def[i] + tag_def[j] + post[k] +"_ttbar";
-          string ttbar_denom_name = "check_"+antitag_def[i] + probe      + post[k] +"_ttbar";
-          ttbar_numer_rebin ->SetName(ttbar_numer_name.c_str() );
-          ttbar_denom_rebin ->SetName(ttbar_denom_name.c_str() );
-          ttbar_numer_rebin ->Write();
-          ttbar_denom_rebin ->Write();
+          // rebin with variable width bins
+          int nbins = bins.size();
+          double xbins[nbins];
+          for( unsigned int i = 0; i < bins.size(); i++) xbins[i] = bins[i];
+          // for( unsigned int i = 0; i < bins.size(); i++) cout<<xbins[i]<<" ";
+          // cout<<endl;
+          cout<<"nbins "<<nbins<<endl;
+          TH1D* primary_numer_rebin = (TH1D*)primary_numer_new->Rebin(nbins-1,"primary_numer_rebin",xbins);
+          TH1D* primary_denom_rebin = (TH1D*)primary_denom_new->Rebin(nbins-1,"primary_denom_rebin",xbins);
+          // primary_numer_rebin->Sumw2(); 
+          // primary_denom_rebin->Sumw2();
+
+          TH1D *secondary_numer_rebin;
+          TH1D *secondary_denom_rebin;
+          if (subtract_secondary[ii]){
+
+            TH1D * secondary_numer = (TH1D*)InFile2->Get(numer.c_str());
+            TH1D * secondary_denom = (TH1D*)InFile2->Get(denom.c_str());
+            secondary_numer ->Sumw2();
+            secondary_denom ->Sumw2();
+            TH1D *secondary_numer_new;
+            TH1D *secondary_denom_new;
+            secondary_numer_new =(TH1D*) secondary_numer->Clone();
+            secondary_denom_new =(TH1D*) secondary_denom->Clone();
+            // secondary_numer_new->Sumw2();
+            // secondary_denom_new->Sumw2(); 
+            secondary_numer_rebin = (TH1D*)secondary_numer_new->Rebin(nbins-1,"secondary_numer_rebin",xbins);
+            secondary_denom_rebin = (TH1D*)secondary_denom_new->Rebin(nbins-1,"secondary_denom_rebin",xbins);
+            // secondary_numer_rebin ->Sumw2();
+            // secondary_denom_rebin ->Sumw2(); 
+          
+            double nevents_dataset_ttbar  = 92925926;//92925926; //96834559;
+            double xsec_ttbar  =  831.76  ;
+            double kfactor  =  1.0 ; //0.94;
+            double toptagsf =  1.0 ; //0.89;
+            double scale_ttbar= toptagsf * toptagsf * kfactor * xsec_ttbar * luminosity / nevents_dataset_ttbar;
+            cout<<"scale_ttbar "<<scale_ttbar<<" ( lumi = "<<luminosity<<" , xsec = "<<xsec_ttbar<<" , nevents = "<<nevents_dataset_ttbar <<" )" <<endl;
+            secondary_numer_rebin->Scale(scale_ttbar);
+            secondary_denom_rebin->Scale(scale_ttbar);
+
+            string secondary_numer_name = "check_"+antitag_def[i] + tag_def[j] + post[k] +"_ttbar";
+            string secondary_denom_name = "check_"+antitag_def[i] + probe      + post[k] +"_ttbar";
+            secondary_numer_rebin ->SetName(secondary_numer_name.c_str() );
+            secondary_denom_rebin ->SetName(secondary_denom_name.c_str() );
+            secondary_numer_rebin ->Write();
+            secondary_denom_rebin ->Write();
 
 
-          string data_nosubtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post[k] +"_data_nosubtract";
-          string data_nosubtract_denom_name =  "check_"+antitag_def[i] + probe      + post[k] +"_data_nosubtract";
-          bkgd_numer_rebin ->SetName(data_nosubtract_numer_name.c_str() );
-          bkgd_denom_rebin ->SetName(data_nosubtract_denom_name.c_str() );
-          bkgd_numer_rebin ->Write();
-          bkgd_denom_rebin ->Write();
+            cout<<"secondary numer "<<secondary_numer_rebin->Integral()<<endl;
+            cout<<"secondary denom "<<secondary_denom_rebin->Integral()<<endl;
+            cout<<"primary pre subtract numer "<<primary_numer_rebin->Integral()<<endl;
+            cout<<"primary pre subtract denom "<<primary_denom_rebin->Integral()<<endl;
+            primary_numer_rebin->Add(secondary_numer_rebin,-1);
+            primary_denom_rebin->Add(secondary_denom_rebin,-1);
+            cout<<"primary post subtract numer "<<primary_numer_rebin->Integral()<<endl;
+            cout<<"primary post subtract denom "<<primary_denom_rebin->Integral()<<endl;
+            // string data_subtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post[k] +"_data_subtract";
+            // string data_subtract_denom_name =  "check_"+antitag_def[i] + probe      + post[k] +"_data_subtract";
+            // primary_numer_rebin ->SetName(data_subtract_numer_name.c_str() );
+            // primary_denom_rebin ->SetName(data_subtract_denom_name.c_str() );
+            // primary_numer_rebin ->Write();
+            // primary_denom_rebin ->Write();
+          }
 
-          cout<<"pre subtract numer "<<bkgd_numer_rebin->Integral()<<endl;
-          cout<<"pre subtract denom "<<bkgd_denom_rebin->Integral()<<endl;
-          bkgd_numer_rebin->Add(ttbar_numer_rebin,-1);
-          bkgd_denom_rebin->Add(ttbar_denom_rebin,-1);
-          cout<<"post subtract numer "<<bkgd_numer_rebin->Integral()<<endl;
-          cout<<"post subtract denom "<<bkgd_denom_rebin->Integral()<<endl;
+          cout<<"outfile string : "<<outfile_savename[ii]<<endl;
+          cout<<"about to divide : numer "<<primary_numer_rebin->Integral()<<endl;
+          cout<<"about to divide : denom "<<primary_denom_rebin->Integral()<<endl;
+          primary_numer_rebin->Divide(primary_numer_rebin,primary_denom_rebin,1,1,"B");
+          primary_numer_rebin->SetTitle(";Jet PT (GeV/c);Top Mistag Rate");
+          primary_numer_rebin->SetName(savename.c_str());
+          primary_numer_rebin->Write();
+          cout<<endl;
 
-          string data_subtract_numer_name =  "check_"+antitag_def[i] + tag_def[j] + post[k] +"_data_subtract";
-          string data_subtract_denom_name =  "check_"+antitag_def[i] + probe      + post[k] +"_data_subtract";
-          bkgd_numer_rebin ->SetName(data_subtract_numer_name.c_str() );
-          bkgd_denom_rebin ->SetName(data_subtract_denom_name.c_str() );
-          bkgd_numer_rebin ->Write();
-          bkgd_denom_rebin ->Write();
         }
-        cout<<"debug1"<<endl;
-
-        // divide histograms
-
-        // TEfficiency * eff_default = new TEfficiency(*bkgd_numer_rebin,*bkgd_denom_rebin);
-        // TEfficiency * eff_normal  = new TEfficiency(*eff_default);
-        // TEfficiency * eff_wilson  = new TEfficiency(*eff_default);
-        // TEfficiency * eff_jeffrey = new TEfficiency(*eff_default);
-        // eff_normal ->SetStatisticOption(TEfficiency::kFNormal);
-        // eff_wilson ->SetStatisticOption(TEfficiency::kFWilson);
-        // eff_jeffrey->SetStatisticOption(TEfficiency::kBJeffrey);
-
-
-        // string savename_eff_default = savename3 + "_default" ;     
-        // string savename_eff_normal  = savename3 + "_normal"  ;    
-        // string savename_eff_wilson  = savename3 + "_wilson"  ;    
-        // string savename_eff_jeffrey = savename3 + "_jeffrey" ;     
-        // eff_default ->SetName(savename_eff_default.c_str());      
-        // eff_normal  ->SetName(savename_eff_normal .c_str());      
-        // eff_wilson  ->SetName(savename_eff_wilson .c_str());
-        // eff_jeffrey ->SetName(savename_eff_jeffrey.c_str());
-        // eff_default ->Write();
-        // eff_normal  ->Write();
-        // eff_wilson  ->Write();
-        // eff_jeffrey ->Write();
-
-        bkgd_numer_rebin->Divide(bkgd_numer_rebin,bkgd_denom_rebin,1,1,"B");
-        bkgd_numer_rebin->SetTitle(";Jet PT (GeV/c);Top Mistag Rate");
-        bkgd_numer_rebin->SetName(savename.c_str());
-        bkgd_numer_rebin->Write();
-
-        // TCanvas* c;
-        // c = new TCanvas("c", "" , 700, 625);
-        // c->cd();
-        // bkgd_numer_rebin->Draw();
-        // bkgd_numer_rebin->GetXaxis()->SetTitleSize(0.03);
-        // bkgd_numer_rebin->GetXaxis()->SetLabelSize(0.025);
-        // bkgd_numer_rebin->GetYaxis()->SetTitleSize(0.03);
-        // bkgd_numer_rebin->GetYaxis()->SetLabelSize(0.025);
-        // bkgd_numer_rebin->GetXaxis()->SetTitleOffset(1.3);
-        // bkgd_numer_rebin->GetYaxis()->SetTitleOffset(1.5);
-        // bkgd_numer_rebin->Draw("SAME");
-        // string savename_mistag = savename +".png";
-        // c->SaveAs(savename_mistag.c_str());
-
       }
     }
+    OutFile->cd();
+    // OutFile->Write();
+    OutFile->Close();
   }
-  OutFile->cd();
-  // OutFile->Write();
-  OutFile->Close();
 }
