@@ -37,13 +37,16 @@ for data:
 
 **For analysis with Loop tree, you must also checkout the btag package and remove one line:**
 
+```
 cd CMSSW_8_0_22/src/
 git cms-addpkg CondFormats/BTauObjects
+```
 *Edit CondFormats/BTauObjects/src/classes.h  and comment out line 30 (it says BTagCalibration btc1;)* 
+```
 cd CondFormats/BTauObjects 
 scramv1 b
 cd ../../
-
+```
 
 
 ##B2G2016 TreeV3 recipe:
