@@ -1,8 +1,6 @@
 // ** Edit top-tag window if it has changed
 // root[] .L LoopTreeAllHad_V2.cpp++
-// root[] run(bool treeBool, bool bkgdEstBool)
-//treeBool: make antiTag file and fill kinematic histograms
-//bkgdEstBool: run background estimate
+// root[] run("BCD","20161206addHist")  // dataset, savelabel
 
 //To-do:
 //Update scale factors
@@ -30,20 +28,58 @@
 #include <TSystem.h>
 #include <TLorentzVector.h>
 #include <TVector3.h>
+
+// --- Predicted Distribution
 #include "Analysis/PredictedDistribution/interface/PredictedDistribution.h"
+
+// --- btag SF
 // #include "CondFormats/BTauObjects/interface/BTagCalibration.h"
 // #include "CondTools/BTau/interface/BTagCalibration2Reader.h"
 // without CMSSW / standalone:
 #include "BTagCalibrationStandalone.h"
 
 
-void looptree_trig(string, string, string, string, float, float, float);
-bool applySF (bool, float, float);
 
-void looptree(string, string, string, string, float, float, float, float, float, string, bool, bool, bool, bool, bool, bool, bool, bool, bool,int, int, bool);
+// --- Function Declaration
+// vector<string>  makeFileList  (string);
+void            looptree_trig (string, string, string, string, float, float, float);
+void            looptree      (string, string, string, string, float, float, float, float, float, string, bool, bool, bool, bool, bool, bool, bool, bool, bool,int, int, bool);
+bool            applySF       (bool, float, float);
+void            run1file      (string, bool, string);
 
-void run()
+// --- Analysis
+
+// example: run("BCD", "20161205addHisto")
+void run(string dataset_shortname = "none", string savelabel = "")
 {
+  std::size_t foundB   = dataset_shortname.find( "B"   );
+  std::size_t foundC   = dataset_shortname.find( "C"   );
+  std::size_t foundD   = dataset_shortname.find( "D"   );
+  std::size_t foundE   = dataset_shortname.find( "E"   );
+  std::size_t foundF   = dataset_shortname.find( "F"   );
+  std::size_t foundG   = dataset_shortname.find( "G"   );
+  std::size_t foundH   = dataset_shortname.find( "H"   );
+  std::size_t foundQ   = dataset_shortname.find( "Q"   );
+  std::size_t foundTT1 = dataset_shortname.find( "TT1" );
+  std::size_t foundTT2 = dataset_shortname.find( "TT2" );
+  std::size_t foundZP  = dataset_shortname.find( "ZP"  );
+  std::size_t foundNone  = dataset_shortname.find( "none"  );
+
+  if ( foundB   !=std::string::npos ) { cout<<"JetHT_Run2016B queued"<<endl; }
+  if ( foundC   !=std::string::npos ) { cout<<"JetHT_Run2016C queued"<<endl; }
+  if ( foundD   !=std::string::npos ) { cout<<"JetHT_Run2016D queued"<<endl; }
+  if ( foundE   !=std::string::npos ) { cout<<"JetHT_Run2016E queued"<<endl; }
+  if ( foundF   !=std::string::npos ) { cout<<"JetHT_Run2016F queued"<<endl; }
+  if ( foundG   !=std::string::npos ) { cout<<"JetHT_Run2016G queued"<<endl; }
+  if ( foundH   !=std::string::npos ) { cout<<"JetHT_Run2016H queued"<<endl; }
+  if ( foundQ   !=std::string::npos ) { cout<<"QCD queued"           <<endl; }
+  if ( foundTT1 !=std::string::npos ) { cout<<"ttbar MT1 queued"     <<endl; }
+  if ( foundTT2 !=std::string::npos ) { cout<<"ttbar MT2 queued"     <<endl; }
+  if ( foundZP  !=std::string::npos ) { cout<<"all Zprime queued"    <<endl; }
+  if ( foundNone  !=std::string::npos ) { cout<<"No input dataset provided" <<endl; return; }
+
+  if (savelabel=="") {cout<<"please provide a unique label for the savefile. example: run(\"BCD\",\"20161201addHist\")"<<endl; return;}
+
   string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V4/";
   string folder_mistag     = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/";
   string folder_modMass    = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/";
@@ -51,7 +87,7 @@ void run()
   string mistag_file_QCD   = folder_mistag + "MistagRate_nbins_092516_14_MC_histsAllHad_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
   string modmass_file      = folder_modMass+ "ModMass_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
 
-  string savelabel = "20161205noPUreweight";
+  // string savelabel = "20161206test1";
   float ttagSDwindowLo = 110. ;
   float ttagSDwindowHi = 210. ;
   float ttagTau32cut   = 0.69 ;
@@ -77,43 +113,59 @@ void run()
   // looptree_trig(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0001.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
 
   //--- Analysis 
-  vector<bool> isdata;
+  vector<bool> file_is_data;
   vector<string> file_name_tree;
 
   //--- JetHT B-H
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0000_partial.root");     isdata.push_back(true);                       
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0001_partial.root");     isdata.push_back(true);                       
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0002_partial.root");     isdata.push_back(true);  
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016C-23Sep2016-v1_JSONnov14_All.root");              isdata.push_back(true);  
-
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0000.root");             isdata.push_back(true);                  
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0001.root");             isdata.push_back(true);                  
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0000.root");             isdata.push_back(true);                  
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0001.root");             isdata.push_back(true);                  
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016F-23Sep2016-v1_JSONnov14_all.root");             isdata.push_back(true);                  
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0000.root");                  isdata.push_back(true);             
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0001.root");             isdata.push_back(true);                  
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0000.root");            isdata.push_back(true);                
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0001.root");            isdata.push_back(true);                
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0002.root");            isdata.push_back(true);                
-  file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v3_JSONnov14_0000.root");            isdata.push_back(true);                
-                               
+  if ( foundB   !=std::string::npos ){
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0000_partial.root");     file_is_data.push_back(true);                       
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0001_partial.root");     file_is_data.push_back(true);                       
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0002_partial.root");     file_is_data.push_back(true);  
+  }
+  if ( foundC   !=std::string::npos ){
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016C-23Sep2016-v1_JSONnov14_All.root");              file_is_data.push_back(true);  
+  }
+  if ( foundD   !=std::string::npos ){
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);                  
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);                  
+  }
+  if ( foundE   !=std::string::npos ){
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);  
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);  
+  }                
+  if ( foundF   !=std::string::npos ){
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016F-23Sep2016-v1_JSONnov14_all.root");              file_is_data.push_back(true);       
+  }           
+  if ( foundG   !=std::string::npos ){
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);             
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);
+  }
+  if ( foundH   !=std::string::npos ){            
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0000.root");            file_is_data.push_back(true);                
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0001.root");            file_is_data.push_back(true);                
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0002.root");            file_is_data.push_back(true);                
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v3_JSONnov14_all.root");             file_is_data.push_back(true);                
+  }                           
   //--- QCD HT binned
-  file_name_tree.push_back("b2gtreeV4_QCD_HT100to200_RunIISpring16MiniAODv2_try2.root");             isdata.push_back(false);                               
-  file_name_tree.push_back("b2gtreeV4_QCD_HT200to300_RunIISpring16MiniAODv2_try2.root");             isdata.push_back(false);                               
-  file_name_tree.push_back("b2gtreeV4_QCD_HT300to500_RunIISpring16MiniAODv2_try2.root");             isdata.push_back(false);                               
-  file_name_tree.push_back("b2gtreeV4_QCD_HT500to700_RunIISpring16MiniAODv2_try2.root");             isdata.push_back(false);                               
-  file_name_tree.push_back("b2gtreeV4_QCD_HT700to1000_RunIISpring16MiniAODv2.root");                 isdata.push_back(false);                           
-  file_name_tree.push_back("b2gtreeV4_QCD_HT1000to1500_RunIISpring16MiniAODv2.root");                isdata.push_back(false);                            
-  file_name_tree.push_back("b2gtreeV4_QCD_HT1500to2000_RunIISpring16MiniAODv2_try4.root");           isdata.push_back(false);                                 
-  file_name_tree.push_back("b2gtreeV4_QCD_HT2000toInf_RunIISpring16MiniAODv2.root");                 isdata.push_back(false);                           
-
+  if ( foundQ   !=std::string::npos ){            
+    file_name_tree.push_back("b2gtreeV4_QCD_HT100to200_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);                               
+    file_name_tree.push_back("b2gtreeV4_QCD_HT200to300_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);                               
+    file_name_tree.push_back("b2gtreeV4_QCD_HT300to500_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);                               
+    file_name_tree.push_back("b2gtreeV4_QCD_HT500to700_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);                               
+    file_name_tree.push_back("b2gtreeV4_QCD_HT700to1000_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);                           
+    file_name_tree.push_back("b2gtreeV4_QCD_HT1000to1500_RunIISpring16MiniAODv2.root");                file_is_data.push_back(false);                            
+    file_name_tree.push_back("b2gtreeV4_QCD_HT1500to2000_RunIISpring16MiniAODv2_try4.root");           file_is_data.push_back(false);                                 
+    file_name_tree.push_back("b2gtreeV4_QCD_HT2000toInf_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);                           
+  }
   //--- TTbar 
-  file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0000.root");  isdata.push_back(false);               
-  file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0001.root");  isdata.push_back(false);               
-  file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0002.root");  isdata.push_back(false);               
-  file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-premix_withHLT_try3.root");               isdata.push_back(false);     
-
+  if ( foundTT1   !=std::string::npos ){            
+    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0000.root");  file_is_data.push_back(false);               
+    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0001.root");  file_is_data.push_back(false);               
+    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0002.root");  file_is_data.push_back(false); 
+  }  
+  if ( foundTT2   !=std::string::npos ){            
+    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-premix_withHLT_try3.root");               file_is_data.push_back(false);     
+  }
 
   bool isQCDMC             = false ;
   bool isFrozen            = true ;
@@ -135,7 +187,7 @@ void run()
         cut_pt_AK8, cut_HT, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut, 
         savelabel            , // string insert in savefile name
         isQCDMC              , // bool is QCDMC? (modMass plots)
-        isdata[i]            , // bool is Data? 
+        file_is_data[i]      , // bool is Data? 
         isFrozen             , // bool is Frozen?
         runAntiTag           , // bool run antitag?
         runKinematic         , // bool run kinematic?
@@ -149,6 +201,57 @@ void run()
     );
   } // end file loop
 }// end run()
+
+
+// example: run1file("b2gtreeV4_JetHT_Run2016H-PromptReco-v3_JSONnov14_all.root", true, "20161206test4")
+void run1file(string filename, bool isData, string savelabel){
+  bool isQCDMC             = false ;
+  bool isFrozen            = true ;
+  bool runAntiTag          = true  ;
+  bool runKinematic        = true  ;
+  bool runbkgdEst          = false ;
+  bool do_PUreweighting    = true  ;
+  bool do_HTreweighting    = false ;
+  bool do_ttbarReweighting = false ;
+
+  string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V4/";
+  string folder_mistag     = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/";
+  string folder_modMass    = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/";
+  string mistag_file_data  = folder_mistag + "MistagRate_nbins_092516_14_ttbar_Subtract_histsAllHad_Jetpt600HT1000_20161010_b2gtree_JetHT_combined.root";
+  string mistag_file_QCD   = folder_mistag + "MistagRate_nbins_092516_14_MC_histsAllHad_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
+  string modmass_file      = folder_modMass+ "ModMass_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
+
+  // string savelabel = "20161206test1";
+  float ttagSDwindowLo = 110. ;
+  float ttagSDwindowHi = 210. ;
+  float ttagTau32cut   = 0.69 ;
+  float cut_pt_AK8     = 500  ;
+  float cut_HT         = 1000 ; 
+  
+  
+  looptree( 
+        folder_input_tree, 
+        filename, 
+        modmass_file, mistag_file_data,
+        cut_pt_AK8, cut_HT, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut, 
+        savelabel            , // string insert in savefile name
+        isQCDMC              , // bool is QCDMC? (modMass plots)
+        isData               , // bool is Data? 
+        isFrozen             , // bool is Frozen?
+        runAntiTag           , // bool run antitag?
+        runKinematic         , // bool run kinematic?
+        runbkgdEst           , // bool run bkgdest?
+        do_PUreweighting     , // bool do PUreweighting    ?
+        do_HTreweighting     , // bool do HTreweighting    ?
+        do_ttbarReweighting  , // bool do ttbarReweighting ?
+        0                    , // int Systematics: 0 = nom , 1/-1 = jec_up/dn , 2/-2 = jer_up/dn , 3/-3 = btag_up/btag , 4/-4 = pdf_up/dn , 5/-5 = q2_up/dn , 6/-6 = PU_up/dn 
+        -1                   , // int Nevents (set to -1 for all events)
+        false                  // bool verbose
+    );
+
+}// end run1file()
+
+
 
 
 void looptree_trig(
@@ -2669,7 +2772,7 @@ void looptree(
   else nLoop = Nevents;
 
   for (int i=0; i<nLoop; i++ ){ 
-    if (i%10000==0) cout<<i<<"  / "<<nLoop<<endl;
+    if (i%10000==0) cout<<i<<"  / "<<nLoop<<"   ("<<setprecision(3)<<(float)i/(float)nLoop*10<<"%)"<<endl;
 
     T1->GetEntry(i);
     h_CutFlow->Fill(0);
@@ -2861,7 +2964,7 @@ void looptree(
 
     //---- Pre-selection ------------------------
     if (jet0pt < minAK8Pt || jet1pt < minAK8Pt) continue;   h_CutFlow->Fill(1);
-    if (HT < minHT) continue;                               h_CutFlow->Fill(2);
+    if (ht < minHT) continue;                               h_CutFlow->Fill(2);
     if (fabs(DijetDeltaPhi)<2.1) continue;                  h_CutFlow->Fill(3);
     // Reject noise events
     if (PassMETFilters==0) continue;                        h_CutFlow->Fill(4);
@@ -4605,8 +4708,9 @@ void looptree(
 
 
   string PUstring = "";
-  if (do_PUreweighting) PUstring = "";
-  else                  PUstring = "_noPUweight";
+  if (do_PUreweighting && !isData) PUstring = "_PUw";
+  else if (isData)                 PUstring = "";
+  else                             PUstring = "_noPUw";
 
   // "Jetpt"+minAK8Pt_string+"HT"+minHT_string+
   // "Jetpt"+minAK8Pt_string+"HT"+minHT_string+
@@ -4715,6 +4819,7 @@ void looptree(
     h_AntiTagCHS140to180_TagMassSDTau32_jetP_dRapIn_inclusive     ->Write();
     h_AntiTagCHS180to220_TagMassSDTau32_jetP_dRapIn_inclusive     ->Write();
     h_AntiTagCHS220to300_TagMassSDTau32_jetP_dRapIn_inclusive     ->Write();
+    Out->Close();
   }
 // --- Kinematic plots                                 
 if (run_kinematic){
@@ -5870,6 +5975,7 @@ if (run_kinematic){
     Out->cd();
 
 
+      
     mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag                           ->GetPredictedHist()   ->Write();
     mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag                           ->GetPredictedHist()   ->Write();
     mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag                           ->GetPredictedHist()   ->Write();
@@ -5970,19 +6076,20 @@ if (run_kinematic){
     mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive                         ->GetPredictedHist()   ->Write();
     mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive                         ->GetPredictedHist()   ->Write();
 
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive                       ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive                       ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive                       ->GetObservedHist()   ->Write();
-
+    if (!isFrozen || !isData ){    
+      mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag                           ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag                           ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag                           ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive                       ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag                           ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag                           ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag                           ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive                       ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag                           ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag                           ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag                           ->GetObservedHist()   ->Write();
+      mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive                       ->GetObservedHist()   ->Write();
+    }
     mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag                         ->GetObservedHist()   ->Write();
     mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag                           ->GetObservedHist()   ->Write();
     mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag                             ->GetObservedHist()   ->Write();
@@ -6171,9 +6278,8 @@ if (run_kinematic){
     mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive                         ->GetTaggableHist()   ->Write();
 
 
-  //background estimate                                        ->Write();                                                          
-  h_DijetMass_modMass_jet0                                     ->Write();                                                               
-  h_DijetMass_modMass_jet1                                     ->Write();  
+    h_DijetMass_modMass_jet0                                     ->Write();                                                               
+    h_DijetMass_modMass_jet1                                     ->Write();  
 
     // h_2btag_DijetMass                           ->Write();
     // h_2btag_DeltaRap                            ->Write();
@@ -6283,7 +6389,7 @@ if (run_kinematic){
   cout<<"Nevents Cutflow 2 (HT)           =  "<< h_CutFlow->GetBinContent(3) <<endl;
   cout<<"Nevents Cutflow 3 (deltaPhi)     =  "<< h_CutFlow->GetBinContent(4) <<endl;
   cout<<"Nevents Cutflow 4 (NoiseFilters) =  "<< h_CutFlow->GetBinContent(5) <<endl;
-  cout<<"Nevents doublecheck preselection =  "<<h_Jet0Pt->Integral()          <<endl;
+  cout<<"Nevents doublecheck preselection =  "<< h_Jet0Pt->Integral()          <<endl;
 
   // Make ModMass File
   if (isQCDMC){
