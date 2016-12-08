@@ -81,11 +81,12 @@ void run(string dataset_shortname = "none", string savelabel = "")
   if (savelabel=="") {cout<<"please provide a unique label for the savefile. example: run(\"BCD\",\"20161201addHist\")"<<endl; return;}
 
   string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V4/";
-  string folder_mistag     = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/";
+  string folder_mistag     = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_22/src/Analysis/B2GTTbar/test/";
   string folder_modMass    = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/";
-  string mistag_file_data  = folder_mistag + "MistagRate_nbins_092516_14_ttbar_Subtract_histsAllHad_Jetpt600HT1000_20161010_b2gtree_JetHT_combined.root";
-  string mistag_file_QCD   = folder_mistag + "MistagRate_nbins_092516_14_MC_histsAllHad_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
+  string mistag_file_data  = folder_mistag + "MistagRate_nbins_11_20161206test1_nom_data_subtract_ttbar.root";
+  string mistag_file_QCD   = folder_mistag + "MistagRate_nbins_11_20161206test1_nom_QCDMC.root";
   string modmass_file      = folder_modMass+ "ModMass_Jetpt600HT1000_20161010_b2gtree_QCD_Pt_300toInf_pythia8_RunIISpring16MiniAODv2_reHLT_V3.root";
+
 
   // string savelabel = "20161206test1";
   float ttagSDwindowLo = 110. ;
@@ -114,64 +115,64 @@ void run(string dataset_shortname = "none", string savelabel = "")
 
   //--- Analysis 
   vector<bool> file_is_data;
+  vector<bool> file_is_QCDMC;
   vector<string> file_name_tree;
 
   //--- JetHT B-H
   if ( foundB   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0000_partial.root");     file_is_data.push_back(true);                       
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0001_partial.root");     file_is_data.push_back(true);                       
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0002_partial.root");     file_is_data.push_back(true);  
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0000_partial.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0001_partial.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0002_partial.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
   }
   if ( foundC   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016C-23Sep2016-v1_JSONnov14_All.root");              file_is_data.push_back(true);  
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016C-23Sep2016-v1_JSONnov14_All.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
   }
   if ( foundD   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);                  
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);                  
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
   }
   if ( foundE   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);  
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);  
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
   }                
   if ( foundF   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016F-23Sep2016-v1_JSONnov14_all.root");              file_is_data.push_back(true);       
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016F-23Sep2016-v1_JSONnov14_all.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false);      
   }           
   if ( foundG   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);             
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);  
   }
   if ( foundH   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0000.root");            file_is_data.push_back(true);                
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0001.root");            file_is_data.push_back(true);                
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0002.root");            file_is_data.push_back(true);                
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v3_JSONnov14_all.root");             file_is_data.push_back(true);                
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0000.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0001.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0002.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v3_JSONnov14_all.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
   }                           
   //--- QCD HT binned
   if ( foundQ   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV4_QCD_HT100to200_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);                               
-    file_name_tree.push_back("b2gtreeV4_QCD_HT200to300_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);                               
-    file_name_tree.push_back("b2gtreeV4_QCD_HT300to500_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);                               
-    file_name_tree.push_back("b2gtreeV4_QCD_HT500to700_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);                               
-    file_name_tree.push_back("b2gtreeV4_QCD_HT700to1000_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);                           
-    file_name_tree.push_back("b2gtreeV4_QCD_HT1000to1500_RunIISpring16MiniAODv2.root");                file_is_data.push_back(false);                            
-    file_name_tree.push_back("b2gtreeV4_QCD_HT1500to2000_RunIISpring16MiniAODv2_try4.root");           file_is_data.push_back(false);                                 
-    file_name_tree.push_back("b2gtreeV4_QCD_HT2000toInf_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);                           
+    file_name_tree.push_back("b2gtreeV4_QCD_HT100to200_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                              
+    file_name_tree.push_back("b2gtreeV4_QCD_HT200to300_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                              
+    file_name_tree.push_back("b2gtreeV4_QCD_HT300to500_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                              
+    file_name_tree.push_back("b2gtreeV4_QCD_HT500to700_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                              
+    file_name_tree.push_back("b2gtreeV4_QCD_HT700to1000_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                          
+    file_name_tree.push_back("b2gtreeV4_QCD_HT1000to1500_RunIISpring16MiniAODv2.root");                file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                           
+    file_name_tree.push_back("b2gtreeV4_QCD_HT1500to2000_RunIISpring16MiniAODv2_try4.root");           file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                                
+    file_name_tree.push_back("b2gtreeV4_QCD_HT2000toInf_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                          
   }
   //--- TTbar 
   if ( foundTT1   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0000.root");  file_is_data.push_back(false);               
-    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0001.root");  file_is_data.push_back(false);               
-    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0002.root");  file_is_data.push_back(false); 
+    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0000.root");  file_is_data.push_back(false);  file_is_QCDMC.push_back(false);              
+    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0001.root");  file_is_data.push_back(false);  file_is_QCDMC.push_back(false);               
+    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0002.root");  file_is_data.push_back(false);  file_is_QCDMC.push_back(false); 
   }  
   if ( foundTT2   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-premix_withHLT_try3.root");               file_is_data.push_back(false);     
+    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-premix_withHLT_try3.root");            file_is_data.push_back(false);  file_is_QCDMC.push_back(false);    
   }
 
-  bool isQCDMC             = false ;
   bool isFrozen            = true ;
-  bool runAntiTag          = true  ;
-  bool runKinematic        = true  ;
-  bool runbkgdEst          = false ;
+  bool runAntiTag          = false  ;
+  bool runKinematic        = false  ;
+  bool runbkgdEst          = true  ;
   bool do_PUreweighting    = true  ;
   bool do_HTreweighting    = false ;
   bool do_ttbarReweighting = false ;
@@ -180,13 +181,18 @@ void run(string dataset_shortname = "none", string savelabel = "")
   // Loop over file_name_tree and make histograms for each
   for (unsigned int i=0; i<file_name_tree.size(); i++){
     //looptree(   input_folder, string input_file, modmass file,       mistagFile,                  bkgdEstOutname, date, isQCDMC, isData, isFrozen, antiTag,  Syst,   minAK8Pt,  minHT, topTagSDwindowLo, topTagSDwindowHi,  topTagTau32cut);
+   
+    string mistag_file;
+    if (file_is_QCDMC[i]) mistag_file = mistag_file_QCD ;
+    else                  mistag_file = mistag_file_data;
+    cout<<"Using Mistag File: "<<mistag_file<<endl;
     looptree( 
         folder_input_tree, 
         file_name_tree[i], 
-        modmass_file, mistag_file_data,
+        modmass_file, mistag_file,
         cut_pt_AK8, cut_HT, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut, 
         savelabel            , // string insert in savefile name
-        isQCDMC              , // bool is QCDMC? (modMass plots)
+        file_is_QCDMC[i]     , // bool is QCDMC? (modMass plots)
         file_is_data[i]      , // bool is Data? 
         isFrozen             , // bool is Frozen?
         runAntiTag           , // bool run antitag?
@@ -1814,44 +1820,105 @@ void looptree(
   cout<<"done setting up tree"<<endl;
 
 
+
+    // 888b     d888 d8b          888                           .d8888b.           888                      
+    // 8888b   d8888 Y8P          888                          d88P  Y88b          888                      
+    // 88888b.d88888              888                          Y88b.               888                      
+    // 888Y88888P888 888 .d8888b  888888  8888b.   .d88b.       "Y888b.    .d88b.  888888 888  888 88888b.  
+    // 888 Y888P 888 888 88K      888        "88b d88P"88b         "Y88b. d8P  Y8b 888    888  888 888 "88b 
+    // 888  Y8P  888 888 "Y8888b. 888    .d888888 888  888           "888 88888888 888    888  888 888  888 
+    // 888   "   888 888      X88 Y88b.  888  888 Y88b 888     Y88b  d88P Y8b.     Y88b.  Y88b 888 888 d88P 
+    // 888       888 888  88888P'  "Y888 "Y888888  "Y88888      "Y8888P"   "Y8888   "Y888  "Y88888 88888P"  
+    //                                                 888                                         888      
+    //                                            Y8b d88P                                         888      
+    //                                             "Y88P"                                          888      
+
+
+
   // input MISTAG
   cout<<"get mistag histograms"<<endl;
-  TFile * Fmistag  = new TFile(mistagFile.c_str()); 
-  TFile * Fmistag_jetP_0bTag = new TFile(mistagFile.c_str()); 
-  TFile * Fmistag_jetP_1bTag = new TFile(mistagFile.c_str()); 
-  TFile * Fmistag_jetP_2bTag = new TFile(mistagFile.c_str()); 
+  TFile * Fmistag            = new TFile(mistagFile.c_str()); 
 
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag_jetP_0bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_0btag");
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag     = (TH1D *) Fmistag_jetP_1bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_1btag");
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag     = (TH1D *) Fmistag_jetP_2bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_2btag");
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive = (TH1D *) Fmistag_jetP_0bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapHi_inclusive");
+  // mistag rate from CHS tag defintion
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive");
 
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag     = (TH1D *) Fmistag_jetP_0bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_0btag");
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag     = (TH1D *) Fmistag_jetP_1bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_1btag");
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag     = (TH1D *) Fmistag_jetP_2bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_2btag");
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive = (TH1D *) Fmistag_jetP_0bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapLo_inclusive");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive");
 
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag     = (TH1D *) Fmistag_jetP_0bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_0btag");
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag     = (TH1D *) Fmistag_jetP_1bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_1btag");
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag     = (TH1D *) Fmistag_jetP_2bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_2btag");
-  TH1D * h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive = (TH1D *) Fmistag_jetP_0bTag->Get("h_mistag_AntiTagTau32_ReqTopMassSD_TagMassSDTau32_jetP_dRapIn_inclusive");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag");
+  TH1D * h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu       = (TH1D *) Fmistag->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive");
 
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag     ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag     ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag     ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag     ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag     ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag     ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag     ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag     ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag     ->Integral() <<endl;
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive ->Integral() <<endl;
+  // mistag rate for PUPPI tag definition
 
-  cout<<"get modmass histograms"<<endl;
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag");
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag");
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag");
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive");
 
-  // input MODMASS
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag");
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag");
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag");
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive");
+
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
+  TH1D * h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     = (TH1D *) Fmistag->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
+
+  // sideband tag defintion for data closure test [ (jet0sdmass > 90 && jet0sdmass < 110) || (jet0sdmass > 210 && jet0sdmass < 300) ]
+
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag");
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag");
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag");
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive");
+
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag");
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag");
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag");
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive");
+
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag");
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag");
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag");
+  TH1D * h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     = (TH1D *) Fmistag->Get("h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive");
+
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag     ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag     ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag     ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag     ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag     ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag     ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag     ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag     ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag     "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag     ->Integral() <<endl;
+  // cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive ->Integral() <<endl;
+
+
+
+
+  // 888b     d888               888 888b     d888                                                  888                      
+  // 8888b   d8888               888 8888b   d8888                                                  888                      
+  // 88888b.d88888               888 88888b.d88888                                                  888                      
+  // 888Y88888P888  .d88b.   .d88888 888Y88888P888  8888b.  .d8888b  .d8888b      .d8888b   .d88b.  888888 888  888 88888b.  
+  // 888 Y888P 888 d88""88b d88" 888 888 Y888P 888     "88b 88K      88K          88K      d8P  Y8b 888    888  888 888 "88b 
+  // 888  Y8P  888 888  888 888  888 888  Y8P  888 .d888888 "Y8888b. "Y8888b.     "Y8888b. 88888888 888    888  888 888  888 
+  // 888   "   888 Y88..88P Y88b 888 888   "   888 888  888      X88      X88          X88 Y8b.     Y88b.  Y88b 888 888 d88P 
+  // 888       888  "Y88P"   "Y88888 888       888 "Y888888  88888P'  88888P'      88888P'  "Y8888   "Y888  "Y88888 88888P"  
+  //                                                                                                                888      
+  //                                                                                                                888      
+  //                                                                                                                888      
+
+
+  // If running on QCD MC, make modMass
   TH1F *  h_mAK8_ModMass                = new TH1F("h_mAK8_ModMass",                 "", 200, 110, 210);
   TH1F *  h_mAK8_ModMass_jet0           = new TH1F("h_mAK8_ModMass_jet0",            "", 200, 110, 210);
   TH1F *  h_mAK8_ModMass_jet1           = new TH1F("h_mAK8_ModMass_jet1",            "", 200, 110, 210);
@@ -1861,7 +1928,13 @@ void looptree(
   TH1F *  h_mPuppiSDropAK8_ModMass      = new TH1F("h_mPuppiSDropAK8_ModMass",       "", 200, 110, 210);
   TH1F *  h_mPuppiSDropAK8_ModMass_jet0 = new TH1F("h_mPuppiSDropAK8_ModMass_jet0",  "", 200, 110, 210);
   TH1F *  h_mPuppiSDropAK8_ModMass_jet1 = new TH1F("h_mPuppiSDropAK8_ModMass_jet1",  "", 200, 110, 210);
+  
+  TH1F *  h_mSDropAK8_AltTag_ModMass           = new TH1F("h_mSDropAK8_AltTag_ModMass",            "", 210, 90, 300);
+  TH1F *  h_mSDropAK8_AltTag_ModMass_jet0      = new TH1F("h_mSDropAK8_AltTag_ModMass_jet0",       "", 210, 90, 300);
+  TH1F *  h_mSDropAK8_AltTag_ModMass_jet1      = new TH1F("h_mSDropAK8_AltTag_ModMass_jet1",       "", 210, 90, 300);
 
+  // input MODMASS histograms from file
+  cout<<"get modmass histograms"<<endl;
   TFile * FmodMass = new TFile(modmassFile.c_str());
   TH1F * h_modMass_Fat            = (TH1F *) FmodMass->Get( "h_mAK8_ModMass"           );
   TH1F * h_modMass_SD             = (TH1F *) FmodMass->Get( "h_mSDropAK8_ModMass"      );
@@ -1906,99 +1979,99 @@ void looptree(
   TH1D *  h_BtagCategoriesPostSF                          = new TH1D("h_BtagCategoriesPostSF" , "", 3, 0, 3);
 
   // anti-tag and probe
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapIn_inclusive                    = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapIn_inclusive"                    , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapIn_0btag                        = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapIn_0btag"                        , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapIn_1btag                        = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapIn_1btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapIn_2btag                        = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapIn_2btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapHi_inclusive                    = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapHi_inclusive"                    , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapHi_0btag                        = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapHi_0btag"                        , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapHi_1btag                        = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapHi_1btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapHi_2btag                        = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapHi_2btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapLo_inclusive                    = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapLo_inclusive"                    , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapLo_0btag                        = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapLo_0btag"                        , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapLo_1btag                        = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapLo_1btag"                        , "", 1400, 0, 7000 );   
-  TH1D * h_AntiTagCHS_Probe_jetP_dRapLo_2btag                        = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapLo_2btag"                        , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive           = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive"           , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag               = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag               = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag               = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive           = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive"           , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag               = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag               = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag               = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive           = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive"           , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag               = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag"               , "", 1400, 0, 7000 );     
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag               = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag"               , "", 1400, 0, 7000 );     
-  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag               = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag"               , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapIn_inclusive                           = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapIn_inclusive"                       , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapIn_0btag                               = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapIn_0btag"                           , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapIn_1btag                               = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapIn_1btag"                           , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapIn_2btag                               = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapIn_2btag"                           , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapHi_inclusive                           = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapHi_inclusive"                       , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapHi_0btag                               = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapHi_0btag"                           , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapHi_1btag                               = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapHi_1btag"                           , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapHi_2btag                               = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapHi_2btag"                           , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapLo_inclusive                           = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapLo_inclusive"                       , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapLo_0btag                               = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapLo_0btag"                           , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapLo_1btag                               = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapLo_1btag"                           , "", 1400, 0, 7000 );   
+  TH1D * h_AntiTagCHS_Probe_jetP_dRapLo_2btag                               = new TH1D( "h_AntiTagCHS_Probe_jetP_dRapLo_2btag"                           , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive                  = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive"              , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive                  = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive"              , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive                  = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive"              , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag"                  , "", 1400, 0, 7000 );     
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag"                  , "", 1400, 0, 7000 );     
+  TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag"                  , "", 1400, 0, 7000 );  
 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                  = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive"                    , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_0btag                      = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_0btag"                        , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_1btag                      = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_1btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_2btag                      = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_2btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                  = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive"                    , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_0btag                      = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_0btag"                        , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_1btag                      = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_1btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_2btag                      = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_2btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                  = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive"                    , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_0btag                      = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_0btag"                        , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_1btag                      = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_1btag"                        , "", 1400, 0, 7000 );   
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_2btag                      = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_2btag"                        , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive         = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive"           , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag             = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag             = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag             = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive         = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive"           , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag             = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag             = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag             = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive         = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive"           , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag             = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag"               , "", 1400, 0, 7000 );     
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag             = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag"               , "", 1400, 0, 7000 );     
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag             = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag"               , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive"                       , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_0btag"                           , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_1btag"                           , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_2btag"                           , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive"                       , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_0btag"                           , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_1btag"                           , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_2btag"                           , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive"                       , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_0btag"                           , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_1btag"                           , "", 1400, 0, 7000 );   
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_2btag"                           , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive"              , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive"              , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive"              , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag"                  , "", 1400, 0, 7000 );     
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag"                  , "", 1400, 0, 7000 );     
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag"                  , "", 1400, 0, 7000 );  
 
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapIn_inclusive                = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapIn_inclusive"                    , "", 1400, 0, 7000 );
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapIn_0btag                    = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapIn_0btag"                        , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapIn_1btag                    = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapIn_1btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapIn_2btag                    = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapIn_2btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapHi_inclusive                = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapHi_inclusive"                    , "", 1400, 0, 7000 );
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapHi_0btag                    = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapHi_0btag"                        , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapHi_1btag                    = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapHi_1btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapHi_2btag                    = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapHi_2btag"                        , "", 1400, 0, 7000 ); 
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapLo_inclusive                = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapLo_inclusive"                    , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapLo_0btag                    = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapLo_0btag"                        , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapLo_1btag                    = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapLo_1btag"                        , "", 1400, 0, 7000 );   
-  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapLo_2btag                    = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapLo_2btag"                        , "", 1400, 0, 7000 );
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive       = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive"           , "", 1400, 0, 7000 );
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag           = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag           = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag           = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive       = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive"           , "", 1400, 0, 7000 );
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag           = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag           = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag           = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag"               , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive       = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive"           , "", 1400, 0, 7000 );  
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag           = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag"               , "", 1400, 0, 7000 );     
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag           = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag"               , "", 1400, 0, 7000 );     
-  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag           = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag"               , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapIn_inclusive                       = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapIn_inclusive"                    , "", 1400, 0, 7000 );
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapIn_0btag                           = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapIn_0btag"                        , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapIn_1btag                           = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapIn_1btag"                        , "", 1400, 0, 7000 ); 
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapIn_2btag                           = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapIn_2btag"                        , "", 1400, 0, 7000 ); 
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapHi_inclusive                       = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapHi_inclusive"                    , "", 1400, 0, 7000 );
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapHi_0btag                           = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapHi_0btag"                        , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapHi_1btag                           = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapHi_1btag"                        , "", 1400, 0, 7000 ); 
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapHi_2btag                           = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapHi_2btag"                        , "", 1400, 0, 7000 ); 
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapLo_inclusive                       = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapLo_inclusive"                    , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapLo_0btag                           = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapLo_0btag"                        , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapLo_1btag                           = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapLo_1btag"                        , "", 1400, 0, 7000 );   
+  TH1D * h_alt_AntiTagCHS_Probe_jetP_dRapLo_2btag                           = new TH1D( "h_alt_AntiTagCHS_Probe_jetP_dRapLo_2btag"                        , "", 1400, 0, 7000 );
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive              = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive"           , "", 1400, 0, 7000 );
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag                  = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag"               , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag                  = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag"               , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag                  = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag"               , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive              = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive"           , "", 1400, 0, 7000 );
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag                  = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag"               , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag                  = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag"               , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag                  = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag"               , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive              = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive"           , "", 1400, 0, 7000 );  
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag                  = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag"               , "", 1400, 0, 7000 );     
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag                  = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag"               , "", 1400, 0, 7000 );     
+  TH1D * h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag                  = new TH1D( "h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag"               , "", 1400, 0, 7000 );  
 
 
-  TH1D *   h_AntiTagCHS40to60_Probe_jetP_dRapIn_inclusive            = new TH1D(   "h_AntiTagCHS40to60_Probe_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);
-  TH1D *   h_AntiTagCHS60to80_Probe_jetP_dRapIn_inclusive            = new TH1D(   "h_AntiTagCHS60to80_Probe_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);
-  TH1D *  h_AntiTagCHS80to110_Probe_jetP_dRapIn_inclusive            = new TH1D(  "h_AntiTagCHS80to110_Probe_jetP_dRapIn_inclusive" , "", 1400, 0, 7000); 
-  TH1D * h_AntiTagCHS100to120_Probe_jetP_dRapIn_inclusive            = new TH1D( "h_AntiTagCHS100to120_Probe_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
-  TH1D * h_AntiTagCHS120to140_Probe_jetP_dRapIn_inclusive            = new TH1D( "h_AntiTagCHS120to140_Probe_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
-  TH1D * h_AntiTagCHS140to180_Probe_jetP_dRapIn_inclusive            = new TH1D( "h_AntiTagCHS140to180_Probe_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
-  TH1D * h_AntiTagCHS180to220_Probe_jetP_dRapIn_inclusive            = new TH1D( "h_AntiTagCHS180to220_Probe_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
-  TH1D * h_AntiTagCHS220to300_Probe_jetP_dRapIn_inclusive            = new TH1D( "h_AntiTagCHS220to300_Probe_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
+  TH1D *   h_AntiTagCHS40to60_Probe_jetP_dRapIn_inclusive                   = new TH1D(   "h_AntiTagCHS40to60_Probe_jetP_dRapIn_inclusive"                 , "", 1400, 0, 7000);
+  TH1D *   h_AntiTagCHS60to80_Probe_jetP_dRapIn_inclusive                   = new TH1D(   "h_AntiTagCHS60to80_Probe_jetP_dRapIn_inclusive"                 , "", 1400, 0, 7000);
+  TH1D *  h_AntiTagCHS80to110_Probe_jetP_dRapIn_inclusive                   = new TH1D(  "h_AntiTagCHS80to110_Probe_jetP_dRapIn_inclusive"                 , "", 1400, 0, 7000); 
+  TH1D * h_AntiTagCHS100to120_Probe_jetP_dRapIn_inclusive                   = new TH1D( "h_AntiTagCHS100to120_Probe_jetP_dRapIn_inclusive"                 , "", 1400, 0, 7000);  
+  TH1D * h_AntiTagCHS120to140_Probe_jetP_dRapIn_inclusive                   = new TH1D( "h_AntiTagCHS120to140_Probe_jetP_dRapIn_inclusive"                 , "", 1400, 0, 7000);  
+  TH1D * h_AntiTagCHS140to180_Probe_jetP_dRapIn_inclusive                   = new TH1D( "h_AntiTagCHS140to180_Probe_jetP_dRapIn_inclusive"                 , "", 1400, 0, 7000);  
+  TH1D * h_AntiTagCHS180to220_Probe_jetP_dRapIn_inclusive                   = new TH1D( "h_AntiTagCHS180to220_Probe_jetP_dRapIn_inclusive"                 , "", 1400, 0, 7000);  
+  TH1D * h_AntiTagCHS220to300_Probe_jetP_dRapIn_inclusive                   = new TH1D( "h_AntiTagCHS220to300_Probe_jetP_dRapIn_inclusive"                 , "", 1400, 0, 7000);  
 
-  TH1D *   h_AntiTagCHS40to60_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D(   "h_AntiTagCHS40to60_TagMassSDTau32_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);
-  TH1D *   h_AntiTagCHS60to80_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D(   "h_AntiTagCHS60to80_TagMassSDTau32_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);
-  TH1D *  h_AntiTagCHS80to110_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D(  "h_AntiTagCHS80to110_TagMassSDTau32_jetP_dRapIn_inclusive" , "", 1400, 0, 7000); 
-  TH1D * h_AntiTagCHS100to120_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS100to120_TagMassSDTau32_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
-  TH1D * h_AntiTagCHS120to140_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS120to140_TagMassSDTau32_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
-  TH1D * h_AntiTagCHS140to180_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS140to180_TagMassSDTau32_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
-  TH1D * h_AntiTagCHS180to220_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS180to220_TagMassSDTau32_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
-  TH1D * h_AntiTagCHS220to300_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS220to300_TagMassSDTau32_jetP_dRapIn_inclusive" , "", 1400, 0, 7000);  
+  TH1D *   h_AntiTagCHS40to60_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D(   "h_AntiTagCHS40to60_TagMassSDTau32_jetP_dRapIn_inclusive"        , "", 1400, 0, 7000);
+  TH1D *   h_AntiTagCHS60to80_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D(   "h_AntiTagCHS60to80_TagMassSDTau32_jetP_dRapIn_inclusive"        , "", 1400, 0, 7000);
+  TH1D *  h_AntiTagCHS80to110_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D(  "h_AntiTagCHS80to110_TagMassSDTau32_jetP_dRapIn_inclusive"        , "", 1400, 0, 7000); 
+  TH1D * h_AntiTagCHS100to120_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS100to120_TagMassSDTau32_jetP_dRapIn_inclusive"        , "", 1400, 0, 7000);  
+  TH1D * h_AntiTagCHS120to140_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS120to140_TagMassSDTau32_jetP_dRapIn_inclusive"        , "", 1400, 0, 7000);  
+  TH1D * h_AntiTagCHS140to180_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS140to180_TagMassSDTau32_jetP_dRapIn_inclusive"        , "", 1400, 0, 7000);  
+  TH1D * h_AntiTagCHS180to220_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS180to220_TagMassSDTau32_jetP_dRapIn_inclusive"        , "", 1400, 0, 7000);  
+  TH1D * h_AntiTagCHS220to300_TagMassSDTau32_jetP_dRapIn_inclusive          = new TH1D( "h_AntiTagCHS220to300_TagMassSDTau32_jetP_dRapIn_inclusive"        , "", 1400, 0, 7000);  
       
 
   // --- Kinematic plots
@@ -2621,119 +2694,452 @@ void looptree(
   TH1D *  h_DijetMass_modMass_jet0                             = new TH1D( "h_DijetMass_modMass_jet0"   ,"", 400, 0, 8000); 
   TH1D *  h_DijetMass_modMass_jet1                             = new TH1D( "h_DijetMass_modMass_jet1"   ,"", 400, 0, 8000); 
 
-
+   
+   
+   
+   
+   
+   
+   
+  // 8888888b.                        888 8888888b.  d8b          888    
+  // 888   Y88b                       888 888  "Y88b Y8P          888    
+  // 888    888                       888 888    888              888    
+  // 888   d88P 888d888  .d88b.   .d88888 888    888 888 .d8888b  888888 
+  // 8888888P"  888P"   d8P  Y8b d88" 888 888    888 888 88K      888    
+  // 888        888     88888888 888  888 888    888 888 "Y8888b. 888    
+  // 888        888     Y8b.     Y88b 888 888  .d88P 888      X88 Y88b.  
+  // 888        888      "Y8888   "Y88888 8888888P"  888  88888P'  "Y888 
 
 
   //Predicted Distribution - Background estimation
-  cout<<"h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag ->Integral() "<<h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag ->Integral() <<endl;
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag"               , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag"          , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag"          , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive,  "mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive"      , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag"          , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag"          , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag"          , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive,  "mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive"      , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag"          , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag"          , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag,      "mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag"          , "mTT Mass", 700, 0, 7000);
-  PredictedDistribution * mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive,  "mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive"      , "mTT Mass", 700, 0, 7000);
+  cout<<"PredictedDistribution setup"<<endl;
+  cout<<"Check mistag Integral "<<h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag ->Integral() <<endl;
 
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag"             , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag"               , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag"                 , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag"           , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag     = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag"          , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag"                 , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_0btag, "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag"            , "bDisc"        , 500,  0,    1 );
+  // --- CHS
+  // -- dRapHi
+  // - 0btag
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapHi_0btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_dRapHi_0btag_maxbdisc"     , "",  200, 0,     1);
+  // - 1btag
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapHi_1btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_CHS_dRapHi_1btag_maxbdisc"     , "",  200, 0,     1);
+  // - 2btag
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapHi_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_CHS_dRapHi_2btag_maxbdisc"     , "",  200, 0,     1);
+  // - btag inclusive
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
+ 
+  // -- dRapLo
+  // - 0btag
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapLo_0btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_dRapLo_0btag_maxbdisc"     , "",  200, 0,     1);
+  // - 1btag
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapLo_1btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_CHS_dRapLo_1btag_maxbdisc"     , "",  200, 0,     1);
+  // - 2btag
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapLo_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_CHS_dRapLo_2btag_maxbdisc"     , "",  200, 0,     1);
+  // - btag inclusive
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
+ 
+  // -- dRapIn
+  // - 0btag
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapIn_0btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_CHS_dRapIn_0btag_maxbdisc"     , "",  200, 0,     1);
+  // - 1btag
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapIn_1btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_CHS_dRapIn_1btag_maxbdisc"     , "",  200, 0,     1);
+  // - 2btag
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapIn_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_CHS_dRapIn_2btag_maxbdisc"     , "",  200, 0,     1);
+  // - btag inclusive
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_JetP           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_JetPt          = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_JetY           = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_CHS_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
+ 
 
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag"        , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag"          , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag"            , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag"      , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag     = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag"          , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag"            , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_1btag, "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag"            , "bDisc"        , 500,  0,    1 );
 
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag"                                     , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag"                                   , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag"                                     , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag"                               , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag     = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag"     , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag"                                     , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_2btag, "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag"                                     , "bDisc"        , 500,  0,    1 );
 
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive    = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive"    , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive"      , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive"        , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive  = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive"  , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive" , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive"        , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapHi_inclusive, "mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive"        , "bDisc"        , 500,  0,    1 );
 
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag"            , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag"              , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag"                , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag"          , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag     = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag"         , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag"                , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_0btag, "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag"                , "bDisc"        , 500,  0,    1 );
+  // --- Puppi
+  // -- dRapHi
+  // - 0btag
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapHi_0btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_dRapHi_0btag_maxbdisc"     , "",  200, 0,     1);
+  // - 1btag
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapHi_1btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_dRapHi_1btag_maxbdisc"     , "",  200, 0,     1);
+  // - 2btag
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapHi_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_dRapHi_2btag_maxbdisc"     , "",  200, 0,     1);
+  // - btag inclusive
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
+ 
+  // -- dRapLo
+  // - 0btag
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapLo_0btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_dRapLo_0btag_maxbdisc"     , "",  200, 0,     1);
+  // - 1btag
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapLo_1btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_dRapLo_1btag_maxbdisc"     , "",  200, 0,     1);
+  // - 2btag
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapLo_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_dRapLo_2btag_maxbdisc"     , "",  200, 0,     1);
+  // - btag inclusive
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
+ 
+  // -- dRapIn
+  // - 0btag
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapIn_0btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_dRapIn_0btag_maxbdisc"     , "",  200, 0,     1);
+  // - 1btag
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapIn_1btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_dRapIn_1btag_maxbdisc"     , "",  200, 0,     1);
+  // - 2btag
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapIn_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_dRapIn_2btag_maxbdisc"     , "",  200, 0,     1);
+  // - btag inclusive
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_Puppi_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
+ 
 
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag"            , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag"              , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag"                , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag"          , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag     = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag"         , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag"                , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_1btag, "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag"                , "bDisc"        , 500,  0,    1 );
 
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag"            , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag"              , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag"                , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag"          , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag     = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag"         , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag"                , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_2btag, "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag"                , "bDisc"        , 500,  0,    1 );
 
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive    = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive"    , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive"      , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive"        , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive  = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive"  , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive" , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive"        , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapLo_inclusive, "mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive"        , "bDisc"        , 500,  0,    1 );
+  // --- Alternative tag definition for closur test - CHS
+  // -- dRapHi
+  // - 0btag
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapHi_0btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_AltTag_dRapHi_0btag_maxbdisc"     , "",  200, 0,     1);
+  // - 1btag
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapHi_1btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_AltTag_dRapHi_1btag_maxbdisc"     , "",  200, 0,     1);
+  // - 2btag
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapHi_2btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_AltTag_dRapHi_2btag_maxbdisc"     , "",  200, 0,     1);
+  // - btag inclusive
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_AltTag_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
+ 
+  // -- dRapLo
+  // - 0btag
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapLo_0btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_AltTag_dRapLo_0btag_maxbdisc"     , "",  200, 0,     1);
+  // - 1btag
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapLo_1btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_AltTag_dRapLo_1btag_maxbdisc"     , "",  200, 0,     1);
+  // - 2btag
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapLo_2btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_AltTag_dRapLo_2btag_maxbdisc"     , "",  200, 0,     1);
+  // - btag inclusive
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_AltTag_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
+ 
+  // -- dRapIn
+  // - 0btag
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapIn_0btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_AltTag_dRapIn_0btag_maxbdisc"     , "",  200, 0,     1);
+  // - 1btag
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapIn_1btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_AltTag_dRapIn_1btag_maxbdisc"     , "",  200, 0,     1);
+  // - 2btag
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapIn_2btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_AltTag_dRapIn_2btag_maxbdisc"     , "",  200, 0,     1);
+  // - btag inclusive
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_DijetMass"    , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_DijetMassMod" , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_HT             = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_HT"           , "", 1000, 0, 10000);
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_DeltaRap"     , "",  500, 0,     5);
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_JetP           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_JetP"         , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_JetPt          = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_JetPt"        , "",  900, 0,  9000);
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_JetY"         , "",  300,-3,     3);
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
+  PredictedDistribution * predDist_AltTag_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_AltTag_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
+ 
 
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag"                                 , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag"                                   , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag"                                     , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag"                               , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag     = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag"     , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag"                                     , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_0btag, "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag"                                     , "bDisc"        , 500,  0,    1 );
-
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag"                                 , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag"                                   , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag"                                     , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag"                               , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag     = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag"     , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag"                                     , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_1btag, "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag"                                     , "bDisc"        , 500,  0,    1 );
-
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag"                                 , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag          = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag"                                   , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag"                                     , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag"                               , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag     = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag"     , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag"                                     , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag            = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_2btag, "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag"                                     , "bDisc"        , 500,  0,    1 );
-
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive    = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive"    , "mTT Mass"     , 700,  0, 7000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive      = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive"      , "Jet Mass"     , 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive"        , "Jet pT"       , 400,  0, 4000 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive  = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive"  , "Jet Rapidity" , 600, -3,    3 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive" , "SoftDrop Mass", 500,  0,  500 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive"        , "Tau32"        , 500,  0,    1 );
-  PredictedDistribution * mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive        = new PredictedDistribution( h_mistag_vs_jetP_TagMassSDTau32_jetP_dRapIn_inclusive, "mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive"        , "bDisc"        , 500,  0,    1 );
 
   cout<<"done setting up bkgdest"<<endl;
 
@@ -2772,7 +3178,7 @@ void looptree(
   else nLoop = Nevents;
 
   for (int i=0; i<nLoop; i++ ){ 
-    if (i%10000==0) cout<<i<<"  / "<<nLoop<<"   ("<<setprecision(3)<<(float)i/(float)nLoop*10<<"%)"<<endl;
+    if (i%10000==0) cout<<i<<"  / "<<nLoop<<"   ("<<setprecision(3)<<(float)i/(float)nLoop*100<<"%)"<<endl;
 
     T1->GetEntry(i);
     h_CutFlow->Fill(0);
@@ -3127,12 +3533,12 @@ void looptree(
     bool j1_antipuptag_tau32_puptag_mass  = j1_antipuptag_tau32 && j1_puptag_mass ;
   
     // Alternative tag and antitag definitions for closure test
-    bool j0_tag_alt1_mass  = (jet0sdmass > 90 && jet0sdmass < 110) || (jet0sdmass > 210 && jet0sdmass < 300)  ;
-    bool j1_tag_alt1_mass  = (jet1sdmass > 90 && jet1sdmass < 110) || (jet1sdmass > 210 && jet1sdmass < 300)  ;
-    bool j0_tag_alt1_t     = j0_tag_alt1_mass && j0_tag_tau32;
-    bool j1_tag_alt1_t     = j1_tag_alt1_mass && j1_tag_tau32;
-    bool j0_antitag_tau32_tag_alt1_mass  = j0_antitag_tau32 && j0_tag_alt1_mass ;
-    bool j1_antitag_tau32_tag_alt1_mass  = j1_antitag_tau32 && j1_tag_alt1_mass ;
+    bool j0_tag_alt_mass  = (jet0sdmass > 90 && jet0sdmass < 110) || (jet0sdmass > 210 && jet0sdmass < 300)  ;
+    bool j1_tag_alt_mass  = (jet1sdmass > 90 && jet1sdmass < 110) || (jet1sdmass > 210 && jet1sdmass < 300)  ;
+    bool j0_tag_alt_t     = j0_tag_alt_mass && j0_tag_tau32;
+    bool j1_tag_alt_t     = j1_tag_alt_mass && j1_tag_tau32;
+    bool j0_antitag_tau32_tag_alt_mass  = j0_antitag_tau32 && j0_tag_alt_mass ;
+    bool j1_antitag_tau32_tag_alt_mass  = j1_antitag_tau32 && j1_tag_alt_mass ;
 
 
 
@@ -3442,105 +3848,105 @@ void looptree(
       if (rand_mistag < 0.5){    // 50% of the time choose jet 0 to be the anti-tag and jet 1 to be the probe
       
         //----------anti-tag tau32, keep jet in SD mass window
-        if (j0_antitag_tau32_tag_alt1_mass){
+        if (j0_antitag_tau32_tag_alt_mass){
 
           h_alt_AntiTagCHS_Probe_jetP_dRapIn_inclusive                                  ->Fill( jet1P       , evWeight ); 
-          if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive     ->Fill( jet1P       , evWeight );
+          if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive     ->Fill( jet1P       , evWeight );
           if (DijetDeltaRap<=1.0){
             h_alt_AntiTagCHS_Probe_jetP_dRapLo_inclusive                                ->Fill( jet1P       , evWeight );
-            if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive   ->Fill( jet1P       , evWeight );
+            if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive   ->Fill( jet1P       , evWeight );
           }
           if (DijetDeltaRap>1.0){
             h_alt_AntiTagCHS_Probe_jetP_dRapHi_inclusive                                ->Fill( jet1P       , evWeight );
-            if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive   ->Fill( jet1P       , evWeight );
+            if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive   ->Fill( jet1P       , evWeight );
           }
                    
           if (j0_tag_b && j1_tag_b){
             h_alt_AntiTagCHS_Probe_jetP_dRapIn_2btag                                    ->Fill( jet1P       , evWeight );
-            if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag       ->Fill( jet1P       , evWeight );
+            if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag       ->Fill( jet1P       , evWeight );
             if (DijetDeltaRap<=1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapLo_2btag                                  ->Fill( jet1P       , evWeight );
-              if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ->Fill( jet1P       , evWeight );
+              if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ->Fill( jet1P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapHi_2btag                                  ->Fill( jet1P       , evWeight );
-              if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ->Fill( jet1P       , evWeight );
+              if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ->Fill( jet1P       , evWeight );
             }
           }
           if ( (j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b) ){
             h_alt_AntiTagCHS_Probe_jetP_dRapIn_1btag                                    ->Fill( jet1P       , evWeight );
-            if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag       ->Fill( jet1P       , evWeight );
+            if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag       ->Fill( jet1P       , evWeight );
             if (DijetDeltaRap<=1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapLo_1btag                                  ->Fill( jet1P       , evWeight );
-              if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ->Fill( jet1P       , evWeight );
+              if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ->Fill( jet1P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapHi_1btag                                  ->Fill( jet1P       , evWeight );
-              if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ->Fill( jet1P       , evWeight );
+              if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ->Fill( jet1P       , evWeight );
             }
           }
           if (!j0_tag_b && ! j1_tag_b){
             h_alt_AntiTagCHS_Probe_jetP_dRapIn_0btag                                    ->Fill( jet1P       , evWeight );
-            if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag       ->Fill( jet1P       , evWeight );
+            if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag       ->Fill( jet1P       , evWeight );
             if (DijetDeltaRap<=1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapLo_0btag                                  ->Fill( jet1P       , evWeight );
-              if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ->Fill( jet1P       , evWeight );
+              if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ->Fill( jet1P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapHi_0btag                                  ->Fill( jet1P       , evWeight );
-              if (j1_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ->Fill( jet1P        , evWeight );
+              if (j1_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ->Fill( jet1P        , evWeight );
             }
           }
         }
       }
       else if ( rand_mistag >= 0.5 ){  // 50% of the time choose jet 1 to be the anti-tag and jet 0 to be the probe
         //----------anti-tag tau32, keep jet in SD mass window
-        if (j1_antitag_tau32_tag_alt1_mass){
+        if (j1_antitag_tau32_tag_alt_mass){
           h_alt_AntiTagCHS_Probe_jetP_dRapIn_inclusive                                  ->Fill( jet0P       , evWeight );
-          if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive     ->Fill( jet0P       , evWeight );
+          if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive     ->Fill( jet0P       , evWeight );
           if (DijetDeltaRap<=1.0){
             h_alt_AntiTagCHS_Probe_jetP_dRapLo_inclusive                                ->Fill( jet0P       , evWeight );
-            if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive   ->Fill( jet0P       , evWeight );
+            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive   ->Fill( jet0P       , evWeight );
           }
           if (DijetDeltaRap>1.0){
             h_alt_AntiTagCHS_Probe_jetP_dRapHi_inclusive                                ->Fill( jet0P       , evWeight );
-            if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive   ->Fill( jet0P       , evWeight );
+            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive   ->Fill( jet0P       , evWeight );
           }
                    
           if (j0_tag_b && j1_tag_b){
             h_alt_AntiTagCHS_Probe_jetP_dRapIn_2btag                                    ->Fill( jet0P       , evWeight );
-            if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag       ->Fill( jet0P       , evWeight );
+            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag       ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapLo_2btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapHi_2btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ->Fill( jet0P       , evWeight );
             }
           }
           if ( (j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b) ){
             h_alt_AntiTagCHS_Probe_jetP_dRapIn_1btag                                    ->Fill( jet0P       , evWeight );
-            if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag       ->Fill( jet0P       , evWeight );
+            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag       ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapLo_1btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapHi_1btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ->Fill( jet0P       , evWeight );
             }
           }
           if (!j0_tag_b && ! j1_tag_b){
             h_alt_AntiTagCHS_Probe_jetP_dRapIn_0btag                                    ->Fill( jet0P       , evWeight );
-            if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag       ->Fill( jet0P       , evWeight );
+            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag       ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapLo_0btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapHi_0btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt1_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ->Fill( jet0P       , evWeight );
             }
           }
         }
@@ -3550,30 +3956,39 @@ void looptree(
       if (isQCDMC){
         //Ungroomed
         if (j0_ungroomedtag_mass){
-          h_mAK8_ModMass_jet0 -> Fill( Jet0Mass, evWeight );
-          h_mAK8_ModMass -> Fill( Jet0Mass, evWeight );
+          h_mAK8_ModMass_jet0 -> Fill( jet0P4.M() , evWeight );
+          h_mAK8_ModMass      -> Fill( jet0P4.M() , evWeight );
         }
         if (j1_ungroomedtag_mass){
-          h_mAK8_ModMass_jet1 -> Fill( Jet1Mass, evWeight );
-          h_mAK8_ModMass -> Fill( Jet1Mass, evWeight );
+          h_mAK8_ModMass_jet1 -> Fill( jet1P4.M() , evWeight );
+          h_mAK8_ModMass      -> Fill( jet1P4.M() , evWeight );
         }
         //Soft Drop
         if (j0_tag_mass){
-          h_mSDropAK8_ModMass_jet0 -> Fill( Jet0SDmass, evWeight );
-          h_mSDropAK8_ModMass -> Fill( Jet0SDmass, evWeight );
+          h_mSDropAK8_ModMass_jet0 -> Fill( jet0sdmass, evWeight );
+          h_mSDropAK8_ModMass      -> Fill( jet0sdmass, evWeight );
         }
         if (j1_tag_mass){
-          h_mSDropAK8_ModMass_jet1 -> Fill( Jet1SDmass, evWeight );
-          h_mSDropAK8_ModMass -> Fill( Jet1SDmass, evWeight );
+          h_mSDropAK8_ModMass_jet1 -> Fill( jet1sdmass, evWeight );
+          h_mSDropAK8_ModMass      -> Fill( jet1sdmass, evWeight );
         }
         //PUPPI Soft Drop
         if (j0_puptag_mass){
-          h_mPuppiSDropAK8_ModMass_jet0 -> Fill( Jet0PuppiSDmass, evWeight );
-          h_mPuppiSDropAK8_ModMass -> Fill( Jet0PuppiSDmass, evWeight );
+          h_mPuppiSDropAK8_ModMass_jet0 -> Fill( puppi0sdmass , evWeight );
+          h_mPuppiSDropAK8_ModMass      -> Fill( puppi0sdmass, evWeight );
         }
         if (j1_puptag_mass){
-          h_mPuppiSDropAK8_ModMass_jet1 -> Fill( Jet1PuppiSDmass, evWeight );
-          h_mPuppiSDropAK8_ModMass -> Fill( Jet1PuppiSDmass, evWeight );
+          h_mPuppiSDropAK8_ModMass_jet1 -> Fill( puppi1sdmass, evWeight );
+          h_mPuppiSDropAK8_ModMass      -> Fill( puppi1sdmass, evWeight );
+        }
+        // Alternative tag for closure test
+        if (j0_tag_alt_mass){
+          h_mSDropAK8_ModMass_jet0 -> Fill( jet0sdmass, evWeight );
+          h_mSDropAK8_ModMass      -> Fill( jet0sdmass, evWeight );
+        }
+        if (j1_tag_alt_mass){
+          h_mSDropAK8_ModMass_jet1 -> Fill( jet1sdmass, evWeight );
+          h_mSDropAK8_ModMass      -> Fill( jet1sdmass, evWeight );
         }
       }
     }// end if antitag
@@ -3718,7 +4133,6 @@ void looptree(
       double jet1_rhoRatioPuppiPmag        =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.P()    * puppi1P4.P()   ) );
       double jet1_rhoRatioPuppiPmagPrime   =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.P()                     ) );
   
-
       h_jet0_rhoRatio                      ->Fill( jet0_rhoRatio                );
       h_jet0_rhoRatioPrime                 ->Fill( jet0_rhoRatioPrime           );
       h_jet0_rhoRatioPmag                  ->Fill( jet0_rhoRatioPmag            );
@@ -3735,7 +4149,6 @@ void looptree(
       h_jet1_rhoRatioPuppiPrime            ->Fill( jet1_rhoRatioPuppiPrime      );
       h_jet1_rhoRatioPuppiPmag             ->Fill( jet1_rhoRatioPuppiPmag       );
       h_jet1_rhoRatioPuppiPmagPrime        ->Fill( jet1_rhoRatioPuppiPmagPrime  );
-
 
       h_jet0_tau32_rhoRatio                ->Fill( jet0_rhoRatio               ,  Jet0Tau32      );
       h_jet0_tau32_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  Jet0Tau32      );
@@ -3980,37 +4393,37 @@ void looptree(
       if (j0_tag_t_b && j1_tag_b )                   h_JetSDmass_OppositeJetTag_t_b_JetTag_b         ->Fill( jet1sdmass , evWeight );
       if (j0_tag_t_b && j1_tag_b && j1_tag_tau32 )   h_JetSDmass_OppositeJetTag_t_b_JetTag_b_tau32   ->Fill( jet1sdmass , evWeight );
 
-                                                     h_Jet0Tau32                                     ->Fill( jet0sdmass , evWeight );
-      if (j0_tag_b)                                  h_Jet0Tau32_JetTag_b                            ->Fill( jet0sdmass , evWeight );
-      if (j0_tag_mass)                               h_Jet0Tau32_JetTag_mass                         ->Fill( jet0sdmass , evWeight );
-      if (j0_tag_b && j0_tag_mass)                   h_Jet0Tau32_JetTag_b_mass                       ->Fill( jet0sdmass , evWeight );
-      if (j1_tag_t_b)                                h_Jet0Tau32_OppositeJetTag_t_b                  ->Fill( jet0sdmass , evWeight );
-      if (j1_tag_t_b && j0_tag_b )                   h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b         ->Fill( jet0sdmass , evWeight );
-      if (j1_tag_t_b && j0_tag_b && j0_tag_mass)     h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b_mass    ->Fill( jet0sdmass , evWeight );
+                                                     h_Jet0Tau32                                     ->Fill(  Jet0Tau32 , evWeight );
+      if (j0_tag_b)                                  h_Jet0Tau32_JetTag_b                            ->Fill(  Jet0Tau32 , evWeight );
+      if (j0_tag_mass)                               h_Jet0Tau32_JetTag_mass                         ->Fill(  Jet0Tau32 , evWeight );
+      if (j0_tag_b && j0_tag_mass)                   h_Jet0Tau32_JetTag_b_mass                       ->Fill(  Jet0Tau32 , evWeight );
+      if (j1_tag_t_b)                                h_Jet0Tau32_OppositeJetTag_t_b                  ->Fill(  Jet0Tau32 , evWeight );
+      if (j1_tag_t_b && j0_tag_b )                   h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b         ->Fill(  Jet0Tau32 , evWeight );
+      if (j1_tag_t_b && j0_tag_b && j0_tag_mass)     h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b_mass    ->Fill(  Jet0Tau32 , evWeight );
     
-                                                     h_Jet1Tau32                                     ->Fill( jet1sdmass , evWeight );
-      if (j1_tag_b)                                  h_Jet1Tau32_JetTag_b                            ->Fill( jet1sdmass , evWeight );
-      if (j1_tag_mass)                               h_Jet1Tau32_JetTag_mass                         ->Fill( jet1sdmass , evWeight );
-      if (j1_tag_b && j1_tag_mass)                   h_Jet1Tau32_JetTag_b_mass                       ->Fill( jet1sdmass , evWeight );
-      if (j0_tag_t_b)                                h_Jet1Tau32_OppositeJetTag_t_b                  ->Fill( jet1sdmass , evWeight );
-      if (j0_tag_t_b && j1_tag_b )                   h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b         ->Fill( jet1sdmass , evWeight );
-      if (j0_tag_t_b && j1_tag_b && j1_tag_mass )    h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b_mass    ->Fill( jet1sdmass , evWeight );
+                                                     h_Jet1Tau32                                     ->Fill(  Jet1Tau32 , evWeight );
+      if (j1_tag_b)                                  h_Jet1Tau32_JetTag_b                            ->Fill(  Jet1Tau32 , evWeight );
+      if (j1_tag_mass)                               h_Jet1Tau32_JetTag_mass                         ->Fill(  Jet1Tau32 , evWeight );
+      if (j1_tag_b && j1_tag_mass)                   h_Jet1Tau32_JetTag_b_mass                       ->Fill(  Jet1Tau32 , evWeight );
+      if (j0_tag_t_b)                                h_Jet1Tau32_OppositeJetTag_t_b                  ->Fill(  Jet1Tau32 , evWeight );
+      if (j0_tag_t_b && j1_tag_b )                   h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b         ->Fill(  Jet1Tau32 , evWeight );
+      if (j0_tag_t_b && j1_tag_b && j1_tag_mass )    h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b_mass    ->Fill(  Jet1Tau32 , evWeight );
 
-                                                     h_JetTau32                                      ->Fill( jet0sdmass , evWeight );
-      if (j0_tag_b)                                  h_JetTau32_JetTag_b                             ->Fill( jet0sdmass , evWeight );
-      if (j0_tag_mass)                               h_JetTau32_JetTag_mass                          ->Fill( jet0sdmass , evWeight );
-      if (j0_tag_b && j0_tag_mass)                   h_JetTau32_JetTag_b_mass                        ->Fill( jet0sdmass , evWeight );
-      if (j1_tag_t_b)                                h_JetTau32_OppositeJetTag_t_b                   ->Fill( jet0sdmass , evWeight );
-      if (j1_tag_t_b && j0_tag_b )                   h_JetTau32_OppositeJetTag_t_b_JetTag_b          ->Fill( jet0sdmass , evWeight );
-      if (j1_tag_t_b && j0_tag_b && j0_tag_mass )    h_JetTau32_OppositeJetTag_t_b_JetTag_b_mass     ->Fill( jet0sdmass , evWeight );
+                                                     h_JetTau32                                      ->Fill(  Jet0Tau32 , evWeight );
+      if (j0_tag_b)                                  h_JetTau32_JetTag_b                             ->Fill(  Jet0Tau32 , evWeight );
+      if (j0_tag_mass)                               h_JetTau32_JetTag_mass                          ->Fill(  Jet0Tau32 , evWeight );
+      if (j0_tag_b && j0_tag_mass)                   h_JetTau32_JetTag_b_mass                        ->Fill(  Jet0Tau32 , evWeight );
+      if (j1_tag_t_b)                                h_JetTau32_OppositeJetTag_t_b                   ->Fill(  Jet0Tau32 , evWeight );
+      if (j1_tag_t_b && j0_tag_b )                   h_JetTau32_OppositeJetTag_t_b_JetTag_b          ->Fill(  Jet0Tau32 , evWeight );
+      if (j1_tag_t_b && j0_tag_b && j0_tag_mass )    h_JetTau32_OppositeJetTag_t_b_JetTag_b_mass     ->Fill(  Jet0Tau32 , evWeight );
 
-                                                     h_JetTau32                                      ->Fill( jet0sdmass , evWeight );
-      if (j1_tag_b)                                  h_JetTau32_JetTag_b                             ->Fill( jet0sdmass , evWeight );
-      if (j1_tag_mass)                               h_JetTau32_JetTag_mass                          ->Fill( jet0sdmass , evWeight );
-      if (j1_tag_b && j1_tag_mass)                   h_JetTau32_JetTag_b_mass                        ->Fill( jet0sdmass , evWeight );
-      if (j0_tag_t_b)                                h_JetTau32_OppositeJetTag_t_b                   ->Fill( jet0sdmass , evWeight );
-      if (j0_tag_t_b && j1_tag_b )                   h_JetTau32_OppositeJetTag_t_b_JetTag_b          ->Fill( jet0sdmass , evWeight );
-      if (j0_tag_t_b && j1_tag_b && j1_tag_mass )    h_JetTau32_OppositeJetTag_t_b_JetTag_b_mass     ->Fill( jet0sdmass , evWeight );
+                                                     h_JetTau32                                      ->Fill(  Jet1Tau32 , evWeight );
+      if (j1_tag_b)                                  h_JetTau32_JetTag_b                             ->Fill(  Jet1Tau32 , evWeight );
+      if (j1_tag_mass)                               h_JetTau32_JetTag_mass                          ->Fill(  Jet1Tau32 , evWeight );
+      if (j1_tag_b && j1_tag_mass)                   h_JetTau32_JetTag_b_mass                        ->Fill(  Jet1Tau32 , evWeight );
+      if (j0_tag_t_b)                                h_JetTau32_OppositeJetTag_t_b                   ->Fill(  Jet1Tau32 , evWeight );
+      if (j0_tag_t_b && j1_tag_b )                   h_JetTau32_OppositeJetTag_t_b_JetTag_b          ->Fill(  Jet1Tau32 , evWeight );
+      if (j0_tag_t_b && j1_tag_b && j1_tag_mass )    h_JetTau32_OppositeJetTag_t_b_JetTag_b_mass     ->Fill(  Jet1Tau32 , evWeight );
 
 
 
@@ -4374,307 +4787,1059 @@ void looptree(
       //Fill predicted distribution
       TRandom3 rand1(0);
       double rand_bkgdest  = rand1.Uniform(0,1.0);
+
       //randomly select jet 0 to be the tag then fill predDist based on probability that jet 1 is mis-tagged
       if (rand_bkgdest < 0.5){
+        
+        // ---- CHS tag definition
         if (j0_tag_t){
-          // b-tag inclusive
-          mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-          mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );  
 
-          mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive                ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive          ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive         ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive                ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-
-          //2btag         
-          if (j0_tag_b && j1_tag_b){
-            mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag              ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag                ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );  
-
-            mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag                ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag                  ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag           ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag                  ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag                  ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-
-          }
-          //1btag         
-          if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
-            mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );  
-
-            mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag                ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag          ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag         ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag                ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-
-          }
-          //0btag         
+          // --- dRapIn
+          // -- btag inclusive
+          predDist_CHS_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+          predDist_CHS_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+          predDist_CHS_dRapIn_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+          predDist_CHS_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+          predDist_CHS_dRapIn_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+          predDist_CHS_dRapIn_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+          predDist_CHS_dRapIn_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+          predDist_CHS_dRapIn_inclu_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+          predDist_CHS_dRapIn_inclu_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+          predDist_CHS_dRapIn_inclu_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+          
+          // -- 0btag       
           if (!j0_tag_b && !j1_tag_b){
-            mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );  
-
-            mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag                ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag          ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag         ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag                ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-
+            predDist_CHS_dRapIn_0btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+            predDist_CHS_dRapIn_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_0btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_0btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_0btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
           }
-          // dRap Hi
+
+          // -- 1btag       
+          if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+            predDist_CHS_dRapIn_1btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+            predDist_CHS_dRapIn_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_1btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_1btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_1btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+          }
+
+          // -- 2btag         
+          if (j0_tag_b && j1_tag_b){
+            predDist_CHS_dRapIn_2btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+            predDist_CHS_dRapIn_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_2btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_2btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapIn_2btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+          }
+          
+          // --- dRapHi
           if (DijetDeltaRap >= 1){
-            //inclusive
-            mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );  
 
-            mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive                ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive          ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive         ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive                ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-
-            //2btag        
-            if (j0_tag_b && j1_tag_b){
-              mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );  
-
-              mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag                ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag          ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag         ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag                ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-
-            }
-            //1btag        
-            if ((j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b)){
-              mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );  
-
-              mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag                ->Accumulate(           jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag          ->Accumulate(       jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag         ->Accumulate(        jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag                ->Accumulate(               Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-
-            }
-            //0btag         
+            // -- btag inclusive
+            predDist_CHS_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapHi_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+            predDist_CHS_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapHi_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapHi_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapHi_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapHi_inclu_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapHi_inclu_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapHi_inclu_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+            
+            // -- 0btag       
             if (!j0_tag_b && !j1_tag_b){
-              mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag                ->Accumulate(           jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag          ->Accumulate(       jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag         ->Accumulate(        jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag                ->Accumulate(               Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_0btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+              predDist_CHS_dRapHi_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_0btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_0btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_0btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+            }
 
-              mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );	 
+            // -- 1btag       
+            if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+              predDist_CHS_dRapHi_1btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+              predDist_CHS_dRapHi_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_1btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_1btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_1btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_tag_b && j1_tag_b){
+              predDist_CHS_dRapHi_2btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+              predDist_CHS_dRapHi_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_2btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_2btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapHi_2btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
             }
           }
-          // dRap Lo
+          // --- dRapLo
           if (DijetDeltaRap < 1){
-            // inclusive  b-tag
-            mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive                ->Accumulate(           jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive          ->Accumulate(       jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive         ->Accumulate(        jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive                ->Accumulate(               Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-            mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );	 
-            //2btag        
-            if (j0_tag_b && j1_tag_b){
-              mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag                ->Accumulate(           jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag          ->Accumulate(       jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag         ->Accumulate(        jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag                ->Accumulate(               Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-
-              mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );	 
-            }
-            //1btag         
-            if ((j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b)){
-              mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag                ->Accumulate(           jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag          ->Accumulate(       jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag         ->Accumulate(        jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag                ->Accumulate(               Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
-
-              mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );	 
-            }
-            //0btag         
+            
+            // -- btag inclusive
+            predDist_CHS_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapLo_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+            predDist_CHS_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapLo_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapLo_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapLo_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+            predDist_CHS_dRapLo_inclu_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapLo_inclu_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+            predDist_CHS_dRapLo_inclu_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+            
+            // -- 0btag       
             if (!j0_tag_b && !j1_tag_b){
-              mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag            ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag              ->Accumulate(             jet1P4.M(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag                ->Accumulate(           jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag          ->Accumulate(       jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag         ->Accumulate(        jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag                ->Accumulate(               Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag                ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+              predDist_CHS_dRapLo_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_0btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+            }
 
-              mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag              ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );	 
+            // -- 1btag       
+            if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+              predDist_CHS_dRapLo_1btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+              predDist_CHS_dRapLo_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_1btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_1btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_1btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_tag_b && j1_tag_b){
+              predDist_CHS_dRapLo_2btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_t, evWeight );        
+              predDist_CHS_dRapLo_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_2btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_2btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_t, evWeight );
+              predDist_CHS_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
             }
           }
-        } // end if jet 0 tagged
+        } // end if chs jet 0 tagged
+
+        // ---- Puppi tag definition
+        if (j0_puptag_t){
+          // --- dRapIn
+          // -- btag inclusive
+          predDist_Puppi_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+          predDist_Puppi_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+          predDist_Puppi_dRapIn_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+          predDist_Puppi_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+          predDist_Puppi_dRapIn_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+          predDist_Puppi_dRapIn_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+          predDist_Puppi_dRapIn_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+          predDist_Puppi_dRapIn_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+          predDist_Puppi_dRapIn_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+          predDist_Puppi_dRapIn_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+        
+          // -- 0btag       
+          if (!j0_puptag_b && !j1_puptag_b){
+            predDist_Puppi_dRapIn_0btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+            predDist_Puppi_dRapIn_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_0btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_0btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+          }
+
+          // -- 1btag       
+          if ((j0_puptag_b && !j1_puptag_b) || (!j0_puptag_b && j1_puptag_b)){
+            predDist_Puppi_dRapIn_1btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+            predDist_Puppi_dRapIn_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_1btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_1btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+          }
+
+          // -- 2btag         
+          if (j0_puptag_b && j1_puptag_b){
+            predDist_Puppi_dRapIn_2btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+            predDist_Puppi_dRapIn_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_2btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_2btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+          }
+          
+          // --- dRapHi
+          if (DijetDeltaRap >= 1){
+
+            // -- btag inclusive
+            predDist_Puppi_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapHi_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+            predDist_Puppi_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapHi_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapHi_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapHi_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapHi_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapHi_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapHi_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            
+            // -- 0btag       
+            if (!j0_puptag_b && !j1_puptag_b){
+              predDist_Puppi_dRapHi_0btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+              predDist_Puppi_dRapHi_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_0btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_0btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            }
+
+            // -- 1btag       
+            if ((j0_puptag_b && !j1_puptag_b) || (!j0_puptag_b && j1_puptag_b)){
+              predDist_Puppi_dRapHi_1btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+              predDist_Puppi_dRapHi_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_1btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_1btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_puptag_b && j1_puptag_b){
+              predDist_Puppi_dRapHi_2btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+              predDist_Puppi_dRapHi_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_2btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_2btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            }
+          }
+          // --- dRapLo
+          if (DijetDeltaRap < 1){
+            
+            // -- btag inclusive
+            predDist_Puppi_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapLo_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+            predDist_Puppi_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapLo_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapLo_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapLo_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+            predDist_Puppi_dRapLo_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapLo_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_dRapLo_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            
+            // -- 0btag       
+            if (!j0_puptag_b && !j1_puptag_b){
+              predDist_Puppi_dRapLo_0btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+              predDist_Puppi_dRapLo_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_0btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_0btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            }
+
+            // -- 1btag       
+            if ((j0_puptag_b && !j1_puptag_b) || (!j0_puptag_b && j1_puptag_b)){
+              predDist_Puppi_dRapLo_1btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+              predDist_Puppi_dRapLo_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_1btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_1btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_puptag_b && j1_puptag_b){
+              predDist_Puppi_dRapLo_2btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
+              predDist_Puppi_dRapLo_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_2btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_2btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            }
+          }
+        } // end if puppi jet 0 tagged
+
+        // ---- Closure test - alternative tag definition
+        if (j0_tag_alt_t){
+
+          // --- dRapIn
+          // -- btag inclusive
+          predDist_AltTag_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+          predDist_AltTag_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+          predDist_AltTag_dRapIn_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+          predDist_AltTag_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+          predDist_AltTag_dRapIn_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+          predDist_AltTag_dRapIn_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+          predDist_AltTag_dRapIn_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+          predDist_AltTag_dRapIn_inclu_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+          predDist_AltTag_dRapIn_inclu_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+          predDist_AltTag_dRapIn_inclu_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+          
+          // -- 0btag       
+          if (!j0_tag_b && !j1_tag_b){
+            predDist_AltTag_dRapIn_0btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapIn_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_0btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_0btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_0btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+          }
+
+          // -- 1btag       
+          if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+            predDist_AltTag_dRapIn_1btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapIn_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_1btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_1btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_1btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+          }
+
+          // -- 2btag         
+          if (j0_tag_b && j1_tag_b){
+            predDist_AltTag_dRapIn_2btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapIn_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_2btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_2btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_2btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+          }
+          
+          // --- dRapHi
+          if (DijetDeltaRap >= 1){
+
+            // -- btag inclusive
+            predDist_AltTag_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapHi_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapHi_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapHi_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapHi_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapHi_inclu_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapHi_inclu_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapHi_inclu_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+            
+            // -- 0btag       
+            if (!j0_tag_b && !j1_tag_b){
+              predDist_AltTag_dRapHi_0btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapHi_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_0btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_0btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_0btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+            }
+
+            // -- 1btag       
+            if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+              predDist_AltTag_dRapHi_1btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapHi_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_1btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_1btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_1btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_tag_b && j1_tag_b){
+              predDist_AltTag_dRapHi_2btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapHi_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_2btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_2btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_2btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+            }
+          }
+          // --- dRapLo
+          if (DijetDeltaRap < 1){
+            
+            // -- btag inclusive
+            predDist_AltTag_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapLo_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapLo_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapLo_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapLo_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapLo_inclu_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapLo_inclu_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+            predDist_AltTag_dRapLo_inclu_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+            
+            // -- 0btag       
+            if (!j0_tag_b && !j1_tag_b){
+              predDist_AltTag_dRapLo_0btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapLo_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_0btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_0btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_0btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+            }
+
+            // -- 1btag       
+            if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+              predDist_AltTag_dRapLo_1btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapLo_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_1btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_1btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_1btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_tag_b && j1_tag_b){
+              predDist_AltTag_dRapLo_2btag_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet1, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapLo_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_2btag_JetSDmass       ->Accumulate(             jet1sdmass, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_2btag_JetTau32        ->Accumulate(              Jet1Tau32, jet1P4.P(), j1_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
+            }
+          }
+        } // end if alternative tag (sideband) jet 0 tagged
+
+
       } // end random # < 0.5
+
       //randomly select jet 1 to be the tag then fill predDist based on probability that jet 0 is mis-tagged
       if (rand_bkgdest >= 0.5){
+    
+       
+        // ---- CHS tag definition
         if (j1_tag_t){
-          // dRap inclusive & b-tag inclusive
-          mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-          mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
-          mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
-          // dRap inclusive & 2btag   
-          if (j0_tag_b && j1_tag_b){     
-            mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
-          }
-          // dRap inclusive & 1btag 
-          if ((j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b)){    
-            mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
 
-            mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
-          }
-          // dRap inclusive & 0btag 
+          // --- dRapIn
+          // -- btag inclusive
+          predDist_CHS_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+          predDist_CHS_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+          predDist_CHS_dRapIn_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+          predDist_CHS_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+          predDist_CHS_dRapIn_inclu_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+          predDist_CHS_dRapIn_inclu_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+          predDist_CHS_dRapIn_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+          predDist_CHS_dRapIn_inclu_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+          predDist_CHS_dRapIn_inclu_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+          predDist_CHS_dRapIn_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+          
+          // -- 0btag       
           if (!j0_tag_b && !j1_tag_b){
-            mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
-
-            mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
+            predDist_CHS_dRapIn_0btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+            predDist_CHS_dRapIn_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_0btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_0btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_0btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
           }
-          // dRap Hi
+
+          // -- 1btag       
+          if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+            predDist_CHS_dRapIn_1btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+            predDist_CHS_dRapIn_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_1btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_1btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_1btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+          }
+
+          // -- 2btag         
+          if (j0_tag_b && j1_tag_b){
+            predDist_CHS_dRapIn_2btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+            predDist_CHS_dRapIn_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapIn_2btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_2btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapIn_2btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+          }
+          
+          // --- dRapHi
           if (DijetDeltaRap >= 1){
-            // btag inclusive
-            mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
 
-            mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
-            //2btag  
+            // -- btag inclusive
+            predDist_CHS_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapHi_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+            predDist_CHS_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapHi_inclu_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapHi_inclu_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapHi_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapHi_inclu_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapHi_inclu_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapHi_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+            
+            // -- 0btag       
+            if (!j0_tag_b && !j1_tag_b){
+              predDist_CHS_dRapHi_0btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+              predDist_CHS_dRapHi_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_0btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_0btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_0btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+            }
+
+            // -- 1btag       
+            if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+              predDist_CHS_dRapHi_1btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+              predDist_CHS_dRapHi_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_1btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_1btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_1btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+            }
+
+            // -- 2btag         
             if (j0_tag_b && j1_tag_b){
-              mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
-
-              mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
-            }
-            //1btag 
-            if ((j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b)){       
-              mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
-
-              mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
-            }
-            //0btag        
-            if (!j0_tag_b && !j1_tag_b){
-              mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
-
-              mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
+              predDist_CHS_dRapHi_2btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+              predDist_CHS_dRapHi_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapHi_2btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_2btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapHi_2btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
             }
           }
-          // dRap Lo
+          // --- dRapLo
           if (DijetDeltaRap < 1){
-            // btag inclusive
-            mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-            mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
-
-            mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
-            //2btag   
-            if (j0_tag_b && j1_tag_b){     
-              mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
-
-              mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
-            }
-            //1btag 
-            if ((j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b)){       
-              mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
-
-              mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
-            }
-            //0btag
+            
+            // -- btag inclusive
+            predDist_CHS_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapLo_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+            predDist_CHS_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapLo_inclu_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapLo_inclu_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapLo_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+            predDist_CHS_dRapLo_inclu_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapLo_inclu_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+            predDist_CHS_dRapLo_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+            
+            // -- 0btag       
             if (!j0_tag_b && !j1_tag_b){
-              mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag            ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag              ->Accumulate(             jet0P4.M(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag                ->Accumulate(           jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag          ->Accumulate(       jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag         ->Accumulate(        jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag                ->Accumulate(               Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
-              mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag                ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+              predDist_CHS_dRapLo_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_0btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_0btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+            }
 
-              mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag              ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );	 
+            // -- 1btag       
+            if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+              predDist_CHS_dRapLo_1btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+              predDist_CHS_dRapLo_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_1btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_1btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_1btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_tag_b && j1_tag_b){
+              predDist_CHS_dRapLo_2btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_t, evWeight );        
+              predDist_CHS_dRapLo_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_t, evWeight ); 
+              predDist_CHS_dRapLo_2btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_2btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_t, evWeight );
+              predDist_CHS_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
             }
           }
-        } // end if jet 1 top tagged
+        } // end if chs jet 1 tagged
+
+        // ---- Puppi tag definition
+        if (j1_puptag_t){
+          // --- dRapIn
+          // -- btag inclusive
+          predDist_Puppi_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+          predDist_Puppi_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+          predDist_Puppi_dRapIn_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+          predDist_Puppi_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+          predDist_Puppi_dRapIn_inclu_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+          predDist_Puppi_dRapIn_inclu_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+          predDist_Puppi_dRapIn_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+          predDist_Puppi_dRapIn_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+          predDist_Puppi_dRapIn_inclu_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+          predDist_Puppi_dRapIn_inclu_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+         
+          // -- 0btag       
+          if (!j0_puptag_b && !j1_puptag_b){
+            predDist_Puppi_dRapIn_0btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+            predDist_Puppi_dRapIn_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_0btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_0btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+          }
+
+          // -- 1btag       
+          if ((j0_puptag_b && !j1_puptag_b) || (!j0_puptag_b && j1_puptag_b)){
+            predDist_Puppi_dRapIn_1btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+            predDist_Puppi_dRapIn_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_1btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_1btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+          }
+
+          // -- 2btag         
+          if (j0_puptag_b && j1_puptag_b){
+            predDist_Puppi_dRapIn_2btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+            predDist_Puppi_dRapIn_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapIn_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_2btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapIn_2btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+          }
+          
+          // --- dRapHi
+          if (DijetDeltaRap >= 1){
+
+            // -- btag inclusive
+            predDist_Puppi_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapHi_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+            predDist_Puppi_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapHi_inclu_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapHi_inclu_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapHi_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapHi_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapHi_inclu_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapHi_inclu_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            
+            // -- 0btag       
+            if (!j0_puptag_b && !j1_puptag_b){
+              predDist_Puppi_dRapHi_0btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+              predDist_Puppi_dRapHi_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_0btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_0btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            }
+
+            // -- 1btag       
+            if ((j0_puptag_b && !j1_puptag_b) || (!j0_puptag_b && j1_puptag_b)){
+              predDist_Puppi_dRapHi_1btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+              predDist_Puppi_dRapHi_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_1btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_1btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_puptag_b && j1_puptag_b){
+              predDist_Puppi_dRapHi_2btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+              predDist_Puppi_dRapHi_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapHi_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_2btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapHi_2btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            }
+          }
+          // --- dRapLo
+          if (DijetDeltaRap < 1){
+            
+            // -- btag inclusive
+            predDist_Puppi_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapLo_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+            predDist_Puppi_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapLo_inclu_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapLo_inclu_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapLo_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+            predDist_Puppi_dRapLo_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapLo_inclu_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_dRapLo_inclu_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            
+            // -- 0btag       
+            if (!j0_puptag_b && !j1_puptag_b){
+              predDist_Puppi_dRapLo_0btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+              predDist_Puppi_dRapLo_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_0btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_0btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            }
+
+            // -- 1btag       
+            if ((j0_puptag_b && !j1_puptag_b) || (!j0_puptag_b && j1_puptag_b)){
+              predDist_Puppi_dRapLo_1btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+              predDist_Puppi_dRapLo_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_1btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_1btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_puptag_b && j1_puptag_b){
+              predDist_Puppi_dRapLo_2btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
+              predDist_Puppi_dRapLo_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
+              predDist_Puppi_dRapLo_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_2btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+              predDist_Puppi_dRapLo_2btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            }
+          }
+        } // end if puppi jet 1 tagged
+
+        // ---- Closure test - alternative tag definition
+        if (j1_tag_alt_t){
+
+          // --- dRapIn
+          // -- btag inclusive
+          predDist_AltTag_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+          predDist_AltTag_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+          predDist_AltTag_dRapIn_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+          predDist_AltTag_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+          predDist_AltTag_dRapIn_inclu_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+          predDist_AltTag_dRapIn_inclu_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+          predDist_AltTag_dRapIn_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+          predDist_AltTag_dRapIn_inclu_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+          predDist_AltTag_dRapIn_inclu_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+          predDist_AltTag_dRapIn_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+          
+          // -- 0btag       
+          if (!j0_tag_b && !j1_tag_b){
+            predDist_AltTag_dRapIn_0btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapIn_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_0btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_0btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_0btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+          }
+
+          // -- 1btag       
+          if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+            predDist_AltTag_dRapIn_1btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapIn_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_1btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_1btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_1btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+          }
+
+          // -- 2btag         
+          if (j0_tag_b && j1_tag_b){
+            predDist_AltTag_dRapIn_2btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapIn_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapIn_2btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_2btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapIn_2btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+          }
+          
+          // --- dRapHi
+          if (DijetDeltaRap >= 1){
+
+            // -- btag inclusive
+            predDist_AltTag_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapHi_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapHi_inclu_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapHi_inclu_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapHi_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapHi_inclu_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapHi_inclu_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapHi_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+            
+            // -- 0btag       
+            if (!j0_tag_b && !j1_tag_b){
+              predDist_AltTag_dRapHi_0btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapHi_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_0btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_0btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_0btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+            }
+
+            // -- 1btag       
+            if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+              predDist_AltTag_dRapHi_1btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapHi_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_1btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_1btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_1btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_tag_b && j1_tag_b){
+              predDist_AltTag_dRapHi_2btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapHi_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapHi_2btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_2btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapHi_2btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+            }
+          }
+          // --- dRapLo
+          if (DijetDeltaRap < 1){
+            
+            // -- btag inclusive
+            predDist_AltTag_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapLo_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+            predDist_AltTag_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapLo_inclu_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapLo_inclu_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapLo_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+            predDist_AltTag_dRapLo_inclu_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapLo_inclu_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+            predDist_AltTag_dRapLo_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+            
+            // -- 0btag       
+            if (!j0_tag_b && !j1_tag_b){
+              predDist_AltTag_dRapLo_0btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapLo_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_0btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_0btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_0btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+            }
+
+            // -- 1btag       
+            if ((j0_tag_b && !j1_tag_b) || (!j0_tag_b && j1_tag_b)){
+              predDist_AltTag_dRapLo_1btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapLo_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_1btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_1btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_1btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+            }
+
+            // -- 2btag         
+            if (j0_tag_b && j1_tag_b){
+              predDist_AltTag_dRapLo_2btag_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_jet0, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_tag_alt_t, evWeight );        
+              predDist_AltTag_dRapLo_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_tag_alt_t, evWeight ); 
+              predDist_AltTag_dRapLo_2btag_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_2btag_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_tag_alt_t, evWeight );
+              predDist_AltTag_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt_t, evWeight );
+            }
+          }
+        } // end if alternative tag (sideband) jet 1 tagged
+
       } // end random # > 0.5
     } // end background estimate
   }// end event loop
@@ -4821,1143 +5986,576 @@ void looptree(
     h_AntiTagCHS220to300_TagMassSDTau32_jetP_dRapIn_inclusive     ->Write();
     Out->Close();
   }
-// --- Kinematic plots                                 
-if (run_kinematic){
+  // --- Kinematic plots                                 
+  if (run_kinematic){
 
 
-  cout<<"Creating OutFile: "<<out_filename_kinematic<<endl;
-  TFile * Out = new TFile(out_filename_kinematic.c_str(), "NEW");// "RECREATE");
-  Out->cd();
+    cout<<"Creating OutFile: "<<out_filename_kinematic<<endl;
+    TFile * Out = new TFile(out_filename_kinematic.c_str(), "NEW");// "RECREATE");
+    Out->cd();
 
-  h_CutFlow                                                     ->Write();                   
-  h_EventWeight                                                 ->Write();                   
-  h_BtagCategoriesPreSF                                         ->Write();                   
-  h_BtagCategoriesPostSF                                        ->Write();                   
-
-
-  // event                                                      ->Write();   
-  h_DijetMass_dRapIn                                            ->Write();                   
-  h_DijetMass_dRapLo                                            ->Write();                   
-  h_DijetMass_dRapHi                                            ->Write();                   
-  h_DeltaRap                                                    ->Write();                   
-  h_DeltaPhi                                                    ->Write();                   
-  h_HT                                                          ->Write();                   
-  h_MET                                                         ->Write();                   
-  h_METphi                                                      ->Write();                   
-  h_Nvtx                                                        ->Write();                   
-  // Jet0                                 
-  h_Jet0P                                                       ->Write();                   
-  h_Jet0Pt                                                      ->Write();                   
-  h_Jet0Phi                                                     ->Write();                   
-  h_Jet0Rap                                                     ->Write();                   
-  h_Jet0sdmass                                                  ->Write();                   
-  h_Jet0Tau1                                                    ->Write();                   
-  h_Jet0Tau2                                                    ->Write();                   
-  h_Jet0Tau3                                                    ->Write();                   
-  h_Jet0Tau4                                                    ->Write();                   
-  h_Jet0SDmaxbdisc                                              ->Write();                   
-  h_Jet0SDsubjet0pt                                             ->Write();                   
-  h_Jet0SDsubjet0mass                                           ->Write();                   
-  h_Jet0SDsubjet0tau1                                           ->Write();                   
-  h_Jet0SDsubjet0tau2                                           ->Write();                   
-  h_Jet0SDsubjet0tau3                                           ->Write();                   
-  h_Jet0SDsubjet0bdisc                                          ->Write();                   
-  h_Jet0SDsubjet1pt                                             ->Write();                   
-  h_Jet0SDsubjet1mass                                           ->Write();                   
-  h_Jet0SDsubjet1tau1                                           ->Write();                   
-  h_Jet0SDsubjet1tau2                                           ->Write();                   
-  h_Jet0SDsubjet1tau3                                           ->Write();                   
-  h_Jet0SDsubjet1bdisc                                          ->Write();                   
-  h_Jet0PuppiPt                                                 ->Write();                   
-  h_Jet0PuppiMass                                               ->Write();                   
-  h_Jet0PuppiSDpt                                               ->Write();                   
-  h_Jet0PuppiTau1                                               ->Write();                   
-  h_Jet0PuppiTau2                                               ->Write();                   
-  h_Jet0PuppiTau3                                               ->Write();                   
-  h_Jet0PuppiTau4                                               ->Write();                   
-  h_Jet0PuppiSDmaxbdisc                                         ->Write();                   
-  h_Jet0PuppiSDsubjet0pt                                        ->Write();                   
-  h_Jet0PuppiSDsubjet0mass                                      ->Write();                   
-  h_Jet0PuppiSDsubjet0tau1                                      ->Write();                   
-  h_Jet0PuppiSDsubjet0tau2                                      ->Write();                   
-  h_Jet0PuppiSDsubjet0tau3                                      ->Write();                   
-  h_Jet0PuppiSDsubjet0bdisc                                     ->Write();                   
-  h_Jet0PuppiSDsubjet1pt                                        ->Write();                   
-  h_Jet0PuppiSDsubjet1mass                                      ->Write();                   
-  h_Jet0PuppiSDsubjet1tau1                                      ->Write();                   
-  h_Jet0PuppiSDsubjet1tau2                                      ->Write();                   
-  h_Jet0PuppiSDsubjet1tau3                                      ->Write();                   
-  h_Jet0PuppiSDsubjet1bdisc                                     ->Write();                   
-  h_Jet0CHF                                                     ->Write();                   
-  h_Jet0NHF                                                     ->Write();                   
-  h_Jet0CM                                                      ->Write();                   
-  h_Jet0NM                                                      ->Write();                   
-  h_Jet0NEF                                                     ->Write();                   
-  h_Jet0CEF                                                     ->Write();                   
-  h_Jet0MF                                                      ->Write();                   
-  h_Jet0Mult                                                    ->Write();                   
-  h_Jet0PuppiCHF                                                ->Write();                   
-  h_Jet0PuppiNHF                                                ->Write();                   
-  h_Jet0PuppiCM                                                 ->Write();                   
-  h_Jet0PuppiNM                                                 ->Write();                   
-  h_Jet0PuppiNEF                                                ->Write();                   
-  h_Jet0PuppiCEF                                                ->Write();                   
-  h_Jet0PuppiMF                                                 ->Write();                   
-  h_Jet0PuppiMult                                               ->Write();                   
-  h_Jet1Pt                                                      ->Write();                   
-  h_Jet1Rap                                                     ->Write();                   
-  // N-1 histograms                                 
-  h_Jet0SDmass                                                  ->Write();                   
-  h_Jet0SDmass_JetTag_b                                         ->Write();                   
-  h_Jet0SDmass_JetTag_tau32                                     ->Write();                   
-  h_Jet0SDmass_JetTag_b_tau32                                   ->Write();                   
-  h_Jet0SDmass_OppositeJetTag_t_b                               ->Write();                   
-  h_Jet0SDmass_OppositeJetTag_t_b_JetTag_b                      ->Write();                   
-  h_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32                ->Write();                   
-  h_Jet1SDmass                                                  ->Write();                   
-  h_Jet1SDmass_JetTag_b                                         ->Write();                   
-  h_Jet1SDmass_JetTag_tau32                                     ->Write();                   
-  h_Jet1SDmass_JetTag_b_tau32                                   ->Write();                   
-  h_Jet1SDmass_OppositeJetTag_t_b                               ->Write();                   
-  h_Jet1SDmass_OppositeJetTag_t_b_JetTag_b                      ->Write();                   
-  h_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32                ->Write();                   
-  h_JetSDmass                                                   ->Write();                   
-  h_JetSDmass_JetTag_b                                          ->Write();                   
-  h_JetSDmass_JetTag_tau32                                      ->Write();                   
-  h_JetSDmass_JetTag_b_tau32                                    ->Write();                   
-  h_JetSDmass_OppositeJetTag_t_b                                ->Write();                   
-  h_JetSDmass_OppositeJetTag_t_b_JetTag_b                       ->Write();                   
-  h_JetSDmass_OppositeJetTag_t_b_JetTag_b_tau32                 ->Write();                   
-  h_Jet0Tau32                                                   ->Write();                   
-  h_Jet0Tau32_JetTag_b                                          ->Write();                   
-  h_Jet0Tau32_JetTag_mass                                       ->Write();                   
-  h_Jet0Tau32_JetTag_b_mass                                     ->Write();                   
-  h_Jet0Tau32_OppositeJetTag_t_b                                ->Write();                   
-  h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b                       ->Write();                   
-  h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b_mass                  ->Write();                   
-  h_Jet1Tau32                                                   ->Write();                   
-  h_Jet1Tau32_JetTag_b                                          ->Write();                   
-  h_Jet1Tau32_JetTag_mass                                       ->Write();                   
-  h_Jet1Tau32_JetTag_b_mass                                     ->Write();                   
-  h_Jet1Tau32_OppositeJetTag_t_b                                ->Write();                   
-  h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b                       ->Write();                   
-  h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b_mass                  ->Write();                   
-  h_JetTau32                                                    ->Write();                   
-  h_JetTau32_JetTag_b                                           ->Write();                   
-  h_JetTau32_JetTag_mass                                        ->Write();                   
-  h_JetTau32_JetTag_b_mass                                      ->Write();                   
-  h_JetTau32_OppositeJetTag_t_b                                 ->Write();                   
-  h_JetTau32_OppositeJetTag_t_b_JetTag_b                        ->Write();                   
-  h_JetTau32_OppositeJetTag_t_b_JetTag_b_mass                   ->Write();                   
-                                 
-  // 2D                                 
-  h_Jet0Pt_Jet0Mass                                     ->Write();            
-  h_Jet0P_Jet0Mass                                      ->Write();            
-  h_Jet0Pt_Jet0SDmass                                   ->Write();            
-  h_Jet0P_Jet0SDmass                                    ->Write();            
-  h_Jet0Y_Jet0Mass                                      ->Write();            
-  h_Jet0Y_Jet0Mass_Pt500to520                           ->Write();            
-                                 
-  h_Jet0Y_Jet0SDmass                                    ->Write();            
-  h_Jet0Y_Jet0SDmass_Pt500to520                         ->Write();            
-                                 
-  h_Jet0Y_Jet1Y                                         ->Write();            
-  h_Jet0Y_Jet1Y_Pt500to520                              ->Write();            
-  h_runNumber_DijetMass                                  ->Write();            
-  h_runNumber_HT                                         ->Write();            
-  h_runNumber_Jet0CHF                                    ->Write();            
-  h_runNumber_Jet0NHF                                    ->Write();            
-  h_runNumber_Jet0CM                                     ->Write();            
-  h_runNumber_Jet0NM                                     ->Write();            
-  h_runNumber_Jet0NEF                                    ->Write();            
-  h_runNumber_Jet0CEF                                    ->Write();            
-  h_runNumber_Jet0MF                                     ->Write();            
-  h_runNumber_Jet0Mult                                   ->Write();            
-  h_runNumber_NvtxGood                                   ->Write();            
-  h_runNumber_Jet0Pt                                     ->Write();            
-  h_runNumber_Jet0SDmass                                 ->Write();            
-                                 
-                                 
-  // MC study                                 
-  h_Jet0SDmass_matchedTop                               ->Write();                     
-  h_Jet0SDmass_matchedTop_topDist                       ->Write();                     
-  h_Jet0SDmass_outside                                  ->Write();                     
-  h_Jet0SDmass_bq                                       ->Write();                     
-  h_Jet0SDmass_qq                                       ->Write();                     
-                                 
-  h_Jet0SDmass_all                                      ->Write();                     
-  h_Jet0SDmass_in_b                                     ->Write();                     
-  h_Jet0SDmass_in_q                                     ->Write();                     
-  h_Jet0SDmass_in_qq                                    ->Write();                     
-  h_Jet0SDmass_in_qb                                    ->Write();                     
-  h_Jet0SDmass_in_qqb                                   ->Write();                     
-  h_Jet0SDmass_unmatched                                ->Write();                     
-  h_Jet0Tau32_all                                       ->Write();                     
-  h_Jet0Tau32_in_b                                      ->Write();                     
-  h_Jet0Tau32_in_q                                      ->Write();                     
-  h_Jet0Tau32_in_qq                                     ->Write();                     
-  h_Jet0Tau32_in_qb                                     ->Write();                     
-  h_Jet0Tau32_in_qqb                                    ->Write();                     
-  h_Jet0Tau32_unmatched                                 ->Write();                     
-  h_Jet0SDmass_Pt600_all                                ->Write();                     
-  h_Jet0SDmass_Pt600_in_b                               ->Write();                     
-  h_Jet0SDmass_Pt600_in_q                               ->Write();                     
-  h_Jet0SDmass_Pt600_in_qq                              ->Write();                     
-  h_Jet0SDmass_Pt600_in_qb                              ->Write();                     
-  h_Jet0SDmass_Pt600_in_qqb                             ->Write();                     
-  h_Jet0SDmass_Pt600_unmatched                          ->Write();                     
-  h_Jet0Tau32_Pt600_all                                 ->Write();                     
-  h_Jet0Tau32_Pt600_in_b                                ->Write();                     
-  h_Jet0Tau32_Pt600_in_q                                ->Write();                     
-  h_Jet0Tau32_Pt600_in_qq                               ->Write();                     
-  h_Jet0Tau32_Pt600_in_qb                               ->Write();                     
-  h_Jet0Tau32_Pt600_in_qqb                              ->Write();                     
-  h_Jet0Tau32_Pt600_unmatched                           ->Write();                     
-  h_Jet0SDmass_BtagM_all                                ->Write();                     
-  h_Jet0SDmass_BtagM_in_b                               ->Write();                     
-  h_Jet0SDmass_BtagM_in_q                               ->Write();                     
-  h_Jet0SDmass_BtagM_in_qq                              ->Write();                     
-  h_Jet0SDmass_BtagM_in_qb                              ->Write();                     
-  h_Jet0SDmass_BtagM_in_qqb                             ->Write();                     
-  h_Jet0SDmass_BtagM_unmatched                          ->Write();                     
-  h_Jet0SDmass_BtagT_all                                ->Write();                     
-  h_Jet0SDmass_BtagT_in_b                               ->Write();                     
-  h_Jet0SDmass_BtagT_in_q                               ->Write();                     
-  h_Jet0SDmass_BtagT_in_qq                              ->Write();                     
-  h_Jet0SDmass_BtagT_in_qb                              ->Write();                     
-  h_Jet0SDmass_BtagT_in_qqb                             ->Write();                     
-  h_Jet0SDmass_BtagT_unmatched                          ->Write();                     
-  h_Jet0Tau32_BtagM_all                                 ->Write();                     
-  h_Jet0Tau32_BtagM_in_b                                ->Write();                     
-  h_Jet0Tau32_BtagM_in_q                                ->Write();                     
-  h_Jet0Tau32_BtagM_in_qq                               ->Write();                     
-  h_Jet0Tau32_BtagM_in_qb                               ->Write();                     
-  h_Jet0Tau32_BtagM_in_qqb                              ->Write();                     
-  h_Jet0Tau32_BtagM_unmatched                           ->Write();                     
-  h_Jet0Tau32_MassTag_all                               ->Write();                     
-  h_Jet0Tau32_MassTag_in_b                              ->Write();                     
-  h_Jet0Tau32_MassTag_in_q                              ->Write();                     
-  h_Jet0Tau32_MassTag_in_qq                             ->Write();                     
-  h_Jet0Tau32_MassTag_in_qb                             ->Write();                     
-  h_Jet0Tau32_MassTag_in_qqb                            ->Write();                     
-  h_Jet0Tau32_MassTag_unmatched                         ->Write();                     
-  h_Jet0Tau32_BtagM_MassTag_all                         ->Write();                     
-  h_Jet0Tau32_BtagM_MassTag_in_b                        ->Write();                     
-  h_Jet0Tau32_BtagM_MassTag_in_q                        ->Write();                     
-  h_Jet0Tau32_BtagM_MassTag_in_qq                       ->Write();                     
-  h_Jet0Tau32_BtagM_MassTag_in_qb                       ->Write();                     
-  h_Jet0Tau32_BtagM_MassTag_in_qqb                      ->Write();                     
-  h_Jet0Tau32_BtagM_MassTag_unmatched                   ->Write();                     
-  h_Jet0SDmass_TauTag_all                               ->Write();                     
-  h_Jet0SDmass_TauTag_in_b                              ->Write();                     
-  h_Jet0SDmass_TauTag_in_q                              ->Write();                     
-  h_Jet0SDmass_TauTag_in_qq                             ->Write();                     
-  h_Jet0SDmass_TauTag_in_qb                             ->Write();                     
-  h_Jet0SDmass_TauTag_in_qqb                            ->Write();                     
-  h_Jet0SDmass_TauTag_unmatched                         ->Write();                     
-  h_Jet0SDmass_AntiTauTag_all                           ->Write();                     
-  h_Jet0SDmass_AntiTauTag_in_b                          ->Write();                     
-  h_Jet0SDmass_AntiTauTag_in_q                          ->Write();                     
-  h_Jet0SDmass_AntiTauTag_in_qq                         ->Write();                     
-  h_Jet0SDmass_AntiTauTag_in_qb                         ->Write();                     
-  h_Jet0SDmass_AntiTauTag_in_qqb                        ->Write();                     
-  h_Jet0SDmass_AntiTauTag_unmatched                     ->Write();                     
-  h_Jet0SDmass_BtagM_TauTag_all                         ->Write();                     
-  h_Jet0SDmass_BtagM_TauTag_in_b                        ->Write();                     
-  h_Jet0SDmass_BtagM_TauTag_in_q                        ->Write();                     
-  h_Jet0SDmass_BtagM_TauTag_in_qq                       ->Write();                     
-  h_Jet0SDmass_BtagM_TauTag_in_qb                       ->Write();                     
-  h_Jet0SDmass_BtagM_TauTag_in_qqb                      ->Write();                     
-  h_Jet0SDmass_BtagM_TauTag_unmatched                   ->Write();                     
-                                 
-  // double tagged                                 
-  h_2ttag_inclu_dRapIn_DijetMass                               ->Write();    
-  h_2ttag_0btag_dRapIn_DijetMass                               ->Write();    
-  h_2ttag_1btag_dRapIn_DijetMass                               ->Write();    
-  h_2ttag_2btag_dRapIn_DijetMass                               ->Write();    
-  h_2ttag_inclu_dRapLo_DijetMass                               ->Write();    
-  h_2ttag_0btag_dRapLo_DijetMass                               ->Write();    
-  h_2ttag_1btag_dRapLo_DijetMass                               ->Write();    
-  h_2ttag_2btag_dRapLo_DijetMass                               ->Write();    
-  h_2ttag_inclu_dRapHi_DijetMass                               ->Write();    
-  h_2ttag_0btag_dRapHi_DijetMass                               ->Write();    
-  h_2ttag_1btag_dRapHi_DijetMass                               ->Write();    
-  h_2ttag_2btag_dRapHi_DijetMass                               ->Write();    
-  h_2ttag_inclu_DeltaRap                                       ->Write();    
-  h_2ttag_0btag_DeltaRap                                       ->Write();    
-  h_2ttag_1btag_DeltaRap                                       ->Write();    
-  h_2ttag_2btag_DeltaRap                                       ->Write();    
-  h_2ttag_inclu_DeltaPhi                                       ->Write();    
-  h_2ttag_0btag_DeltaPhi                                       ->Write();    
-  h_2ttag_1btag_DeltaPhi                                       ->Write();    
-  h_2ttag_2btag_DeltaPhi                                       ->Write();    
-  h_2ttag_inclu_HT                                             ->Write();    
-  h_2ttag_0btag_HT                                             ->Write();    
-  h_2ttag_1btag_HT                                             ->Write();    
-  h_2ttag_2btag_HT                                             ->Write();    
-  h_2ttag_inclu_MET                                            ->Write();    
-  h_2ttag_0btag_MET                                            ->Write();    
-  h_2ttag_1btag_MET                                            ->Write();    
-  h_2ttag_2btag_MET                                            ->Write();    
-                                 
-  h_2ttag_inclu_METphi                                         ->Write();    
-  h_2ttag_0btag_METphi                                         ->Write();    
-  h_2ttag_1btag_METphi                                         ->Write();    
-  h_2ttag_2btag_METphi                                         ->Write();    
-                                 
-  h_2ttag_inclu_Nvtx                                           ->Write();    
-  h_2ttag_0btag_Nvtx                                           ->Write();    
-  h_2ttag_1btag_Nvtx                                           ->Write();    
-  h_2ttag_2btag_Nvtx                                           ->Write();    
-                                 
-                                 
-  h_2ttag_inclu_Jet0P                                          ->Write();        
-  h_2ttag_inclu_Jet0Pt                                         ->Write();        
-  h_2ttag_inclu_Jet0Phi                                        ->Write();        
-  h_2ttag_inclu_Jet0Rap                                        ->Write();        
-  h_2ttag_inclu_Jet0SDmass                                     ->Write();        
-  h_2ttag_inclu_Jet0SDmassCorrL23                              ->Write();        
-  h_2ttag_inclu_Jet0SDmassCorrL23Up                            ->Write();        
-  h_2ttag_inclu_Jet0Tau1                                       ->Write();        
-  h_2ttag_inclu_Jet0Tau2                                       ->Write();        
-  h_2ttag_inclu_Jet0Tau3                                       ->Write();        
-  h_2ttag_inclu_Jet0Tau4                                       ->Write();        
-  h_2ttag_inclu_Jet0SDmaxbdisc                                 ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet0pt                                ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet0mass                              ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet0tau1                              ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet0tau2                              ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet0tau3                              ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet0bdisc                             ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet1pt                                ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet1mass                              ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet1tau1                              ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet1tau2                              ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet1tau3                              ->Write();        
-  h_2ttag_inclu_Jet0SDsubjet1bdisc                             ->Write();        
-  h_2ttag_inclu_Jet0PuppiPt                                    ->Write();        
-  h_2ttag_inclu_Jet0PuppiMass                                  ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDpt                                  ->Write();        
-  h_2ttag_inclu_Jet0PuppiTau1                                  ->Write();        
-  h_2ttag_inclu_Jet0PuppiTau2                                  ->Write();        
-  h_2ttag_inclu_Jet0PuppiTau3                                  ->Write();        
-  h_2ttag_inclu_Jet0PuppiTau4                                  ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDmaxbdisc                            ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet0pt                           ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet0mass                         ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet0tau1                         ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet0tau2                         ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet0tau3                         ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet0bdisc                        ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet1pt                           ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet1mass                         ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet1tau1                         ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet1tau2                         ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet1tau3                         ->Write();        
-  h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc                        ->Write();        
-  h_2ttag_inclu_Jet0CHF                                        ->Write();        
-  h_2ttag_inclu_Jet0NHF                                        ->Write();        
-  h_2ttag_inclu_Jet0CM                                         ->Write();        
-  h_2ttag_inclu_Jet0NM                                         ->Write();        
-  h_2ttag_inclu_Jet0NEF                                        ->Write();        
-  h_2ttag_inclu_Jet0CEF                                        ->Write();        
-  h_2ttag_inclu_Jet0MF                                         ->Write();        
-  h_2ttag_inclu_Jet0Mult                                       ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet0pt                           ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet0mass                         ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet0tau1                         ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet0tau2                         ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet0tau3                         ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet0bdisc                        ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet1pt                           ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet1mass                         ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet1tau1                         ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet1tau2                         ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet1tau3                         ->Write();        
-  h_2ttag_2btag_Jet0PuppiSDsubjet1bdisc                        ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet0pt                           ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet0mass                         ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet0tau1                         ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet0tau2                         ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet0tau3                         ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet0bdisc                        ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet1pt                           ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet1mass                         ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet1tau1                         ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet1tau2                         ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet1tau3                         ->Write();        
-  h_2ttag_1btag_Jet0PuppiSDsubjet1bdisc                        ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet0pt                           ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet0mass                         ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet0tau1                         ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet0tau2                         ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet0tau3                         ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet0bdisc                        ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet1pt                           ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet1mass                         ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet1tau1                         ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet1tau2                         ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet1tau3                         ->Write();        
-  h_2ttag_0btag_Jet0PuppiSDsubjet1bdisc                        ->Write();        
-                                 
-  h_2btag_DijetMass                                            ->Write();                    
-  h_2btag_DeltaRap                                             ->Write();                    
-  h_2btag_jet0massSD                                           ->Write();                    
-  h_2btag_jet0tau32                                            ->Write();                    
-  h_2btag_jet0tau21                                            ->Write();                    
-  h_2btag_jet0tau1                                             ->Write();                    
-  h_2btag_jet0tau2                                             ->Write();                    
-  h_2btag_jet0tau3                                             ->Write();                    
-  h_2btag_jet0subjet0mass                                      ->Write();                    
-  h_2btag_jet0subjet1mass                                      ->Write();                    
-  h_2btag_jet0subjet0mass_jet0subjet1mass                      ->Write();                    
-  h_2btag_jet0subjet0bdisc_jet0subjet1bdisc                    ->Write();                    
-  h_2btag_jet1massSD                                           ->Write();                    
-  h_2btag_jet1tau32                                            ->Write();                    
-  h_2btag_jet1tau21                                            ->Write();                    
-  h_2btag_jet1tau1                                             ->Write();                    
-  h_2btag_jet1tau2                                             ->Write();                    
-  h_2btag_jet1tau3                                             ->Write();                    
-  h_2btag_jet1subjet0mass                                      ->Write();                    
-  h_2btag_jet1subjet1mass                                      ->Write();                    
-  h_2btag_jet1subjet0mass_jet1subjet1mass                      ->Write();                    
-  h_2btag_jet1subjet0bdisc_jet1subjet1bdisc                    ->Write();                    
-  h_2btag_jet1ttag_jet0massSD                                  ->Write();                    
-  h_2btag_jet1ttag_jet0tau32                                   ->Write();                    
-  h_2btag_jet1ttag_jet0tau21                                   ->Write();                    
-  h_2btag_jet1ttag_jet0tau1                                    ->Write();                    
-  h_2btag_jet1ttag_jet0tau2                                    ->Write();                    
-  h_2btag_jet1ttag_jet0tau3                                    ->Write();                    
-  h_2btag_jet1ttag_jet0subjet0mass                             ->Write();                    
-  h_2btag_jet1ttag_jet0subjet1mass                             ->Write();                    
-  h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass             ->Write();                    
-  h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc           ->Write();                    
-  h_2btag_jet0ttag_jet1massSD                                  ->Write();                    
-  h_2btag_jet0ttag_jet1tau32                                   ->Write();                    
-  h_2btag_jet0ttag_jet1tau21                                   ->Write();                    
-  h_2btag_jet0ttag_jet1tau1                                    ->Write();                    
-  h_2btag_jet0ttag_jet1tau2                                    ->Write();                    
-  h_2btag_jet0ttag_jet1tau3                                    ->Write();                    
-  h_2btag_jet0ttag_jet1subjet0mass                             ->Write();                    
-  h_2btag_jet0ttag_jet1subjet1mass                             ->Write();                    
-  h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass             ->Write();                    
-  h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc           ->Write();                    
-  h_2btag_jet1ttag_jet0tautag_jet0massSD                       ->Write();                    
-  h_2btag_jet1ttag_jet0masstag_jet0tau32                       ->Write();                    
-  h_2btag_jet1ttag_jet0masstag_jet0tau21                       ->Write();                    
-  h_2btag_jet1ttag_jet0masstag_jet0tau1                        ->Write();                    
-  h_2btag_jet1ttag_jet0masstag_jet0tau2                        ->Write();                    
-  h_2btag_jet1ttag_jet0masstag_jet0tau3                        ->Write();                    
-  h_2btag_jet0ttag_jet1tautag_jet1massSD                       ->Write();                    
-  h_2btag_jet0ttag_jet1masstag_jet1tau32                       ->Write();                    
-  h_2btag_jet0ttag_jet1masstag_jet1tau21                       ->Write();                    
-  h_2btag_jet0ttag_jet1masstag_jet1tau1                        ->Write();                    
-  h_2btag_jet0ttag_jet1masstag_jet1tau2                        ->Write();                    
-  h_2btag_jet0ttag_jet1masstag_jet1tau3                        ->Write();                    
-  h_topTag_jet0subjet0pt                                       ->Write();                    
-  h_topTag_jet0subjet1pt                                       ->Write();                    
-  h_topTag_jet0pt                                              ->Write();                    
-  h_topTag_jet0pt_jet0subjet0pt                                ->Write();                    
-  h_topTag_jet0pt_jet0subjet1pt                                ->Write();                    
-  h_topTag_jet0subjet0pt_jet0subjet1pt                         ->Write();                    
-  h_topTag_jet0subjet0mass_jet0subjet1mass                     ->Write();                    
-  h_topTag_jet0subjet0bdisc_jet0subjet1bdisc                   ->Write();                    
-  h_topTag_jet0subjet0mass                                     ->Write();                    
-  h_topTag_jet0subjet1mass                                     ->Write();                    
-  h_topTag_jet0subjet0bdisc                                    ->Write();                    
-  h_topTag_jet0subjet1bdisc                                    ->Write();                    
-  h_topTag_jet0maxBdisc                                        ->Write();                    
-  h_topTagbTag_jet0subjet0pt                                   ->Write();                    
-  h_topTagbTag_jet0subjet1pt                                   ->Write();                    
-  h_topTagbTag_jet0pt                                          ->Write();                    
-  h_topTagbTag_jet0pt_jet0subjet0pt                            ->Write();                    
-  h_topTagbTag_jet0pt_jet0subjet1pt                            ->Write();                    
-  h_topTagbTag_jet0subjet0pt_jet0subjet1pt                     ->Write();                    
-  h_topTagbTag_jet0subjet0mass_jet0subjet1mass                 ->Write();                    
-  h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc               ->Write();                    
-  h_topTagbTag_jet0subjet0mass                                 ->Write();                    
-  h_topTagbTag_jet0subjet1mass                                 ->Write();                    
-  h_topTagbTag_jet0subjet0bdisc                                ->Write();                    
-  h_topTagbTag_jet0subjet1bdisc                                ->Write();                    
-  h_topTagbTag_jet0maxBdisc                                    ->Write();                    
-                                 
-                                 
-  // DDT tests                                 
-  h_jet0_rhoRatio                                              ->Write();      
-  h_jet0_rhoRatioPrime                                         ->Write();      
-  h_jet0_rhoRatioPmag                                          ->Write();      
-  h_jet0_rhoRatioPmagPrime                                     ->Write();      
-  h_jet0_rhoRatioPuppi                                         ->Write();      
-  h_jet0_rhoRatioPuppiPrime                                    ->Write();      
-  h_jet0_rhoRatioPuppiPmag                                     ->Write();      
-  h_jet0_rhoRatioPuppiPmagPrime                                ->Write();      
-  h_jet1_rhoRatio                                              ->Write();      
-  h_jet1_rhoRatioPrime                                         ->Write();      
-  h_jet1_rhoRatioPmag                                          ->Write();      
-  h_jet1_rhoRatioPmagPrime                                     ->Write();      
-  h_jet1_rhoRatioPuppi                                         ->Write();      
-  h_jet1_rhoRatioPuppiPrime                                    ->Write();      
-  h_jet1_rhoRatioPuppiPmag                                     ->Write();      
-  h_jet1_rhoRatioPuppiPmagPrime                                ->Write();      
-  h_jet0_tau32_rhoRatio                                ->Write();              
-  h_jet0_tau32_rhoRatioPrime                           ->Write();              
-  h_jet0_tau32_rhoRatioPmag                            ->Write();              
-  h_jet0_tau32_rhoRatioPmagPrime                       ->Write();              
-  h_jet0_tau32_rhoRatioPuppi                           ->Write();              
-  h_jet0_tau32_rhoRatioPuppiPrime                      ->Write();              
-  h_jet0_tau32_rhoRatioPuppiPmag                       ->Write();              
-  h_jet0_tau32_rhoRatioPuppiPmagPrime                  ->Write();              
-  h_jet1_tau32_rhoRatio                                ->Write();              
-  h_jet1_tau32_rhoRatioPrime                           ->Write();              
-  h_jet1_tau32_rhoRatioPmag                            ->Write();              
-  h_jet1_tau32_rhoRatioPmagPrime                       ->Write();              
-  h_jet1_tau32_rhoRatioPuppi                           ->Write();              
-  h_jet1_tau32_rhoRatioPuppiPrime                      ->Write();              
-  h_jet1_tau32_rhoRatioPuppiPmag                       ->Write();              
-  h_jet1_tau32_rhoRatioPuppiPmagPrime                  ->Write();              
-  h_jet0_tau21_rhoRatio                                ->Write();              
-  h_jet0_tau21_rhoRatioPrime                           ->Write();              
-  h_jet0_tau21_rhoRatioPmag                            ->Write();              
-  h_jet0_tau21_rhoRatioPmagPrime                       ->Write();              
-  h_jet0_tau21_rhoRatioPuppi                           ->Write();              
-  h_jet0_tau21_rhoRatioPuppiPrime                      ->Write();              
-  h_jet0_tau21_rhoRatioPuppiPmag                       ->Write();              
-  h_jet0_tau21_rhoRatioPuppiPmagPrime                  ->Write();              
-  h_jet1_tau21_rhoRatio                                ->Write();              
-  h_jet1_tau21_rhoRatioPrime                           ->Write();              
-  h_jet1_tau21_rhoRatioPmag                            ->Write();              
-  h_jet1_tau21_rhoRatioPmagPrime                       ->Write();              
-  h_jet1_tau21_rhoRatioPuppi                           ->Write();              
-  h_jet1_tau21_rhoRatioPuppiPrime                      ->Write();              
-  h_jet1_tau21_rhoRatioPuppiPmag                       ->Write();              
-  h_jet1_tau21_rhoRatioPuppiPmagPrime                  ->Write();              
-  h_jet0_tau42_rhoRatio                                ->Write();              
-  h_jet0_tau42_rhoRatioPrime                           ->Write();              
-  h_jet0_tau42_rhoRatioPmag                            ->Write();              
-  h_jet0_tau42_rhoRatioPmagPrime                       ->Write();              
-  h_jet0_tau42_rhoRatioPuppi                           ->Write();              
-  h_jet0_tau42_rhoRatioPuppiPrime                      ->Write();              
-  h_jet0_tau42_rhoRatioPuppiPmag                       ->Write();              
-  h_jet0_tau42_rhoRatioPuppiPmagPrime                  ->Write();              
-  h_jet1_tau42_rhoRatio                                ->Write();              
-  h_jet1_tau42_rhoRatioPrime                           ->Write();              
-  h_jet1_tau42_rhoRatioPmag                            ->Write();              
-  h_jet1_tau42_rhoRatioPmagPrime                       ->Write();              
-  h_jet1_tau42_rhoRatioPuppi                           ->Write();              
-  h_jet1_tau42_rhoRatioPuppiPrime                      ->Write();              
-  h_jet1_tau42_rhoRatioPuppiPmag                       ->Write();              
-  h_jet1_tau42_rhoRatioPuppiPmagPrime                  ->Write();              
-                                 
-  //Hadronic mtt selection and background estimaion            ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapHi_inclusive                    ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapHi_0btag                        ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapHi_1btag                        ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapHi_2btag                        ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapLo_inclusive                    ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapLo_0btag                        ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapLo_1btag                        ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapLo_2btag                        ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapIn_inclusive                    ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapIn_0btag                        ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapIn_1btag                        ->Write();                  
-  h_mttMass_tagMassSDTau32_dRapIn_2btag                        ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapHi_inclusive                    ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapHi_0btag                        ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapHi_1btag                        ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapHi_2btag                        ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapLo_inclusive                    ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapLo_0btag                        ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapLo_1btag                        ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapLo_2btag                        ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapIn_inclusive                    ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapIn_0btag                        ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapIn_1btag                        ->Write();                  
-  h_bkgdEst_tagMassSDTau32_dRapIn_2btag                        ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapHi_inclusive            ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapHi_0btag                ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapHi_1btag                ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapHi_2btag                ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_inclusive            ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_0btag                ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_1btag                ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag                ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_inclusive            ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_0btag                ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_1btag                ->Write();                  
-  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_2btag                ->Write();                  
-                                                                                          
-                                                             
-  Out->Close();
-}
+    h_CutFlow                                                     ->Write();                   
+    h_EventWeight                                                 ->Write();                   
+    h_BtagCategoriesPreSF                                         ->Write();                   
+    h_BtagCategoriesPostSF                                        ->Write();                   
 
 
+    // event                                                      ->Write();   
+    h_DijetMass_dRapIn                                            ->Write();                   
+    h_DijetMass_dRapLo                                            ->Write();                   
+    h_DijetMass_dRapHi                                            ->Write();                   
+    h_DeltaRap                                                    ->Write();                   
+    h_DeltaPhi                                                    ->Write();                   
+    h_HT                                                          ->Write();                   
+    h_MET                                                         ->Write();                   
+    h_METphi                                                      ->Write();                   
+    h_Nvtx                                                        ->Write();                   
+    // Jet0                                 
+    h_Jet0P                                                       ->Write();                   
+    h_Jet0Pt                                                      ->Write();                   
+    h_Jet0Phi                                                     ->Write();                   
+    h_Jet0Rap                                                     ->Write();                   
+    h_Jet0sdmass                                                  ->Write();                   
+    h_Jet0Tau1                                                    ->Write();                   
+    h_Jet0Tau2                                                    ->Write();                   
+    h_Jet0Tau3                                                    ->Write();                   
+    h_Jet0Tau4                                                    ->Write();                   
+    h_Jet0SDmaxbdisc                                              ->Write();                   
+    h_Jet0SDsubjet0pt                                             ->Write();                   
+    h_Jet0SDsubjet0mass                                           ->Write();                   
+    h_Jet0SDsubjet0tau1                                           ->Write();                   
+    h_Jet0SDsubjet0tau2                                           ->Write();                   
+    h_Jet0SDsubjet0tau3                                           ->Write();                   
+    h_Jet0SDsubjet0bdisc                                          ->Write();                   
+    h_Jet0SDsubjet1pt                                             ->Write();                   
+    h_Jet0SDsubjet1mass                                           ->Write();                   
+    h_Jet0SDsubjet1tau1                                           ->Write();                   
+    h_Jet0SDsubjet1tau2                                           ->Write();                   
+    h_Jet0SDsubjet1tau3                                           ->Write();                   
+    h_Jet0SDsubjet1bdisc                                          ->Write();                   
+    h_Jet0PuppiPt                                                 ->Write();                   
+    h_Jet0PuppiMass                                               ->Write();                   
+    h_Jet0PuppiSDpt                                               ->Write();                   
+    h_Jet0PuppiTau1                                               ->Write();                   
+    h_Jet0PuppiTau2                                               ->Write();                   
+    h_Jet0PuppiTau3                                               ->Write();                   
+    h_Jet0PuppiTau4                                               ->Write();                   
+    h_Jet0PuppiSDmaxbdisc                                         ->Write();                   
+    h_Jet0PuppiSDsubjet0pt                                        ->Write();                   
+    h_Jet0PuppiSDsubjet0mass                                      ->Write();                   
+    h_Jet0PuppiSDsubjet0tau1                                      ->Write();                   
+    h_Jet0PuppiSDsubjet0tau2                                      ->Write();                   
+    h_Jet0PuppiSDsubjet0tau3                                      ->Write();                   
+    h_Jet0PuppiSDsubjet0bdisc                                     ->Write();                   
+    h_Jet0PuppiSDsubjet1pt                                        ->Write();                   
+    h_Jet0PuppiSDsubjet1mass                                      ->Write();                   
+    h_Jet0PuppiSDsubjet1tau1                                      ->Write();                   
+    h_Jet0PuppiSDsubjet1tau2                                      ->Write();                   
+    h_Jet0PuppiSDsubjet1tau3                                      ->Write();                   
+    h_Jet0PuppiSDsubjet1bdisc                                     ->Write();                   
+    h_Jet0CHF                                                     ->Write();                   
+    h_Jet0NHF                                                     ->Write();                   
+    h_Jet0CM                                                      ->Write();                   
+    h_Jet0NM                                                      ->Write();                   
+    h_Jet0NEF                                                     ->Write();                   
+    h_Jet0CEF                                                     ->Write();                   
+    h_Jet0MF                                                      ->Write();                   
+    h_Jet0Mult                                                    ->Write();                   
+    h_Jet0PuppiCHF                                                ->Write();                   
+    h_Jet0PuppiNHF                                                ->Write();                   
+    h_Jet0PuppiCM                                                 ->Write();                   
+    h_Jet0PuppiNM                                                 ->Write();                   
+    h_Jet0PuppiNEF                                                ->Write();                   
+    h_Jet0PuppiCEF                                                ->Write();                   
+    h_Jet0PuppiMF                                                 ->Write();                   
+    h_Jet0PuppiMult                                               ->Write();                   
+    h_Jet1Pt                                                      ->Write();                   
+    h_Jet1Rap                                                     ->Write();                   
+    // N-1 histograms                                 
+    h_Jet0SDmass                                                  ->Write();                   
+    h_Jet0SDmass_JetTag_b                                         ->Write();                   
+    h_Jet0SDmass_JetTag_tau32                                     ->Write();                   
+    h_Jet0SDmass_JetTag_b_tau32                                   ->Write();                   
+    h_Jet0SDmass_OppositeJetTag_t_b                               ->Write();                   
+    h_Jet0SDmass_OppositeJetTag_t_b_JetTag_b                      ->Write();                   
+    h_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32                ->Write();                   
+    h_Jet1SDmass                                                  ->Write();                   
+    h_Jet1SDmass_JetTag_b                                         ->Write();                   
+    h_Jet1SDmass_JetTag_tau32                                     ->Write();                   
+    h_Jet1SDmass_JetTag_b_tau32                                   ->Write();                   
+    h_Jet1SDmass_OppositeJetTag_t_b                               ->Write();                   
+    h_Jet1SDmass_OppositeJetTag_t_b_JetTag_b                      ->Write();                   
+    h_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32                ->Write();                   
+    h_JetSDmass                                                   ->Write();                   
+    h_JetSDmass_JetTag_b                                          ->Write();                   
+    h_JetSDmass_JetTag_tau32                                      ->Write();                   
+    h_JetSDmass_JetTag_b_tau32                                    ->Write();                   
+    h_JetSDmass_OppositeJetTag_t_b                                ->Write();                   
+    h_JetSDmass_OppositeJetTag_t_b_JetTag_b                       ->Write();                   
+    h_JetSDmass_OppositeJetTag_t_b_JetTag_b_tau32                 ->Write();                   
+    h_Jet0Tau32                                                   ->Write();                   
+    h_Jet0Tau32_JetTag_b                                          ->Write();                   
+    h_Jet0Tau32_JetTag_mass                                       ->Write();                   
+    h_Jet0Tau32_JetTag_b_mass                                     ->Write();                   
+    h_Jet0Tau32_OppositeJetTag_t_b                                ->Write();                   
+    h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b                       ->Write();                   
+    h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b_mass                  ->Write();                   
+    h_Jet1Tau32                                                   ->Write();                   
+    h_Jet1Tau32_JetTag_b                                          ->Write();                   
+    h_Jet1Tau32_JetTag_mass                                       ->Write();                   
+    h_Jet1Tau32_JetTag_b_mass                                     ->Write();                   
+    h_Jet1Tau32_OppositeJetTag_t_b                                ->Write();                   
+    h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b                       ->Write();                   
+    h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b_mass                  ->Write();                   
+    h_JetTau32                                                    ->Write();                   
+    h_JetTau32_JetTag_b                                           ->Write();                   
+    h_JetTau32_JetTag_mass                                        ->Write();                   
+    h_JetTau32_JetTag_b_mass                                      ->Write();                   
+    h_JetTau32_OppositeJetTag_t_b                                 ->Write();                   
+    h_JetTau32_OppositeJetTag_t_b_JetTag_b                        ->Write();                   
+    h_JetTau32_OppositeJetTag_t_b_JetTag_b_mass                   ->Write();                   
+                                   
+    // 2D                                 
+    h_Jet0Pt_Jet0Mass                                     ->Write();            
+    h_Jet0P_Jet0Mass                                      ->Write();            
+    h_Jet0Pt_Jet0SDmass                                   ->Write();            
+    h_Jet0P_Jet0SDmass                                    ->Write();            
+    h_Jet0Y_Jet0Mass                                      ->Write();            
+    h_Jet0Y_Jet0Mass_Pt500to520                           ->Write();            
+                                   
+    h_Jet0Y_Jet0SDmass                                    ->Write();            
+    h_Jet0Y_Jet0SDmass_Pt500to520                         ->Write();            
+                                   
+    h_Jet0Y_Jet1Y                                         ->Write();            
+    h_Jet0Y_Jet1Y_Pt500to520                              ->Write();            
+    h_runNumber_DijetMass                                  ->Write();            
+    h_runNumber_HT                                         ->Write();            
+    h_runNumber_Jet0CHF                                    ->Write();            
+    h_runNumber_Jet0NHF                                    ->Write();            
+    h_runNumber_Jet0CM                                     ->Write();            
+    h_runNumber_Jet0NM                                     ->Write();            
+    h_runNumber_Jet0NEF                                    ->Write();            
+    h_runNumber_Jet0CEF                                    ->Write();            
+    h_runNumber_Jet0MF                                     ->Write();            
+    h_runNumber_Jet0Mult                                   ->Write();            
+    h_runNumber_NvtxGood                                   ->Write();            
+    h_runNumber_Jet0Pt                                     ->Write();            
+    h_runNumber_Jet0SDmass                                 ->Write();            
+                                   
+                                   
+    // MC study                                 
+    h_Jet0SDmass_matchedTop                               ->Write();                     
+    h_Jet0SDmass_matchedTop_topDist                       ->Write();                     
+    h_Jet0SDmass_outside                                  ->Write();                     
+    h_Jet0SDmass_bq                                       ->Write();                     
+    h_Jet0SDmass_qq                                       ->Write();                     
+                                   
+    h_Jet0SDmass_all                                      ->Write();                     
+    h_Jet0SDmass_in_b                                     ->Write();                     
+    h_Jet0SDmass_in_q                                     ->Write();                     
+    h_Jet0SDmass_in_qq                                    ->Write();                     
+    h_Jet0SDmass_in_qb                                    ->Write();                     
+    h_Jet0SDmass_in_qqb                                   ->Write();                     
+    h_Jet0SDmass_unmatched                                ->Write();                     
+    h_Jet0Tau32_all                                       ->Write();                     
+    h_Jet0Tau32_in_b                                      ->Write();                     
+    h_Jet0Tau32_in_q                                      ->Write();                     
+    h_Jet0Tau32_in_qq                                     ->Write();                     
+    h_Jet0Tau32_in_qb                                     ->Write();                     
+    h_Jet0Tau32_in_qqb                                    ->Write();                     
+    h_Jet0Tau32_unmatched                                 ->Write();                     
+    h_Jet0SDmass_Pt600_all                                ->Write();                     
+    h_Jet0SDmass_Pt600_in_b                               ->Write();                     
+    h_Jet0SDmass_Pt600_in_q                               ->Write();                     
+    h_Jet0SDmass_Pt600_in_qq                              ->Write();                     
+    h_Jet0SDmass_Pt600_in_qb                              ->Write();                     
+    h_Jet0SDmass_Pt600_in_qqb                             ->Write();                     
+    h_Jet0SDmass_Pt600_unmatched                          ->Write();                     
+    h_Jet0Tau32_Pt600_all                                 ->Write();                     
+    h_Jet0Tau32_Pt600_in_b                                ->Write();                     
+    h_Jet0Tau32_Pt600_in_q                                ->Write();                     
+    h_Jet0Tau32_Pt600_in_qq                               ->Write();                     
+    h_Jet0Tau32_Pt600_in_qb                               ->Write();                     
+    h_Jet0Tau32_Pt600_in_qqb                              ->Write();                     
+    h_Jet0Tau32_Pt600_unmatched                           ->Write();                     
+    h_Jet0SDmass_BtagM_all                                ->Write();                     
+    h_Jet0SDmass_BtagM_in_b                               ->Write();                     
+    h_Jet0SDmass_BtagM_in_q                               ->Write();                     
+    h_Jet0SDmass_BtagM_in_qq                              ->Write();                     
+    h_Jet0SDmass_BtagM_in_qb                              ->Write();                     
+    h_Jet0SDmass_BtagM_in_qqb                             ->Write();                     
+    h_Jet0SDmass_BtagM_unmatched                          ->Write();                     
+    h_Jet0SDmass_BtagT_all                                ->Write();                     
+    h_Jet0SDmass_BtagT_in_b                               ->Write();                     
+    h_Jet0SDmass_BtagT_in_q                               ->Write();                     
+    h_Jet0SDmass_BtagT_in_qq                              ->Write();                     
+    h_Jet0SDmass_BtagT_in_qb                              ->Write();                     
+    h_Jet0SDmass_BtagT_in_qqb                             ->Write();                     
+    h_Jet0SDmass_BtagT_unmatched                          ->Write();                     
+    h_Jet0Tau32_BtagM_all                                 ->Write();                     
+    h_Jet0Tau32_BtagM_in_b                                ->Write();                     
+    h_Jet0Tau32_BtagM_in_q                                ->Write();                     
+    h_Jet0Tau32_BtagM_in_qq                               ->Write();                     
+    h_Jet0Tau32_BtagM_in_qb                               ->Write();                     
+    h_Jet0Tau32_BtagM_in_qqb                              ->Write();                     
+    h_Jet0Tau32_BtagM_unmatched                           ->Write();                     
+    h_Jet0Tau32_MassTag_all                               ->Write();                     
+    h_Jet0Tau32_MassTag_in_b                              ->Write();                     
+    h_Jet0Tau32_MassTag_in_q                              ->Write();                     
+    h_Jet0Tau32_MassTag_in_qq                             ->Write();                     
+    h_Jet0Tau32_MassTag_in_qb                             ->Write();                     
+    h_Jet0Tau32_MassTag_in_qqb                            ->Write();                     
+    h_Jet0Tau32_MassTag_unmatched                         ->Write();                     
+    h_Jet0Tau32_BtagM_MassTag_all                         ->Write();                     
+    h_Jet0Tau32_BtagM_MassTag_in_b                        ->Write();                     
+    h_Jet0Tau32_BtagM_MassTag_in_q                        ->Write();                     
+    h_Jet0Tau32_BtagM_MassTag_in_qq                       ->Write();                     
+    h_Jet0Tau32_BtagM_MassTag_in_qb                       ->Write();                     
+    h_Jet0Tau32_BtagM_MassTag_in_qqb                      ->Write();                     
+    h_Jet0Tau32_BtagM_MassTag_unmatched                   ->Write();                     
+    h_Jet0SDmass_TauTag_all                               ->Write();                     
+    h_Jet0SDmass_TauTag_in_b                              ->Write();                     
+    h_Jet0SDmass_TauTag_in_q                              ->Write();                     
+    h_Jet0SDmass_TauTag_in_qq                             ->Write();                     
+    h_Jet0SDmass_TauTag_in_qb                             ->Write();                     
+    h_Jet0SDmass_TauTag_in_qqb                            ->Write();                     
+    h_Jet0SDmass_TauTag_unmatched                         ->Write();                     
+    h_Jet0SDmass_AntiTauTag_all                           ->Write();                     
+    h_Jet0SDmass_AntiTauTag_in_b                          ->Write();                     
+    h_Jet0SDmass_AntiTauTag_in_q                          ->Write();                     
+    h_Jet0SDmass_AntiTauTag_in_qq                         ->Write();                     
+    h_Jet0SDmass_AntiTauTag_in_qb                         ->Write();                     
+    h_Jet0SDmass_AntiTauTag_in_qqb                        ->Write();                     
+    h_Jet0SDmass_AntiTauTag_unmatched                     ->Write();                     
+    h_Jet0SDmass_BtagM_TauTag_all                         ->Write();                     
+    h_Jet0SDmass_BtagM_TauTag_in_b                        ->Write();                     
+    h_Jet0SDmass_BtagM_TauTag_in_q                        ->Write();                     
+    h_Jet0SDmass_BtagM_TauTag_in_qq                       ->Write();                     
+    h_Jet0SDmass_BtagM_TauTag_in_qb                       ->Write();                     
+    h_Jet0SDmass_BtagM_TauTag_in_qqb                      ->Write();                     
+    h_Jet0SDmass_BtagM_TauTag_unmatched                   ->Write();                     
+                                   
+    // double tagged                                 
+    h_2ttag_inclu_dRapIn_DijetMass                               ->Write();    
+    h_2ttag_0btag_dRapIn_DijetMass                               ->Write();    
+    h_2ttag_1btag_dRapIn_DijetMass                               ->Write();    
+    h_2ttag_2btag_dRapIn_DijetMass                               ->Write();    
+    h_2ttag_inclu_dRapLo_DijetMass                               ->Write();    
+    h_2ttag_0btag_dRapLo_DijetMass                               ->Write();    
+    h_2ttag_1btag_dRapLo_DijetMass                               ->Write();    
+    h_2ttag_2btag_dRapLo_DijetMass                               ->Write();    
+    h_2ttag_inclu_dRapHi_DijetMass                               ->Write();    
+    h_2ttag_0btag_dRapHi_DijetMass                               ->Write();    
+    h_2ttag_1btag_dRapHi_DijetMass                               ->Write();    
+    h_2ttag_2btag_dRapHi_DijetMass                               ->Write();    
+    h_2ttag_inclu_DeltaRap                                       ->Write();    
+    h_2ttag_0btag_DeltaRap                                       ->Write();    
+    h_2ttag_1btag_DeltaRap                                       ->Write();    
+    h_2ttag_2btag_DeltaRap                                       ->Write();    
+    h_2ttag_inclu_DeltaPhi                                       ->Write();    
+    h_2ttag_0btag_DeltaPhi                                       ->Write();    
+    h_2ttag_1btag_DeltaPhi                                       ->Write();    
+    h_2ttag_2btag_DeltaPhi                                       ->Write();    
+    h_2ttag_inclu_HT                                             ->Write();    
+    h_2ttag_0btag_HT                                             ->Write();    
+    h_2ttag_1btag_HT                                             ->Write();    
+    h_2ttag_2btag_HT                                             ->Write();    
+    h_2ttag_inclu_MET                                            ->Write();    
+    h_2ttag_0btag_MET                                            ->Write();    
+    h_2ttag_1btag_MET                                            ->Write();    
+    h_2ttag_2btag_MET                                            ->Write();    
+                                   
+    h_2ttag_inclu_METphi                                         ->Write();    
+    h_2ttag_0btag_METphi                                         ->Write();    
+    h_2ttag_1btag_METphi                                         ->Write();    
+    h_2ttag_2btag_METphi                                         ->Write();    
+                                   
+    h_2ttag_inclu_Nvtx                                           ->Write();    
+    h_2ttag_0btag_Nvtx                                           ->Write();    
+    h_2ttag_1btag_Nvtx                                           ->Write();    
+    h_2ttag_2btag_Nvtx                                           ->Write();    
+                                   
+                                   
+    h_2ttag_inclu_Jet0P                                          ->Write();        
+    h_2ttag_inclu_Jet0Pt                                         ->Write();        
+    h_2ttag_inclu_Jet0Phi                                        ->Write();        
+    h_2ttag_inclu_Jet0Rap                                        ->Write();        
+    h_2ttag_inclu_Jet0SDmass                                     ->Write();        
+    h_2ttag_inclu_Jet0SDmassCorrL23                              ->Write();        
+    h_2ttag_inclu_Jet0SDmassCorrL23Up                            ->Write();        
+    h_2ttag_inclu_Jet0Tau1                                       ->Write();        
+    h_2ttag_inclu_Jet0Tau2                                       ->Write();        
+    h_2ttag_inclu_Jet0Tau3                                       ->Write();        
+    h_2ttag_inclu_Jet0Tau4                                       ->Write();        
+    h_2ttag_inclu_Jet0SDmaxbdisc                                 ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet0pt                                ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet0mass                              ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet0tau1                              ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet0tau2                              ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet0tau3                              ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet0bdisc                             ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet1pt                                ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet1mass                              ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet1tau1                              ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet1tau2                              ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet1tau3                              ->Write();        
+    h_2ttag_inclu_Jet0SDsubjet1bdisc                             ->Write();        
+    h_2ttag_inclu_Jet0PuppiPt                                    ->Write();        
+    h_2ttag_inclu_Jet0PuppiMass                                  ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDpt                                  ->Write();        
+    h_2ttag_inclu_Jet0PuppiTau1                                  ->Write();        
+    h_2ttag_inclu_Jet0PuppiTau2                                  ->Write();        
+    h_2ttag_inclu_Jet0PuppiTau3                                  ->Write();        
+    h_2ttag_inclu_Jet0PuppiTau4                                  ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDmaxbdisc                            ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet0pt                           ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet0mass                         ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet0tau1                         ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet0tau2                         ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet0tau3                         ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet0bdisc                        ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet1pt                           ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet1mass                         ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet1tau1                         ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet1tau2                         ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet1tau3                         ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc                        ->Write();        
+    h_2ttag_inclu_Jet0CHF                                        ->Write();        
+    h_2ttag_inclu_Jet0NHF                                        ->Write();        
+    h_2ttag_inclu_Jet0CM                                         ->Write();        
+    h_2ttag_inclu_Jet0NM                                         ->Write();        
+    h_2ttag_inclu_Jet0NEF                                        ->Write();        
+    h_2ttag_inclu_Jet0CEF                                        ->Write();        
+    h_2ttag_inclu_Jet0MF                                         ->Write();        
+    h_2ttag_inclu_Jet0Mult                                       ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet0pt                           ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet0mass                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet0tau1                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet0tau2                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet0tau3                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet0bdisc                        ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet1pt                           ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet1mass                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet1tau1                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet1tau2                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet1tau3                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet1bdisc                        ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet0pt                           ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet0mass                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet0tau1                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet0tau2                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet0tau3                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet0bdisc                        ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet1pt                           ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet1mass                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet1tau1                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet1tau2                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet1tau3                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet1bdisc                        ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet0pt                           ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet0mass                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet0tau1                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet0tau2                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet0tau3                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet0bdisc                        ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet1pt                           ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet1mass                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet1tau1                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet1tau2                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet1tau3                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet1bdisc                        ->Write();        
+                                   
+    h_2btag_DijetMass                                            ->Write();                    
+    h_2btag_DeltaRap                                             ->Write();                    
+    h_2btag_jet0massSD                                           ->Write();                    
+    h_2btag_jet0tau32                                            ->Write();                    
+    h_2btag_jet0tau21                                            ->Write();                    
+    h_2btag_jet0tau1                                             ->Write();                    
+    h_2btag_jet0tau2                                             ->Write();                    
+    h_2btag_jet0tau3                                             ->Write();                    
+    h_2btag_jet0subjet0mass                                      ->Write();                    
+    h_2btag_jet0subjet1mass                                      ->Write();                    
+    h_2btag_jet0subjet0mass_jet0subjet1mass                      ->Write();                    
+    h_2btag_jet0subjet0bdisc_jet0subjet1bdisc                    ->Write();                    
+    h_2btag_jet1massSD                                           ->Write();                    
+    h_2btag_jet1tau32                                            ->Write();                    
+    h_2btag_jet1tau21                                            ->Write();                    
+    h_2btag_jet1tau1                                             ->Write();                    
+    h_2btag_jet1tau2                                             ->Write();                    
+    h_2btag_jet1tau3                                             ->Write();                    
+    h_2btag_jet1subjet0mass                                      ->Write();                    
+    h_2btag_jet1subjet1mass                                      ->Write();                    
+    h_2btag_jet1subjet0mass_jet1subjet1mass                      ->Write();                    
+    h_2btag_jet1subjet0bdisc_jet1subjet1bdisc                    ->Write();                    
+    h_2btag_jet1ttag_jet0massSD                                  ->Write();                    
+    h_2btag_jet1ttag_jet0tau32                                   ->Write();                    
+    h_2btag_jet1ttag_jet0tau21                                   ->Write();                    
+    h_2btag_jet1ttag_jet0tau1                                    ->Write();                    
+    h_2btag_jet1ttag_jet0tau2                                    ->Write();                    
+    h_2btag_jet1ttag_jet0tau3                                    ->Write();                    
+    h_2btag_jet1ttag_jet0subjet0mass                             ->Write();                    
+    h_2btag_jet1ttag_jet0subjet1mass                             ->Write();                    
+    h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass             ->Write();                    
+    h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc           ->Write();                    
+    h_2btag_jet0ttag_jet1massSD                                  ->Write();                    
+    h_2btag_jet0ttag_jet1tau32                                   ->Write();                    
+    h_2btag_jet0ttag_jet1tau21                                   ->Write();                    
+    h_2btag_jet0ttag_jet1tau1                                    ->Write();                    
+    h_2btag_jet0ttag_jet1tau2                                    ->Write();                    
+    h_2btag_jet0ttag_jet1tau3                                    ->Write();                    
+    h_2btag_jet0ttag_jet1subjet0mass                             ->Write();                    
+    h_2btag_jet0ttag_jet1subjet1mass                             ->Write();                    
+    h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass             ->Write();                    
+    h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc           ->Write();                    
+    h_2btag_jet1ttag_jet0tautag_jet0massSD                       ->Write();                    
+    h_2btag_jet1ttag_jet0masstag_jet0tau32                       ->Write();                    
+    h_2btag_jet1ttag_jet0masstag_jet0tau21                       ->Write();                    
+    h_2btag_jet1ttag_jet0masstag_jet0tau1                        ->Write();                    
+    h_2btag_jet1ttag_jet0masstag_jet0tau2                        ->Write();                    
+    h_2btag_jet1ttag_jet0masstag_jet0tau3                        ->Write();                    
+    h_2btag_jet0ttag_jet1tautag_jet1massSD                       ->Write();                    
+    h_2btag_jet0ttag_jet1masstag_jet1tau32                       ->Write();                    
+    h_2btag_jet0ttag_jet1masstag_jet1tau21                       ->Write();                    
+    h_2btag_jet0ttag_jet1masstag_jet1tau1                        ->Write();                    
+    h_2btag_jet0ttag_jet1masstag_jet1tau2                        ->Write();                    
+    h_2btag_jet0ttag_jet1masstag_jet1tau3                        ->Write();                    
+    h_topTag_jet0subjet0pt                                       ->Write();                    
+    h_topTag_jet0subjet1pt                                       ->Write();                    
+    h_topTag_jet0pt                                              ->Write();                    
+    h_topTag_jet0pt_jet0subjet0pt                                ->Write();                    
+    h_topTag_jet0pt_jet0subjet1pt                                ->Write();                    
+    h_topTag_jet0subjet0pt_jet0subjet1pt                         ->Write();                    
+    h_topTag_jet0subjet0mass_jet0subjet1mass                     ->Write();                    
+    h_topTag_jet0subjet0bdisc_jet0subjet1bdisc                   ->Write();                    
+    h_topTag_jet0subjet0mass                                     ->Write();                    
+    h_topTag_jet0subjet1mass                                     ->Write();                    
+    h_topTag_jet0subjet0bdisc                                    ->Write();                    
+    h_topTag_jet0subjet1bdisc                                    ->Write();                    
+    h_topTag_jet0maxBdisc                                        ->Write();                    
+    h_topTagbTag_jet0subjet0pt                                   ->Write();                    
+    h_topTagbTag_jet0subjet1pt                                   ->Write();                    
+    h_topTagbTag_jet0pt                                          ->Write();                    
+    h_topTagbTag_jet0pt_jet0subjet0pt                            ->Write();                    
+    h_topTagbTag_jet0pt_jet0subjet1pt                            ->Write();                    
+    h_topTagbTag_jet0subjet0pt_jet0subjet1pt                     ->Write();                    
+    h_topTagbTag_jet0subjet0mass_jet0subjet1mass                 ->Write();                    
+    h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc               ->Write();                    
+    h_topTagbTag_jet0subjet0mass                                 ->Write();                    
+    h_topTagbTag_jet0subjet1mass                                 ->Write();                    
+    h_topTagbTag_jet0subjet0bdisc                                ->Write();                    
+    h_topTagbTag_jet0subjet1bdisc                                ->Write();                    
+    h_topTagbTag_jet0maxBdisc                                    ->Write();                    
+                                   
+                                   
+    // DDT tests                                 
+    h_jet0_rhoRatio                                              ->Write();      
+    h_jet0_rhoRatioPrime                                         ->Write();      
+    h_jet0_rhoRatioPmag                                          ->Write();      
+    h_jet0_rhoRatioPmagPrime                                     ->Write();      
+    h_jet0_rhoRatioPuppi                                         ->Write();      
+    h_jet0_rhoRatioPuppiPrime                                    ->Write();      
+    h_jet0_rhoRatioPuppiPmag                                     ->Write();      
+    h_jet0_rhoRatioPuppiPmagPrime                                ->Write();      
+    h_jet1_rhoRatio                                              ->Write();      
+    h_jet1_rhoRatioPrime                                         ->Write();      
+    h_jet1_rhoRatioPmag                                          ->Write();      
+    h_jet1_rhoRatioPmagPrime                                     ->Write();      
+    h_jet1_rhoRatioPuppi                                         ->Write();      
+    h_jet1_rhoRatioPuppiPrime                                    ->Write();      
+    h_jet1_rhoRatioPuppiPmag                                     ->Write();      
+    h_jet1_rhoRatioPuppiPmagPrime                                ->Write();      
+    h_jet0_tau32_rhoRatio                                ->Write();              
+    h_jet0_tau32_rhoRatioPrime                           ->Write();              
+    h_jet0_tau32_rhoRatioPmag                            ->Write();              
+    h_jet0_tau32_rhoRatioPmagPrime                       ->Write();              
+    h_jet0_tau32_rhoRatioPuppi                           ->Write();              
+    h_jet0_tau32_rhoRatioPuppiPrime                      ->Write();              
+    h_jet0_tau32_rhoRatioPuppiPmag                       ->Write();              
+    h_jet0_tau32_rhoRatioPuppiPmagPrime                  ->Write();              
+    h_jet1_tau32_rhoRatio                                ->Write();              
+    h_jet1_tau32_rhoRatioPrime                           ->Write();              
+    h_jet1_tau32_rhoRatioPmag                            ->Write();              
+    h_jet1_tau32_rhoRatioPmagPrime                       ->Write();              
+    h_jet1_tau32_rhoRatioPuppi                           ->Write();              
+    h_jet1_tau32_rhoRatioPuppiPrime                      ->Write();              
+    h_jet1_tau32_rhoRatioPuppiPmag                       ->Write();              
+    h_jet1_tau32_rhoRatioPuppiPmagPrime                  ->Write();              
+    h_jet0_tau21_rhoRatio                                ->Write();              
+    h_jet0_tau21_rhoRatioPrime                           ->Write();              
+    h_jet0_tau21_rhoRatioPmag                            ->Write();              
+    h_jet0_tau21_rhoRatioPmagPrime                       ->Write();              
+    h_jet0_tau21_rhoRatioPuppi                           ->Write();              
+    h_jet0_tau21_rhoRatioPuppiPrime                      ->Write();              
+    h_jet0_tau21_rhoRatioPuppiPmag                       ->Write();              
+    h_jet0_tau21_rhoRatioPuppiPmagPrime                  ->Write();              
+    h_jet1_tau21_rhoRatio                                ->Write();              
+    h_jet1_tau21_rhoRatioPrime                           ->Write();              
+    h_jet1_tau21_rhoRatioPmag                            ->Write();              
+    h_jet1_tau21_rhoRatioPmagPrime                       ->Write();              
+    h_jet1_tau21_rhoRatioPuppi                           ->Write();              
+    h_jet1_tau21_rhoRatioPuppiPrime                      ->Write();              
+    h_jet1_tau21_rhoRatioPuppiPmag                       ->Write();              
+    h_jet1_tau21_rhoRatioPuppiPmagPrime                  ->Write();              
+    h_jet0_tau42_rhoRatio                                ->Write();              
+    h_jet0_tau42_rhoRatioPrime                           ->Write();              
+    h_jet0_tau42_rhoRatioPmag                            ->Write();              
+    h_jet0_tau42_rhoRatioPmagPrime                       ->Write();              
+    h_jet0_tau42_rhoRatioPuppi                           ->Write();              
+    h_jet0_tau42_rhoRatioPuppiPrime                      ->Write();              
+    h_jet0_tau42_rhoRatioPuppiPmag                       ->Write();              
+    h_jet0_tau42_rhoRatioPuppiPmagPrime                  ->Write();              
+    h_jet1_tau42_rhoRatio                                ->Write();              
+    h_jet1_tau42_rhoRatioPrime                           ->Write();              
+    h_jet1_tau42_rhoRatioPmag                            ->Write();              
+    h_jet1_tau42_rhoRatioPmagPrime                       ->Write();              
+    h_jet1_tau42_rhoRatioPuppi                           ->Write();              
+    h_jet1_tau42_rhoRatioPuppiPrime                      ->Write();              
+    h_jet1_tau42_rhoRatioPuppiPmag                       ->Write();              
+    h_jet1_tau42_rhoRatioPuppiPmagPrime                  ->Write();              
+                                   
+    //Hadronic mtt selection and background estimaion            ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapHi_inclusive                    ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapHi_0btag                        ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapHi_1btag                        ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapHi_2btag                        ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapLo_inclusive                    ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapLo_0btag                        ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapLo_1btag                        ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapLo_2btag                        ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapIn_inclusive                    ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapIn_0btag                        ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapIn_1btag                        ->Write();                  
+    h_mttMass_tagMassSDTau32_dRapIn_2btag                        ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapHi_inclusive                    ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapHi_0btag                        ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapHi_1btag                        ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapHi_2btag                        ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapLo_inclusive                    ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapLo_0btag                        ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapLo_1btag                        ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapLo_2btag                        ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapIn_inclusive                    ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapIn_0btag                        ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapIn_1btag                        ->Write();                  
+    h_bkgdEst_tagMassSDTau32_dRapIn_2btag                        ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapHi_inclusive            ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapHi_0btag                ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapHi_1btag                ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapHi_2btag                ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapLo_inclusive            ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapLo_0btag                ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapLo_1btag                ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag                ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapIn_inclusive            ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapIn_0btag                ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapIn_1btag                ->Write();                  
+    h_bkgdEst_modMass_tagMassSDTau32_dRapIn_2btag                ->Write();                  
+                                                                                            
+                                                               
+    Out->Close();
+  }
 
-/*
 
-  h_CutFlow                              ->Write();
-
-  h_DijetMass_dRapIn                     ->Write();
-  h_Jet0Pt                               ->Write();
-  h_Jet0Rap                              ->Write();
-  h_Jet1Pt                               ->Write();
-  h_Jet1Rap                              ->Write();
-
-  // write antitag histgrams to file
-  if (antiTag){
-    cout<<"Writing antiTag histograms"<<endl;
-    h_2ttag_inclu_dRapIn_DijetMass       ->Write();
-    h_2ttag_0btag_dRapIn_DijetMass       ->Write();
-    h_2ttag_1btag_dRapIn_DijetMass       ->Write();
-    h_2ttag_2btag_dRapIn_DijetMass       ->Write();
-    h_DijetMass_dRapLo                   ->Write();
-    h_2ttag_inclu_dRapLo_DijetMass       ->Write();
-    h_2ttag_0btag_dRapLo_DijetMass       ->Write();
-    h_2ttag_1btag_dRapLo_DijetMass       ->Write();
-    h_2ttag_2btag_dRapLo_DijetMass       ->Write();
-    h_DijetMass_dRapHi                   ->Write();
-    h_2ttag_inclu_dRapHi_DijetMass       ->Write();
-    h_2ttag_0btag_dRapHi_DijetMass       ->Write();
-    h_2ttag_1btag_dRapHi_DijetMass       ->Write();
-    h_2ttag_2btag_dRapHi_DijetMass       ->Write();
-    h_DeltaRap                           ->Write();
-    h_2ttag_inclu_DeltaRap               ->Write();
-    h_2ttag_0btag_DeltaRap               ->Write();
-    h_2ttag_1btag_DeltaRap               ->Write();
-    h_2ttag_2btag_DeltaRap               ->Write();
-    h_DeltaPhi                           ->Write();
-    h_2ttag_inclu_DeltaPhi               ->Write();
-    h_2ttag_0btag_DeltaPhi               ->Write();
-    h_2ttag_1btag_DeltaPhi               ->Write();
-    h_2ttag_2btag_DeltaPhi               ->Write();
-    h_HT                                 ->Write();
-    h_2ttag_inclu_HT                     ->Write();
-    h_2ttag_0btag_HT                     ->Write();
-    h_2ttag_1btag_HT                     ->Write();
-    h_2ttag_2btag_HT                     ->Write();
-    h_MET                                ->Write();
-    h_2ttag_inclu_MET                    ->Write();
-    h_2ttag_0btag_MET                    ->Write();
-    h_2ttag_1btag_MET                    ->Write();
-    h_2ttag_2btag_MET                    ->Write();
-    h_METphi                             ->Write();
-    h_2ttag_inclu_METphi                 ->Write();
-    h_2ttag_0btag_METphi                 ->Write();
-    h_2ttag_1btag_METphi                 ->Write();
-    h_2ttag_2btag_METphi                 ->Write();
-    h_Nvtx                               ->Write();
-    h_2ttag_inclu_Nvtx                   ->Write();
-    h_2ttag_0btag_Nvtx                   ->Write();
-    h_2ttag_1btag_Nvtx                   ->Write();
-    h_2ttag_2btag_Nvtx                   ->Write();
-                
-    h_EventWeight   ->Write();
-    h_runNumber_Jet0CHF     ->Write();
-    h_runNumber_Jet0NHF     ->Write();
-    h_runNumber_Jet0CM      ->Write();
-    h_runNumber_Jet0NM      ->Write();
-    h_runNumber_Jet0NEF     ->Write();
-    h_runNumber_Jet0CEF     ->Write();
-    h_runNumber_Jet0MF      ->Write();
-    h_runNumber_Jet0Mult    ->Write();
-    h_runNumber_NvtxGood    ->Write();
-    h_runNumber_Jet0Pt      ->Write();
-    h_runNumber_Jet0SDmass  ->Write();
-    h_runNumber_DijetMass   ->Write();  
-    h_runNumber_HT          ->Write();  
-
-    h_Jet0Pt_Jet0Mass              ->Write();
-    h_Jet0P_Jet0Mass               ->Write();
-    h_Jet0Pt_Jet0SDmass            ->Write();
-    h_Jet0P_Jet0SDmass             ->Write();
-    h_Jet0Y_Jet0Mass               ->Write();
-    h_Jet0Y_Jet0Mass_Pt500to520    ->Write();
-    h_Jet0Y_Jet0SDmass             ->Write();
-    h_Jet0Y_Jet0SDmass_Pt500to520  ->Write();
-    h_Jet0Y_Jet1Y                  ->Write();
-    h_Jet0Y_Jet1Y_Pt500to520       ->Write();
-
-    h_jet0_rhoRatioPrime                   ->Write();  
-    h_jet0_rhoRatioPmag                    ->Write();  
-    h_jet0_rhoRatioPmagPrime               ->Write();  
-    h_jet0_rhoRatioPuppi                   ->Write();  
-    h_jet0_rhoRatioPuppiPrime              ->Write();  
-    h_jet0_rhoRatioPuppiPmag               ->Write();  
-    h_jet0_rhoRatioPuppiPmagPrime          ->Write();  
-    h_jet1_rhoRatio                        ->Write();  
-    h_jet1_rhoRatioPrime                   ->Write();  
-    h_jet1_rhoRatioPmag                    ->Write();  
-    h_jet1_rhoRatioPmagPrime               ->Write();  
-    h_jet1_rhoRatioPuppi                   ->Write();  
-    h_jet1_rhoRatioPuppiPrime              ->Write();  
-    h_jet1_rhoRatioPuppiPmag               ->Write();  
-    h_jet1_rhoRatioPuppiPmagPrime          ->Write();  
-    h_jet0_tau32_rhoRatio                  ->Write();  
-    h_jet0_tau32_rhoRatioPrime             ->Write();  
-    h_jet0_tau32_rhoRatioPmag              ->Write();  
-    h_jet0_tau32_rhoRatioPmagPrime         ->Write();  
-    h_jet0_tau32_rhoRatioPuppi             ->Write();  
-    h_jet0_tau32_rhoRatioPuppiPrime        ->Write();  
-    h_jet0_tau32_rhoRatioPuppiPmag         ->Write();  
-    h_jet0_tau32_rhoRatioPuppiPmagPrime    ->Write();  
-    h_jet1_tau32_rhoRatio                  ->Write();  
-    h_jet1_tau32_rhoRatioPrime             ->Write();  
-    h_jet1_tau32_rhoRatioPmag              ->Write();  
-    h_jet1_tau32_rhoRatioPmagPrime         ->Write();  
-    h_jet1_tau32_rhoRatioPuppi             ->Write();  
-    h_jet1_tau32_rhoRatioPuppiPrime        ->Write();  
-    h_jet1_tau32_rhoRatioPuppiPmag         ->Write();  
-    h_jet1_tau32_rhoRatioPuppiPmagPrime    ->Write();  
-    h_jet0_tau21_rhoRatio                  ->Write();  
-    h_jet0_tau21_rhoRatioPrime             ->Write();  
-    h_jet0_tau21_rhoRatioPmag              ->Write();  
-    h_jet0_tau21_rhoRatioPmagPrime         ->Write();  
-    h_jet0_tau21_rhoRatioPuppi             ->Write();  
-    h_jet0_tau21_rhoRatioPuppiPrime        ->Write();  
-    h_jet0_tau21_rhoRatioPuppiPmag         ->Write();  
-    h_jet0_tau21_rhoRatioPuppiPmagPrime    ->Write();  
-    h_jet1_tau21_rhoRatio                  ->Write();  
-    h_jet1_tau21_rhoRatioPrime             ->Write();  
-    h_jet1_tau21_rhoRatioPmag              ->Write();  
-    h_jet1_tau21_rhoRatioPmagPrime         ->Write();  
-    h_jet1_tau21_rhoRatioPuppi             ->Write();  
-    h_jet1_tau21_rhoRatioPuppiPrime        ->Write();  
-    h_jet1_tau21_rhoRatioPuppiPmag         ->Write();  
-    h_jet1_tau21_rhoRatioPuppiPmagPrime    ->Write();  
-    h_jet0_tau42_rhoRatio                  ->Write();  
-    h_jet0_tau42_rhoRatioPrime             ->Write();  
-    h_jet0_tau42_rhoRatioPmag              ->Write();  
-    h_jet0_tau42_rhoRatioPmagPrime         ->Write();  
-    h_jet0_tau42_rhoRatioPuppi             ->Write();  
-    h_jet0_tau42_rhoRatioPuppiPrime        ->Write();  
-    h_jet0_tau42_rhoRatioPuppiPmag         ->Write();  
-    h_jet0_tau42_rhoRatioPuppiPmagPrime    ->Write();  
-    h_jet1_tau42_rhoRatio                  ->Write();  
-    h_jet1_tau42_rhoRatioPrime             ->Write();  
-    h_jet1_tau42_rhoRatioPmag              ->Write();  
-    h_jet1_tau42_rhoRatioPmagPrime         ->Write();  
-    h_jet1_tau42_rhoRatioPuppi             ->Write();  
-    h_jet1_tau42_rhoRatioPuppiPrime        ->Write();  
-    h_jet1_tau42_rhoRatioPuppiPmag         ->Write();  
-    h_jet1_tau42_rhoRatioPuppiPmagPrime    ->Write();  
-
-
-    h_Jet0P                                ->Write();
-    h_Jet0Phi                              ->Write();
-    h_Jet0sdmass                           ->Write();
-    h_Jet0Tau1                             ->Write();
-    h_Jet0Tau2                             ->Write();
-    h_Jet0Tau3                             ->Write();
-    h_Jet0Tau4                             ->Write();
-    h_Jet0SDmaxbdisc                       ->Write();
-    h_Jet0SDsubjet0pt                      ->Write();
-    h_Jet0SDsubjet0mass                    ->Write();
-    h_Jet0SDsubjet0tau1                    ->Write();
-    h_Jet0SDsubjet0tau2                    ->Write();
-    h_Jet0SDsubjet0tau3                    ->Write();
-    h_Jet0SDsubjet0bdisc                   ->Write();
-    h_Jet0SDsubjet1pt                      ->Write();
-    h_Jet0SDsubjet1mass                    ->Write();
-    h_Jet0SDsubjet1tau1                    ->Write();
-    h_Jet0SDsubjet1tau2                    ->Write();
-    h_Jet0SDsubjet1tau3                    ->Write();
-    h_Jet0SDsubjet1bdisc                   ->Write();
-    h_Jet0PuppiPt                          ->Write();
-    h_Jet0PuppiMass                        ->Write();
-    h_Jet0PuppiSDpt                        ->Write();
-    h_Jet0PuppiTau1                        ->Write();
-    h_Jet0PuppiTau2                        ->Write();
-    h_Jet0PuppiTau3                        ->Write();
-    h_Jet0PuppiTau4                        ->Write();
-    h_Jet0PuppiSDmaxbdisc                  ->Write();
-    h_Jet0PuppiSDsubjet0pt                 ->Write();
-    h_Jet0PuppiSDsubjet0mass               ->Write();
-    h_Jet0PuppiSDsubjet0tau1               ->Write();
-    h_Jet0PuppiSDsubjet0tau2               ->Write();
-    h_Jet0PuppiSDsubjet0tau3               ->Write();
-    h_Jet0PuppiSDsubjet0bdisc              ->Write();
-    h_Jet0PuppiSDsubjet1pt                 ->Write();
-    h_Jet0PuppiSDsubjet1mass               ->Write();
-    h_Jet0PuppiSDsubjet1tau1               ->Write();
-    h_Jet0PuppiSDsubjet1tau2               ->Write();
-    h_Jet0PuppiSDsubjet1tau3               ->Write();
-    h_Jet0PuppiSDsubjet1bdisc              ->Write();
-    h_Jet0CHF                              ->Write();
-    h_Jet0NHF                              ->Write();
-    h_Jet0CM                               ->Write();
-    h_Jet0NM                               ->Write();
-    h_Jet0NEF                              ->Write();
-    h_Jet0CEF                              ->Write();
-    h_Jet0MF                               ->Write();
-    h_Jet0Mult                             ->Write();
-    h_Jet0PuppiCHF                         ->Write();
-    h_Jet0PuppiNHF                         ->Write();
-    h_Jet0PuppiCM                          ->Write();
-    h_Jet0PuppiNM                          ->Write();
-    h_Jet0PuppiNEF                         ->Write();
-    h_Jet0PuppiCEF                         ->Write();
-    h_Jet0PuppiMF                          ->Write();
-    h_Jet0PuppiMult                        ->Write();
-    h_2ttag_inclu_Jet0P                    ->Write();
-    h_2ttag_inclu_Jet0Pt                   ->Write();
-    h_2ttag_inclu_Jet0Phi                  ->Write();
-    h_2ttag_inclu_Jet0Rap                  ->Write();
-    h_2ttag_inclu_Jet0SDmass               ->Write();
-    h_2ttag_inclu_Jet0SDmassCorrL23        ->Write();
-    h_2ttag_inclu_Jet0SDmassCorrL23Up      ->Write();
-    h_2ttag_inclu_Jet0Tau1                 ->Write();
-    h_2ttag_inclu_Jet0Tau2                 ->Write();
-    h_2ttag_inclu_Jet0Tau3                 ->Write();
-    h_2ttag_inclu_Jet0Tau4                 ->Write();
-    h_2ttag_inclu_Jet0SDmaxbdisc           ->Write();
-    h_2ttag_inclu_Jet0SDsubjet0pt          ->Write();
-    h_2ttag_inclu_Jet0SDsubjet0mass        ->Write();
-    h_2ttag_inclu_Jet0SDsubjet0tau1        ->Write();
-    h_2ttag_inclu_Jet0SDsubjet0tau2        ->Write();
-    h_2ttag_inclu_Jet0SDsubjet0tau3        ->Write();
-    h_2ttag_inclu_Jet0SDsubjet0bdisc       ->Write();
-    h_2ttag_inclu_Jet0SDsubjet1pt          ->Write();
-    h_2ttag_inclu_Jet0SDsubjet1mass        ->Write();
-    h_2ttag_inclu_Jet0SDsubjet1tau1        ->Write();
-    h_2ttag_inclu_Jet0SDsubjet1tau2        ->Write();
-    h_2ttag_inclu_Jet0SDsubjet1tau3        ->Write();
-    h_2ttag_inclu_Jet0SDsubjet1bdisc       ->Write();
-    h_2ttag_inclu_Jet0PuppiPt              ->Write();
-    h_2ttag_inclu_Jet0PuppiMass            ->Write();
-    h_2ttag_inclu_Jet0PuppiSDpt            ->Write();
-    h_2ttag_inclu_Jet0PuppiTau1            ->Write();
-    h_2ttag_inclu_Jet0PuppiTau2            ->Write();
-    h_2ttag_inclu_Jet0PuppiTau3            ->Write();
-    h_2ttag_inclu_Jet0PuppiTau4            ->Write();
-    h_2ttag_inclu_Jet0PuppiSDmaxbdisc      ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet0pt     ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet0mass   ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet0tau1   ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet0tau2   ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet0tau3   ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet0bdisc  ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet1pt     ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet1mass   ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet1tau1   ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet1tau2   ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet1tau3   ->Write();
-    h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc  ->Write();
-    h_2ttag_inclu_Jet0CHF                  ->Write();
-    h_2ttag_inclu_Jet0NHF                  ->Write();
-    h_2ttag_inclu_Jet0CM                   ->Write();
-    h_2ttag_inclu_Jet0NM                   ->Write();
-    h_2ttag_inclu_Jet0NEF                  ->Write();
-    h_2ttag_inclu_Jet0CEF                  ->Write();
-    h_2ttag_inclu_Jet0MF                   ->Write();
-    h_2ttag_inclu_Jet0Mult                 ->Write();
-
-
-    h_Jet0SDmass                                     ->Write();
-    h_Jet0SDmass_JetTag_b                            ->Write();
-    h_Jet0SDmass_JetTag_tau32                        ->Write();
-    h_Jet0SDmass_JetTag_b_tau32                      ->Write();
-    h_Jet0SDmass_OppositeJetTag_t_b                  ->Write();
-    h_Jet0SDmass_OppositeJetTag_t_b_JetTag_b         ->Write();
-    h_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32   ->Write();
-    h_Jet1SDmass                                     ->Write();
-    h_Jet1SDmass_JetTag_b                            ->Write();
-    h_Jet1SDmass_JetTag_tau32                        ->Write();
-    h_Jet1SDmass_JetTag_b_tau32                      ->Write();
-    h_Jet1SDmass_OppositeJetTag_t_b                  ->Write();
-    h_Jet1SDmass_OppositeJetTag_t_b_JetTag_b         ->Write();
-    h_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32   ->Write();
-    h_JetSDmass                                      ->Write();
-    h_JetSDmass_JetTag_b                             ->Write();
-    h_JetSDmass_JetTag_tau32                         ->Write();
-    h_JetSDmass_JetTag_b_tau32                       ->Write();
-    h_JetSDmass_OppositeJetTag_t_b                   ->Write();
-    h_JetSDmass_OppositeJetTag_t_b_JetTag_b          ->Write();
-    h_JetSDmass_OppositeJetTag_t_b_JetTag_b_tau32    ->Write();
-    h_Jet0Tau32                                      ->Write();
-    h_Jet0Tau32_JetTag_b                             ->Write();
-    h_Jet0Tau32_JetTag_mass                          ->Write();
-    h_Jet0Tau32_JetTag_b_mass                        ->Write();
-    h_Jet0Tau32_OppositeJetTag_t_b                   ->Write();
-    h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b          ->Write();
-    h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b_mass     ->Write();
-    h_Jet1Tau32                                      ->Write();
-    h_Jet1Tau32_JetTag_b                             ->Write();
-    h_Jet1Tau32_JetTag_mass                          ->Write();
-    h_Jet1Tau32_JetTag_b_mass                        ->Write();
-    h_Jet1Tau32_OppositeJetTag_t_b                   ->Write();
-    h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b          ->Write();
-    h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b_mass     ->Write();
-    h_JetTau32                                       ->Write();
-    h_JetTau32_JetTag_b                              ->Write();
-    h_JetTau32_JetTag_mass                           ->Write();
-    h_JetTau32_JetTag_b_mass                         ->Write();
-    h_JetTau32_OppositeJetTag_t_b                    ->Write();
-    h_JetTau32_OppositeJetTag_t_b_JetTag_b           ->Write();
-    h_JetTau32_OppositeJetTag_t_b_JetTag_b_mass      ->Write();
-
-    
-    h_2ttag_2btag_Jet0PuppiSDsubjet0pt               ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet0mass             ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet0tau1             ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet0tau2             ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet0tau3             ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet0bdisc            ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet1pt               ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet1mass             ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet1tau1             ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet1tau2             ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet1tau3             ->Write();
-    h_2ttag_2btag_Jet0PuppiSDsubjet1bdisc            ->Write();
-
-    h_2ttag_1btag_Jet0PuppiSDsubjet0pt               ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet0mass             ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet0tau1             ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet0tau2             ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet0tau3             ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet0bdisc            ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet1pt               ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet1mass             ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet1tau1             ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet1tau2             ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet1tau3             ->Write();
-    h_2ttag_1btag_Jet0PuppiSDsubjet1bdisc            ->Write();
-    
-    h_2ttag_0btag_Jet0PuppiSDsubjet0pt               ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet0mass             ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet0tau1             ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet0tau2             ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet0tau3             ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet0bdisc            ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet1pt               ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet1mass             ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet1tau1             ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet1tau2             ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet1tau3             ->Write();
-    h_2ttag_0btag_Jet0PuppiSDsubjet1bdisc            ->Write();
-
-    
-    if (!isData){
-      h_Jet0SDmass_matchedTop              ->Write();
-      h_Jet0SDmass_matchedTop_topDist      ->Write();
-      h_Jet0SDmass_outside                 ->Write();
-      h_Jet0SDmass_bq                      ->Write();
-      h_Jet0SDmass_qq                      ->Write();
-
-      h_Jet0SDmass_all                     ->Write();
-      h_Jet0SDmass_in_b                    ->Write();
-      h_Jet0SDmass_in_q                    ->Write();
-      h_Jet0SDmass_in_qq                   ->Write();
-      h_Jet0SDmass_in_qb                   ->Write();
-      h_Jet0SDmass_in_qqb                  ->Write();
-      h_Jet0SDmass_unmatched               ->Write();
-      
-      h_Jet0Tau32_all                      ->Write();
-      h_Jet0Tau32_in_b                     ->Write();
-      h_Jet0Tau32_in_q                     ->Write();
-      h_Jet0Tau32_in_qq                    ->Write();
-      h_Jet0Tau32_in_qb                    ->Write();
-      h_Jet0Tau32_in_qqb                   ->Write();
-      h_Jet0Tau32_unmatched                ->Write();
-
-      h_Jet0SDmass_Pt600_all               ->Write();
-      h_Jet0SDmass_Pt600_in_b              ->Write();
-      h_Jet0SDmass_Pt600_in_q              ->Write();
-      h_Jet0SDmass_Pt600_in_qq             ->Write();
-      h_Jet0SDmass_Pt600_in_qb             ->Write();
-      h_Jet0SDmass_Pt600_in_qqb            ->Write();
-      h_Jet0SDmass_Pt600_unmatched         ->Write();
-      
-      h_Jet0Tau32_Pt600_all                ->Write();
-      h_Jet0Tau32_Pt600_in_b               ->Write();
-      h_Jet0Tau32_Pt600_in_q               ->Write();
-      h_Jet0Tau32_Pt600_in_qq              ->Write();
-      h_Jet0Tau32_Pt600_in_qb              ->Write();
-      h_Jet0Tau32_Pt600_in_qqb             ->Write();
-      h_Jet0Tau32_Pt600_unmatched          ->Write();
-
-      h_Jet0SDmass_BtagM_all               ->Write();
-      h_Jet0SDmass_BtagM_in_b              ->Write();
-      h_Jet0SDmass_BtagM_in_q              ->Write();
-      h_Jet0SDmass_BtagM_in_qq             ->Write();
-      h_Jet0SDmass_BtagM_in_qb             ->Write();
-      h_Jet0SDmass_BtagM_in_qqb            ->Write();
-      h_Jet0SDmass_BtagM_unmatched         ->Write();
-
-      h_Jet0SDmass_BtagT_all               ->Write();
-      h_Jet0SDmass_BtagT_in_b              ->Write();
-      h_Jet0SDmass_BtagT_in_q              ->Write();
-      h_Jet0SDmass_BtagT_in_qq             ->Write();
-      h_Jet0SDmass_BtagT_in_qb             ->Write();
-      h_Jet0SDmass_BtagT_in_qqb            ->Write();
-      h_Jet0SDmass_BtagT_unmatched         ->Write();
-      
-      h_Jet0Tau32_BtagM_all                ->Write();
-      h_Jet0Tau32_BtagM_in_b               ->Write();
-      h_Jet0Tau32_BtagM_in_q               ->Write();
-      h_Jet0Tau32_BtagM_in_qq              ->Write();
-      h_Jet0Tau32_BtagM_in_qb              ->Write();
-      h_Jet0Tau32_BtagM_in_qqb             ->Write();
-      h_Jet0Tau32_BtagM_unmatched          ->Write();
-
-      h_Jet0Tau32_MassTag_all              ->Write(); 
-      h_Jet0Tau32_MassTag_in_b             ->Write(); 
-      h_Jet0Tau32_MassTag_in_q             ->Write(); 
-      h_Jet0Tau32_MassTag_in_qq            ->Write(); 
-      h_Jet0Tau32_MassTag_in_qb            ->Write(); 
-      h_Jet0Tau32_MassTag_in_qqb           ->Write(); 
-      h_Jet0Tau32_MassTag_unmatched        ->Write(); 
-      
-      h_Jet0Tau32_BtagM_MassTag_all        ->Write(); 
-      h_Jet0Tau32_BtagM_MassTag_in_b       ->Write(); 
-      h_Jet0Tau32_BtagM_MassTag_in_q       ->Write(); 
-      h_Jet0Tau32_BtagM_MassTag_in_qq      ->Write(); 
-      h_Jet0Tau32_BtagM_MassTag_in_qb      ->Write(); 
-      h_Jet0Tau32_BtagM_MassTag_in_qqb     ->Write(); 
-      h_Jet0Tau32_BtagM_MassTag_unmatched  ->Write(); 
-      
-      h_Jet0SDmass_TauTag_all              ->Write();
-      h_Jet0SDmass_TauTag_in_b             ->Write();
-      h_Jet0SDmass_TauTag_in_q             ->Write();
-      h_Jet0SDmass_TauTag_in_qq            ->Write();
-      h_Jet0SDmass_TauTag_in_qb            ->Write();
-      h_Jet0SDmass_TauTag_in_qqb           ->Write();
-      h_Jet0SDmass_TauTag_unmatched        ->Write();
-
-      h_Jet0SDmass_AntiTauTag_all          ->Write();
-      h_Jet0SDmass_AntiTauTag_in_b         ->Write();
-      h_Jet0SDmass_AntiTauTag_in_q         ->Write();
-      h_Jet0SDmass_AntiTauTag_in_qq        ->Write();
-      h_Jet0SDmass_AntiTauTag_in_qb        ->Write();
-      h_Jet0SDmass_AntiTauTag_in_qqb       ->Write();
-      h_Jet0SDmass_AntiTauTag_unmatched    ->Write();
-      
-      h_Jet0SDmass_BtagM_TauTag_all        ->Write();
-      h_Jet0SDmass_BtagM_TauTag_in_b       ->Write();
-      h_Jet0SDmass_BtagM_TauTag_in_q       ->Write();
-      h_Jet0SDmass_BtagM_TauTag_in_qq      ->Write();
-      h_Jet0SDmass_BtagM_TauTag_in_qb      ->Write();
-      h_Jet0SDmass_BtagM_TauTag_in_qqb     ->Write();
-      h_Jet0SDmass_BtagM_TauTag_unmatched  ->Write();
-    }
-*/
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapIn_inclusive            Integral = "<< h_AntiTagCHS_Probe_jetP_dRapIn_inclusive           ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapIn_0btag                Integral = "<< h_AntiTagCHS_Probe_jetP_dRapIn_0btag               ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapIn_1btag                Integral = "<< h_AntiTagCHS_Probe_jetP_dRapIn_1btag               ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapIn_2btag                Integral = "<< h_AntiTagCHS_Probe_jetP_dRapIn_2btag               ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapHi_inclusive            Integral = "<< h_AntiTagCHS_Probe_jetP_dRapHi_inclusive           ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapHi_0btag                Integral = "<< h_AntiTagCHS_Probe_jetP_dRapHi_0btag               ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapHi_1btag                Integral = "<< h_AntiTagCHS_Probe_jetP_dRapHi_1btag               ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapHi_2btag                Integral = "<< h_AntiTagCHS_Probe_jetP_dRapHi_2btag               ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapLo_inclusive            Integral = "<< h_AntiTagCHS_Probe_jetP_dRapLo_inclusive           ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapLo_0btag                Integral = "<< h_AntiTagCHS_Probe_jetP_dRapLo_0btag               ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapLo_1btag                Integral = "<< h_AntiTagCHS_Probe_jetP_dRapLo_1btag               ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_Probe_jetP_dRapLo_2btag                Integral = "<< h_AntiTagCHS_Probe_jetP_dRapLo_2btag               ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive   Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive  ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag       Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag      ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag       Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag      ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag       Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag      ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive   Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive  ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag       Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag      ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag       Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag      ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag       Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag      ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive   Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive  ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag       Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag      ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag       Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag      ->Integral() <<endl;
-  //   cout<<"h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag       Integral = "<< h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag      ->Integral() <<endl;
-
-  //   h_AntiTagCHS_Probe_jetP_dRapIn_inclusive           ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapIn_0btag               ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapIn_1btag               ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapIn_2btag               ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapHi_inclusive           ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapHi_0btag               ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapHi_1btag               ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapHi_2btag               ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapLo_inclusive           ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapLo_0btag               ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapLo_1btag               ->Write();
-  //   h_AntiTagCHS_Probe_jetP_dRapLo_2btag               ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive  ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag      ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag      ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag      ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive  ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag      ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag      ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag      ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive  ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag      ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag      ->Write();
-  //   h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag      ->Write();
-
-
-  //   h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive           ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapIn_0btag               ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapIn_1btag               ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapIn_2btag               ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive           ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapHi_0btag               ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapHi_1btag               ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapHi_2btag               ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive           ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapLo_0btag               ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapLo_1btag               ->Write();
-  //   h_AntiTagPuppi_Probe_jetP_dRapLo_2btag               ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive  ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag      ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag      ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag      ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive  ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag      ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag      ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag      ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive  ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag      ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag      ->Write();
-  //   h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag      ->Write();
-
-
-
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapIn_inclusive                ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapIn_0btag                    ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapIn_1btag                    ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapIn_2btag                    ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapHi_inclusive                ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapHi_0btag                    ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapHi_1btag                    ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapHi_2btag                    ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapLo_inclusive                ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapLo_0btag                    ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapLo_1btag                    ->Write();           
-  //   h_alt_AntiTagCHS_Probe_jetP_dRapLo_2btag                    ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive       ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag           ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag           ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag           ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive       ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag           ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag           ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag           ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive       ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag           ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag           ->Write();           
-  //   h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag           ->Write();           
-  //   h_AntiTagCHS40to60_Probe_jetP_dRapIn_inclusive              ->Write();         
-  //   h_AntiTagCHS60to80_Probe_jetP_dRapIn_inclusive              ->Write();         
-  //   h_AntiTagCHS80to110_Probe_jetP_dRapIn_inclusive             ->Write();          
-  //   h_AntiTagCHS100to120_Probe_jetP_dRapIn_inclusive            ->Write();           
-  //   h_AntiTagCHS120to140_Probe_jetP_dRapIn_inclusive            ->Write();           
-  //   h_AntiTagCHS140to180_Probe_jetP_dRapIn_inclusive            ->Write();           
-  //   h_AntiTagCHS180to220_Probe_jetP_dRapIn_inclusive            ->Write();           
-  //   h_AntiTagCHS220to300_Probe_jetP_dRapIn_inclusive            ->Write();           
-  //   h_AntiTagCHS40to60_TagMassSDTau32_jetP_dRapIn_inclusive     ->Write();         
-  //   h_AntiTagCHS60to80_TagMassSDTau32_jetP_dRapIn_inclusive     ->Write();         
-  //   h_AntiTagCHS80to110_TagMassSDTau32_jetP_dRapIn_inclusive    ->Write();          
-  //   h_AntiTagCHS100to120_TagMassSDTau32_jetP_dRapIn_inclusive   ->Write();           
-  //   h_AntiTagCHS120to140_TagMassSDTau32_jetP_dRapIn_inclusive   ->Write();           
-  //   h_AntiTagCHS140to180_TagMassSDTau32_jetP_dRapIn_inclusive   ->Write();           
-  //   h_AntiTagCHS180to220_TagMassSDTau32_jetP_dRapIn_inclusive   ->Write();           
-  //   h_AntiTagCHS220to300_TagMassSDTau32_jetP_dRapIn_inclusive   ->Write();           
-  // }
   // write background estimate histograms to file
   if (run_bkgdest){
     cout<<"Writing background estimate histograms"<<endl;
@@ -5975,413 +6573,1115 @@ if (run_kinematic){
     Out->cd();
 
 
-      
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive                       ->GetPredictedHist()   ->Write();
-
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag                      ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag                      ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag                      ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive                     ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive                   ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive                  ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive                         ->GetPredictedHist()   ->Write();
-
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag                      ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag                      ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag                      ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive                     ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive                   ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive                  ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive                         ->GetPredictedHist()   ->Write();
-
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag                      ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag                      ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag                           ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag                      ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag                             ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive                     ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive                       ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive                   ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive                  ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive                         ->GetPredictedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive                         ->GetPredictedHist()   ->Write();
-
-    if (!isFrozen || !isData ){    
-      mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag                           ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag                           ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag                           ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive                       ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag                           ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag                           ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag                           ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive                       ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag                           ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag                           ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag                           ->GetObservedHist()   ->Write();
-      mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive                       ->GetObservedHist()   ->Write();
-    }
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag                      ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag                      ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag                      ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive                     ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive                   ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive                  ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive                         ->GetObservedHist()   ->Write();
-
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag                      ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag                      ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag                      ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive                     ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive                   ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive                  ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive                         ->GetObservedHist()   ->Write();
-
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag                      ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag                      ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag                           ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag                      ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag                             ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive                     ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive                       ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive                   ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive                  ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive                         ->GetObservedHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive                         ->GetObservedHist()   ->Write();
-    
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_0btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_1btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_2btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapHi_inclusive                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_0btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_1btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_2btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapLo_inclusive                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_0btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_1btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_2btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_modMass_tagMassSDTau32_dRapIn_inclusive                       ->GetTaggableHist()   ->Write();
-
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_0btag                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_0btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_0btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_0btag                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_0btag                      ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_0btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_0btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_1btag                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_1btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_1btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_1btag                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_1btag                      ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_1btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_1btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_2btag                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_2btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_2btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_2btag                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_2btag                      ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_2btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_2btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_DijetMass_inclusive                     ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetMass_inclusive                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetPt_inclusive                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_JetRapidity_inclusive                   ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_SoftDropMass_inclusive                  ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_Tau32_inclusive                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapHi_bDisc_inclusive                         ->GetTaggableHist()   ->Write();
-
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_0btag                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_0btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_0btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_0btag                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_0btag                      ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_0btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_0btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_1btag                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_1btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_1btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_1btag                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_1btag                      ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_1btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_1btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_2btag                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_2btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_2btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_2btag                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_2btag                      ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_2btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_2btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_DijetMass_inclusive                     ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetMass_inclusive                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetPt_inclusive                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_JetRapidity_inclusive                   ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_SoftDropMass_inclusive                  ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_Tau32_inclusive                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapLo_bDisc_inclusive                         ->GetTaggableHist()   ->Write();
-
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_0btag                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_0btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_0btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_0btag                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_0btag                      ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_0btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_0btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_1btag                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_1btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_1btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_1btag                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_1btag                      ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_1btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_1btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_2btag                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_2btag                           ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_2btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_2btag                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_2btag                      ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_2btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_2btag                             ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_DijetMass_inclusive                     ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetMass_inclusive                       ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetPt_inclusive                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_JetRapidity_inclusive                   ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_SoftDropMass_inclusive                  ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_Tau32_inclusive                         ->GetTaggableHist()   ->Write();
-    mttPredDist2_tagMassSDTau32_dRapIn_bDisc_inclusive                         ->GetTaggableHist()   ->Write();
+    //-------------------------------------------------------------------------------------------------------------------
+    // Write Predicted
 
 
+    predDist_CHS_dRapHi_0btag_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_DijetMass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_DijetMassMod     ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_HT               ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_DeltaRap         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetP             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetPt            ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetY             ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetSDmass        ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetTau32         ->GetPredictedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_DijetMass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_DijetMassMod   ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_HT             ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetP           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetPt          ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetY           ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetSDmass      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetTau32       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_DijetMassMod  ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_HT            ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_DeltaRap      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetP          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetPt         ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Write();
+
+    // if (!isFrozen || !isData ) 
+    // ---------------------------------------------------------------------------
+    // -- Write Observed histograms (double tagged)
+    predDist_CHS_dRapHi_0btag_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_DijetMass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_DijetMassMod     ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_HT               ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_DeltaRap         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetP             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetPt            ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetY             ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetSDmass        ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetTau32         ->GetObservedHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_DijetMass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_DijetMassMod   ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_HT             ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetP           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetPt          ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetY           ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetSDmass      ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetTau32       ->GetObservedHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_DijetMassMod  ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_HT            ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_DeltaRap      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetP          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetPt         ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetY          ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Write();
+
+
+
+
+
+
+    // ---------------------------------------------------------------------------
+    // -- Write taggable histograms 
+    predDist_CHS_dRapHi_0btag_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_0btag_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_1btag_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_2btag_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapHi_inclu_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_0btag_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_1btag_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_2btag_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapLo_inclu_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_0btag_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_1btag_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_2btag_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_DijetMass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_DijetMassMod     ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_HT               ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_DeltaRap         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetP             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetPt            ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetY             ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetSDmass        ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_JetTau32         ->GetTaggableHist()   ->Write();
+    predDist_CHS_dRapIn_inclu_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_0btag_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_1btag_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_2btag_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapHi_inclu_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_0btag_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_1btag_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_2btag_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapLo_inclu_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_0btag_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_1btag_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_2btag_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_DijetMass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_DijetMassMod   ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_HT             ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetP           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetPt          ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetY           ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetSDmass      ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_JetTau32       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_dRapIn_inclu_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_0btag_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_1btag_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_2btag_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapHi_inclu_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_0btag_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_1btag_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_2btag_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapLo_inclu_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_0btag_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_1btag_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_2btag_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_DijetMassMod  ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_HT            ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_DeltaRap      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetP          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetPt         ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetY          ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetSDmass     ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_JetTau32      ->GetTaggableHist()   ->Write();
+    predDist_AltTag_dRapIn_inclu_maxbdisc      ->GetTaggableHist()   ->Write();
+
+    // ---------------------------------------------------------------------------
+    // -- Write additional test histograms
     h_DijetMass_modMass_jet0                                     ->Write();                                                               
     h_DijetMass_modMass_jet1                                     ->Write();  
 
-    // h_2btag_DijetMass                           ->Write();
-    // h_2btag_DeltaRap                            ->Write();
-    // h_2btag_jet0massSD                          ->Write();
-    // h_2btag_jet0tau32                           ->Write();
-    // h_2btag_jet0tau21                           ->Write();
-    // h_2btag_jet0tau1                            ->Write();
-    // h_2btag_jet0tau2                            ->Write();
-    // h_2btag_jet0tau3                            ->Write();
-    // h_2btag_jet0subjet0mass                     ->Write();
-    // h_2btag_jet0subjet1mass                     ->Write();
-    // h_2btag_jet0subjet0mass_jet0subjet1mass     ->Write();
-    // h_2btag_jet0subjet0bdisc_jet0subjet1bdisc   ->Write();
-    // h_2btag_jet1massSD                          ->Write();
-    // h_2btag_jet1tau32                           ->Write();
-    // h_2btag_jet1tau21                           ->Write();
-    // h_2btag_jet1tau1                            ->Write();
-    // h_2btag_jet1tau2                            ->Write();
-    // h_2btag_jet1tau3                            ->Write();
-    // h_2btag_jet1subjet0mass                     ->Write();
-    // h_2btag_jet1subjet1mass                     ->Write();
-    // h_2btag_jet1subjet0mass_jet1subjet1mass     ->Write();
-    // h_2btag_jet1subjet0bdisc_jet1subjet1bdisc   ->Write();
 
-    // h_2btag_jet1ttag_jet0massSD                         ->Write();
-    // h_2btag_jet1ttag_jet0tau32                          ->Write();
-    // h_2btag_jet1ttag_jet0tau21                          ->Write();
-    // h_2btag_jet1ttag_jet0tau1                           ->Write();
-    // h_2btag_jet1ttag_jet0tau2                           ->Write();
-    // h_2btag_jet1ttag_jet0tau3                           ->Write();
-    // h_2btag_jet1ttag_jet0subjet0mass                    ->Write();
-    // h_2btag_jet1ttag_jet0subjet1mass                    ->Write();
-    // h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass    ->Write();
-    // h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc  ->Write();
-    // h_2btag_jet0ttag_jet1massSD                         ->Write();
-    // h_2btag_jet0ttag_jet1tau32                          ->Write();
-    // h_2btag_jet0ttag_jet1tau21                          ->Write();
-    // h_2btag_jet0ttag_jet1tau1                           ->Write();
-    // h_2btag_jet0ttag_jet1tau2                           ->Write();
-    // h_2btag_jet0ttag_jet1tau3                           ->Write();
-    // h_2btag_jet0ttag_jet1subjet0mass                    ->Write();
-    // h_2btag_jet0ttag_jet1subjet1mass                    ->Write();
-    // h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass    ->Write();
-    // h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc  ->Write();
+    h_CutFlow                                                     ->Write();                   
+    h_EventWeight                                                 ->Write();                   
+    h_BtagCategoriesPreSF                                         ->Write();                   
+    h_BtagCategoriesPostSF                                        ->Write();                   
 
-    // h_2btag_jet1ttag_jet0tautag_jet0massSD      ->Write();
-    // h_2btag_jet1ttag_jet0masstag_jet0tau32      ->Write();
-    // h_2btag_jet1ttag_jet0masstag_jet0tau21      ->Write();
-    // h_2btag_jet1ttag_jet0masstag_jet0tau1       ->Write();
-    // h_2btag_jet1ttag_jet0masstag_jet0tau2       ->Write();
-    // h_2btag_jet1ttag_jet0masstag_jet0tau3       ->Write();
-    // h_2btag_jet0ttag_jet1tautag_jet1massSD      ->Write();
-    // h_2btag_jet0ttag_jet1masstag_jet1tau32      ->Write();
-    // h_2btag_jet0ttag_jet1masstag_jet1tau21      ->Write();
-    // h_2btag_jet0ttag_jet1masstag_jet1tau1       ->Write();
-    // h_2btag_jet0ttag_jet1masstag_jet1tau2       ->Write();
-    // h_2btag_jet0ttag_jet1masstag_jet1tau3       ->Write();
-
-    // h_topTag_jet0subjet0pt                       ->Write();
-    // h_topTag_jet0subjet0mass                     ->Write();
-    // h_topTag_jet0subjet0bdisc                    ->Write();
-    // //h_topTag_jet0subjet0flav                     ->Write();                                                                                                                                                              
-
-    // h_topTag_jet0subjet1pt                       ->Write();
-    // h_topTag_jet0subjet1mass                     ->Write();
-    // h_topTag_jet0subjet1bdisc                    ->Write();
-    // //h_topTag_jet0subjet1flav                     ->Write();                                                                                                                                                              
-
-    // h_topTag_jet0maxBdisc                        ->Write();
-    // //h_topTag_jet0maxBdiscflav                    ->Write();                                                                                                                                                              
-    // h_topTag_jet0pt                              ->Write();
-    // h_topTag_jet0pt_jet0subjet0pt                ->Write();
-    // h_topTag_jet0pt_jet0subjet1pt                ->Write();
-    // h_topTag_jet0subjet0pt_jet0subjet1pt         ->Write();
-    // h_topTag_jet0subjet0mass_jet0subjet1mass     ->Write();
-    // //h_topTag_jet0subjet0flav_jet0subjet1flav     ->Write();                                                                                                                                                              
-    // h_topTag_jet0subjet0bdisc_jet0subjet1bdisc   ->Write();
-
-
-    // h_topTagbTag_jet0subjet0pt                       ->Write();
-    // h_topTagbTag_jet0subjet0mass                     ->Write();
-    // h_topTagbTag_jet0subjet0bdisc                    ->Write();
-    // //h_topTagbTag_jet0subjet0flav                     ->Write();                                                                                                                                                          
-
-    // h_topTagbTag_jet0subjet1pt                       ->Write();
-    // h_topTagbTag_jet0subjet1mass                     ->Write();
-    // h_topTagbTag_jet0subjet1bdisc                    ->Write();
-    // //h_topTagbTag_jet0subjet1flav                     ->Write();
-
-    // h_topTagbTag_jet0maxBdisc                        ->Write();
-    // //h_topTagbTag_jet0maxBdiscflav                    ->Write();                                                                                                                                                          
-    // h_topTagbTag_jet0pt                              ->Write();
-    // h_topTagbTag_jet0pt_jet0subjet0pt                ->Write();
-    // h_topTagbTag_jet0pt_jet0subjet1pt                ->Write();
-    // h_topTagbTag_jet0subjet0pt_jet0subjet1pt         ->Write();
-    // h_topTagbTag_jet0subjet0mass_jet0subjet1mass     ->Write();
-    // //h_topTagbTag_jet0subjet0flav_jet0subjet1flav     ->Write();                                                                                                                                                          
-    // h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc   ->Write();
-
-    // h_DijetMass_modMass_jet0                   ->Write();
-    // h_DijetMass_modMass_jet1                   ->Write();
-      Out->Close();
+    Out->Close();
   }
   cout<<"Nevents tree                     =  "<< treeNentries                 <<endl;
   cout<<"Nevents Cutflow 0                =  "<< h_CutFlow->GetBinContent(1) <<endl;
