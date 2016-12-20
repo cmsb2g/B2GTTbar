@@ -1,6 +1,6 @@
 // ** Edit top-tag window if it has changed
 // root[] .L LoopTreeAllHad_V2.cpp++
-// root[] run("BCD","20161206addHist")  // dataset, savelabel
+// root[] run("BCD","20161206addHist", 1, 0)  // dataset, savelabel, run looptree, run looptree_trig
 
 //To-do:
 //Update scale factors
@@ -33,8 +33,8 @@
 #include "Analysis/PredictedDistribution/interface/PredictedDistribution.h"
 
 // --- btag SF
-// #include "CondFormats/BTauObjects/interface/BTagCalibration.h"
-// #include "CondTools/BTau/interface/BTagCalibration2Reader.h"
+//#include "CondFormats/BTauObjects/interface/BTagCalibration.h"
+//#include "CondTools/BTau/interface/BTagCalibration2Reader.h"
 // without CMSSW / standalone:
 #include "BTagCalibrationStandalone.h"
 
@@ -42,15 +42,15 @@
 
 // --- Function Declaration
 // vector<string>  makeFileList  (string);
-void            looptree_trig (string, string, string, string, float, float, float);
+void            looptree_trig (string, string, string, string, float, float, float, bool);
 void            looptree      (string, string, string, string, float, float, float, float, float, string, bool, bool, bool, bool, bool, bool, bool, bool, bool,int, int, bool);
 bool            applySF       (bool, float, float);
 void            run1file      (string, bool, string);
 
 // --- Analysis
 
-// example: run("BCD", "20161205addHisto")
-void run(string dataset_shortname = "none", string savelabel = "")
+// example: run("BCD", "20161205addHisto", 1, 1)
+void run(string dataset_shortname = "none", string savelabel = "", bool runLoopTree = 1, bool runLoopTree_trig = 0)
 {
   std::size_t foundB   = dataset_shortname.find( "B"   );
   std::size_t foundC   = dataset_shortname.find( "C"   );
@@ -78,9 +78,12 @@ void run(string dataset_shortname = "none", string savelabel = "")
   if ( foundZP  !=std::string::npos ) { cout<<"all Zprime queued"    <<endl; }
   if ( foundNone  !=std::string::npos ) { cout<<"No input dataset provided" <<endl; return; }
 
-  if (savelabel=="") {cout<<"please provide a unique label for the savefile. example: run(\"BCD\",\"20161201addHist\")"<<endl; return;}
+  if (savelabel=="" && runLoopTree) {cout<<"please provide a unique label for the savefile. example: run(\"BCD\",\"20161201addHist\",1,0)"<<endl; return;}
+
+  string date = "20161216";
 
   string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V4/";
+  string folder_input_tree_Zprime ="root://cmseos.fnal.gov//store/user/camclean/B2GAnaFW/Trees/80X_V4/";
   string folder_mistag     = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_22/src/Analysis/B2GTTbar/test/";
   string folder_modMass    = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/";
   string mistag_file_data  = folder_mistag + "MistagRate_nbins_11_20161206test1_nom_data_subtract_ttbar.root";
@@ -95,78 +98,67 @@ void run(string dataset_shortname = "none", string savelabel = "")
   float cut_pt_AK8     = 500  ;
   float cut_HT         = 1000 ; 
   
-  //--- Function def:
-  // looptree_trig(string input_folder, string input_file, string date, string output_folder, float topTagSDwindowLo, float topTagSDwindowHi, float topTagTau32cut);
-
-  //--- Trigger efficiency calculation
-  // looptree_trig(folder, "b2gtree_ZprimeToTT_M-2000_W-20_RunIISpring16MiniAODv2_reHLT_V3.root"           , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_ZprimeToTT_M-3000_W-30_RunIISpring16MiniAODv2_reHLT_V3.root"           , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016B-PromptReco-v2_JSONsept9_V3_99percentFinished_0002.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016C-PromptReco-v2_JSONsept9_V3_99percentFinished_All.root"  , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016D-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0000.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016E-PromptReco-v2_JSONsept9_V3_99percentFinished_0001.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016F-PromptReco-v1_JSONsept9_V3_99percentFinished_All.root"  , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0000.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-  // looptree_trig(folder, "b2gtree_JetHT_Run2016G-PromptReco-v1_JSONsept9_V3_99percentFinished_0001.root" , date, "trigEffStudies/run"+date+"/", ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut);
-
   //--- Analysis 
-  vector<bool> file_is_data;
-  vector<bool> file_is_QCDMC;
+  vector<string> input_folder;
   vector<string> file_name_tree;
+  vector<bool> file_is_data;
+  vector<bool> file_is_RunHdata;
+  vector<bool> file_is_QCDMC;
 
   //--- JetHT B-H
   if ( foundB   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0000_partial.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0001_partial.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0002_partial.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0000_partial.root");     file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);                      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0001_partial.root");     file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);                      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0002_partial.root");     file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
   }
   if ( foundC   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016C-23Sep2016-v1_JSONnov14_All.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016C-23Sep2016-v1_JSONnov14_All.root");              file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
   }
   if ( foundD   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);                 
   }
   if ( foundE   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
   }                
   if ( foundF   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016F-23Sep2016-v1_JSONnov14_all.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false);      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016F-23Sep2016-v1_JSONnov14_all.root");              file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);      
   }           
   if ( foundG   !=std::string::npos ){
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);  
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);            
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);  
   }
   if ( foundH   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0000.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0001.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0002.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
-    file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v3_JSONnov14_all.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0000.root");            file_is_data.push_back(true);     file_is_RunHdata.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0001.root");            file_is_data.push_back(true);     file_is_RunHdata.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0002.root");            file_is_data.push_back(true);     file_is_RunHdata.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v3_JSONnov14_all.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(true);     file_is_QCDMC.push_back(false);               
   }                           
   //--- QCD HT binned
   if ( foundQ   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV4_QCD_HT100to200_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                              
-    file_name_tree.push_back("b2gtreeV4_QCD_HT200to300_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                              
-    file_name_tree.push_back("b2gtreeV4_QCD_HT300to500_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                              
-    file_name_tree.push_back("b2gtreeV4_QCD_HT500to700_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                              
-    file_name_tree.push_back("b2gtreeV4_QCD_HT700to1000_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                          
-    file_name_tree.push_back("b2gtreeV4_QCD_HT1000to1500_RunIISpring16MiniAODv2.root");                file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                           
-    file_name_tree.push_back("b2gtreeV4_QCD_HT1500to2000_RunIISpring16MiniAODv2_try4.root");           file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                                
-    file_name_tree.push_back("b2gtreeV4_QCD_HT2000toInf_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);    file_is_QCDMC.push_back(true);                          
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT100to200_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT200to300_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT300to500_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT500to700_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT700to1000_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                          
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT1000to1500_RunIISpring16MiniAODv2.root");                file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                           
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT1500to2000_RunIISpring16MiniAODv2_try4.root");           file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                                
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT2000toInf_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                          
   }
   //--- TTbar 
   if ( foundTT1   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0000.root");  file_is_data.push_back(false);  file_is_QCDMC.push_back(false);              
-    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0001.root");  file_is_data.push_back(false);  file_is_QCDMC.push_back(false);               
-    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0002.root");  file_is_data.push_back(false);  file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0000.root");  file_is_data.push_back(false);  file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0001.root");  file_is_data.push_back(false);  file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0002.root");  file_is_data.push_back(false);  file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
   }  
   if ( foundTT2   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-premix_withHLT_try3.root");            file_is_data.push_back(false);  file_is_QCDMC.push_back(false);    
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-premix_withHLT_try3.root");            file_is_data.push_back(false);  file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);    
+  }
+
+  //--- Z Prime
+  if (foundZP   !=std::string::npos ){
+    input_folder.push_back(folder_input_tree_Zprime); file_name_tree.push_back("b2gtreeV4_ZprimeToTT_M-3000_W-30_RunIISpring16MiniAODv2_reHLT.root"); file_is_data.push_back(false); file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);
   }
 
   bool isFrozen            = true ;
@@ -180,31 +172,43 @@ void run(string dataset_shortname = "none", string savelabel = "")
   
   // Loop over file_name_tree and make histograms for each
   for (unsigned int i=0; i<file_name_tree.size(); i++){
-    //looptree(   input_folder, string input_file, modmass file,       mistagFile,                  bkgdEstOutname, date, isQCDMC, isData, isFrozen, antiTag,  Syst,   minAK8Pt,  minHT, topTagSDwindowLo, topTagSDwindowHi,  topTagTau32cut);
-   
-    string mistag_file;
-    if (file_is_QCDMC[i]) mistag_file = mistag_file_QCD ;
-    else                  mistag_file = mistag_file_data;
-    cout<<"Using Mistag File: "<<mistag_file<<endl;
-    looptree( 
-        folder_input_tree, 
-        file_name_tree[i], 
-        modmass_file, mistag_file,
-        cut_pt_AK8, cut_HT, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut, 
-        savelabel            , // string insert in savefile name
-        file_is_QCDMC[i]     , // bool is QCDMC? (modMass plots)
-        file_is_data[i]      , // bool is Data? 
-        isFrozen             , // bool is Frozen?
-        runAntiTag           , // bool run antitag?
-        runKinematic         , // bool run kinematic?
-        runbkgdEst           , // bool run bkgdest?
-        do_PUreweighting     , // bool do PUreweighting    ?
-        do_HTreweighting     , // bool do HTreweighting    ?
-        do_ttbarReweighting  , // bool do ttbarReweighting ?
-        0                    , // int Systematics: 0 = nom , 1/-1 = jec_up/dn , 2/-2 = jer_up/dn , 3/-3 = btag_up/btag , 4/-4 = pdf_up/dn , 5/-5 = q2_up/dn , 6/-6 = PU_up/dn 
-        -1                   , // int Nevents (set to -1 for all events)
-        false                  // bool verbose
-    );
+
+    if (runLoopTree){
+      string mistag_file;
+      if (file_is_QCDMC[i]) mistag_file = mistag_file_QCD ;
+      else                  mistag_file = mistag_file_data;
+      cout<<"Using Mistag File: "<<mistag_file<<endl;
+      looptree( 
+	       folder_input_tree, 
+	       file_name_tree[i], 
+	       modmass_file, mistag_file,
+	       cut_pt_AK8, cut_HT, ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut, 
+	       savelabel            , // string insert in savefile name
+	       file_is_QCDMC[i]     , // bool is QCDMC? (modMass plots)
+	       file_is_data[i]      , // bool is Data? 
+	       isFrozen             , // bool is Frozen?
+	       runAntiTag           , // bool run antitag?
+	       runKinematic         , // bool run kinematic?
+	       runbkgdEst           , // bool run bkgdest?
+	       do_PUreweighting     , // bool do PUreweighting    ?
+	       do_HTreweighting     , // bool do HTreweighting    ?
+	       do_ttbarReweighting  , // bool do ttbarReweighting ?
+	       0                    , // int Systematics: 0 = nom , 1/-1 = jec_up/dn , 2/-2 = jer_up/dn , 3/-3 = btag_up/btag , 4/-4 = pdf_up/dn , 5/-5 = q2_up/dn , 6/-6 = PU_up/dn 
+	       -1                   , // int Nevents (set to -1 for all events)
+	       false                  // bool verbose
+		);
+    } // end if (runLoopTree)
+
+    if (runLoopTree_trig){
+      looptree_trig(
+		    input_folder[i],
+		    file_name_tree[i],
+		    date,
+		    "trigEffStudies/run"+date+"/",
+		    ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut,
+		    file_is_RunHdata[i] //bool is Run H?
+		    );
+    } // end if (runLoopTree_trig)
   } // end file loop
 }// end run()
 
@@ -267,12 +271,14 @@ void looptree_trig(
           string output_folder, 
           float topTagSDwindowLo, 
           float topTagSDwindowHi, 
-          float topTagTau32cut)
+          float topTagTau32cut,
+	  bool isRunH
+		   )
 {
   
-  string file_name =  input_folder+input_file;
-  TFile *F1   = new TFile(file_name.c_str() );
-  cout << file_name <<endl;
+  string file_name =  input_folder + input_file;
+  cout<<"opening "<<file_name<<endl;
+  TFile *F1   = TFile::Open(file_name.c_str() );
 
   // Get Tree entries                                                                                                                        
   Float_t Jet0SDmass         ;
@@ -281,8 +287,11 @@ void looptree_trig(
   Float_t Jet1Mass           ;
   Float_t Jet0Pt             ;
   Float_t Jet1Pt             ;
+  Float_t Jet0Phi             ;
+  Float_t Jet1Phi             ;
   Float_t Jet0Tau32          ;
   Float_t Jet1Tau32          ;
+  Float_t HT                 ;
   std::string *AllHadTrigAcceptBits = new std::string;
 
   TTree *T1    = (TTree*)  F1     ->Get("ana/TreeAllHad");
@@ -296,8 +305,11 @@ void looptree_trig(
   T1->SetBranchAddress("Jet1Mass"                                        , & Jet1Mass                                      );
   T1->SetBranchAddress("Jet0Pt"                                          , & Jet0Pt                                        );
   T1->SetBranchAddress("Jet1Pt"                                          , & Jet1Pt                                        );
+  T1->SetBranchAddress("Jet0Phi"                                          , & Jet0Phi                                        );
+  T1->SetBranchAddress("Jet1Phi"                                          , & Jet1Phi                                        );
   T1->SetBranchAddress("Jet0Tau32"                                       , & Jet0Tau32                                     );
   T1->SetBranchAddress("Jet1Tau32"                                       , & Jet1Tau32                                     );
+  T1->SetBranchAddress("HT"                                              , & HT                                            );
   T1->SetBranchAddress("AllHadTrigAcceptBits"                            , & AllHadTrigAcceptBits                          );
 
   //ignore other branches                                                                                                                    
@@ -308,51 +320,91 @@ void looptree_trig(
   T1->SetBranchStatus("Jet1Mass",1)            ;
   T1->SetBranchStatus("Jet0Pt",1)              ;
   T1->SetBranchStatus("Jet1Pt",1)              ;
+  T1->SetBranchStatus("Jet0Phi",1)              ;
+  T1->SetBranchStatus("Jet1Phi",1)              ;
   T1->SetBranchStatus("Jet0Tau32",1)           ;
   T1->SetBranchStatus("Jet1Tau32",1)           ;
+  T1->SetBranchStatus("HT",1)                  ;
   T1->SetBranchStatus("AllHadTrigAcceptBits",1);
 
   vector <string> xAxisLabels;
   vector <string> cutCats;
+
+  vector <string> ptCutLabels;
+  vector <float> ptCuts;
 
   vector <string> numLabels;
   vector <string> numOrLabels;
   vector <int> numTrig;
   vector <int> numOrTrig;
 
+  vector <string> denomLabels;
+
   xAxisLabels.push_back("sumJetPt");
+  xAxisLabels.push_back("HT");
   xAxisLabels.push_back("Jet0Pt");
   xAxisLabels.push_back("Jet0Mass");
 
+  //adding top tag cuts
   cutCats.push_back("_");
   cutCats.push_back("_2tagMass_");
   cutCats.push_back("_2tagMass_2tagTau32_");
 
-  numLabels.push_back("PFHT700TrimMass50"); numTrig.push_back(13);
-  numLabels.push_back("PFHT800"); numTrig.push_back(6);
-  numLabels.push_back("PFHT900"); numTrig.push_back(7);
+  //adjusting the minimum jet pt
+  ptCutLabels.push_back("_minpt300"); ptCuts.push_back(300.);
+  ptCutLabels.push_back("_minpt400"); ptCuts.push_back(400.);
+  ptCutLabels.push_back("_minpt450"); ptCuts.push_back(450.);
+  ptCutLabels.push_back("_minpt500"); ptCuts.push_back(500.);
 
-  numOrLabels.push_back("PFJet450"); numOrTrig.push_back(10);
-  numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(12);
-  
-  //denominator histograms
-  TH1D *histos_passPFHT650denom[xAxisLabels.size()][cutCats.size()];
+  //trigger numerators and denominators
+  if (!isRunH){//Runs B - G
+    numLabels.push_back("PFHT700TrimMass50"); numTrig.push_back(13);
+    numLabels.push_back("PFHT800"); numTrig.push_back(6);
+    numLabels.push_back("PFHT900"); numTrig.push_back(7);
 
-  //numerator histograms
-  TH1D *histos_num[xAxisLabels.size()][cutCats.size()][numLabels.size()];
-  TH1D *histos_numOr[xAxisLabels.size()][cutCats.size()][numLabels.size()][numOrLabels.size()];
+    numOrLabels.push_back("PFJet450"); numOrTrig.push_back(10);
+    numOrLabels.push_back("AK8PFJet450"); numOrTrig.push_back(30);
+    numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(12);
+    numOrLabels.push_back("AK8DiPFJet280_200_TrimMass30"); numOrTrig.push_back(15);
+
+    denomLabels.push_back("PFHT650");
+    denomLabels.push_back("Mu50orIsoMu24");
+  }
+  else{ //Problems with HT triggers in run H - need Or with single jet triggers                                                              
+    numLabels.push_back("PFHT700TrimMass50"); numTrig.push_back(12);
+    numLabels.push_back("PFHT900"); numTrig.push_back(6);
+
+    numOrLabels.push_back("PFJet450"); numOrTrig.push_back(9);
+    numOrLabels.push_back("AK8PFJet450"); numOrTrig.push_back(27);
+    numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(11);
+    numOrLabels.push_back("AK8DiPFJet280_200_TrimMass30"); numOrTrig.push_back(14);
+
+    denomLabels.push_back("PFHT650");
+    denomLabels.push_back("Mu50orIsoMu24");
+  }
+  //denominator histograms                                                                                                                   
+  TH1D *histos_denom[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()];
+
+  //numerator histograms                                                                                                                     
+  TH1D *histos_num[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()];
+  TH1D *histos_numOr[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()][numOrLabels.size()];
 
   //naming histograms
   for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-    for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-      histos_passPFHT650denom[i_xAxisLabels][i_cutCats] = new TH1D(Form("h_passPFHT650denom%s%s",cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
-      for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-        histos_num[i_xAxisLabels][i_cutCats][i_numLabels] = new TH1D(Form("h_pass%snumPFHT650denom%s%s",numLabels[i_numLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
-        for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels] = new TH1D(Form("h_pass%sor%snumPFHT650denom%s%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+    for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){ 
+      for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+	for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
+	  histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels] = new TH1D(Form("h_pass%sdenom%s%s%s",denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	    histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels] = new TH1D(Form("h_pass%snum%sdenom%s%s%s",numLabels[i_numLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels] = new TH1D(Form("h_pass%sor%snum%sdenom%s%s%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+	  }
+	}
       }
     }
   }
 
+	
   for (int i=0; i<treeNentries; i++ ){ //entries                                                                                                  
     if (i%10000==0) cout<<i<<"  / "<<treeNentries<<endl;
 
@@ -367,19 +419,28 @@ void looptree_trig(
     bool jets_top_tag = jets_tag_mass && j0_tag_tau32 && j1_tag_tau32;
 
     float sumJetPt = Jet0Pt + Jet1Pt;
+    float deltaPhi = abs(Jet0Phi - Jet1Phi);
+
     string trigBitsString = AllHadTrigAcceptBits->c_str();
-    int trigBits = std::stoi(trigBitsString,nullptr,2);
+    int trigBits = std::stol(trigBitsString,nullptr,2);
 
     vector <float> xAxisVars;
     vector <bool> cuts;
+    vector <bool> denomTrigPass;
 
     xAxisVars.push_back(sumJetPt);
+    xAxisVars.push_back(HT);
     xAxisVars.push_back(Jet0Pt);
     xAxisVars.push_back(Jet0Mass);
 
     cuts.push_back(1);
     cuts.push_back(jets_tag_mass);
     cuts.push_back(jets_top_tag);
+
+    denomTrigPass.push_back((trigBits>>5)&1);//PFHT650
+    //Mu50orIsoMu24 
+    if (!isRunH) denomTrigPass.push_back(((trigBits>>17)&1) || ((trigBits>>20)&1));
+    else denomTrigPass.push_back(((trigBits>>16)&1) || ((trigBits>>19)&1));
 
     //make sure vector lengths are consistent
     if (xAxisVars.size() != xAxisLabels.size()){
@@ -390,16 +451,30 @@ void looptree_trig(
       break;
       cout << "Incorrect length of cuts vector!" << endl;
     }
-
+    if (denomTrigPass.size() != denomLabels.size()){
+      break;
+      cout << "Incorrect length of denominator vector!" << endl;
+    }
+    
     //filling histograms
-    for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-      for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-        if (cuts[i_cutCats] && ((trigBits>>5)&1)){
-          histos_passPFHT650denom[i_xAxisLabels][i_cutCats]->Fill(xAxisVars[i_xAxisLabels]);
-          for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-            if ((trigBits>>numTrig[i_numLabels])&1) histos_num[i_xAxisLabels][i_cutCats][i_numLabels]->Fill(xAxisVars[i_xAxisLabels]);
-            for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
-              if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels]->Fill(xAxisVars[i_xAxisLabels]);
+    if (deltaPhi > 2.1){
+      for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){
+	if ((Jet0Pt > ptCuts[i_ptCutLabels]) && (Jet1Pt > ptCuts[i_ptCutLabels])){
+	  for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+	    if (cuts[i_cutCats]){
+	      for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
+		if (denomTrigPass[i_denomLabels]){
+		  for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+		    histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Fill(xAxisVars[i_xAxisLabels]);
+		    for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+		      if ((trigBits>>numTrig[i_numLabels])&1) histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Fill(xAxisVars[i_xAxisLabels]);
+		      for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
+			if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Fill(xAxisVars[i_xAxisLabels]);
+		      }
+		    }
+		  }
+		}
+	      }
             }
           }
         }
@@ -408,6 +483,7 @@ void looptree_trig(
     
     xAxisVars.clear(); 
     cuts.clear();
+    denomTrigPass.clear();
   }
 
   string outName = output_folder+"outRunTrigEff_"+date+"_"+input_file;
@@ -417,11 +493,15 @@ void looptree_trig(
 
   //writing histograms
   for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-    for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-      histos_passPFHT650denom[i_xAxisLabels][i_cutCats]->Write();
-      for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-        histos_num[i_xAxisLabels][i_cutCats][i_numLabels]->Write();
-        for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels]->Write();
+    for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){
+      for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+	for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
+	  histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Write();
+	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	    histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Write();
+	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Write();
+	  }
+	}
       }
     }
   }
@@ -487,7 +567,7 @@ void looptree(
   // Get intput file
   string file_name =  input_folder+input_file;
   cout<<"opening "<<file_name<<endl;
-  TFile *F1   = new TFile(file_name.c_str() );
+  TFile *F1   = TFile::Open(file_name.c_str() );
 
   // Get Tree entries
   Int_t   PassMETFilters                            ;
