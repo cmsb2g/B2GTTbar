@@ -35,18 +35,14 @@ class B2GSelectSemiLepTTbar_IsoStd( ) :
         self.ak8SDJet = None
         
 
-        self.leptonP4 = ROOT.TLorentzVector()
+        self.leptonP4 = ROOT.TLorentzVector()        
         self.leptonP4.SetPtEtaPhiM( self.tree.LeptonPt[0], self.tree.LeptonEta[0], self.tree.LeptonPhi[0], 0)
+        #print 'lepton : (%8.1f %6.3f %6.3f %8.1f)' % ( self.leptonP4.Perp(), self.leptonP4.Eta(), self.leptonP4.Phi(), self.leptonP4.M() )
         self.nuP4 = ROOT.TLorentzVector( self.tree.SemiLeptMETpt[0], self.tree.SemiLeptMETpx[0], self.tree.SemiLeptMETpy[0], 0. )
+        #print 'nu     : (%8.1f %6.3f %6.3f %8.1f)' % ( self.nuP4.Perp(), self.nuP4.Eta(), self.nuP4.Phi(), self.nuP4.M() )
         self.ak4Jet = ROOT.TLorentzVector()
-        # INCORRECT: NEED TO FILL JET MASS FOR AK4 JETS
-        # For now it is okay because we only use the 3-vector (delta r to lepton)
-        self.ak4Jet.SetPtEtaPhiM( self.tree.AK4dRminPt[0], self.tree.AK4dRminEta[0], self.tree.AK4dRminPhi[0], 0. )
-        if self.printAK4Warning :
-            print '----------------------------------- WARNING --------------------------------------'
-            print '    AK4 jet mass is not set correctly. It is set to zero because it is not filled.'
-            print '    To be fixed. Do NOT use the AK4 four vector, but you can use the three vector.'
-            self.printAK4Warning = False
+        self.ak4Jet.SetPtEtaPhiM( self.tree.AK4_dRminLep_Pt[0], self.tree.AK4_dRminLep_Eta[0], self.tree.AK4_dRminLep_Phi[0], self.tree.AK4_dRminLep_Mass[0] )
+        #print 'ak4Jet : (%8.1f %6.3f %6.3f %8.1f)' % ( self.ak4Jet.Perp(), self.ak4Jet.Eta(), self.ak4Jet.Phi(), self.ak4Jet.M() )
 
         # Work the cut flow
         # Stage 0 : None.

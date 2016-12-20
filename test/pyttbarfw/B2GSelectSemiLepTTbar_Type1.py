@@ -37,12 +37,18 @@ class B2GSelectSemiLepTTbar_Type1( ) :
         self.ak8SDJet = None
         self.ak8SDJet_Subjet0 = None
         self.ak8SDJet_Subjet1 = None
-        self.ak4JetBdisc = None        
+        self.ak4JetBdisc = None
         
+        # Work the cut flow
+        self.passed = [False] * self.nstages
+        self.passed[0] = self.lepsel.passed[ len(self.lepsel.passed) - 1]
+        if not self.passed[0] : return self.passed
+
+        if self.tree.JetPuppiPt[0] < 0 : return self.passed        
 
         self.ak4Jet = ROOT.TLorentzVector( )        
-        self.ak4Jet.SetPtEtaPhiM( self.tree.AK4dRminPt[0], self.tree.AK4dRminEta[0], self.tree.AK4dRminPhi[0], 0 )
-        self.ak4JetBdisc = self.tree.AK4dRminBdisc[0]
+        self.ak4Jet.SetPtEtaPhiM( self.tree.AK4_dRminLep_Pt[0], self.tree.AK4_dRminLep_Eta[0], self.tree.AK4_dRminLep_Phi[0], self.tree.AK4_dRminLep_Mass[0] )
+        self.ak4JetBdisc = self.tree.AK4_dRminLep_Bdisc[0]
         self.ak8Jet = ROOT.TLorentzVector()
         self.ak8Jet.SetPtEtaPhiM( self.tree.JetPuppiPt[0], self.tree.JetPuppiEta[0], self.tree.JetPuppiPhi[0], self.tree.JetPuppiMass[0] )        
         self.ak8SDJet_Subjet0 = ROOT.TLorentzVector()
@@ -55,10 +61,7 @@ class B2GSelectSemiLepTTbar_Type1( ) :
         #print 'ak8SDJet = (%6.2f,%8.3f,%8.3f,%6.2f)' % ( self.ak8SDJet.Perp(), self.ak8SDJet.Eta(), self.ak8SDJet.Phi(), self.ak8SDJet.M() )
 
 
-        # Work the cut flow
-        self.passed = [False] * self.nstages
-        self.passed[0] = self.lepsel.passed[ len(self.lepsel.passed) - 1]
-        if not self.passed[0] : return self.passed
+
 
         if not (self.ak8Jet.Perp() > 400. and abs(self.ak8Jet.Eta()) < 2.4 and self.ak8Jet.DeltaR( self.lepsel.leptonP4) > 1.0 ) : return self.passed
         self.passed[1] = True

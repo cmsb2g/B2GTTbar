@@ -32,7 +32,8 @@ import ROOT
 
 xs_ttbar = 831.
 nev_ttbar = 92925926.
-lumi = 20000. # pb-1
+
+lumi = 36220. # pb-1
 
 xs_wjets = [
     1345.,     #100To200  
@@ -45,16 +46,53 @@ xs_wjets = [
     ]
 
 nev_wjets = [
-    26304033., #100To200   10 / 214 failed
+    10231928., #100To200   10 / 214 failed
     4963240.,  #200To400 
     1963464.,  #400To600 
     3722395.,  #600To800
-    6314257.,  #800To1200 
-    5215198.,  #1200To2500 12 / 54 failed  (total = 6817172)
+    1540477.,  #800To1200 
+    246737.,   #1200To2500 12 / 54 failed  (total = 6817172)
     253561.,   #2500ToInf 
+    ]
+xs_qcd = [
+    27990000., # 100To200
+    1712000.,  # 200To300
+    347700.,   # 300To500
+    32100.,    # 500To700
+    6831.,     # 700To1000
+    1207.,     # 1000To1500
+    119.9,     # 1500To2000
+    25.24,     # 2000ToInf 
+    ]
+
+nev_qcd = [
+    82073090., # 100To200  
+    18523829., # 200To300  
+    16830696., # 300To500  
+    19199088., # 500To700  
+    15621634., # 700To1000 
+    4980387.,  # 1000To1500
+    3846616.,  # 1500To2000
+    1960245.   # 2000ToInf 
+    ]
+
+xs_singletop = [
+    136.02 * 0.322,#singletop_tchanneltop_outfile.root
+    80.95 * 0.322, #singletop_tchannel_outfile.root
+    35.6,          #singletop_tW_outfile.root
+    35.6,          #singletop_tWantitop_outfile.root
+    3.36           #singletop_schannel_outfile.root    
+    ]
+nev_singletop = [
+    32808300.,
+    19825855.,
+    998400.,
+    985000.,
+    1000000.
     ]
 
 
+    
 ROOT.gStyle.SetOptStat(000000)
 
 
@@ -74,7 +112,25 @@ wjetsfiles = [
 wjets_colors = [ 
     ROOT.kWhite,ROOT.kRed - 9, ROOT.kRed - 7, ROOT.kRed - 4, ROOT.kRed, ROOT.kRed +1, ROOT.kRed +2   ]
 
+qcdfiles = [
+    ROOT.TFile('qcd100_outfile.root'),
+    ROOT.TFile('qcd200_outfile.root'),
+    ROOT.TFile('qcd300_outfile.root'),
+    ROOT.TFile('qcd500_outfile.root'),
+    ROOT.TFile('qcd700_outfile.root'),
+    ROOT.TFile('qcd1000_outfile.root'),
+    ROOT.TFile('qcd1500_outfile.root'),
+    ROOT.TFile('qcd2000_outfile.root'),
+    ]
 
+singletopfiles = [
+    ROOT.TFile("singletop_tchanneltop_outfile.root"),
+    ROOT.TFile("singletop_tchannel_outfile.root"),
+    ROOT.TFile("singletop_tW_outfile.root"),
+    ROOT.TFile("singletop_tWantitop_outfile.root"),
+    ROOT.TFile("singletop_schannel_outfile.root"),
+    ]
+    
 objs = []
 
 for istage in xrange(11) : 
@@ -107,11 +163,57 @@ for istage in xrange(11) :
 
     hwjets.SetFillColor( ROOT.kRed )
 
+
+    hqcd_list = []
+    hqcd = None
+    hqcd_stack = ROOT.THStack("hqcd_stack", "hqcd_stack")
+
+    for iqcd in xrange(len(qcdfiles)) :
+        htemp = qcdfiles[iqcd].Get(options.hist + str(istage))
+        htemp.Scale( xs_qcd[iqcd] / nev_qcd[iqcd] * lumi )
+        hqcd_list.append( htemp )
+        #htemp.SetFillColor( qcd_colors[iqcd] )
+        if iqcd == 0 :
+            hqcd = htemp.Clone('hqcd')
+        else :
+            hqcd.Add( htemp )
+        hqcd_stack.Add( htemp )
+    #hqcd_stack.Draw("hist")
+
+
+    hqcd.SetFillColor( ROOT.kYellow )
+    
+
+
+    hsingletop_list = []
+    hsingletop = None
+    hsingletop_stack = ROOT.THStack("hsingletop_stack", "hsingletop_stack")
+
+    for isingletop in xrange(len(singletopfiles)) :
+        htemp = singletopfiles[isingletop].Get(options.hist + str(istage))
+        htemp.Scale( xs_singletop[isingletop] / nev_singletop[isingletop] * lumi )
+        hsingletop_list.append( htemp )
+        #htemp.SetFillColor( singletop_colors[isingletop] )
+        if isingletop == 0 :
+            hsingletop = htemp.Clone('hsingletop')
+        else :
+            hsingletop.Add( htemp )
+        hsingletop_stack.Add( htemp )
+    #hsingletop_stack.Draw("hist")
+
+
+    hsingletop.SetFillColor( ROOT.kMagenta )
+    
+    
+    hqcd.Rebin(10)
+    hsingletop.Rebin(10)
     hwjets.Rebin(10)
     httbar.Rebin(10)
     hdata.Rebin(10)
 
     hstack = ROOT.THStack("bkgs", "")
+    hstack.Add( hqcd )
+    hstack.Add( hsingletop )
     hstack.Add( hwjets )
     hstack.Add( httbar )
 
@@ -127,6 +229,8 @@ for istage in xrange(11) :
     leg.AddEntry( hdata, 'Data', 'p')
     leg.AddEntry( httbar, 't#bar{t}', 'f')
     leg.AddEntry( hwjets, 'W+jets', 'f')
+    leg.AddEntry( hsingletop, 'Single top', 'f')
+    leg.AddEntry( hqcd, 'QCD', 'f')
     leg.Draw()
     
     c1.Update()
