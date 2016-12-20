@@ -77,7 +77,7 @@ class B2GSelectSemiLepTTbar_Iso2D( ) :
 
         # NOTE: This jet cut was found to be strongly suboptimal by the semileptonic team. They had better performance at pt > 15 GeV, with 
         # delta R < 0.4 and ptrel > 20. For now, we will raise the HTLep cut and ptrel cut but we need to fix this. 
-        if not ( self.ak4Jet.Perp() > 50. and abs(self.ak4Jet.Eta()) < 2.4 and (self.tree.DeltaRJetLep[0] > 0.4 or self.tree.PtRel[0] > 40. ) ) : return self.passed
+        if not ( self.ak4Jet.Perp() > 50. and abs(self.ak4Jet.Eta()) < 2.4 and (self.tree.AK4_dRminLep_dRlep[0] > 0.4 or self.tree.PtRel[0] > 40. ) ) : return self.passed
         self.passed[4] = True
         
         if not ( (self.leptonP4 + self.nuP4).Perp() > 300. ) : return self.passed

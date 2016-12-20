@@ -257,8 +257,8 @@ class B2GTTreeSemiLep( ) :
             'MuTight':'i',
             'MuMedium':'i',
             'MuIso':'f',
-            'DeltaRJetLep':'f',
-            'DeltaPhiJetLep':'f',
+            #'DeltaRJetLep':'f',
+            #'DeltaPhiJetLep':'f',
           }
 
 
