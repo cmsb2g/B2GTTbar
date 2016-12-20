@@ -113,7 +113,7 @@ class RunSemiLepTTbar() :
         print 'processing ', self.eventsToRun, ' events'
 
         for jentry in xrange( self.eventsToRun ):
-            if jentry % 100000 == 0 :
+            if jentry % 10000 == 0 :
                 print 'processing ' + str(jentry)
             # get the next tree in the chain and verify            
             ientry = self.treeobj.tree.GetEntry( jentry )        
