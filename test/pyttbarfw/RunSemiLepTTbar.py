@@ -67,6 +67,11 @@ class RunSemiLepTTbar() :
                           default = 0.7,
                           help='B discriminator cut')
 
+        parser.add_option('--maxevents', type='int', action='store',
+                          dest='maxevents',
+                          default = None,
+                          help='Maximum number of events')
+        
         parser.add_option('--ignoreTrig', action='store_true',
                           dest='ignoreTrig',
                           default = False,
@@ -89,14 +94,17 @@ class RunSemiLepTTbar() :
 
         print 'Getting entries'
         entries = self.treeobj.tree.GetEntries()
-        self.eventsToRun = entries
+        if options.maxevents == None or options.maxevents < 0 : 
+            self.eventsToRun = entries
+        else : 
+            self.eventsToRun = min( options.maxevents, entries )
 
         ### Here is the semileptonic ttbar selection for W jets
         self.lepSelection = B2GSelectSemiLepTTbar_IsoStd.B2GSelectSemiLepTTbar_IsoStd( options, self.treeobj )
         self.hadSelection = B2GSelectSemiLepTTbar_Type2.B2GSelectSemiLepTTbar_Type2( options, self.treeobj, self.lepSelection )
 
         self.nstages = self.lepSelection.nstages + self.hadSelection.nstages
-        
+        self.nlep = 2 # Electrons and muons
 
         ### Book histograms
         self.book()
@@ -151,21 +159,37 @@ class RunSemiLepTTbar() :
         self.AK8MHist = []
         self.AK8MSDHist = []
         self.AK8MSDSJ0Hist = []
+        self.lepNames = ['Muon', 'Electron']
 
         self.hists = []
-        for ival in xrange(self.nstages):
-            self.AK8PtHist.append( ROOT.TH1F("AK8PtHist" +  str(ival), "Jet p_{T}, Stage " + str(ival), 1000, 0, 1000) )
-            self.AK8EtaHist.append( ROOT.TH1F("AK8EtaHist" +  str(ival), "Jet #eta, Stage " + str(ival), 1000, -2.5, 2.5) )
-            self.AK8MHist.append( ROOT.TH1F("AK8MHist" +  str(ival), "Jet Mass, Stage " + str(ival), 1000, 0, 500) )
-            self.AK8MSDHist.append( ROOT.TH1F("AK8MSDHist" +  str(ival), "Jet Soft Dropped Mass, Stage " + str(ival), 1000, 0, 500) )
-            self.AK8MSDSJ0Hist.append( ROOT.TH1F("AK8MSDSJ0Hist" +  str(ival), "Leading Subjet Soft Dropped Mass, Stage " + str(ival), 1000, 0, 500) )
+        for ilep in xrange(self.nlep) :
+            self.AK8PtHist.append([])
+            self.AK8EtaHist.append([])
+            self.AK8MHist.append([])
+            self.AK8MSDHist.append([])
+            self.AK8MSDSJ0Hist.append([])
 
-            self.LeptonPtHist.append( ROOT.TH1F("LeptonPtHist" +  str(ival), "Lepton p_{T}, Stage " + str(ival), 1000, 0, 1000) )
-            self.LeptonEtaHist.append( ROOT.TH1F("LeptonEtaHist" +  str(ival), "Lepton #eta, Stage " + str(ival), 1000, -2.5, 2.5) )
+            self.LeptonPtHist.append([])
+            self.LeptonEtaHist.append([])
 
-            self.METPtHist.append( ROOT.TH1F("METPtHist" +  str(ival), "Missing p_{T}, Stage " + str(ival), 1000, 0, 1000) )
-            self.HTLepHist.append( ROOT.TH1F("HTLepHist" +  str(ival), "Lepton p_{T} + Missing p_{T}, Stage " + str(ival), 1000, 0, 1000) )
-            self.Iso2DHist.append ( ROOT.TH2F("Iso2DHist" +  str(ival), "Lepton 2D isolation (#Delta R vs p_{T}^{REL} ), Stage " + str(ival), 25, 0, 500, 25, 0, 1) )
+            self.METPtHist.append([])
+            self.HTLepHist.append([])
+            self.Iso2DHist.append([])
+
+                
+            for ival in xrange(self.nstages):
+                self.AK8PtHist[ilep].append( ROOT.TH1F("AK8PtHist" + self.lepNames[ilep] + str(ival), "Jet p_{T}, " + self.lepNames[ilep] + ", Stage " + str(ival), 1000, 0, 1000) )
+                self.AK8EtaHist[ilep].append( ROOT.TH1F("AK8EtaHist" + self.lepNames[ilep] + str(ival), "Jet #eta, " + self.lepNames[ilep] + ", Stage " + str(ival), 1000, -2.5, 2.5) )
+                self.AK8MHist[ilep].append( ROOT.TH1F("AK8MHist" + self.lepNames[ilep] + str(ival), "Jet Mass, " + self.lepNames[ilep] + ", Stage " + str(ival), 1000, 0, 500) )
+                self.AK8MSDHist[ilep].append( ROOT.TH1F("AK8MSDHist" + self.lepNames[ilep] + str(ival), "Jet Soft Dropped Mass, " + self.lepNames[ilep] + ", Stage " + str(ival), 1000, 0, 500) )
+                self.AK8MSDSJ0Hist[ilep].append( ROOT.TH1F("AK8MSDSJ0Hist" + self.lepNames[ilep] + str(ival), "Leading Subjet Soft Dropped Mass, " + self.lepNames[ilep] + ", Stage " + str(ival), 1000, 0, 500) )
+
+                self.LeptonPtHist[ilep].append( ROOT.TH1F("LeptonPtHist" + self.lepNames[ilep] + str(ival), "Lepton p_{T}, " + self.lepNames[ilep] + ", Stage " + str(ival), 1000, 0, 1000) )
+                self.LeptonEtaHist[ilep].append( ROOT.TH1F("LeptonEtaHist" + self.lepNames[ilep] + str(ival), "Lepton #eta, " + self.lepNames[ilep] + ", Stage " + str(ival), 1000, -2.5, 2.5) )
+
+                self.METPtHist[ilep].append( ROOT.TH1F("METPtHist" + self.lepNames[ilep] + str(ival), "Missing p_{T}, " + self.lepNames[ilep] + ", Stage " + str(ival), 1000, 0, 1000) )
+                self.HTLepHist[ilep].append( ROOT.TH1F("HTLepHist" + self.lepNames[ilep] + str(ival), "Lepton p_{T} + Missing p_{T}, " + self.lepNames[ilep] + ", Stage " + str(ival), 1000, 0, 1000) )
+                self.Iso2DHist[ilep].append ( ROOT.TH2F("Iso2DHist" + self.lepNames[ilep] + str(ival), "Lepton 2D isolation (#Delta R vs p_{T}^{REL} ), " + self.lepNames[ilep] + ", Stage " + str(ival), 25, 0, 500, 25, 0, 1) )
 
             
 
@@ -175,21 +199,22 @@ class RunSemiLepTTbar() :
         member variable in the Selector class to cache the variable and just fill here. 
         '''
         a = self.lepSelection
-        b = self.hadSelection        
+        b = self.hadSelection
+        ilep = a.tree.LeptonIsMu[0]
         if b.ak8Jet != None :
-            self.AK8PtHist[index].Fill( b.ak8Jet.Perp() )
-            self.AK8EtaHist[index].Fill( b.ak8Jet.Eta() )
-            self.AK8MHist[index].Fill( b.ak8Jet.M() )
-            self.AK8MSDHist[index].Fill( b.ak8SDJet.M() )
-            self.AK8MSDSJ0Hist[index].Fill( b.ak8SDJet_Subjet0.M() )
+            self.AK8PtHist[ilep][index].Fill( b.ak8Jet.Perp() )
+            self.AK8EtaHist[ilep][index].Fill( b.ak8Jet.Eta() )
+            self.AK8MHist[ilep][index].Fill( b.ak8Jet.M() )
+            self.AK8MSDHist[ilep][index].Fill( b.ak8SDJet.M() )
+            self.AK8MSDSJ0Hist[ilep][index].Fill( b.ak8SDJet_Subjet0.M() )
 
         if a.leptonP4 != None : 
-            self.LeptonPtHist[index].Fill( a.leptonP4.Perp() )
-            self.LeptonEtaHist[index].Fill( a.leptonP4.Eta() )
-            self.METPtHist[index].Fill( a.nuP4.Perp() )
-            self.HTLepHist[index].Fill( a.leptonP4.Perp() + a.nuP4.Perp() )
+            self.LeptonPtHist[ilep][index].Fill( a.leptonP4.Perp() )
+            self.LeptonEtaHist[ilep][index].Fill( a.leptonP4.Eta() )
+            self.METPtHist[ilep][index].Fill( a.nuP4.Perp() )
+            self.HTLepHist[ilep][index].Fill( a.leptonP4.Perp() + a.nuP4.Perp() )
             if a.ak4Jet != None : 
-                self.Iso2DHist[index].Fill( a.leptonP4.Perp( a.ak4Jet.Vect() ), a.leptonP4.DeltaR( a.ak4Jet ) )
+                self.Iso2DHist[ilep][index].Fill( a.leptonP4.Perp( a.ak4Jet.Vect() ), a.leptonP4.DeltaR( a.ak4Jet ) )
             
 
 

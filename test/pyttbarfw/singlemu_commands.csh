@@ -1,13 +1,13 @@
 
 python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_ttbar_all_V4.root --outfile ttbar_outfile.root >& ttbar_outfile_out.log &
 
-python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_100_V4.root --outfile wjets100to200_outfile.root >& wjets100to200_outfile_out.log &
-python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_200_V4.root --outfile wjets200to400_outfile.root >& wjets200to400_outfile_out.log &
-python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_400_V4.root --outfile wjets400to600_outfile.root >& wjets400to600_outfile_out.log &
-python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_600_V4.root --outfile wjets600to800_outfile.root >& wjets600to800_outfile_out.log &
-python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_800_V4.root  --outfile wjets800to1200_outfile.root >& wjets800to1000_outfile_out.log &
-python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_1200_V4.root --outfile wjets1200to2500_outfile.root >& wjets1200to2500_outfile_out.log &
-python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_2500_V4.root --outfile wjets2500toinf_outfile.root >& wjets2500toinf_outfile_out.log &
+python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_100_V4.root --outfile wjets100to200_outfile.root --ignoreTrig >& wjets100to200_outfile_out.log &
+python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_200_V4.root --outfile wjets200to400_outfile.root --ignoreTrig >& wjets200to400_outfile_out.log &
+python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_400_V4.root --outfile wjets400to600_outfile.root --ignoreTrig >& wjets400to600_outfile_out.log &
+python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_600_V4.root --outfile wjets600to800_outfile.root --ignoreTrig >& wjets600to800_outfile_out.log &
+python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_800_V4.root  --outfile wjets800to1200_outfile.root --ignoreTrig >& wjets800to1000_outfile_out.log &
+python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_1200_V4.root --outfile wjets1200to2500_outfile.root --ignoreTrig >& wjets1200to2500_outfile_out.log &
+python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_2500_V4.root --outfile wjets2500toinf_outfile.root --ignoreTrig >& wjets2500toinf_outfile_out.log &
 
 
 python RunSemiLepTTbar.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_data_Run2016B_all_V4.root --outfile run2016b_outfile.root

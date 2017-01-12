@@ -21,9 +21,9 @@ class B2GSelectSemiLepTTbar_Iso2D( ) :
         self.trigIndex = [
             self.trigMap.HLT_Mu30_eta2p1_PFJet150_PFJet50_v,
             self.trigMap.HLT_Mu40_eta2p1_PFJet200_PFJet50_v,
-            #self.trigMap.HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v,
-            #self.trigMap.HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet140_v,
-            #self.trigMap.HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165_v
+            self.trigMap.HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v,
+            self.trigMap.HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet140_v,
+            self.trigMap.HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165_v
             ]
 
         self.printAK4Warning = True
@@ -69,7 +69,11 @@ class B2GSelectSemiLepTTbar_Iso2D( ) :
         else :
             self.passed[1] = True
 
-        if not ( self.tree.LeptonIsMu[0] == 1 and self.leptonP4.Perp() > 60. and abs(self.leptonP4.Eta()) < 2.1 and self.tree.MuTight[0] ) : return self.passed
+
+        passMuon = self.tree.LeptonIsMu[0] == 1 and self.leptonP4.Perp() > 60. and abs(self.leptonP4.Eta()) < 2.1 and self.tree.MuTight[0]
+        passElectron = self.tree.LeptonIsMu[0] == 0 and self.leptonP4.Perp() > 55. and abs(self.leptonP4.Eta()) < 2.5 and self.tree.Electron_noiso_passMedium[0]
+
+        if not ( passMuon or passElectron ) : return self.passed
         self.passed[2] = True
         
         if not (self.nuP4.Perp() > 50.) : return self.passed
