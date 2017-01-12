@@ -10,22 +10,6 @@ python RunSemiLepTTbar_HighMass.py --infile root://131.225.207.127:1094//store/u
 python RunSemiLepTTbar_HighMass.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_MC_wjets_2500_V4.root --ignoreTrig --outfile wjets2500toinf_highmass_outfile.root >& wjets2500toinf_highmass_outfile_out.log &
 
 
-python RunSemiLepTTbar_HighMass.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_data_Run2016B_all_V4.root --outfile run2016b_highmass_outfile.root
-python RunSemiLepTTbar_HighMass.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_data_Run2016C_all_V4.root --outfile run2016c_highmass_outfile.root
-python RunSemiLepTTbar_HighMass.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_data_Run2016D_all_V4.root --outfile run2016d_highmass_outfile.root
-python RunSemiLepTTbar_HighMass.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_mudata_Run2016B-23Sep_all_V4.root --outfile run2016b_highmass_outfile.root
-python RunSemiLepTTbar_HighMass.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_mudata_Run2016F-23Sep_all_V4.root
-python RunSemiLepTTbar_HighMass.py --infile root://131.225.207.127:1094//store/user/asparker/B2G2016/V4Trees/b2gtree_mudata_Run2016G-23Sep_all_V4.root
-
-
-
-
-hadd singlemu_run2016B_0.root `xrdfsls -u /store/user/jdolen/B2G2016/SingleMuon/crab_b2gtreeV4_SingleMuon_Run2016B-23Sep2016-v3_JSONnov14/161116_084007/0000/ | grep '\.root'`
-hadd singlemu_run2016B_1.root `xrdfsls -u /store/user/jdolen/B2G2016/SingleMuon/crab_b2gtreeV4_SingleMuon_Run2016B-23Sep2016-v3_JSONnov14/161116_084007/0001/ | grep '\.root'`
-hadd singlemu_run2016B_2.root `xrdfsls -u /store/user/jdolen/B2G2016/SingleMuon/crab_b2gtreeV4_SingleMuon_Run2016B-23Sep2016-v3_JSONnov14/161116_084007/0002/ | grep '\.root'`
-
-
-
 python RunSemiLepTTbar_HighMass.py --infile root://cmsxrootd.fnal.gov//store/user/rappocc/B2GAnaFWFiles16Dec2016/singlemu_run2016B.root --outfile singlemu_run2016B_highmass_histos.root > & singlemu_run2016B_highmass_histos.txt &
 python RunSemiLepTTbar_HighMass.py --infile root://cmsxrootd.fnal.gov//store/user/rappocc/B2GAnaFWFiles16Dec2016/singlemu_run2016C.root --outfile singlemu_run2016C_highmass_histos.root > & singlemu_run2016C_highmass_histos.txt &
 python RunSemiLepTTbar_HighMass.py --infile root://cmsxrootd.fnal.gov//store/user/rappocc/B2GAnaFWFiles16Dec2016/singlemu_run2016D.root --outfile singlemu_run2016D_highmass_histos.root > & singlemu_run2016D_highmass_histos.txt &
