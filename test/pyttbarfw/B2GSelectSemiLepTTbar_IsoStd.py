@@ -17,7 +17,7 @@ class B2GSelectSemiLepTTbar_IsoStd( ) :
         # Cached class member variables for plotting
         self.leptonP4 = None
         self.nuP4 = None
-        self.trigIndex = [self.trigMap.HLT_Mu45_eta2p1_v, self.trigMap.HLT_Mu50_v, self.trigMap.HLT_Mu55_v, self.trigMap.HLT_Ele105_CaloIdVT_GsfTrkIdT_v]
+        self.trigIndex = [self.trigMap.HLT_Mu45_eta2p1_v, self.trigMap.HLT_Mu50_v, self.trigMap.HLT_Mu55_v, self.trigMap.HLT_Ele35_WPLoose_Gsf_v, self.trigMap.HLT_Ele105_CaloIdVT_GsfTrkIdT_v]
         self.printAK4Warning = True
 
         self.passed = [False] * self.nstages  
