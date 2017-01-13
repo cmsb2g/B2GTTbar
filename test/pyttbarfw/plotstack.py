@@ -230,9 +230,15 @@ for istage in xrange(11) :
 
 
     c1 = ROOT.TCanvas("c" + str(istage), "c" + str(istage) )
+
+
+    
     hdata.Draw("e")
     hstack.Draw("hist same")
+    maxval = max( hdata.GetMaximum(), hstack.GetMaximum() )
+    hdata.SetMaximum( maxval * 1.2 )
     hdata.Draw("e same")
+    
 
     leg = ROOT.TLegend(0.8, 0.8, 1.0, 1.0)
     leg.SetFillColor(0)
