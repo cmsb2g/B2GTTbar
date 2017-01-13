@@ -27,8 +27,6 @@ parser.add_option('--highmass', action='store_true',
 
 
 
-
-
 (options, args) = parser.parse_args(sys.argv)
 argv = []
 
@@ -107,7 +105,10 @@ if options.highmass :
     instring = '_highmass'
 
 ttbarfile = ROOT.TFile('ttbar' + instring + '_outfile.root')
-datafile = ROOT.TFile('singlemu' + instring + '_run2016.root')
+if 'Electron' not in options.hist : 
+    datafile = ROOT.TFile('singlemu' + instring + '_outfile.root')
+else :
+    datafile = ROOT.TFile('singleel' + instring + '_outfile.root')
 
 wjetsfiles = [
     ROOT.TFile('wjets100to200' + instring + '_outfile.root'),
