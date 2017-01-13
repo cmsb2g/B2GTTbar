@@ -64,9 +64,10 @@ class B2GSelectSemiLepTTbar_IsoStd( ) :
             self.passed[1] = True
 
         passMuon = self.tree.LeptonIsMu[0] == 1 and self.leptonP4.Perp() > 53. and abs(self.leptonP4.Eta()) < 2.1 and self.tree.MuTight[0] and self.tree.MuIso[0] < 0.1
-        passElectron = self.tree.LeptonIsMu[0] == 0 and self.leptonP4.Perp() > 110. and abs(self.leptonP4.Eta()) < 2.5 and self.tree.Electron_iso_passMedium[0] and self.tree.Elecron_relIsoWithEA[0] < 0.15
+        passElectron = self.tree.LeptonIsMu[0] == 0 and self.leptonP4.Perp() > 110. and abs(self.leptonP4.Eta()) < 2.5 and self.tree.Electron_iso_passMedium[0] > 0 and self.tree.Elecron_relIsoWithEA[0] < 0.15
         if not ( passMuon or passElectron ) : return self.passed
         self.passed[2] = True
+
         
         if not (self.nuP4.Perp() > 40.) : return self.passed
         self.passed[3] = True

@@ -159,7 +159,7 @@ class RunSemiLepTTbar() :
         self.AK8MHist = []
         self.AK8MSDHist = []
         self.AK8MSDSJ0Hist = []
-        self.lepNames = ['Muon', 'Electron']
+        self.lepNames = ['Electron', 'Muon' ]
 
         self.hists = []
         for ilep in xrange(self.nlep) :
@@ -201,6 +201,7 @@ class RunSemiLepTTbar() :
         a = self.lepSelection
         b = self.hadSelection
         ilep = a.tree.LeptonIsMu[0]
+        print 'ilep = ', ilep
         if b.ak8Jet != None :
             self.AK8PtHist[ilep][index].Fill( b.ak8Jet.Perp() )
             self.AK8EtaHist[ilep][index].Fill( b.ak8Jet.Eta() )

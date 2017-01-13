@@ -151,7 +151,7 @@ class RunSemiLepTTbar_HighMass() :
         self.AK8MHist = []
         self.AK8MSDHist = []
         self.AK8MSDSJ0Hist = []
-        self.lepNames = ['Muon', 'Electron']
+        self.lepNames = ['Electron', 'Muon']
 
         self.hists = []
         for ilep in xrange(self.nlep) :
