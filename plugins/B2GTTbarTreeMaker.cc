@@ -3195,7 +3195,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     bool goodJet_looseJetID =  
          ( fabs(eta) <= 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 && CHF > 0.0  && CM > 0 && CEMF < 0.99   ) 
       || ( fabs(eta) <= 2.7 && fabs(eta) > 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 ) 
-      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NEMF < 0.9 && NM > 2 ) 
+      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NHF < 0.98 && NEMF > 0.01 && NM > 2 ) 
       || ( fabs(eta)  > 3.0 && NEMF < 0.9 && NM > 10 );
     if (verbose_) cout<<"  goodJet = "<<goodJet_looseJetID<<endl;
 
@@ -3421,8 +3421,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     bool goodJet_looseJetID =  
          ( fabs(eta) <= 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 && CHF > 0.0  && CM > 0 && CEMF < 0.99   ) 
       || ( fabs(eta) <= 2.7 && fabs(eta) > 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 ) 
-      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NEMF < 0.9 && NM > 2 ) 
+      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NHF < 0.98 && NEMF > 0.01 && NM > 2 ) 
       || ( fabs(eta)  > 3.0 && NEMF < 0.9 && NM > 10 );
+
     if (verbose_) cout<<"  goodJet = "<<goodJet_looseJetID<<endl;
 
     if (!goodJet_looseJetID) {
