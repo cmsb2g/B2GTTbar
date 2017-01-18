@@ -12,7 +12,7 @@ process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
 process.load('Configuration.StandardSequences.MagneticField_38T_cff')
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
-process.GlobalTag.globaltag = '80X_mcRun2_asymptotic_2016_miniAODv2_v1'
+process.GlobalTag.globaltag = '80X_mcRun2_asymptotic_2016_TrancheIV_v7'
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(False) )
 process.options.allowUnscheduled = cms.untracked.bool(True)
 
@@ -26,7 +26,11 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 10000
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-       'root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/RSGluonToTT_M-1500_TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/70000/5A55B211-4938-E611-90DE-F832E4CC4EB1.root'
+      'file:root://cmsxrootd.fnal.gov////store/mc/RunIISummer16MiniAODv2/RSGluonToTT_M-3000_TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/220B9096-25B7-E611-9E16-141877344D39.root',
+      'file:root://cmsxrootd.fnal.gov////store/mc/RunIISummer16MiniAODv2/RSGluonToTT_M-3000_TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/2CE514B5-2AB7-E611-BAAC-008CFA165F18.root',
+      'file:root://cmsxrootd.fnal.gov////store/mc/RunIISummer16MiniAODv2/RSGluonToTT_M-3000_TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/AABE4A83-29B7-E611-8747-0025907B4EC8.root',
+      'file:root://cmsxrootd.fnal.gov////store/mc/RunIISummer16MiniAODv2/RSGluonToTT_M-3000_TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/F697AF2E-26B7-E611-BA71-0090FAA57400.root'
+      #'root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/RSGluonToTT_M-1500_TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1/70000/5A55B211-4938-E611-90DE-F832E4CC4EB1.root'
       #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/0064B539-803A-E611-BDEA-002590D0B060.root',
       #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/008796C3-B53A-E611-8853-0025905C42A6.root',
       #'file:root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv2/TT_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14_ext3-v1/00000/00E165A2-C63A-E611-AA23-141877344134.root',
@@ -110,12 +114,12 @@ listBTagInfos = [
      'pfInclusiveSecondaryVertexFinderTagInfos',
 ]
 listBtagDiscriminatorsAK8 = [ 
-    'pfJetProbabilityBJetTags',
+    # 'pfJetProbabilityBJetTags',
     'pfCombinedInclusiveSecondaryVertexV2BJetTags',
-    'pfCombinedMVAV2BJetTags',
+    # 'pfCombinedMVAV2BJetTags',
     # 'pfCombinedCvsLJetTags',
     # 'pfCombinedCvsBJetTags',
-    'pfBoostedDoubleSecondaryVertexAK8BJetTags',
+    # 'pfBoostedDoubleSecondaryVertexAK8BJetTags',
     # 'pfBoostedDoubleSecondaryVertexCA15BJetTags',
 ]
 
@@ -190,7 +194,7 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     ak8puppiInput        = cms.InputTag("selectedPatJetsAK8PFPuppi"),
     ak8chsSubjetsInput   = cms.InputTag("selectedPatJetsAK8PFCHSSoftDropPacked","SubJets"),
     ak8puppiSubjetsInput = cms.InputTag("selectedPatJetsAK8PFPuppiSoftDropPacked","SubJets"),
-    triggerBits          = cms.InputTag("TriggerResults", "", "HLT2"),
+    triggerBits          = cms.InputTag("TriggerResults", "", "HLT"),
     lheSrc               = cms.InputTag("externalLHEProducer", "", "LHE"),
     eleIdFullInfoMapToken_HLTpre  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronHLTPreselection-Summer16-V1"),
     eleIdFullInfoMapToken_Loose   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-loose"),
@@ -198,32 +202,32 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     eleIdFullInfoMapToken_Tight   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-tight"),
     eleIdFullInfoMapToken_HEEP    = cms.InputTag("egmGsfElectronIDs:heepElectronID-HEEPV60"), 
     jecPayloadsAK8chs = cms.vstring([
-                                    'Spring16_25nsV6_MC_L1FastJet_AK8PFchs.txt',
-                                    'Spring16_25nsV6_MC_L2Relative_AK8PFchs.txt',
-                                    'Spring16_25nsV6_MC_L3Absolute_AK8PFchs.txt',
-                                    'Spring16_25nsV6_MC_L2L3Residual_AK8PFchs.txt',
-                                    'Spring16_25nsV6_MC_Uncertainty_AK8PFchs.txt'
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L1FastJet_AK8PFchs.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L2Relative_AK8PFchs.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L3Absolute_AK8PFchs.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L2L3Residual_AK8PFchs.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_Uncertainty_AK8PFchs.txt'
                                     ]),
     jecPayloadsAK4chs = cms.vstring([
-                                    'Spring16_25nsV6_MC_L1FastJet_AK4PFchs.txt',
-                                    'Spring16_25nsV6_MC_L2Relative_AK4PFchs.txt',
-                                    'Spring16_25nsV6_MC_L3Absolute_AK4PFchs.txt',
-                                    'Spring16_25nsV6_MC_L2L3Residual_AK4PFchs.txt',
-                                    'Spring16_25nsV6_MC_Uncertainty_AK4PFchs.txt'
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L1FastJet_AK4PFchs.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L2Relative_AK4PFchs.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L3Absolute_AK4PFchs.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L2L3Residual_AK4PFchs.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_Uncertainty_AK4PFchs.txt'
                                     ]),
     jecPayloadsAK8pup = cms.vstring([
-                                    'Spring16_25nsV6_MC_L1FastJet_AK8PFPuppi.txt',
-                                    'Spring16_25nsV6_MC_L2Relative_AK8PFPuppi.txt',
-                                    'Spring16_25nsV6_MC_L3Absolute_AK8PFPuppi.txt',
-                                    'Spring16_25nsV6_MC_L2L3Residual_AK8PFPuppi.txt',
-                                    'Spring16_25nsV6_MC_Uncertainty_AK8PFPuppi.txt'
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L1FastJet_AK8PFPuppi.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L2Relative_AK8PFPuppi.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L3Absolute_AK8PFPuppi.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L2L3Residual_AK8PFPuppi.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_Uncertainty_AK8PFPuppi.txt'
                                     ]),
     jecPayloadsAK4pup = cms.vstring([
-                                    'Spring16_25nsV6_MC_L1FastJet_AK4PFPuppi.txt',
-                                    'Spring16_25nsV6_MC_L2Relative_AK4PFPuppi.txt',
-                                    'Spring16_25nsV6_MC_L3Absolute_AK4PFPuppi.txt',
-                                    'Spring16_25nsV6_MC_L2L3Residual_AK4PFPuppi.txt',
-                                    'Spring16_25nsV6_MC_Uncertainty_AK4PFPuppi.txt'
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L1FastJet_AK4PFPuppi.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L2Relative_AK4PFPuppi.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L3Absolute_AK4PFPuppi.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_L2L3Residual_AK4PFPuppi.txt',
+                                    '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V2_MC/Summer16_23Sep2016V2_MC_Uncertainty_AK4PFPuppi.txt'
                                     ]),
     jerSFtext         = cms.string('Spring16_25nsV6_MC_SF_AK8PFchs.txt'
                                     )
