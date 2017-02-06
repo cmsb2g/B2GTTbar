@@ -111,7 +111,7 @@ switchOnVIDElectronIdProducer(process, dataFormat)
 my_id_modules = [
     'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronHLTPreselecition_Summer16_V1_cff',
     'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Summer16_80X_V1_cff',
-    'RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV60_cff'
+    'RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV70_cff'
 ]
 
 for idmod in my_id_modules:
