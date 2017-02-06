@@ -129,7 +129,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   addCMSTopTagger = False, 
   Cut = ak8Cut , 
   addNsubSubjets = True, 
-  subjetMaxTau = 4 )
+  subjetMaxTau = 3 )
 
 
 # |---- jetToolBox: JETTOOLBOX RUNNING ON MiniAOD FOR AK8 JETS USING Puppi
@@ -159,7 +159,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   addCMSTopTagger = False, 
   Cut = ak8pupCut , 
   addNsubSubjets = True, 
-  subjetMaxTau = 4 )
+  subjetMaxTau = 3 )
 
 #----------------------------------------------------------------------------------------
 ### Analyzer
