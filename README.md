@@ -26,15 +26,12 @@ cmsRun run_B2GTTbarTreeMaker_MC_testLocal_ZP2000w200.py
 
 
 **For analysis with Loop tree, you must also checkout the btag package and remove one line:**
-
-```
 cd CMSSW_8_0_26/src/
-```
 *Edit CondFormats/BTauObjects/src/classes.h  and comment out line 30 (it says BTagCalibration btc1;)* 
-```
 cd CondFormats/BTauObjects 
 scramv1 b
-cd ../../
+cd ../../Analysis/B2GTTbar/test/
+*run loop tree*
 ```
 
 

@@ -166,7 +166,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
 
 ## LOCAL RUNNING
 JECtxtlocation = '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V3_MC/'
-JERtxtlocation = '../../../JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV6_MC/'
+JERtxtlocation = '../../../JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV10_MC/'
 ## CRAB SUBMIT
 # JECtxtlocation=''
 # JERtxtlocation=''
@@ -247,9 +247,9 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
                                     '',
                                     ''
                                     ]),
-    jertextAK4        = cms.string(JERtxtlocation+'Spring16_25nsV6_MC_PtResolution_AK4PFchs.txt'),
-    jertextAK8        = cms.string(JERtxtlocation+'Spring16_25nsV6_MC_PtResolution_AK8PFchs.txt'),
-    jerSFtext         = cms.string(JERtxtlocation+'Spring16_25nsV6_MC_SF_AK8PFchs.txt')
+    jertextAK4        = cms.string(JERtxtlocation+'Spring16_25nsV10_MC_PtResolution_AK4PFchs.txt'),
+    jertextAK8        = cms.string(JERtxtlocation+'Spring16_25nsV10_MC_PtResolution_AK8PFchs.txt'),
+    jerSFtext         = cms.string(JERtxtlocation+'Spring16_25nsV10_MC_SF_AK8PFchs.txt')
                                     
 )
 
