@@ -2717,7 +2717,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   double puweightUp = hPUweight_MBup->GetBinContent( hPUweight_MBup->GetXaxis()->FindBin( nPU ) )  ;
   double puweightDn = hPUweight_MBdn->GetBinContent( hPUweight_MBdn->GetXaxis()->FindBin( nPU ) )  ;
 
-  if (verbose_) std::cout<<"PU weight: "<<puweight<<std::endl;
+  if (verbose_) std::cout<<"nPU true  "<<nPU<<"  PU weight: "<<puweight<<std::endl;
 
   h_NtrueIntPU ->Fill(nPU);
   h_NPV ->Fill(nvtx);
@@ -2801,11 +2801,11 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           NNPDF3wgt_frac = NNPDF3wgt/(centralWgt);
           NNPDF3wgtAvg += NNPDF3wgt_frac;
           if (verbose_){
-            cout << "-----" << endl;
+            // cout << "-----" << endl;
             cout << i_lhePDF - PDFstart << endl;
             cout << "Fractional PDF weight: " << NNPDF3wgt_frac << endl;
-            cout << "-----" << endl;
-            cout << "" << endl;
+            // cout << "-----" << endl;
+            // cout << "" << endl;
           }
         }
 
@@ -3071,8 +3071,25 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     vid::CutFlowResult masked_cutflow_Medium = full_cutflow_Medium    .getCutFlowResultMasking(7); // 7 = GsfEleEffAreaPFIsoCut_0
     vid::CutFlowResult masked_cutflow_Tight  = full_cutflow_Tight     .getCutFlowResultMasking(7); // 7 = GsfEleEffAreaPFIsoCut_0
 
+ //    CutFlow name= heepElectronID-HEEPV70    decision is 1
+ // Index                               cut name              isMasked    value-cut-upon     pass?
+ //   0                                              MinPtCut_0    0        184.027176          1
+ //   1                              GsfEleSCEtaMultiRangeCut_0    0        0.623662          1
+ //   2                                   GsfEleDEtaInSeedCut_0    0        0.000611          1
+ //   3                                       GsfEleDPhiInCut_0    0        0.000396          1
+ //   4                  GsfEleFull5x5SigmaIEtaIEtaWithSatCut_0    0        0.009297          1
+ //   5                   GsfEleFull5x5E2x5OverE5x5WithSatCut_0    0        1.061618          1
+ //   6                         GsfEleHadronicOverEMLinearCut_0    0        2.786542          1
+ //   7                               GsfEleValueMapIsoRhoCut_0    0        0.000000          1
+ //   8                                GsfEleEmHadD1IsoRhoCut_0    0        3.276085          1
+ //   9                                          GsfEleDxyCut_0    0        0.000517          1
+ //  10                                  GsfEleMissingHitsCut_0    0        0.000000          1
+ //  11                                   GsfEleEcalDrivenCut_0    0        1.000000          1
+
+
     std::vector<std::string> maskCuts;
-    maskCuts.push_back("GsfEleTrkPtIsoCut_0"); 
+    // maskCuts.push_back("GsfEleTrkPtIsoCut_0");  // OLD HEEP v6 only
+    maskCuts.push_back("GsfEleValueMapIsoRhoCut_0"); // new in HEEP v7
     maskCuts.push_back("GsfEleEmHadD1IsoRhoCut_0");
     vid::CutFlowResult masked_cutflow_HEEP   = full_cutflow_HEEP      .getCutFlowResultMasking(maskCuts);
 
