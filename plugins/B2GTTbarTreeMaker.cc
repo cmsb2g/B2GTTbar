@@ -2802,12 +2802,13 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           NNPDF3wgtAvg += NNPDF3wgt_frac;
           if (verbose_){
             // cout << "-----" << endl;
-            cout << i_lhePDF - PDFstart << endl;
-            cout << "Fractional PDF weight: " << NNPDF3wgt_frac << endl;
+            cout << i_lhePDF - PDFstart ;
+            cout << "   Fractional PDF weight: " << NNPDF3wgt_frac << endl;
             // cout << "-----" << endl;
             // cout << "" << endl;
           }
         }
+
 
         NNPDF3wgtAvg = NNPDF3wgtAvg/(PDFend - PDFstart);
         if (verbose_) cout << NNPDF3wgtAvg;
