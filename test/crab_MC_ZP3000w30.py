@@ -1,4 +1,5 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
+import os
 
 config = config()
 config.General.requestName = 'b2gtreeV5_ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2_testFeb6'
