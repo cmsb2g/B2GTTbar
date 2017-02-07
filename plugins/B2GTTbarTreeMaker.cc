@@ -259,6 +259,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
       TTree *TreeAllHad;   
 
+      std::vector<TLorentzVector> *AK4JETS     = new std::vector<TLorentzVector>;
       std::vector<std::string> *AllHadTrigNames     = new std::vector<std::string>;
       std::vector<int> *AllHadTrigPrescales = new std::vector<int>;
       std::vector<bool> *AllHadTrigPass    = new std::vector<bool>;
@@ -1168,6 +1169,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad = new TTree("TreeAllHad","TreeAllHad"); 
 
 
+  TreeAllHad->Branch("AK4JETS"       , "vector<TLorentzVector>", &AK4JETS);
   TreeAllHad->Branch("AllHadTrigNames"       , "vector<std::string>", &AllHadTrigNames);
   TreeAllHad->Branch("AllHadTrigPrescales"   , "vector<int>", &AllHadTrigPrescales);
   TreeAllHad->Branch("AllHadTrigPass"        , "vector<bool>", &AllHadTrigPass);
@@ -2402,6 +2404,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     std::bitset<28> hltbit;
     vector<bool> trigAccept;
 
+    AK4JETS       ->clear();
     AllHadTrigNames       ->clear();
     SemiLeptTrigNames     ->clear();
     AllHadTrigPrescales   ->clear();
@@ -5631,7 +5634,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     AllHadLumiBlock      = iEvent.id().luminosityBlock() ;              
     AllHadEventNum       = iEvent.id().event() ;  
     PassMETFilters       = (int)  passMETfilters;
-
+    AK4JETS = ak4jets;
     TreeAllHad -> Fill();
   } 
 
