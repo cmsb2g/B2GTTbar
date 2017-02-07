@@ -3239,6 +3239,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   edm::Handle<reco::GenJetCollection> AK4GENJET;  
   iEvent.getByToken(ak4genjetToken_, AK4GENJET);
 
+  vector <TLorentzVector> ak4jets;
+
   if (verbose_) cout<<"debug: about to grab ak4 jets"<<endl;
 
   for (const pat::Jet &ijet : *AK4MINI) {  
@@ -3311,6 +3313,14 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     if (verbose_) cout<<"uncorrected AK4 jet pt "<<uncorrJet.pt()<<" corrected jet pt "<<corrJet.pt()<<endl;
     
     if (corrJet.pt()<15 ) continue;  
+
+    if (corrJet.pt()>30 ){
+      TLorentzVector jetp4;
+      jetp4.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
+      ak4jets.push_back(jetp4); 
+    }  
+
+
 
     //------------------------------------
     // AK4CHS JEC uncertainty
@@ -3492,7 +3502,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<"    ak4_btag_tight  "<<ak4_btag_tight  <<endl; 
   }
 
-
+  cout<<"ak4jets .size()"<<ak4jets.size()<<endl;
   //      
   //         d8888 888    d8P   .d8888b.       .d8888b.  888    888  .d8888b.         d8b          888             
   //        d88888 888   d8P   d88P  Y88b     d88P  Y88b 888    888 d88P  Y88b        Y8P          888             

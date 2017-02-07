@@ -170,13 +170,17 @@ JECtxtlocation=''
 JERtxtlocation=''
 
 process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
+    
     useToolbox    = cms.bool(True),
     verbose       = cms.bool(False),
     verboseGen    = cms.bool(False),
     runGenLoop    = cms.bool(True),
+    
     isZprime      = cms.bool(True),
     isttbar       = cms.bool(False),
     isRSG         = cms.bool(False),
+    isRun2016F    = cms.bool(False),
+
     ak8chsInput          = cms.InputTag("selectedPatJetsAK8PFCHS"),   
     ak8puppiInput        = cms.InputTag("selectedPatJetsAK8PFPuppi"),
     ak8chsSubjetsInput   = cms.InputTag("selectedPatJetsAK8PFCHSSoftDropPacked","SubJets"),

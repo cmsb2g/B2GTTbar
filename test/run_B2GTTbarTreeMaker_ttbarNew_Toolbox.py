@@ -176,9 +176,12 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     verbose       = cms.bool(False),
     verboseGen    = cms.bool(False),
     runGenLoop    = cms.bool(True),
+  
     isZprime      = cms.bool(False),
     isttbar       = cms.bool(True),
     isRSG         = cms.bool(False),
+    isRun2016F    = cms.bool(False),
+
     ak8chsInput          = cms.InputTag("selectedPatJetsAK8PFCHS"),   
     ak8puppiInput        = cms.InputTag("selectedPatJetsAK8PFPuppi"),
     ak8chsSubjetsInput   = cms.InputTag("selectedPatJetsAK8PFCHSSoftDropPacked","SubJets"),
