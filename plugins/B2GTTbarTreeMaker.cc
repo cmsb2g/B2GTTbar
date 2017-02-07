@@ -259,7 +259,15 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
       TTree *TreeAllHad;   
 
-      std::vector<TLorentzVector> *AK4JETS     = new std::vector<TLorentzVector>;
+      std::vector<float> *vAK4pt      = new std::vector<float>;
+      std::vector<float> *vAK4eta     = new std::vector<float>;
+      std::vector<float> *vAK4phi     = new std::vector<float>;
+      std::vector<float> *vAK4m       = new std::vector<float>;
+
+ 
+
+
+
       std::vector<std::string> *AllHadTrigNames     = new std::vector<std::string>;
       std::vector<int> *AllHadTrigPrescales = new std::vector<int>;
       std::vector<bool> *AllHadTrigPass    = new std::vector<bool>;
@@ -1169,7 +1177,11 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad = new TTree("TreeAllHad","TreeAllHad"); 
 
 
-  TreeAllHad->Branch("AK4JETS"       , "vector<TLorentzVector>", &AK4JETS);
+  TreeAllHad->Branch("vAK4pt"      , "vector<float>", &vAK4pt );
+  TreeAllHad->Branch("vAK4eta"     , "vector<float>", &vAK4eta);
+  TreeAllHad->Branch("vAK4phi"     , "vector<float>", &vAK4phi);
+  TreeAllHad->Branch("vAK4m"       , "vector<float>", &vAK4m  );
+
   TreeAllHad->Branch("AllHadTrigNames"       , "vector<std::string>", &AllHadTrigNames);
   TreeAllHad->Branch("AllHadTrigPrescales"   , "vector<int>", &AllHadTrigPrescales);
   TreeAllHad->Branch("AllHadTrigPass"        , "vector<bool>", &AllHadTrigPass);
@@ -2404,7 +2416,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     std::bitset<28> hltbit;
     vector<bool> trigAccept;
 
-    AK4JETS       ->clear();
     AllHadTrigNames       ->clear();
     SemiLeptTrigNames     ->clear();
     AllHadTrigPrescales   ->clear();
@@ -3242,7 +3253,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   edm::Handle<reco::GenJetCollection> AK4GENJET;  
   iEvent.getByToken(ak4genjetToken_, AK4GENJET);
 
-  vector <TLorentzVector> ak4jets;
+  vAK4pt  ->clear();
+  vAK4eta ->clear();
+  vAK4phi ->clear();
+  vAK4m   ->clear();
 
   if (verbose_) cout<<"debug: about to grab ak4 jets"<<endl;
 
@@ -3318,9 +3332,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     if (corrJet.pt()<15 ) continue;  
 
     if (corrJet.pt()>30 ){
-      TLorentzVector jetp4;
-      jetp4.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
-      ak4jets.push_back(jetp4); 
+      vAK4pt   ->push_back( corrJet.pt()   ); 
+      vAK4eta  ->push_back( corrJet.eta()  ); 
+      vAK4phi  ->push_back( corrJet.phi()  ); 
+      vAK4m    ->push_back( corrJet.mass() ); 
     }  
 
 
@@ -3505,7 +3520,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<"    ak4_btag_tight  "<<ak4_btag_tight  <<endl; 
   }
 
-  cout<<"ak4jets .size()"<<ak4jets.size()<<endl;
   //      
   //         d8888 888    d8P   .d8888b.       .d8888b.  888    888  .d8888b.         d8b          888             
   //        d88888 888   d8P   d88P  Y88b     d88P  Y88b 888    888 d88P  Y88b        Y8P          888             
@@ -5634,7 +5648,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     AllHadLumiBlock      = iEvent.id().luminosityBlock() ;              
     AllHadEventNum       = iEvent.id().event() ;  
     PassMETFilters       = (int)  passMETfilters;
-    AK4JETS = ak4jets;
+
+
     TreeAllHad -> Fill();
   } 
 
