@@ -3541,7 +3541,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   for (const pat::Jet &ijet : *AK8CHS) {
     if (count_AK8CHS>1) break;
-    if (count_AK8CHS==0 && ijet.pt()<250) break;
+    if (count_AK8CHS==0 && ijet.pt()<170) break;
     if (verbose_) cout<<"\nJet "<<count_AK8CHS<<" with pT "<<ijet.pt()<<" sdMass "<<ijet.userFloat("ak8PFJetsCHSSoftDropMass")<<endl;
 
     //------------------------------------
@@ -5581,7 +5581,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //------------------------------------
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
   //------------------------------------
-  if (AK8jet0_P4corr.Perp()>300 && AK8jet1_P4corr.Perp()>300 && fabs( AK8jet0_P4corr.Rapidity() ) <2.4 && fabs( AK8jet1_P4corr.Rapidity() ) <2.4 ){    
+  if (AK8jet0_P4corr.Perp()>200 && AK8jet1_P4corr.Perp()>200 && fabs( AK8jet0_P4corr.Rapidity() ) <2.4 && fabs( AK8jet1_P4corr.Rapidity() ) <2.4 ){    
     
     double dijetDeltaPhi = fabs( deltaPhi( AK8jet0_P4corr.Phi(),  AK8jet1_P4corr.Phi() ));
 
