@@ -86,9 +86,6 @@
 #include "DataFormats/Math/interface/deltaR.h"
 #include "DataFormats/Math/interface/deltaPhi.h"
 
-
-#include <TRandom3.h>
-
 // // CMS Top Tagger
 // #include "DataFormats/BTauReco/interface/CATopJetTagInfo.h"
 // #include "RecoJets/JetAlgorithms/interface/CATopJetHelper.h"
@@ -111,6 +108,7 @@
 #include "TH2.h"
 #include "TTree.h"
 #include "TLorentzVector.h"
+#include <TRandom3.h>
 
 //RS gluon PDF weights
 namespace LHAPDF {
@@ -199,7 +197,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
       std::string jertextAK4_;   // jet resolution AK4 jets
       std::string jertextAK8_;   // jet resolution AK8 jets
-      std::string jerSFtext_;    // jer SF
+      std::string jerSFtext_ ;   // jer SF
 
       // JEC
       boost::shared_ptr<FactorizedJetCorrector>   JetCorrectorAK4chs;
@@ -231,26 +229,10 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       TH1D * h_NPVgood          ;               
       TH1D * h_NPVgoodreweighted ;     
 
-
-      // int count_GenTruth_semileptonic ;
-      // int count_nMu_gt1 ; 
-      // int count_nEl_gt1 ; 
-      // int count_nMu_e1 ; 
-      // int count_nEl_e1 ; 
-      // int count_nLep_e1 ; 
-      // int count_JetPt300 ; 
-      // int count_JetPt300Eta ; 
-      // int count_JetPt300Eta_AK4 ; 
-      // int count_JetPt300Eta_muPt40 ; 
-      // int count_JetPt300Eta_muPt40_MET40 ; 
-      // int count_JetPt300Eta_muPt40_MET40_AK4 ; 
-
       // -- Triggers to be saved in tree
       std::vector<std::string> trigsToRun;
 
   
-
-
       //
       //       d8888 888 888        888    888               888     88888888888                           
       //      d88888 888 888        888    888               888         888                               
@@ -262,8 +244,6 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       //d88P     888 888 888        888    888 "Y888888  "Y88888         888     888      "Y8888   "Y8888  
       //                                                                                                   
     
-         
-
       TTree *TreeAllHad;   
 
       std::vector<float> *vAK4pt      = new std::vector<float>;
@@ -769,6 +749,11 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       std::vector<int> *SemiLeptTrigPrescales = new std::vector<int>;
       std::vector<bool> *SemiLeptTrigPass    = new std::vector<bool>;
 
+      std::vector<float> *SemiLeptAK4pt      = new std::vector<float>;
+      std::vector<float> *SemiLeptAK4eta     = new std::vector<float>;
+      std::vector<float> *SemiLeptAK4phi     = new std::vector<float>;
+      std::vector<float> *SemiLeptAK4m       = new std::vector<float>;
+      std::vector<float> *SemiLeptAK4bdisc   = new std::vector<float>;
 
 
       std::string SemiLeptTrigAcceptBits;
@@ -1252,7 +1237,6 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("AllHadTrigPrescales"   , "vector<int>", &AllHadTrigPrescales);
   TreeAllHad->Branch("AllHadTrigPass"        , "vector<bool>", &AllHadTrigPass);
   TreeAllHad->Branch("AllHadTrigAcceptBits"  , &AllHadTrigAcceptBits);
-
 
   TreeAllHad->Branch("PassMETFilters"                        , & PassMETFilters                     ,    "PassMETFilters/I"                          );                                  
   TreeAllHad->Branch("Jet0PtRaw"                             , & Jet0PtRaw                          ,    "Jet0PtRaw/F"                               );                                  
@@ -1755,6 +1739,12 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptTrigPass"      , "vector<bool>", &SemiLeptTrigPass);
   TreeSemiLept->Branch("SemiLeptTrigAcceptBits", &SemiLeptTrigAcceptBits);
 
+
+  TreeSemiLept->Branch("SemiLeptAK4pt"      , "vector<float>", &SemiLeptAK4pt     );
+  TreeSemiLept->Branch("SemiLeptAK4eta"     , "vector<float>", &SemiLeptAK4eta    );
+  TreeSemiLept->Branch("SemiLeptAK4phi"     , "vector<float>", &SemiLeptAK4phi    );
+  TreeSemiLept->Branch("SemiLeptAK4m"       , "vector<float>", &SemiLeptAK4m      );
+  TreeSemiLept->Branch("SemiLeptAK4bdisc"   , "vector<float>", &SemiLeptAK4bdisc  );
 
 
   TreeSemiLept->Branch("JetPtRaw"                             , & JetPtRaw                          ,    "JetPtRaw/F"                               );                                  
@@ -3306,6 +3296,13 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   vAK4phi   ->clear();
   vAK4m     ->clear();
   vAK4bdisc ->clear();
+
+  SemiLeptAK4pt    ->clear();
+  SemiLeptAK4eta   ->clear();
+  SemiLeptAK4phi   ->clear();
+  SemiLeptAK4m     ->clear();
+  SemiLeptAK4bdisc ->clear();
+
   if (verbose_) cout<<"AK4 jet loop"<<endl;
 
   for (const pat::Jet &ijet : *AK4MINI) {  
@@ -3496,6 +3493,12 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       vAK4phi   ->push_back( corrJet.phi()   ); 
       vAK4m     ->push_back( corrJet.mass()  ); 
       vAK4bdisc ->push_back( bdisc           );
+
+      SemiLeptAK4pt    ->push_back( corrJet.pt()    ); 
+      SemiLeptAK4eta   ->push_back( corrJet.eta()   ); 
+      SemiLeptAK4phi   ->push_back( corrJet.phi()   ); 
+      SemiLeptAK4m     ->push_back( corrJet.mass()  ); 
+      SemiLeptAK4bdisc ->push_back( bdisc           );
     }  
 
     //------------------------------------
