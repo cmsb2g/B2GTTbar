@@ -1,4 +1,4 @@
-#
+# cfg for local testing of B2GTTbarTreeMaker
 
 import FWCore.ParameterSet.Config as cms
 
@@ -165,7 +165,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
 ### Analyzer
 
 ## LOCAL RUNNING
-JECtxtlocation = '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V3_MC/'
+JECtxtlocation = '../../../JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/'
 JERtxtlocation = '../../../JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV10_MC/'
 ## CRAB SUBMIT
 # JECtxtlocation=''
@@ -194,32 +194,32 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     eleIdFullInfoMapToken_Tight   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-tight"),
     eleIdFullInfoMapToken_HEEP    = cms.InputTag("egmGsfElectronIDs:heepElectronID-HEEPV70"), 
     jecPayloadsAK8chs = cms.vstring([
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L1FastJet_AK8PFchs.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L2Relative_AK8PFchs.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L3Absolute_AK8PFchs.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L2L3Residual_AK8PFchs.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_Uncertainty_AK8PFchs.txt'
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L1FastJet_AK8PFchs.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L2Relative_AK8PFchs.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L3Absolute_AK8PFchs.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L2L3Residual_AK8PFchs.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_Uncertainty_AK8PFchs.txt'
                                     ]),
     jecPayloadsAK4chs = cms.vstring([
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L1FastJet_AK4PFchs.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L2Relative_AK4PFchs.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L3Absolute_AK4PFchs.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L2L3Residual_AK4PFchs.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_Uncertainty_AK4PFchs.txt'
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L1FastJet_AK4PFchs.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L2Relative_AK4PFchs.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L3Absolute_AK4PFchs.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L2L3Residual_AK4PFchs.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_Uncertainty_AK4PFchs.txt'
                                     ]),
     jecPayloadsAK8pup = cms.vstring([
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L1FastJet_AK8PFPuppi.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L2Relative_AK8PFPuppi.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L3Absolute_AK8PFPuppi.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L2L3Residual_AK8PFPuppi.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_Uncertainty_AK8PFPuppi.txt'
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L1FastJet_AK8PFPuppi.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L2Relative_AK8PFPuppi.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L3Absolute_AK8PFPuppi.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L2L3Residual_AK8PFPuppi.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_Uncertainty_AK8PFPuppi.txt'
                                     ]),
     jecPayloadsAK4pup = cms.vstring([
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L1FastJet_AK4PFPuppi.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L2Relative_AK4PFPuppi.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L3Absolute_AK4PFPuppi.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_L2L3Residual_AK4PFPuppi.txt',
-                                    JECtxtlocation+'Summer16_23Sep2016V3_MC_Uncertainty_AK4PFPuppi.txt'
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L1FastJet_AK4PFPuppi.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L2Relative_AK4PFPuppi.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L3Absolute_AK4PFPuppi.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_L2L3Residual_AK4PFPuppi.txt',
+                                    JECtxtlocation+'Summer16_23Sep2016V4_MC_Uncertainty_AK4PFPuppi.txt'
                                     ]),
     jecPayloadsAK8chsSecondary = cms.vstring([
                                     '',
