@@ -87,7 +87,7 @@ runMetCorAndUncFromMiniAOD(process,
 ### Toolbox (https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetToolbox)
 from JMEAnalysis.JetToolbox.jetToolbox_cff import jetToolbox
 
-ak8Cut    = 'pt > 170 && abs(eta) < 2.5'
+ak8Cut    = 'pt > 30 && abs(eta) < 2.5'
 ak8pupCut = 'pt > 140 && abs(eta) < 2.5'
 
 listBTagInfos = [
@@ -116,6 +116,8 @@ listBtagDiscriminatorsAK8 = [
 jetToolbox( process, 'ak8', 'ak8JetSubs', 'out', 
   runOnMC = isMC, 
   PUMethod='CHS', 
+  JETCorrLevels = [ 'None' ],
+  subJETCorrLevels = [ 'None' ],
   # updateCollection='slimmedJetsAK8', # can't run groomers on this yet
   # JETCorrPayload='AK8PFchs', # needed for update collection
   addSoftDropSubjets = True, 
@@ -148,6 +150,8 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   newPFCollection=True, 
   nameNewPFCollection='puppiOnTheFly',
   PUMethod='Puppi', 
+  JETCorrLevels = [ 'None' ],
+  subJETCorrLevels = [ 'None' ],
   addSoftDropSubjets = True, 
   addTrimming = True,  rFiltTrim=0.2, ptFrac=0.05,
   addPruning = True, 
@@ -172,16 +176,21 @@ JERtxtlocation = '../../../JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV10_MC/
 # JERtxtlocation=''
 
 process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
-    useToolbox    = cms.bool(True),
-    verbose       = cms.bool(True),
-    verboseGen    = cms.bool(False),
-    runGenLoop    = cms.bool(True),
-   
-    isZprime      = cms.bool(True),
-    isttbar       = cms.bool(False),
-    isRSG         = cms.bool(False),
-    isRun2016F    = cms.bool(False),
-   
+
+    verbose         = cms.bool(True),
+    verboseGen      = cms.bool(True),
+    useToolbox      = cms.bool(True),
+
+    runGenLoop      = cms.bool(True),
+    runAllHadTree   = cms.bool(True),
+    runSemiLeptTree = cms.bool(False),
+    
+    isZprime        = cms.bool(True),
+    isttbar         = cms.bool(False),
+    isRSG           = cms.bool(False),
+    isRun2016F      = cms.bool(False),
+
+
     ak8chsInput          = cms.InputTag("selectedPatJetsAK8PFCHS"),   
     ak8puppiInput        = cms.InputTag("selectedPatJetsAK8PFPuppi"),
     ak8chsSubjetsInput   = cms.InputTag("selectedPatJetsAK8PFCHSSoftDropPacked","SubJets"),

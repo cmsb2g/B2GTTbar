@@ -86,7 +86,7 @@ process.puppiOnTheFly.useExistingWeights = True
 ### Toolbox (https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetToolbox)
 from JMEAnalysis.JetToolbox.jetToolbox_cff import jetToolbox
 
-ak8Cut    = 'pt > 170 && abs(eta) < 2.5'
+ak8Cut    = 'pt > 30 && abs(eta) < 2.5'
 ak8pupCut = 'pt > 140 && abs(eta) < 2.5'
 
 
@@ -118,6 +118,8 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   PUMethod='CHS', 
   # updateCollection='slimmedJetsAK8', # can't run groomers on this yet
   # JETCorrPayload='AK8PFchs', # needed for update collection
+  JETCorrLevels = [ 'None' ],
+  subJETCorrLevels = [ 'None' ],
   addSoftDropSubjets = True, 
   addTrimming = True, rFiltTrim=0.2, ptFrac=0.05,
   addPruning = True, 
@@ -148,6 +150,8 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   newPFCollection=True, 
   nameNewPFCollection='puppiOnTheFly',
   PUMethod='Puppi', 
+  JETCorrLevels = [ 'None' ],
+  subJETCorrLevels = [ 'None' ],
   addSoftDropSubjets = True, 
   addTrimming = True,  rFiltTrim=0.2, ptFrac=0.05,
   addPruning = True, 
@@ -172,15 +176,19 @@ JECtxtlocation=''
 JERtxtlocation=''
 
 process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
-    useToolbox    = cms.bool(True),
-    verbose       = cms.bool(False),
-    verboseGen    = cms.bool(False),
-    runGenLoop    = cms.bool(True),
-  
-    isZprime      = cms.bool(False),
-    isttbar       = cms.bool(True),
-    isRSG         = cms.bool(False),
-    isRun2016F    = cms.bool(False),
+    
+    verbose         = cms.bool(False),
+    verboseGen      = cms.bool(False),
+    useToolbox      = cms.bool(True),
+    
+    runGenLoop      = cms.bool(True),
+    runAllHadTree   = cms.bool(True),
+    runSemiLeptTree = cms.bool(True),
+
+    isZprime        = cms.bool(False),
+    isttbar         = cms.bool(True),
+    isRSG           = cms.bool(False),
+    isRun2016F      = cms.bool(False),
 
     ak8chsInput          = cms.InputTag("selectedPatJetsAK8PFCHS"),   
     ak8puppiInput        = cms.InputTag("selectedPatJetsAK8PFPuppi"),
