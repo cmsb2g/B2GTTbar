@@ -345,13 +345,13 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
 #     )
 # process.endpath = cms.EndPath(process.out) 
 
-process.SimpleMemoryCheck=cms.Service("SimpleMemoryCheck",
-                                   ignoreTotal=cms.untracked.int32(1), #->start logging event N
-                                   oncePerEventMode=cms.untracked.bool(False), # true->report every event, false->report only high memory events 
-                                   moduleMemorySummary=cms.untracked.bool(True),
-                                   monitorPssAndPrivate=cms.untracked.bool(False)
+# process.SimpleMemoryCheck=cms.Service("SimpleMemoryCheck",
+#                                    ignoreTotal=cms.untracked.int32(1), #->start logging event N
+#                                    oncePerEventMode=cms.untracked.bool(False), # true->report every event, false->report only high memory events 
+#                                    moduleMemorySummary=cms.untracked.bool(True),
+#                                    monitorPssAndPrivate=cms.untracked.bool(False)
 
-)
+# )
 
 
 process.TFileService = cms.Service("TFileService",

@@ -39,7 +39,7 @@ os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV
 os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV10_MC/Spring16_25nsV10_MC_SF_AK8PFchs.txt'
 ]
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 3
+config.Data.unitsPerJob = 1
 config.Data.outLFNDirBase = '/store/user/jdolen/B2G2016/'
 config.Data.publication = False
 config.Site.storageSite = 'T3_US_FNALLPC'

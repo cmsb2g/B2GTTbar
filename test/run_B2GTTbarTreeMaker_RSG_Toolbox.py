@@ -18,17 +18,17 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 
 isMC   = True
 
-process.MessageLogger = cms.Service("MessageLogger",
- destinations = cms.untracked.vstring('cout')
-#        destinations = cms.untracked.vstring('myOutputFile'),
-#        myOutputFile = cms.untracked.PSet(threshold = cms.untracked.string( 'WARNING' )),
-)                                                                      
+# process.MessageLogger = cms.Service("MessageLogger",
+#  destinations = cms.untracked.vstring('cout')
+# #        destinations = cms.untracked.vstring('myOutputFile'),
+# #        myOutputFile = cms.untracked.PSet(threshold = cms.untracked.string( 'WARNING' )),
+# )                                                                      
 
 
 #----------------------------------------------------------------------------------------
 ### INPUT
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
-#process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 
 process.source = cms.Source("PoolSource",
@@ -284,13 +284,13 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
 #     )
 #process.endpath = cms.EndPath(process.out) 
 
-process.SimpleMemoryCheck=cms.Service("SimpleMemoryCheck",
-                                   ignoreTotal=cms.untracked.int32(1), #->start logging event N
-                                   oncePerEventMode=cms.untracked.bool(False), # true->report every event, false->report only high memory events 
-                                   moduleMemorySummary=cms.untracked.bool(True),
-                                   monitorPssAndPrivate=cms.untracked.bool(False)
+# process.SimpleMemoryCheck=cms.Service("SimpleMemoryCheck",
+#                                    ignoreTotal=cms.untracked.int32(1), #->start logging event N
+#                                    oncePerEventMode=cms.untracked.bool(False), # true->report every event, false->report only high memory events 
+#                                    moduleMemorySummary=cms.untracked.bool(True),
+#                                    monitorPssAndPrivate=cms.untracked.bool(False)
 
-)
+# )
 
 
 process.TFileService = cms.Service("TFileService",
