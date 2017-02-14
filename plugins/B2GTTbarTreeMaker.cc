@@ -1784,8 +1784,8 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptTrigPass"      , "vector<bool>", &SemiLeptTrigPass);
   TreeSemiLept->Branch("SemiLeptTrigAcceptBits", &SemiLeptTrigAcceptBits);
 
-  TreeAllHad->Branch("Jet0NsubjetsSD"        , & Jet0NsubjetsSD     ,    "Jet0NsubjetsSD/I"          );      
-  TreeAllHad->Branch("Jet0NsubjetsSDPuppi"        , & Jet0NsubjetsSDPuppi     ,    "Jet0NsubjetsSDPuppi/I"          );      
+  TreeAllHad->Branch("JetNsubjetsSD"        , & JetNsubjetsSD     ,    "JetNsubjetsSD/I"          );      
+  TreeAllHad->Branch("JetNsubjetsSDPuppi"        , & JetNsubjetsSDPuppi     ,    "JetNsubjetsSDPuppi/I"          );      
 
 
   // TreeSemiLept->Branch("SemiLeptAK4pt"      , "vector<float>", &SemiLeptAK4pt     );
@@ -4298,6 +4298,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if ( count_all_subjets==closest_i || count_all_subjets==second_closest_i ){
           if (verbose_) cout<<"      -> one of two closest "<<endl;
           if (deltaRsubjetJet<0.8){
+            nsubjets_chs++;
             if (verbose_) cout<<"      -> dR matched subjet with mass "<< subjetMass<<endl;
 
             count_matched_subjets++;
@@ -4472,7 +4473,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       if (verbose_) cout<<"     closest_i "<<closest_i<<endl;
       if (verbose_) cout<<"     second_closest_i "<<second_closest_i<<endl;
 
-      nsubjets_chs  = count_all_subjets;
+      
     }
 
     TLorentzVector sumSDsubjets_P4_uncorr           ;
@@ -4687,6 +4688,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if ( count_all_subjets==closest_i || count_all_subjets==second_closest_i ){
           if (verbose_) cout<<"      -> one of two closest "<<endl;
           if (deltaRsubjetJet<0.8){
+            nsubjets_pup++;
             if (verbose_) cout<<"      -> dR matched subjet with mass "<< subjetMass<<endl;
 
             count_matched_subjets++;
@@ -4826,8 +4828,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       if (verbose_) cout<<"     second_closest_DR "<<second_closest_DR<<endl;;
       if (verbose_) cout<<"     closest_i "<<closest_i<<endl;
       if (verbose_) cout<<"     second_closest_i "<<second_closest_i<<endl;
-      nsubjets_pup = count_all_subjets;
-
     }
 
 
