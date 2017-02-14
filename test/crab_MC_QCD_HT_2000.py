@@ -1,37 +1,42 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
+import os
 
 config = config()
-config.General.requestName = 'b2gtreeV4_QCD_HT2000toInf_RunIISpring16MiniAODv2'
+config.General.requestName = 'b2gtreeV5_QCD_HT2000toInf_RunIISummer16MiniAODv2'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 config.JobType.pluginName = 'Analysis'
-config.JobType.psetName = 'run_B2GTTbarTreeMaker_MC2_Toolbox.py'
+config.JobType.psetName = 'run_B2GTTbarTreeMaker_MC_Toolbox.py'
 config.JobType.maxJobRuntimeMin = 2750
-config.Data.inputDataset = '/QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/MINIAODSIM'
+config.Data.inputDataset = '/QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM'
 config.Data.inputDBS = 'global'
 config.JobType.inputFiles = [
-'PUweight_Nov4JSON_Nov6PiileupJSON_Xsec72383_MCRunIISpring16MiniAODv2.root',
-'Spring16_25nsV6_MC_L1FastJet_AK8PFchs.txt',
-'Spring16_25nsV6_MC_L2Relative_AK8PFchs.txt',
-'Spring16_25nsV6_MC_L3Absolute_AK8PFchs.txt',
-'Spring16_25nsV6_MC_L2L3Residual_AK8PFchs.txt',
-'Spring16_25nsV6_MC_Uncertainty_AK8PFchs.txt',
-'Spring16_25nsV6_MC_L1FastJet_AK4PFchs.txt',
-'Spring16_25nsV6_MC_L2Relative_AK4PFchs.txt',
-'Spring16_25nsV6_MC_L3Absolute_AK4PFchs.txt',
-'Spring16_25nsV6_MC_L2L3Residual_AK4PFchs.txt',
-'Spring16_25nsV6_MC_Uncertainty_AK4PFchs.txt',
-'Spring16_25nsV6_MC_L1FastJet_AK8PFPuppi.txt',
-'Spring16_25nsV6_MC_L2Relative_AK8PFPuppi.txt',
-'Spring16_25nsV6_MC_L3Absolute_AK8PFPuppi.txt',
-'Spring16_25nsV6_MC_L2L3Residual_AK8PFPuppi.txt',
-'Spring16_25nsV6_MC_Uncertainty_AK8PFPuppi.txt',
-'Spring16_25nsV6_MC_L1FastJet_AK4PFPuppi.txt',
-'Spring16_25nsV6_MC_L2Relative_AK4PFPuppi.txt',
-'Spring16_25nsV6_MC_L3Absolute_AK4PFPuppi.txt',
-'Spring16_25nsV6_MC_L2L3Residual_AK4PFPuppi.txt',
-'Spring16_25nsV6_MC_Uncertainty_AK4PFPuppi.txt',
-'Spring16_25nsV6_MC_SF_AK8PFchs.txt'
+'PUweight_FinalJSON2016_PileupJSONFeb2017_Xsec69200nominal_MCRunIISummer16MiniAODv2_PUMoriond17.root',
+
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L1FastJet_AK8PFchs.txt'     ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L2Relative_AK8PFchs.txt'    ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L3Absolute_AK8PFchs.txt'    ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L2L3Residual_AK8PFchs.txt'  ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_Uncertainty_AK8PFchs.txt'   ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L1FastJet_AK4PFchs.txt'     ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L2Relative_AK4PFchs.txt'    ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L3Absolute_AK4PFchs.txt'    ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L2L3Residual_AK4PFchs.txt'  ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_Uncertainty_AK4PFchs.txt'   ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L1FastJet_AK8PFPuppi.txt'   ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L2Relative_AK8PFPuppi.txt'  ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L3Absolute_AK8PFPuppi.txt'  ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L2L3Residual_AK8PFPuppi.txt',
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_Uncertainty_AK8PFPuppi.txt' ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L1FastJet_AK4PFPuppi.txt'   ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L2Relative_AK4PFPuppi.txt'  ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L3Absolute_AK4PFPuppi.txt'  ,
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_L2L3Residual_AK4PFPuppi.txt',
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_Uncertainty_AK4PFPuppi.txt' ,
+
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV10_MC/Spring16_25nsV10_MC_PtResolution_AK4PFchs.txt',
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV10_MC/Spring16_25nsV10_MC_PtResolution_AK8PFchs.txt',
+os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV10_MC/Spring16_25nsV10_MC_SF_AK8PFchs.txt'
 ]
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 3
