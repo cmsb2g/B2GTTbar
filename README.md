@@ -20,6 +20,7 @@ git clone https://github.com/cmsb2g/B2GTTbar.git Analysis/B2GTTbar
 git clone git@github.com:cms-jet/JetToolbox.git JMEAnalysis/JetToolbox -b jetToolbox_80X
 git clone git@github.com:cms-jet/JECDatabase.git JMEAnalysis/JECDatabase
 git clone git@github.com:cms-jet/JRDatabase.git JMEAnalysis/JRDatabase
+git clone git@github.com:thaarres/PuppiSoftdropMassCorr.git JMEAnalysis/PuppiSoftdropMassCorr
 scramv1 b -j 16
 cd Analysis/B2GTTbar/test/
 cmsRun run_B2GTTbarTreeMaker_MC_testLocal_ZP2000w200.py
