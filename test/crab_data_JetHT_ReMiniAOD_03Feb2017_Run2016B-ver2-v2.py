@@ -40,7 +40,7 @@ os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV
 
 ]
 config.Data.splitting = 'LumiBased'
-config.Data.unitsPerJob = 5
+config.Data.unitsPerJob = 8
 config.Data.lumiMask = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
 #config.Data.runRange
 config.Data.outLFNDirBase = '/store/user/jdolen/B2G2016/'

@@ -41,7 +41,7 @@ os.environ['CMSSW_BASE'] + '/src/JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV
 
 ]
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 1
+config.Data.unitsPerJob = 2  # more than 10000 jobs error if = 1
 config.Data.outLFNDirBase = '/store/user/jdolen/B2G2016/'
 config.Data.publication = False
 config.Site.storageSite = 'T3_US_FNALLPC'
