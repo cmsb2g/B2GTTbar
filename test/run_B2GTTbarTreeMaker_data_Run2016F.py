@@ -234,7 +234,7 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
 # JERtxtlocation = '../../../JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV10_DATA/'
 ## CRAB SUBMIT
 JECtxtlocation=''
-JEC2txtlocation=''
+JECtxtlocation2=''
 JERtxtlocation=''
 
 # Note: JER text files exist for multiple jet collections but at the moment they use the same numbers
