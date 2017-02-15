@@ -7,4 +7,6 @@ source /cvmfs/cms.cern.ch/crab3/crab.csh
 foreach dir (crab_b2g*)
     echo CHECK STATUS OF CRAB DIRECTORY:  $dir
     crab status -d  $dir
+    echo "-----------------------------------------------------------------------------------------"
+    echo
 end

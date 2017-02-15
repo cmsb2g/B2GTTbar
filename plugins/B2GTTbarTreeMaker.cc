@@ -1784,8 +1784,8 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptTrigPass"      , "vector<bool>", &SemiLeptTrigPass);
   TreeSemiLept->Branch("SemiLeptTrigAcceptBits", &SemiLeptTrigAcceptBits);
 
-  TreeAllHad->Branch("JetNsubjetsSD"        , & JetNsubjetsSD     ,    "JetNsubjetsSD/I"          );      
-  TreeAllHad->Branch("JetNsubjetsSDPuppi"        , & JetNsubjetsSDPuppi     ,    "JetNsubjetsSDPuppi/I"          );      
+  TreeSemiLept->Branch("JetNsubjetsSD"        , & JetNsubjetsSD     ,    "JetNsubjetsSD/I"          );      
+  TreeSemiLept->Branch("JetNsubjetsSDPuppi"        , & JetNsubjetsSDPuppi     ,    "JetNsubjetsSDPuppi/I"          );      
 
 
   // TreeSemiLept->Branch("SemiLeptAK4pt"      , "vector<float>", &SemiLeptAK4pt     );
