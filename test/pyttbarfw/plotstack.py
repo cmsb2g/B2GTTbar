@@ -20,6 +20,11 @@ parser.add_option('--hist', type='string', action='store',
                   help='Hist string')
 
 
+parser.add_option('--highmass', action='store_true',
+                  dest='highmass',
+                  default = False,
+                  help='High mass?')
+
 
 
 (options, args) = parser.parse_args(sys.argv)
@@ -95,40 +100,46 @@ nev_singletop = [
     
 ROOT.gStyle.SetOptStat(000000)
 
+instring = ''
+if options.highmass :
+    instring = '_highmass'
 
-ttbarfile = ROOT.TFile('ttbar_outfile.root')
-datafile = ROOT.TFile('singlemu_run2016.root')
+ttbarfile = ROOT.TFile('ttbar' + instring + '_outfile.root')
+if 'Electron' not in options.hist : 
+    datafile = ROOT.TFile('singlemu' + instring + '_outfile.root')
+else :
+    datafile = ROOT.TFile('singleel' + instring + '_outfile.root')
 
 wjetsfiles = [
-    ROOT.TFile('wjets100to200_outfile.root'),
-    ROOT.TFile('wjets200to400_outfile.root'),
-    ROOT.TFile('wjets400to600_outfile.root'),
-    ROOT.TFile('wjets600to800_outfile.root'),
-    ROOT.TFile('wjets800to1200_outfile.root'),
-    ROOT.TFile('wjets1200to2500_outfile.root'),
-    ROOT.TFile('wjets2500toinf_outfile.root'),
+    ROOT.TFile('wjets100to200' + instring + '_outfile.root'),
+    ROOT.TFile('wjets200to400' + instring + '_outfile.root'),
+    ROOT.TFile('wjets400to600' + instring + '_outfile.root'),
+    ROOT.TFile('wjets600to800' + instring + '_outfile.root'),
+    ROOT.TFile('wjets800to1200' + instring + '_outfile.root'),
+    ROOT.TFile('wjets1200to2500' + instring + '_outfile.root'),
+    ROOT.TFile('wjets2500toinf' + instring + '_outfile.root'),
     ]
 
 wjets_colors = [ 
     ROOT.kWhite,ROOT.kRed - 9, ROOT.kRed - 7, ROOT.kRed - 4, ROOT.kRed, ROOT.kRed +1, ROOT.kRed +2   ]
 
 qcdfiles = [
-    ROOT.TFile('qcd100_outfile.root'),
-    ROOT.TFile('qcd200_outfile.root'),
-    ROOT.TFile('qcd300_outfile.root'),
-    ROOT.TFile('qcd500_outfile.root'),
-    ROOT.TFile('qcd700_outfile.root'),
-    ROOT.TFile('qcd1000_outfile.root'),
-    ROOT.TFile('qcd1500_outfile.root'),
-    ROOT.TFile('qcd2000_outfile.root'),
+    ROOT.TFile('qcd100' + instring + '_outfile.root'),
+    ROOT.TFile('qcd200' + instring + '_outfile.root'),
+    ROOT.TFile('qcd300' + instring + '_outfile.root'),
+    ROOT.TFile('qcd500' + instring + '_outfile.root'),
+    ROOT.TFile('qcd700' + instring + '_outfile.root'),
+    ROOT.TFile('qcd1000' + instring + '_outfile.root'),
+    ROOT.TFile('qcd1500' + instring + '_outfile.root'),
+    ROOT.TFile('qcd2000' + instring + '_outfile.root'),
     ]
 
 singletopfiles = [
-    ROOT.TFile("singletop_tchanneltop_outfile.root"),
-    ROOT.TFile("singletop_tchannel_outfile.root"),
-    ROOT.TFile("singletop_tW_outfile.root"),
-    ROOT.TFile("singletop_tWantitop_outfile.root"),
-    ROOT.TFile("singletop_schannel_outfile.root"),
+    ROOT.TFile('singletop_tchanneltop' + instring + '_outfile.root'),
+    ROOT.TFile('singletop_tchannel' + instring + '_outfile.root'),
+    ROOT.TFile('singletop_tW' + instring + '_outfile.root'),
+    ROOT.TFile('singletop_tWantitop' + instring + '_outfile.root'),
+    ROOT.TFile('singletop_schannel' + instring + '_outfile.root'),
     ]
     
 objs = []
@@ -219,9 +230,15 @@ for istage in xrange(11) :
 
 
     c1 = ROOT.TCanvas("c" + str(istage), "c" + str(istage) )
+
+
+    
     hdata.Draw("e")
     hstack.Draw("hist same")
+    maxval = max( hdata.GetMaximum(), hstack.GetMaximum() )
+    hdata.SetMaximum( maxval * 1.2 )
     hdata.Draw("e same")
+    
 
     leg = ROOT.TLegend(0.8, 0.8, 1.0, 1.0)
     leg.SetFillColor(0)
@@ -235,6 +252,6 @@ for istage in xrange(11) :
     
     c1.Update()
 
-    c1.Print("plot_" + options.hist + str(istage) + ".pdf", "pdf")
-    c1.Print("plot_" + options.hist + str(istage) + ".png", "png")
+    c1.Print("plot_" + options.hist + str(istage) + instring + ".pdf", "pdf")
+    c1.Print("plot_" + options.hist + str(istage) + instring + ".png", "png")
     objs.append( [hdata, httbar, hwjets, c1, hstack, leg] )

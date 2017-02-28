@@ -1,13 +1,36 @@
-{
-  TFile * F_data_PUnom       = new TFile( "MyDataPileupHistogram.root"                      );
-  TFile * F_data_PUup        = new TFile( "MyDataPileupHistogramUP.root"                    );
-  TFile * F_data_PUdn        = new TFile( "MyDataPileupHistogramDN.root"                    );
-  TFile * F_MC               = new TFile( "tree_RSGluonToTT_M-2000_B2Gv8p4_reader603e.root" );
+// root [0] .L PUweightCalc.cpp++
+// root [1] run()
 
-  TH1D * NPU_data_true       = F_data_PUnom->Get("pileup");
-  TH1D * NPU_data_true_MBup  = F_data_PUup->Get("pileup");
-  TH1D * NPU_data_true_MBdn  = F_data_PUdn->Get("pileup");
-  TH1D * NPU_MC_true         = F_MC->Get("h_NtrueIntPU");
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <iostream>
+#include <TTree.h>
+#include <TH1F.h>
+#include <sstream>
+#include <TFile.h>
+#include <TCanvas.h>
+#include <TGraph.h>
+#include <TGraphErrors.h>
+#include <TLegend.h>
+#include <TF1.h>
+#include <TROOT.h>
+#include <TColor.h>
+#include <TStyle.h>
+#include <TCanvas.h>
+
+void run(){
+
+
+  TFile * F_data_PUnom       = new TFile( "MyDataPileupHistogram_FinalJSON_LatestPileupJSON_Xsec69200.root"                    );
+  TFile * F_data_PUup        = new TFile( "MyDataPileupHistogram_FinalJSON_LatestPileupJSON_Xsec72383.root"                    );
+  TFile * F_data_PUdn        = new TFile( "MyDataPileupHistogram_FinalJSON_LatestPileupJSON_Xsec66017.root"                    );
+  TFile * F_MC               = new TFile( "b2gtreeV5prelim_ZprimeToTT_M-2000_W-200_MCRunIISummer16MiniAODv2_PUMoriond17.root"  );
+
+  TH1D * NPU_data_true       = (TH1D*) F_data_PUnom->Get("pileup");
+  TH1D * NPU_data_true_MBup  = (TH1D*) F_data_PUup->Get("pileup");
+  TH1D * NPU_data_true_MBdn  = (TH1D*) F_data_PUdn->Get("pileup");
+  TH1D * NPU_MC_true         = (TH1D*) F_MC->Get("ana/h_NtrueIntPU");
 
   NPU_data_true       ->Sumw2();
   NPU_data_true_MBup  ->Sumw2();
@@ -35,7 +58,7 @@
   NPU_MC_true   ->SetMarkerStyle(21);
 
   NPU_data_true->SetTitle(";N_{PU} true;Number of events");
-  NPU_data_true->GetXaxis()->SetRangeUser(0,30);
+  NPU_data_true->GetXaxis()->SetRangeUser(0,80);
 
   NPU_data_true ->Draw();
   NPU_MC_true   ->Draw("same");
@@ -50,9 +73,12 @@
 
   c1237->RedrawAxis();
   c1237->SaveAs("NPU.pdf");
+  c1237->SetLogy();
+  c1237->SaveAs("NPUlog.pdf");
+  c1237->SetLogy(0);
 
   // Draw NPU data (MBup and down) and MC
-  TCanvas *c1237= new TCanvas("c1237","",200,10,950,700);
+  // TCanvas *c1237= new TCanvas("c1237","",200,10,950,700);
   gStyle->SetOptStat(0);
   gStyle->SetHistLineWidth(2);
 
@@ -62,26 +88,28 @@
   NPU_MC_true         ->SetLineColor(2);
 
   NPU_data_true_MBdn->SetTitle(";N_{PU} true;Number of events");
-  NPU_data_true_MBdn->GetXaxis()->SetRangeUser(0,30);
+  NPU_data_true_MBdn->GetXaxis()->SetRangeUser(0,80);
 
   NPU_data_true_MBdn   ->Draw("HIST");
   NPU_data_true_MBup   ->Draw("HISTsame");
   NPU_data_true        ->Draw("HISTsame");
   NPU_MC_true          ->Draw("HISTsame");
 
-  TLegend * leg = new TLegend(0.6,0.7,0.85,0.84);
-  leg->SetBorderSize(0);
-  leg->SetFillColor(0);
-  leg->SetFillStyle( 4050 );
-  leg->AddEntry(NPU_data_true      ,"data nominal","L");
-  leg->AddEntry(NPU_data_true_MBup ,"data #sigma_{MB} up","L");
-  leg->AddEntry(NPU_data_true_MBdn ,"data #sigma_{MB} down","L");
-  leg->AddEntry(NPU_MC_true        ,"MC","L");
-  leg->Draw("same");
+  TLegend * leg2 = new TLegend(0.6,0.7,0.85,0.84);
+  leg2->SetBorderSize(0);
+  leg2->SetFillColor(0);
+  leg2->SetFillStyle( 4050 );
+  leg2->AddEntry(NPU_data_true      ,"data nominal","L");
+  leg2->AddEntry(NPU_data_true_MBup ,"data #sigma_{MB} up","L");
+  leg2->AddEntry(NPU_data_true_MBdn ,"data #sigma_{MB} down","L");
+  leg2->AddEntry(NPU_MC_true        ,"MC","L");
+  leg2->Draw("same");
 
   c1237->RedrawAxis();
   c1237->SaveAs("NPU_updn.pdf");
-
+  c1237->SetLogy();
+  c1237->SaveAs("NPU_updn_log.pdf");
+  c1237->SetLogy(0);
 
   // calculate weight = data / MC
   NPU_data_true       ->Divide( NPU_MC_true );
@@ -107,28 +135,33 @@
   NPU_data_true_MBup ->SetMarkerStyle(20);
   NPU_data_true_MBdn ->SetMarkerStyle(20);
 
-  NPU_data_true->GetXaxis()->SetRangeUser(0,30);
+  NPU_data_true     ->GetXaxis()->SetRangeUser(0,80);
+  NPU_data_true_MBup->GetXaxis()->SetRangeUser(0,80);
+  NPU_data_true_MBdn->GetXaxis()->SetRangeUser(0,80);
   NPU_data_true->GetYaxis()->SetRangeUser(0,5);
 
   NPU_data_true      ->Draw();
   NPU_data_true_MBup ->Draw("same");
   NPU_data_true_MBdn ->Draw("same");
 
-  TLegend * leg = new TLegend(0.7,0.6,0.85,0.84);
-  leg->SetBorderSize(0);
-  leg->SetFillColor(0);
-  leg->SetFillStyle( 4050 );
-  leg->AddEntry(NPU_data_true ,"Nominal","LP");
-  leg->AddEntry(NPU_data_true_MBup   ,"#sigma_{MB} up","LP");
-  leg->AddEntry(NPU_data_true_MBdn   ,"#sigma_{MB} dn","LP");
-  leg->Draw("same");
+  TLegend * leg3 = new TLegend(0.7,0.6,0.85,0.84);
+  leg3->SetBorderSize(0);
+  leg3->SetFillColor(0);
+  leg3->SetFillStyle( 4050 );
+  leg3->AddEntry(NPU_data_true ,"Nominal","LP");
+  leg3->AddEntry(NPU_data_true_MBup   ,"#sigma_{MB} up","LP");
+  leg3->AddEntry(NPU_data_true_MBdn   ,"#sigma_{MB} dn","LP");
+  leg3->Draw("same");
 
   c1237->RedrawAxis();
   c1237->SaveAs("PUweight.pdf");
+  c1237->SetLogy();
+  c1237->SaveAs("PUweightlog.pdf");
+  c1237->SetLogy(0);
 
   // Save weight in output file
   TFile *Out;
-  Out = new TFile("PUweight20160316.root","RECREATE");
+  Out = new TFile("PUweight_FinalJSON2016_PileupJSONFeb2017_Xsec69200nominal_MCRunIISummer16MiniAODv2_PUMoriond17.root","RECREATE");
   Out->cd();
 
   NPU_data_true       ->Write();

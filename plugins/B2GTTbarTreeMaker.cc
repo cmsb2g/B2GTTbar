@@ -65,6 +65,7 @@
 #include "DataFormats/EgammaCandidates/interface/Conversion.h"
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
 #include "DataFormats/PatCandidates/interface/VIDCutFlowResult.h"
+
 // Trigger
 #include "FWCore/Common/interface/TriggerNames.h"
 #include "DataFormats/Common/interface/TriggerResults.h"
@@ -108,6 +109,7 @@
 #include "TH2.h"
 #include "TTree.h"
 #include "TLorentzVector.h"
+#include <TRandom3.h>
 
 //RS gluon PDF weights
 namespace LHAPDF {
@@ -143,58 +145,72 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       void printCutFlowResult(vid::CutFlowResult &cutflow);
 
       // ----------member data ---------------------------
-      edm::EDGetTokenT<pat::JetCollection> ak4jetToken_;
-      edm::EDGetTokenT<pat::JetCollection> ak8jetToken_;
-      edm::EDGetTokenT<pat::JetCollection> puppijetToken_;
-      edm::EDGetTokenT<pat::JetCollection> ak8CHSSoftDropSubjetsToken_;
-      edm::EDGetTokenT<pat::JetCollection> ak8PuppiSoftDropSubjetsToken_;
-      edm::EDGetTokenT<reco::GenJetCollection> ak4genjetToken_;
-      edm::EDGetTokenT<reco::GenJetCollection> ak8genjetToken_;
-      edm::EDGetTokenT<edm::View<reco::GenParticle> > prunedGenToken_;
-      edm::EDGetTokenT<double> rhoToken_;
-      edm::EDGetTokenT<std::vector<reco::Vertex> > vtxToken_;
-      edm::EDGetTokenT<edm::TriggerResults> triggerResultsMETFilterToken_;
-      edm::EDGetTokenT<edm::TriggerResults> triggerBits_;
-      edm::EDGetTokenT<pat::TriggerObjectStandAloneCollection> triggerObjects_;
-      edm::EDGetTokenT<pat::PackedTriggerPrescales> triggerPrescales_;
-      edm::EDGetTokenT<bool> badMuonFilterToken_;
-      edm::EDGetTokenT<bool> badChargedCandidateFilterToken_;
-      edm::EDGetTokenT<pat::MuonCollection> muonToken_;
-      edm::EDGetTokenT<edm::View<pat::Electron>> electronToken_;  //ElectronCollection
-      edm::EDGetTokenT<pat::METCollection> metToken_;
-      edm::EDGetTokenT<std::vector<PileupSummaryInfo> > pileupInfoToken_;
-      edm::EDGetTokenT<LHEEventProduct> lheSrc_;
-      edm::EDGetTokenT<GenEventInfoProduct> pdfToken_;
-      edm::EDGetTokenT<reco::BeamSpot> beamSpotToken_;
-      edm::EDGetTokenT<reco::ConversionCollection> conversionsToken_;
+      edm::EDGetTokenT<pat::JetCollection>                     ak4jetToken_                     ;
+      edm::EDGetTokenT<pat::JetCollection>                     ak8jetToken_                     ;
+      edm::EDGetTokenT<pat::JetCollection>                     puppijetToken_                   ;
+      edm::EDGetTokenT<pat::JetCollection>                     ak8CHSSoftDropSubjetsToken_      ;
+      edm::EDGetTokenT<pat::JetCollection>                     ak8PuppiSoftDropSubjetsToken_    ;
+      edm::EDGetTokenT<reco::GenJetCollection>                 ak4genjetToken_                  ;
+      edm::EDGetTokenT<reco::GenJetCollection>                 ak8genjetToken_                  ;               
+      edm::EDGetTokenT<edm::View<reco::GenParticle>>           prunedGenToken_                  ;               
+      edm::EDGetTokenT<double>                                 rhoToken_                        ;
+      edm::EDGetTokenT<std::vector<reco::Vertex>>              vtxToken_                        ;
+      edm::EDGetTokenT<edm::TriggerResults>                    triggerResultsMETFilterToken_    ;
+      edm::EDGetTokenT<edm::TriggerResults>                    triggerBits_                     ;
+      edm::EDGetTokenT<pat::TriggerObjectStandAloneCollection> triggerObjects_                  ;
+      edm::EDGetTokenT<pat::PackedTriggerPrescales>            triggerPrescales_                ;
+      edm::EDGetTokenT<bool>                                   badMuonFilterToken_              ;
+      edm::EDGetTokenT<bool>                                   badChargedCandidateFilterToken_  ;
+      edm::EDGetTokenT<pat::MuonCollection>                    muonToken_                       ;
+      edm::EDGetTokenT<edm::View<pat::Electron>>               electronToken_                   ;  
+      edm::EDGetTokenT<pat::METCollection>                     metToken_                        ;
+      edm::EDGetTokenT<std::vector<PileupSummaryInfo>>         pileupInfoToken_                 ;
+      edm::EDGetTokenT<LHEEventProduct>                        lheSrc_                          ;
+      edm::EDGetTokenT<GenEventInfoProduct>                    pdfToken_                        ;
+      edm::EDGetTokenT<reco::BeamSpot>                         beamSpotToken_                   ;                     
+      edm::EDGetTokenT<reco::ConversionCollection>             conversionsToken_                ;
 
-      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_HLTpre_     ;
-      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_Loose_    ;
-      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_Medium_   ;
-      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_Tight_    ;
-      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult> >  eleIdFullInfoMapToken_HEEP_     ;
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult>>      eleIdFullInfoMapToken_HLTpre_    ;
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult>>      eleIdFullInfoMapToken_Loose_     ;
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult>>      eleIdFullInfoMapToken_Medium_    ;
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult>>      eleIdFullInfoMapToken_Tight_     ;
+      edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult>>      eleIdFullInfoMapToken_HEEP_      ;
   
       // Grab from configuration file
-      bool useToolbox_;
-      bool verbose_;
-      bool verboseGen_;
-      bool runGenLoop_;
-      bool isZprime_;
-      bool isttbar_;
-      bool isRSG_;
+    
+      bool verbose_         ;
+      bool verboseGen_      ;
+      
+      bool useToolbox_      ;
+
+      bool runGenLoop_      ;
+      bool runAllHadTree_   ;
+      bool runSemiLeptTree_ ;
+
+      bool isZprime_        ;
+      bool isttbar_         ;
+      bool isRSG_           ;
+      bool isRun2016F_      ;
 
       std::vector<std::string>  jecPayloadsAK4chs_;
       std::vector<std::string>  jecPayloadsAK8chs_;
       std::vector<std::string>  jecPayloadsAK4pup_;
       std::vector<std::string>  jecPayloadsAK8pup_;
 
-      std::string jerSFtext_;
+      std::vector<std::string>  jecPayloadsAK4chsSecondary_;
+      std::vector<std::string>  jecPayloadsAK8chsSecondary_;
+      std::vector<std::string>  jecPayloadsAK4pupSecondary_;
+      std::vector<std::string>  jecPayloadsAK8pupSecondary_;
+
+      std::string jertextAK4_;   // jet resolution AK4 jets
+      std::string jertextAK8_;   // jet resolution AK8 jets
+      std::string jerSFtext_ ;   // jer SF
 
       // JEC
-      boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK4chs;
-      boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK8chs;
-      boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK4pup;
-      boost::shared_ptr<FactorizedJetCorrector> JetCorrectorAK8pup;
+      boost::shared_ptr<FactorizedJetCorrector>   JetCorrectorAK4chs;
+      boost::shared_ptr<FactorizedJetCorrector>   JetCorrectorAK8chs;
+      boost::shared_ptr<FactorizedJetCorrector>   JetCorrectorAK4pup;
+      boost::shared_ptr<FactorizedJetCorrector>   JetCorrectorAK8pup;
       boost::shared_ptr<JetCorrectionUncertainty> JetCorrUncertAK4chs;
       boost::shared_ptr<JetCorrectionUncertainty> JetCorrUncertAK8chs;
       boost::shared_ptr<JetCorrectionUncertainty> JetCorrUncertAK4pup;
@@ -207,32 +223,23 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       TH1D* hPUweight_MBdn;
 
       // A few basic histograms
-      TH1D * h_ak8puppi_softDropMass ;
-      TH1D * h_ak8chs_softDropMass   ;
-      TH1D * h_ak8chs_softDropMass_reweighted ;
-      TH1D * h_ak8chs_pt   ;
-      TH1D * h_ak8chs_pt_reweighted ;
-      TH1D * h_NtrueIntPU ;
-      TH1D * h_NPV           ;               
-      TH1D * h_NPVreweighted ;     
-      TH1D * h_NPVgood          ;               
+      TH1D * h_cutflow_allhad ;
+      TH1D * h_cutflow_semilept;
+      // TH1D * h_ak8puppi_softDropMass          ;
+      // TH1D * h_ak8chs_softDropMass            ;
+      // TH1D * h_ak8chs_softDropMass_reweighted ;
+      // TH1D * h_ak8chs_pt                      ;
+      // TH1D * h_ak8chs_pt_reweighted           ;
+      TH1D * h_NtrueIntPU        ;
+      TH1D * h_NPV               ;               
+      TH1D * h_NPVreweighted     ;     
+      TH1D * h_NPVgood           ;               
       TH1D * h_NPVgoodreweighted ;     
 
+      // -- Triggers to be saved in tree
+      std::vector<std::string> trigsToRun;
 
-      // int count_GenTruth_semileptonic ;
-      // int count_nMu_gt1 ; 
-      // int count_nEl_gt1 ; 
-      // int count_nMu_e1 ; 
-      // int count_nEl_e1 ; 
-      // int count_nLep_e1 ; 
-      // int count_JetPt300 ; 
-      // int count_JetPt300Eta ; 
-      // int count_JetPt300Eta_AK4 ; 
-      // int count_JetPt300Eta_muPt40 ; 
-      // int count_JetPt300Eta_muPt40_MET40 ; 
-      // int count_JetPt300Eta_muPt40_MET40_AK4 ; 
-
-
+  
       //
       //       d8888 888 888        888    888               888     88888888888                           
       //      d88888 888 888        888    888               888         888                               
@@ -244,14 +251,17 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       //d88P     888 888 888        888    888 "Y888888  "Y88888         888     888      "Y8888   "Y8888  
       //                                                                                                   
     
-         
-
       TTree *TreeAllHad;   
 
-      std::vector<std::string> *AllHadTrigNames     = new std::vector<std::string>;
-      std::vector<int> *AllHadTrigPrescales = new std::vector<int>;
-      std::vector<bool> *AllHadTrigPass    = new std::vector<bool>;
+      // std::vector<float> *vAK4pt      = new std::vector<float>;
+      // std::vector<float> *vAK4eta     = new std::vector<float>;
+      // std::vector<float> *vAK4phi     = new std::vector<float>;
+      // std::vector<float> *vAK4m       = new std::vector<float>;
+      // std::vector<float> *vAK4bdisc   = new std::vector<float>;
 
+      // std::vector<std::string> *AllHadTrigNames     = new std::vector<std::string>;
+      std::vector<int>  *AllHadTrigPrescales = new std::vector<int>  ;
+      std::vector<bool> *AllHadTrigPass      = new std::vector<bool> ;
       std::string AllHadTrigAcceptBits;
 
       Int_t   PassMETFilters                            ;
@@ -259,35 +269,35 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Jet0EtaRaw                                ;
       Float_t Jet0PhiRaw                                ;
       Float_t Jet0MassRaw                               ;
-      Float_t Jet0P                                     ;
-      Float_t Jet0Pt                                    ;
-      Float_t Jet0Eta                                   ;
-      Float_t Jet0Phi                                   ;
-      Float_t Jet0Rap                                   ;
-      Float_t Jet0Energy                                ;
-      Float_t Jet0Mass                                  ;
+      // Float_t Jet0P                                     ;
+      // Float_t Jet0Pt                                    ;
+      // Float_t Jet0Eta                                   ;
+      // Float_t Jet0Phi                                   ;
+      // Float_t Jet0Rap                                   ;
+      // Float_t Jet0Energy                                ;
+      // Float_t Jet0Mass                                  ;
       Float_t Jet0Area                                  ;
-      Float_t Jet0SDmass                                ;
+      // Float_t Jet0SDmass                                ;
       Float_t Jet0SDmassRaw                             ;
-      Float_t Jet0SDmassCorrL23                         ;    
-      Float_t Jet0SDmassCorrL23Up                       ;    
-      Float_t Jet0SDmassCorrL23Dn                       ;     
-      Float_t Jet0SDmassCorrL23Smear                    ;    
-      Float_t Jet0SDmassCorrL23SmearUp                  ;    
-      Float_t Jet0SDmassCorrL23SmearDn                  ;  
-      Float_t Jet0SDmassCorrL123                        ;    
-      Float_t Jet0SDmassCorrL123Up                      ;    
-      Float_t Jet0SDmassCorrL123Dn                      ;     
+      Float_t Jet0SDmassSubjetCorrL23                   ;    
+      // Float_t Jet0SDmassCorrL23Up                       ;    
+      // Float_t Jet0SDmassCorrL23Dn                       ;     
+      // Float_t Jet0SDmassCorrL23Smear                    ;    
+      // Float_t Jet0SDmassCorrL23SmearUp                  ;    
+      // Float_t Jet0SDmassCorrL23SmearDn                  ;  
+      Float_t Jet0SDmassSubjetCorrL123                  ;    
+      // Float_t Jet0SDmassCorrL123Up                      ;    
+      // Float_t Jet0SDmassCorrL123Dn                      ;     
       Float_t Jet0SDptRaw                               ;    
-      Float_t Jet0SDptCorrL23                           ;    
-      Float_t Jet0SDptCorrL23Up                         ;    
-      Float_t Jet0SDptCorrL23Dn                         ;    
-      Float_t Jet0SDptCorrL123                          ;    
-      Float_t Jet0SDptCorrL123Up                        ;    
-      Float_t Jet0SDptCorrL123Dn                        ;    
-      Float_t Jet0SDptCorrL23Smear                      ;    
-      Float_t Jet0SDptCorrL23SmearUp                    ;    
-      Float_t Jet0SDptCorrL23SmearDn                    ;    
+      // Float_t Jet0SDptCorrL23                           ;    
+      // Float_t Jet0SDptCorrL23Up                         ;    
+      // Float_t Jet0SDptCorrL23Dn                         ;    
+      // Float_t Jet0SDptCorrL123                          ;    
+      // Float_t Jet0SDptCorrL123Up                        ;    
+      // Float_t Jet0SDptCorrL123Dn                        ;    
+      // Float_t Jet0SDptCorrL23Smear                      ;    
+      // Float_t Jet0SDptCorrL23SmearUp                    ;    
+      // Float_t Jet0SDptCorrL23SmearDn                    ;    
       Float_t Jet0SDetaRaw                              ;    
       Float_t Jet0SDphiRaw                              ;    
       Float_t Jet0MassPruned                            ;
@@ -327,34 +337,34 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Jet0SDsubjet1tau2                         ;
       Float_t Jet0SDsubjet1tau3                         ;
 
-      Float_t Jet0PuppiP                                ;
-      Float_t Jet0PuppiPt                               ;
-      Float_t Jet0PuppiEta                              ;
-      Float_t Jet0PuppiPhi                              ;
-      Float_t Jet0PuppiMass                             ;
+      // Float_t Jet0PuppiP                                ;
+      Float_t Jet0PuppiPtRaw                            ;
+      Float_t Jet0PuppiEtaRaw                           ;
+      Float_t Jet0PuppiPhiRaw                           ;
+      Float_t Jet0PuppiMassRaw                          ;
       Float_t Jet0PuppiArea                             ;
 
-      Float_t Jet0PuppiSDmass                           ;
-      Float_t Jet0PuppiSDmassSubjetCorr                       ;
-      Float_t Jet0PuppiSDmassSubjetCorrUp                     ;
-      Float_t Jet0PuppiSDmassSubjetCorrDn                     ;
+      Float_t Jet0PuppiSDmassRaw                        ;
+      Float_t Jet0PuppiSDmassSubjetCorr                 ;
+      // Float_t Jet0PuppiSDmassSubjetCorrUp                     ;
+      // Float_t Jet0PuppiSDmassSubjetCorrDn                     ;
       // Float_t Jet0PuppiSDmassSubjetCorrL23Smear               ;
       // Float_t Jet0PuppiSDmassSubjetCorrL23SmearUp             ;
       // Float_t Jet0PuppiSDmassSubjetCorrL23SmearDn             ;
      
-      Float_t Jet0PuppiSDmassUserFloat   ;  
+      // Float_t Jet0PuppiSDmassUserFloat   ;  
       Float_t Jet0PuppiMassPruned        ;  
       Float_t Jet0PuppiMassTrimmed       ;  
 
-      Float_t Jet0PuppiSDpt                             ;
-      Float_t Jet0PuppiSDptSubjetCorr                         ;
-      Float_t Jet0PuppiSDptSubjetCorrUp                       ;
-      Float_t Jet0PuppiSDptSubjetCorrDn                       ;
-      Float_t Jet0PuppiSDptSubjetCorrL23Smear                 ;
-      Float_t Jet0PuppiSDptSubjetCorrL23SmearUp               ;
-      Float_t Jet0PuppiSDptSubjetCorrL23SmearDn               ;
-      Float_t Jet0PuppiSDeta                            ;
-      Float_t Jet0PuppiSDphi                            ;
+      Float_t Jet0PuppiSDptRaw                             ;
+      // Float_t Jet0PuppiSDptSubjetCorr                         ;
+      // Float_t Jet0PuppiSDptSubjetCorrUp                       ;
+      // Float_t Jet0PuppiSDptSubjetCorrDn                       ;
+      // Float_t Jet0PuppiSDptSubjetCorrL23Smear                 ;
+      // Float_t Jet0PuppiSDptSubjetCorrL23SmearUp               ;
+      // Float_t Jet0PuppiSDptSubjetCorrL23SmearDn               ;
+      Float_t Jet0PuppiSDetaRaw                            ;
+      Float_t Jet0PuppiSDphiRaw                            ;
 
       Float_t Jet0PuppiTau1                             ;
       Float_t Jet0PuppiTau2                             ;
@@ -473,39 +483,45 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Jet0GenMatched_partonID                   ;
       Float_t Jet0GenMatched_DeltaRjetParton            ;
 
+
+      Int_t Jet0NsubjetsSD ;
+      Int_t Jet0NsubjetsSDPuppi ;
+      Int_t Jet1NsubjetsSD ;
+      Int_t Jet1NsubjetsSDPuppi ;
+
       Float_t Jet1PtRaw                                 ;
       Float_t Jet1EtaRaw                                ;
       Float_t Jet1PhiRaw                                ;
       Float_t Jet1MassRaw                               ;
-      Float_t Jet1P                                     ;
-      Float_t Jet1Pt                                    ;
-      Float_t Jet1Eta                                   ;
-      Float_t Jet1Phi                                   ;
-      Float_t Jet1Rap                                   ;
-      Float_t Jet1Energy                                ;
-      Float_t Jet1Mass                                  ;
+      // Float_t Jet1P                                     ;
+      // Float_t Jet1Pt                                    ;
+      // Float_t Jet1Eta                                   ;
+      // Float_t Jet1Phi                                   ;
+      // Float_t Jet1Rap                                   ;
+      // Float_t Jet1Energy                                ;
+      // Float_t Jet1Mass                                  ;
       Float_t Jet1Area                                  ;
       Float_t Jet1SDmass                                ;
       Float_t Jet1SDmassRaw                             ;
-      Float_t Jet1SDmassCorrL23                         ;
-      Float_t Jet1SDmassCorrL23Up                       ;
-      Float_t Jet1SDmassCorrL23Dn                       ;
-      Float_t Jet1SDmassCorrL123                        ;
-      Float_t Jet1SDmassCorrL123Up                      ;
-      Float_t Jet1SDmassCorrL123Dn                      ;
-      Float_t Jet1SDmassCorrL23Smear                    ;
-      Float_t Jet1SDmassCorrL23SmearUp                  ;
-      Float_t Jet1SDmassCorrL23SmearDn                  ;
+      Float_t Jet1SDmassSubjetCorrL23                         ;
+      // Float_t Jet1SDmassCorrL23Up                       ;
+      // Float_t Jet1SDmassCorrL23Dn                       ;
+      Float_t Jet1SDmassSubjetCorrL123                        ;
+      // Float_t Jet1SDmassCorrL123Up                      ;
+      // Float_t Jet1SDmassCorrL123Dn                      ;
+      // Float_t Jet1SDmassCorrL23Smear                    ;
+      // Float_t Jet1SDmassCorrL23SmearUp                  ;
+      // Float_t Jet1SDmassCorrL23SmearDn                  ;
       Float_t Jet1SDptRaw                               ;
-      Float_t Jet1SDptCorrL23                           ;
-      Float_t Jet1SDptCorrL23Up                         ;
-      Float_t Jet1SDptCorrL23Dn                         ;
-      Float_t Jet1SDptCorrL123                          ;
-      Float_t Jet1SDptCorrL123Up                        ;
-      Float_t Jet1SDptCorrL123Dn                        ;
-      Float_t Jet1SDptCorrL23Smear                      ;
-      Float_t Jet1SDptCorrL23SmearUp                    ;
-      Float_t Jet1SDptCorrL23SmearDn                    ;
+      // Float_t Jet1SDptCorrL23                           ;
+      // Float_t Jet1SDptCorrL23Up                         ;
+      // Float_t Jet1SDptCorrL23Dn                         ;
+      // Float_t Jet1SDptCorrL123                          ;
+      // Float_t Jet1SDptCorrL123Up                        ;
+      // Float_t Jet1SDptCorrL123Dn                        ;
+      // Float_t Jet1SDptCorrL23Smear                      ;
+      // Float_t Jet1SDptCorrL23SmearUp                    ;
+      // Float_t Jet1SDptCorrL23SmearDn                    ;
       Float_t Jet1SDetaRaw                              ;
       Float_t Jet1SDphiRaw                              ; 
       Float_t Jet1MassPruned                            ;
@@ -544,34 +560,34 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Jet1SDsubjet1tau1                         ;
       Float_t Jet1SDsubjet1tau2                         ;
       Float_t Jet1SDsubjet1tau3                         ;
-      Float_t Jet1PuppiP                                ;
-      Float_t Jet1PuppiPt                               ;
-      Float_t Jet1PuppiEta                              ;
-      Float_t Jet1PuppiPhi                              ;
-      Float_t Jet1PuppiMass                             ;
+      // Float_t Jet1PuppiP                                ;
+      Float_t Jet1PuppiPtRaw                               ;
+      Float_t Jet1PuppiEtaRaw                              ;
+      Float_t Jet1PuppiPhiRaw                              ;
+      Float_t Jet1PuppiMassRaw                             ;
       Float_t Jet1PuppiArea                             ;
 
-      Float_t Jet1PuppiSDmassUserFloat   ;  
+      // Float_t Jet1PuppiSDmassUserFloat   ;  
       Float_t Jet1PuppiMassPruned        ;  
       Float_t Jet1PuppiMassTrimmed       ;  
 
 
-      Float_t Jet1PuppiSDmass                           ;
+      Float_t Jet1PuppiSDmassRaw                           ;
       Float_t Jet1PuppiSDmassSubjetCorr                       ;
-      Float_t Jet1PuppiSDmassSubjetCorrUp                     ;
-      Float_t Jet1PuppiSDmassSubjetCorrDn                     ;
+      // Float_t Jet1PuppiSDmassSubjetCorrUp                     ;
+      // Float_t Jet1PuppiSDmassSubjetCorrDn                     ;
       // Float_t Jet1PuppiSDmassSubjetCorrL23Smear               ;
       // Float_t Jet1PuppiSDmassSubjetCorrL23SmearUp             ;
       // Float_t Jet1PuppiSDmassSubjetCorrL23SmearDn             ;
-      Float_t Jet1PuppiSDpt                             ;
-      Float_t Jet1PuppiSDptSubjetCorr                         ;
-      Float_t Jet1PuppiSDptSubjetCorrUp                       ;
-      Float_t Jet1PuppiSDptSubjetCorrDn                       ;
-      Float_t Jet1PuppiSDptSubjetCorrL23Smear                 ;
-      Float_t Jet1PuppiSDptSubjetCorrL23SmearUp               ;
-      Float_t Jet1PuppiSDptSubjetCorrL23SmearDn               ;
-      Float_t Jet1PuppiSDeta                            ;
-      Float_t Jet1PuppiSDphi                            ;
+      Float_t Jet1PuppiSDptRaw                             ;
+      // Float_t Jet1PuppiSDptSubjetCorr                         ;
+      // Float_t Jet1PuppiSDptSubjetCorrUp                       ;
+      // Float_t Jet1PuppiSDptSubjetCorrDn                       ;
+      // Float_t Jet1PuppiSDptSubjetCorrL23Smear                 ;
+      // Float_t Jet1PuppiSDptSubjetCorrL23SmearUp               ;
+      // Float_t Jet1PuppiSDptSubjetCorrL23SmearDn               ;
+      Float_t Jet1PuppiSDetaRaw                            ;
+      Float_t Jet1PuppiSDphiRaw                            ;
 
       Float_t Jet1PuppiTau1                             ;
       Float_t Jet1PuppiTau2                             ;
@@ -690,8 +706,19 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t Jet1GenMatched_partonID                   ;
       Float_t Jet1GenMatched_DeltaRjetParton            ;
 
-      Float_t AllHadMETpx                               ;           
-      Float_t AllHadMETpy                               ;           
+      Float_t NeighborJet_Jet0_pt                       ;   
+      Float_t NeighborJet_Jet0_eta                      ;   
+      Float_t NeighborJet_Jet0_phi                      ;   
+      Float_t NeighborJet_Jet0_m                        ;   
+      Float_t NeighborJet_Jet0_bdisc                    ;   
+      Float_t NeighborJet_Jet1_pt                       ;   
+      Float_t NeighborJet_Jet1_eta                      ;   
+      Float_t NeighborJet_Jet1_phi                      ;   
+      Float_t NeighborJet_Jet1_m                        ;   
+      Float_t NeighborJet_Jet1_bdisc                    ;   
+
+      // Float_t AllHadMETpx                               ;           
+      // Float_t AllHadMETpy                               ;           
       Float_t AllHadMETpt                               ;           
       Float_t AllHadMETphi                              ;           
       Float_t AllHadMETsumET                            ;           
@@ -711,6 +738,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t DiGenJetMass                              ;  
       Int_t   CountLep                                  ;         
       Float_t GenTTmass                                 ;           
+      Int_t   GenCountHadTop                            ;           
       Float_t HT                                        ;           
       Float_t HT_CorrDn                                 ;           
       Float_t HT_CorrUp                                 ;           
@@ -741,10 +769,15 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       //                                                                888       
          
       TTree *TreeSemiLept;
-      std::vector<std::string> *SemiLeptTrigNames     = new std::vector<std::string>;
+      // std::vector<std::string> *SemiLeptTrigNames     = new std::vector<std::string>;
       std::vector<int> *SemiLeptTrigPrescales = new std::vector<int>;
       std::vector<bool> *SemiLeptTrigPass    = new std::vector<bool>;
 
+      // std::vector<float> *SemiLeptAK4pt      = new std::vector<float>;
+      // std::vector<float> *SemiLeptAK4eta     = new std::vector<float>;
+      // std::vector<float> *SemiLeptAK4phi     = new std::vector<float>;
+      // std::vector<float> *SemiLeptAK4m       = new std::vector<float>;
+      // std::vector<float> *SemiLeptAK4bdisc   = new std::vector<float>;
 
 
       std::string SemiLeptTrigAcceptBits;
@@ -753,35 +786,35 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t JetEtaRaw                              ;
       Float_t JetPhiRaw                              ;
       Float_t JetMassRaw                             ;
-      Float_t JetP                                   ;
-      Float_t JetPt                                  ;
-      Float_t JetEta                                 ;
-      Float_t JetPhi                                 ;
-      Float_t JetRap                                 ;
-      Float_t JetEnergy                              ;
-      Float_t JetMass                                ;
+      // Float_t JetP                                   ;
+      // Float_t JetPt                                  ;
+      // Float_t JetEta                                 ;
+      // Float_t JetPhi                                 ;
+      // Float_t JetRap                                 ;
+      // Float_t JetEnergy                              ;
+      // Float_t JetMass                                ;
       Float_t JetArea                                ;
-      Float_t JetSDmass                              ;
+      // Float_t JetSDmass                              ;
       Float_t JetSDmassRaw                           ;
-      Float_t JetSDmassCorrL23                       ;
-      Float_t JetSDmassCorrL23Up                     ;
-      Float_t JetSDmassCorrL23Dn                     ;
-      Float_t JetSDmassCorrL123                      ;
-      Float_t JetSDmassCorrL123Up                    ;
-      Float_t JetSDmassCorrL123Dn                    ;
-      Float_t JetSDmassCorrL23Smear                  ;
-      Float_t JetSDmassCorrL23SmearUp                ;
-      Float_t JetSDmassCorrL23SmearDn                ;
+      Float_t JetSDmassSubjetCorrL23                       ;
+      // Float_t JetSDmassCorrL23Up                     ;
+      // Float_t JetSDmassCorrL23Dn                     ;
+      Float_t JetSDmassSubjetCorrL123                      ;
+      // Float_t JetSDmassCorrL123Up                    ;
+      // Float_t JetSDmassCorrL123Dn                    ;
+      // Float_t JetSDmassCorrL23Smear                  ;
+      // Float_t JetSDmassCorrL23SmearUp                ;
+      // Float_t JetSDmassCorrL23SmearDn                ;
       Float_t JetSDptRaw                             ;
-      Float_t JetSDptCorrL23                         ;
-      Float_t JetSDptCorrL23Up                       ;
-      Float_t JetSDptCorrL23Dn                       ;
-      Float_t JetSDptCorrL123                        ;
-      Float_t JetSDptCorrL123Up                      ;
-      Float_t JetSDptCorrL123Dn                      ;
-      Float_t JetSDptCorrL23Smear                    ;
-      Float_t JetSDptCorrL23SmearUp                  ;
-      Float_t JetSDptCorrL23SmearDn                  ;
+      // Float_t JetSDptCorrL23                         ;
+      // Float_t JetSDptCorrL23Up                       ;
+      // Float_t JetSDptCorrL23Dn                       ;
+      // Float_t JetSDptCorrL123                        ;
+      // Float_t JetSDptCorrL123Up                      ;
+      // Float_t JetSDptCorrL123Dn                      ;
+      // Float_t JetSDptCorrL23Smear                    ;
+      // Float_t JetSDptCorrL23SmearUp                  ;
+      // Float_t JetSDptCorrL23SmearDn                  ;
       Float_t JetSDetaRaw                            ;
       Float_t JetSDphiRaw                            ;
       Float_t JetMassPruned                          ;
@@ -819,28 +852,28 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t JetSDsubjet1tau1                       ;
       Float_t JetSDsubjet1tau2                       ;
       Float_t JetSDsubjet1tau3                       ;
-      Float_t JetPuppiP                              ;
-      Float_t JetPuppiPt                             ;
-      Float_t JetPuppiEta                            ;
-      Float_t JetPuppiPhi                            ;
-      Float_t JetPuppiMass                           ;
+      // Float_t JetPuppiP                              ;
+      Float_t JetPuppiPtRaw                             ;
+      Float_t JetPuppiEtaRaw                            ;
+      Float_t JetPuppiPhiRaw                            ;
+      Float_t JetPuppiMassRaw                           ;
       Float_t JetPuppiArea                           ;
-      Float_t JetPuppiSDmass                         ;
+      Float_t JetPuppiSDmassRaw                         ;
       Float_t JetPuppiSDmassSubjetCorr                     ;
-      Float_t JetPuppiSDmassSubjetCorrUp                   ;
-      Float_t JetPuppiSDmassSubjetCorrDn                   ;
+      // Float_t JetPuppiSDmassSubjetCorrUp                   ;
+      // Float_t JetPuppiSDmassSubjetCorrDn                   ;
       // Float_t JetPuppiSDmassSubjetCorrL23Smear             ;
       // Float_t JetPuppiSDmassSubjetCorrL23SmearUp           ;
       // Float_t JetPuppiSDmassSubjetCorrL23SmearDn           ;
-      Float_t JetPuppiSDpt                           ;
-      Float_t JetPuppiSDptSubjetCorr                       ;
-      Float_t JetPuppiSDptSubjetCorrUp                     ;
-      Float_t JetPuppiSDptSubjetCorrDn                     ;
-      Float_t JetPuppiSDptSubjetCorrL23Smear               ;
-      Float_t JetPuppiSDptSubjetCorrL23SmearUp             ;
-      Float_t JetPuppiSDptSubjetCorrL23SmearDn             ;
-      Float_t JetPuppiSDeta                          ;
-      Float_t JetPuppiSDphi                          ;
+      Float_t JetPuppiSDptRaw                           ;
+      // Float_t JetPuppiSDptSubjetCorr                       ;
+      // Float_t JetPuppiSDptSubjetCorrUp                     ;
+      // Float_t JetPuppiSDptSubjetCorrDn                     ;
+      // Float_t JetPuppiSDptSubjetCorrL23Smear               ;
+      // Float_t JetPuppiSDptSubjetCorrL23SmearUp             ;
+      // Float_t JetPuppiSDptSubjetCorrL23SmearDn             ;
+      Float_t JetPuppiSDetaRaw                          ;
+      Float_t JetPuppiSDphiRaw                          ;
       Float_t JetPuppiTau1                           ;
       Float_t JetPuppiTau2                           ;
       Float_t JetPuppiTau3                           ;
@@ -875,10 +908,13 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t JetPuppiSDsubjet1tau2                  ;
       Float_t JetPuppiSDsubjet1tau3                  ;
 
-      Float_t JetPuppiSDmassUserFloat   ;  
+      // Float_t JetPuppiSDmassUserFloat   ;  
       Float_t JetPuppiMassPruned        ;  
       Float_t JetPuppiMassTrimmed       ;  
 
+
+      Int_t JetNsubjetsSD ;
+      Int_t JetNsubjetsSDPuppi ;
 
       Float_t JetCHF                                 ;
       Float_t JetNHF                                 ;
@@ -995,6 +1031,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
 
       Float_t SemiLeptGenTTmass                      ;
+      Int_t   SemiLeptGenCountHadTop                 ;
 
       Float_t HTlep                                  ;
       Float_t ST                                     ;                
@@ -1071,7 +1108,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 // constructors and destructor
 //
 B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
-    ak4jetToken_(consumes<pat::JetCollection>(edm::InputTag("slimmedJets"))),
+    ak4jetToken_(consumes<pat::JetCollection>(    edm::InputTag("slimmedJets"))),
     ak8jetToken_(consumes<pat::JetCollection>(    iConfig.getParameter<edm::InputTag>("ak8chsInput"))),  //edm::InputTag("slimmedJetsAK8"))),
     puppijetToken_(consumes<pat::JetCollection>(  iConfig.getParameter<edm::InputTag>("ak8puppiInput"))),
     ak8CHSSoftDropSubjetsToken_(consumes<pat::JetCollection>(  iConfig.getParameter<edm::InputTag>("ak8chsSubjetsInput"))),
@@ -1096,22 +1133,31 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
     beamSpotToken_(consumes<reco::BeamSpot>(edm::InputTag("offlineBeamSpot"))),
     conversionsToken_(consumes<reco::ConversionCollection>(edm::InputTag("reducedEgamma:reducedConversions"))),
     eleIdFullInfoMapToken_HLTpre_  (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_HLTpre"))),
-    eleIdFullInfoMapToken_Loose_ (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_Loose"))),
-    eleIdFullInfoMapToken_Medium_(consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_Medium"))),
-    eleIdFullInfoMapToken_Tight_ (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_Tight"))),
-    eleIdFullInfoMapToken_HEEP_  (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_HEEP"))),
-    useToolbox_(iConfig.getParameter<bool>  ("useToolbox")),
-    verbose_(iConfig.getParameter<bool>  ("verbose")),
-    verboseGen_(iConfig.getParameter<bool>  ("verboseGen")),
-    runGenLoop_(iConfig.getParameter<bool>  ("runGenLoop")),
-    isZprime_(iConfig.getParameter<bool>  ("isZprime")),
-    isttbar_(iConfig.getParameter<bool>  ("isttbar")),
-    isRSG_(iConfig.getParameter<bool>  ("isRSG")),
+    eleIdFullInfoMapToken_Loose_   (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_Loose"))),
+    eleIdFullInfoMapToken_Medium_  (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_Medium"))),
+    eleIdFullInfoMapToken_Tight_   (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_Tight"))),
+    eleIdFullInfoMapToken_HEEP_    (consumes<edm::ValueMap<vid::CutFlowResult> >(iConfig.getParameter<edm::InputTag>("eleIdFullInfoMapToken_HEEP"))),
+    verbose_         (iConfig.getParameter<bool>  ("verbose")),
+    verboseGen_      (iConfig.getParameter<bool>  ("verboseGen")),
+    useToolbox_      (iConfig.getParameter<bool>  ("useToolbox")),
+    runGenLoop_      (iConfig.getParameter<bool>  ("runGenLoop")),
+    runAllHadTree_   (iConfig.getParameter<bool>  ("runAllHadTree")),
+    runSemiLeptTree_ (iConfig.getParameter<bool>  ("runSemiLeptTree")),
+    isZprime_        (iConfig.getParameter<bool>  ("isZprime")),
+    isttbar_         (iConfig.getParameter<bool>  ("isttbar")),
+    isRSG_           (iConfig.getParameter<bool>  ("isRSG")),
+    isRun2016F_      (iConfig.getParameter<bool>  ("isRun2016F")),
     jecPayloadsAK4chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4chs")),
     jecPayloadsAK8chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK8chs")),
     jecPayloadsAK4pup_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4pup")),
     jecPayloadsAK8pup_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK8pup")),
-    jerSFtext_ (iConfig.getParameter<std::string>  ("jerSFtext"))
+    jecPayloadsAK4chsSecondary_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4chsSecondary")),
+    jecPayloadsAK8chsSecondary_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK8chsSecondary")),
+    jecPayloadsAK4pupSecondary_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4pupSecondary")),
+    jecPayloadsAK8pupSecondary_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK8pupSecondary")),
+    jertextAK4_ (iConfig.getParameter<std::string>  ("jertextAK4")),
+    jertextAK8_ (iConfig.getParameter<std::string>  ("jertextAK8")),
+    jerSFtext_  (iConfig.getParameter<std::string>  ("jerSFtext"))
 {
   std::cout<<"B2GTTbarTreeMaker::B2GTTbarTreeMaker"<<std::endl;
 
@@ -1122,16 +1168,72 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
 
   edm::Service<TFileService> fs;
 
-  h_ak8puppi_softDropMass            =  fs->make<TH1D>("h_ak8puppi_softDropMass"           ,"",200,0,400);
-  h_ak8chs_softDropMass              =  fs->make<TH1D>("h_ak8chs_softDropMass"             ,"",200,0,400);
-  h_ak8chs_softDropMass_reweighted   =  fs->make<TH1D>("h_ak8chs_softDropMass_reweighted"  ,"",200,0,400);
-  h_ak8chs_pt                        =  fs->make<TH1D>("h_ak8chs_pt"                       ,"",200,0,4000);
-  h_ak8chs_pt_reweighted             =  fs->make<TH1D>("h_ak8chs_pt_reweighted"            ,"",200,0,4000);
+  h_cutflow_allhad                   =  fs->make<TH1D>("h_cutflow_allhad"                  ,"",20,0,20);
+  h_cutflow_semilept                 =  fs->make<TH1D>("h_cutflow_semilept"                ,"",20,0,20);
+  // h_ak8puppi_softDropMass            =  fs->make<TH1D>("h_ak8puppi_softDropMass"           ,"",200,0,400);
+  // h_ak8chs_softDropMass              =  fs->make<TH1D>("h_ak8chs_softDropMass"             ,"",200,0,400);
+  // h_ak8chs_softDropMass_reweighted   =  fs->make<TH1D>("h_ak8chs_softDropMass_reweighted"  ,"",200,0,400);
+  // h_ak8chs_pt                        =  fs->make<TH1D>("h_ak8chs_pt"                       ,"",200,0,4000);
+  // h_ak8chs_pt_reweighted             =  fs->make<TH1D>("h_ak8chs_pt_reweighted"            ,"",200,0,4000);
   h_NtrueIntPU                       =  fs->make<TH1D>("h_NtrueIntPU"                      ,"",200,0,200);
   h_NPV                              =  fs->make<TH1D>("h_NPV"                             ,"",200,0,200);
   h_NPVreweighted                    =  fs->make<TH1D>("h_NPVreweighted"                   ,"",200,0,200);
   h_NPVgood                          =  fs->make<TH1D>("h_NPVgood"                         ,"",200,0,200);
   h_NPVgoodreweighted                =  fs->make<TH1D>("h_NPVgoodreweighted"               ,"",200,0,200);
+
+  // HT 
+  trigsToRun.push_back("HLT_PFHT300_v");
+  trigsToRun.push_back("HLT_PFHT350_v");
+  trigsToRun.push_back("HLT_PFHT400_v");
+  trigsToRun.push_back("HLT_PFHT475_v");
+  trigsToRun.push_back("HLT_PFHT600_v");
+  trigsToRun.push_back("HLT_PFHT650_v");
+  trigsToRun.push_back("HLT_PFHT800_v");
+  trigsToRun.push_back("HLT_PFHT900_v");
+  trigsToRun.push_back("HLT_PFHT650_WideJetMJJ900"); //HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v6
+  trigsToRun.push_back("HLT_PFHT650_WideJetMJJ950"); //HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v6
+
+  // Single jet
+  trigsToRun.push_back("HLT_CaloJet500_NoJetID_v");
+  trigsToRun.push_back("HLT_PFJet320_v");
+  trigsToRun.push_back("HLT_PFJet400_v");
+  trigsToRun.push_back("HLT_PFJet450_v");
+  trigsToRun.push_back("HLT_PFJet500_v");
+  trigsToRun.push_back("HLT_AK8PFJet450_v");
+  trigsToRun.push_back("HLT_AK8PFJet500_v");
+
+  // Substructure
+  trigsToRun.push_back("HLT_AK8PFJet360_TrimMass30_v");
+  trigsToRun.push_back("HLT_AK8PFHT650_TrimR0p1PT0p03Mass50_v");
+  trigsToRun.push_back("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v");
+
+  // Substructure + b-tag
+  trigsToRun.push_back("HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20_v");
+  trigsToRun.push_back("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v");
+
+  // Muon
+  trigsToRun.push_back("HLT_Mu45_eta2p1_v");
+  trigsToRun.push_back("HLT_Mu50_v");
+  trigsToRun.push_back("HLT_Mu55_v");
+  trigsToRun.push_back("HLT_TkMu50_v");
+  trigsToRun.push_back("HLT_IsoMu22_eta2p1_v");
+  trigsToRun.push_back("HLT_IsoMu24_v");
+  trigsToRun.push_back("HLT_IsoMu27_v");
+
+  // Muon + jet
+  trigsToRun.push_back("HLT_Mu30_eta2p1_PFJet150_PFJet50_v");
+  trigsToRun.push_back("HLT_Mu40_eta2p1_PFJet200_PFJet50_v");
+
+  // Electron
+  trigsToRun.push_back("HLT_Ele32_eta2p1_WPTight_Gsf_v");
+  trigsToRun.push_back("HLT_Ele35_WPLoose_Gsf_v");
+  trigsToRun.push_back("HLT_Ele105_CaloIdVT_GsfTrkIdT_v");
+  trigsToRun.push_back("HLT_Ele115_CaloIdVT_GsfTrkIdT_v");
+
+  // Electron + jet
+  trigsToRun.push_back("HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v");
+  trigsToRun.push_back("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet140_v");
+  trigsToRun.push_back("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165_v");
 
 
 
@@ -1150,46 +1252,51 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad = new TTree("TreeAllHad","TreeAllHad"); 
 
 
-  TreeAllHad->Branch("AllHadTrigNames"       , "vector<std::string>", &AllHadTrigNames);
+  // TreeAllHad->Branch("vAK4pt"      , "vector<float>", &vAK4pt     );
+  // TreeAllHad->Branch("vAK4eta"     , "vector<float>", &vAK4eta    );
+  // TreeAllHad->Branch("vAK4phi"     , "vector<float>", &vAK4phi    );
+  // TreeAllHad->Branch("vAK4m"       , "vector<float>", &vAK4m      );
+  // TreeAllHad->Branch("vAK4bdisc"   , "vector<float>", &vAK4bdisc  );
+
+  // TreeAllHad->Branch("AllHadTrigNames"       , "vector<std::string>", &AllHadTrigNames);
   TreeAllHad->Branch("AllHadTrigPrescales"   , "vector<int>", &AllHadTrigPrescales);
   TreeAllHad->Branch("AllHadTrigPass"        , "vector<bool>", &AllHadTrigPass);
   TreeAllHad->Branch("AllHadTrigAcceptBits"  , &AllHadTrigAcceptBits);
-
 
   TreeAllHad->Branch("PassMETFilters"                        , & PassMETFilters                     ,    "PassMETFilters/I"                          );                                  
   TreeAllHad->Branch("Jet0PtRaw"                             , & Jet0PtRaw                          ,    "Jet0PtRaw/F"                               );                                  
   TreeAllHad->Branch("Jet0EtaRaw"                            , & Jet0EtaRaw                         ,    "Jet0EtaRaw/F"                              );                                   
   TreeAllHad->Branch("Jet0PhiRaw"                            , & Jet0PhiRaw                         ,    "Jet0PhiRaw/F"                              );                                   
   TreeAllHad->Branch("Jet0MassRaw"                           , & Jet0MassRaw                        ,    "Jet0MassRaw/F"                             );                                    
-  TreeAllHad->Branch("Jet0P"                                 , & Jet0P                              ,    "Jet0P/F"                                   );                              
-  TreeAllHad->Branch("Jet0Pt"                                , & Jet0Pt                             ,    "Jet0Pt/F"                                  );                               
-  TreeAllHad->Branch("Jet0Eta"                               , & Jet0Eta                            ,    "Jet0Eta/F"                                 );                                
-  TreeAllHad->Branch("Jet0Phi"                               , & Jet0Phi                            ,    "Jet0Phi/F"                                 );                                
-  TreeAllHad->Branch("Jet0Rap"                               , & Jet0Rap                            ,    "Jet0Rap/F"                                 );                                
-  TreeAllHad->Branch("Jet0Energy"                            , & Jet0Energy                         ,    "Jet0Energy/F"                              );                                   
-  TreeAllHad->Branch("Jet0Mass"                              , & Jet0Mass                           ,    "Jet0Mass/F"                                );                                 
-  TreeAllHad->Branch("Jet0Area"                              , & Jet0Area                           ,    "Jet0Area/F"                                );                                 
-  TreeAllHad->Branch("Jet0SDmass"                            , & Jet0SDmass                         ,    "Jet0SDmass/F"                              );                                         
+  // TreeAllHad->Branch("Jet0P"                                 , & Jet0P                              ,    "Jet0P/F"                                   );                              
+  // TreeAllHad->Branch("Jet0Pt"                                , & Jet0Pt                             ,    "Jet0Pt/F"                                  );                               
+  // TreeAllHad->Branch("Jet0Eta"                               , & Jet0Eta                            ,    "Jet0Eta/F"                                 );                                
+  // TreeAllHad->Branch("Jet0Phi"                               , & Jet0Phi                            ,    "Jet0Phi/F"                                 );                                
+  // TreeAllHad->Branch("Jet0Rap"                               , & Jet0Rap                            ,    "Jet0Rap/F"                                 );                                
+  // TreeAllHad->Branch("Jet0Energy"                            , & Jet0Energy                         ,    "Jet0Energy/F"                              );                                   
+  // TreeAllHad->Branch("Jet0Mass"                              , & Jet0Mass                           ,    "Jet0Mass/F"                                );                                 
+  // TreeAllHad->Branch("Jet0Area"                              , & Jet0Area                           ,    "Jet0Area/F"                                );                                 
+  // TreeAllHad->Branch("Jet0SDmass"                            , & Jet0SDmass                         ,    "Jet0SDmass/F"                              );                                         
   TreeAllHad->Branch("Jet0SDmassRaw"                         , & Jet0SDmassRaw                      ,    "Jet0SDmassRaw/F"                           );                                               
-  TreeAllHad->Branch("Jet0SDmassCorrL23"                     , & Jet0SDmassCorrL23                  ,    "Jet0SDmassCorrL23/F"                       );                                                    
-  TreeAllHad->Branch("Jet0SDmassCorrL23Up"                   , & Jet0SDmassCorrL23Up                ,    "Jet0SDmassCorrL23Up/F"                     );                                                      
-  TreeAllHad->Branch("Jet0SDmassCorrL23Dn"                   , & Jet0SDmassCorrL23Dn                ,    "Jet0SDmassCorrL23Dn/F"                     );                                                      
-  TreeAllHad->Branch("Jet0SDmassCorrL123"                    , & Jet0SDmassCorrL123                 ,    "Jet0SDmassCorrL123/F"                      );                                                      
-  TreeAllHad->Branch("Jet0SDmassCorrL123Up"                  , & Jet0SDmassCorrL123Up               ,    "Jet0SDmassCorrL123Up/F"                    );                                                        
-  TreeAllHad->Branch("Jet0SDmassCorrL123Dn"                  , & Jet0SDmassCorrL123Dn               ,    "Jet0SDmassCorrL123Dn/F"                    );                                                        
-  TreeAllHad->Branch("Jet0SDmassCorrL23Smear"                , & Jet0SDmassCorrL23Smear             ,    "Jet0SDmassCorrL23Smear/F"                  );                                                     
-  TreeAllHad->Branch("Jet0SDmassCorrL23SmearUp"              , & Jet0SDmassCorrL23SmearUp           ,    "Jet0SDmassCorrL23SmearUp/F"                );                                                       
-  TreeAllHad->Branch("Jet0SDmassCorrL23SmearDn"              , & Jet0SDmassCorrL23SmearDn           ,    "Jet0SDmassCorrL23SmearDn/F"                );   
+  TreeAllHad->Branch("Jet0SDmassSubjetCorrL23"                     , & Jet0SDmassSubjetCorrL23                  ,    "Jet0SDmassSubjetCorrL23/F"                       );                                                    
+  // TreeAllHad->Branch("Jet0SDmassSubjetCorrL23Up"                   , & Jet0SDmassSubjetCorrL23Up                ,    "Jet0SDmassSubjetCorrL23Up/F"                     );                                                      
+  // TreeAllHad->Branch("Jet0SDmassSubjetCorrL23Dn"                   , & Jet0SDmassSubjetCorrL23Dn                ,    "Jet0SDmassSubjetCorrL23Dn/F"                     );                                                      
+  TreeAllHad->Branch("Jet0SDmassSubjetCorrL123"                    , & Jet0SDmassSubjetCorrL123                 ,    "Jet0SDmassSubjetCorrL123/F"                      );                                                      
+  // TreeAllHad->Branch("Jet0SDmassCorrL123Up"                  , & Jet0SDmassCorrL123Up               ,    "Jet0SDmassCorrL123Up/F"                    );                                                        
+  // TreeAllHad->Branch("Jet0SDmassCorrL123Dn"                  , & Jet0SDmassCorrL123Dn               ,    "Jet0SDmassCorrL123Dn/F"                    );                                                        
+  // TreeAllHad->Branch("Jet0SDmassCorrL23Smear"                , & Jet0SDmassCorrL23Smear             ,    "Jet0SDmassCorrL23Smear/F"                  );                                                     
+  // TreeAllHad->Branch("Jet0SDmassCorrL23SmearUp"              , & Jet0SDmassCorrL23SmearUp           ,    "Jet0SDmassCorrL23SmearUp/F"                );                                                       
+  // TreeAllHad->Branch("Jet0SDmassCorrL23SmearDn"              , & Jet0SDmassCorrL23SmearDn           ,    "Jet0SDmassCorrL23SmearDn/F"                );   
   TreeAllHad->Branch("Jet0SDptRaw"                           , & Jet0SDptRaw                        ,    "Jet0SDptRaw/F"                             );                                               
-  TreeAllHad->Branch("Jet0SDptCorrL23"                       , & Jet0SDptCorrL23                    ,    "Jet0SDptCorrL23/F"                         );                                                    
-  TreeAllHad->Branch("Jet0SDptCorrL23Up"                     , & Jet0SDptCorrL23Up                  ,    "Jet0SDptCorrL23Up/F"                       );                                                      
-  TreeAllHad->Branch("Jet0SDptCorrL23Dn"                     , & Jet0SDptCorrL23Dn                  ,    "Jet0SDptCorrL23Dn/F"                       );                                                      
-  TreeAllHad->Branch("Jet0SDptCorrL123"                      , & Jet0SDptCorrL123                   ,    "Jet0SDptCorrL123/F"                        );                                                      
-  TreeAllHad->Branch("Jet0SDptCorrL123Up"                    , & Jet0SDptCorrL123Up                 ,    "Jet0SDptCorrL123Up/F"                      );                                                        
-  TreeAllHad->Branch("Jet0SDptCorrL123Dn"                    , & Jet0SDptCorrL123Dn                 ,    "Jet0SDptCorrL123Dn/F"                      );                                                        
-  TreeAllHad->Branch("Jet0SDptCorrL23Smear"                  , & Jet0SDptCorrL23Smear               ,    "Jet0SDptCorrL23Smear/F"                    );                                                     
-  TreeAllHad->Branch("Jet0SDptCorrL23SmearUp"                , & Jet0SDptCorrL23SmearUp             ,    "Jet0SDptCorrL23SmearUp/F"                  );                                                       
-  TreeAllHad->Branch("Jet0SDptCorrL23SmearDn"                , & Jet0SDptCorrL23SmearDn             ,    "Jet0SDptCorrL23SmearDn/F"                  );                                                     
+  // TreeAllHad->Branch("Jet0SDptCorrL23"                       , & Jet0SDptCorrL23                    ,    "Jet0SDptCorrL23/F"                         );                                                    
+  // TreeAllHad->Branch("Jet0SDptCorrL23Up"                     , & Jet0SDptCorrL23Up                  ,    "Jet0SDptCorrL23Up/F"                       );                                                      
+  // TreeAllHad->Branch("Jet0SDptCorrL23Dn"                     , & Jet0SDptCorrL23Dn                  ,    "Jet0SDptCorrL23Dn/F"                       );                                                      
+  // TreeAllHad->Branch("Jet0SDptCorrL123"                      , & Jet0SDptCorrL123                   ,    "Jet0SDptCorrL123/F"                        );                                                      
+  // TreeAllHad->Branch("Jet0SDptCorrL123Up"                    , & Jet0SDptCorrL123Up                 ,    "Jet0SDptCorrL123Up/F"                      );                                                        
+  // TreeAllHad->Branch("Jet0SDptCorrL123Dn"                    , & Jet0SDptCorrL123Dn                 ,    "Jet0SDptCorrL123Dn/F"                      );                                                        
+  // TreeAllHad->Branch("Jet0SDptCorrL23Smear"                  , & Jet0SDptCorrL23Smear               ,    "Jet0SDptCorrL23Smear/F"                    );                                                     
+  // TreeAllHad->Branch("Jet0SDptCorrL23SmearUp"                , & Jet0SDptCorrL23SmearUp             ,    "Jet0SDptCorrL23SmearUp/F"                  );                                                       
+  // TreeAllHad->Branch("Jet0SDptCorrL23SmearDn"                , & Jet0SDptCorrL23SmearDn             ,    "Jet0SDptCorrL23SmearDn/F"                  );                                                     
   TreeAllHad->Branch("Jet0SDetaRaw"                          , & Jet0SDetaRaw                       ,    "Jet0SDetaRaw/F"                            );                                               
   TreeAllHad->Branch("Jet0SDphiRaw"                          , & Jet0SDphiRaw                       ,    "Jet0SDphiRaw/F"                            );                                               
   TreeAllHad->Branch("Jet0MassPruned"                        , & Jet0MassPruned                     ,    "Jet0MassPruned/F"                          );                                       
@@ -1227,37 +1334,37 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("Jet0SDsubjet1tau2"                     , & Jet0SDsubjet1tau2                  ,    "Jet0SDsubjet1tau2/F"                       );
   TreeAllHad->Branch("Jet0SDsubjet1tau3"                     , & Jet0SDsubjet1tau3                  ,    "Jet0SDsubjet1tau3/F"                       );  
   TreeAllHad->Branch("Jet0SDsubjet1bdisc"                    , & Jet0SDsubjet1bdisc                 ,    "Jet0SDsubjet1bdisc/F"                      );                                                                                    
-  TreeAllHad->Branch("Jet0PuppiP"                            , & Jet0PuppiP                         ,    "Jet0PuppiP/F"                              );                                    
-  TreeAllHad->Branch("Jet0PuppiPt"                           , & Jet0PuppiPt                        ,    "Jet0PuppiPt/F"                             );                                    
-  TreeAllHad->Branch("Jet0PuppiEta"                          , & Jet0PuppiEta                       ,    "Jet0PuppiEta/F"                            );                                     
-  TreeAllHad->Branch("Jet0PuppiPhi"                          , & Jet0PuppiPhi                       ,    "Jet0PuppiPhi/F"                            );                                     
-  TreeAllHad->Branch("Jet0PuppiMass"                         , & Jet0PuppiMass                      ,    "Jet0PuppiMass/F"                           );                                      
+  // TreeAllHad->Branch("Jet0PuppiP"                            , & Jet0PuppiP                         ,    "Jet0PuppiP/F"                              );                                    
+  TreeAllHad->Branch("Jet0PuppiPtRaw"                           , & Jet0PuppiPtRaw                        ,    "Jet0PuppiPtRaw/F"                             );                                    
+  TreeAllHad->Branch("Jet0PuppiEtaRaw"                          , & Jet0PuppiEtaRaw                       ,    "Jet0PuppiEtaRaw/F"                            );                                     
+  TreeAllHad->Branch("Jet0PuppiPhiRaw"                          , & Jet0PuppiPhiRaw                       ,    "Jet0PuppiPhiRaw/F"                            );                                     
+  TreeAllHad->Branch("Jet0PuppiMassRaw"                         , & Jet0PuppiMassRaw                      ,    "Jet0PuppiMassRaw/F"                           );                                      
   TreeAllHad->Branch("Jet0PuppiArea"                         , & Jet0PuppiArea                      ,    "Jet0PuppiArea/F"                           );                                      
   
-  TreeAllHad->Branch("Jet0PuppiSDmass"                       , & Jet0PuppiSDmass                    ,   "Jet0PuppiSDmass/F"                          );
+  TreeAllHad->Branch("Jet0PuppiSDmassRaw"                       , & Jet0PuppiSDmassRaw                    ,   "Jet0PuppiSDmassRaw/F"                          );
   TreeAllHad->Branch("Jet0PuppiSDmassSubjetCorr"             , & Jet0PuppiSDmassSubjetCorr          ,   "Jet0PuppiSDmassSubjetCorr/F"                );
-  TreeAllHad->Branch("Jet0PuppiSDmassSubjetCorrUp"           , & Jet0PuppiSDmassSubjetCorrUp        ,   "Jet0PuppiSDmassSubjetCorrUp/F"              );
-  TreeAllHad->Branch("Jet0PuppiSDmassSubjetCorrDn"           , & Jet0PuppiSDmassSubjetCorrDn        ,   "Jet0PuppiSDmassSubjetCorrDn/F"              );
+  // TreeAllHad->Branch("Jet0PuppiSDmassSubjetCorrUp"           , & Jet0PuppiSDmassSubjetCorrUp        ,   "Jet0PuppiSDmassSubjetCorrUp/F"              );
+  // TreeAllHad->Branch("Jet0PuppiSDmassSubjetCorrDn"           , & Jet0PuppiSDmassSubjetCorrDn        ,   "Jet0PuppiSDmassSubjetCorrDn/F"              );
   // TreeAllHad->Branch("Jet0PuppiSDmassSubjetCorrL23Smear"           , & Jet0PuppiSDmassSubjetCorrL23Smear        ,   "Jet0PuppiSDmassSubjetCorrL23Smear/F"              );
   // TreeAllHad->Branch("Jet0PuppiSDmassSubjetCorrL23SmearUp"         , & Jet0PuppiSDmassSubjetCorrL23SmearUp      ,   "Jet0PuppiSDmassSubjetCorrL23SmearUp/F"            );
   // TreeAllHad->Branch("Jet0PuppiSDmassSubjetCorrL23SmearDn"         , & Jet0PuppiSDmassSubjetCorrL23SmearDn      ,   "Jet0PuppiSDmassSubjetCorrL23SmearDn/F"            );
   
 
-  TreeAllHad->Branch("Jet0PuppiSDmassUserFloat"               , & Jet0PuppiSDmassUserFloat          ,   "Jet0PuppiSDmassUserFloat/F"                     );
+  // TreeAllHad->Branch("Jet0PuppiSDmassUserFloat"               , & Jet0PuppiSDmassUserFloat          ,   "Jet0PuppiSDmassUserFloat/F"                     );
   TreeAllHad->Branch("Jet0PuppiMassPruned"                    , & Jet0PuppiMassPruned               ,   "Jet0PuppiMassPruned/F"                          );
   TreeAllHad->Branch("Jet0PuppiMassTrimmed"                   , & Jet0PuppiMassTrimmed              ,   "Jet0PuppiMassTrimmed/F"                         );
 
 
 
-  TreeAllHad->Branch("Jet0PuppiSDpt"                         , & Jet0PuppiSDpt                      ,   "Jet0PuppiSDpt/F"                            );
-  TreeAllHad->Branch("Jet0PuppiSDptSubjetCorr"               , & Jet0PuppiSDptSubjetCorr            ,   "Jet0PuppiSDptSubjetCorr/F"                  );
-  TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrUp"             , & Jet0PuppiSDptSubjetCorrUp          ,   "Jet0PuppiSDptSubjetCorrUp/F"                );
-  TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrDn"             , & Jet0PuppiSDptSubjetCorrDn          ,   "Jet0PuppiSDptSubjetCorrDn/F"                );
-  TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrL23Smear"       , & Jet0PuppiSDptSubjetCorrL23Smear    ,   "Jet0PuppiSDptSubjetCorrL23Smear/F"          );
-  TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrL23SmearUp"     , & Jet0PuppiSDptSubjetCorrL23SmearUp  ,   "Jet0PuppiSDptSubjetCorrL23SmearUp/F"        );
-  TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrL23SmearDn"     , & Jet0PuppiSDptSubjetCorrL23SmearDn  ,   "Jet0PuppiSDptSubjetCorrL23SmearDn/F"        );
-  TreeAllHad->Branch("Jet0PuppiSDeta"                        , & Jet0PuppiSDeta                     ,   "Jet0PuppiSDeta/F"                           );
-  TreeAllHad->Branch("Jet0PuppiSDphi"                        , & Jet0PuppiSDphi                     ,   "Jet0PuppiSDphi/F"                           );
+  TreeAllHad->Branch("Jet0PuppiSDptRaw"                         , & Jet0PuppiSDptRaw                      ,   "Jet0PuppiSDptRaw/F"                            );
+  // TreeAllHad->Branch("Jet0PuppiSDptSubjetCorr"               , & Jet0PuppiSDptSubjetCorr            ,   "Jet0PuppiSDptSubjetCorr/F"                  );
+  // TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrUp"             , & Jet0PuppiSDptSubjetCorrUp          ,   "Jet0PuppiSDptSubjetCorrUp/F"                );
+  // TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrDn"             , & Jet0PuppiSDptSubjetCorrDn          ,   "Jet0PuppiSDptSubjetCorrDn/F"                );
+  // TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrL23Smear"       , & Jet0PuppiSDptSubjetCorrL23Smear    ,   "Jet0PuppiSDptSubjetCorrL23Smear/F"          );
+  // TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrL23SmearUp"     , & Jet0PuppiSDptSubjetCorrL23SmearUp  ,   "Jet0PuppiSDptSubjetCorrL23SmearUp/F"        );
+  // TreeAllHad->Branch("Jet0PuppiSDptSubjetCorrL23SmearDn"     , & Jet0PuppiSDptSubjetCorrL23SmearDn  ,   "Jet0PuppiSDptSubjetCorrL23SmearDn/F"        );
+  TreeAllHad->Branch("Jet0PuppiSDetaRaw"                        , & Jet0PuppiSDetaRaw                     ,   "Jet0PuppiSDetaRaw/F"                           );
+  TreeAllHad->Branch("Jet0PuppiSDphiRaw"                        , & Jet0PuppiSDphiRaw                     ,   "Jet0PuppiSDphiRaw/F"                           );
                                                            
   TreeAllHad->Branch("Jet0PuppiTau1"                         , & Jet0PuppiTau1                      ,    "Jet0PuppiTau1/F"                           );                                      
   TreeAllHad->Branch("Jet0PuppiTau2"                         , & Jet0PuppiTau2                      ,    "Jet0PuppiTau2/F"                           );                                      
@@ -1378,45 +1485,54 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("Jet0GenMatched_partonMass"             , & Jet0GenMatched_partonMass          ,    "Jet0GenMatched_partonMass/F"               );      
   TreeAllHad->Branch("Jet0GenMatched_partonID"               , & Jet0GenMatched_partonID            ,    "Jet0GenMatched_partonID/F"                 );      
   TreeAllHad->Branch("Jet0GenMatched_DeltaRjetParton"        , & Jet0GenMatched_DeltaRjetParton     ,    "Jet0GenMatched_DeltaRjetParton/F"          );      
+  
+
+  TreeAllHad->Branch("Jet0NsubjetsSD"        , & Jet0NsubjetsSD     ,    "Jet0NsubjetsSD/I"          );      
+  TreeAllHad->Branch("Jet1NsubjetsSD"        , & Jet1NsubjetsSD     ,    "Jet1NsubjetsSD/I"          );      
+  TreeAllHad->Branch("Jet0NsubjetsSDPuppi"        , & Jet0NsubjetsSDPuppi     ,    "Jet0NsubjetsSDPuppi/I"          );      
+  TreeAllHad->Branch("Jet1NsubjetsSDPuppi"        , & Jet1NsubjetsSDPuppi     ,    "Jet1NsubjetsSDPuppi/I"          );      
+
+
+
   std::cout<<"Setup Jet0 in tree"<<std::endl;
   
   TreeAllHad->Branch("Jet1PtRaw"                             , & Jet1PtRaw                          ,    "Jet1PtRaw/F"                               );                                  
   TreeAllHad->Branch("Jet1EtaRaw"                            , & Jet1EtaRaw                         ,    "Jet1EtaRaw/F"                              );                                   
   TreeAllHad->Branch("Jet1PhiRaw"                            , & Jet1PhiRaw                         ,    "Jet1PhiRaw/F"                              );                                   
   TreeAllHad->Branch("Jet1MassRaw"                           , & Jet1MassRaw                        ,    "Jet1MassRaw/F"                             );                                    
-  TreeAllHad->Branch("Jet1P"                                 , & Jet1P                              ,    "Jet1P/F"                                   );                              
-  TreeAllHad->Branch("Jet1Pt"                                , & Jet1Pt                             ,    "Jet1Pt/F"                                  );                               
-  TreeAllHad->Branch("Jet1Eta"                               , & Jet1Eta                            ,    "Jet1Eta/F"                                 );                                
-  TreeAllHad->Branch("Jet1Phi"                               , & Jet1Phi                            ,    "Jet1Phi/F"                                 );                                
-  TreeAllHad->Branch("Jet1Rap"                               , & Jet1Rap                            ,    "Jet1Rap/F"                                 );                                
-  TreeAllHad->Branch("Jet1Energy"                            , & Jet1Energy                         ,    "Jet1Energy/F"                              );                                   
-  TreeAllHad->Branch("Jet1Mass"                              , & Jet1Mass                           ,    "Jet1Mass/F"                                );                                 
+  // TreeAllHad->Branch("Jet1P"                                 , & Jet1P                              ,    "Jet1P/F"                                   );                              
+  // TreeAllHad->Branch("Jet1Pt"                                , & Jet1Pt                             ,    "Jet1Pt/F"                                  );                               
+  // TreeAllHad->Branch("Jet1Eta"                               , & Jet1Eta                            ,    "Jet1Eta/F"                                 );                                
+  // TreeAllHad->Branch("Jet1Phi"                               , & Jet1Phi                            ,    "Jet1Phi/F"                                 );                                
+  // TreeAllHad->Branch("Jet1Rap"                               , & Jet1Rap                            ,    "Jet1Rap/F"                                 );                                
+  // TreeAllHad->Branch("Jet1Energy"                            , & Jet1Energy                         ,    "Jet1Energy/F"                              );                                   
+  // TreeAllHad->Branch("Jet1Mass"                              , & Jet1Mass                           ,    "Jet1Mass/F"                                );                                 
   TreeAllHad->Branch("Jet1Area"                              , & Jet1Area                           ,    "Jet1Area/F"                                );                                 
   TreeAllHad->Branch("Jet1SDmass"                            , & Jet1SDmass                         ,    "Jet1SDmass/F"                              );                                         
   TreeAllHad->Branch("Jet1SDmassRaw"                         , & Jet1SDmassRaw                      ,    "Jet1SDmassRaw/F"                           );                                               
-  TreeAllHad->Branch("Jet1SDmassCorrL23"                     , & Jet1SDmassCorrL23                  ,    "Jet1SDmassCorrL23/F"                       );                                                    
-  TreeAllHad->Branch("Jet1SDmassCorrL23Up"                   , & Jet1SDmassCorrL23Up                ,    "Jet1SDmassCorrL23Up/F"                     );                                                      
-  TreeAllHad->Branch("Jet1SDmassCorrL23Dn"                   , & Jet1SDmassCorrL23Dn                ,    "Jet1SDmassCorrL23Dn/F"                     );                                                      
-  TreeAllHad->Branch("Jet1SDmassCorrL123"                    , & Jet1SDmassCorrL123                 ,    "Jet1SDmassCorrL123/F"                      );                                                      
-  TreeAllHad->Branch("Jet1SDmassCorrL123Up"                  , & Jet1SDmassCorrL123Up               ,    "Jet1SDmassCorrL123Up/F"                    );                                                        
-  TreeAllHad->Branch("Jet1SDmassCorrL123Dn"                  , & Jet1SDmassCorrL123Dn               ,    "Jet1SDmassCorrL123Dn/F"                    );                                                        
-  TreeAllHad->Branch("Jet1SDmassCorrL23Smear"                , & Jet1SDmassCorrL23Smear             ,    "Jet1SDmassCorrL23Smear/F"                  );                                                     
-  TreeAllHad->Branch("Jet1SDmassCorrL23SmearUp"              , & Jet1SDmassCorrL23SmearUp           ,    "Jet1SDmassCorrL23SmearUp/F"                );                                                       
-  TreeAllHad->Branch("Jet1SDmassCorrL23SmearDn"              , & Jet1SDmassCorrL23SmearDn           ,    "Jet1SDmassCorrL23SmearDn/F"                );   
+  TreeAllHad->Branch("Jet1SDmassSubjetCorrL23"                     , & Jet1SDmassSubjetCorrL23                  ,    "Jet1SDmassSubjetCorrL23/F"                       );                                                    
+  // TreeAllHad->Branch("Jet1SDmassSubjetCorrL23Up"                   , & Jet1SDmassSubjetCorrL23Up                ,    "Jet1SDmassSubjetCorrL23Up/F"                     );                                                      
+  // TreeAllHad->Branch("Jet1SDmassSubjetCorrL23Dn"                   , & Jet1SDmassSubjetCorrL23Dn                ,    "Jet1SDmassSubjetCorrL23Dn/F"                     );                                                      
+  TreeAllHad->Branch("Jet1SDmassSubjetCorrL123"                    , & Jet1SDmassSubjetCorrL123                 ,    "Jet1SDmassSubjetCorrL123/F"                      );                                                      
+  // TreeAllHad->Branch("Jet1SDmassCorrL123Up"                  , & Jet1SDmassCorrL123Up               ,    "Jet1SDmassCorrL123Up/F"                    );                                                        
+  // TreeAllHad->Branch("Jet1SDmassCorrL123Dn"                  , & Jet1SDmassCorrL123Dn               ,    "Jet1SDmassCorrL123Dn/F"                    );                                                        
+  // TreeAllHad->Branch("Jet1SDmassCorrL23Smear"                , & Jet1SDmassCorrL23Smear             ,    "Jet1SDmassCorrL23Smear/F"                  );                                                     
+  // TreeAllHad->Branch("Jet1SDmassCorrL23SmearUp"              , & Jet1SDmassCorrL23SmearUp           ,    "Jet1SDmassCorrL23SmearUp/F"                );                                                       
+  // TreeAllHad->Branch("Jet1SDmassCorrL23SmearDn"              , & Jet1SDmassCorrL23SmearDn           ,    "Jet1SDmassCorrL23SmearDn/F"                );   
   TreeAllHad->Branch("Jet1SDptRaw"                           , & Jet1SDptRaw                        ,    "Jet1SDptRaw/F"                             );                                               
-  TreeAllHad->Branch("Jet1SDptCorrL23"                       , & Jet1SDptCorrL23                    ,    "Jet1SDptCorrL23/F"                         );                                                    
-  TreeAllHad->Branch("Jet1SDptCorrL23Up"                     , & Jet1SDptCorrL23Up                  ,    "Jet1SDptCorrL23Up/F"                       );                                                      
-  TreeAllHad->Branch("Jet1SDptCorrL23Dn"                     , & Jet1SDptCorrL23Dn                  ,    "Jet1SDptCorrL23Dn/F"                       );                                                      
-  TreeAllHad->Branch("Jet1SDptCorrL123"                      , & Jet1SDptCorrL123                   ,    "Jet1SDptCorrL123/F"                        );                                                      
-  TreeAllHad->Branch("Jet1SDptCorrL123Up"                    , & Jet1SDptCorrL123Up                 ,    "Jet1SDptCorrL123Up/F"                      );                                                        
-  TreeAllHad->Branch("Jet1SDptCorrL123Dn"                    , & Jet1SDptCorrL123Dn                 ,    "Jet1SDptCorrL123Dn/F"                      );                                                        
-  TreeAllHad->Branch("Jet1SDptCorrL23Smear"                  , & Jet1SDptCorrL23Smear               ,    "Jet1SDptCorrL23Smear/F"                    );                                                     
-  TreeAllHad->Branch("Jet1SDptCorrL23SmearUp"                , & Jet1SDptCorrL23SmearUp             ,    "Jet1SDptCorrL23SmearUp/F"                  );                                                       
-  TreeAllHad->Branch("Jet1SDptCorrL23SmearDn"                , & Jet1SDptCorrL23SmearDn             ,    "Jet1SDptCorrL23SmearDn/F"                  );                                                     
+  // TreeAllHad->Branch("Jet1SDptCorrL23"                       , & Jet1SDptCorrL23                    ,    "Jet1SDptCorrL23/F"                         );                                                    
+  // TreeAllHad->Branch("Jet1SDptCorrL23Up"                     , & Jet1SDptCorrL23Up                  ,    "Jet1SDptCorrL23Up/F"                       );                                                      
+  // TreeAllHad->Branch("Jet1SDptCorrL23Dn"                     , & Jet1SDptCorrL23Dn                  ,    "Jet1SDptCorrL23Dn/F"                       );                                                      
+  // TreeAllHad->Branch("Jet1SDptCorrL123"                      , & Jet1SDptCorrL123                   ,    "Jet1SDptCorrL123/F"                        );                                                      
+  // TreeAllHad->Branch("Jet1SDptCorrL123Up"                    , & Jet1SDptCorrL123Up                 ,    "Jet1SDptCorrL123Up/F"                      );                                                        
+  // TreeAllHad->Branch("Jet1SDptCorrL123Dn"                    , & Jet1SDptCorrL123Dn                 ,    "Jet1SDptCorrL123Dn/F"                      );                                                        
+  // TreeAllHad->Branch("Jet1SDptCorrL23Smear"                  , & Jet1SDptCorrL23Smear               ,    "Jet1SDptCorrL23Smear/F"                    );                                                     
+  // TreeAllHad->Branch("Jet1SDptCorrL23SmearUp"                , & Jet1SDptCorrL23SmearUp             ,    "Jet1SDptCorrL23SmearUp/F"                  );                                                       
+  // TreeAllHad->Branch("Jet1SDptCorrL23SmearDn"                , & Jet1SDptCorrL23SmearDn             ,    "Jet1SDptCorrL23SmearDn/F"                  );                                                     
   TreeAllHad->Branch("Jet1SDetaRaw"                          , & Jet1SDetaRaw                       ,    "Jet1SDetaRaw/F"                            );                                               
   TreeAllHad->Branch("Jet1SDphiRaw"                          , & Jet1SDphiRaw                       ,    "Jet1SDphiRaw/F"                            );  
 
-  TreeAllHad->Branch("Jet1PuppiSDmassUserFloat"               , & Jet1PuppiSDmassUserFloat          ,   "Jet1PuppiSDmassUserFloat/F"                     );
+  // TreeAllHad->Branch("Jet1PuppiSDmassUserFloat"               , & Jet1PuppiSDmassUserFloat          ,   "Jet1PuppiSDmassUserFloat/F"                     );
   TreeAllHad->Branch("Jet1PuppiMassPruned"                    , & Jet1PuppiMassPruned               ,   "Jet1PuppiMassPruned/F"                          );
   TreeAllHad->Branch("Jet1PuppiMassTrimmed"                   , & Jet1PuppiMassTrimmed              ,   "Jet1PuppiMassTrimmed/F"                         );
 
@@ -1457,29 +1573,29 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("Jet1SDsubjet1tau2"                     , & Jet1SDsubjet1tau2                  ,    "Jet1SDsubjet1tau2/F"                       );
   TreeAllHad->Branch("Jet1SDsubjet1tau3"                     , & Jet1SDsubjet1tau3                  ,    "Jet1SDsubjet1tau3/F"                       ); 
   TreeAllHad->Branch("Jet1SDsubjet1bdisc"                    , & Jet1SDsubjet1bdisc                 ,    "Jet1SDsubjet1bdisc/F"                      );                                                                                    
-  TreeAllHad->Branch("Jet1PuppiP"                            , & Jet1PuppiP                         ,    "Jet1PuppiP/F"                              );                                    
-  TreeAllHad->Branch("Jet1PuppiPt"                           , & Jet1PuppiPt                        ,    "Jet1PuppiPt/F"                             );                                    
-  TreeAllHad->Branch("Jet1PuppiEta"                          , & Jet1PuppiEta                       ,    "Jet1PuppiEta/F"                            );                                     
-  TreeAllHad->Branch("Jet1PuppiPhi"                          , & Jet1PuppiPhi                       ,    "Jet1PuppiPhi/F"                            );                                     
-  TreeAllHad->Branch("Jet1PuppiMass"                         , & Jet1PuppiMass                      ,    "Jet1PuppiMass/F"                           );                                      
+  // TreeAllHad->Branch("Jet1PuppiP"                            , & Jet1PuppiP                         ,    "Jet1PuppiP/F"                              );                                    
+  TreeAllHad->Branch("Jet1PuppiPtRaw"                           , & Jet1PuppiPtRaw                       ,    "Jet1PuppiPtRaw/F"                             );                                    
+  TreeAllHad->Branch("Jet1PuppiEtaRaw"                          , & Jet1PuppiEtaRaw                       ,    "Jet1PuppiEtaRaw/F"                            );                                     
+  TreeAllHad->Branch("Jet1PuppiPhiRaw"                          , & Jet1PuppiPhiRaw                       ,    "Jet1PuppiPhiRaw/F"                            );                                     
+  TreeAllHad->Branch("Jet1PuppiMassRaw"                         , & Jet1PuppiMassRaw                      ,    "Jet1PuppiMassRaw/F"                           );                                      
   TreeAllHad->Branch("Jet1PuppiArea"                         , & Jet1PuppiArea                      ,    "Jet1PuppiArea/F"                           );                                      
   
-  TreeAllHad->Branch("Jet1PuppiSDmass"                       , & Jet1PuppiSDmass                    ,   "Jet1PuppiSDmass/F"                          );
+  TreeAllHad->Branch("Jet1PuppiSDmassRaw"                       , & Jet1PuppiSDmassRaw                    ,   "Jet1PuppiSDmassRaw/F"                          );
   TreeAllHad->Branch("Jet1PuppiSDmassSubjetCorr"                   , & Jet1PuppiSDmassSubjetCorr                ,   "Jet1PuppiSDmassSubjetCorr/F"                      );
-  TreeAllHad->Branch("Jet1PuppiSDmassSubjetCorrUp"                 , & Jet1PuppiSDmassSubjetCorrUp              ,   "Jet1PuppiSDmassSubjetCorrUp/F"                    );
-  TreeAllHad->Branch("Jet1PuppiSDmassSubjetCorrDn"                 , & Jet1PuppiSDmassSubjetCorrDn              ,   "Jet1PuppiSDmassSubjetCorrDn/F"                    );
+  // TreeAllHad->Branch("Jet1PuppiSDmassSubjetCorrUp"                 , & Jet1PuppiSDmassSubjetCorrUp              ,   "Jet1PuppiSDmassSubjetCorrUp/F"                    );
+  // TreeAllHad->Branch("Jet1PuppiSDmassSubjetCorrDn"                 , & Jet1PuppiSDmassSubjetCorrDn              ,   "Jet1PuppiSDmassSubjetCorrDn/F"                    );
   // TreeAllHad->Branch("Jet1PuppiSDmassSubjetCorrL23Smear"           , & Jet1PuppiSDmassSubjetCorrL23Smear        ,   "Jet1PuppiSDmassSubjetCorrL23Smear/F"              );
   // TreeAllHad->Branch("Jet1PuppiSDmassSubjetCorrL23SmearUp"         , & Jet1PuppiSDmassSubjetCorrL23SmearUp      ,   "Jet1PuppiSDmassSubjetCorrL23SmearUp/F"            );
   // TreeAllHad->Branch("Jet1PuppiSDmassSubjetCorrL23SmearDn"         , & Jet1PuppiSDmassSubjetCorrL23SmearDn      ,   "Jet1PuppiSDmassSubjetCorrL23SmearDn/F"            );
-  TreeAllHad->Branch("Jet1PuppiSDpt"                         , & Jet1PuppiSDpt                      ,   "Jet1PuppiSDpt/F"                            );
-  TreeAllHad->Branch("Jet1PuppiSDptSubjetCorr"                     , & Jet1PuppiSDptSubjetCorr                  ,   "Jet1PuppiSDptSubjetCorr/F"                        );
-  TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrUp"                   , & Jet1PuppiSDptSubjetCorrUp                ,   "Jet1PuppiSDptSubjetCorrUp/F"                      );
-  TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrDn"                   , & Jet1PuppiSDptSubjetCorrDn                ,   "Jet1PuppiSDptSubjetCorrDn/F"                      );
-  TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrL23Smear"             , & Jet1PuppiSDptSubjetCorrL23Smear          ,   "Jet1PuppiSDptSubjetCorrL23Smear/F"                );
-  TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrL23SmearUp"           , & Jet1PuppiSDptSubjetCorrL23SmearUp        ,   "Jet1PuppiSDptSubjetCorrL23SmearUp/F"              );
-  TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrL23SmearDn"           , & Jet1PuppiSDptSubjetCorrL23SmearDn        ,   "Jet1PuppiSDptSubjetCorrL23SmearDn/F"              );
-  TreeAllHad->Branch("Jet1PuppiSDeta"                        , & Jet1PuppiSDeta                     ,   "Jet1PuppiSDeta/F"                           );
-  TreeAllHad->Branch("Jet1PuppiSDphi"                        , & Jet1PuppiSDphi                     ,   "Jet1PuppiSDphi/F"                           );
+  TreeAllHad->Branch("Jet1PuppiSDptRaw"                         , & Jet1PuppiSDptRaw                      ,   "Jet1PuppiSDptRaw/F"                            );
+  // TreeAllHad->Branch("Jet1PuppiSDptSubjetCorr"                     , & Jet1PuppiSDptSubjetCorr                  ,   "Jet1PuppiSDptSubjetCorr/F"                        );
+  // TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrUp"                   , & Jet1PuppiSDptSubjetCorrUp                ,   "Jet1PuppiSDptSubjetCorrUp/F"                      );
+  // TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrDn"                   , & Jet1PuppiSDptSubjetCorrDn                ,   "Jet1PuppiSDptSubjetCorrDn/F"                      );
+  // TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrL23Smear"             , & Jet1PuppiSDptSubjetCorrL23Smear          ,   "Jet1PuppiSDptSubjetCorrL23Smear/F"                );
+  // TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrL23SmearUp"           , & Jet1PuppiSDptSubjetCorrL23SmearUp        ,   "Jet1PuppiSDptSubjetCorrL23SmearUp/F"              );
+  // TreeAllHad->Branch("Jet1PuppiSDptSubjetCorrL23SmearDn"           , & Jet1PuppiSDptSubjetCorrL23SmearDn        ,   "Jet1PuppiSDptSubjetCorrL23SmearDn/F"              );
+  TreeAllHad->Branch("Jet1PuppiSDetaRaw"                        , & Jet1PuppiSDetaRaw                     ,   "Jet1PuppiSDetaRaw/F"                           );
+  TreeAllHad->Branch("Jet1PuppiSDphiRaw"                        , & Jet1PuppiSDphiRaw                     ,   "Jet1PuppiSDphiRaw/F"                           );
                          
   TreeAllHad->Branch("Jet1PuppiTau1"                         , & Jet1PuppiTau1                      ,    "Jet1PuppiTau1/F"                           );                                      
   TreeAllHad->Branch("Jet1PuppiTau2"                         , & Jet1PuppiTau2                      ,    "Jet1PuppiTau2/F"                           );                                      
@@ -1599,8 +1715,19 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("Jet1GenMatched_DeltaRjetParton"        , & Jet1GenMatched_DeltaRjetParton     ,    "Jet1GenMatched_DeltaRjetParton/F"          );      
   std::cout<<"Setup Jet1 in tree"<<std::endl;
 
-  TreeAllHad->Branch("AllHadMETpx"                           , & AllHadMETpx                        ,    "AllHadMETpx/F"                             );                                    
-  TreeAllHad->Branch("AllHadMETpy"                           , & AllHadMETpy                        ,    "AllHadMETpy/F"                             );                                    
+  TreeAllHad->Branch("NeighborJet_Jet0_pt"                   , &  NeighborJet_Jet0_pt               ,    "NeighborJet_Jet0_pt/F"                     ); 
+  TreeAllHad->Branch("NeighborJet_Jet0_eta"                  , &  NeighborJet_Jet0_eta              ,    "NeighborJet_Jet0_eta/F"                    ); 
+  TreeAllHad->Branch("NeighborJet_Jet0_phi"                  , &  NeighborJet_Jet0_phi              ,    "NeighborJet_Jet0_phi/F"                    ); 
+  TreeAllHad->Branch("NeighborJet_Jet0_m"                    , &  NeighborJet_Jet0_m                ,    "NeighborJet_Jet0_m/F"                      ); 
+  TreeAllHad->Branch("NeighborJet_Jet0_bdisc"                , &  NeighborJet_Jet0_bdisc            ,    "NeighborJet_Jet0_bdisc/F"                  ); 
+  TreeAllHad->Branch("NeighborJet_Jet1_pt"                   , &  NeighborJet_Jet1_pt               ,    "NeighborJet_Jet1_pt/F"                     ); 
+  TreeAllHad->Branch("NeighborJet_Jet1_eta"                  , &  NeighborJet_Jet1_eta              ,    "NeighborJet_Jet1_eta/F"                    ); 
+  TreeAllHad->Branch("NeighborJet_Jet1_phi"                  , &  NeighborJet_Jet1_phi              ,    "NeighborJet_Jet1_phi/F"                    ); 
+  TreeAllHad->Branch("NeighborJet_Jet1_m"                    , &  NeighborJet_Jet1_m                ,    "NeighborJet_Jet1_m/F"                      ); 
+  TreeAllHad->Branch("NeighborJet_Jet1_bdisc"                , &  NeighborJet_Jet1_bdisc            ,    "NeighborJet_Jet1_bdisc/F"                  ); 
+
+  // TreeAllHad->Branch("AllHadMETpx"                           , & AllHadMETpx                        ,    "AllHadMETpx/F"                             );                                    
+  // TreeAllHad->Branch("AllHadMETpy"                           , & AllHadMETpy                        ,    "AllHadMETpy/F"                             );                                    
   TreeAllHad->Branch("AllHadMETpt"                           , & AllHadMETpt                        ,    "AllHadMETpt/F"                             );                                    
   TreeAllHad->Branch("AllHadMETphi"                          , & AllHadMETphi                       ,    "AllHadMETphi/F"                            );                                     
   TreeAllHad->Branch("AllHadMETsumET"                        , & AllHadMETsumET                     ,    "AllHadMETsumET/F"                          );                                     
@@ -1620,6 +1747,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("DiGenJetMass"                          , & DiGenJetMass                       ,    "DiGenJetMass/F"                            );                                     
   TreeAllHad->Branch("CountLep"                              , & CountLep                           ,    "CountLep/I"                                );                                  
   TreeAllHad->Branch("GenTTmass"                             , & GenTTmass                          ,    "GenTTmass/F"                               );                                  
+  TreeAllHad->Branch("GenCountHadTop"                        , & GenCountHadTop                     ,    "GenCountHadTop/I"                         );                                  
   TreeAllHad->Branch("HT"                                    , & HT                                 ,    "HT/F"                                      );                           
   TreeAllHad->Branch("HT_CorrDn"                             , & HT_CorrDn                          ,    "HT_CorrDn/F"                               );                                  
   TreeAllHad->Branch("HT_CorrUp"                             , & HT_CorrUp                          ,    "HT_CorrUp/F"                               );                                  
@@ -1651,47 +1779,56 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   
   TreeSemiLept = new TTree("TreeSemiLept","TreeSemiLept"); 
        
-  TreeSemiLept->Branch("SemiLeptTrigNames"    , "vector<std::string>", &SemiLeptTrigNames);
+  // TreeSemiLept->Branch("SemiLeptTrigNames"    , "vector<std::string>", &SemiLeptTrigNames);
   TreeSemiLept->Branch("SemiLeptTrigPrescales" , "vector<int>",  &SemiLeptTrigPrescales);
   TreeSemiLept->Branch("SemiLeptTrigPass"      , "vector<bool>", &SemiLeptTrigPass);
   TreeSemiLept->Branch("SemiLeptTrigAcceptBits", &SemiLeptTrigAcceptBits);
 
+  TreeSemiLept->Branch("JetNsubjetsSD"        , & JetNsubjetsSD     ,    "JetNsubjetsSD/I"          );      
+  TreeSemiLept->Branch("JetNsubjetsSDPuppi"        , & JetNsubjetsSDPuppi     ,    "JetNsubjetsSDPuppi/I"          );      
+
+
+  // TreeSemiLept->Branch("SemiLeptAK4pt"      , "vector<float>", &SemiLeptAK4pt     );
+  // TreeSemiLept->Branch("SemiLeptAK4eta"     , "vector<float>", &SemiLeptAK4eta    );
+  // TreeSemiLept->Branch("SemiLeptAK4phi"     , "vector<float>", &SemiLeptAK4phi    );
+  // TreeSemiLept->Branch("SemiLeptAK4m"       , "vector<float>", &SemiLeptAK4m      );
+  // TreeSemiLept->Branch("SemiLeptAK4bdisc"   , "vector<float>", &SemiLeptAK4bdisc  );
 
 
   TreeSemiLept->Branch("JetPtRaw"                             , & JetPtRaw                          ,    "JetPtRaw/F"                               );                                  
   TreeSemiLept->Branch("JetEtaRaw"                            , & JetEtaRaw                         ,    "JetEtaRaw/F"                              );                                   
   TreeSemiLept->Branch("JetPhiRaw"                            , & JetPhiRaw                         ,    "JetPhiRaw/F"                              );                                   
   TreeSemiLept->Branch("JetMassRaw"                           , & JetMassRaw                        ,    "JetMassRaw/F"                             );                                    
-  TreeSemiLept->Branch("JetP"                                 , & JetP                              ,    "JetP/F"                                   );                              
-  TreeSemiLept->Branch("JetPt"                                , & JetPt                             ,    "JetPt/F"                                  );                               
-  TreeSemiLept->Branch("JetEta"                               , & JetEta                            ,    "JetEta/F"                                 );                                
-  TreeSemiLept->Branch("JetPhi"                               , & JetPhi                            ,    "JetPhi/F"                                 );                                
-  TreeSemiLept->Branch("JetRap"                               , & JetRap                            ,    "JetRap/F"                                 );                                
-  TreeSemiLept->Branch("JetEnergy"                            , & JetEnergy                         ,    "JetEnergy/F"                              );                                   
-  TreeSemiLept->Branch("JetMass"                              , & JetMass                           ,    "JetMass/F"                                );                                 
+  // TreeSemiLept->Branch("JetP"                                 , & JetP                              ,    "JetP/F"                                   );                              
+  // TreeSemiLept->Branch("JetPt"                                , & JetPt                             ,    "JetPt/F"                                  );                               
+  // TreeSemiLept->Branch("JetEta"                               , & JetEta                            ,    "JetEta/F"                                 );                                
+  // TreeSemiLept->Branch("JetPhi"                               , & JetPhi                            ,    "JetPhi/F"                                 );                                
+  // TreeSemiLept->Branch("JetRap"                               , & JetRap                            ,    "JetRap/F"                                 );                                
+  // TreeSemiLept->Branch("JetEnergy"                            , & JetEnergy                         ,    "JetEnergy/F"                              );                                   
+  // TreeSemiLept->Branch("JetMass"                              , & JetMass                           ,    "JetMass/F"                                );                                 
   TreeSemiLept->Branch("JetArea"                              , & JetArea                           ,    "JetArea/F"                                );                                 
   
-  TreeSemiLept->Branch("JetSDmass"                            , & JetSDmass                         ,    "JetSDmass/F"                              );                                         
+  // TreeSemiLept->Branch("JetSDmass"                            , & JetSDmass                         ,    "JetSDmass/F"                              );                                         
   TreeSemiLept->Branch("JetSDmassRaw"                         , & JetSDmassRaw                      ,    "JetSDmassRaw/F"                           );                                               
-  TreeSemiLept->Branch("JetSDmassCorrL23"                     , & JetSDmassCorrL23                  ,    "JetSDmassCorrL23/F"                       );                                                    
-  TreeSemiLept->Branch("JetSDmassCorrL23Up"                   , & JetSDmassCorrL23Up                ,    "JetSDmassCorrL23Up/F"                     );                                                      
-  TreeSemiLept->Branch("JetSDmassCorrL23Dn"                   , & JetSDmassCorrL23Dn                ,    "JetSDmassCorrL23Dn/F"                     );                                                      
-  TreeSemiLept->Branch("JetSDmassCorrL123"                    , & JetSDmassCorrL123                 ,    "JetSDmassCorrL123/F"                      );                                                      
-  TreeSemiLept->Branch("JetSDmassCorrL123Up"                  , & JetSDmassCorrL123Up               ,    "JetSDmassCorrL123Up/F"                    );                                                        
-  TreeSemiLept->Branch("JetSDmassCorrL123Dn"                  , & JetSDmassCorrL123Dn               ,    "JetSDmassCorrL123Dn/F"                    );                                                        
-  TreeSemiLept->Branch("JetSDmassCorrL23Smear"                , & JetSDmassCorrL23Smear             ,    "JetSDmassCorrL23Smear/F"                     );                                                     
-  TreeSemiLept->Branch("JetSDmassCorrL23SmearUp"              , & JetSDmassCorrL23SmearUp           ,    "JetSDmassCorrL23SmearUp/F"                   );                                                       
-  TreeSemiLept->Branch("JetSDmassCorrL23SmearDn"              , & JetSDmassCorrL23SmearDn           ,    "JetSDmassCorrL23SmearDn/F"                   );   
+  TreeSemiLept->Branch("JetSDmassSubjetCorrL23"                     , & JetSDmassSubjetCorrL23                  ,    "JetSDmassSubjetCorrL23/F"                       );                                                    
+  // TreeSemiLept->Branch("JetSDmassSubjetCorrL23Up"                   , & JetSDmassSubjetCorrL23Up                ,    "JetSDmassSubjetCorrL23Up/F"                     );                                                      
+  // TreeSemiLept->Branch("JetSDmassSubjetCorrL23Dn"                   , & JetSDmassSubjetCorrL23Dn                ,    "JetSDmassSubjetCorrL23Dn/F"                     );                                                      
+  TreeSemiLept->Branch("JetSDmassSubjetCorrL123"                    , & JetSDmassSubjetCorrL123                 ,    "JetSDmassSubjetCorrL123/F"                      );                                                      
+  // TreeSemiLept->Branch("JetSDmassCorrL123Up"                  , & JetSDmassCorrL123Up               ,    "JetSDmassCorrL123Up/F"                    );                                                        
+  // TreeSemiLept->Branch("JetSDmassCorrL123Dn"                  , & JetSDmassCorrL123Dn               ,    "JetSDmassCorrL123Dn/F"                    );                                                        
+  // TreeSemiLept->Branch("JetSDmassCorrL23Smear"                , & JetSDmassCorrL23Smear             ,    "JetSDmassCorrL23Smear/F"                     );                                                     
+  // TreeSemiLept->Branch("JetSDmassCorrL23SmearUp"              , & JetSDmassCorrL23SmearUp           ,    "JetSDmassCorrL23SmearUp/F"                   );                                                       
+  // TreeSemiLept->Branch("JetSDmassCorrL23SmearDn"              , & JetSDmassCorrL23SmearDn           ,    "JetSDmassCorrL23SmearDn/F"                   );   
   TreeSemiLept->Branch("JetSDptRaw"                           , & JetSDptRaw                        ,    "JetSDptRaw/F"                             );                                               
-  TreeSemiLept->Branch("JetSDptCorrL23"                       , & JetSDptCorrL23                    ,    "JetSDptCorrL23/F"                         );                                                    
-  TreeSemiLept->Branch("JetSDptCorrL23Up"                     , & JetSDptCorrL23Up                  ,    "JetSDptCorrL23Up/F"                       );                                                      
-  TreeSemiLept->Branch("JetSDptCorrL23Dn"                     , & JetSDptCorrL23Dn                  ,    "JetSDptCorrL23Dn/F"                       );                                                      
-  TreeSemiLept->Branch("JetSDptCorrL123"                      , & JetSDptCorrL123                   ,    "JetSDptCorrL123/F"                        );                                                      
-  TreeSemiLept->Branch("JetSDptCorrL123Up"                    , & JetSDptCorrL123Up                 ,    "JetSDptCorrL123Up/F"                      );                                                        
-  TreeSemiLept->Branch("JetSDptCorrL123Dn"                    , & JetSDptCorrL123Dn                 ,    "JetSDptCorrL123Dn/F"                      );                                                        
-  TreeSemiLept->Branch("JetSDptCorrL23Smear"                  , & JetSDptCorrL23Smear               ,    "JetSDptCorrL23Smear/F"                       );                                                     
-  TreeSemiLept->Branch("JetSDptCorrL23SmearUp"                , & JetSDptCorrL23SmearUp             ,    "JetSDptCorrL23SmearUp/F"                     );                                                       
-  TreeSemiLept->Branch("JetSDptCorrL23SmearDn"                , & JetSDptCorrL23SmearDn             ,    "JetSDptCorrL23SmearDn/F"                     );                                                     
+  // TreeSemiLept->Branch("JetSDptCorrL23"                       , & JetSDptCorrL23                    ,    "JetSDptCorrL23/F"                         );                                                    
+  // TreeSemiLept->Branch("JetSDptCorrL23Up"                     , & JetSDptCorrL23Up                  ,    "JetSDptCorrL23Up/F"                       );                                                      
+  // TreeSemiLept->Branch("JetSDptCorrL23Dn"                     , & JetSDptCorrL23Dn                  ,    "JetSDptCorrL23Dn/F"                       );                                                      
+  // TreeSemiLept->Branch("JetSDptCorrL123"                      , & JetSDptCorrL123                   ,    "JetSDptCorrL123/F"                        );                                                      
+  // TreeSemiLept->Branch("JetSDptCorrL123Up"                    , & JetSDptCorrL123Up                 ,    "JetSDptCorrL123Up/F"                      );                                                        
+  // TreeSemiLept->Branch("JetSDptCorrL123Dn"                    , & JetSDptCorrL123Dn                 ,    "JetSDptCorrL123Dn/F"                      );                                                        
+  // TreeSemiLept->Branch("JetSDptCorrL23Smear"                  , & JetSDptCorrL23Smear               ,    "JetSDptCorrL23Smear/F"                       );                                                     
+  // TreeSemiLept->Branch("JetSDptCorrL23SmearUp"                , & JetSDptCorrL23SmearUp             ,    "JetSDptCorrL23SmearUp/F"                     );                                                       
+  // TreeSemiLept->Branch("JetSDptCorrL23SmearDn"                , & JetSDptCorrL23SmearDn             ,    "JetSDptCorrL23SmearDn/F"                     );                                                     
   TreeSemiLept->Branch("JetSDetaRaw"                          , & JetSDetaRaw                       ,    "JetSDetaRaw/F"                            );                                               
   TreeSemiLept->Branch("JetSDphiRaw"                          , & JetSDphiRaw                       ,    "JetSDphiRaw/F"                            );  
 
@@ -1732,35 +1869,35 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("JetSDsubjet1tau3"                     , & JetSDsubjet1tau3                  ,    "JetSDsubjet1tau3/F"                       );                                           
   TreeSemiLept->Branch("JetSDsubjet1bdisc"                    , & JetSDsubjet1bdisc                 ,    "JetSDsubjet1bdisc/F"                      );                                     
 
-  TreeSemiLept->Branch("JetPuppiP"                            , & JetPuppiP                         ,    "JetPuppiP/F"                              );                                    
-  TreeSemiLept->Branch("JetPuppiPt"                           , & JetPuppiPt                        ,    "JetPuppiPt/F"                             );                                    
-  TreeSemiLept->Branch("JetPuppiEta"                          , & JetPuppiEta                       ,    "JetPuppiEta/F"                            );                                     
-  TreeSemiLept->Branch("JetPuppiPhi"                          , & JetPuppiPhi                       ,    "JetPuppiPhi/F"                            );                                     
-  TreeSemiLept->Branch("JetPuppiMass"                         , & JetPuppiMass                      ,    "JetPuppiMass/F"                           );                                      
+  // TreeSemiLept->Branch("JetPuppiP"                            , & JetPuppiP                         ,    "JetPuppiP/F"                              );                                    
+  TreeSemiLept->Branch("JetPuppiPtRaw"                           , & JetPuppiPtRaw                        ,    "JetPuppiPtRaw/F"                             );                                    
+  TreeSemiLept->Branch("JetPuppiEtaRaw"                          , & JetPuppiEtaRaw                       ,    "JetPuppiEtaRaw/F"                            );                                     
+  TreeSemiLept->Branch("JetPuppiPhiRaw"                          , & JetPuppiPhiRaw                       ,    "JetPuppiPhiRaw/F"                            );                                     
+  TreeSemiLept->Branch("JetPuppiMassRaw"                         , & JetPuppiMassRaw                      ,    "JetPuppiMassRaw/F"                           );                                      
   TreeSemiLept->Branch("JetPuppiArea"                         , & JetPuppiArea                      ,    "JetPuppiArea/F"                           );                                      
 
-  TreeSemiLept->Branch("JetPuppiSDmassUserFloat"               , & JetPuppiSDmassUserFloat          ,   "JetPuppiSDmassUserFloat/F"                     );
+  // TreeSemiLept->Branch("JetPuppiSDmassUserFloat"               , & JetPuppiSDmassUserFloat          ,   "JetPuppiSDmassUserFloat/F"                     );
   TreeSemiLept->Branch("JetPuppiMassPruned"                    , & JetPuppiMassPruned               ,   "JetPuppiMassPruned/F"                          );
   TreeSemiLept->Branch("JetPuppiMassTrimmed"                   , & JetPuppiMassTrimmed              ,   "JetPuppiMassTrimmed/F"                         );
 
 
   
-  TreeSemiLept->Branch("JetPuppiSDmass"                         , & JetPuppiSDmass                    ,    "JetPuppiSDmass/F"                          );
+  TreeSemiLept->Branch("JetPuppiSDmassRaw"                         , & JetPuppiSDmassRaw                    ,    "JetPuppiSDmassRaw/F"                          );
   TreeSemiLept->Branch("JetPuppiSDmassSubjetCorr"                     , & JetPuppiSDmassSubjetCorr                ,    "JetPuppiSDmassSubjetCorr/F"                      );
-  TreeSemiLept->Branch("JetPuppiSDmassSubjetCorrUp"                   , & JetPuppiSDmassSubjetCorrUp              ,    "JetPuppiSDmassSubjetCorrUp/F"                    );
-  TreeSemiLept->Branch("JetPuppiSDmassSubjetCorrDn"                   , & JetPuppiSDmassSubjetCorrDn              ,    "JetPuppiSDmassSubjetCorrDn/F"                    );
+  // TreeSemiLept->Branch("JetPuppiSDmassSubjetCorrUp"                   , & JetPuppiSDmassSubjetCorrUp              ,    "JetPuppiSDmassSubjetCorrUp/F"                    );
+  // TreeSemiLept->Branch("JetPuppiSDmassSubjetCorrDn"                   , & JetPuppiSDmassSubjetCorrDn              ,    "JetPuppiSDmassSubjetCorrDn/F"                    );
   // TreeSemiLept->Branch("JetPuppiSDmassSubjetCorrL23Smear"             , & JetPuppiSDmassSubjetCorrL23Smear        ,    "JetPuppiSDmassSubjetCorrL23Smear/F"              );
   // TreeSemiLept->Branch("JetPuppiSDmassSubjetCorrL23SmearUp"           , & JetPuppiSDmassSubjetCorrL23SmearUp      ,    "JetPuppiSDmassSubjetCorrL23SmearUp/F"            );
   // TreeSemiLept->Branch("JetPuppiSDmassSubjetCorrL23SmearDn"           , & JetPuppiSDmassSubjetCorrL23SmearDn      ,    "JetPuppiSDmassSubjetCorrL23SmearDn/F"            );
-  TreeSemiLept->Branch("JetPuppiSDpt"                           , & JetPuppiSDpt                      ,    "JetPuppiSDpt/F"                            );
-  TreeSemiLept->Branch("JetPuppiSDptSubjetCorr"                       , & JetPuppiSDptSubjetCorr                  ,    "JetPuppiSDptSubjetCorr/F"                        );
-  TreeSemiLept->Branch("JetPuppiSDptSubjetCorrUp"                     , & JetPuppiSDptSubjetCorrUp                ,    "JetPuppiSDptSubjetCorrUp/F"                      );
-  TreeSemiLept->Branch("JetPuppiSDptSubjetCorrDn"                     , & JetPuppiSDptSubjetCorrDn                ,    "JetPuppiSDptSubjetCorrDn/F"                      );
+  TreeSemiLept->Branch("JetPuppiSDptRaw"                           , & JetPuppiSDptRaw                      ,    "JetPuppiSDptRaw/F"                            );
+  // TreeSemiLept->Branch("JetPuppiSDptSubjetCorr"                       , & JetPuppiSDptSubjetCorr                  ,    "JetPuppiSDptSubjetCorr/F"                        );
+  // TreeSemiLept->Branch("JetPuppiSDptSubjetCorrUp"                     , & JetPuppiSDptSubjetCorrUp                ,    "JetPuppiSDptSubjetCorrUp/F"                      );
+  // TreeSemiLept->Branch("JetPuppiSDptSubjetCorrDn"                     , & JetPuppiSDptSubjetCorrDn                ,    "JetPuppiSDptSubjetCorrDn/F"                      );
   // TreeSemiLept->Branch("JetPuppiSDptSubjetCorrL23Smear"               , & JetPuppiSDptSubjetCorrL23Smear          ,    "JetPuppiSDptSubjetCorrL23Smear/F"                );
   // TreeSemiLept->Branch("JetPuppiSDptSubjetCorrL23SmearUp"             , & JetPuppiSDptSubjetCorrL23SmearUp        ,    "JetPuppiSDptSubjetCorrL23SmearUp/F"              );
   // TreeSemiLept->Branch("JetPuppiSDptSubjetCorrL23SmearDn"             , & JetPuppiSDptSubjetCorrL23SmearDn        ,    "JetPuppiSDptSubjetCorrL23SmearDn/F"              );
-  TreeSemiLept->Branch("JetPuppiSDeta"                          , & JetPuppiSDeta                     ,    "JetPuppiSDeta/F"                           );
-  TreeSemiLept->Branch("JetPuppiSDphi"                          , & JetPuppiSDphi                     ,    "JetPuppiSDphi/F"                           );
+  TreeSemiLept->Branch("JetPuppiSDetaRaw"                          , & JetPuppiSDetaRaw                     ,    "JetPuppiSDetaRaw/F"                           );
+  TreeSemiLept->Branch("JetPuppiSDphiRaw"                          , & JetPuppiSDphiRaw                     ,    "JetPuppiSDphiRaw/F"                           );
                          
 
   TreeSemiLept->Branch("JetPuppiTau1"                         , & JetPuppiTau1                      ,    "JetPuppiTau1/F"                           );                                      
@@ -1908,14 +2045,14 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptNvtxGood"                     , & SemiLeptNvtxGood                  , "SemiLeptNvtxGood/F"               );
   TreeSemiLept->Branch("SemiLeptRho"                          , & SemiLeptRho                       , "SemiLeptRho/F"                    );
   TreeSemiLept->Branch("SemiLeptEventWeight"                  , & SemiLeptEventWeight               , "SemiLeptEventWeight/F"            );
-  TreeSemiLept->Branch("SemiLeptPUweight"                  , & SemiLeptPUweight               , "SemiLeptPUweight/F"            );
-  TreeSemiLept->Branch("SemiLeptPUweight_MBup"                  , & SemiLeptPUweight_MBup               , "SemiLeptPUweight_MBup/F"            );
-  TreeSemiLept->Branch("SemiLeptPUweight_MBdn"                  , & SemiLeptPUweight_MBdn               , "SemiLeptPUweight_MBdn/F"            );
+  TreeSemiLept->Branch("SemiLeptPUweight"                     , & SemiLeptPUweight                  , "SemiLeptPUweight/F"            );
+  TreeSemiLept->Branch("SemiLeptPUweight_MBup"                , & SemiLeptPUweight_MBup             , "SemiLeptPUweight_MBup/F"            );
+  TreeSemiLept->Branch("SemiLeptPUweight_MBdn"                , & SemiLeptPUweight_MBdn             , "SemiLeptPUweight_MBdn/F"            );
        
   
-  
- 
+
   TreeSemiLept->Branch("SemiLeptGenTTmass"                    , & SemiLeptGenTTmass                 , "SemiLeptGenTTmass/F"              );
+  TreeSemiLept->Branch("SemiLeptGenCountHadTop"               , & SemiLeptGenCountHadTop            , "SemiLeptGenCountHadTop/I"         );
   
   TreeSemiLept->Branch("HTlep"                                , & HTlep                             , "HTlep/F"                  );
   TreeSemiLept->Branch("ST"                                   , & ST                                , "ST/F"                     );
@@ -2013,11 +2150,16 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   using namespace reco;
   using namespace pat;
   using namespace LHAPDF;
-  
+  // using namespace fastjet;
+
   if (verbose_) {
     cout<<"----------------------------------------------------------------------------------------------------------"<<endl;
     cout<<"Analyze event "<<iEvent.id().event()<<" run "<<iEvent.id().run()<<" lumiblock "<<iEvent.id().luminosityBlock()<<endl;
   }
+
+  h_cutflow_allhad   ->Fill(0.5);
+  h_cutflow_semilept ->Fill(0.5);
+
   //
   //    .d8888b.  8888888888 888b    888     8888888b.                   888    d8b          888                   
   //   d88P  Y88b 888        8888b   888     888   Y88b                  888    Y8P          888                   
@@ -2065,6 +2207,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   bool GenTruth_allhadronic = false;
   bool GenTruth_semileptonic = false;
+  int count_gen_truth_hadronic_top = 0;
 
   double deltaR_t1_t2       = 99 ;
   double deltaR_t1_b1       = 99 ;
@@ -2088,8 +2231,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   double deltaR_W2d1_b2     = 99 ;
   double deltaR_W2d2_b2     = 99 ;
 
-  double max_deltaR_parton_t1 = -1;
-  double max_deltaR_parton_t2 = -1;
+  double max_deltaR_parton_t1  = -1;
+  double max_deltaR_parton_t2  = -1;
   double max_deltaR_Wparton_t1 = -1;
   double max_deltaR_Wparton_t2 = -1;
   double max_deltaR_Wparton_W1 = -1;
@@ -2102,7 +2245,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     // Classify the event based on the number of top quarks
     for(size_t i=0; i<genpart->size();i++){
-    if (fabs((*genpart)[i].pdgId())==6 && (*genpart)[i].status()<30 && (*genpart)[i].status()>=20) counttop++;  // Z' events: status 22 = top from Z', status 52 with 2 daughters = the top that decays (after radiating a bunch of times)
+      if (fabs((*genpart)[i].pdgId())==6 && (*genpart)[i].status()<30 && (*genpart)[i].status()>=20) counttop++;  // Z' events: status 22 = top from Z', status 52 with 2 daughters = the top that decays (after radiating a bunch of times)
     }
     if (verboseGen_) cout<<"counttop "<<counttop<<endl;
    
@@ -2206,9 +2349,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     } // end genParticle loop
 
     // Generator truth all-hadronic or semileptonic
-    if (top1hadronic && top2hadronic)  GenTruth_allhadronic = true;
-    if (top1hadronic && !top2hadronic) GenTruth_semileptonic = true;
-    if (!top1hadronic && top2hadronic) GenTruth_semileptonic = true;
+    if (top1hadronic && top2hadronic)  { GenTruth_allhadronic  = true; count_gen_truth_hadronic_top =2; }
+    if (top1hadronic && !top2hadronic) { GenTruth_semileptonic = true; count_gen_truth_hadronic_top =1; }
+    if (!top1hadronic && top2hadronic) { GenTruth_semileptonic = true; count_gen_truth_hadronic_top =1; }
 
     // Angles between particles
     deltaR_t1_t2       = t1_p4  .DeltaR(t2_p4  );
@@ -2287,6 +2430,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       if (GenTruth_allhadronic)  cout<<"allhadronic"<<endl;
       if (GenTruth_semileptonic) cout<<"semileptonic"<<endl;
     
+      cout<<"count_gen_truth_hadronic_top "<<count_gen_truth_hadronic_top<<endl;
+
       cout<<"t1_p4   Pt "<<t1_p4  .Pt()<<" Eta "<<t1_p4  .Eta()<<" Phi "<<t1_p4  .Phi()<<" M "<<t1_p4  .M()<<endl;
       cout<<"t2_p4   Pt "<<t2_p4  .Pt()<<" Eta "<<t2_p4  .Eta()<<" Phi "<<t2_p4  .Phi()<<" M "<<t2_p4  .M()<<endl;
       cout<<"b1_p4   Pt "<<b1_p4  .Pt()<<" Eta "<<b1_p4  .Eta()<<" Phi "<<b1_p4  .Phi()<<" M "<<b1_p4  .M()<<endl;
@@ -2324,122 +2469,84 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   // 888    888 88888888     888     
   // 
   
-    edm::Handle<edm::TriggerResults> triggerBits;
-    edm::Handle<pat::TriggerObjectStandAloneCollection> triggerObjects;
-    edm::Handle<pat::PackedTriggerPrescales> triggerPrescales;
+  edm::Handle<edm::TriggerResults> triggerBits;
+  edm::Handle<pat::TriggerObjectStandAloneCollection> triggerObjects;
+  edm::Handle<pat::PackedTriggerPrescales> triggerPrescales;
 
-    iEvent.getByToken(triggerBits_, triggerBits);
-    iEvent.getByToken(triggerObjects_, triggerObjects);
-    iEvent.getByToken(triggerPrescales_, triggerPrescales);
+  iEvent.getByToken(triggerBits_, triggerBits);
+  iEvent.getByToken(triggerObjects_, triggerObjects);
+  iEvent.getByToken(triggerPrescales_, triggerPrescales);
 
+  const int ntrigs = trigsToRun.size();
+  if (verbose_) cout<<"trigsToRun size "<<ntrigs<<endl;
 
+  // do the same thing two different ways ( to test)
+  std::bitset<38> hltbit;
+  vector<bool> trigAccept;
 
+  // AllHadTrigNames       ->clear();
+  // SemiLeptTrigNames     ->clear();
+  AllHadTrigPrescales   ->clear();
+  SemiLeptTrigPrescales ->clear();
+  AllHadTrigPass        ->clear();
+  SemiLeptTrigPass      ->clear();
 
+  const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
+  if (verbose_) std::cout << "\n === TRIGGER PATHS === " << std::endl;
+  int counttrigs =0;
 
-    vector<string> trigsToRun;
-    trigsToRun.push_back("HLT_PFHT300_v");
-    trigsToRun.push_back("HLT_PFHT350_v");
-    trigsToRun.push_back("HLT_PFHT400_v");
-    trigsToRun.push_back("HLT_PFHT475_v");
-    trigsToRun.push_back("HLT_PFHT600_v");
-    trigsToRun.push_back("HLT_PFHT650_v");
-    trigsToRun.push_back("HLT_PFHT800_v");
-    trigsToRun.push_back("HLT_PFHT900_v");
-    trigsToRun.push_back("HLT_PFJet320_v");
-    trigsToRun.push_back("HLT_PFJet400_v");
-    trigsToRun.push_back("HLT_PFJet450_v");
-    trigsToRun.push_back("HLT_PFJet500_v");
-    trigsToRun.push_back("HLT_AK8PFJet360_TrimMass30_v");
-    trigsToRun.push_back("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v");
-    trigsToRun.push_back("HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20_v");
-    trigsToRun.push_back("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v");
-    trigsToRun.push_back("HLT_Mu45_eta2p1_v");
-    trigsToRun.push_back("HLT_Mu50_v");
-    trigsToRun.push_back("HLT_Mu55_v");
-    trigsToRun.push_back("HLT_IsoMu22_eta2p1_v");
-    trigsToRun.push_back("HLT_IsoMu24_v");
-    trigsToRun.push_back("HLT_IsoMu27_v");
-    trigsToRun.push_back("HLT_Mu30_eta2p1_PFJet150_PFJet50_v");
-    trigsToRun.push_back("HLT_Mu40_eta2p1_PFJet200_PFJet50_v");
-    trigsToRun.push_back("HLT_Ele32_eta2p1_WPTight_Gsf_v");
-    trigsToRun.push_back("HLT_Ele35_WPLoose_Gsf_v");
-    trigsToRun.push_back("HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v");
-    trigsToRun.push_back("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet140_v");
-    trigsToRun.push_back("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165_v");
-    trigsToRun.push_back("HLT_Ele105_CaloIdVT_GsfTrkIdT_v");
-    trigsToRun.push_back("HLT_AK8PFJet450_v");
-    trigsToRun.push_back("HLT_AK8PFJet500_v");
-    trigsToRun.push_back("HLT_CaloJet500_NoJetID_v");
-
-
-
-    const int ntrigs = trigsToRun.size();
-
-    if (verbose_) cout<<"trigsToRun size "<<ntrigs<<endl;
-
-    // do the same thing two different ways ( to test)
-    std::bitset<33> hltbit;
-    vector<bool> trigAccept;
-
-    AllHadTrigNames       ->clear();
-    SemiLeptTrigNames     ->clear();
-    AllHadTrigPrescales   ->clear();
-    SemiLeptTrigPrescales ->clear();
-    AllHadTrigPass        ->clear();
-    SemiLeptTrigPass      ->clear();
-
-    const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
-    if (verbose_) std::cout << "\n === TRIGGER PATHS === " << std::endl;
-    int counttrigs =0;
-    // for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
-    for (unsigned int j=0; j<trigsToRun.size(); j++){  // Running this loop first even though it is slow in order to preserve order (temporary solution)
-      if (verbose_) cout<<"try to find "<< trigsToRun[j]<<endl;
-      for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
-        string name = names.triggerName(i);
-        //if (verbose_) cout<<" "<<name<<endl;
-        std::size_t found = name.find( trigsToRun[j] );
-        // cout<<" Check: "<<trigsToRun[j]  <<" = "<<name<< " ?" <<found<<endl;
-        if ( found !=std::string::npos ) {
-          int accept = triggerBits->accept(i) ;
-          bool pass = false;
-          if (accept ==1 ) pass = true;
-          int prescale = triggerPrescales->getPrescaleForIndex(i)  ;
-        
-          if (verbose_) std::cout << "  Found Trigger " << names.triggerName(i) << ", prescale " << triggerPrescales->getPrescaleForIndex(i) <<": " << (triggerBits->accept(i) ? "PASS" : "fail (or not run)") << std::endl; 
-          trigAccept.push_back(pass);
-          // trigStrings.push_back(name);
-          // trigPrescale.push_back(prescale);
-          AllHadTrigNames       ->push_back(name);
-          SemiLeptTrigNames     ->push_back(name);
-          AllHadTrigPrescales   ->push_back(prescale);
-          SemiLeptTrigPrescales ->push_back(prescale);
-          AllHadTrigPass        ->push_back(pass);
-          SemiLeptTrigPass      ->push_back(pass);
-          if (pass)  hltbit[counttrigs]=1;  
-          counttrigs++;
-          break;
-        }
-      }
-    }
-
-    if (verbose_) {
-      cout<<"trig accept size "<<trigAccept.size()<<endl;
-      for (unsigned int i=0; i< trigAccept.size(); i++){
-        cout<<trigAccept[trigAccept.size()-1-i];
-      }
-      cout<<endl;
-      cout<<"hlt bit"<<endl;
-      cout<<hltbit.to_string()<<endl;
-    }
-
-    AllHadTrigAcceptBits   = hltbit.to_string();
-    SemiLeptTrigAcceptBits = hltbit.to_string();
+  // Loop over the list of triggers to save
+  for (unsigned int j=0; j<trigsToRun.size(); j++){ 
+    if (verbose_) cout<<"try to find "<<setw(50)<< trigsToRun[j];
     
-    // if (verbose_){
-    //   cout<<"trigStrings "<<trigStrings.size()<<endl;
-    //   cout<<"trigAccept "<<trigAccept.size()<<endl;
-    //   cout<<"trigPrescale "<<trigPrescale.size()<<endl;
-    // }
+    bool foundtrig  = false;
+    bool pass = false;
+    int prescale = 0;
+    string name = "";
+    // Loop over all triggers in the event
+    for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
+      
+      name = names.triggerName(i);
+      std::size_t found = name.find( trigsToRun[j] );
+
+      // If the trigger from the trigger list is found in the event check if it passed
+      if ( found !=std::string::npos ) {
+        foundtrig = true;
+        int accept = triggerBits->accept(i) ;
+        if (accept ==1 ) pass = true;
+        prescale = triggerPrescales->getPrescaleForIndex(i)  ;
+        break;
+      }
+    }// end loop over all triggers in event
+
+    if (verbose_ && foundtrig)  cout<<"  -> found. pass = "<<pass << ", prescale = " << prescale<<", name = "<< name  << std::endl; 
+    if (verbose_ && !foundtrig) cout<<"  -> did not find "<< trigsToRun[j]<<endl;
+
+      trigAccept.push_back(pass);
+      // AllHadTrigNames       ->push_back(name);
+      // SemiLeptTrigNames     ->push_back(name);
+      AllHadTrigPrescales   ->push_back(prescale);
+      SemiLeptTrigPrescales ->push_back(prescale);
+      AllHadTrigPass        ->push_back(pass);
+      SemiLeptTrigPass      ->push_back(pass);
+      if (pass)  hltbit[counttrigs]=1;  
+      counttrigs++;
+  
+  }// end loop over list of triggers to save in tree
+
+  if (verbose_) {
+    cout<<"trig accept vector. size = "<<trigAccept.size()<<" contents = "<<endl;
+    for (unsigned int i=0; i< trigAccept.size(); i++){
+      cout<<trigAccept[trigAccept.size()-1-i];
+    }
+    cout<<endl;
+    cout<<"hlt bit = "<<endl;
+    cout<<hltbit.to_string()<<endl;
+  }
+
+  AllHadTrigAcceptBits   = hltbit.to_string();
+  SemiLeptTrigAcceptBits = hltbit.to_string();
+  
 
   // 
   // 888b     d888 8888888888 88888888888     888b    888          d8b                       8888888888 d8b 888 888                              
@@ -2452,78 +2559,43 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   // 888       888 8888888888     888         888    Y888  "Y88P"  888  88888P'  "Y8888      888        888 888  "Y888  "Y8888  888      88888P' 
 
   bool passMETfilters=false;
-  if ( iEvent.isRealData() ) {
-    edm::Handle < edm::TriggerResults > metFilters;
-    iEvent.getByToken(triggerResultsMETFilterToken_, metFilters);
-    edm::TriggerNames const& filterTriggerNames = iEvent.triggerNames(*metFilters);
 
-    int nMETfilters = metFilters->size();
-    if (verbose_) cout<<"nMETfilters "<<nMETfilters<<endl;
+  edm::Handle < edm::TriggerResults > metFilters;
+  iEvent.getByToken(triggerResultsMETFilterToken_, metFilters);
+  edm::TriggerNames const& filterTriggerNames = iEvent.triggerNames(*metFilters);
 
-    //https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#MiniAOD_8011_ICHEP_dataset
-    // Flag_HBHENoiseFilter TO BE USED
-    // Flag_HBHENoiseIsoFilter TO BE USED
-    // Flag_EcalDeadCellTriggerPrimitiveFilter TO BE USED
-    // Flag_goodVertices TO BE USED
-    // Flag_eeBadScFilter TO BE USED
-    // Flag_globalTightHalo2016Filter NEW TO BE USED
-    // badMuon (NEW not available in 80X miniAOD v2, see snippet below) TO BE USED
-    // badCharged hadron (NEW not available in 80X miniAOD v2, see snippet below) TO BE USED 
+  int nMETfilters = metFilters->size();
+  if (verbose_) cout<<"nMETfilters "<<nMETfilters<<endl;
 
-    // Recomendation:
-    // primary vertex filter (available in miniAOD v2)
-    // beam halo filter (NEW available in miniAOD v2)
-    // HBHE noise filter (available in miniAOD v2)
-    // HBHEiso noise filter (available in miniAOD v2)
-    // ee badSC noise filter (available in miniAOD v2)
-    // ECAL TP filter (available in miniAOD v2)
-    // badMuon (NEW not available in miniAOD v2, see snippet below)
-    // badCharged hadron (NEW not available in miniAOD v2, see snippet below) 
+  //https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2
 
-    //Check: MET filters November 10 2016
+  vector <string> filterFlags;
+  filterFlags.push_back("Flag_goodVertices");
+  if ( iEvent.isRealData() ) filterFlags.push_back("Flag_globalTightHalo2016Filter"); //Data only
+  filterFlags.push_back("Flag_HBHENoiseFilter");
+  filterFlags.push_back("Flag_HBHENoiseIsoFilter");
+  filterFlags.push_back("Flag_EcalDeadCellTriggerPrimitiveFilter");
+  // filterFlags.push_back("Flag_eeBadScFilter");   // No longer suggested for Moriond 2017
 
-    // filter                  location                data  MC(fullSim) 
-    // primary vertex filter   available in miniAOD v2 DONE  suggested   
-    // beam halo filter        available in miniAOD v2 DONE  suggested   
-    // HBHE noise filter       available in miniAOD v2 DONE  suggested   
-    // HBHEiso noise filter    available in miniAOD v2 DONE  suggested   
-    // ECAL TP filter          available in miniAOD v2 DONE  DONE        
-    // ee badSC noise filter   available in miniAOD v2 DONE  not         
-    // badMuon                 to be run on the fly    DONE  DONE        
-    // badCharged hadron       to be run on the fly    DONE  DONE        
-
-
-
-    vector <string> filterFlags;
-    filterFlags.push_back("Flag_goodVertices");
-    filterFlags.push_back("Flag_globalTightHalo2016Filter");
-    filterFlags.push_back("Flag_HBHENoiseFilter");
-    filterFlags.push_back("Flag_HBHENoiseIsoFilter");
-    filterFlags.push_back("Flag_EcalDeadCellTriggerPrimitiveFilter");
-    filterFlags.push_back("Flag_eeBadScFilter");
-
-    unsigned int count_matched_accept = 0;
-    for (int itrig = 0; itrig != nMETfilters; ++itrig){
-     std::string trigName = filterTriggerNames.triggerName(itrig);
-      bool accept = metFilters->accept(itrig);
-      if (verbose_) cout<<trigName<<"  "<<accept;
-      if ( std::find( filterFlags.begin(), filterFlags.end(), trigName ) != filterFlags.end() ) {
-          if (verbose_) cout<<"  -> matches filterFlags list ("<<trigName<<")"<<endl;
-          if (accept) count_matched_accept++;
-      }
-      else { if (verbose_) cout<<endl;}
+  unsigned int count_matched_accept = 0;
+  for (int itrig = 0; itrig != nMETfilters; ++itrig){
+   std::string trigName = filterTriggerNames.triggerName(itrig);
+    bool accept = metFilters->accept(itrig);
+    if (verbose_) cout<<trigName<<"  "<<accept;
+    if ( std::find( filterFlags.begin(), filterFlags.end(), trigName ) != filterFlags.end() ) {
+        if (verbose_) cout<<"  -> matches filterFlags list ("<<trigName<<")"<<endl;
+        if (accept) count_matched_accept++;
     }
-    if (verbose_) cout<<"filterFlags.size() "<<filterFlags.size()<<" count_matched_accept "<<count_matched_accept<<endl;
-    if ( count_matched_accept==filterFlags.size() ){
-      passMETfilters=true;
-    }
-    if (verbose_) cout<<"miniAOD Flags pass? "<<passMETfilters<<endl;
+    else { if (verbose_) cout<<endl;}
   }
-  else{
+  if (verbose_) cout<<"filterFlags.size() "<<filterFlags.size()<<" count_matched_accept "<<count_matched_accept<<endl;
+  if ( count_matched_accept==filterFlags.size() ){
     passMETfilters=true;
   }
+  if (verbose_) cout<<"miniAOD Flags pass? "<<passMETfilters<<endl;
+ 
 
-  // RECO problemes -> apply to both data and MC
+  // RECO problemes -> apply to both data and MC. Not sure if we need these for the Summer16 samples. What about the re-miniAOD?
   Handle<bool> ifilterbadChCand;
   iEvent.getByToken(badChargedCandidateFilterToken_ , ifilterbadChCand);
   bool  filterbadChCandidate = *ifilterbadChCand;
@@ -2536,6 +2608,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   passMETfilters = passMETfilters && filterbadChCandidate && filterbadPFMuon;
   if (verbose_) cout<<"passMETfilters = "<< passMETfilters <<endl;
+
 
   //
   //  888888 8888888888  .d8888b.      8888888b.                    888                        888          
@@ -2551,46 +2624,91 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //888P"                                                   "Y88P"                                          
   //
 
+  // Run 2016 F into two JEC payloads. 
+  //   IOV EF: [276831,278801] corresponds to Summer16_23Sep2016EFV3_DATA (For Runs E/early F)
+  //   IOV FG: [278802,280385] corresponds to Summer16_23Sep2016GV3_DATA (For Runs lateF/G)
+  std::vector<std::string>  jecPayloadsAK4chsFinal;
+  std::vector<std::string>  jecPayloadsAK8chsFinal;
+  std::vector<std::string>  jecPayloadsAK4pupFinal;
+  std::vector<std::string>  jecPayloadsAK8pupFinal;
+
+  int runNumber = iEvent.id().run();
+
+  if (isRun2016F_ && runNumber < 278801 ){
+    if (verbose_) cout<<"Using Run2016F early JEC"<<endl;
+    jecPayloadsAK4chsFinal = jecPayloadsAK4chs_;
+    jecPayloadsAK8chsFinal = jecPayloadsAK8chs_;
+    jecPayloadsAK4pupFinal = jecPayloadsAK4pup_;
+    jecPayloadsAK8pupFinal = jecPayloadsAK8pup_;
+  } 
+  else if (isRun2016F_ && runNumber > 278801 ){
+    if (verbose_) cout<<"Using Run2016F late JEC"<<endl;
+    jecPayloadsAK4chsFinal = jecPayloadsAK4chsSecondary_;
+    jecPayloadsAK8chsFinal = jecPayloadsAK8chsSecondary_;
+    jecPayloadsAK4pupFinal = jecPayloadsAK4pupSecondary_;
+    jecPayloadsAK8pupFinal = jecPayloadsAK8pupSecondary_;
+  } 
+  else{
+    if (verbose_) cout<<"Using Primary JEC from cfg"<<endl;
+    jecPayloadsAK4chsFinal = jecPayloadsAK4chs_;
+    jecPayloadsAK8chsFinal = jecPayloadsAK8chs_;
+    jecPayloadsAK4pupFinal = jecPayloadsAK4pup_;
+    jecPayloadsAK8pupFinal = jecPayloadsAK8pup_;
+  }
+  
+  if (verbose_){
+    cout<<"jecPayloadsAK4chs_.size()              "<<jecPayloadsAK4chs_.size()<<endl;
+    cout<<"jecPayloadsAK4chsSecondary_.size()     "<<jecPayloadsAK4chsSecondary_.size()<<endl;
+    cout<<"jecPayloadsAK4chsFinal.size()          "<<jecPayloadsAK4chsFinal.size()<<endl;
+  }
+
   // AK4chs JEC 
   std::vector<JetCorrectorParameters> vParAK4chs;
-   for ( std::vector<std::string>::const_iterator ipayload = jecPayloadsAK4chs_.begin(),
-     ipayloadEnd = jecPayloadsAK4chs_.end(); ipayload != ipayloadEnd - 1; ++ipayload ) {
+   for ( std::vector<std::string>::const_iterator ipayload = jecPayloadsAK4chsFinal.begin(),
+     ipayloadEnd = jecPayloadsAK4chsFinal.end(); ipayload != ipayloadEnd - 1; ++ipayload ) {
+     if (verbose_)cout<<"AK4chs JEC txt: "<<*ipayload<<endl;
      JetCorrectorParameters pars(*ipayload);
      vParAK4chs.push_back(pars);
   }
   JetCorrectorAK4chs   = boost::shared_ptr<FactorizedJetCorrector>  ( new FactorizedJetCorrector(vParAK4chs) );
-  JetCorrUncertAK4chs  = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadsAK4chs_.back()));
+  JetCorrUncertAK4chs  = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadsAK4chsFinal.back()));
   
   // AK8chs JEC 
   std::vector<JetCorrectorParameters> vParAK8chs;
-   for ( std::vector<std::string>::const_iterator ipayload = jecPayloadsAK8chs_.begin(),
-     ipayloadEnd = jecPayloadsAK8chs_.end(); ipayload != ipayloadEnd - 1; ++ipayload ) {
+   for ( std::vector<std::string>::const_iterator ipayload = jecPayloadsAK8chsFinal.begin(),
+     ipayloadEnd = jecPayloadsAK8chsFinal.end(); ipayload != ipayloadEnd - 1; ++ipayload ) {
      JetCorrectorParameters pars(*ipayload);
      vParAK8chs.push_back(pars);
   }
   JetCorrectorAK8chs   = boost::shared_ptr<FactorizedJetCorrector>  ( new FactorizedJetCorrector(vParAK8chs) );
-  JetCorrUncertAK8chs  = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadsAK8chs_.back()));
+  JetCorrUncertAK8chs  = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadsAK8chsFinal.back()));
 
   // AK4pup JEC 
   std::vector<JetCorrectorParameters> vParAK4pup;
-   for ( std::vector<std::string>::const_iterator ipayload = jecPayloadsAK4pup_.begin(),
-     ipayloadEnd = jecPayloadsAK4pup_.end(); ipayload != ipayloadEnd - 1; ++ipayload ) {
+   for ( std::vector<std::string>::const_iterator ipayload = jecPayloadsAK4pupFinal.begin(),
+     ipayloadEnd = jecPayloadsAK4pupFinal.end(); ipayload != ipayloadEnd - 1; ++ipayload ) {
      JetCorrectorParameters pars(*ipayload);
      vParAK4pup.push_back(pars);
   }
   JetCorrectorAK4pup   = boost::shared_ptr<FactorizedJetCorrector>  ( new FactorizedJetCorrector(vParAK4pup) );
-  JetCorrUncertAK4pup  = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadsAK4pup_.back()));
+  JetCorrUncertAK4pup  = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadsAK4pupFinal.back()));
   
   // AK8pup JEC 
   std::vector<JetCorrectorParameters> vParAK8pup;
-   for ( std::vector<std::string>::const_iterator ipayload = jecPayloadsAK8pup_.begin(),
-     ipayloadEnd = jecPayloadsAK8pup_.end(); ipayload != ipayloadEnd - 1; ++ipayload ) {
+   for ( std::vector<std::string>::const_iterator ipayload = jecPayloadsAK8pupFinal.begin(),
+     ipayloadEnd = jecPayloadsAK8pupFinal.end(); ipayload != ipayloadEnd - 1; ++ipayload ) {
      JetCorrectorParameters pars(*ipayload);
      vParAK8pup.push_back(pars);
   }
   JetCorrectorAK8pup   = boost::shared_ptr<FactorizedJetCorrector>  ( new FactorizedJetCorrector(vParAK8pup) );
-  JetCorrUncertAK8pup  = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadsAK8pup_.back()));
+  JetCorrUncertAK8pup  = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadsAK8pupFinal.back()));
   
+  // jet resolution from text files
+  JME::JetResolution jet_resolution_AK4CHS;
+  JME::JetResolution jet_resolution_AK8CHS;
+  jet_resolution_AK4CHS = JME::JetResolution(jertextAK4_);
+  jet_resolution_AK8CHS = JME::JetResolution(jertextAK8_);
+
   // jet resolution scale factor from text files
   JME::JetResolutionScaleFactor jer_scaler;
   jer_scaler = JME::JetResolutionScaleFactor(jerSFtext_);
@@ -2618,7 +2736,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   for(std::vector<reco::Vertex>::const_iterator vtx = vertices->begin(); vtx != vertices->end(); ++vtx) {
     bool isFake = (vtx->chi2()==0 && vtx->ndof()==0);   //// bool isFake = vtx->isFake();  // for AOD
     if ( !isFake &&  vtx->ndof()>=4. && vtx->position().Rho()<=2.0 && fabs(vtx->position().Z())<=24.0) {
-      if (verbose_) cout<<"found good vertex"<<endl;
       nvtxgood++;
     }
   }
@@ -2654,14 +2771,13 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   double puweightUp = hPUweight_MBup->GetBinContent( hPUweight_MBup->GetXaxis()->FindBin( nPU ) )  ;
   double puweightDn = hPUweight_MBdn->GetBinContent( hPUweight_MBdn->GetXaxis()->FindBin( nPU ) )  ;
 
-  if (verbose_) std::cout<<"PU weight: "<<puweight<<std::endl;
+  if (verbose_) std::cout<<"nPU true  "<<nPU<<"  PU weight: "<<puweight<<std::endl;
 
-  h_NtrueIntPU ->Fill(nPU);
-  h_NPV ->Fill(nvtx);
-  h_NPVreweighted  ->Fill(nvtx,puweight);
-  h_NPVgood ->Fill(nvtxgood);
+  h_NtrueIntPU         ->Fill(nPU);
+  h_NPV                ->Fill(nvtx);
+  h_NPVreweighted      ->Fill(nvtx,puweight);
+  h_NPVgood            ->Fill(nvtxgood);
   h_NPVgoodreweighted  ->Fill(nvtxgood,puweight);
-
 
 
   //  888      888    888 8888888888     888       888          d8b          888      888             
@@ -2694,13 +2810,11 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       double maxQ2wgt_frac = 1;
       double minQ2wgt_frac = 1;
       
-      if (verbose_) cout << "Q^2 loop" <<endl;
       for (unsigned int iLHE = 0; iLHE < 9; ++iLHE){
         if (iLHE != 5 && iLHE != 7){
           double Q2wgt = EvtHandle->weights()[iLHE].wgt;
-          if (verbose_) cout << "Q^2 Weight: " << Q2wgt << endl;
           double Q2wgt_frac = Q2wgt/(centralWgt);
-          if (verbose_) cout << "Fractional Q^2 Weight: " << Q2wgt_frac << endl;
+          if (verbose_) cout << "Q^2 Weight: " << Q2wgt << "  Fractional Q^2 Weight: " << Q2wgt_frac << endl;
           maxQ2wgt_frac = max(maxQ2wgt_frac, Q2wgt_frac);
           minQ2wgt_frac = min(minQ2wgt_frac, Q2wgt_frac);
         }
@@ -2733,21 +2847,22 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if (verbose_) cout << "Unphysical: central PDF weight is zero!" << endl;
       }
       else{
+        if (verbose_){cout << "PDF Fractional weights: "; 
         for (unsigned int i_lhePDF = PDFstart; i_lhePDF < PDFend; ++i_lhePDF){
           NNPDF3wgt = EvtHandle->weights()[i_lhePDF].wgt;
           NNPDF3wgt_frac = NNPDF3wgt/(centralWgt);
           NNPDF3wgtAvg += NNPDF3wgt_frac;
-          if (verbose_){
-            cout << "-----" << endl;
-            cout << i_lhePDF - PDFstart << endl;
-            cout << "Fractional PDF weight: " << NNPDF3wgt_frac << endl;
-            cout << "-----" << endl;
-            cout << "" << endl;
+          
+            // cout << "-----" << endl;
+            // cout << i_lhePDF - PDFstart
+            if (verbose_)cout<< NNPDF3wgt_frac<<", ";
+            // cout << "-----" << endl;
+            // cout << "" << endl;
           }
         }
+        if (verbose_) cout<<endl;
 
         NNPDF3wgtAvg = NNPDF3wgtAvg/(PDFend - PDFstart);
-        if (verbose_) cout << NNPDF3wgtAvg;
             
         for (unsigned int i_lhePDF = PDFstart; i_lhePDF < PDFend; ++i_lhePDF){
           NNPDF3wgt = EvtHandle->weights()[i_lhePDF].wgt;
@@ -2758,6 +2873,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         NNPDF3wgtRMS = sqrt(NNPDF3wgtRMS/(PDFend - PDFstart - 1));
         NNPDF3wgt_up = 1.0 + NNPDF3wgtRMS;
         NNPDF3wgt_down = 1.0 - NNPDF3wgtRMS;
+
+        if (verbose_) cout <<"NNPDF3wgtAvg = "<< NNPDF3wgtAvg<<" NNPDF3wgtRMS = "<< NNPDF3wgtRMS<<endl;
+
       }
     }
   }
@@ -2790,23 +2908,19 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       sumsq += ( weight - w0 ) * (weight - w0);
     }
 
-
     double rmsWt = sqrt( (1./99.)*sumsq );
 
     if ( rmsWt > 1.0){
-
       NNPDF3wgt_up = rmsWt;
       NNPDF3wgt_down = 2 - rmsWt;
     }
 
     if (rmsWt < 1.0){
-
       NNPDF3wgt_down = rmsWt;
       NNPDF3wgt_up = 2 - rmsWt;
     }
     
   }
-
 
   edm::Handle<GenEventInfoProduct> genEventInfo;
   iEvent.getByToken(pdfToken_, genEventInfo);
@@ -2844,7 +2958,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   Handle<double> rhoH;
   iEvent.getByToken(rhoToken_, rhoH);
   double rho = *rhoH;
-
+  if (verbose_) cout<<"rho = "<<rho<<endl;
+  
   //
   // 888b     d888                            
   // 8888b   d8888                            
@@ -2869,22 +2984,33 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   std::vector<reco::CandidatePtr> muFootprint;
 
   for (const pat::Muon &mu : *muons) {
+
+      // use only loose muons 
       if (mu.pt() < 30 || !mu.isLooseMuon() || fabs( mu.eta() ) > 2.1) continue;
-
-
+      // use the leading muon only
       if (count_mu==0){
         mu0_p4.SetPtEtaPhiM( mu.pt(), mu.eta(), mu.phi(), mu.mass() );
-        if ( mu.isTightMuon(PV) ) mu0_isTight = true;
-        // ICHEP HIP MEDIUM MUON ID https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideMuonIdRun2#Short_Term_Instructions_for_ICHE
-        bool goodGlob = mu.isGlobalMuon() && 
-                      mu.globalTrack()->normalizedChi2() < 3 && 
-                      mu.combinedQuality().chi2LocalPosition < 12 && 
-                      mu.combinedQuality().trkKink < 20; 
-        bool isMedium = muon::isLooseMuon(mu) && 
-                      mu.innerTrack()->validFraction() > 0.49 && 
-                      muon::segmentCompatibility(mu) > (goodGlob ? 0.303 : 0.451); 
+
+        // Moriond 2017 short term instructions for medium muon ID
+        //https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideMuonIdRun2
+        bool goodGlob   = mu.isGlobalMuon() && 
+                          mu.globalTrack()->normalizedChi2() < 3 && 
+                          mu.combinedQuality().chi2LocalPosition < 12 && 
+                          mu.combinedQuality().trkKink < 20; 
+        bool isMediumBF = muon::isLooseMuon(mu) && 
+                          mu.innerTrack()->validFraction() > 0.49 && 
+                          muon::segmentCompatibility(mu) > (goodGlob ? 0.303 : 0.451); 
+        bool isMediumStandard = muon::isMediumMuon(mu);
+        bool isMedium   = false;
+        if      (iEvent.isRealData() && runNumber <= 278808) isMedium = isMediumBF;       // Data B-F
+        else if (iEvent.isRealData() && runNumber  > 278808) isMedium = isMediumStandard; // Data G-H
+        else isMedium = isMediumStandard;  // MC 
         if ( isMedium ) mu0_isMedium = true;
 
+        // Tight ID
+        if ( mu.isTightMuon(PV) ) mu0_isTight = true;
+
+        // HighPt ID
         bool isHighPt = mu.isHighPtMuon(PV);
         if ( isHighPt ) mu0_isHighPt = true;
 
@@ -2900,7 +3026,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         for (unsigned int i = 0, n = mu.numberOfSourceCandidatePtrs(); i < n; ++i) {
           muFootprint.push_back(mu.sourceCandidatePtr(i));
         }
-        if (verbose_) cout<<"Muon pT "<<mu.pt()<<" iso04 "<<iso04<<endl;
+        if (verbose_) cout<<"Muon pT "<<mu.pt()<<" iso04 "<<iso04<<" isMedium "<<mu0_isTight<<" isTight "<<mu0_isTight<<" isHighPt "<<mu0_isHighPt<<endl;
       } 
       // printf("muon with pt %4.1f, dz(PV) %+5.3f, POG loose id %d, tight id %d\n",
       // mu.pt(), mu.muonBestTrack()->dz(PV.position()), mu.isLooseMuon(), mu.isTightMuon(PV));
@@ -2974,7 +3100,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   std::vector<reco::CandidatePtr> elFootprint;
 
-
   for (size_t i = 0; i < electrons->size(); ++i){   
     const auto el = electrons->ptrAt(i);          // easier if we use ptrs for the id
     if (el->pt() < 50 || fabs(el->eta())>2.4 ) continue;
@@ -2998,7 +3123,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     vid::CutFlowResult masked_cutflow_Tight  = full_cutflow_Tight     .getCutFlowResultMasking(7); // 7 = GsfEleEffAreaPFIsoCut_0
 
     std::vector<std::string> maskCuts;
-    maskCuts.push_back("GsfEleTrkPtIsoCut_0"); 
+    // maskCuts.push_back("GsfEleTrkPtIsoCut_0");  // OLD HEEP v6 only
+    maskCuts.push_back("GsfEleValueMapIsoRhoCut_0"); // new in HEEP v7
     maskCuts.push_back("GsfEleEmHadD1IsoRhoCut_0");
     vid::CutFlowResult masked_cutflow_HEEP   = full_cutflow_HEEP      .getCutFlowResultMasking(maskCuts);
 
@@ -3080,6 +3206,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<"count_lep "<<count_lep<<endl;
   }
 
+
   //
   // 888b     d888 8888888888 88888888888 
   // 8888b   d8888 888            888     
@@ -3091,7 +3218,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   // 888       888 8888888888     888     
   //                                      
 
-  if (verbose_) cout<<"debug: about to grab met"<<endl;
   edm::Handle<pat::METCollection> mets;
   iEvent.getByToken(metToken_, mets);
   const pat::MET &met = mets->front();
@@ -3113,14 +3239,13 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //                                                                                 888                          
   //                                                                                d88P                          
 
-  //int count_AK4MINI = 0;
+  int count_AK4 = 0;
   TLorentzVector AK4_dRMinLep_p4;
   TLorentzVector AK4_btagged_dRMinLep_p4;
   double AK4_dRMinLep_bdisc = -99;
   double AK4_btagged_dRMinLep_bdisc = -99;
   double AK4_dRMinLep_deltaR  = 99;
   double AK4_btagged_dRMinLep = 99;
-
 
   double AK4_dRMinLep_ptsmear    = 1; 
   double AK4_dRMinLep_ptsmearUp  = 1; 
@@ -3147,11 +3272,25 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   edm::Handle<reco::GenJetCollection> AK4GENJET;  
   iEvent.getByToken(ak4genjetToken_, AK4GENJET);
 
-  if (verbose_) cout<<"debug: about to grab ak4 jets"<<endl;
+  // vAK4pt    ->clear();
+  // vAK4eta   ->clear();
+  // vAK4phi   ->clear();
+  // vAK4m     ->clear();
+  // vAK4bdisc ->clear();
+
+  // SemiLeptAK4pt    ->clear();
+  // SemiLeptAK4eta   ->clear();
+  // SemiLeptAK4phi   ->clear();
+  // SemiLeptAK4m     ->clear();
+  // SemiLeptAK4bdisc ->clear();
+
+  if (verbose_) cout<<"AK4 jet loop"<<endl;
 
   for (const pat::Jet &ijet : *AK4MINI) {  
     
     if (ijet.pt()<15 || fabs(ijet.eta())>3.0) continue; 
+    if (verbose_) cout<<" jet "<<count_AK4<<endl;
+    count_AK4++;
 
     //------------------------------------
     // Remove leptons from AK4 jets
@@ -3162,26 +3301,26 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     //// Jet constituent indices for lepton matching
     std::vector<int> constituentIndices;
     auto jetConstituents = uncorrJetObj.daughterPtrVector();
-    if ( verbose_ ) cout << "debug: uncorr jet before lepton cleaning pt,eta,phi,m = " << uncorrJet.pt() << ", " << uncorrJet.eta() << ", " << uncorrJet.phi() << ", " << uncorrJet.mass() << endl;
+    if ( verbose_ ) cout << "   -> before lepton cleaning uncorr pt,eta,phi,m = " << uncorrJet.pt() << ", " << uncorrJet.eta() << ", " << uncorrJet.phi() << ", " << uncorrJet.mass() << endl;
     for ( auto & constituent : jetConstituents ) {
 
       // If this constituent is part of a muon, remove the constituent's four vector
       if ( std::find(muFootprint.begin(), muFootprint.end(), constituent ) != muFootprint.end() ) {
         uncorrJet -= constituent->p4();
-        if ( verbose_ ) cout << "debug: REMOVED part of muon" << endl;
+        if ( verbose_ ) cout << "     -> REMOVED part of muon" << endl;
         }
       // If this constituent is part of an electron, remove the constituent's four vector
       if ( std::find(elFootprint.begin(), elFootprint.end(), constituent ) != elFootprint.end() ) {
         uncorrJet -= constituent->p4();
-        if ( verbose_ ) cout << "debug: REMOVED part of electron" << endl;
+        if ( verbose_ ) cout << "     -> REMOVED part of electron" << endl;
       }
     }
-    if ( verbose_ ) cout << "debug: uncorr jet after lepton cleaning pt,eta,phi,m = " << uncorrJet.pt() << ", " << uncorrJet.eta() << ", " << uncorrJet.phi() << ", " << uncorrJet.mass() << endl;
-
+    if ( verbose_ ) cout << "   -> after lepton cleaning uncorr pt,eta,phi,m = " << uncorrJet.pt() << ", " << uncorrJet.eta() << ", " << uncorrJet.phi() << ", " << uncorrJet.mass() << endl;
 
     //------------------------------------
     // Noise jet ID
     //------------------------------------    
+
     double NHF       = ijet.neutralHadronEnergyFraction();
     double NEMF      = ijet.neutralEmEnergyFraction();
     double CHF       = ijet.chargedHadronEnergyFraction();
@@ -3195,12 +3334,12 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     bool goodJet_looseJetID =  
          ( fabs(eta) <= 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 && CHF > 0.0  && CM > 0 && CEMF < 0.99   ) 
       || ( fabs(eta) <= 2.7 && fabs(eta) > 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 ) 
-      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NEMF < 0.9 && NM > 2 ) 
+      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NHF < 0.98 && NEMF > 0.01 && NM > 2 ) 
       || ( fabs(eta)  > 3.0 && NEMF < 0.9 && NM > 10 );
-    if (verbose_) cout<<"  goodJet = "<<goodJet_looseJetID<<endl;
+    if (verbose_ && goodJet_looseJetID) cout<<"   -> goodJet "<<endl;
 
     if (!goodJet_looseJetID) {
-      if(verbose_) cout<<"  bad AK4 jet. skip.  ( pt "<<ijet.pt()<<" eta "<<ijet.eta()<<" NumConst "<<NumConst<<" )"<<endl;
+      if(verbose_) cout<<"   -> bad AK4 jet. skip.  ( pt "<<ijet.pt()<<" eta "<<ijet.eta()<<" NumConst "<<NumConst<<" )"<<endl;
       continue;
     }
 
@@ -3216,8 +3355,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     double corr = JetCorrectorAK4chs->getCorrection();
 
     reco::Candidate::LorentzVector corrJet = corr * uncorrJet;
-    if (verbose_) cout<<"uncorrected AK4 jet pt "<<uncorrJet.pt()<<" corrected jet pt "<<corrJet.pt()<<endl;
+    if ( verbose_ ) cout << "   -> after JEC pt,eta,phi,m = " << corrJet.pt() << ", " << corrJet.eta() << ", " << corrJet.phi() << ", " << corrJet.mass() << endl;
     
+    if (corrJet.pt()<15 ) continue;  
+
     //------------------------------------
     // AK4CHS JEC uncertainty
     //------------------------------------
@@ -3232,41 +3373,86 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     JetCorrUncertAK4chs->setJetPt(   corrJet.pt()   );
     corrUp = corr + JetCorrUncertAK4chs->getUncertainty(1);
 
-    if (verbose_) cout<<"  corrDn "<<corrDn<<" corrUp "<< corrUp<<endl;
+    if (verbose_) cout<<"   -> corr "<<corr<<" corrDn "<<corrDn<<" corrUp "<< corrUp<<endl;
 
     //------------------------------------
-    // GenJet  matched
-    //------------------------------------ 
-    double genpt = 0;
-    if (!iEvent.isRealData()){
-      const reco::GenJet* genJet = ijet.genJet();
-      if (genJet) {
-        genpt = genJet->pt();
-        if (verbose_) cout<<"  ak4 genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<endl;
-      }
-    }
+    // AK4 JER SF
     //------------------------------------
-    // JER SF
-    //------------------------------------
+   
     double ptsmear   = 1;
     double ptsmearUp = 1;
     double ptsmearDn = 1;
+
     if (!iEvent.isRealData()) {
-      double jer_sf    = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}});
-      double jer_sf_up = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}}, Variation::UP);
-      double jer_sf_dn = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}}, Variation::DOWN);
-      if (verbose_) std::cout << "  JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
-      double recopt    = corrJet.pt();
-      // double genpt     = GenJetMatched.Perp();
-      double deltapt   = (recopt-genpt)*(jer_sf-1.0);
-      double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
-      double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
-      ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
-      ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
-      ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
+      if (verbose_) cout<<"   Get JER SF"<<endl;
+
+      // get genjet
+      double genpt = 0;
+      TLorentzVector GenJetMatched;
+      const reco::GenJet* genJet = ijet.genJet();
+      bool foundgenjet = false;
+      if (genJet) {
+        foundgenjet=true;
+        genpt = genJet->pt();
+        GenJetMatched.SetPtEtaPhiM( genJet->pt(), genJet->eta(), genJet->phi(), genJet->mass() );
+        if (verbose_) cout<<"      -> Found ak4 genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<endl;
+      }
+      else{ if(verbose_)cout<<"      -> Did not find genJet"<<endl;}
+    
+      // Set parameters needed for jet resolution and scale factors
+      JME::JetParameters jer_parameters;
+      jer_parameters.setJetPt ( corrJet.pt()  );
+      jer_parameters.setJetEta( corrJet.eta() );
+      jer_parameters.setRho   ( rho           );
+
+      // Get resolution
+      double res = jet_resolution_AK4CHS.getResolution(jer_parameters); 
+
+      // Get scale factors
+      double jer_sf    = jer_scaler.getScaleFactor(jer_parameters                   );
+      double jer_sf_up = jer_scaler.getScaleFactor(jer_parameters , Variation::UP   );
+      double jer_sf_dn = jer_scaler.getScaleFactor(jer_parameters , Variation::DOWN );
+      if (verbose_) std::cout << "      -> JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn <<"    & Resolution :"<<res<< std::endl;
+     
+      // Get Smearings  
+      // --- If well matched, smear based on GenJet, If not well matched,  gaussian smear based on resolution
+      TLorentzVector AK4JetP4;
+      AK4JetP4.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
+      double DeltaR_gen_reco  = AK4JetP4.DeltaR( GenJetMatched );
+      double DeltaPt_gen_reco = AK4JetP4.Pt() - GenJetMatched.Pt()  ;
+      double jet_distance_param = 0.4; 
+      if (verbose_) cout<<"      -> gen pt "<<GenJetMatched.Pt()<<" reco pt "<<AK4JetP4.Pt()<<"  delta "<<DeltaPt_gen_reco<<endl;
+
+      if (genJet && (DeltaR_gen_reco<jet_distance_param/2.0) && (std::abs(DeltaPt_gen_reco)<(3*res*AK4JetP4.Pt())) ) {
+        if (verbose_) cout<<"      -> Well matched (recojet,genjet)"<<endl;
+        double recopt    = corrJet.pt();
+        // double genpt     = GenJetMatched.Perp();
+        double deltapt   = (recopt-genpt)*(jer_sf-1.0);
+        double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
+        double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
+
+        ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
+        ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
+        ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
+      }
+      else{
+        if (verbose_){
+          cout<<"      -> Not well matched. DeltaR_gen_reco "<<DeltaR_gen_reco<<" DeltaPt_gen_reco "<<DeltaPt_gen_reco<<" 3*res*AK4JetP4.Pt()) "<<3*res*AK4JetP4.Pt();
+          if (!foundgenjet) cout<<". Did not find genjet"<<endl;
+          else cout<<endl;
+        }
+        double sigma   = std::sqrt(jer_sf * jer_sf - 1)       * res ;  
+        double sigmaUp = std::sqrt(jer_sf_up * jer_sf_up - 1) * res ;
+        double sigmaDn = std::sqrt(jer_sf_dn * jer_sf_dn - 1) * res ;
+
+        TRandom3 rand1(0);
+        ptsmear   = std::max( (double)0.0, 1 + rand1.Gaus(0, sigma  ) );
+        ptsmearUp = std::max( (double)0.0, 1 + rand1.Gaus(0, sigmaUp) );
+        ptsmearDn = std::max( (double)0.0, 1 + rand1.Gaus(0, sigmaDn) );
+      }
     }
 
-    if (verbose_) cout<<"  ptsmear "<<ptsmear<<" ptsmearUp "<< ptsmearDn<<" ptsmearDn "<< ptsmearUp<<endl;
+    if (verbose_) cout<<"   -> ptsmear "<<ptsmear<<" ptsmearUp "<< ptsmearDn<<" ptsmearDn "<< ptsmearUp<<endl;
 
     //------------------------------------
     // AK4 variables 
@@ -3280,6 +3466,20 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     double bdisc        = ijet.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); 
     //double puid         = ijet.userFloat("pileupJetId:fullDiscriminant");
  
+    //  if (corrJet.pt()>20 ){
+    //   vAK4pt    ->push_back( corrJet.pt()    ); 
+    //   vAK4eta   ->push_back( corrJet.eta()   ); 
+    //   vAK4phi   ->push_back( corrJet.phi()   ); 
+    //   vAK4m     ->push_back( corrJet.mass()  ); 
+    //   vAK4bdisc ->push_back( bdisc           );
+
+    //   SemiLeptAK4pt    ->push_back( corrJet.pt()    ); 
+    //   SemiLeptAK4eta   ->push_back( corrJet.eta()   ); 
+    //   SemiLeptAK4phi   ->push_back( corrJet.phi()   ); 
+    //   SemiLeptAK4m     ->push_back( corrJet.mass()  ); 
+    //   SemiLeptAK4bdisc ->push_back( bdisc           );
+    // }  
+
     //------------------------------------
     // HT calculation
     //------------------------------------
@@ -3296,7 +3496,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     //------------------------------------ 
     double deltaRlep = deltaR(corrJet.eta(), corrJet.phi(), lep0_p4.Eta(), lep0_p4.Phi() );
 
-    if (pt>15 && fabs(eta)<3.0 && goodJet_looseJetID){
+    if (pt>25 && fabs(eta)<3.0 && goodJet_looseJetID){
       if (deltaRlep<AK4_dRMinLep_deltaR ){
         AK4_dRMinLep_deltaR = deltaRlep;
         AK4_dRMinLep_p4.SetPtEtaPhiM( pt, eta, phi, mass );
@@ -3308,14 +3508,13 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         AK4_dRMinLep_corr    = corr ;
         AK4_dRMinLep_corrUp  = corrUp ;
         AK4_dRMinLep_corrDn  = corrDn ;
-
       }
     }
 
     //------------------------------------
     // Find Loose b-tagged AK4 jet closest to lepton
     //------------------------------------ 
-    if (pt>15. && fabs(eta)<3.0 && goodJet_looseJetID && bdisc>0.460 ){
+    if (pt>25. && fabs(eta)<3.0 && goodJet_looseJetID && bdisc> 0.5426  ){
       if (deltaRlep<AK4_btagged_dRMinLep){
         AK4_btagged_dRMinLep = deltaRlep;
         AK4_btagged_dRMinLep_p4.SetPtEtaPhiM( pt, eta, phi, mass );
@@ -3327,12 +3526,12 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     // Check if there is a b-tagged AK4 jet in the lepton hemisphere
     //------------------------------------ 
     double deltaPhiLep = fabs( deltaPhi( phi,  lep0_p4.Phi() ));  
-    if (pt>15. && fabs(eta)<3.0 && goodJet_looseJetID){              
+    if (pt>25. && fabs(eta)<3.0 && goodJet_looseJetID){              
       if (deltaPhiLep<  3.14/2.0)
       {
-        if (bdisc>0.460 ) ak4_btag_loose  = true;
-        if (bdisc>0.800 ) ak4_btag_medium = true;
-        if (bdisc>0.935 ) ak4_btag_tight  = true;
+        if (bdisc> 0.5426  ) ak4_btag_loose  = true;
+        if (bdisc> 0.8484  ) ak4_btag_medium = true;
+        if (bdisc> 0.9535  ) ak4_btag_tight  = true;
       }
     }
   } //end AK4 loop
@@ -3351,8 +3550,14 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<"    ak4_btag_loose  "<<ak4_btag_loose  <<endl; 
     cout<<"    ak4_btag_medium "<<ak4_btag_medium <<endl; 
     cout<<"    ak4_btag_tight  "<<ak4_btag_tight  <<endl; 
-  }
 
+    cout<<"HT_AK4_pt30          "<<HT_AK4_pt30         <<endl;
+    cout<<"HT_AK4_pt30_corrUp   "<<HT_AK4_pt30_corrUp  <<endl;
+    cout<<"HT_AK4_pt30_corrDn   "<<HT_AK4_pt30_corrDn  <<endl;
+    cout<<"HT_AK4_pt30_smearNom "<<HT_AK4_pt30_smearNom<<endl;
+    cout<<"HT_AK4_pt30_smearUp  "<<HT_AK4_pt30_smearUp <<endl;
+    cout<<"HT_AK4_pt30_smearDn  "<<HT_AK4_pt30_smearDn <<endl;
+  }
 
   //      
   //         d8888 888    d8P   .d8888b.       .d8888b.  888    888  .d8888b.         d8b          888             
@@ -3383,6 +3588,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   }
 
   int count_AK8CHS = 0;
+  // int count_AK8CHS_good = 0;
   int count_fill_leptTree =0;
 
   TLorentzVector AK8jet_SemiLept_P4corr;
@@ -3398,11 +3604,21 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   TLorentzVector GenJetMatchedPuppi0;
   TLorentzVector GenJetMatchedPuppi1;
 
-  if (verbose_) cout<<"debug: about to grab ak8 jets"<<endl;
+
+  double closestAK8_to_Jet0_dR=99;
+  double closestAK8_to_Jet1_dR=99;
+  TLorentzVector closestAK8_to_Jet0_P4;
+  TLorentzVector closestAK8_to_Jet1_P4;
+  double closestAK8_to_Jet0_bdisc=-10;
+  double closestAK8_to_Jet1_bdisc=-10;
+
+
+  if (verbose_) cout<<"\nAK8 jet loop"<<endl;
+
 
   for (const pat::Jet &ijet : *AK8CHS) {
-    if (count_AK8CHS>1) break;
-    if (count_AK8CHS==0 && ijet.pt()<250) break;
+    // if (count_AK8CHS>1) break;
+    if (count_AK8CHS==0 && ijet.pt()<30) break;
     if (verbose_) cout<<"\nJet "<<count_AK8CHS<<" with pT "<<ijet.pt()<<" sdMass "<<ijet.userFloat("ak8PFJetsCHSSoftDropMass")<<endl;
 
     //------------------------------------
@@ -3421,14 +3637,16 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     bool goodJet_looseJetID =  
          ( fabs(eta) <= 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 && CHF > 0.0  && CM > 0 && CEMF < 0.99   ) 
       || ( fabs(eta) <= 2.7 && fabs(eta) > 2.4 && NHF < 0.99 && NEMF < 0.99 && NumConst >1 ) 
-      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NEMF < 0.9 && NM > 2 ) 
+      || ( fabs(eta) <= 3.0 && fabs(eta) > 2.7 && NHF < 0.98 && NEMF > 0.01 && NM > 2 ) 
       || ( fabs(eta)  > 3.0 && NEMF < 0.9 && NM > 10 );
-    if (verbose_) cout<<"  goodJet = "<<goodJet_looseJetID<<endl;
+
+    if (verbose_ && goodJet_looseJetID) cout<<"   -> goodJet "<<endl;
 
     if (!goodJet_looseJetID) {
-      if(verbose_) cout<<"  bad AK8 jet. skip.  ( pt "<<ijet.pt()<<" eta "<<ijet.eta()<<" NumConst "<<NumConst<<" )"<<endl;
+      if(verbose_) cout<<"   -> bad AK8 jet. skip.  ( pt "<<ijet.pt()<<" eta "<<ijet.eta()<<" NumConst "<<NumConst<<" )"<<endl;
       continue;
     }
+    // count_AK8CHS_good ++;
 
     //------------------------------------
     // AK8CHS JEC correction 
@@ -3443,12 +3661,33 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     double corr = JetCorrectorAK8chs->getCorrection();
 
     reco::Candidate::LorentzVector corrJet = corr * uncorrJet;
-    if (verbose_) cout<<" uncorrected AK8 jet pt "<<uncorrJet.pt()<<" corrected jet pt "<<corrJet.pt()<<endl;
+    if (verbose_) cout<<"   -> uncorrected AK8 jet pt "<<uncorrJet.pt()<<" corrected jet pt "<<corrJet.pt()<<endl;
     
     TLorentzVector jet_p4;
     jet_p4.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
+
+
+    if ( jet_p4.Pt() < 30 ) continue;
+
     if(count_AK8CHS==0) AK8jet0_P4corr = jet_p4;
     if(count_AK8CHS==1) AK8jet1_P4corr = jet_p4;
+
+    if(count_AK8CHS>1) {
+      double DeltaR_Jet0  = AK8jet0_P4corr.DeltaR( jet_p4 );
+      double DeltaR_Jet1  = AK8jet1_P4corr.DeltaR( jet_p4 );
+      if (DeltaR_Jet0 < closestAK8_to_Jet0_dR) {
+        closestAK8_to_Jet0_dR = DeltaR_Jet0;
+        closestAK8_to_Jet0_P4 = jet_p4 ;
+        closestAK8_to_Jet0_bdisc = ijet.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); ;
+      }
+      if (DeltaR_Jet1 < closestAK8_to_Jet1_dR) {
+        closestAK8_to_Jet1_dR = DeltaR_Jet1;
+        closestAK8_to_Jet1_P4 = jet_p4 ;
+        closestAK8_to_Jet1_bdisc = ijet.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); ;
+      }
+    }
+    // Only need 3rd jet and beyond to find jet 0 and jet1 nearest neighbors (above)
+    if(count_AK8CHS>1) continue; 
 
     //------------------------------------
     // AK8CHS JEC L23 correction
@@ -3495,40 +3734,86 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     corrUp_L23   = corr_factor_L23res + corrUp_temp1;
     corrUp_L123 = corr + corrUp_temp1;
 
-    //------------------------------------
-    // GenJet  matched
-    //------------------------------------ 
-    TLorentzVector GenJetMatched;
-    if (!iEvent.isRealData()){
-      const reco::GenJet* genJet = ijet.genJet();
-      if (genJet) {
-        GenJetMatched.SetPtEtaPhiM( genJet->pt(), genJet->eta(), genJet->phi(), genJet->mass() );
-        if (verbose_) cout<<"  ak8 genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<endl;
-      }
-    }
-    if ( count_AK8CHS==0 ) GenJetMatched0 = GenJetMatched;
-    if ( count_AK8CHS==1 ) GenJetMatched1 = GenJetMatched;
+    if (verbose_) cout<<"   -> corr "<<corr<<" corr_factor_L23res "<<corr_factor_L23res<<" corrDn_L123 "<<corrDn_L123<<" corrUp_L123 "<<corrUp_L123<<endl;
 
     //------------------------------------
-    // JER SF
+    // AK8 JER SF
     //------------------------------------
+  
+    TLorentzVector GenJetMatched;
     double ptsmear   = 1;
     double ptsmearUp = 1;
     double ptsmearDn = 1;
+
     if (!iEvent.isRealData()) {
-      double jer_sf    = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}});
-      double jer_sf_up = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}}, Variation::UP);
-      double jer_sf_dn = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrJet.eta()}}, Variation::DOWN);
-      if (verbose_) std::cout << " JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
-      double recopt    = corrJet.pt();
-      double genpt     = GenJetMatched.Perp();
-      double deltapt   = (recopt-genpt)*(jer_sf-1.0);
-      double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
-      double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
-      ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
-      ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
-      ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
+      if (verbose_) cout<<"   Get JER SF"<<endl;
+
+      // get genjet
+      double genpt = 0;
+      const reco::GenJet* genJet = ijet.genJet();
+      bool foundgenjet = false;
+      if (genJet) {
+        foundgenjet=true;
+        genpt = genJet->pt();
+        GenJetMatched.SetPtEtaPhiM( genJet->pt(), genJet->eta(), genJet->phi(), genJet->mass() );
+        if (verbose_) cout<<"     -> found ak8 genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<endl;
+      }
+      else{ if(verbose_)cout<<"     -> did not find ak8 genJet"<<endl;}
+    
+      // Set parameters needed for jet resolution and scale factors
+      JME::JetParameters jer_parameters;
+      jer_parameters.setJetPt ( corrJet.pt()  );
+      jer_parameters.setJetEta( corrJet.eta() );
+      jer_parameters.setRho   ( rho           );
+
+      // Get resolution
+      double res = jet_resolution_AK8CHS.getResolution(jer_parameters); 
+
+      // Get scale factors
+      double jer_sf    = jer_scaler.getScaleFactor(jer_parameters                   );
+      double jer_sf_up = jer_scaler.getScaleFactor(jer_parameters , Variation::UP   );
+      double jer_sf_dn = jer_scaler.getScaleFactor(jer_parameters , Variation::DOWN );
+      if (verbose_) std::cout << "     -> JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn <<"    & Resolution :"<<res<< std::endl;
+     
+      // Get Smearings  
+      // --- If well matched, smear based on GenJet, If not well matched,  gaussian smear based on resolution
+      TLorentzVector AK8JetP4;
+      AK8JetP4.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
+      double DeltaR_gen_reco  = AK8JetP4.DeltaR( GenJetMatched );
+      double DeltaPt_gen_reco = AK8JetP4.Pt() - GenJetMatched.Pt()  ;
+      double jet_distance_param = 0.4; 
+      if (verbose_) cout<<"     -> gen pt "<<GenJetMatched.Pt()<<" reco pt "<<AK8JetP4.Pt()<<"  delta "<<DeltaPt_gen_reco<<endl;
+
+      if (genJet && (DeltaR_gen_reco<jet_distance_param/2.0) && (std::abs(DeltaPt_gen_reco)<(3*res*AK8JetP4.Pt())) ) {
+        if (verbose_) cout<<"     -> Well matched"<<endl;
+        double recopt    = corrJet.pt();
+        // double genpt     = GenJetMatched.Perp();
+        double deltapt   = (recopt-genpt)*(jer_sf-1.0);
+        double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
+        double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
+
+        ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
+        ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
+        ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
+      }
+      else{
+        if (verbose_){
+          cout<<"     -> Not well matched. DeltaR_gen_reco "<<DeltaR_gen_reco<<" DeltaPt_gen_reco "<<DeltaPt_gen_reco<<" 3*res*AK4JetP4.Pt()) "<<3*res*AK8JetP4.Pt();
+          if (!foundgenjet) cout<<". Did not find genjet"<<endl;
+          else cout<<endl;
+        }
+        double sigma   = std::sqrt(jer_sf * jer_sf - 1)       * res ;  
+        double sigmaUp = std::sqrt(jer_sf_up * jer_sf_up - 1) * res ;
+        double sigmaDn = std::sqrt(jer_sf_dn * jer_sf_dn - 1) * res ;
+
+        TRandom3 rand1(0);
+        ptsmear   = std::max( (double)0.0, 1 + rand1.Gaus(0, sigma  ) );
+        ptsmearUp = std::max( (double)0.0, 1 + rand1.Gaus(0, sigmaUp) );
+        ptsmearDn = std::max( (double)0.0, 1 + rand1.Gaus(0, sigmaDn) );
+      }
     }
+
+    if (verbose_) cout<<"   -> ptsmear "<<ptsmear<<" ptsmearUp "<< ptsmearDn<<" ptsmearDn "<< ptsmearUp<<endl;
 
     //------------------------------------
     // AK8CHS variables 
@@ -3566,6 +3851,53 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     if (tau1!=0) tau21 = tau2/tau1;
     if (tau2!=0) tau32 = tau3/tau2;
 
+
+    // //-----------
+    // // get jet constituents
+    // //-----------
+    // std::vector<fastjet::PseudoJet> FJparticles;
+    // for (unsigned i = 0; i < ijet.numberOfDaughters() ; i++){
+    //   const reco::PFCandidate* this_constituent = dynamic_cast<const reco::PFCandidate*>(ijet.daughter(i));
+    //   FJparticles.push_back( fastjet::PseudoJet( this_constituent->px(),
+    //            this_constituent->py(),
+    //          this_constituent->pz(),
+    //          this_constituent->energy() ) );
+    // }
+
+    // //------------------------------------
+    // // Recluster jet
+    // //------------------------------------
+    // double R = 0.8;
+    // double maxrap = 5.0;
+    // unsigned int n_repeat = 1; // default is 1
+    // double ghost_area = 0.01; // this is the default
+    // fastjet::GhostedAreaSpec area_spec(maxrap, n_repeat, ghost_area);       
+    // //fastjet::AreaDefinition area_def(fastjet::active_area, area_spec);
+    // fastjet::AreaDefinition area_def(fastjet::active_area_explicit_ghosts, area_spec);
+    // fastjet::JetDefinition jet_def(fastjet::cambridge_algorithm, R);
+    // fastjet::ClusterSequenceArea cs(FJparticles, jet_def, area_def);
+    // vector<fastjet::PseudoJet> jets = sorted_by_pt(cs.inclusive_jets());
+
+
+    // double z_cut = 0.10;
+    // double beta  = 0.0;
+    // contrib::SoftDrop sd(beta, z_cut);
+    // cout << "SoftDrop groomer is: " << sd.description() << endl;
+
+    // for (unsigned jjet = 0; jjet < jets.size(); jjet++) {
+    //   // Run SoftDrop and examine the output
+    //   PseudoJet sd_jet = sd(jets[jjet]);
+    //   cout <<"sd mass "<<sd_jet.m() << endl;
+    //   // cout << "original    jet: " << jets[jjet] << endl;
+    //   // cout << "SoftDropped jet: " << sd_jet << endl;
+
+    //   assert(sd_jet != 0); //because soft drop is a groomer (not a tagger), it should always return a soft-dropped jet
+       
+    //   cout << "  delta_R between subjets: " << sd_jet.structure_of<contrib::SoftDrop>().delta_R() << endl;
+    //   cout << "  symmetry measure(z):     " << sd_jet.structure_of<contrib::SoftDrop>().symmetry() << endl;
+    //   cout << "  mass drop(mu):           " << sd_jet.structure_of<contrib::SoftDrop>().mu() << endl;
+    // }
+
     //------------------------------------
     // AK8PUPPI variables 
     //------------------------------------
@@ -3581,7 +3913,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     double puppi_tau4           = -99;     
     double puppi_prunedMass     = -1;     
     double puppi_trimmedMass    = -1;     
-    double puppi_softDropMass   = -1;     
+    // double puppi_softDropMass   = -1;     
 
     TLorentzVector AK8PUPPI_P4uncorr;
     TLorentzVector GenJetMatchedPuppi; 
@@ -3595,6 +3927,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     double puppi_MF     = -99;
     double puppi_Mult   = -99;
  
+    // If you're getting jet variables from miniAOD
     if (!useToolbox_){
       puppi_pt           = ijet.userFloat("ak8PFJetsPuppiValueMap:pt");
       puppi_mass         = ijet.userFloat("ak8PFJetsPuppiValueMap:mass");
@@ -3605,17 +3938,20 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       puppi_tau3         = ijet.userFloat("ak8PFJetsPuppiValueMap:NjettinessAK8PuppiTau3");
     }
 
-    if (verbose_)  cout<<"chs uncorr "<<uncorrJet.pt()<<" corr "<<corrJet.pt()<<endl;
+    // If you've clustered AK8PUPPI using the toolbox, match the Puppi jets to AK8CHS and save the puppi variables
+
     double minDR_pup_chs = 99;
     if (useToolbox_){
+      if (verbose_)  cout<<"   Puppi jet loop (toolbox)"<<endl; 
+      int count_puppi_jet = 0;
       for (const pat::Jet &ipup : *AK8PUPPI) {  
-         if (verbose_)  cout<<"puppi uncorr "<<ipup.correctedP4(0).pt()<<" corr "<<ipup.pt()<<endl;
+        if (verbose_)  cout<<"    puppi jet "<<count_puppi_jet<<" uncorr "<<ipup.correctedP4(0).pt()<<" corr "<<ipup.pt()<<endl;
         double deltaRpup = deltaR(ijet.eta(), ijet.phi(), ipup.eta(), ipup.phi() );
         if (deltaRpup< minDR_pup_chs){
           minDR_pup_chs = deltaRpup;
-           if (verbose_)  cout<<" clostest puppi jet so far: deltaRpup "<<deltaRpup<<endl;
+          if (verbose_)  cout<<"      -> clostest puppi jet so far: deltaRpup "<<deltaRpup<<endl;
           if (deltaRpup<1.0){
-             if (verbose_)  cout<<"  passes dR"<<endl;
+            if (verbose_)  cout<<"      -> passes dR"<<endl;
             puppi_pt           = ipup.correctedP4(0).pt();
             puppi_mass         = ipup.correctedP4(0).mass();
             puppi_eta          = ipup.correctedP4(0).eta();
@@ -3624,7 +3960,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
             puppi_area         = ipup.jetArea();
             puppi_prunedMass   = ipup.userFloat("ak8PFJetsPuppiPrunedMass");
             puppi_trimmedMass  = ipup.userFloat("ak8PFJetsPuppiTrimmedMass");
-            puppi_softDropMass = ipup.userFloat("ak8PFJetsPuppiSoftDropMass");
+            // puppi_softDropMass = ipup.userFloat("ak8PFJetsPuppiSoftDropMass");
             puppi_tau1         = ipup.userFloat("NjettinessAK8Puppi:tau1");
             puppi_tau2         = ipup.userFloat("NjettinessAK8Puppi:tau2");
             puppi_tau3         = ipup.userFloat("NjettinessAK8Puppi:tau3");
@@ -3643,26 +3979,25 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
               const reco::GenJet* genJet = ipup.genJet();
               if (genJet) {
                 GenJetMatchedPuppi.SetPtEtaPhiM( genJet->pt(), genJet->eta(), genJet->phi(), genJet->mass() );
-                if (verbose_) cout<<"  ak8puppi genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<endl;
+                if (verbose_) cout<<"      -> ak8puppi genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<endl;
               }
             }
           }
         }
+        count_puppi_jet++;
       }
     }
     AK8PUPPI_P4uncorr.SetPtEtaPhiM(puppi_pt, puppi_eta, puppi_phi, puppi_mass );
     if ( count_AK8CHS==0 ) GenJetMatchedPuppi0 = GenJetMatchedPuppi;
     if ( count_AK8CHS==1 ) GenJetMatchedPuppi1 = GenJetMatchedPuppi;
 
-
-    if (minDR_pup_chs>1.0 && verbose_) cout<<"Didn't find matching PUPPI jet. Setting PUPPI variables to -99"<<endl;
-
+    if (minDR_pup_chs>1.0 && verbose_) cout<<"   Did not find matching PUPPI jet. Setting PUPPI variables to -99"<<endl;
+    if (minDR_pup_chs<1.0 && verbose_) cout<<"   Found matching PUPPI jet with pt "<<puppi_pt<<" and mass " <<puppi_mass<<endl;
 
     double puppi_tau21        = 99;
     double puppi_tau32        = 99;
     if (puppi_tau1!=0) puppi_tau21 = puppi_tau2/puppi_tau1;
     if (puppi_tau2!=0) puppi_tau32 = puppi_tau3/puppi_tau2;
-
 
     //------------------------------------
     // AK8PUPPI JEC L23 correction
@@ -3693,7 +4028,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     TLorentzVector AK8PUPPI_P4corr;
     AK8PUPPI_P4corr = corr_factorAK8pup_L23res *  AK8PUPPI_P4uncorr;
 
-
     if(count_AK8CHS==0) PUPPIjet0_P4corr = AK8PUPPI_P4corr;
     if(count_AK8CHS==1) PUPPIjet1_P4corr = AK8PUPPI_P4corr;
 
@@ -3715,17 +4049,15 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         corrUp_pup_L23   = corr_factorAK8pup_L23res + JetCorrUncertAK8pup->getUncertainty(1);;
     }
     if (verbose_){
-      cout<<"AK8PUPPI_P4uncorr.Perp() "<<AK8PUPPI_P4uncorr.Perp() <<endl;
-      cout<<"AK8PUPPI_P4corr.Perp    "<<AK8PUPPI_P4corr.Perp() <<endl;
-
-      cout<<"corr_factorAK8pup_L23res "<<corr_factorAK8pup_L23res<<endl;
-      cout<<"corrDn_pup_L23           "<<corrDn_pup_L23<<endl;
-      cout<<"corrUp_pup_L23           "<<corrUp_pup_L23<<endl;
+      cout<<"    -> puppi uncorr pt "<<AK8PUPPI_P4uncorr.Perp()<<" corr pt "<<AK8PUPPI_P4corr.Perp() <<endl;
+      cout<<"    -> corr L2L3res " <<corr_factorAK8pup_L23res<<" corr_factorAK8pup_L1 "<<corr_factorAK8pup_L1<<" corrDn_pup_L23"<<corrDn_pup_L23<<" corrUp_pup_L23 "<<corrUp_pup_L23<<endl;
     }
 
     //------------------------------------
     // AK8PUPPI JER SF
     //------------------------------------
+    TLorentzVector GenJetMatched_Pup;
+
     double pup_ptsmear   = 1;
     double pup_ptsmearUp = 1;
     double pup_ptsmearDn = 1;
@@ -3733,7 +4065,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       double jer_sf    = jer_scaler.getScaleFactor({{JME::Binning::JetEta, puppi_eta  }});
       double jer_sf_up = jer_scaler.getScaleFactor({{JME::Binning::JetEta, puppi_eta  }}, Variation::UP);
       double jer_sf_dn = jer_scaler.getScaleFactor({{JME::Binning::JetEta, puppi_eta  }}, Variation::DOWN);
-      if (verbose_) std::cout << " PUPPI JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
+      if (verbose_) std::cout << "   PUPPI JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
       double recopt    = AK8PUPPI_P4corr.Perp();
       double genpt     = GenJetMatched.Perp();
       double deltapt   = (recopt-genpt)*(jer_sf-1.0);
@@ -3744,12 +4076,12 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       pup_ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
 
       if (verbose_){
-        cout<<"AK8PUPPI JER recopt  "<<recopt <<endl;  
-        cout<<"AK8PUPPI JER genpt   "<<genpt  <<endl;  
-        cout<<"AK8PUPPI JER deltapt "<<deltapt<<endl;  
-        cout<<"AK8PUPPI JER ptsmear "<<pup_ptsmear<<endl;
-        cout<<"AK8PUPPI JER pup_ptsmearUp "<<pup_ptsmearUp<<endl;
-        cout<<"AK8PUPPI JER pup_ptsmearDn "<<pup_ptsmearDn<<endl;
+        cout<<"    -> AK8PUPPI JER recopt  "<<recopt <<endl;  
+        cout<<"    -> AK8PUPPI JER genpt   "<<genpt  <<endl;  
+        cout<<"    -> AK8PUPPI JER deltapt "<<deltapt<<endl;  
+        cout<<"    -> AK8PUPPI JER ptsmear "<<pup_ptsmear<<endl;
+        cout<<"    -> AK8PUPPI JER pup_ptsmearUp "<<pup_ptsmearUp<<endl;
+        cout<<"    -> AK8PUPPI JER pup_ptsmearDn "<<pup_ptsmearDn<<endl;
       }
     }
 
@@ -3758,25 +4090,25 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     //------------------------------------
     TLorentzVector sub0_P4_uncorr           ;
     TLorentzVector sub0_P4_L23res           ;
-    TLorentzVector sub0_P4_L23resCorrUp     ;
-    TLorentzVector sub0_P4_L23resCorrDn     ;
+    // TLorentzVector sub0_P4_L23resCorrUp     ;
+    // TLorentzVector sub0_P4_L23resCorrDn     ;
     // TLorentzVector sub0_P4_L23resPtSmear    ;
     // TLorentzVector sub0_P4_L23resPtSmearUp  ;
     // TLorentzVector sub0_P4_L23resPtSmearDn  ;
     TLorentzVector sub0_P4_L123res          ;
-    TLorentzVector sub0_P4_L123resCorrUp    ;
-    TLorentzVector sub0_P4_L123resCorrDn    ;
+    // TLorentzVector sub0_P4_L123resCorrUp    ;
+    // TLorentzVector sub0_P4_L123resCorrDn    ;
 
     TLorentzVector sub1_P4_uncorr           ;
     TLorentzVector sub1_P4_L23res           ;
-    TLorentzVector sub1_P4_L23resCorrUp     ;
-    TLorentzVector sub1_P4_L23resCorrDn     ;
+    // TLorentzVector sub1_P4_L23resCorrUp     ;
+    // TLorentzVector sub1_P4_L23resCorrDn     ;
     // TLorentzVector sub1_P4_L23resPtSmear    ;
     // TLorentzVector sub1_P4_L23resPtSmearUp  ;
     // TLorentzVector sub1_P4_L23resPtSmearDn  ;
     TLorentzVector sub1_P4_L123res          ;
-    TLorentzVector sub1_P4_L123resCorrUp    ;
-    TLorentzVector sub1_P4_L123resCorrDn    ;
+    // TLorentzVector sub1_P4_L123resCorrUp    ;
+    // TLorentzVector sub1_P4_L123resCorrDn    ;
 
     double sub0_area  = 0;
     double sub0_tau1  = 0;
@@ -3796,6 +4128,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     double sub1_genpt = 0;
     double mostMassiveSDsubjetMass = 0;
     int count_SD =0;
+
+    int nsubjets_chs = 0;
+    int nsubjets_pup = 0;
 
     if (!useToolbox_){
       auto const & sdSubjets = ijet.subjets("SoftDrop");
@@ -3847,31 +4182,31 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if (verbose_) cout<<"subjet corr: L1 "<<subjet_corr_factor_L1<<" L23 "<<subjet_corr_factor_L23<<" L23res "<<subjet_corr_factor_L23res<<" L123res"<<subjet_corr_factor_L123res<<endl;
         reco::Candidate::LorentzVector corrSubjetL23res   = subjet_corr_factor_L23res * uncorrSubjet;
         
-        //------------------------------------
-        // subjet JEC uncertainty
-        //------------------------------------
-        double subjet_corrDn_L23 =   1.0;
-        double subjet_corrDn_L123 = 1.0;
-        JetCorrUncertAK4chs->setJetPhi(  corrSubjetL123res.phi()  );
-        JetCorrUncertAK4chs->setJetEta(  corrSubjetL123res.eta()  );
-        JetCorrUncertAK4chs->setJetPt(   corrSubjetL123res.pt()   );
-        double corrDn_temp2 = JetCorrUncertAK4chs->getUncertainty(0);
-        subjet_corrDn_L23   = subjet_corr_factor_L23res - corrDn_temp2;
-        subjet_corrDn_L123  = subjet_corr_factor_L123res_full - corrDn_temp2;
+        // //------------------------------------
+        // // subjet JEC uncertainty
+        // //------------------------------------
+        // double subjet_corrDn_L23 =   1.0;
+        // double subjet_corrDn_L123 = 1.0;
+        // JetCorrUncertAK4chs->setJetPhi(  corrSubjetL123res.phi()  );
+        // JetCorrUncertAK4chs->setJetEta(  corrSubjetL123res.eta()  );
+        // JetCorrUncertAK4chs->setJetPt(   corrSubjetL123res.pt()   );
+        // double corrDn_temp2 = JetCorrUncertAK4chs->getUncertainty(0);
+        // subjet_corrDn_L23   = subjet_corr_factor_L23res - corrDn_temp2;
+        // subjet_corrDn_L123  = subjet_corr_factor_L123res_full - corrDn_temp2;
 
-        double subjet_corrUp_L23   = 1.0;
-        double subjet_corrUp_L123 = 1.0;
-        JetCorrUncertAK4chs->setJetPhi(  corrSubjetL123res.phi()  );
-        JetCorrUncertAK4chs->setJetEta(  corrSubjetL123res.eta()  );
-        JetCorrUncertAK4chs->setJetPt(   corrSubjetL123res.pt()   );
-        double corrUp_temp2 = JetCorrUncertAK4chs->getUncertainty(1);
-        subjet_corrUp_L23   = subjet_corr_factor_L23res + corrUp_temp2;
-        subjet_corrUp_L123  = subjet_corr_factor_L123res_full + corrUp_temp2;
+        // double subjet_corrUp_L23   = 1.0;
+        // double subjet_corrUp_L123 = 1.0;
+        // JetCorrUncertAK4chs->setJetPhi(  corrSubjetL123res.phi()  );
+        // JetCorrUncertAK4chs->setJetEta(  corrSubjetL123res.eta()  );
+        // JetCorrUncertAK4chs->setJetPt(   corrSubjetL123res.pt()   );
+        // double corrUp_temp2 = JetCorrUncertAK4chs->getUncertainty(1);
+        // subjet_corrUp_L23   = subjet_corr_factor_L23res + corrUp_temp2;
+        // subjet_corrUp_L123  = subjet_corr_factor_L123res_full + corrUp_temp2;
 
-        reco::Candidate::LorentzVector corrSubjetL123resCorrDn  = subjet_corrDn_L123  * uncorrSubjet;
-        reco::Candidate::LorentzVector corrSubjetL123resCorrUp  = subjet_corrUp_L123  * uncorrSubjet;
-        reco::Candidate::LorentzVector corrSubjetL23resCorrDn   = subjet_corrDn_L23   * uncorrSubjet;
-        reco::Candidate::LorentzVector corrSubjetL23resCorrUp   = subjet_corrUp_L23   * uncorrSubjet;
+        // reco::Candidate::LorentzVector corrSubjetL123resCorrDn  = subjet_corrDn_L123  * uncorrSubjet;
+        // reco::Candidate::LorentzVector corrSubjetL123resCorrUp  = subjet_corrUp_L123  * uncorrSubjet;
+        // reco::Candidate::LorentzVector corrSubjetL23resCorrDn   = subjet_corrDn_L23   * uncorrSubjet;
+        // reco::Candidate::LorentzVector corrSubjetL23resCorrUp   = subjet_corrUp_L23   * uncorrSubjet;
      
 
         //------------------------------------
@@ -3881,10 +4216,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           sub0_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
           sub0_P4_L123res           .SetPtEtaPhiM( corrSubjetL123res.pt()   , corrSubjetL123res.eta()   , corrSubjetL123res.phi()   , corrSubjetL123res.mass()    );
           sub0_P4_L23res            .SetPtEtaPhiM( corrSubjetL23res.pt()    , corrSubjetL23res.eta()    , corrSubjetL23res.phi()    , corrSubjetL23res.mass()     );
-          sub0_P4_L123resCorrUp    .SetPtEtaPhiM( corrSubjetL123resCorrUp.pt() , corrSubjetL123resCorrUp.eta() , corrSubjetL123resCorrUp.phi() , corrSubjetL123resCorrUp.mass()  );
-          sub0_P4_L23resCorrUp     .SetPtEtaPhiM( corrSubjetL23resCorrUp.pt()  , corrSubjetL23resCorrUp.eta()  , corrSubjetL23resCorrUp.phi()  , corrSubjetL23resCorrUp.mass()   );
-          sub0_P4_L123resCorrDn    .SetPtEtaPhiM( corrSubjetL123resCorrDn.pt() , corrSubjetL123resCorrDn.eta() , corrSubjetL123resCorrDn.phi() , corrSubjetL123resCorrUp.mass()  );
-          sub0_P4_L23resCorrDn     .SetPtEtaPhiM( corrSubjetL23resCorrDn.pt()  , corrSubjetL23resCorrDn.eta()  , corrSubjetL23resCorrDn.phi()  , corrSubjetL23res.mass()     );
+          // sub0_P4_L123resCorrUp    .SetPtEtaPhiM( corrSubjetL123resCorrUp.pt() , corrSubjetL123resCorrUp.eta() , corrSubjetL123resCorrUp.phi() , corrSubjetL123resCorrUp.mass()  );
+          // sub0_P4_L23resCorrUp     .SetPtEtaPhiM( corrSubjetL23resCorrUp.pt()  , corrSubjetL23resCorrUp.eta()  , corrSubjetL23resCorrUp.phi()  , corrSubjetL23resCorrUp.mass()   );
+          // sub0_P4_L123resCorrDn    .SetPtEtaPhiM( corrSubjetL123resCorrDn.pt() , corrSubjetL123resCorrDn.eta() , corrSubjetL123resCorrDn.phi() , corrSubjetL123resCorrUp.mass()  );
+          // sub0_P4_L23resCorrDn     .SetPtEtaPhiM( corrSubjetL23resCorrDn.pt()  , corrSubjetL23resCorrDn.eta()  , corrSubjetL23resCorrDn.phi()  , corrSubjetL23res.mass()     );
           sub0_area   = it->jetArea() ;
           sub0_flav_parton   = it->partonFlavour();
           sub0_flav_hadron   = it->hadronFlavour();
@@ -3894,10 +4229,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           sub1_P4_uncorr          .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
           sub1_P4_L123res         .SetPtEtaPhiM( corrSubjetL123res.pt()   , corrSubjetL123res.eta()   , corrSubjetL123res.phi()   , corrSubjetL123res.mass()    );
           sub1_P4_L23res          .SetPtEtaPhiM( corrSubjetL23res.pt()    , corrSubjetL23res.eta()    , corrSubjetL23res.phi()    , corrSubjetL23res.mass()     );
-          sub1_P4_L123resCorrUp  .SetPtEtaPhiM( corrSubjetL123resCorrUp.pt() , corrSubjetL123resCorrUp.eta() , corrSubjetL123resCorrUp.phi() , corrSubjetL123resCorrUp.mass()  );
-          sub1_P4_L23resCorrUp   .SetPtEtaPhiM( corrSubjetL23resCorrUp.pt()  , corrSubjetL23resCorrUp.eta()  , corrSubjetL23resCorrUp.phi()  , corrSubjetL23resCorrUp.mass()   );
-          sub1_P4_L123resCorrDn  .SetPtEtaPhiM( corrSubjetL123resCorrDn.pt() , corrSubjetL123resCorrDn.eta() , corrSubjetL123resCorrDn.phi() , corrSubjetL123resCorrUp.mass()  );
-          sub1_P4_L23resCorrDn   .SetPtEtaPhiM( corrSubjetL23resCorrDn.pt()  , corrSubjetL23resCorrDn.eta()  , corrSubjetL23resCorrDn.phi()  , corrSubjetL23res.mass()     );
+          // sub1_P4_L123resCorrUp  .SetPtEtaPhiM( corrSubjetL123resCorrUp.pt() , corrSubjetL123resCorrUp.eta() , corrSubjetL123resCorrUp.phi() , corrSubjetL123resCorrUp.mass()  );
+          // sub1_P4_L23resCorrUp   .SetPtEtaPhiM( corrSubjetL23resCorrUp.pt()  , corrSubjetL23resCorrUp.eta()  , corrSubjetL23resCorrUp.phi()  , corrSubjetL23resCorrUp.mass()   );
+          // sub1_P4_L123resCorrDn  .SetPtEtaPhiM( corrSubjetL123resCorrDn.pt() , corrSubjetL123resCorrDn.eta() , corrSubjetL123resCorrDn.phi() , corrSubjetL123resCorrUp.mass()  );
+          // sub1_P4_L23resCorrDn   .SetPtEtaPhiM( corrSubjetL23resCorrDn.pt()  , corrSubjetL23resCorrDn.eta()  , corrSubjetL23resCorrDn.phi()  , corrSubjetL23res.mass()     );
           sub1_area   = it->jetArea() ;
           sub1_flav_parton   = it->partonFlavour();
           sub1_flav_hadron   = it->hadronFlavour();
@@ -3909,8 +4244,46 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         count_SD++;
       }
     }
+  
     if (useToolbox_){
+      if (verbose_) cout<<"   Toolbox AK8 jets. Find chs softdrop subjets "<<endl;
+   
+      int count_all_subjets =0;
+      int count_matched_subjets =0;
+      double closest_DR = 99;
+      double closest_i = -1;
+      double second_closest_DR = 99;
+      double second_closest_i  = -1;
+
+      // Loop once to find the subjets closest to the AK8 jet
       for (const pat::Jet &isub : *AK8CHSsub) {  
+  
+        double subjetPt       = isub.correctedP4(0).pt();
+        double subjetEta      = isub.correctedP4(0).eta();
+        double subjetPhi      = isub.correctedP4(0).phi();
+        double subjetMass     = isub.correctedP4(0).mass();
+        // double subjetBdisc    = isub.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); 
+
+        double deltaRsubjetJet = deltaR(ijet.eta(), ijet.phi(), subjetEta, subjetPhi);
+
+        if (verbose_) cout<<"     Subjet "<<count_all_subjets<<"   "<<subjetMass<<" "<<subjetPt<<" "<<deltaRsubjetJet<<endl;
+
+        if (deltaRsubjetJet<closest_DR){
+          second_closest_DR = closest_DR;
+          closest_DR        = deltaRsubjetJet;
+          second_closest_i  = closest_i;
+          closest_i         = count_all_subjets;
+        }
+        else if (deltaRsubjetJet<second_closest_DR){
+          second_closest_DR = deltaRsubjetJet ;
+          second_closest_i  = count_all_subjets;
+        }
+        count_all_subjets++;
+      }
+      // Loop a second time. If one of the two closest subjets matches the dR requirement save its infromation. Subjet 0 = hardest.
+      count_all_subjets =0;
+      for (const pat::Jet &isub : *AK8CHSsub) {  
+        
   
         double subjetPt       = isub.correctedP4(0).pt();
         double subjetEta      = isub.correctedP4(0).eta();
@@ -3919,195 +4292,212 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         double subjetBdisc    = isub.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); 
 
         double deltaRsubjetJet = deltaR(ijet.eta(), ijet.phi(), subjetEta, subjetPhi);
-        if (deltaRsubjetJet<0.8){
-          if (verbose_) cout<<" matched subjet with mass "<< subjetMass<<endl;
 
-          //------------------------------------
-          // subjet JEC 
-          //------------------------------------
-          reco::Candidate::LorentzVector uncorrSubjet = isub.correctedP4(0);
-          JetCorrectorAK4chs -> setJetEta( uncorrSubjet.eta()    );
-          JetCorrectorAK4chs -> setJetPt ( uncorrSubjet.pt()     );
-          JetCorrectorAK4chs -> setJetE  ( uncorrSubjet.energy() );
-          JetCorrectorAK4chs -> setJetA  ( isub.jetArea()        );
-          JetCorrectorAK4chs -> setRho   ( rho                   );
-          JetCorrectorAK4chs -> setNPV   ( nvtx                  );
-          double subjet_corr_factor_L123res_full = JetCorrectorAK4chs->getCorrection();
-          reco::Candidate::LorentzVector corrSubjetL123res = subjet_corr_factor_L123res_full * uncorrSubjet;
+        if (verbose_) cout<<"     Subjet "<<count_all_subjets<<"   "<<subjetMass<<" "<<subjetPt<<" "<<deltaRsubjetJet<<endl;
 
-          //------------------------------------
-          // subjet L23 JEC 
-          //------------------------------------
-          JetCorrectorAK4chs->setJetEta( uncorrSubjet.eta()    );
-          JetCorrectorAK4chs->setJetPt ( uncorrSubjet.pt()     );
-          JetCorrectorAK4chs->setJetE  ( uncorrSubjet.energy() );
-          JetCorrectorAK4chs->setJetA  ( isub.jetArea()         );
-          JetCorrectorAK4chs->setRho   ( rho                   );
-          JetCorrectorAK4chs->setNPV   ( nvtx                  );
-          // getSubCorrections member function returns the vector of the subcorrections UP to the given level. For example in the example above, factors[0] is the L1 correction and factors[3] is the L1+L2+L3+Residual correction. 
-          vector<float> subjet_factors = JetCorrectorAK4chs->getSubCorrections();
-          float subjet_corr_factor_L1      = 1.0;
-          float subjet_corr_factor_L12     = 1.0;
-          float subjet_corr_factor_L123    = 1.0;
-          float subjet_corr_factor_L123res = 1.0;
-          if (factors.size() > 0) subjet_corr_factor_L1      = subjet_factors[0];
-          if (factors.size() > 1) subjet_corr_factor_L12     = subjet_factors[1];
-          if (factors.size() > 2) subjet_corr_factor_L123    = subjet_factors[2];
-          if (factors.size() > 3) subjet_corr_factor_L123res = subjet_factors[3];
-          double subjet_corr_factor_L2     = subjet_corr_factor_L12     / subjet_corr_factor_L1     ;
-          double subjet_corr_factor_L3     = subjet_corr_factor_L123    / subjet_corr_factor_L12    ;
-          double subjet_corr_factor_res    = subjet_corr_factor_L123res / subjet_corr_factor_L123   ;
-          double subjet_corr_factor_L23    = subjet_corr_factor_L2 * subjet_corr_factor_L3     ;
-          double subjet_corr_factor_L23res = subjet_corr_factor_L2 * subjet_corr_factor_L3 * subjet_corr_factor_res    ;
-          if (verbose_) cout<<"  subjet corr: L1 "<<subjet_corr_factor_L1<<" L23 "<<subjet_corr_factor_L23<<" L23res "<<subjet_corr_factor_L23res<<" L123res "<<subjet_corr_factor_L123res<<endl;
-          reco::Candidate::LorentzVector corrSubjetL23res   = subjet_corr_factor_L23res * uncorrSubjet;
-          
-          //------------------------------------
-          // subjet JEC uncertainty
-          //------------------------------------
-          double subjet_corrDn_L23 =   1.0;
-          double subjet_corrDn_L123 = 1.0;
-          JetCorrUncertAK4chs->setJetPhi(  corrSubjetL123res.phi()  );
-          JetCorrUncertAK4chs->setJetEta(  corrSubjetL123res.eta()  );
-          JetCorrUncertAK4chs->setJetPt(   corrSubjetL123res.pt()   );
-          double corrDn_temp2 = JetCorrUncertAK4chs->getUncertainty(0);
-          subjet_corrDn_L23   = subjet_corr_factor_L23res - corrDn_temp2;
-          subjet_corrDn_L123  = subjet_corr_factor_L123res_full - corrDn_temp2;
+        if ( count_all_subjets==closest_i || count_all_subjets==second_closest_i ){
+          if (verbose_) cout<<"      -> one of two closest "<<endl;
+          if (deltaRsubjetJet<0.8){
+            nsubjets_chs++;
+            if (verbose_) cout<<"      -> dR matched subjet with mass "<< subjetMass<<endl;
 
-          double subjet_corrUp_L23   = 1.0;
-          double subjet_corrUp_L123 = 1.0;
-          JetCorrUncertAK4chs->setJetPhi(  corrSubjetL123res.phi()  );
-          JetCorrUncertAK4chs->setJetEta(  corrSubjetL123res.eta()  );
-          JetCorrUncertAK4chs->setJetPt(   corrSubjetL123res.pt()   );
-          double corrUp_temp2 = JetCorrUncertAK4chs->getUncertainty(1);
-          subjet_corrUp_L23   = subjet_corr_factor_L23res + corrUp_temp2;
-          subjet_corrUp_L123  = subjet_corr_factor_L123res_full + corrUp_temp2;
+            count_matched_subjets++;
+            //------------------------------------
+            // subjet JEC 
+            //------------------------------------
+            reco::Candidate::LorentzVector uncorrSubjet = isub.correctedP4(0);
+            JetCorrectorAK4chs -> setJetEta( uncorrSubjet.eta()    );
+            JetCorrectorAK4chs -> setJetPt ( uncorrSubjet.pt()     );
+            JetCorrectorAK4chs -> setJetE  ( uncorrSubjet.energy() );
+            JetCorrectorAK4chs -> setJetA  ( isub.jetArea()        );
+            JetCorrectorAK4chs -> setRho   ( rho                   );
+            JetCorrectorAK4chs -> setNPV   ( nvtx                  );
+            double subjet_corr_factor_L123res_full = JetCorrectorAK4chs->getCorrection();
+            reco::Candidate::LorentzVector corrSubjetL123res = subjet_corr_factor_L123res_full * uncorrSubjet;
 
-          reco::Candidate::LorentzVector corrSubjetL123resCorrDn  = subjet_corrDn_L123  * uncorrSubjet;
-          reco::Candidate::LorentzVector corrSubjetL123resCorrUp  = subjet_corrUp_L123  * uncorrSubjet;
-          reco::Candidate::LorentzVector corrSubjetL23resCorrDn   = subjet_corrDn_L23   * uncorrSubjet;
-          reco::Candidate::LorentzVector corrSubjetL23resCorrUp   = subjet_corrUp_L23   * uncorrSubjet;
-         
-          // //------------------------------------
-          // // subjet JER SF
-          // //------------------------------------
+            //------------------------------------
+            // subjet L23 JEC 
+            //------------------------------------
+            JetCorrectorAK4chs->setJetEta( uncorrSubjet.eta()    );
+            JetCorrectorAK4chs->setJetPt ( uncorrSubjet.pt()     );
+            JetCorrectorAK4chs->setJetE  ( uncorrSubjet.energy() );
+            JetCorrectorAK4chs->setJetA  ( isub.jetArea()         );
+            JetCorrectorAK4chs->setRho   ( rho                   );
+            JetCorrectorAK4chs->setNPV   ( nvtx                  );
+            // getSubCorrections member function returns the vector of the subcorrections UP to the given level. For example in the example above, factors[0] is the L1 correction and factors[3] is the L1+L2+L3+Residual correction. 
+            vector<float> subjet_factors = JetCorrectorAK4chs->getSubCorrections();
+            float subjet_corr_factor_L1      = 1.0;
+            float subjet_corr_factor_L12     = 1.0;
+            float subjet_corr_factor_L123    = 1.0;
+            float subjet_corr_factor_L123res = 1.0;
+            if (factors.size() > 0) subjet_corr_factor_L1      = subjet_factors[0];
+            if (factors.size() > 1) subjet_corr_factor_L12     = subjet_factors[1];
+            if (factors.size() > 2) subjet_corr_factor_L123    = subjet_factors[2];
+            if (factors.size() > 3) subjet_corr_factor_L123res = subjet_factors[3];
+            double subjet_corr_factor_L2     = subjet_corr_factor_L12     / subjet_corr_factor_L1     ;
+            double subjet_corr_factor_L3     = subjet_corr_factor_L123    / subjet_corr_factor_L12    ;
+            double subjet_corr_factor_res    = subjet_corr_factor_L123res / subjet_corr_factor_L123   ;
+            double subjet_corr_factor_L23    = subjet_corr_factor_L2 * subjet_corr_factor_L3     ;
+            double subjet_corr_factor_L23res = subjet_corr_factor_L2 * subjet_corr_factor_L3 * subjet_corr_factor_res    ;
+            if (verbose_) cout<<"        -> subjet corr: L1 "<<subjet_corr_factor_L1<<" L23 "<<subjet_corr_factor_L23<<" L23res "<<subjet_corr_factor_L23res<<" L123res "<<subjet_corr_factor_L123res<<endl;
+            reco::Candidate::LorentzVector corrSubjetL23res   = subjet_corr_factor_L23res * uncorrSubjet;
+            
+            // //------------------------------------
+            // // subjet JEC uncertainty
+            // //------------------------------------
+            // double subjet_corrDn_L23 =   1.0;
+            // double subjet_corrDn_L123 = 1.0;
+            // JetCorrUncertAK4chs->setJetPhi(  corrSubjetL123res.phi()  );
+            // JetCorrUncertAK4chs->setJetEta(  corrSubjetL123res.eta()  );
+            // JetCorrUncertAK4chs->setJetPt(   corrSubjetL123res.pt()   );
+            // double corrDn_temp2 = JetCorrUncertAK4chs->getUncertainty(0);
+            // subjet_corrDn_L23   = subjet_corr_factor_L23res - corrDn_temp2;
+            // subjet_corrDn_L123  = subjet_corr_factor_L123res_full - corrDn_temp2;
 
-          // Doesn't work. Matched gensubjets don't match well
+            // double subjet_corrUp_L23   = 1.0;
+            // double subjet_corrUp_L123 = 1.0;
+            // JetCorrUncertAK4chs->setJetPhi(  corrSubjetL123res.phi()  );
+            // JetCorrUncertAK4chs->setJetEta(  corrSubjetL123res.eta()  );
+            // JetCorrUncertAK4chs->setJetPt(   corrSubjetL123res.pt()   );
+            // double corrUp_temp2 = JetCorrUncertAK4chs->getUncertainty(1);
+            // subjet_corrUp_L23   = subjet_corr_factor_L23res + corrUp_temp2;
+            // subjet_corrUp_L123  = subjet_corr_factor_L123res_full + corrUp_temp2;
 
-          // TLorentzVector GenSubJet;
-          // double ptsmear   = 1;
-          // double ptsmearUp = 1;
-          // double ptsmearDn = 1;
-          // if (!iEvent.isRealData()){
-          //   const reco::GenJet* genJet = isub.genJet();
-          //   if (genJet) {
-          //     GenSubJet.SetPtEtaPhiM( genJet->pt(), genJet->eta(), genJet->phi(), genJet->mass() );
-          //     if (verbose_) cout<<"  SD subjet genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<" reco pt "<<subjetPt<<" reco mass "<<subjetMass<<endl;
-          //   }
-          //   double jer_sf    = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}});
-          //   double jer_sf_up = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}}, Variation::UP);
-          //   double jer_sf_dn = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}}, Variation::DOWN);
-          //   if (verbose_) std::cout << " SD subjet JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
-          //   double recopt    = corrSubjetL23res.pt();
-          //   double genpt     = GenJetMatched.Perp();
-          //   double deltapt   = (recopt-genpt)*(jer_sf-1.0);
-          //   double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
-          //   double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
-          //   ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
-          //   ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
-          //   ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
-          //   if (verbose_) std::cout<<" SD subjet ptsmear "<<ptsmear<<" ptsmearUp "<<ptsmearUp<<" ptsmearDn "<<ptsmearDn<<endl;
-          // }
-          // reco::Candidate::LorentzVector corrSubjetL23resPtSmear   = ptsmear * corrSubjetL23res ;
-          // reco::Candidate::LorentzVector corrSubjetL23resPtSmearUp = ptsmearUp * corrSubjetL23res ;
-          // reco::Candidate::LorentzVector corrSubjetL23resPtSmearDn = ptsmearDn * corrSubjetL23res ;
+            // reco::Candidate::LorentzVector corrSubjetL123resCorrDn  = subjet_corrDn_L123  * uncorrSubjet;
+            // reco::Candidate::LorentzVector corrSubjetL123resCorrUp  = subjet_corrUp_L123  * uncorrSubjet;
+            // reco::Candidate::LorentzVector corrSubjetL23resCorrDn   = subjet_corrDn_L23   * uncorrSubjet;
+            // reco::Candidate::LorentzVector corrSubjetL23resCorrUp   = subjet_corrUp_L23   * uncorrSubjet;
+           
+            // //------------------------------------
+            // // subjet JER SF
+            // //------------------------------------
 
-          //------------------------------------
-          // subjet values for Tree
-          //------------------------------------
+            // Doesn't work. Matched gensubjets don't match well
 
-          double gensubjetpt = 0;
-          if (!iEvent.isRealData()){
-            const reco::GenJet* genJet = isub.genJet();
-            if (genJet) gensubjetpt = genJet->pt();
+            // TLorentzVector GenSubJet;
+            // double ptsmear   = 1;
+            // double ptsmearUp = 1;
+            // double ptsmearDn = 1;
+            // if (!iEvent.isRealData()){
+            //   const reco::GenJet* genJet = isub.genJet();
+            //   if (genJet) {
+            //     GenSubJet.SetPtEtaPhiM( genJet->pt(), genJet->eta(), genJet->phi(), genJet->mass() );
+            //     if (verbose_) cout<<"  SD subjet genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<" reco pt "<<subjetPt<<" reco mass "<<subjetMass<<endl;
+            //   }
+            //   double jer_sf    = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}});
+            //   double jer_sf_up = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}}, Variation::UP);
+            //   double jer_sf_dn = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}}, Variation::DOWN);
+            //   if (verbose_) std::cout << " SD subjet JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
+            //   double recopt    = corrSubjetL23res.pt();
+            //   double genpt     = GenJetMatched.Perp();
+            //   double deltapt   = (recopt-genpt)*(jer_sf-1.0);
+            //   double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
+            //   double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
+            //   ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
+            //   ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
+            //   ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
+            //   if (verbose_) std::cout<<" SD subjet ptsmear "<<ptsmear<<" ptsmearUp "<<ptsmearUp<<" ptsmearDn "<<ptsmearDn<<endl;
+            // }
+            // reco::Candidate::LorentzVector corrSubjetL23resPtSmear   = ptsmear * corrSubjetL23res ;
+            // reco::Candidate::LorentzVector corrSubjetL23resPtSmearUp = ptsmearUp * corrSubjetL23res ;
+            // reco::Candidate::LorentzVector corrSubjetL23resPtSmearDn = ptsmearDn * corrSubjetL23res ;
+
+            //------------------------------------
+            // subjet values for Tree
+            //------------------------------------
+
+            double gensubjetpt = 0;
+            if (!iEvent.isRealData()){
+              const reco::GenJet* genJet = isub.genJet();
+              if (genJet) gensubjetpt = genJet->pt();
+            }
+
+            if (count_SD==0){
+              sub0_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
+              sub0_P4_L23res            .SetPtEtaPhiM( corrSubjetL23res          .pt() , corrSubjetL23res          .eta()  , corrSubjetL23res          .phi()  , corrSubjetL23res          .mass()  );
+              // sub0_P4_L23resCorrUp      .SetPtEtaPhiM( corrSubjetL23resCorrUp    .pt() , corrSubjetL23resCorrUp    .eta()  , corrSubjetL23resCorrUp    .phi()  , corrSubjetL23resCorrUp    .mass()  );
+              // sub0_P4_L23resCorrDn      .SetPtEtaPhiM( corrSubjetL23resCorrDn    .pt() , corrSubjetL23resCorrDn    .eta()  , corrSubjetL23resCorrDn    .phi()  , corrSubjetL23resCorrDn    .mass()  );
+              // sub0_P4_L23resPtSmear     .SetPtEtaPhiM( corrSubjetL23resPtSmear   .pt() , corrSubjetL23resPtSmear   .eta()  , corrSubjetL23resPtSmear   .phi()  , corrSubjetL23resPtSmear   .mass()  );
+              // sub0_P4_L23resPtSmearUp   .SetPtEtaPhiM( corrSubjetL23resPtSmearUp .pt() , corrSubjetL23resPtSmearUp .eta()  , corrSubjetL23resPtSmearUp .phi()  , corrSubjetL23resPtSmearUp .mass()  );
+              // sub0_P4_L23resPtSmearDn   .SetPtEtaPhiM( corrSubjetL23resPtSmearDn .pt() , corrSubjetL23resPtSmearDn .eta()  , corrSubjetL23resPtSmearDn .phi()  , corrSubjetL23resPtSmearDn .mass()  );
+              sub0_P4_L123res           .SetPtEtaPhiM( corrSubjetL123res         .pt() , corrSubjetL123res         .eta()  , corrSubjetL123res         .phi()  , corrSubjetL123res         .mass()  );
+              // sub0_P4_L123resCorrUp     .SetPtEtaPhiM( corrSubjetL123resCorrUp   .pt() , corrSubjetL123resCorrUp   .eta()  , corrSubjetL123resCorrUp   .phi()  , corrSubjetL123resCorrUp   .mass()  );
+              // sub0_P4_L123resCorrDn     .SetPtEtaPhiM( corrSubjetL123resCorrDn   .pt() , corrSubjetL123resCorrDn   .eta()  , corrSubjetL123resCorrDn   .phi()  , corrSubjetL123resCorrDn   .mass()  );
+   
+              sub0_area          = isub.jetArea() ;
+              sub0_flav_parton   = isub.partonFlavour();
+              sub0_flav_hadron   = isub.hadronFlavour();
+              sub0_bdisc         = subjetBdisc;
+              // available from toolbox only (80X)
+              sub0_tau1          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau1");
+              sub0_tau2          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau2");
+              sub0_tau3          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau3");
+              sub0_genpt         = gensubjetpt;
+            }
+            if (count_SD==1) {
+              sub1_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
+              sub1_P4_L23res            .SetPtEtaPhiM( corrSubjetL23res          .pt() , corrSubjetL23res          .eta()  , corrSubjetL23res          .phi()  , corrSubjetL23res          .mass()  );
+              // sub1_P4_L23resCorrUp      .SetPtEtaPhiM( corrSubjetL23resCorrUp    .pt() , corrSubjetL23resCorrUp    .eta()  , corrSubjetL23resCorrUp    .phi()  , corrSubjetL23resCorrUp    .mass()  );
+              // sub1_P4_L23resCorrDn      .SetPtEtaPhiM( corrSubjetL23resCorrDn    .pt() , corrSubjetL23resCorrDn    .eta()  , corrSubjetL23resCorrDn    .phi()  , corrSubjetL23resCorrDn    .mass()  );
+              // sub1_P4_L23resPtSmear     .SetPtEtaPhiM( corrSubjetL23resPtSmear   .pt() , corrSubjetL23resPtSmear   .eta()  , corrSubjetL23resPtSmear   .phi()  , corrSubjetL23resPtSmear   .mass()  );
+              // sub1_P4_L23resPtSmearUp   .SetPtEtaPhiM( corrSubjetL23resPtSmearUp .pt() , corrSubjetL23resPtSmearUp .eta()  , corrSubjetL23resPtSmearUp .phi()  , corrSubjetL23resPtSmearUp .mass()  );
+              // sub1_P4_L23resPtSmearDn   .SetPtEtaPhiM( corrSubjetL23resPtSmearDn .pt() , corrSubjetL23resPtSmearDn .eta()  , corrSubjetL23resPtSmearDn .phi()  , corrSubjetL23resPtSmearDn .mass()  );
+              sub1_P4_L123res           .SetPtEtaPhiM( corrSubjetL123res         .pt() , corrSubjetL123res         .eta()  , corrSubjetL123res         .phi()  , corrSubjetL123res         .mass()  );
+              // sub1_P4_L123resCorrUp     .SetPtEtaPhiM( corrSubjetL123resCorrUp   .pt() , corrSubjetL123resCorrUp   .eta()  , corrSubjetL123resCorrUp   .phi()  , corrSubjetL123resCorrUp   .mass()  );
+              // sub1_P4_L123resCorrDn     .SetPtEtaPhiM( corrSubjetL123resCorrDn   .pt() , corrSubjetL123resCorrDn   .eta()  , corrSubjetL123resCorrDn   .phi()  , corrSubjetL123resCorrDn   .mass()  );
+   
+              sub1_area          = isub.jetArea() ;
+              sub1_flav_parton   = isub.partonFlavour();
+              sub1_flav_hadron   = isub.hadronFlavour();
+              sub1_bdisc         = subjetBdisc;
+              // available from toolbox only (80X)
+              sub1_tau1          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau1");
+              sub1_tau2          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau2");
+              sub1_tau3          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau3");
+              sub1_genpt         = gensubjetpt;
+            }
+            if (subjetMass > mostMassiveSDsubjetMass) mostMassiveSDsubjetMass = subjetMass;
+
+            if (verbose_) cout<<"        -> SD Subjet pt "<<subjetPt<<" Eta "<<subjetEta<<" deltaRsubjetJet "<<deltaRsubjetJet<<" Mass "<<subjetMass<<" corrMass "<<corrSubjetL23res.mass() <<" Bdisc "<<subjetBdisc<<endl;
+            if (verbose_) cout<<"        ->    sub0_tau1 "<<sub0_tau1<<" sub0_tau2 "<<sub0_tau2<<" sub0_tau3 "<<sub0_tau3<<endl;
+            count_SD++;
+
           }
-
-          if (count_SD==0){
-            sub0_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
-            sub0_P4_L23res            .SetPtEtaPhiM( corrSubjetL23res          .pt() , corrSubjetL23res          .eta()  , corrSubjetL23res          .phi()  , corrSubjetL23res          .mass()  );
-            sub0_P4_L23resCorrUp      .SetPtEtaPhiM( corrSubjetL23resCorrUp    .pt() , corrSubjetL23resCorrUp    .eta()  , corrSubjetL23resCorrUp    .phi()  , corrSubjetL23resCorrUp    .mass()  );
-            sub0_P4_L23resCorrDn      .SetPtEtaPhiM( corrSubjetL23resCorrDn    .pt() , corrSubjetL23resCorrDn    .eta()  , corrSubjetL23resCorrDn    .phi()  , corrSubjetL23resCorrDn    .mass()  );
-            // sub0_P4_L23resPtSmear     .SetPtEtaPhiM( corrSubjetL23resPtSmear   .pt() , corrSubjetL23resPtSmear   .eta()  , corrSubjetL23resPtSmear   .phi()  , corrSubjetL23resPtSmear   .mass()  );
-            // sub0_P4_L23resPtSmearUp   .SetPtEtaPhiM( corrSubjetL23resPtSmearUp .pt() , corrSubjetL23resPtSmearUp .eta()  , corrSubjetL23resPtSmearUp .phi()  , corrSubjetL23resPtSmearUp .mass()  );
-            // sub0_P4_L23resPtSmearDn   .SetPtEtaPhiM( corrSubjetL23resPtSmearDn .pt() , corrSubjetL23resPtSmearDn .eta()  , corrSubjetL23resPtSmearDn .phi()  , corrSubjetL23resPtSmearDn .mass()  );
-            sub0_P4_L123res           .SetPtEtaPhiM( corrSubjetL123res         .pt() , corrSubjetL123res         .eta()  , corrSubjetL123res         .phi()  , corrSubjetL123res         .mass()  );
-            sub0_P4_L123resCorrUp     .SetPtEtaPhiM( corrSubjetL123resCorrUp   .pt() , corrSubjetL123resCorrUp   .eta()  , corrSubjetL123resCorrUp   .phi()  , corrSubjetL123resCorrUp   .mass()  );
-            sub0_P4_L123resCorrDn     .SetPtEtaPhiM( corrSubjetL123resCorrDn   .pt() , corrSubjetL123resCorrDn   .eta()  , corrSubjetL123resCorrDn   .phi()  , corrSubjetL123resCorrDn   .mass()  );
- 
-            sub0_area          = isub.jetArea() ;
-            sub0_flav_parton   = isub.partonFlavour();
-            sub0_flav_hadron   = isub.hadronFlavour();
-            sub0_bdisc         = subjetBdisc;
-            // available from toolbox only (80X)
-            sub0_tau1          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau1");
-            sub0_tau2          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau2");
-            sub0_tau3          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau3");
-            sub0_genpt         = gensubjetpt;
-          }
-          if (count_SD==1) {
-            sub1_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
-            sub1_P4_L23res            .SetPtEtaPhiM( corrSubjetL23res          .pt() , corrSubjetL23res          .eta()  , corrSubjetL23res          .phi()  , corrSubjetL23res          .mass()  );
-            sub1_P4_L23resCorrUp      .SetPtEtaPhiM( corrSubjetL23resCorrUp    .pt() , corrSubjetL23resCorrUp    .eta()  , corrSubjetL23resCorrUp    .phi()  , corrSubjetL23resCorrUp    .mass()  );
-            sub1_P4_L23resCorrDn      .SetPtEtaPhiM( corrSubjetL23resCorrDn    .pt() , corrSubjetL23resCorrDn    .eta()  , corrSubjetL23resCorrDn    .phi()  , corrSubjetL23resCorrDn    .mass()  );
-            // sub1_P4_L23resPtSmear     .SetPtEtaPhiM( corrSubjetL23resPtSmear   .pt() , corrSubjetL23resPtSmear   .eta()  , corrSubjetL23resPtSmear   .phi()  , corrSubjetL23resPtSmear   .mass()  );
-            // sub1_P4_L23resPtSmearUp   .SetPtEtaPhiM( corrSubjetL23resPtSmearUp .pt() , corrSubjetL23resPtSmearUp .eta()  , corrSubjetL23resPtSmearUp .phi()  , corrSubjetL23resPtSmearUp .mass()  );
-            // sub1_P4_L23resPtSmearDn   .SetPtEtaPhiM( corrSubjetL23resPtSmearDn .pt() , corrSubjetL23resPtSmearDn .eta()  , corrSubjetL23resPtSmearDn .phi()  , corrSubjetL23resPtSmearDn .mass()  );
-            sub1_P4_L123res           .SetPtEtaPhiM( corrSubjetL123res         .pt() , corrSubjetL123res         .eta()  , corrSubjetL123res         .phi()  , corrSubjetL123res         .mass()  );
-            sub1_P4_L123resCorrUp     .SetPtEtaPhiM( corrSubjetL123resCorrUp   .pt() , corrSubjetL123resCorrUp   .eta()  , corrSubjetL123resCorrUp   .phi()  , corrSubjetL123resCorrUp   .mass()  );
-            sub1_P4_L123resCorrDn     .SetPtEtaPhiM( corrSubjetL123resCorrDn   .pt() , corrSubjetL123resCorrDn   .eta()  , corrSubjetL123resCorrDn   .phi()  , corrSubjetL123resCorrDn   .mass()  );
- 
-            sub1_area          = isub.jetArea() ;
-            sub1_flav_parton   = isub.partonFlavour();
-            sub1_flav_hadron   = isub.hadronFlavour();
-            sub1_bdisc         = subjetBdisc;
-            // available from toolbox only (80X)
-            sub1_tau1          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau1");
-            sub1_tau2          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau2");
-            sub1_tau3          = isub.userFloat("NsubjettinessAK8PFCHSSoftDropSubjets:tau3");
-            sub1_genpt         = gensubjetpt;
-          }
-          if (subjetMass > mostMassiveSDsubjetMass) mostMassiveSDsubjetMass = subjetMass;
-
-          if (verbose_) cout<<"  SD Subjet pt "<<subjetPt<<" Eta "<<subjetEta<<" deltaRsubjetJet "<<deltaRsubjetJet<<" Mass "<<subjetMass<<" corrMass "<<corrSubjetL23res.mass() <<" Bdisc "<<subjetBdisc<<endl;
-          if (verbose_) cout<<"    sub0_tau1 "<<sub0_tau1<<" sub0_tau2 "<<sub0_tau2<<" sub0_tau3 "<<sub0_tau3<<endl;
-          count_SD++;
-
         }
+        count_all_subjets++;
       }
+      if (verbose_) cout<<"     count_matched_subjets "<<count_matched_subjets<<endl;
+      if (count_matched_subjets!=2 && verbose_ ) cout<<"     CHECKME"<<endl;
+      if (verbose_) cout<<"     closest_DR "<<closest_DR<<endl;;
+      if (verbose_) cout<<"     second_closest_DR "<<second_closest_DR<<endl;;
+      if (verbose_) cout<<"     closest_i "<<closest_i<<endl;
+      if (verbose_) cout<<"     second_closest_i "<<second_closest_i<<endl;
+
+      
     }
 
     TLorentzVector sumSDsubjets_P4_uncorr           ;
     TLorentzVector sumSDsubjets_P4_L23res           ;
-    TLorentzVector sumSDsubjets_P4_L23resCorrUp     ;
-    TLorentzVector sumSDsubjets_P4_L23resCorrDn     ;
+    // TLorentzVector sumSDsubjets_P4_L23resCorrUp     ;
+    // TLorentzVector sumSDsubjets_P4_L23resCorrDn     ;
     // TLorentzVector sumSDsubjets_P4_L23resPtSmear    ;
     // TLorentzVector sumSDsubjets_P4_L23resPtSmearUp  ;
     // TLorentzVector sumSDsubjets_P4_L23resPtSmearDn  ;
     TLorentzVector sumSDsubjets_P4_L123res          ;
-    TLorentzVector sumSDsubjets_P4_L123resCorrDn    ;
-    TLorentzVector sumSDsubjets_P4_L123resCorrUp    ;
+    // TLorentzVector sumSDsubjets_P4_L123resCorrDn    ;
+    // TLorentzVector sumSDsubjets_P4_L123resCorrUp    ;
 
     if (count_SD>1){ 
       sumSDsubjets_P4_uncorr             = sub0_P4_uncorr              + sub1_P4_uncorr            ; 
       sumSDsubjets_P4_L23res             = sub0_P4_L23res              + sub1_P4_L23res            ; 
-      sumSDsubjets_P4_L23resCorrUp       = sub0_P4_L23resCorrUp        + sub1_P4_L23resCorrUp      ; 
-      sumSDsubjets_P4_L23resCorrDn       = sub0_P4_L23resCorrDn        + sub1_P4_L23resCorrDn      ; 
+      // sumSDsubjets_P4_L23resCorrUp       = sub0_P4_L23resCorrUp        + sub1_P4_L23resCorrUp      ; 
+      // sumSDsubjets_P4_L23resCorrDn       = sub0_P4_L23resCorrDn        + sub1_P4_L23resCorrDn      ; 
       // sumSDsubjets_P4_L23resPtSmear      = sub0_P4_L23resPtSmear       + sub1_P4_L23resPtSmear     ;
       // sumSDsubjets_P4_L23resPtSmearUp    = sub0_P4_L23resPtSmearUp     + sub1_P4_L23resPtSmearUp   ;
       // sumSDsubjets_P4_L23resPtSmearDn    = sub0_P4_L23resPtSmearDn     + sub1_P4_L23resPtSmearDn   ;
       sumSDsubjets_P4_L123res            = sub0_P4_L123res             + sub1_P4_L123res           ; 
-      sumSDsubjets_P4_L123resCorrUp      = sub0_P4_L123resCorrUp       + sub1_P4_L123resCorrUp     ; 
-      sumSDsubjets_P4_L123resCorrDn      = sub0_P4_L123resCorrDn       + sub1_P4_L123resCorrDn     ; 
+      // sumSDsubjets_P4_L123resCorrUp      = sub0_P4_L123resCorrUp       + sub1_P4_L123resCorrUp     ; 
+      // sumSDsubjets_P4_L123resCorrDn      = sub0_P4_L123resCorrDn       + sub1_P4_L123resCorrDn     ; 
     }  
 
     double maxbdisc = 0 ;
@@ -4129,19 +4519,19 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     //------------------------------------ 
     TLorentzVector pup0_P4_uncorr           ;
     TLorentzVector pup0_P4_L23res           ;
-    TLorentzVector pup0_P4_L23resCorrUp     ;
-    TLorentzVector pup0_P4_L23resCorrDn     ;
-    TLorentzVector pup0_P4_L23resPtSmear    ;
-    TLorentzVector pup0_P4_L23resPtSmearUp  ;
-    TLorentzVector pup0_P4_L23resPtSmearDn  ;
+    // TLorentzVector pup0_P4_L23resCorrUp     ;
+    // TLorentzVector pup0_P4_L23resCorrDn     ;
+    // TLorentzVector pup0_P4_L23resPtSmear    ;
+    // TLorentzVector pup0_P4_L23resPtSmearUp  ;
+    // TLorentzVector pup0_P4_L23resPtSmearDn  ;
 
     TLorentzVector pup1_P4_uncorr           ;
     TLorentzVector pup1_P4_L23res           ;
-    TLorentzVector pup1_P4_L23resCorrUp     ;
-    TLorentzVector pup1_P4_L23resCorrDn     ;
-    TLorentzVector pup1_P4_L23resPtSmear    ;
-    TLorentzVector pup1_P4_L23resPtSmearUp  ;
-    TLorentzVector pup1_P4_L23resPtSmearDn  ;
+    // TLorentzVector pup1_P4_L23resCorrUp     ;
+    // TLorentzVector pup1_P4_L23resCorrDn     ;
+    // TLorentzVector pup1_P4_L23resPtSmear    ;
+    // TLorentzVector pup1_P4_L23resPtSmearUp  ;
+    // TLorentzVector pup1_P4_L23resPtSmearDn  ;
 
 
     double pup0_area  = 0;
@@ -4187,22 +4577,22 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         double subjet_corr_factor_L23res_full = JetCorrectorAK4pup->getCorrection();
         reco::Candidate::LorentzVector corrSubjetL23res = subjet_corr_factor_L23res_full * uncorrSubjet;
 
-        //------------------------------------
-        // PUPPI subjet JEC uncertainty
-        //------------------------------------
-        double subjet_corrDn_L23 =   1.0;
-        JetCorrUncertAK4pup->setJetPhi(  corrSubjetL23res.phi()  );
-        JetCorrUncertAK4pup->setJetEta(  corrSubjetL23res.eta()  );
-        JetCorrUncertAK4pup->setJetPt(   corrSubjetL23res.pt()   );
-        subjet_corrDn_L23   = subjet_corr_factor_L23res_full - JetCorrUncertAK4pup->getUncertainty(0);
-        double subjet_corrUp_L23 =   1.0;
-        JetCorrUncertAK4pup->setJetPhi(  corrSubjetL23res.phi()  );
-        JetCorrUncertAK4pup->setJetEta(  corrSubjetL23res.eta()  );
-        JetCorrUncertAK4pup->setJetPt(   corrSubjetL23res.pt()   );
-        subjet_corrUp_L23   = subjet_corr_factor_L23res_full + JetCorrUncertAK4pup->getUncertainty(1);
+        // //------------------------------------
+        // // PUPPI subjet JEC uncertainty
+        // //------------------------------------
+        // double subjet_corrDn_L23 =   1.0;
+        // JetCorrUncertAK4pup->setJetPhi(  corrSubjetL23res.phi()  );
+        // JetCorrUncertAK4pup->setJetEta(  corrSubjetL23res.eta()  );
+        // JetCorrUncertAK4pup->setJetPt(   corrSubjetL23res.pt()   );
+        // subjet_corrDn_L23   = subjet_corr_factor_L23res_full - JetCorrUncertAK4pup->getUncertainty(0);
+        // double subjet_corrUp_L23 =   1.0;
+        // JetCorrUncertAK4pup->setJetPhi(  corrSubjetL23res.phi()  );
+        // JetCorrUncertAK4pup->setJetEta(  corrSubjetL23res.eta()  );
+        // JetCorrUncertAK4pup->setJetPt(   corrSubjetL23res.pt()   );
+        // subjet_corrUp_L23   = subjet_corr_factor_L23res_full + JetCorrUncertAK4pup->getUncertainty(1);
 
-        reco::Candidate::LorentzVector corrSubjetL23resCorrDn   = subjet_corrDn_L23   * uncorrSubjet;
-        reco::Candidate::LorentzVector corrSubjetL23resCorrUp   = subjet_corrUp_L23   * uncorrSubjet;
+        // reco::Candidate::LorentzVector corrSubjetL23resCorrDn   = subjet_corrDn_L23   * uncorrSubjet;
+        // reco::Candidate::LorentzVector corrSubjetL23resCorrUp   = subjet_corrUp_L23   * uncorrSubjet;
      
         //------------------------------------
         // subjet values for Tree
@@ -4211,8 +4601,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if (count_pup==0){
           pup0_P4_uncorr           .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
           pup0_P4_L23res           .SetPtEtaPhiM( corrSubjetL23res.pt()    , corrSubjetL23res.eta()    , corrSubjetL23res.phi()    , corrSubjetL23res.mass()     );
-          pup0_P4_L23resCorrUp    .SetPtEtaPhiM( corrSubjetL23resCorrUp.pt()  , corrSubjetL23resCorrUp.eta()  , corrSubjetL23resCorrUp.phi()  , corrSubjetL23resCorrUp.mass()   );
-          pup0_P4_L23resCorrDn    .SetPtEtaPhiM( corrSubjetL23resCorrDn.pt()  , corrSubjetL23resCorrDn.eta()  , corrSubjetL23resCorrDn.phi()  , corrSubjetL23res.mass()     );
+          // pup0_P4_L23resCorrUp    .SetPtEtaPhiM( corrSubjetL23resCorrUp.pt()  , corrSubjetL23resCorrUp.eta()  , corrSubjetL23resCorrUp.phi()  , corrSubjetL23resCorrUp.mass()   );
+          // pup0_P4_L23resCorrDn    .SetPtEtaPhiM( corrSubjetL23resCorrDn.pt()  , corrSubjetL23resCorrDn.eta()  , corrSubjetL23resCorrDn.phi()  , corrSubjetL23res.mass()     );
           pup0_area   = it->jetArea() ;
           if (useToolbox_){
             pup0_tau1   = it->userFloat("ak8PFJetsPuppiValueMap:NjettinessAK8PuppiTau1");
@@ -4226,8 +4616,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if (count_pup==1) {
           pup1_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
           pup1_P4_L23res           .SetPtEtaPhiM( corrSubjetL23res.pt()    , corrSubjetL23res.eta()    , corrSubjetL23res.phi()    , corrSubjetL23res.mass()     );
-          pup1_P4_L23resCorrUp    .SetPtEtaPhiM( corrSubjetL23resCorrUp.pt()  , corrSubjetL23resCorrUp.eta()  , corrSubjetL23resCorrUp.phi()  , corrSubjetL23resCorrUp.mass()   );
-          pup1_P4_L23resCorrDn    .SetPtEtaPhiM( corrSubjetL23resCorrDn.pt()  , corrSubjetL23resCorrDn.eta()  , corrSubjetL23resCorrDn.phi()  , corrSubjetL23res.mass()     );
+          // pup1_P4_L23resCorrUp    .SetPtEtaPhiM( corrSubjetL23resCorrUp.pt()  , corrSubjetL23resCorrUp.eta()  , corrSubjetL23resCorrUp.phi()  , corrSubjetL23resCorrUp.mass()   );
+          // pup1_P4_L23resCorrDn    .SetPtEtaPhiM( corrSubjetL23resCorrDn.pt()  , corrSubjetL23resCorrDn.eta()  , corrSubjetL23resCorrDn.phi()  , corrSubjetL23res.mass()     );
           pup1_area   = it->jetArea() ;
           if (useToolbox_){
             pup1_tau1   = it->userFloat("ak8PFJetsPuppiValueMap:NjettinessAK8PuppiTau1");
@@ -4244,160 +4634,215 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       }
     }
     if (useToolbox_){
+      if (verbose_) cout<<"   Toolbox AK8 jets. Find puppi softdrop subjets "<<endl;
+
+ 
+      int count_all_subjets =0;
+      int count_matched_subjets =0;
+      double closest_DR = 99;
+      double closest_i = -1;
+      double second_closest_DR = 99;
+      double second_closest_i  = -1;
+
+      // Loop once to find the subjets closest to the AK8 jet
       for (const pat::Jet &isub : *AK8PUPPIsub) {  
   
-        double subjetEta       = isub.correctedP4(0).eta();
-        double subjetPhi       = isub.correctedP4(0).phi();
-        double deltaRsubjetJet = deltaR(ijet.eta(), ijet.phi(), subjetEta, subjetPhi);
+        double subjetPt       = isub.correctedP4(0).pt();
+        double subjetEta      = isub.correctedP4(0).eta();
+        double subjetPhi      = isub.correctedP4(0).phi();
+        double subjetMass     = isub.correctedP4(0).mass();
+        // double subjetBdisc    = isub.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); 
 
-        if (deltaRsubjetJet<0.8){
-          double subjetPt        = isub.correctedP4(0).pt();
-          double subjetMass      = isub.correctedP4(0).mass();
-          double subjetBdisc     = isub.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); 
-          if (verbose_) cout<<" matched puppi subjet with mass "<< subjetMass<<endl;
+        double deltaRsubjetJet = deltaR(puppi_eta, puppi_phi, subjetEta, subjetPhi);
 
-          //------------------------------------
-          // PUPPI subjet JEC 
-          //------------------------------------
-          reco::Candidate::LorentzVector uncorrSubjet = isub.correctedP4(0);
-          JetCorrectorAK4pup -> setJetEta( uncorrSubjet.eta()    );
-          JetCorrectorAK4pup -> setJetPt ( uncorrSubjet.pt()     );
-          JetCorrectorAK4pup -> setJetE  ( uncorrSubjet.energy() );
-          JetCorrectorAK4pup -> setJetA  ( isub.jetArea()         );
-          JetCorrectorAK4pup -> setRho   ( rho                   );
-          JetCorrectorAK4pup -> setNPV   ( nvtx                  );
-          double subjet_corr_factor_L23res_full = JetCorrectorAK4pup->getCorrection();
-          reco::Candidate::LorentzVector corrSubjetL23res = subjet_corr_factor_L23res_full * uncorrSubjet;
+        if (verbose_) cout<<"     PupSubjet "<<count_all_subjets<<"   "<<subjetMass<<" "<<subjetPt<<" "<<deltaRsubjetJet<<endl;
 
-          //------------------------------------
-          // PUPPI subjet JEC uncertainty
-          //------------------------------------
-          double subjet_corrDn_L23 =   1.0;
-          JetCorrUncertAK4pup->setJetPhi(  corrSubjetL23res.phi()  );
-          JetCorrUncertAK4pup->setJetEta(  corrSubjetL23res.eta()  );
-          JetCorrUncertAK4pup->setJetPt(   corrSubjetL23res.pt()   );
-          subjet_corrDn_L23   = subjet_corr_factor_L23res_full - JetCorrUncertAK4pup->getUncertainty(0);
-          double subjet_corrUp_L23 =   1.0;
-          JetCorrUncertAK4pup->setJetPhi(  corrSubjetL23res.phi()  );
-          JetCorrUncertAK4pup->setJetEta(  corrSubjetL23res.eta()  );
-          JetCorrUncertAK4pup->setJetPt(   corrSubjetL23res.pt()   );
-          subjet_corrUp_L23   = subjet_corr_factor_L23res_full + JetCorrUncertAK4pup->getUncertainty(1);
-
-          reco::Candidate::LorentzVector corrSubjetL23resCorrDn   = subjet_corrDn_L23   * uncorrSubjet;
-          reco::Candidate::LorentzVector corrSubjetL23resCorrUp   = subjet_corrUp_L23   * uncorrSubjet;
-       
-          // //------------------------------------
-          // // subjet JER SF
-          // //------------------------------------
-
-          // Doesn't seem to work. Gen subjet from isub.genJet()  is not a good match (especially true for 2nd subjet). If i have the time try just smearing the jets with no gen info.
-
-          // TLorentzVector GenSubJet;
-          // double ptsmear   = 1;
-          // double ptsmearUp = 1;
-          // double ptsmearDn = 1;
-          // if (!iEvent.isRealData()){
-          //   const reco::GenJet* genJet = isub.genJet();
-          //   if (genJet) {
-          //     GenSubJet.SetPtEtaPhiM( genJet->pt(), genJet->eta(), genJet->phi(), genJet->mass() );
-          //     if (verbose_) cout<<"  SD subjet genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<" reco pt "<<subjetPt<<" reco mass "<<subjetMass<<endl;
-          //   }
-          //   double jer_sf    = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}});
-          //   double jer_sf_up = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}}, Variation::UP);
-          //   double jer_sf_dn = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}}, Variation::DOWN);
-          //   if (verbose_) std::cout << " SD subjet JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
-          //   double recopt    = corrSubjetL23res.pt();
-          //   double genpt     = GenJetMatched.Perp();
-          //   double deltapt   = (recopt-genpt)*(jer_sf-1.0);
-          //   double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
-          //   double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
-
-          //   cout<<"recopt     "<<recopt    <<endl; 
-          //   cout<<"genpt      "<<genpt     <<endl; 
-          //   cout<<"deltapt    "<<deltapt   <<endl; 
-
-          //   cout<<"recopt + deltapt     "<<recopt +deltapt   <<endl; 
-          //   cout<<"(recopt+deltapt)/recopt     "<<(recopt+deltapt)/recopt   <<endl; 
-
-          //   ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
-          //   ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
-          //   ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
-          //   if (verbose_); std::cout<<" SD subjet ptsmear "<<ptsmear<<" ptsmearUp "<<ptsmearUp<<" ptsmearDn "<<ptsmearDn<<endl;
-          // }
-          // reco::Candidate::LorentzVector corrSubjetL23resPtSmear   = ptsmear   * corrSubjetL23res ;
-          // reco::Candidate::LorentzVector corrSubjetL23resPtSmearUp = ptsmearUp * corrSubjetL23res ;
-          // reco::Candidate::LorentzVector corrSubjetL23resPtSmearDn = ptsmearDn * corrSubjetL23res ;
-
-          //------------------------------------
-          // subjet values for Tree
-          //------------------------------------
-
-          double gensubjetpt = 0;
-          if (!iEvent.isRealData()){
-            const reco::GenJet* genJet = isub.genJet();
-            if (genJet) gensubjetpt = genJet->pt();
-          }
-
-          if (count_pup==0){
-            pup0_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
-            pup0_P4_L23res            .SetPtEtaPhiM( corrSubjetL23res          .pt() , corrSubjetL23res          .eta() , corrSubjetL23res          .phi() , corrSubjetL23res          .mass() );
-            pup0_P4_L23resCorrUp      .SetPtEtaPhiM( corrSubjetL23resCorrUp    .pt() , corrSubjetL23resCorrUp    .eta() , corrSubjetL23resCorrUp    .phi() , corrSubjetL23resCorrUp    .mass() );
-            pup0_P4_L23resCorrDn      .SetPtEtaPhiM( corrSubjetL23resCorrDn    .pt() , corrSubjetL23resCorrDn    .eta() , corrSubjetL23resCorrDn    .phi() , corrSubjetL23resCorrDn    .mass() );
-            // pup0_P4_L23resPtSmear     .SetPtEtaPhiM( corrSubjetL23resPtSmear   .pt() , corrSubjetL23resPtSmear   .eta() , corrSubjetL23resPtSmear   .phi() , corrSubjetL23resPtSmear   .mass() );
-            // pup0_P4_L23resPtSmearUp   .SetPtEtaPhiM( corrSubjetL23resPtSmearUp .pt() , corrSubjetL23resPtSmearUp .eta() , corrSubjetL23resPtSmearUp .phi() , corrSubjetL23resPtSmearUp .mass() );
-            // pup0_P4_L23resPtSmearDn   .SetPtEtaPhiM( corrSubjetL23resPtSmearDn .pt() , corrSubjetL23resPtSmearDn .eta() , corrSubjetL23resPtSmearDn .phi() , corrSubjetL23resPtSmearDn .mass() );
-
-            pup0_tau1   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau1");
-            pup0_tau2   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau2");
-            pup0_tau3   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau3");
-          
-            pup0_flav_parton   = isub.partonFlavour();
-            pup0_flav_hadron   = isub.hadronFlavour();
-            pup0_area          = isub.jetArea() ;
-            pup0_bdisc         = subjetBdisc;
-            pup0_genpt         = gensubjetpt;
-          }
-          if (count_pup==1) {
-            pup1_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
-            pup1_P4_L23res            .SetPtEtaPhiM( corrSubjetL23res          .pt() , corrSubjetL23res          .eta() , corrSubjetL23res          .phi() , corrSubjetL23res          .mass() );
-            pup1_P4_L23resCorrUp      .SetPtEtaPhiM( corrSubjetL23resCorrUp    .pt() , corrSubjetL23resCorrUp    .eta() , corrSubjetL23resCorrUp    .phi() , corrSubjetL23resCorrUp    .mass() );
-            pup1_P4_L23resCorrDn      .SetPtEtaPhiM( corrSubjetL23resCorrDn    .pt() , corrSubjetL23resCorrDn    .eta() , corrSubjetL23resCorrDn    .phi() , corrSubjetL23resCorrDn    .mass() );
-            // pup1_P4_L23resPtSmear     .SetPtEtaPhiM( corrSubjetL23resPtSmear   .pt() , corrSubjetL23resPtSmear   .eta() , corrSubjetL23resPtSmear   .phi() , corrSubjetL23resPtSmear   .mass() );
-            // pup1_P4_L23resPtSmearUp   .SetPtEtaPhiM( corrSubjetL23resPtSmearUp .pt() , corrSubjetL23resPtSmearUp .eta() , corrSubjetL23resPtSmearUp .phi() , corrSubjetL23resPtSmearUp .mass() );
-            // pup1_P4_L23resPtSmearDn   .SetPtEtaPhiM( corrSubjetL23resPtSmearDn .pt() , corrSubjetL23resPtSmearDn .eta() , corrSubjetL23resPtSmearDn .phi() , corrSubjetL23resPtSmearDn .mass() );
-
-            pup1_tau1   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau1");
-            pup1_tau2   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau2");
-            pup1_tau3   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau3");
-          
-            pup1_flav_parton   = isub.partonFlavour();
-            pup1_flav_hadron   = isub.hadronFlavour();
-            pup1_area          = isub.jetArea() ;
-            pup1_bdisc         = subjetBdisc;
-            pup1_genpt         = gensubjetpt;
-          }
-
-          if (subjetMass > mostMassiveSDPUPPIsubjetMass) mostMassiveSDPUPPIsubjetMass = subjetMass;
-          count_pup++;
-           if (verbose_) cout<<"  SD Subjet pt "<<subjetPt<<" Eta "<<subjetEta<<" deltaRsubjetJet "<<deltaRsubjetJet<<" Mass "<<subjetMass<<" Bdisc "<<subjetBdisc<<endl; 
-
-
+        if (deltaRsubjetJet<closest_DR){
+          second_closest_DR = closest_DR;
+          closest_DR        = deltaRsubjetJet;
+          second_closest_i  = closest_i;
+          closest_i         = count_all_subjets;
         }
+        else if (deltaRsubjetJet<second_closest_DR){
+          second_closest_DR = deltaRsubjetJet ;
+          second_closest_i  = count_all_subjets;
+        }
+        count_all_subjets++;
       }
+
+      // Loop a second time. If one of the two closest subjets matches the dR requirement save its infromation. Subjet 0 = hardest.
+      count_all_subjets =0;
+      for (const pat::Jet &isub : *AK8PUPPIsub) {  
+        
+  
+        double subjetPt       = isub.correctedP4(0).pt();
+        double subjetEta      = isub.correctedP4(0).eta();
+        double subjetPhi      = isub.correctedP4(0).phi();
+        double subjetMass     = isub.correctedP4(0).mass();
+        double subjetBdisc    = isub.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); 
+
+        double deltaRsubjetJet = deltaR(puppi_eta, puppi_phi, subjetEta, subjetPhi);
+
+        if (verbose_) cout<<"     PupSubjet "<<count_all_subjets<<"   "<<subjetMass<<" "<<subjetPt<<" "<<deltaRsubjetJet<<endl;
+
+        if ( count_all_subjets==closest_i || count_all_subjets==second_closest_i ){
+          if (verbose_) cout<<"      -> one of two closest "<<endl;
+          if (deltaRsubjetJet<0.8){
+            nsubjets_pup++;
+            if (verbose_) cout<<"      -> dR matched subjet with mass "<< subjetMass<<endl;
+
+            count_matched_subjets++;
+
+            //------------------------------------
+            // PUPPI subjet JEC 
+            //------------------------------------
+            reco::Candidate::LorentzVector uncorrSubjet = isub.correctedP4(0);
+            JetCorrectorAK4pup -> setJetEta( uncorrSubjet.eta()    );
+            JetCorrectorAK4pup -> setJetPt ( uncorrSubjet.pt()     );
+            JetCorrectorAK4pup -> setJetE  ( uncorrSubjet.energy() );
+            JetCorrectorAK4pup -> setJetA  ( isub.jetArea()         );
+            JetCorrectorAK4pup -> setRho   ( rho                   );
+            JetCorrectorAK4pup -> setNPV   ( nvtx                  );
+            double subjet_corr_factor_L23res_full = JetCorrectorAK4pup->getCorrection();
+            reco::Candidate::LorentzVector corrSubjetL23res = subjet_corr_factor_L23res_full * uncorrSubjet;
+
+            // //------------------------------------
+            // // PUPPI subjet JEC uncertainty
+            // //------------------------------------
+            // double subjet_corrDn_L23 =   1.0;
+            // JetCorrUncertAK4pup->setJetPhi(  corrSubjetL23res.phi()  );
+            // JetCorrUncertAK4pup->setJetEta(  corrSubjetL23res.eta()  );
+            // JetCorrUncertAK4pup->setJetPt(   corrSubjetL23res.pt()   );
+            // subjet_corrDn_L23   = subjet_corr_factor_L23res_full - JetCorrUncertAK4pup->getUncertainty(0);
+            // double subjet_corrUp_L23 =   1.0;
+            // JetCorrUncertAK4pup->setJetPhi(  corrSubjetL23res.phi()  );
+            // JetCorrUncertAK4pup->setJetEta(  corrSubjetL23res.eta()  );
+            // JetCorrUncertAK4pup->setJetPt(   corrSubjetL23res.pt()   );
+            // subjet_corrUp_L23   = subjet_corr_factor_L23res_full + JetCorrUncertAK4pup->getUncertainty(1);
+
+            // reco::Candidate::LorentzVector corrSubjetL23resCorrDn   = subjet_corrDn_L23   * uncorrSubjet;
+            // reco::Candidate::LorentzVector corrSubjetL23resCorrUp   = subjet_corrUp_L23   * uncorrSubjet;
+         
+            // //------------------------------------
+            // // subjet JER SF
+            // //------------------------------------
+
+            // Doesn't seem to work. Gen subjet from isub.genJet()  is not a good match (especially true for 2nd subjet). If i have the time try just smearing the jets with no gen info.
+
+            // TLorentzVector GenSubJet;
+            // double ptsmear   = 1;
+            // double ptsmearUp = 1;
+            // double ptsmearDn = 1;
+            // if (!iEvent.isRealData()){
+            //   const reco::GenJet* genJet = isub.genJet();
+            //   if (genJet) {
+            //     GenSubJet.SetPtEtaPhiM( genJet->pt(), genJet->eta(), genJet->phi(), genJet->mass() );
+            //     if (verbose_) cout<<"  SD subjet genJet pt "<<genJet->pt()<<" mass "<<genJet->mass()<<" reco pt "<<subjetPt<<" reco mass "<<subjetMass<<endl;
+            //   }
+            //   double jer_sf    = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}});
+            //   double jer_sf_up = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}}, Variation::UP);
+            //   double jer_sf_dn = jer_scaler.getScaleFactor({{JME::Binning::JetEta, corrSubjetL23res.eta()}}, Variation::DOWN);
+            //   if (verbose_) std::cout << " SD subjet JER Scale factors (Nominal / Up / Down) : " << jer_sf << " / " << jer_sf_up << " / " << jer_sf_dn << std::endl;
+            //   double recopt    = corrSubjetL23res.pt();
+            //   double genpt     = GenJetMatched.Perp();
+            //   double deltapt   = (recopt-genpt)*(jer_sf-1.0);
+            //   double deltaptUp = (recopt-genpt)*(jer_sf_up-1.0);
+            //   double deltaptDn = (recopt-genpt)*(jer_sf_dn-1.0);
+
+            //   cout<<"recopt     "<<recopt    <<endl; 
+            //   cout<<"genpt      "<<genpt     <<endl; 
+            //   cout<<"deltapt    "<<deltapt   <<endl; 
+
+            //   cout<<"recopt + deltapt     "<<recopt +deltapt   <<endl; 
+            //   cout<<"(recopt+deltapt)/recopt     "<<(recopt+deltapt)/recopt   <<endl; 
+
+            //   ptsmear   = std::max((double)0.0, (recopt+deltapt)/recopt     );
+            //   ptsmearUp = std::max((double)0.0, (recopt+deltaptUp)/recopt   );
+            //   ptsmearDn = std::max((double)0.0, (recopt+deltaptDn)/recopt   );
+            //   if (verbose_); std::cout<<" SD subjet ptsmear "<<ptsmear<<" ptsmearUp "<<ptsmearUp<<" ptsmearDn "<<ptsmearDn<<endl;
+            // }
+            // reco::Candidate::LorentzVector corrSubjetL23resPtSmear   = ptsmear   * corrSubjetL23res ;
+            // reco::Candidate::LorentzVector corrSubjetL23resPtSmearUp = ptsmearUp * corrSubjetL23res ;
+            // reco::Candidate::LorentzVector corrSubjetL23resPtSmearDn = ptsmearDn * corrSubjetL23res ;
+
+            //------------------------------------
+            // subjet values for Tree
+            //------------------------------------
+
+            double gensubjetpt = 0;
+            if (!iEvent.isRealData()){
+              const reco::GenJet* genJet = isub.genJet();
+              if (genJet) gensubjetpt = genJet->pt();
+            }
+
+            if (count_pup==0){
+              pup0_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
+              pup0_P4_L23res            .SetPtEtaPhiM( corrSubjetL23res          .pt() , corrSubjetL23res          .eta() , corrSubjetL23res          .phi() , corrSubjetL23res          .mass() );
+              // pup0_P4_L23resCorrUp      .SetPtEtaPhiM( corrSubjetL23resCorrUp    .pt() , corrSubjetL23resCorrUp    .eta() , corrSubjetL23resCorrUp    .phi() , corrSubjetL23resCorrUp    .mass() );
+              // pup0_P4_L23resCorrDn      .SetPtEtaPhiM( corrSubjetL23resCorrDn    .pt() , corrSubjetL23resCorrDn    .eta() , corrSubjetL23resCorrDn    .phi() , corrSubjetL23resCorrDn    .mass() );
+              // pup0_P4_L23resPtSmear     .SetPtEtaPhiM( corrSubjetL23resPtSmear   .pt() , corrSubjetL23resPtSmear   .eta() , corrSubjetL23resPtSmear   .phi() , corrSubjetL23resPtSmear   .mass() );
+              // pup0_P4_L23resPtSmearUp   .SetPtEtaPhiM( corrSubjetL23resPtSmearUp .pt() , corrSubjetL23resPtSmearUp .eta() , corrSubjetL23resPtSmearUp .phi() , corrSubjetL23resPtSmearUp .mass() );
+              // pup0_P4_L23resPtSmearDn   .SetPtEtaPhiM( corrSubjetL23resPtSmearDn .pt() , corrSubjetL23resPtSmearDn .eta() , corrSubjetL23resPtSmearDn .phi() , corrSubjetL23resPtSmearDn .mass() );
+
+              pup0_tau1   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau1");
+              pup0_tau2   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau2");
+              pup0_tau3   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau3");
+            
+              pup0_flav_parton   = isub.partonFlavour();
+              pup0_flav_hadron   = isub.hadronFlavour();
+              pup0_area          = isub.jetArea() ;
+              pup0_bdisc         = subjetBdisc;
+              pup0_genpt         = gensubjetpt;
+            }
+            if (count_pup==1) {
+              pup1_P4_uncorr            .SetPtEtaPhiM( subjetPt, subjetEta, subjetPhi, subjetMass);
+              pup1_P4_L23res            .SetPtEtaPhiM( corrSubjetL23res          .pt() , corrSubjetL23res          .eta() , corrSubjetL23res          .phi() , corrSubjetL23res          .mass() );
+              // pup1_P4_L23resCorrUp      .SetPtEtaPhiM( corrSubjetL23resCorrUp    .pt() , corrSubjetL23resCorrUp    .eta() , corrSubjetL23resCorrUp    .phi() , corrSubjetL23resCorrUp    .mass() );
+              // pup1_P4_L23resCorrDn      .SetPtEtaPhiM( corrSubjetL23resCorrDn    .pt() , corrSubjetL23resCorrDn    .eta() , corrSubjetL23resCorrDn    .phi() , corrSubjetL23resCorrDn    .mass() );
+              // pup1_P4_L23resPtSmear     .SetPtEtaPhiM( corrSubjetL23resPtSmear   .pt() , corrSubjetL23resPtSmear   .eta() , corrSubjetL23resPtSmear   .phi() , corrSubjetL23resPtSmear   .mass() );
+              // pup1_P4_L23resPtSmearUp   .SetPtEtaPhiM( corrSubjetL23resPtSmearUp .pt() , corrSubjetL23resPtSmearUp .eta() , corrSubjetL23resPtSmearUp .phi() , corrSubjetL23resPtSmearUp .mass() );
+              // pup1_P4_L23resPtSmearDn   .SetPtEtaPhiM( corrSubjetL23resPtSmearDn .pt() , corrSubjetL23resPtSmearDn .eta() , corrSubjetL23resPtSmearDn .phi() , corrSubjetL23resPtSmearDn .mass() );
+
+              pup1_tau1   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau1");
+              pup1_tau2   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau2");
+              pup1_tau3   = isub.userFloat("NsubjettinessAK8PFPuppiSoftDropSubjets:tau3");
+            
+              pup1_flav_parton   = isub.partonFlavour();
+              pup1_flav_hadron   = isub.hadronFlavour();
+              pup1_area          = isub.jetArea() ;
+              pup1_bdisc         = subjetBdisc;
+              pup1_genpt         = gensubjetpt;
+            }
+
+            if (subjetMass > mostMassiveSDPUPPIsubjetMass) mostMassiveSDPUPPIsubjetMass = subjetMass;
+            count_pup++;
+            if (verbose_) cout<<"       -> SD Subjet pt "<<subjetPt<<" Eta "<<subjetEta<<" deltaRsubjetJet "<<deltaRsubjetJet<<" Mass "<<subjetMass<<" Bdisc "<<subjetBdisc<<endl; 
+
+          }
+        }
+        count_all_subjets++;
+      }
+      if (verbose_) cout<<"     Puppi count_matched_subjets "<<count_matched_subjets<<endl;
+      if (count_matched_subjets!=2 && verbose_ ) cout<<"     CHECKME"<<endl;
+      if (verbose_) cout<<"     closest_DR "<<closest_DR<<endl;;
+      if (verbose_) cout<<"     second_closest_DR "<<second_closest_DR<<endl;;
+      if (verbose_) cout<<"     closest_i "<<closest_i<<endl;
+      if (verbose_) cout<<"     second_closest_i "<<second_closest_i<<endl;
     }
+
 
     TLorentzVector sumPUPsubjets_P4_uncorr          ;
     TLorentzVector sumPUPsubjets_P4_L23res          ;
-    TLorentzVector sumPUPsubjets_P4_L23resCorrUp    ;
-    TLorentzVector sumPUPsubjets_P4_L23resCorrDn    ;
-    TLorentzVector sumPUPsubjets_P4_L23resPtSmear   ;
-    TLorentzVector sumPUPsubjets_P4_L23resPtSmearUp ;
-    TLorentzVector sumPUPsubjets_P4_L23resPtSmearDn ;
+    // TLorentzVector sumPUPsubjets_P4_L23resCorrUp    ;
+    // TLorentzVector sumPUPsubjets_P4_L23resCorrDn    ;
+    // TLorentzVector sumPUPsubjets_P4_L23resPtSmear   ;
+    // TLorentzVector sumPUPsubjets_P4_L23resPtSmearUp ;
+    // TLorentzVector sumPUPsubjets_P4_L23resPtSmearDn ;
     if (count_SD>1){ 
       sumPUPsubjets_P4_uncorr            = pup0_P4_uncorr            + pup1_P4_uncorr            ; 
       sumPUPsubjets_P4_L23res            = pup0_P4_L23res            + pup1_P4_L23res            ; 
-      sumPUPsubjets_P4_L23resCorrUp      = pup0_P4_L23resCorrUp      + pup1_P4_L23resCorrUp      ; 
-      sumPUPsubjets_P4_L23resCorrDn      = pup0_P4_L23resCorrDn      + pup1_P4_L23resCorrDn      ; 
+      // sumPUPsubjets_P4_L23resCorrUp      = pup0_P4_L23resCorrUp      + pup1_P4_L23resCorrUp      ; 
+      // sumPUPsubjets_P4_L23resCorrDn      = pup0_P4_L23resCorrDn      + pup1_P4_L23resCorrDn      ; 
       // sumPUPsubjets_P4_L23resPtSmear     = pup0_P4_L23resPtSmear     + pup1_P4_L23resPtSmear     ; 
       // sumPUPsubjets_P4_L23resPtSmearUp   = pup0_P4_L23resPtSmearUp   + pup1_P4_L23resPtSmearUp   ; 
       // sumPUPsubjets_P4_L23resPtSmearDn   = pup0_P4_L23resPtSmearDn   + pup1_P4_L23resPtSmearDn   ; 
@@ -4418,62 +4863,50 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       pup_maxbdiscflav_parton = pup1_flav_parton;
     }  
 
-    h_ak8chs_softDropMass    ->Fill( sumSDsubjets_P4_uncorr.M()   );
-    h_ak8puppi_softDropMass  ->Fill( sumPUPsubjets_P4_uncorr.M()  );
-
-    // //------------------------------------
-    // // CMS Top Tagger  // need to fix the toolbox
-    // //------------------------------------ 
-    
-    // reco::CATopJetTagInfo const * tagInfo =  dynamic_cast<reco::CATopJetTagInfo const *>( ijet.tagInfo("caTop"));
-    // double minMass    = 0;
-    // int nSubJetsCATop = 0;
-    // if ( tagInfo != 0 ) {
-    //   minMass = tagInfo->properties().minMass;
-    //   nSubJetsCATop = tagInfo->properties().nSubJets;
-    // }
-    // cout<<"minMass "<<minMass<<endl;
-    // cout<<"nSubJetsCATop "<<nSubJetsCATop<<endl;
-
-
     //------------------------------------
     // Gen particle info
     //------------------------------------ 
-    
-    double deltaR_jet_t1 = jet_p4.DeltaR(t1_p4  );
-    double deltaR_jet_t2 = jet_p4.DeltaR(t2_p4  );
+    double deltaR_jet_t1 = 99;
+    double deltaR_jet_t2 = 99;
+    double deltaR_jet_p1 = 99;
+    double deltaR_jet_p2 = 99;
+
     bool jet_matched_t1 = false;
     bool jet_matched_t2 = false;
-    if (deltaR_jet_t1<deltaR_jet_t2) jet_matched_t1 = true;
-    if (deltaR_jet_t2<deltaR_jet_t1) jet_matched_t2 = true;
-
-    double deltaR_jet_p1 =  jet_p4.DeltaR(hardest_parton_hardScatterOutgoing_p4);
-    double deltaR_jet_p2 =  jet_p4.DeltaR(second_hardest_parton_hardScatterOutgoing_p4);
     bool jet_matched_p1 = false;
     bool jet_matched_p2 = false;
-    if (deltaR_jet_p1<deltaR_jet_p2) jet_matched_p1 = true;
-    if (deltaR_jet_p2<deltaR_jet_p1) jet_matched_p2 = true;
-      
+
+    if (!iEvent.isRealData() and runGenLoop_) {
+      deltaR_jet_t1 = jet_p4.DeltaR(t1_p4  );
+      deltaR_jet_t2 = jet_p4.DeltaR(t2_p4  );
+      deltaR_jet_p1 = jet_p4.DeltaR(hardest_parton_hardScatterOutgoing_p4        );
+      deltaR_jet_p2 = jet_p4.DeltaR(second_hardest_parton_hardScatterOutgoing_p4 );
+      if (deltaR_jet_t1<deltaR_jet_t2) jet_matched_t1 = true;
+      if (deltaR_jet_t2<deltaR_jet_t1) jet_matched_t2 = true;
+      if (deltaR_jet_p1<deltaR_jet_p2) jet_matched_p1 = true;
+      if (deltaR_jet_p2<deltaR_jet_p1) jet_matched_p2 = true;
+    } 
+
     //------------------------------------
-    // Fill AllHadTree
+    // Tree variables
     //------------------------------------ 
-    if (verbose_) cout<<"Fill AllHadTree "<<endl;
 
     // Jet 0
-    if (count_AK8CHS==0){
+    if (runAllHadTree_ && count_AK8CHS==0){
+      if (verbose_) cout<<"Put jet 0 variables in allhad tree"<<endl;
       
       // basic kinematic and ID variables
       Jet0PtRaw                              = uncorrJet.pt()      ;                 
       Jet0EtaRaw                             = uncorrJet.eta()     ;                  
       Jet0PhiRaw                             = uncorrJet.phi()     ;   
       Jet0MassRaw                            = uncorrJet.mass()    ;                                           
-      Jet0P                                  = corrJet.P()         ;        
-      Jet0Pt                                 = corrJet.pt()        ;                  
-      Jet0Eta                                = corrJet.eta()       ;                  
-      Jet0Phi                                = corrJet.phi()       ;                  
-      Jet0Rap                                = corrJet.Rapidity()  ;                  
-      Jet0Energy                             = corrJet.energy()    ;                  
-      Jet0Mass                               = corrJet.mass()      ;                    
+      // Jet0P                                  = corrJet.P()         ;        
+      // Jet0Pt                                 = corrJet.pt()        ;                  
+      // Jet0Eta                                = corrJet.eta()       ;                  
+      // Jet0Phi                                = corrJet.phi()       ;                  
+      // Jet0Rap                                = corrJet.Rapidity()  ;                  
+      // Jet0Energy                             = corrJet.energy()    ;                  
+      // Jet0Mass                               = corrJet.mass()      ;                    
       Jet0Area                               = ijet.jetArea()      ;                  
      
       Jet0CHF                                = ijet.chargedHadronEnergy() / uncorrJet.E()  ;                        
@@ -4485,6 +4918,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet0MF                                 = ijet.muonEnergy() / uncorrJet.E()  ;                         
       Jet0Mult                               = ijet.numberOfDaughters() ;   
 
+      Jet0NsubjetsSD                         = nsubjets_chs   ;
+      Jet0NsubjetsSDPuppi                    = nsubjets_pup   ;
       // soft drop mass calculated from soft drop subjets                          
       Jet0SDmassRaw                          = sumSDsubjets_P4_uncorr   .M()    ;  
       Jet0SDetaRaw                           = sumSDsubjets_P4_uncorr   .Eta()  ;                    
@@ -4492,27 +4927,27 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet0SDptRaw                            = sumSDsubjets_P4_uncorr   .Perp() ;  
   
       // experiment with JEC applied separately to each subjet
-      Jet0SDmassCorrL23                      = sumSDsubjets_P4_L23res          .M()    ;   
-      Jet0SDmassCorrL23Up                    = sumSDsubjets_P4_L23resCorrUp    .M()    ;   
-      Jet0SDmassCorrL23Dn                    = sumSDsubjets_P4_L23resCorrDn    .M()    ; 
-      Jet0SDmassCorrL123                     = sumSDsubjets_P4_L123res         .M()    ;  
-      Jet0SDmassCorrL123Up                   = sumSDsubjets_P4_L123resCorrUp   .M()    ;   
-      Jet0SDmassCorrL123Dn                   = sumSDsubjets_P4_L123resCorrDn   .M()    ;  
+      Jet0SDmassSubjetCorrL23                      = sumSDsubjets_P4_L23res          .M()    ;   
+      // Jet0SDmassSubjetCorrL23Up                    = sumSDsubjets_P4_L23resSubjetCorrUp    .M()    ;   
+      // Jet0SDmassSubjetCorrL23Dn                    = sumSDsubjets_P4_L23resSubjetCorrDn    .M()    ; 
+      Jet0SDmassSubjetCorrL123                     = sumSDsubjets_P4_L123res         .M()    ;  
+      // Jet0SDmassSubjetCorrL123Up                   = sumSDsubjets_P4_L123resSubjetCorrUp   .M()    ;   
+      // Jet0SDmassSubjetCorrL123Dn                   = sumSDsubjets_P4_L123resSubjetCorrDn   .M()    ;  
       // Jet0SDmassCorrL23Smear                 = sumSDsubjets_P4_L23resPtSmear   .M()    ;   // This doesn't work. Subjet genjets are not a good match.
       // Jet0SDmassCorrL23SmearUp               = sumSDsubjets_P4_L23resPtSmearUp .M()    ;
       // Jet0SDmassCorrL23SmearDn               = sumSDsubjets_P4_L23resPtSmearDn .M()    ;
-      Jet0SDptCorrL23                        = sumSDsubjets_P4_L23res          .Perp() ;  
-      Jet0SDptCorrL23Up                      = sumSDsubjets_P4_L23resCorrUp    .Perp() ;  
-      Jet0SDptCorrL23Dn                      = sumSDsubjets_P4_L23resCorrDn    .Perp() ;  
-      Jet0SDptCorrL123                       = sumSDsubjets_P4_L123res         .Perp() ;  
-      Jet0SDptCorrL123Up                     = sumSDsubjets_P4_L123resCorrUp   .Perp() ;  
-      Jet0SDptCorrL123Dn                     = sumSDsubjets_P4_L123resCorrDn   .Perp() ;  
+      // Jet0SDptCorrL23                        = sumSDsubjets_P4_L23res          .Perp() ;  
+      // Jet0SDptCorrL23Up                      = sumSDsubjets_P4_L23resCorrUp    .Perp() ;  
+      // Jet0SDptCorrL23Dn                      = sumSDsubjets_P4_L23resCorrDn    .Perp() ;  
+      // Jet0SDptCorrL123                       = sumSDsubjets_P4_L123res         .Perp() ;  
+      // Jet0SDptCorrL123Up                     = sumSDsubjets_P4_L123resCorrUp   .Perp() ;  
+      // Jet0SDptCorrL123Dn                     = sumSDsubjets_P4_L123resCorrDn   .Perp() ;  
       // Jet0SDptCorrL23Smear                   = sumSDsubjets_P4_L23resPtSmear   .Perp() ;
       // Jet0SDptCorrL23SmearUp                 = sumSDsubjets_P4_L23resPtSmearUp .Perp() ;
       // Jet0SDptCorrL23SmearDn                 = sumSDsubjets_P4_L23resPtSmearDn .Perp() ;
           
       // user floats from the toolbox
-      Jet0SDmass                             = softDropMass  ;   // soft Drop mass from miniAOD                 
+      // Jet0SDmass                             = softDropMass  ;   // soft Drop mass from miniAOD                 
       Jet0MassPruned                         = prunedMass    ;     
       Jet0MassTrimmed                        = trimmedMass   ;     
       Jet0Tau1                               = tau1          ;  
@@ -4555,11 +4990,11 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       // Jet0DeltaRPuppi                        = minDR_pup_chs;       
 
       // Puppi jet kinematics (uncorrected) and ID variables
-      Jet0PuppiP                             = AK8PUPPI_P4uncorr.P()    ;                  
-      Jet0PuppiPt                            = puppi_pt   ;                  
-      Jet0PuppiEta                           = puppi_eta  ;                   
-      Jet0PuppiPhi                           = puppi_phi  ;                  
-      Jet0PuppiMass                          = puppi_mass ;                  
+      // Jet0PuppiP                             = AK8PUPPI_P4uncorr.P()    ;                  
+      Jet0PuppiPtRaw                            = puppi_pt   ;                  
+      Jet0PuppiEtaRaw                           = puppi_eta  ;                   
+      Jet0PuppiPhiRaw                           = puppi_phi  ;                  
+      Jet0PuppiMassRaw                          = puppi_mass ;                  
       Jet0PuppiArea                          = puppi_area ;                  
 
       Jet0PuppiCHF                           = puppi_CHF   ; 
@@ -4572,25 +5007,25 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet0PuppiMult                          = puppi_Mult  ; 
 
       // Puppi softdrop mass from puppi subjets ( JEC applied separately to each subjet )
-      Jet0PuppiSDmass                        = sumPUPsubjets_P4_uncorr           .M()   ;
+      Jet0PuppiSDmassRaw                        = sumPUPsubjets_P4_uncorr           .M()   ;
       Jet0PuppiSDmassSubjetCorr              = sumPUPsubjets_P4_L23res           .M()   ;
-      Jet0PuppiSDmassSubjetCorrUp            = sumPUPsubjets_P4_L23resCorrUp     .M()   ;
-      Jet0PuppiSDmassSubjetCorrDn            = sumPUPsubjets_P4_L23resCorrDn     .M()   ;
+      // Jet0PuppiSDmassSubjetCorrUp            = sumPUPsubjets_P4_L23resCorrUp     .M()   ;
+      // Jet0PuppiSDmassSubjetCorrDn            = sumPUPsubjets_P4_L23resCorrDn     .M()   ;
       // Jet0PuppiSDmassSubjetCorrL23Smear            = sumPUPsubjets_P4_L23resPtSmear    .M()   ;
       // Jet0PuppiSDmassSubjetCorrL23SmearUp          = sumPUPsubjets_P4_L23resPtSmearUp  .M()   ;
       // Jet0PuppiSDmassSubjetCorrL23SmearDn          = sumPUPsubjets_P4_L23resPtSmearDn  .M()   ;
-      Jet0PuppiSDpt                          = sumPUPsubjets_P4_uncorr           .Perp();
-      Jet0PuppiSDptSubjetCorr                = sumPUPsubjets_P4_L23res           .Perp();
-      Jet0PuppiSDptSubjetCorrUp              = sumPUPsubjets_P4_L23resCorrUp     .Perp();
-      Jet0PuppiSDptSubjetCorrDn              = sumPUPsubjets_P4_L23resCorrDn     .Perp();
+      Jet0PuppiSDptRaw                          = sumPUPsubjets_P4_uncorr           .Perp();
+      // Jet0PuppiSDptSubjetCorr                = sumPUPsubjets_P4_L23res           .Perp();
+      // Jet0PuppiSDptSubjetCorrUp              = sumPUPsubjets_P4_L23resCorrUp     .Perp();
+      // Jet0PuppiSDptSubjetCorrDn              = sumPUPsubjets_P4_L23resCorrDn     .Perp();
       // Jet0PuppiSDptSubjetCorrL23Smear              = sumPUPsubjets_P4_L23resPtSmear    .Perp();
       // Jet0PuppiSDptSubjetCorrL23SmearUp            = sumPUPsubjets_P4_L23resPtSmearUp  .Perp();
       // Jet0PuppiSDptSubjetCorrL23SmearDn            = sumPUPsubjets_P4_L23resPtSmearDn  .Perp();
-      Jet0PuppiSDeta                         = sumPUPsubjets_P4_uncorr           .Eta() ;
-      Jet0PuppiSDphi                         = sumPUPsubjets_P4_uncorr           .Phi() ;
+      Jet0PuppiSDetaRaw                         = sumPUPsubjets_P4_uncorr           .Eta() ;
+      Jet0PuppiSDphiRaw                         = sumPUPsubjets_P4_uncorr           .Phi() ;
 
       // PUPPI user floats from the toolbox
-      Jet0PuppiSDmassUserFloat               = puppi_softDropMass ;
+      // Jet0PuppiSDmassUserFloat               = puppi_softDropMass ;
       Jet0PuppiMassPruned                    = puppi_prunedMass   ;
       Jet0PuppiMassTrimmed                   = puppi_trimmedMass  ; 
       Jet0PuppiTau1                          = puppi_tau1         ;                  
@@ -4763,20 +5198,21 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     }   
 
     // Jet 1
-    if (count_AK8CHS==1){
-      
+    if (runAllHadTree_ && count_AK8CHS==1){
+      if (verbose_) cout<<"Put jet 1 variables in allhad tree"<<endl;
+
       // basic kinematic and ID variables
       Jet1PtRaw                              = uncorrJet.pt()      ;                 
       Jet1EtaRaw                             = uncorrJet.eta()     ;                  
       Jet1PhiRaw                             = uncorrJet.phi()     ;   
       Jet1MassRaw                            = uncorrJet.mass()    ;                                           
-      Jet1P                                  = corrJet.P()         ;        
-      Jet1Pt                                 = corrJet.pt()        ;                  
-      Jet1Eta                                = corrJet.eta()       ;                  
-      Jet1Phi                                = corrJet.phi()       ;                  
-      Jet1Rap                                = corrJet.Rapidity()  ;                  
-      Jet1Energy                             = corrJet.energy()    ;                  
-      Jet1Mass                               = corrJet.mass()      ;                    
+      // Jet1P                                  = corrJet.P()         ;        
+      // Jet1Pt                                 = corrJet.pt()        ;                  
+      // Jet1Eta                                = corrJet.eta()       ;                  
+      // Jet1Phi                                = corrJet.phi()       ;                  
+      // Jet1Rap                                = corrJet.Rapidity()  ;                  
+      // Jet1Energy                             = corrJet.energy()    ;                  
+      // Jet1Mass                               = corrJet.mass()      ;                    
       Jet1Area                               = ijet.jetArea()      ;                  
      
       Jet1CHF                                = ijet.chargedHadronEnergy() / uncorrJet.E()  ;                        
@@ -4795,21 +5231,21 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet1SDptRaw                            = sumSDsubjets_P4_uncorr   .Perp() ;  
   
       // experiment with JEC applied separately to each subjet
-      Jet1SDmassCorrL23                      = sumSDsubjets_P4_L23res          .M()    ;   
-      Jet1SDmassCorrL23Up                    = sumSDsubjets_P4_L23resCorrUp    .M()    ;   
-      Jet1SDmassCorrL23Dn                    = sumSDsubjets_P4_L23resCorrDn    .M()    ; 
-      Jet1SDmassCorrL123                     = sumSDsubjets_P4_L123res         .M()    ;  
-      Jet1SDmassCorrL123Up                   = sumSDsubjets_P4_L123resCorrUp   .M()    ;   
-      Jet1SDmassCorrL123Dn                   = sumSDsubjets_P4_L123resCorrDn   .M()    ;  
+      Jet1SDmassSubjetCorrL23                      = sumSDsubjets_P4_L23res          .M()    ;   
+      // Jet1SDmassSubjetCorrL23Up                    = sumSDsubjets_P4_L23resSubjetCorrUp    .M()    ;   
+      // Jet1SDmassSubjetCorrL23Dn                    = sumSDsubjets_P4_L23resSubjetCorrDn    .M()    ; 
+      Jet1SDmassSubjetCorrL123                     = sumSDsubjets_P4_L123res         .M()    ;  
+      // Jet1SDmassCorrL123Up                   = sumSDsubjets_P4_L123resCorrUp   .M()    ;   
+      // Jet1SDmassCorrL123Dn                   = sumSDsubjets_P4_L123resCorrDn   .M()    ;  
       // Jet1SDmassCorrL23Smear                 = sumSDsubjets_P4_L23resPtSmear   .M()    ;   // This doesn't work. Subjet genjets are not a good match.
       // Jet1SDmassCorrL23SmearUp               = sumSDsubjets_P4_L23resPtSmearUp .M()    ;
       // Jet1SDmassCorrL23SmearDn               = sumSDsubjets_P4_L23resPtSmearDn .M()    ;
-      Jet1SDptCorrL23                        = sumSDsubjets_P4_L23res          .Perp() ;  
-      Jet1SDptCorrL23Up                      = sumSDsubjets_P4_L23resCorrUp    .Perp() ;  
-      Jet1SDptCorrL23Dn                      = sumSDsubjets_P4_L23resCorrDn    .Perp() ;  
-      Jet1SDptCorrL123                       = sumSDsubjets_P4_L123res         .Perp() ;  
-      Jet1SDptCorrL123Up                     = sumSDsubjets_P4_L123resCorrUp   .Perp() ;  
-      Jet1SDptCorrL123Dn                     = sumSDsubjets_P4_L123resCorrDn   .Perp() ;  
+      // Jet1SDptCorrL23                        = sumSDsubjets_P4_L23res          .Perp() ;  
+      // Jet1SDptCorrL23Up                      = sumSDsubjets_P4_L23resCorrUp    .Perp() ;  
+      // Jet1SDptCorrL23Dn                      = sumSDsubjets_P4_L23resCorrDn    .Perp() ;  
+      // Jet1SDptCorrL123                       = sumSDsubjets_P4_L123res         .Perp() ;  
+      // Jet1SDptCorrL123Up                     = sumSDsubjets_P4_L123resCorrUp   .Perp() ;  
+      // Jet1SDptCorrL123Dn                     = sumSDsubjets_P4_L123resCorrDn   .Perp() ;  
       // Jet1SDptCorrL23Smear                   = sumSDsubjets_P4_L23resPtSmear   .Perp() ;
       // Jet1SDptCorrL23SmearUp                 = sumSDsubjets_P4_L23resPtSmearUp .Perp() ;
       // Jet1SDptCorrL23SmearDn                 = sumSDsubjets_P4_L23resPtSmearDn .Perp() ;
@@ -4824,6 +5260,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet1Tau4                               = tau4          ;  
       Jet1Tau32                              = tau32         ;  
       Jet1Tau21                              = tau21         ;  
+
+      Jet1NsubjetsSD                         = nsubjets_chs   ;
+      Jet1NsubjetsSDPuppi                    = nsubjets_pup   ;
 
       // Softdrop subjet variables
       Jet1SDsubjet0bdisc                     = sub0_bdisc            ;  
@@ -4858,11 +5297,11 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       // Jet1DeltaRPuppi                        = minDR_pup_chs;       
 
       // Puppi jet kinematics (uncorrected) and ID variables
-      Jet1PuppiP                             = AK8PUPPI_P4uncorr.P()    ;                  
-      Jet1PuppiPt                            = puppi_pt   ;                  
-      Jet1PuppiEta                           = puppi_eta  ;                   
-      Jet1PuppiPhi                           = puppi_phi  ;                  
-      Jet1PuppiMass                          = puppi_mass ;                  
+      // Jet1PuppiP                             = AK8PUPPI_P4uncorr.P()    ;                  
+      Jet1PuppiPtRaw                            = puppi_pt   ;                  
+      Jet1PuppiEtaRaw                           = puppi_eta  ;                   
+      Jet1PuppiPhiRaw                           = puppi_phi  ;                  
+      Jet1PuppiMassRaw                          = puppi_mass ;                  
       Jet1PuppiArea                          = puppi_area ;                  
 
       Jet1PuppiCHF                           = puppi_CHF   ; 
@@ -4875,25 +5314,25 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       Jet1PuppiMult                          = puppi_Mult  ; 
 
       // Puppi softdrop mass from puppi subjets ( JEC applied separately to each subjet )
-      Jet1PuppiSDmass                        = sumPUPsubjets_P4_uncorr           .M()   ;
+      Jet1PuppiSDmassRaw                        = sumPUPsubjets_P4_uncorr           .M()   ;
       Jet1PuppiSDmassSubjetCorr              = sumPUPsubjets_P4_L23res           .M()   ;
-      Jet1PuppiSDmassSubjetCorrUp            = sumPUPsubjets_P4_L23resCorrUp     .M()   ;
-      Jet1PuppiSDmassSubjetCorrDn            = sumPUPsubjets_P4_L23resCorrDn     .M()   ;
+      // Jet1PuppiSDmassSubjetCorrUp            = sumPUPsubjets_P4_L23resCorrUp     .M()   ;
+      // Jet1PuppiSDmassSubjetCorrDn            = sumPUPsubjets_P4_L23resCorrDn     .M()   ;
       // Jet1PuppiSDmassSubjetCorrL23Smear            = sumPUPsubjets_P4_L23resPtSmear    .M()   ;
       // Jet1PuppiSDmassSubjetCorrL23SmearUp          = sumPUPsubjets_P4_L23resPtSmearUp  .M()   ;
       // Jet1PuppiSDmassSubjetCorrL23SmearDn          = sumPUPsubjets_P4_L23resPtSmearDn  .M()   ;
-      Jet1PuppiSDpt                          = sumPUPsubjets_P4_uncorr           .Perp();
-      Jet1PuppiSDptSubjetCorr                = sumPUPsubjets_P4_L23res           .Perp();
-      Jet1PuppiSDptSubjetCorrUp              = sumPUPsubjets_P4_L23resCorrUp     .Perp();
-      Jet1PuppiSDptSubjetCorrDn              = sumPUPsubjets_P4_L23resCorrDn     .Perp();
+      Jet1PuppiSDptRaw                          = sumPUPsubjets_P4_uncorr           .Perp();
+      // Jet1PuppiSDptSubjetCorr                = sumPUPsubjets_P4_L23res           .Perp();
+      // Jet1PuppiSDptSubjetCorrUp              = sumPUPsubjets_P4_L23resCorrUp     .Perp();
+      // Jet1PuppiSDptSubjetCorrDn              = sumPUPsubjets_P4_L23resCorrDn     .Perp();
       // Jet1PuppiSDptSubjetCorrL23Smear              = sumPUPsubjets_P4_L23resPtSmear    .Perp();
       // Jet1PuppiSDptSubjetCorrL23SmearUp            = sumPUPsubjets_P4_L23resPtSmearUp  .Perp();
       // Jet1PuppiSDptSubjetCorrL23SmearDn            = sumPUPsubjets_P4_L23resPtSmearDn  .Perp();
-      Jet1PuppiSDeta                         = sumPUPsubjets_P4_uncorr           .Eta() ;
-      Jet1PuppiSDphi                         = sumPUPsubjets_P4_uncorr           .Phi() ;
+      Jet1PuppiSDetaRaw                         = sumPUPsubjets_P4_uncorr           .Eta() ;
+      Jet1PuppiSDphiRaw                         = sumPUPsubjets_P4_uncorr           .Phi() ;
 
       // PUPPI user floats from the toolbox
-      Jet1PuppiSDmassUserFloat               = puppi_softDropMass ;
+      // Jet1PuppiSDmassUserFloat               = puppi_softDropMass ;
       Jet1PuppiMassPruned                    = puppi_prunedMass   ;
       Jet1PuppiMassTrimmed                   = puppi_trimmedMass  ; 
       Jet1PuppiTau1                          = puppi_tau1         ;                  
@@ -5064,320 +5503,331 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       }   
     } 
 
+    // Semilept Jet opposite lepton
+    if (verbose_) cout<<"count_lep "<<count_lep<<endl;
+    if (runSemiLeptTree_ && count_lep ==1){
+      double deltaPhi_lep_jet = fabs( deltaPhi(corrJet.phi(), lep0_p4.Phi() )) ;
+      if (verbose_) cout<<"  -> deltaPhi_lep_jet "<<deltaPhi_lep_jet<<endl;
+      // AK8 jet should be in opposite hemisphere from lepton. If leading jet matches then use it. If it doensn't then check the second leading jet.
+      if ( ((count_AK8CHS==0&& deltaPhi_lep_jet >=3.14/2) || (count_AK8CHS==1&&deltaPhi_lep_jet >=3.14/2)) && count_fill_leptTree==0 ){
+        if (verbose_) cout<<"Put jet variables in semilept tree  -> count_AK8CHS "<<count_AK8CHS<<" count_fill_leptTree"<<count_fill_leptTree<<endl;
+        count_fill_leptTree++;
+        AK8jet_SemiLept_P4corr.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
 
-    //------------------------------------
-    // Fill SemiLeptTree
-    //------------------------------------ 
-    if (verbose_) cout<<"Fill SemiLeptTree "<<endl;
-    double deltaPhi_lep_jet = fabs( deltaPhi(corrJet.phi(), lep0_p4.Phi() )) ;
-    // AK8 jet should be in opposite hemisphere from lepton. If leading jet matches then use it. If it doensn't then check the second leading jet.
-    if ( ((count_AK8CHS==0&& deltaPhi_lep_jet >=3.14/2) || (count_AK8CHS==1&&deltaPhi_lep_jet >=3.14/2)) && count_lep ==1 && count_fill_leptTree==0 ){
-      count_fill_leptTree++;
-      AK8jet_SemiLept_P4corr.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
+        DeltaRJetLep                          = deltaR(corrJet.eta(), corrJet.phi(), lep0_p4.Eta(), lep0_p4.Phi() );
+        DeltaPhiJetLep                        = deltaPhi_lep_jet    ;
 
-      DeltaRJetLep                          = deltaR(corrJet.eta(), corrJet.phi(), lep0_p4.Eta(), lep0_p4.Phi() );
-      DeltaPhiJetLep                        = deltaPhi_lep_jet    ;
+        // basic kinematic and ID variables
+        JetPtRaw                              = uncorrJet.pt()      ;                 
+        JetEtaRaw                             = uncorrJet.eta()     ;                  
+        JetPhiRaw                             = uncorrJet.phi()     ;   
+        JetMassRaw                            = uncorrJet.mass()    ;                                           
+        // JetP                                  = corrJet.P()         ;        
+        // JetPt                                 = corrJet.pt()        ;                  
+        // JetEta                                = corrJet.eta()       ;                  
+        // JetPhi                                = corrJet.phi()       ;                  
+        // JetRap                                = corrJet.Rapidity()  ;                  
+        // JetEnergy                             = corrJet.energy()    ;                  
+        // JetMass                               = corrJet.mass()      ;                    
+        JetArea                               = ijet.jetArea()      ;                  
+       
+        JetCHF                                = ijet.chargedHadronEnergy() / uncorrJet.E()  ;                        
+        JetNHF                                = ijet.neutralHadronEnergy() / uncorrJet.E()  ;                         
+        JetCM                                 = ijet.chargedMultiplicity()  ;                         
+        JetNM                                 = ijet.neutralMultiplicity()  ;                          
+        JetNEF                                = ijet.neutralEmEnergy() / uncorrJet.E()  ;                            
+        JetCEF                                = ijet.chargedEmEnergy() / uncorrJet.E()  ;                          
+        JetMF                                 = ijet.muonEnergy() / uncorrJet.E()  ;                         
+        JetMult                               = ijet.numberOfDaughters() ;   
 
-      // basic kinematic and ID variables
-      JetPtRaw                              = uncorrJet.pt()      ;                 
-      JetEtaRaw                             = uncorrJet.eta()     ;                  
-      JetPhiRaw                             = uncorrJet.phi()     ;   
-      JetMassRaw                            = uncorrJet.mass()    ;                                           
-      JetP                                  = corrJet.P()         ;        
-      JetPt                                 = corrJet.pt()        ;                  
-      JetEta                                = corrJet.eta()       ;                  
-      JetPhi                                = corrJet.phi()       ;                  
-      JetRap                                = corrJet.Rapidity()  ;                  
-      JetEnergy                             = corrJet.energy()    ;                  
-      JetMass                               = corrJet.mass()      ;                    
-      JetArea                               = ijet.jetArea()      ;                  
-     
-      JetCHF                                = ijet.chargedHadronEnergy() / uncorrJet.E()  ;                        
-      JetNHF                                = ijet.neutralHadronEnergy() / uncorrJet.E()  ;                         
-      JetCM                                 = ijet.chargedMultiplicity()  ;                         
-      JetNM                                 = ijet.neutralMultiplicity()  ;                          
-      JetNEF                                = ijet.neutralEmEnergy() / uncorrJet.E()  ;                            
-      JetCEF                                = ijet.chargedEmEnergy() / uncorrJet.E()  ;                          
-      JetMF                                 = ijet.muonEnergy() / uncorrJet.E()  ;                         
-      JetMult                               = ijet.numberOfDaughters() ;   
+        // soft drop mass calculated from soft drop subjets                          
+        JetSDmassRaw                          = sumSDsubjets_P4_uncorr   .M()    ;  
+        JetSDetaRaw                           = sumSDsubjets_P4_uncorr   .Eta()  ;                    
+        JetSDphiRaw                           = sumSDsubjets_P4_uncorr   .Phi()  ;  
+        JetSDptRaw                            = sumSDsubjets_P4_uncorr   .Perp() ;  
+    
+        // experiment with JEC applied separately to each subjet
+        JetSDmassSubjetCorrL23                      = sumSDsubjets_P4_L23res          .M()    ;   
+        // JetSDmassSubjetCorrL23Up                    = sumSDsubjets_P4_L23resSubjetCorrUp    .M()    ;   
+        // JetSDmassSubjetCorrL23Dn                    = sumSDsubjets_P4_L23resSubjetCorrDn    .M()    ; 
+        JetSDmassSubjetCorrL123                     = sumSDsubjets_P4_L123res         .M()    ;  
+        // JetSDmassCorrL123Up                   = sumSDsubjets_P4_L123resCorrUp   .M()    ;   
+        // JetSDmassCorrL123Dn                   = sumSDsubjets_P4_L123resCorrDn   .M()    ;  
+        // JetSDmassCorrL23Smear                 = sumSDsubjets_P4_L23resPtSmear   .M()    ;   // This doesn't work. Subjet genjets are not a good match.
+        // JetSDmassCorrL23SmearUp               = sumSDsubjets_P4_L23resPtSmearUp .M()    ;
+        // JetSDmassCorrL23SmearDn               = sumSDsubjets_P4_L23resPtSmearDn .M()    ;
+        // JetSDptCorrL23                        = sumSDsubjets_P4_L23res          .Perp() ;  
+        // JetSDptCorrL23Up                      = sumSDsubjets_P4_L23resCorrUp    .Perp() ;  
+        // JetSDptCorrL23Dn                      = sumSDsubjets_P4_L23resCorrDn    .Perp() ;  
+        // JetSDptCorrL123                       = sumSDsubjets_P4_L123res         .Perp() ;  
+        // JetSDptCorrL123Up                     = sumSDsubjets_P4_L123resCorrUp   .Perp() ;  
+        // JetSDptCorrL123Dn                     = sumSDsubjets_P4_L123resCorrDn   .Perp() ;  
+        // JetSDptCorrL23Smear                   = sumSDsubjets_P4_L23resPtSmear   .Perp() ;
+        // JetSDptCorrL23SmearUp                 = sumSDsubjets_P4_L23resPtSmearUp .Perp() ;
+        // JetSDptCorrL23SmearDn                 = sumSDsubjets_P4_L23resPtSmearDn .Perp() ;
+            
+        // user floats from the toolbox
+        // JetSDmass                             = softDropMass  ;   // soft Drop mass from miniAOD                 
+        JetMassPruned                         = prunedMass    ;     
+        JetMassTrimmed                        = trimmedMass   ;     
+        JetTau1                               = tau1          ;  
+        JetTau2                               = tau2          ;  
+        JetTau3                               = tau3          ;  
+        JetTau4                               = tau4          ;  
+        JetTau32                              = tau32         ;  
+        JetTau21                              = tau21         ;  
 
-      // soft drop mass calculated from soft drop subjets                          
-      JetSDmassRaw                          = sumSDsubjets_P4_uncorr   .M()    ;  
-      JetSDetaRaw                           = sumSDsubjets_P4_uncorr   .Eta()  ;                    
-      JetSDphiRaw                           = sumSDsubjets_P4_uncorr   .Phi()  ;  
-      JetSDptRaw                            = sumSDsubjets_P4_uncorr   .Perp() ;  
-  
-      // experiment with JEC applied separately to each subjet
-      JetSDmassCorrL23                      = sumSDsubjets_P4_L23res          .M()    ;   
-      JetSDmassCorrL23Up                    = sumSDsubjets_P4_L23resCorrUp    .M()    ;   
-      JetSDmassCorrL23Dn                    = sumSDsubjets_P4_L23resCorrDn    .M()    ; 
-      JetSDmassCorrL123                     = sumSDsubjets_P4_L123res         .M()    ;  
-      JetSDmassCorrL123Up                   = sumSDsubjets_P4_L123resCorrUp   .M()    ;   
-      JetSDmassCorrL123Dn                   = sumSDsubjets_P4_L123resCorrDn   .M()    ;  
-      // JetSDmassCorrL23Smear                 = sumSDsubjets_P4_L23resPtSmear   .M()    ;   // This doesn't work. Subjet genjets are not a good match.
-      // JetSDmassCorrL23SmearUp               = sumSDsubjets_P4_L23resPtSmearUp .M()    ;
-      // JetSDmassCorrL23SmearDn               = sumSDsubjets_P4_L23resPtSmearDn .M()    ;
-      JetSDptCorrL23                        = sumSDsubjets_P4_L23res          .Perp() ;  
-      JetSDptCorrL23Up                      = sumSDsubjets_P4_L23resCorrUp    .Perp() ;  
-      JetSDptCorrL23Dn                      = sumSDsubjets_P4_L23resCorrDn    .Perp() ;  
-      JetSDptCorrL123                       = sumSDsubjets_P4_L123res         .Perp() ;  
-      JetSDptCorrL123Up                     = sumSDsubjets_P4_L123resCorrUp   .Perp() ;  
-      JetSDptCorrL123Dn                     = sumSDsubjets_P4_L123resCorrDn   .Perp() ;  
-      // JetSDptCorrL23Smear                   = sumSDsubjets_P4_L23resPtSmear   .Perp() ;
-      // JetSDptCorrL23SmearUp                 = sumSDsubjets_P4_L23resPtSmearUp .Perp() ;
-      // JetSDptCorrL23SmearDn                 = sumSDsubjets_P4_L23resPtSmearDn .Perp() ;
-          
-      // user floats from the toolbox
-      JetSDmass                             = softDropMass  ;   // soft Drop mass from miniAOD                 
-      JetMassPruned                         = prunedMass    ;     
-      JetMassTrimmed                        = trimmedMass   ;     
-      JetTau1                               = tau1          ;  
-      JetTau2                               = tau2          ;  
-      JetTau3                               = tau3          ;  
-      JetTau4                               = tau4          ;  
-      JetTau32                              = tau32         ;  
-      JetTau21                              = tau21         ;  
+        JetNsubjetsSD                         = nsubjets_chs   ;
+        JetNsubjetsSDPuppi                    = nsubjets_pup   ;
 
-      // Softdrop subjet variables
-      JetSDsubjet0bdisc                     = sub0_bdisc            ;  
-      JetSDsubjet1bdisc                     = sub1_bdisc            ;   
-      JetSDmaxbdisc                         = maxbdisc              ;
-      JetSDmaxbdiscflavHadron               = maxbdiscflav_hadron   ;  
-      JetSDmaxbdiscflavParton               = maxbdiscflav_parton   ;  
-      JetSDsubjet0pt                        = sub0_P4_uncorr.Pt()   ;               
-      JetSDsubjet0mass                      = sub0_P4_uncorr.M()    ;  
-      JetSDsubjet0eta                       = sub0_P4_uncorr.Eta()  ;  
-      JetSDsubjet0phi                       = sub0_P4_uncorr.Phi()  ;  
-      JetSDsubjet0area                      = sub0_area             ;  
-      JetSDsubjet0flavHadron                = sub0_flav_hadron      ;  
-      JetSDsubjet0flavParton                = sub0_flav_parton      ;  
-      JetSDsubjet0matchedgenjetpt           = sub0_genpt            ;  
-      JetSDsubjet0tau1                      = sub0_tau1             ;  
-      JetSDsubjet0tau2                      = sub0_tau2             ;  
-      JetSDsubjet0tau3                      = sub0_tau3             ;  
-      JetSDsubjet1pt                        = sub1_P4_uncorr.Pt()   ;                    
-      JetSDsubjet1mass                      = sub1_P4_uncorr.M()    ; 
-      JetSDsubjet1eta                       = sub1_P4_uncorr.Eta()  ;  
-      JetSDsubjet1phi                       = sub1_P4_uncorr.Phi()  ;                     
-      JetSDsubjet1area                      = sub1_area             ;                    
-      JetSDsubjet1flavHadron                = sub1_flav_hadron      ;     
-      JetSDsubjet1flavParton                = sub1_flav_parton      ;
-      JetSDsubjet1matchedgenjetpt           = sub1_genpt            ;       
-      JetSDsubjet1tau1                      = sub1_tau1             ;  
-      JetSDsubjet1tau2                      = sub1_tau2             ;  
-      JetSDsubjet1tau3                      = sub1_tau3             ; 
+        // Softdrop subjet variables
+        JetSDsubjet0bdisc                     = sub0_bdisc            ;  
+        JetSDsubjet1bdisc                     = sub1_bdisc            ;   
+        JetSDmaxbdisc                         = maxbdisc              ;
+        JetSDmaxbdiscflavHadron               = maxbdiscflav_hadron   ;  
+        JetSDmaxbdiscflavParton               = maxbdiscflav_parton   ;  
+        JetSDsubjet0pt                        = sub0_P4_uncorr.Pt()   ;               
+        JetSDsubjet0mass                      = sub0_P4_uncorr.M()    ;  
+        JetSDsubjet0eta                       = sub0_P4_uncorr.Eta()  ;  
+        JetSDsubjet0phi                       = sub0_P4_uncorr.Phi()  ;  
+        JetSDsubjet0area                      = sub0_area             ;  
+        JetSDsubjet0flavHadron                = sub0_flav_hadron      ;  
+        JetSDsubjet0flavParton                = sub0_flav_parton      ;  
+        JetSDsubjet0matchedgenjetpt           = sub0_genpt            ;  
+        JetSDsubjet0tau1                      = sub0_tau1             ;  
+        JetSDsubjet0tau2                      = sub0_tau2             ;  
+        JetSDsubjet0tau3                      = sub0_tau3             ;  
+        JetSDsubjet1pt                        = sub1_P4_uncorr.Pt()   ;                    
+        JetSDsubjet1mass                      = sub1_P4_uncorr.M()    ; 
+        JetSDsubjet1eta                       = sub1_P4_uncorr.Eta()  ;  
+        JetSDsubjet1phi                       = sub1_P4_uncorr.Phi()  ;                     
+        JetSDsubjet1area                      = sub1_area             ;                    
+        JetSDsubjet1flavHadron                = sub1_flav_hadron      ;     
+        JetSDsubjet1flavParton                = sub1_flav_parton      ;
+        JetSDsubjet1matchedgenjetpt           = sub1_genpt            ;       
+        JetSDsubjet1tau1                      = sub1_tau1             ;  
+        JetSDsubjet1tau2                      = sub1_tau2             ;  
+        JetSDsubjet1tau3                      = sub1_tau3             ; 
 
-      // Angle between puppi jet and chs jet
-      // JetDeltaRPuppi                        = minDR_pup_chs;       
+        // Angle between puppi jet and chs jet
+        // JetDeltaRPuppi                        = minDR_pup_chs;       
 
-      // Puppi jet kinematics (uncorrected) and ID variables
-      JetPuppiP                             = AK8PUPPI_P4uncorr.P()    ;                  
-      JetPuppiPt                            = puppi_pt   ;                  
-      JetPuppiEta                           = puppi_eta  ;                   
-      JetPuppiPhi                           = puppi_phi  ;                  
-      JetPuppiMass                          = puppi_mass ;                  
-      JetPuppiArea                          = puppi_area ;                  
+        // Puppi jet kinematics (uncorrected) and ID variables
+        // JetPuppiP                             = AK8PUPPI_P4uncorr.P()    ;                  
+        JetPuppiPtRaw                            = puppi_pt   ;                  
+        JetPuppiEtaRaw                           = puppi_eta  ;                   
+        JetPuppiPhiRaw                           = puppi_phi  ;                  
+        JetPuppiMassRaw                          = puppi_mass ;                  
+        JetPuppiArea                          = puppi_area ;                  
 
-      JetPuppiCHF                           = puppi_CHF   ; 
-      JetPuppiNHF                           = puppi_NHF   ; 
-      JetPuppiCM                            = puppi_CM    ; 
-      JetPuppiNM                            = puppi_NM    ; 
-      JetPuppiNEF                           = puppi_NEF   ; 
-      JetPuppiCEF                           = puppi_CEF   ; 
-      JetPuppiMF                            = puppi_MF    ; 
-      JetPuppiMult                          = puppi_Mult  ; 
+        JetPuppiCHF                           = puppi_CHF   ; 
+        JetPuppiNHF                           = puppi_NHF   ; 
+        JetPuppiCM                            = puppi_CM    ; 
+        JetPuppiNM                            = puppi_NM    ; 
+        JetPuppiNEF                           = puppi_NEF   ; 
+        JetPuppiCEF                           = puppi_CEF   ; 
+        JetPuppiMF                            = puppi_MF    ; 
+        JetPuppiMult                          = puppi_Mult  ; 
 
-      // Puppi softdrop mass from puppi subjets ( JEC applied separately to each subjet )
-      JetPuppiSDmass                        = sumPUPsubjets_P4_uncorr           .M()   ;
-      JetPuppiSDmassSubjetCorr              = sumPUPsubjets_P4_L23res           .M()   ;
-      JetPuppiSDmassSubjetCorrUp            = sumPUPsubjets_P4_L23resCorrUp     .M()   ;
-      JetPuppiSDmassSubjetCorrDn            = sumPUPsubjets_P4_L23resCorrDn     .M()   ;
-      // JetPuppiSDmassSubjetCorrL23Smear            = sumPUPsubjets_P4_L23resPtSmear    .M()   ;
-      // JetPuppiSDmassSubjetCorrL23SmearUp          = sumPUPsubjets_P4_L23resPtSmearUp  .M()   ;
-      // JetPuppiSDmassSubjetCorrL23SmearDn          = sumPUPsubjets_P4_L23resPtSmearDn  .M()   ;
-      JetPuppiSDpt                          = sumPUPsubjets_P4_uncorr           .Perp();
-      JetPuppiSDptSubjetCorr                = sumPUPsubjets_P4_L23res           .Perp();
-      JetPuppiSDptSubjetCorrUp              = sumPUPsubjets_P4_L23resCorrUp     .Perp();
-      JetPuppiSDptSubjetCorrDn              = sumPUPsubjets_P4_L23resCorrDn     .Perp();
-      // JetPuppiSDptSubjetCorrL23Smear              = sumPUPsubjets_P4_L23resPtSmear    .Perp();
-      // JetPuppiSDptSubjetCorrL23SmearUp            = sumPUPsubjets_P4_L23resPtSmearUp  .Perp();
-      // JetPuppiSDptSubjetCorrL23SmearDn            = sumPUPsubjets_P4_L23resPtSmearDn  .Perp();
-      JetPuppiSDeta                         = sumPUPsubjets_P4_uncorr           .Eta() ;
-      JetPuppiSDphi                         = sumPUPsubjets_P4_uncorr           .Phi() ;
+        // Puppi softdrop mass from puppi subjets ( JEC applied separately to each subjet )
+        JetPuppiSDmassRaw                        = sumPUPsubjets_P4_uncorr           .M()   ;
+        JetPuppiSDmassSubjetCorr              = sumPUPsubjets_P4_L23res           .M()   ;
+        // JetPuppiSDmassSubjetCorrUp            = sumPUPsubjets_P4_L23resCorrUp     .M()   ;
+        // JetPuppiSDmassSubjetCorrDn            = sumPUPsubjets_P4_L23resCorrDn     .M()   ;
+        // JetPuppiSDmassSubjetCorrL23Smear            = sumPUPsubjets_P4_L23resPtSmear    .M()   ;
+        // JetPuppiSDmassSubjetCorrL23SmearUp          = sumPUPsubjets_P4_L23resPtSmearUp  .M()   ;
+        // JetPuppiSDmassSubjetCorrL23SmearDn          = sumPUPsubjets_P4_L23resPtSmearDn  .M()   ;
+        JetPuppiSDptRaw                          = sumPUPsubjets_P4_uncorr           .Perp();
+        // JetPuppiSDptSubjetCorr                = sumPUPsubjets_P4_L23res           .Perp();
+        // JetPuppiSDptSubjetCorrUp              = sumPUPsubjets_P4_L23resCorrUp     .Perp();
+        // JetPuppiSDptSubjetCorrDn              = sumPUPsubjets_P4_L23resCorrDn     .Perp();
+        // JetPuppiSDptSubjetCorrL23Smear              = sumPUPsubjets_P4_L23resPtSmear    .Perp();
+        // JetPuppiSDptSubjetCorrL23SmearUp            = sumPUPsubjets_P4_L23resPtSmearUp  .Perp();
+        // JetPuppiSDptSubjetCorrL23SmearDn            = sumPUPsubjets_P4_L23resPtSmearDn  .Perp();
+        JetPuppiSDetaRaw                         = sumPUPsubjets_P4_uncorr           .Eta() ;
+        JetPuppiSDphiRaw                         = sumPUPsubjets_P4_uncorr           .Phi() ;
 
-      // PUPPI user floats from the toolbox
-      JetPuppiSDmassUserFloat               = puppi_softDropMass ;
-      JetPuppiMassPruned                    = puppi_prunedMass   ;
-      JetPuppiMassTrimmed                   = puppi_trimmedMass  ; 
-      JetPuppiTau1                          = puppi_tau1         ;                  
-      JetPuppiTau2                          = puppi_tau2         ;                  
-      JetPuppiTau3                          = puppi_tau3         ;                  
-      JetPuppiTau4                          = puppi_tau4         ;                  
-      JetPuppiTau32                         = puppi_tau32        ;                  
-      JetPuppiTau21                         = puppi_tau21        ;   
+        // PUPPI user floats from the toolbox
+        // JetPuppiSDmassUserFloat               = puppi_softDropMass ;
+        JetPuppiMassPruned                    = puppi_prunedMass   ;
+        JetPuppiMassTrimmed                   = puppi_trimmedMass  ; 
+        JetPuppiTau1                          = puppi_tau1         ;                  
+        JetPuppiTau2                          = puppi_tau2         ;                  
+        JetPuppiTau3                          = puppi_tau3         ;                  
+        JetPuppiTau4                          = puppi_tau4         ;                  
+        JetPuppiTau32                         = puppi_tau32        ;                  
+        JetPuppiTau21                         = puppi_tau21        ;   
 
-      // PUPPI subjet variables               
-      JetPuppiSDsubjet0bdisc                = pup0_bdisc                ;
-      JetPuppiSDsubjet1bdisc                = pup1_bdisc                ;
-      JetPuppiSDmaxbdisc                    = pup_maxbdisc              ;
-      JetPuppiSDmaxbdiscflavHadron          = pup_maxbdiscflav_hadron   ;
-      JetPuppiSDmaxbdiscflavParton          = pup_maxbdiscflav_parton   ;
-      JetPuppiSDsubjet0pt                   = pup0_P4_uncorr.Pt()       ;
-      JetPuppiSDsubjet0mass                 = pup0_P4_uncorr.M()        ;
-      JetPuppiSDsubjet0eta                  = pup0_P4_uncorr.Eta()      ;
-      JetPuppiSDsubjet0phi                  = pup0_P4_uncorr.Phi()      ;
-      JetPuppiSDsubjet0area                 = pup0_area                 ;
-      JetPuppiSDsubjet0flavHadron           = pup0_flav_hadron          ; 
-      JetPuppiSDsubjet0flavParton           = pup0_flav_parton          ;
-      JetPuppiSDsubjet0matchedgenjetpt      = pup0_genpt                ;       
-      JetPuppiSDsubjet0tau1                 = pup0_tau1                 ;  
-      JetPuppiSDsubjet0tau2                 = pup0_tau2                 ;  
-      JetPuppiSDsubjet0tau3                 = pup0_tau3                 ; 
-      JetPuppiSDsubjet1pt                   = pup1_P4_uncorr.Pt()       ;                 
-      JetPuppiSDsubjet1mass                 = pup1_P4_uncorr.M()        ; 
-      JetPuppiSDsubjet1eta                  = pup1_P4_uncorr.Eta()      ;
-      JetPuppiSDsubjet1phi                  = pup1_P4_uncorr.Phi()      ;             
-      JetPuppiSDsubjet1area                 = pup1_area                 ;              
-      JetPuppiSDsubjet1flavHadron           = pup1_flav_hadron          ;   
-      JetPuppiSDsubjet1flavParton           = pup1_flav_parton          ;   
-      JetPuppiSDsubjet1matchedgenjetpt      = pup1_genpt                ;       
-      JetPuppiSDsubjet1tau1                 = pup1_tau1                 ;  
-      JetPuppiSDsubjet1tau2                 = pup1_tau2                 ;  
-      JetPuppiSDsubjet1tau3                 = pup1_tau3                 ; 
+        // PUPPI subjet variables               
+        JetPuppiSDsubjet0bdisc                = pup0_bdisc                ;
+        JetPuppiSDsubjet1bdisc                = pup1_bdisc                ;
+        JetPuppiSDmaxbdisc                    = pup_maxbdisc              ;
+        JetPuppiSDmaxbdiscflavHadron          = pup_maxbdiscflav_hadron   ;
+        JetPuppiSDmaxbdiscflavParton          = pup_maxbdiscflav_parton   ;
+        JetPuppiSDsubjet0pt                   = pup0_P4_uncorr.Pt()       ;
+        JetPuppiSDsubjet0mass                 = pup0_P4_uncorr.M()        ;
+        JetPuppiSDsubjet0eta                  = pup0_P4_uncorr.Eta()      ;
+        JetPuppiSDsubjet0phi                  = pup0_P4_uncorr.Phi()      ;
+        JetPuppiSDsubjet0area                 = pup0_area                 ;
+        JetPuppiSDsubjet0flavHadron           = pup0_flav_hadron          ; 
+        JetPuppiSDsubjet0flavParton           = pup0_flav_parton          ;
+        JetPuppiSDsubjet0matchedgenjetpt      = pup0_genpt                ;       
+        JetPuppiSDsubjet0tau1                 = pup0_tau1                 ;  
+        JetPuppiSDsubjet0tau2                 = pup0_tau2                 ;  
+        JetPuppiSDsubjet0tau3                 = pup0_tau3                 ; 
+        JetPuppiSDsubjet1pt                   = pup1_P4_uncorr.Pt()       ;                 
+        JetPuppiSDsubjet1mass                 = pup1_P4_uncorr.M()        ; 
+        JetPuppiSDsubjet1eta                  = pup1_P4_uncorr.Eta()      ;
+        JetPuppiSDsubjet1phi                  = pup1_P4_uncorr.Phi()      ;             
+        JetPuppiSDsubjet1area                 = pup1_area                 ;              
+        JetPuppiSDsubjet1flavHadron           = pup1_flav_hadron          ;   
+        JetPuppiSDsubjet1flavParton           = pup1_flav_parton          ;   
+        JetPuppiSDsubjet1matchedgenjetpt      = pup1_genpt                ;       
+        JetPuppiSDsubjet1tau1                 = pup1_tau1                 ;  
+        JetPuppiSDsubjet1tau2                 = pup1_tau2                 ;  
+        JetPuppiSDsubjet1tau3                 = pup1_tau3                 ; 
 
-      // AK8CHS JEC scale nom/up/down      
-      JetCorrFactor                         = corr ;        
-      JetCorrFactorUp                       = corrUp_L123 ;
-      JetCorrFactorDn                       = corrDn_L123;
-      // AK8CHS L2L3 JEC scale nom/up/down for groomed mass correction
-      JetMassCorrFactor                     = corr_factor_L23res ;        
-      JetMassCorrFactorUp                   = corrUp_L23 ;
-      JetMassCorrFactorDn                   = corrDn_L23 ;
-      // AK8CHS JER
-      JetPtSmearFactor                      = ptsmear  ;
-      JetPtSmearFactorUp                    = ptsmearUp;
-      JetPtSmearFactorDn                    = ptsmearDn;         
-      
-      // AK8PUPPI JEC scale nom/up/down  (use for both full jet and groomed mass corrections)     
-      JetPuppiCorrFactor                    = corr_factorAK8pup_L23res;          
-      JetPuppiCorrFactorUp                  = corrUp_pup_L23;          
-      JetPuppiCorrFactorDn                  = corrDn_pup_L23;    
-      
-      // AK8PUPPI JER
-      JetPuppiPtSmearFactor                 = pup_ptsmear;          
-      JetPuppiPtSmearFactorUp               = pup_ptsmearUp;          
-      JetPuppiPtSmearFactorDn               = pup_ptsmearDn;  
+        // AK8CHS JEC scale nom/up/down      
+        JetCorrFactor                         = corr ;        
+        JetCorrFactorUp                       = corrUp_L123 ;
+        JetCorrFactorDn                       = corrDn_L123;
+        // AK8CHS L2L3 JEC scale nom/up/down for groomed mass correction
+        JetMassCorrFactor                     = corr_factor_L23res ;        
+        JetMassCorrFactorUp                   = corrUp_L23 ;
+        JetMassCorrFactorDn                   = corrDn_L23 ;
+        // AK8CHS JER
+        JetPtSmearFactor                      = ptsmear  ;
+        JetPtSmearFactorUp                    = ptsmearUp;
+        JetPtSmearFactorDn                    = ptsmearDn;         
+        
+        // AK8PUPPI JEC scale nom/up/down  (use for both full jet and groomed mass corrections)     
+        JetPuppiCorrFactor                    = corr_factorAK8pup_L23res;          
+        JetPuppiCorrFactorUp                  = corrUp_pup_L23;          
+        JetPuppiCorrFactorDn                  = corrDn_pup_L23;    
+        
+        // AK8PUPPI JER
+        JetPuppiPtSmearFactor                 = pup_ptsmear;          
+        JetPuppiPtSmearFactorUp               = pup_ptsmearUp;          
+        JetPuppiPtSmearFactorDn               = pup_ptsmearDn;  
 
-      // AK8CHS JAR   
-      // JetEtaScaleFactor                     = 1;          
-      // JetPhiScaleFactor                     = 1;      
+        // AK8CHS JAR   
+        // JetEtaScaleFactor                     = 1;          
+        // JetPhiScaleFactor                     = 1;      
 
-      // AK8CHS GenJet
-      JetMatchedGenJetPt                    = GenJetMatched.Perp();       
-      JetMatchedGenJetMass                  = GenJetMatched.M();   
+        // AK8CHS GenJet
+        JetMatchedGenJetPt                    = GenJetMatched.Perp();       
+        JetMatchedGenJetMass                  = GenJetMatched.M();   
 
-      // AK8PUPPI GenJet
-      JetPuppiMatchedGenJetPt               = GenJetMatchedPuppi.Perp();       
-      JetPuppiMatchedGenJetMass             = GenJetMatchedPuppi.M();   
-      // JetMatchedGenJetDR                 = GenJetMatched_dRmin;             
+        // AK8PUPPI GenJet
+        JetPuppiMatchedGenJetPt               = GenJetMatchedPuppi.Perp();       
+        JetPuppiMatchedGenJetMass             = GenJetMatchedPuppi.M();   
+        // JetMatchedGenJetDR                 = GenJetMatched_dRmin;             
 
 
-      if (!iEvent.isRealData() and runGenLoop_) {
-        if (counttop==2 && jet_matched_t1){
-          JetGenMatched_TopHadronic         = (int) top1hadronic             ;
-          JetGenMatched_TopPt               = t1_p4.Perp()                   ;
-          JetGenMatched_TopEta              = t1_p4.Eta()                    ;
-          JetGenMatched_TopPhi              = t1_p4.Phi()                    ;
-          JetGenMatched_TopMass             = t1_p4.M()                      ;
-          JetGenMatched_bPt                 = b1_p4.Perp()                   ;
-          JetGenMatched_WPt                 = W1_p4.Perp()                   ;
-          JetGenMatched_Wd1Pt               = W1d1_p4.Perp()                 ;
-          JetGenMatched_Wd2Pt               = W1d2_p4.Perp()                 ;
-          JetGenMatched_Wd1ID               = W1d1_id                        ;
-          JetGenMatched_Wd2ID               = W1d2_id                        ;
-          JetGenMatched_MaxDeltaRPartonTop  = max_deltaR_parton_t1           ;
-          JetGenMatched_MaxDeltaRWPartonTop = max_deltaR_Wparton_t1          ;
-          JetGenMatched_MaxDeltaRWPartonW   = max_deltaR_Wparton_W1          ;
-          JetGenMatched_DeltaR_t_b          = deltaR_t1_b1                   ;
-          JetGenMatched_DeltaR_t_W          = deltaR_t1_W1                   ;
-          JetGenMatched_DeltaR_t_Wd1        = deltaR_t1_W1d1                 ;
-          JetGenMatched_DeltaR_t_Wd2        = deltaR_t1_W1d2                 ;
-          JetGenMatched_DeltaR_W_b1         = deltaR_W1_b1                   ;
-          JetGenMatched_DeltaR_W_Wd1        = deltaR_W1_W1d1                 ;
-          JetGenMatched_DeltaR_W_Wd2        = deltaR_W1_W1d2                 ;
-          JetGenMatched_DeltaR_Wd1_Wd2      = deltaR_W1d1_W1d2               ;
-          JetGenMatched_DeltaR_Wd1_b        = deltaR_W1d1_b1                 ;
-          JetGenMatched_DeltaR_Wd2_b        = deltaR_W1d2_b1                 ;
-          JetGenMatched_DeltaR_jet_t        = deltaR_jet_t1                  ;
-          JetGenMatched_DeltaR_jet_W        = jet_p4.DeltaR(W1_p4  )         ;
-          JetGenMatched_DeltaR_jet_b        = jet_p4.DeltaR(b1_p4  )         ;
-          JetGenMatched_DeltaR_jet_Wd1      = jet_p4.DeltaR(W1d1_p4)         ;
-          JetGenMatched_DeltaR_jet_Wd2      = jet_p4.DeltaR(W1d2_p4)         ;
-          JetGenMatched_DeltaR_pup0_b       = pup0_P4_L23res.DeltaR(b1_p4)   ;
-          JetGenMatched_DeltaR_pup0_Wd1     = pup0_P4_L23res.DeltaR(W1d1_p4) ;
-          JetGenMatched_DeltaR_pup0_Wd2     = pup0_P4_L23res.DeltaR(W1d2_p4) ;
-          JetGenMatched_DeltaR_pup1_b       = pup1_P4_L23res.DeltaR(b1_p4)   ;
-          JetGenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W1d1_p4) ;
-          JetGenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W1d2_p4) ;
-        }   
-        if (counttop==2 && jet_matched_t2){
-          JetGenMatched_TopHadronic         = (int) top2hadronic     ;
-          JetGenMatched_TopPt               = t2_p4.Perp()           ;
-          JetGenMatched_TopEta              = t2_p4.Eta()            ;
-          JetGenMatched_TopPhi              = t2_p4.Phi()            ;
-          JetGenMatched_TopMass             = t2_p4.M()              ;
-          JetGenMatched_bPt                 = b2_p4.Perp()           ;
-          JetGenMatched_WPt                 = W2_p4.Perp()           ;
-          JetGenMatched_Wd1Pt               = W2d1_p4.Perp()         ;
-          JetGenMatched_Wd2Pt               = W2d2_p4.Perp()         ;
-          JetGenMatched_Wd1ID               = W2d1_id                ;
-          JetGenMatched_Wd2ID               = W2d2_id                ;
-          JetGenMatched_MaxDeltaRPartonTop  = max_deltaR_parton_t2   ;
-          JetGenMatched_MaxDeltaRWPartonTop = max_deltaR_Wparton_t2  ;
-          JetGenMatched_MaxDeltaRWPartonW   = max_deltaR_Wparton_W2  ;
-          JetGenMatched_DeltaR_t_b          = deltaR_t2_b2           ;
-          JetGenMatched_DeltaR_t_W          = deltaR_t2_W2           ;
-          JetGenMatched_DeltaR_t_Wd1        = deltaR_t2_W2d1         ;
-          JetGenMatched_DeltaR_t_Wd2        = deltaR_t2_W2d2         ;
-          JetGenMatched_DeltaR_W_b1         = deltaR_W2_b2           ;
-          JetGenMatched_DeltaR_W_Wd1        = deltaR_W2_W2d1         ;
-          JetGenMatched_DeltaR_W_Wd2        = deltaR_W2_W2d2         ;
-          JetGenMatched_DeltaR_Wd1_Wd2      = deltaR_W2d1_W2d2       ;
-          JetGenMatched_DeltaR_Wd1_b        = deltaR_W2d1_b2         ;
-          JetGenMatched_DeltaR_Wd2_b        = deltaR_W2d2_b2         ;
-          JetGenMatched_DeltaR_jet_t        = deltaR_jet_t2          ;
-          JetGenMatched_DeltaR_jet_W        = jet_p4.DeltaR(W2_p4  ) ;
-          JetGenMatched_DeltaR_jet_b        = jet_p4.DeltaR(b2_p4  ) ;
-          JetGenMatched_DeltaR_jet_Wd1      = jet_p4.DeltaR(W2d1_p4) ;
-          JetGenMatched_DeltaR_jet_Wd2      = jet_p4.DeltaR(W2d2_p4) ;
-          JetGenMatched_DeltaR_pup0_b       = pup0_P4_L23res.DeltaR(b2_p4)   ;
-          JetGenMatched_DeltaR_pup0_Wd1     = pup0_P4_L23res.DeltaR(W2d1_p4) ;
-          JetGenMatched_DeltaR_pup0_Wd2     = pup0_P4_L23res.DeltaR(W2d2_p4) ;
-          JetGenMatched_DeltaR_pup1_b       = pup1_P4_L23res.DeltaR(b2_p4)   ;
-          JetGenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W2d1_p4) ;
-          JetGenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W2d2_p4) ;
+        if (!iEvent.isRealData() and runGenLoop_) {
+          if (counttop==2 && jet_matched_t1){
+            JetGenMatched_TopHadronic         = (int) top1hadronic             ;
+            JetGenMatched_TopPt               = t1_p4.Perp()                   ;
+            JetGenMatched_TopEta              = t1_p4.Eta()                    ;
+            JetGenMatched_TopPhi              = t1_p4.Phi()                    ;
+            JetGenMatched_TopMass             = t1_p4.M()                      ;
+            JetGenMatched_bPt                 = b1_p4.Perp()                   ;
+            JetGenMatched_WPt                 = W1_p4.Perp()                   ;
+            JetGenMatched_Wd1Pt               = W1d1_p4.Perp()                 ;
+            JetGenMatched_Wd2Pt               = W1d2_p4.Perp()                 ;
+            JetGenMatched_Wd1ID               = W1d1_id                        ;
+            JetGenMatched_Wd2ID               = W1d2_id                        ;
+            JetGenMatched_MaxDeltaRPartonTop  = max_deltaR_parton_t1           ;
+            JetGenMatched_MaxDeltaRWPartonTop = max_deltaR_Wparton_t1          ;
+            JetGenMatched_MaxDeltaRWPartonW   = max_deltaR_Wparton_W1          ;
+            JetGenMatched_DeltaR_t_b          = deltaR_t1_b1                   ;
+            JetGenMatched_DeltaR_t_W          = deltaR_t1_W1                   ;
+            JetGenMatched_DeltaR_t_Wd1        = deltaR_t1_W1d1                 ;
+            JetGenMatched_DeltaR_t_Wd2        = deltaR_t1_W1d2                 ;
+            JetGenMatched_DeltaR_W_b1         = deltaR_W1_b1                   ;
+            JetGenMatched_DeltaR_W_Wd1        = deltaR_W1_W1d1                 ;
+            JetGenMatched_DeltaR_W_Wd2        = deltaR_W1_W1d2                 ;
+            JetGenMatched_DeltaR_Wd1_Wd2      = deltaR_W1d1_W1d2               ;
+            JetGenMatched_DeltaR_Wd1_b        = deltaR_W1d1_b1                 ;
+            JetGenMatched_DeltaR_Wd2_b        = deltaR_W1d2_b1                 ;
+            JetGenMatched_DeltaR_jet_t        = deltaR_jet_t1                  ;
+            JetGenMatched_DeltaR_jet_W        = jet_p4.DeltaR(W1_p4  )         ;
+            JetGenMatched_DeltaR_jet_b        = jet_p4.DeltaR(b1_p4  )         ;
+            JetGenMatched_DeltaR_jet_Wd1      = jet_p4.DeltaR(W1d1_p4)         ;
+            JetGenMatched_DeltaR_jet_Wd2      = jet_p4.DeltaR(W1d2_p4)         ;
+            JetGenMatched_DeltaR_pup0_b       = pup0_P4_L23res.DeltaR(b1_p4)   ;
+            JetGenMatched_DeltaR_pup0_Wd1     = pup0_P4_L23res.DeltaR(W1d1_p4) ;
+            JetGenMatched_DeltaR_pup0_Wd2     = pup0_P4_L23res.DeltaR(W1d2_p4) ;
+            JetGenMatched_DeltaR_pup1_b       = pup1_P4_L23res.DeltaR(b1_p4)   ;
+            JetGenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W1d1_p4) ;
+            JetGenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W1d2_p4) ;
+
+            if (verbose_){
+              cout<<"  JetGenMatched_DeltaR_pup0_b   "<<JetGenMatched_DeltaR_pup0_b  <<endl;
+              cout<<"  JetGenMatched_DeltaR_pup0_Wd1 "<<JetGenMatched_DeltaR_pup0_Wd1<<endl;
+              cout<<"  JetGenMatched_DeltaR_pup0_Wd2 "<<JetGenMatched_DeltaR_pup0_Wd2<<endl;
+            }
+          }   
+          if (counttop==2 && jet_matched_t2){
+            JetGenMatched_TopHadronic         = (int) top2hadronic     ;
+            JetGenMatched_TopPt               = t2_p4.Perp()           ;
+            JetGenMatched_TopEta              = t2_p4.Eta()            ;
+            JetGenMatched_TopPhi              = t2_p4.Phi()            ;
+            JetGenMatched_TopMass             = t2_p4.M()              ;
+            JetGenMatched_bPt                 = b2_p4.Perp()           ;
+            JetGenMatched_WPt                 = W2_p4.Perp()           ;
+            JetGenMatched_Wd1Pt               = W2d1_p4.Perp()         ;
+            JetGenMatched_Wd2Pt               = W2d2_p4.Perp()         ;
+            JetGenMatched_Wd1ID               = W2d1_id                ;
+            JetGenMatched_Wd2ID               = W2d2_id                ;
+            JetGenMatched_MaxDeltaRPartonTop  = max_deltaR_parton_t2   ;
+            JetGenMatched_MaxDeltaRWPartonTop = max_deltaR_Wparton_t2  ;
+            JetGenMatched_MaxDeltaRWPartonW   = max_deltaR_Wparton_W2  ;
+            JetGenMatched_DeltaR_t_b          = deltaR_t2_b2           ;
+            JetGenMatched_DeltaR_t_W          = deltaR_t2_W2           ;
+            JetGenMatched_DeltaR_t_Wd1        = deltaR_t2_W2d1         ;
+            JetGenMatched_DeltaR_t_Wd2        = deltaR_t2_W2d2         ;
+            JetGenMatched_DeltaR_W_b1         = deltaR_W2_b2           ;
+            JetGenMatched_DeltaR_W_Wd1        = deltaR_W2_W2d1         ;
+            JetGenMatched_DeltaR_W_Wd2        = deltaR_W2_W2d2         ;
+            JetGenMatched_DeltaR_Wd1_Wd2      = deltaR_W2d1_W2d2       ;
+            JetGenMatched_DeltaR_Wd1_b        = deltaR_W2d1_b2         ;
+            JetGenMatched_DeltaR_Wd2_b        = deltaR_W2d2_b2         ;
+            JetGenMatched_DeltaR_jet_t        = deltaR_jet_t2          ;
+            JetGenMatched_DeltaR_jet_W        = jet_p4.DeltaR(W2_p4  ) ;
+            JetGenMatched_DeltaR_jet_b        = jet_p4.DeltaR(b2_p4  ) ;
+            JetGenMatched_DeltaR_jet_Wd1      = jet_p4.DeltaR(W2d1_p4) ;
+            JetGenMatched_DeltaR_jet_Wd2      = jet_p4.DeltaR(W2d2_p4) ;
+            JetGenMatched_DeltaR_pup0_b       = pup0_P4_L23res.DeltaR(b2_p4)   ;
+            JetGenMatched_DeltaR_pup0_Wd1     = pup0_P4_L23res.DeltaR(W2d1_p4) ;
+            JetGenMatched_DeltaR_pup0_Wd2     = pup0_P4_L23res.DeltaR(W2d2_p4) ;
+            JetGenMatched_DeltaR_pup1_b       = pup1_P4_L23res.DeltaR(b2_p4)   ;
+            JetGenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W2d1_p4) ;
+            JetGenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W2d2_p4) ;
+          }
+          if (counttop==0 && jet_matched_p1){
+            JetGenMatched_partonPt               = hardest_parton_hardScatterOutgoing_p4.Perp()           ;
+            JetGenMatched_partonEta              = hardest_parton_hardScatterOutgoing_p4.Eta()            ;
+            JetGenMatched_partonPhi              = hardest_parton_hardScatterOutgoing_p4.Phi()            ;
+            JetGenMatched_partonMass             = hardest_parton_hardScatterOutgoing_p4.M()              ;
+            JetGenMatched_partonID               = parton1id                                              ;
+            JetGenMatched_DeltaRjetParton        = deltaR_jet_p1                                          ;
+          }
+          if (counttop==0 && jet_matched_p2){
+            JetGenMatched_partonPt               = second_hardest_parton_hardScatterOutgoing_p4.Perp()    ;
+            JetGenMatched_partonEta              = second_hardest_parton_hardScatterOutgoing_p4.Eta()     ;
+            JetGenMatched_partonPhi              = second_hardest_parton_hardScatterOutgoing_p4.Phi()     ;
+            JetGenMatched_partonMass             = second_hardest_parton_hardScatterOutgoing_p4.M()       ;
+            JetGenMatched_partonID               = parton2id                                              ;
+            JetGenMatched_DeltaRjetParton        = deltaR_jet_p2                                          ;
+          }
         }
-        if (counttop==0 && jet_matched_p1){
-          JetGenMatched_partonPt               = hardest_parton_hardScatterOutgoing_p4.Perp()           ;
-          JetGenMatched_partonEta              = hardest_parton_hardScatterOutgoing_p4.Eta()            ;
-          JetGenMatched_partonPhi              = hardest_parton_hardScatterOutgoing_p4.Phi()            ;
-          JetGenMatched_partonMass             = hardest_parton_hardScatterOutgoing_p4.M()              ;
-          JetGenMatched_partonID               = parton1id                                              ;
-          JetGenMatched_DeltaRjetParton        = deltaR_jet_p1                                          ;
-        }
-        if (counttop==0 && jet_matched_p2){
-          JetGenMatched_partonPt               = second_hardest_parton_hardScatterOutgoing_p4.Perp()    ;
-          JetGenMatched_partonEta              = second_hardest_parton_hardScatterOutgoing_p4.Eta()     ;
-          JetGenMatched_partonPhi              = second_hardest_parton_hardScatterOutgoing_p4.Phi()     ;
-          JetGenMatched_partonMass             = second_hardest_parton_hardScatterOutgoing_p4.M()       ;
-          JetGenMatched_partonID               = parton2id                                              ;
-          JetGenMatched_DeltaRjetParton        = deltaR_jet_p2                                          ;
-        }
-      }
-    } 
-
+      } // end if this jet is opposite the lepton
+    }// end if event has 1 lepton
     count_AK8CHS++;
   }
+
+
   //
   //        d8888 888 888        888    888               888     88888888888                           
   //       d88888 888 888        888    888               888         888                               
@@ -5393,49 +5843,89 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //------------------------------------
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
   //------------------------------------
-  if (AK8jet0_P4corr.Perp()>300 && AK8jet1_P4corr.Perp()>300 && fabs( AK8jet0_P4corr.Rapidity() ) <2.4 && fabs( AK8jet1_P4corr.Rapidity() ) <2.4 ){    
-    
-    double dijetDeltaPhi = fabs( deltaPhi( AK8jet0_P4corr.Phi(),  AK8jet1_P4corr.Phi() ));
 
-    AllHadMETpx          = met.px();                   
-    AllHadMETpy          = met.py();                   
-    AllHadMETpt          = met.pt();                   
-    AllHadMETphi         = met.phi();                   
-    AllHadMETsumET       = met.sumEt();                                  
-    AllHadNvtx           = nvtx;    
-    AllHadNvtxGood       = nvtxgood;    
-    AllHadNPUtrue        = nPU;           
-    AllHadRho            = rho ;               
-    AllHadEventWeight    = evWeight ;   
-    AllHadPUweight       = puweight  ; 
-    AllHadPUweight_MBup  = puweightUp ;
-    AllHadPUweight_MBdn  = puweightDn  ;          
-    DijetMass            = (AK8jet0_P4corr + AK8jet1_P4corr).M() ;                                                   
-    DijetMassPuppi       = (PUPPIjet0_P4corr + PUPPIjet1_P4corr).M() ;                                                   
-    DijetDeltaR          = deltaR( AK8jet0_P4corr.Eta(), AK8jet0_P4corr.Phi(), AK8jet1_P4corr.Eta(), AK8jet1_P4corr.Phi() );               
-    DijetDeltaPhi        = dijetDeltaPhi;                 
-    DijetDeltaRap        = fabs(AK8jet0_P4corr.Rapidity() -  AK8jet1_P4corr.Rapidity() );
+  if (runAllHadTree_ &&  AK8jet0_P4corr.Perp()>170 && AK8jet1_P4corr.Perp()>170){
+    h_cutflow_allhad   ->Fill(1.5);
+   
+    if ( fabs( AK8jet0_P4corr.Rapidity() ) <2.4 && fabs( AK8jet1_P4corr.Rapidity() ) <2.4 ){    
+      h_cutflow_allhad   ->Fill(2.5);
+      if (verbose_) cout<<"Write All-Had Tree"<<endl;
 
-    CountLep             = count_lep ;
-    DiGenJetMass         = (GenJetMatched0 + GenJetMatched1).M();                   
-    GenTTmass            = (t1_p4+t2_p4).M() ;               
-    HT                   = HT_AK4_pt30          ;                
-    HT_CorrDn            = HT_AK4_pt30_corrDn   ;                
-    HT_CorrUp            = HT_AK4_pt30_corrUp   ;  
-    HT_PtSmearNom        = HT_AK4_pt30_smearNom ;          
-    HT_PtSmearUp         = HT_AK4_pt30_smearUp  ;               
-    HT_PtSmearDn         = HT_AK4_pt30_smearDn  ;               
-    Q2weight_CorrDn      = Q2wgt_down ;              
-    Q2weight_CorrUp      = Q2wgt_up ;              
-    NNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
-    NNPDF3weight_CorrUp  = NNPDF3wgt_up ;              
-    AllHadRunNum         = iEvent.id().run() ;              
-    AllHadLumiBlock      = iEvent.id().luminosityBlock() ;              
-    AllHadEventNum       = iEvent.id().event() ;  
-    PassMETFilters       = (int)  passMETfilters;
 
-    TreeAllHad -> Fill();
-  } 
+      NeighborJet_Jet0_pt      = closestAK8_to_Jet0_P4.Pt() ;
+      NeighborJet_Jet0_eta     = closestAK8_to_Jet0_P4.Eta();
+      NeighborJet_Jet0_phi     = closestAK8_to_Jet0_P4.Phi();
+      NeighborJet_Jet0_m       = closestAK8_to_Jet0_P4.M()  ;
+      NeighborJet_Jet0_bdisc   = closestAK8_to_Jet0_bdisc   ;
+
+      NeighborJet_Jet1_pt      = closestAK8_to_Jet1_P4.Pt() ;
+      NeighborJet_Jet1_eta     = closestAK8_to_Jet1_P4.Eta();
+      NeighborJet_Jet1_phi     = closestAK8_to_Jet1_P4.Phi();
+      NeighborJet_Jet1_m       = closestAK8_to_Jet1_P4.M()  ;
+      NeighborJet_Jet1_bdisc   = closestAK8_to_Jet1_bdisc   ;
+
+      // AllHadMETpx          = met.px();                   
+      // AllHadMETpy          = met.py();                   
+      AllHadMETpt          = met.pt();                   
+      AllHadMETphi         = met.phi();                   
+      AllHadMETsumET       = met.sumEt();                                  
+      AllHadNvtx           = nvtx;    
+      AllHadNvtxGood       = nvtxgood;    
+      AllHadNPUtrue        = nPU;           
+      AllHadRho            = rho ;               
+     
+      if ( !iEvent.isRealData() ){
+        AllHadEventWeight    = evWeight ;   
+        AllHadPUweight       = puweight  ; 
+        AllHadPUweight_MBup  = puweightUp ;
+        AllHadPUweight_MBdn  = puweightDn  ; 
+        DiGenJetMass         = (GenJetMatched0 + GenJetMatched1).M();                   
+        GenTTmass            = (t1_p4+t2_p4).M() ;   
+        GenCountHadTop       = count_gen_truth_hadronic_top;    
+        Q2weight_CorrDn      = Q2wgt_down ;              
+        Q2weight_CorrUp      = Q2wgt_up ;              
+        NNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
+        NNPDF3weight_CorrUp  = NNPDF3wgt_up ;                        
+      }  
+      else{ 
+        AllHadEventWeight    = 1; 
+        AllHadPUweight       = 1; 
+        AllHadPUweight_MBup  = 1; 
+        AllHadPUweight_MBdn  = 1; 
+        DiGenJetMass         = 0; 
+        GenTTmass            = 0; 
+        GenCountHadTop       = 0; 
+        Q2weight_CorrDn      = 1; 
+        Q2weight_CorrUp      = 1; 
+        NNPDF3weight_CorrDn  = 1; 
+        NNPDF3weight_CorrUp  = 1;    
+      }
+
+      double dijetDeltaPhi = fabs( deltaPhi( AK8jet0_P4corr.Phi(),  AK8jet1_P4corr.Phi() ));
+
+      DijetMass            = (AK8jet0_P4corr + AK8jet1_P4corr).M() ;                                                   
+      DijetMassPuppi       = (PUPPIjet0_P4corr + PUPPIjet1_P4corr).M() ;                                                   
+      DijetDeltaR          = deltaR( AK8jet0_P4corr.Eta(), AK8jet0_P4corr.Phi(), AK8jet1_P4corr.Eta(), AK8jet1_P4corr.Phi() );               
+      DijetDeltaPhi        = dijetDeltaPhi;                 
+      DijetDeltaRap        = fabs(AK8jet0_P4corr.Rapidity() -  AK8jet1_P4corr.Rapidity() );
+
+      CountLep             = count_lep ;
+          
+      HT                   = HT_AK4_pt30          ;                
+      HT_CorrDn            = HT_AK4_pt30_corrDn   ;                
+      HT_CorrUp            = HT_AK4_pt30_corrUp   ;  
+      HT_PtSmearNom        = HT_AK4_pt30_smearNom ;          
+      HT_PtSmearUp         = HT_AK4_pt30_smearUp  ;               
+      HT_PtSmearDn         = HT_AK4_pt30_smearDn  ;               
+      
+      AllHadRunNum         = iEvent.id().run() ;              
+      AllHadLumiBlock      = iEvent.id().luminosityBlock() ;              
+      AllHadEventNum       = iEvent.id().event() ;  
+      PassMETFilters       = (int)  passMETfilters;
+
+      TreeAllHad -> Fill();
+    } // end rapidity
+  }
 
 
 
@@ -5452,184 +5942,190 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //                                                                888                                                       
   //                                                                888       
      
-
   if (count_lep ==1  && verbose_){
-    cout<<" ak8pt "<<AK8jet_SemiLept_P4corr.Perp()<<endl;
-    cout<<" mu pt "<<mu0_p4.Perp()<<endl;
-    cout<<" el pt "<<el0_p4.Perp()<<endl;
-    cout<<" met "<<met.pt() <<endl;
-    cout<<" ak4 pt "<<AK4_dRMinLep_p4.Perp() <<endl;
+    cout<<" ak8pt  "<< AK8jet_SemiLept_P4corr.Perp() <<endl;
+    cout<<" mu pt  "<< mu0_p4.Perp()                 <<endl;
+    cout<<" el pt  "<< el0_p4.Perp()                 <<endl;
+    cout<<" met    "<< met.pt()                      <<endl;
+    cout<<" ak4 pt "<< AK4_dRMinLep_p4.Perp()        <<endl;
   }  
 
   //------------------------------------
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
   //------------------------------------
+  //  lep0_p4.Perp()>30 && met.pt() > 30 ){
 
-  if (count_lep ==1 && AK8jet_SemiLept_P4corr.Perp()>200 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4  ){
-    //&&  lep0_p4.Perp()>30 && met.pt() > 30 ){
-       
-    SemiLeptMETpx                = met.px();                   
-    SemiLeptMETpy                = met.py();                   
-    SemiLeptMETpt                = met.pt();                   
-    SemiLeptMETphi               = met.phi();                   
-    SemiLeptMETsumET             = met.sumEt();   
+  if (verbose_) cout<<"count_fill_leptTree "<<count_fill_leptTree<<endl;
+  if (runSemiLeptTree_ && count_lep ==1){
+    h_cutflow_semilept   ->Fill(1.5);
+
+    if ( AK8jet_SemiLept_P4corr.Perp()>200){
+      h_cutflow_semilept   ->Fill(2.5);
+
+      if (fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4  ){
+        h_cutflow_semilept   ->Fill(3.5);
+
+        if (verbose_) cout<<"Write Semi-Lept Tree"<<endl;
+
+        SemiLeptMETpx                = met.px();                   
+        SemiLeptMETpy                = met.py();                   
+        SemiLeptMETpt                = met.pt();                   
+        SemiLeptMETphi               = met.phi();                   
+        SemiLeptMETsumET             = met.sumEt();   
     
-    if ( !iEvent.isRealData() )  SemiLeptMETgenMET            = met.genMET()->pt();                   
-    SemiLeptMETuncorPt           = met.uncorPt();                    
-       
-    SemiLeptMETshiftedPtJetEnUp  = met.shiftedPt(pat::MET::JetEnUp            ) ;                    
-    SemiLeptMETshiftedPtJetEnDn  = met.shiftedPt(pat::MET::JetEnDown          ) ;                    
-    SemiLeptMETshiftedPtElEnUp   = met.shiftedPt(pat::MET::ElectronEnUp       ) ;                    
-    SemiLeptMETshiftedPtElEnDn   = met.shiftedPt(pat::MET::ElectronEnDown     ) ;                    
-    SemiLeptMETshiftedPtMuEnUp   = met.shiftedPt(pat::MET::MuonEnUp           ) ;                    
-    SemiLeptMETshiftedPtMuEnDn   = met.shiftedPt(pat::MET::MuonEnDown         ) ;                    
-    SemiLeptMETshiftedPtJetResUp = met.shiftedPt(pat::MET::JetResUp           ) ;                    
-    SemiLeptMETshiftedPtJetResDn = met.shiftedPt(pat::MET::JetResDown         ) ;                    
-    SemiLeptMETshiftedPtUnclEnUp = met.shiftedPt(pat::MET::UnclusteredEnUp    ) ;                    
-    SemiLeptMETshiftedPtUnclEnDn = met.shiftedPt(pat::MET::UnclusteredEnDown  ) ;                    
+        if ( !iEvent.isRealData() )  SemiLeptMETgenMET            = met.genMET()->pt();                   
+        SemiLeptMETuncorPt           = met.uncorPt();                    
+           
+        SemiLeptMETshiftedPtJetEnUp  = met.shiftedPt(pat::MET::JetEnUp            ) ;                    
+        SemiLeptMETshiftedPtJetEnDn  = met.shiftedPt(pat::MET::JetEnDown          ) ;                    
+        SemiLeptMETshiftedPtElEnUp   = met.shiftedPt(pat::MET::ElectronEnUp       ) ;                    
+        SemiLeptMETshiftedPtElEnDn   = met.shiftedPt(pat::MET::ElectronEnDown     ) ;                    
+        SemiLeptMETshiftedPtMuEnUp   = met.shiftedPt(pat::MET::MuonEnUp           ) ;                    
+        SemiLeptMETshiftedPtMuEnDn   = met.shiftedPt(pat::MET::MuonEnDown         ) ;                    
+        SemiLeptMETshiftedPtJetResUp = met.shiftedPt(pat::MET::JetResUp           ) ;                    
+        SemiLeptMETshiftedPtJetResDn = met.shiftedPt(pat::MET::JetResDown         ) ;                    
+        SemiLeptMETshiftedPtUnclEnUp = met.shiftedPt(pat::MET::UnclusteredEnUp    ) ;                    
+        SemiLeptMETshiftedPtUnclEnDn = met.shiftedPt(pat::MET::UnclusteredEnDown  ) ;                    
 
-
-    if (verbose_){
-      cout<<" met.pt() "<<   met.pt() <<endl;
-      cout<<" met.shiftedPt(pat::MET::JetEnUp)             "<<met.shiftedPt(pat::MET::JetEnUp)            <<endl;       
-      cout<<" met.shiftedPt(pat::MET::JetEnDown)           "<<met.shiftedPt(pat::MET::JetEnDown)          <<endl;               
-      cout<<" met.shiftedPt(pat::MET::ElectronEnUp)        "<<met.shiftedPt(pat::MET::ElectronEnUp)       <<endl;            
-      cout<<" met.shiftedPt(pat::MET::ElectronEnDown)      "<<met.shiftedPt(pat::MET::ElectronEnDown)     <<endl;                            
-      cout<<" met.shiftedPt(pat::MET::MuonEnUp)            "<<met.shiftedPt(pat::MET::MuonEnUp)           <<endl;        
-      cout<<" met.shiftedPt(pat::MET::MuonEnDown)          "<<met.shiftedPt(pat::MET::MuonEnDown)         <<endl;                      
-      cout<<" met.shiftedPt(pat::MET::JetResUp)            "<<met.shiftedPt(pat::MET::JetResUp)           <<endl;        
-      cout<<" met.shiftedPt(pat::MET::JetResDown)          "<<met.shiftedPt(pat::MET::JetResDown)         <<endl;               
-      cout<<" met.shiftedPt(pat::MET::UnclusteredEnUp)     "<<met.shiftedPt(pat::MET::UnclusteredEnUp)    <<endl;               
-      cout<<" met.shiftedPt(pat::MET::UnclusteredEnDown)   "<<met.shiftedPt(pat::MET::UnclusteredEnDown)  <<endl;                 
-      
-      cout<<" met.phi() "<<   met.phi() <<endl;
-      cout<<" met.shiftedPhi(pat::MET::UnclusteredEnUp)    "<<met.shiftedPhi(pat::MET::UnclusteredEnUp)   <<endl;                
-      cout<<" met.shiftedPhi(pat::MET::UnclusteredEnDown)  "<<met.shiftedPhi(pat::MET::UnclusteredEnDown) <<endl;                  
-      cout<<" met.shiftedPhi(pat::MET::JetEnUp)            "<<met.shiftedPhi(pat::MET::JetEnUp)           <<endl;        
-      cout<<" met.shiftedPhi(pat::MET::JetEnDown)          "<<met.shiftedPhi(pat::MET::JetEnDown)         <<endl; 
-      cout<<" met.shiftedPhi(pat::MET::ElectronEnUp)       "<<met.shiftedPhi(pat::MET::ElectronEnUp)      <<endl;             
-      cout<<" met.shiftedPhi(pat::MET::ElectronEnDown)     "<<met.shiftedPhi(pat::MET::ElectronEnDown)    <<endl; 
-      cout<<" met.shiftedPhi(pat::MET::MuonEnUp)           "<<met.shiftedPhi(pat::MET::MuonEnUp)          <<endl;         
-      cout<<" met.shiftedPhi(pat::MET::MuonEnDown)         "<<met.shiftedPhi(pat::MET::MuonEnDown)        <<endl;
-      cout<<" met.shiftedPhi(pat::MET::JetResUp)           "<<met.shiftedPhi(pat::MET::JetResUp)          <<endl;         
-      cout<<" met.shiftedPhi(pat::MET::JetResDown)         "<<met.shiftedPhi(pat::MET::JetResDown)        <<endl;    
-    }
-
-    SemiLeptNvtx                 = nvtx;     
-    SemiLeptNvtxGood             = nvtxgood;     
-    SemiLeptNPUtrue              = nPU;     
-    SemiLeptRho                  = rho ;               
-    if ( !iEvent.isRealData() ){
-      SemiLeptEventWeight          = evWeight ;              
-      SemiLeptPUweight             = puweight  ; 
-      SemiLeptPUweight_MBup        = puweightUp ;
-      SemiLeptPUweight_MBdn        = puweightDn  ;
-      SemiLeptGenTTmass            = (t1_p4+t2_p4).M() ; 
-      SemiLeptQ2weight_CorrDn      = Q2wgt_down ;              
-      SemiLeptQ2weight_CorrUp      = Q2wgt_up ;              
-      SemiLeptNNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
-      SemiLeptNNPDF3weight_CorrUp  = NNPDF3wgt_up ;    
-    }  
-    else{ 
-      SemiLeptEventWeight          = 1;    
-      SemiLeptPUweight             = 1;
-      SemiLeptPUweight_MBup        = 1;
-      SemiLeptPUweight_MBdn        = 1;
-      SemiLeptGenTTmass            = 0;
-      SemiLeptQ2weight_CorrDn      = 1;       
-      SemiLeptQ2weight_CorrUp      = 1;     
-      SemiLeptNNPDF3weight_CorrDn  = 1;           
-      SemiLeptNNPDF3weight_CorrUp  = 1;
-    }
-    double htlep = lep0_p4.Perp() + met.pt() ;
-    HTlep                = htlep ;
-    ST                   = htlep + HT_AK4_pt30           ;                
-    ST_CorrDn            = htlep + HT_AK4_pt30_corrDn    ;                
-    ST_CorrUp            = htlep + HT_AK4_pt30_corrUp    ;                
-    ST_PtSmearNom        = htlep + HT_AK4_pt30_smearNom  ;                
-    ST_PtSmearUp         = htlep + HT_AK4_pt30_smearUp   ;                
-    ST_PtSmearDn         = htlep + HT_AK4_pt30_smearDn   ;  
+        // if (verbose_){
+        //   cout<<" met.pt() "<<   met.pt() <<endl;
+        //   cout<<" met.shiftedPt(pat::MET::JetEnUp)             "<<met.shiftedPt(pat::MET::JetEnUp)            <<endl;       
+        //   cout<<" met.shiftedPt(pat::MET::JetEnDown)           "<<met.shiftedPt(pat::MET::JetEnDown)          <<endl;               
+        //   cout<<" met.shiftedPt(pat::MET::ElectronEnUp)        "<<met.shiftedPt(pat::MET::ElectronEnUp)       <<endl;            
+        //   cout<<" met.shiftedPt(pat::MET::ElectronEnDown)      "<<met.shiftedPt(pat::MET::ElectronEnDown)     <<endl;                            
+        //   cout<<" met.shiftedPt(pat::MET::MuonEnUp)            "<<met.shiftedPt(pat::MET::MuonEnUp)           <<endl;        
+        //   cout<<" met.shiftedPt(pat::MET::MuonEnDown)          "<<met.shiftedPt(pat::MET::MuonEnDown)         <<endl;                      
+        //   cout<<" met.shiftedPt(pat::MET::JetResUp)            "<<met.shiftedPt(pat::MET::JetResUp)           <<endl;        
+        //   cout<<" met.shiftedPt(pat::MET::JetResDown)          "<<met.shiftedPt(pat::MET::JetResDown)         <<endl;               
+        //   cout<<" met.shiftedPt(pat::MET::UnclusteredEnUp)     "<<met.shiftedPt(pat::MET::UnclusteredEnUp)    <<endl;               
+        //   cout<<" met.shiftedPt(pat::MET::UnclusteredEnDown)   "<<met.shiftedPt(pat::MET::UnclusteredEnDown)  <<endl;                 
           
-    SemiLeptRunNum               = iEvent.id().run() ;              
-    SemiLeptLumiBlock            = iEvent.id().luminosityBlock() ;              
-    SemiLeptEventNum             = iEvent.id().event() ; 
-    SemiLeptPassMETFilters       = (int) passMETfilters;              
+        //   cout<<" met.phi() "<<   met.phi() <<endl;
+        //   cout<<" met.shiftedPhi(pat::MET::UnclusteredEnUp)    "<<met.shiftedPhi(pat::MET::UnclusteredEnUp)   <<endl;                
+        //   cout<<" met.shiftedPhi(pat::MET::UnclusteredEnDown)  "<<met.shiftedPhi(pat::MET::UnclusteredEnDown) <<endl;                  
+        //   cout<<" met.shiftedPhi(pat::MET::JetEnUp)            "<<met.shiftedPhi(pat::MET::JetEnUp)           <<endl;        
+        //   cout<<" met.shiftedPhi(pat::MET::JetEnDown)          "<<met.shiftedPhi(pat::MET::JetEnDown)         <<endl; 
+        //   cout<<" met.shiftedPhi(pat::MET::ElectronEnUp)       "<<met.shiftedPhi(pat::MET::ElectronEnUp)      <<endl;             
+        //   cout<<" met.shiftedPhi(pat::MET::ElectronEnDown)     "<<met.shiftedPhi(pat::MET::ElectronEnDown)    <<endl; 
+        //   cout<<" met.shiftedPhi(pat::MET::MuonEnUp)           "<<met.shiftedPhi(pat::MET::MuonEnUp)          <<endl;         
+        //   cout<<" met.shiftedPhi(pat::MET::MuonEnDown)         "<<met.shiftedPhi(pat::MET::MuonEnDown)        <<endl;
+        //   cout<<" met.shiftedPhi(pat::MET::JetResUp)           "<<met.shiftedPhi(pat::MET::JetResUp)          <<endl;         
+        //   cout<<" met.shiftedPhi(pat::MET::JetResDown)         "<<met.shiftedPhi(pat::MET::JetResDown)        <<endl;    
+        // }
 
-    AK4_dRminLep_Pt        = AK4_dRMinLep_p4.Perp() ;
-    AK4_dRminLep_Eta       = AK4_dRMinLep_p4.Eta()  ;
-    AK4_dRminLep_Phi       = AK4_dRMinLep_p4.Phi()  ;
-    AK4_dRminLep_Mass      = AK4_dRMinLep_p4.M()    ;
-    AK4_dRminLep_Bdisc     = AK4_dRMinLep_bdisc     ;
-    AK4_dRminLep_dRlep     = AK4_dRMinLep_deltaR    ;
-    AK4_dRminLep_dRak8     = AK4_dRMinLep_p4.DeltaR( AK8jet_SemiLept_P4corr  ) ;
-   
-    AK4_dRminLep_PtSmear   = AK4_dRMinLep_ptsmear    ;
-    AK4_dRminLep_PtSmearUp = AK4_dRMinLep_ptsmearUp  ;
-    AK4_dRminLep_PtSmearDn = AK4_dRMinLep_ptsmearDn  ;
-    AK4_dRminLep_PtUncorr  = AK4_dRMinLep_ptuncorr   ;
-
-    AK4_dRminLep_Corr      = AK4_dRMinLep_corr       ;
-    AK4_dRminLep_CorrUp    = AK4_dRMinLep_corrUp     ;
-    AK4_dRminLep_CorrDn    = AK4_dRMinLep_corrDn     ;
-
-    // Closest b-tagged jet to the lepton
-    // I don't think we need this 
-    // AK4BtagdRminPt    = AK4_btagged_dRMinLep_p4.Perp();
-    // AK4BtagdRminBdisc = AK4_btagged_dRMinLep_bdisc    ;
-    // AK4BtagdRminLep   = AK4_btagged_dRMinLep          ;
-   
-    LepHemiContainsAK4BtagLoose  = (int)  ak4_btag_loose;
-    LepHemiContainsAK4BtagMedium = (int)  ak4_btag_medium;
-    LepHemiContainsAK4BtagTight  = (int)  ak4_btag_tight;
-
-    LeptonPhi   = lep0_p4.Phi()  ; 
-    LeptonPt    = lep0_p4.Perp() ;  
-    LeptonEta   = lep0_p4.Eta()  ; 
-    LeptonMass  = lep0_p4.M() ; 
+        SemiLeptNvtx                 = nvtx;     
+        SemiLeptNvtxGood             = nvtxgood;     
+        SemiLeptNPUtrue              = nPU;     
+        SemiLeptRho                  = rho ;               
+        if ( !iEvent.isRealData() ){
+          SemiLeptEventWeight          = evWeight ;              
+          SemiLeptPUweight             = puweight  ; 
+          SemiLeptPUweight_MBup        = puweightUp ;
+          SemiLeptPUweight_MBdn        = puweightDn  ;
+          SemiLeptGenTTmass            = (t1_p4+t2_p4).M() ; 
+          SemiLeptGenCountHadTop       = count_gen_truth_hadronic_top;            
+          SemiLeptQ2weight_CorrDn      = Q2wgt_down ;              
+          SemiLeptQ2weight_CorrUp      = Q2wgt_up ;              
+          SemiLeptNNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
+          SemiLeptNNPDF3weight_CorrUp  = NNPDF3wgt_up ;    
+        }  
+        else{ 
+          SemiLeptEventWeight          = 1;    
+          SemiLeptPUweight             = 1;
+          SemiLeptPUweight_MBup        = 1;
+          SemiLeptPUweight_MBdn        = 1;
+          SemiLeptGenTTmass            = 0;
+          SemiLeptGenCountHadTop       = 0;            
+          SemiLeptQ2weight_CorrDn      = 1;       
+          SemiLeptQ2weight_CorrUp      = 1;     
+          SemiLeptNNPDF3weight_CorrDn  = 1;           
+          SemiLeptNNPDF3weight_CorrUp  = 1;
+        }
+        double htlep = lep0_p4.Perp() + met.pt() ;
 
 
-    if      (count_mu==1 && count_el==0) LeptonIsMu  = 1  ; 
-    else if (count_mu==0 && count_el==1) LeptonIsMu  = 0  ; 
-    else                                 LeptonIsMu  = -1  ;
 
-    PtRel  = AK4_dRMinLep_p4.Perp( lep0_p4.Vect() );
-    MuIso  = mu0_iso04;
+        HTlep                = htlep ;
+        ST                   = htlep + HT_AK4_pt30           ;                
+        ST_CorrDn            = htlep + HT_AK4_pt30_corrDn    ;                
+        ST_CorrUp            = htlep + HT_AK4_pt30_corrUp    ;                
+        ST_PtSmearNom        = htlep + HT_AK4_pt30_smearNom  ;                
+        ST_PtSmearUp         = htlep + HT_AK4_pt30_smearUp   ;                
+        ST_PtSmearDn         = htlep + HT_AK4_pt30_smearDn   ;  
+              
+        SemiLeptRunNum               = iEvent.id().run() ;              
+        SemiLeptLumiBlock            = iEvent.id().luminosityBlock() ;              
+        SemiLeptEventNum             = iEvent.id().event() ; 
+        SemiLeptPassMETFilters       = (int) passMETfilters;              
 
-    Elecron_absiso            = el0_absiso           ;  
-    Elecron_relIsoWithDBeta   = el0_relIsoWithDBeta  ;  
-    Elecron_absiso_EA         = el0_absiso_EA        ;  
-    Elecron_relIsoWithEA      = el0_relIsoWithEA     ;  
+        AK4_dRminLep_Pt        = AK4_dRMinLep_p4.Perp() ;
+        AK4_dRminLep_Eta       = AK4_dRMinLep_p4.Eta()  ;
+        AK4_dRminLep_Phi       = AK4_dRMinLep_p4.Phi()  ;
+        AK4_dRminLep_Mass      = AK4_dRMinLep_p4.M()    ;
+        AK4_dRminLep_Bdisc     = AK4_dRMinLep_bdisc     ;
+        AK4_dRminLep_dRlep     = AK4_dRMinLep_deltaR    ;
+        AK4_dRminLep_dRak8     = AK4_dRMinLep_p4.DeltaR( AK8jet_SemiLept_P4corr  ) ;
+       
+        AK4_dRminLep_PtSmear   = AK4_dRMinLep_ptsmear    ;
+        AK4_dRminLep_PtSmearUp = AK4_dRMinLep_ptsmearUp  ;
+        AK4_dRminLep_PtSmearDn = AK4_dRMinLep_ptsmearDn  ;
+        AK4_dRminLep_PtUncorr  = AK4_dRMinLep_ptuncorr   ;
 
-    Electron_iso_passHLTpre   = el0_iso_passHLTpre  ;
-    Electron_iso_passLoose    = el0_iso_passLoose   ;
-    Electron_iso_passMedium   = el0_iso_passMedium  ;
-    Electron_iso_passTight    = el0_iso_passTight   ;
-    Electron_iso_passHEEP     = el0_iso_passHEEP    ;
-    Electron_noiso_passLoose  = el0_noiso_passLoose ;
-    Electron_noiso_passMedium = el0_noiso_passMedium;
-    Electron_noiso_passTight  = el0_noiso_passTight ;
-    Electron_noiso_passHEEP   = el0_noiso_passHEEP  ;
+        AK4_dRminLep_Corr      = AK4_dRMinLep_corr       ;
+        AK4_dRminLep_CorrUp    = AK4_dRMinLep_corrUp     ;
+        AK4_dRminLep_CorrDn    = AK4_dRMinLep_corrDn     ;
 
-    MuMedium = (int) mu0_isMedium   ;
-    MuTight  = (int) mu0_isTight    ;
-    MuHighPt = (int) mu0_isHighPt   ;
+        // Closest b-tagged jet to the lepton
+        // I don't think we need this 
+        // AK4BtagdRminPt    = AK4_btagged_dRMinLep_p4.Perp();
+        // AK4BtagdRminBdisc = AK4_btagged_dRMinLep_bdisc    ;
+        // AK4BtagdRminLep   = AK4_btagged_dRMinLep          ;
+       
+        LepHemiContainsAK4BtagLoose  = (int)  ak4_btag_loose;
+        LepHemiContainsAK4BtagMedium = (int)  ak4_btag_medium;
+        LepHemiContainsAK4BtagTight  = (int)  ak4_btag_tight;
 
-    // if (GenTruth_semileptonic)  count_GenTruth_semileptonic ++;
-    // if (count_mu  >=1 )  count_nMu_gt1 ++; 
-    // if (count_el  >=1 )  count_nEl_gt1 ++; 
-    // if (count_mu  ==1 )  count_nMu_e1 ++; 
-    // if (count_el  ==1 )  count_nEl_e1 ++; 
-    // if (count_lep ==1 )  count_nLep_e1 ++; 
-    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300)  count_JetPt300 ++; 
-    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 )  count_JetPt300Eta ++; 
-    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 && AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_AK4 ++; 
-    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40)  count_JetPt300Eta_muPt40 ++; 
-    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40)  count_JetPt300Eta_muPt40_MET40 ++; 
-    // if (count_lep ==1  && AK8jet_SemiLept_P4corr.Perp()>300 && fabs( AK8jet_SemiLept_P4corr.Rapidity() ) <2.4 &&  mu0_p4.Perp()>40 && met.pt() > 40 &&  AK4_dRMinLep_p4.Perp() > 20)  count_JetPt300Eta_muPt40_MET40_AK4 ++; 
+        LeptonPhi   = lep0_p4.Phi()  ; 
+        LeptonPt    = lep0_p4.Perp() ;  
+        LeptonEta   = lep0_p4.Eta()  ; 
+        LeptonMass  = lep0_p4.M() ; 
 
-    TreeSemiLept -> Fill();
+
+        if      (count_mu==1 && count_el==0) LeptonIsMu  = 1  ; 
+        else if (count_mu==0 && count_el==1) LeptonIsMu  = 0  ; 
+        else                                 LeptonIsMu  = -1  ;
+
+        PtRel  = AK4_dRMinLep_p4.Perp( lep0_p4.Vect() );
+        MuIso  = mu0_iso04;
+
+        Elecron_absiso            = el0_absiso           ;  
+        Elecron_relIsoWithDBeta   = el0_relIsoWithDBeta  ;  
+        Elecron_absiso_EA         = el0_absiso_EA        ;  
+        Elecron_relIsoWithEA      = el0_relIsoWithEA     ;  
+
+        Electron_iso_passHLTpre   = el0_iso_passHLTpre  ;
+        Electron_iso_passLoose    = el0_iso_passLoose   ;
+        Electron_iso_passMedium   = el0_iso_passMedium  ;
+        Electron_iso_passTight    = el0_iso_passTight   ;
+        Electron_iso_passHEEP     = el0_iso_passHEEP    ;
+        Electron_noiso_passLoose  = el0_noiso_passLoose ;
+        Electron_noiso_passMedium = el0_noiso_passMedium;
+        Electron_noiso_passTight  = el0_noiso_passTight ;
+        Electron_noiso_passHEEP   = el0_noiso_passHEEP  ;
+
+        MuMedium = (int) mu0_isMedium   ;
+        MuTight  = (int) mu0_isTight    ;
+        MuHighPt = (int) mu0_isHighPt   ;
+
+        TreeSemiLept -> Fill();
+      }// end rapidity selection
+    }// end pt selection
   } 
 
+  jecPayloadsAK4chsFinal  .clear();
+  jecPayloadsAK8chsFinal  .clear();
+  jecPayloadsAK4pupFinal  .clear();
+  jecPayloadsAK8pupFinal  .clear();
 
 }
 
@@ -5638,45 +6134,22 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 void 
 B2GTTbarTreeMaker::beginJob()
 {
-  fPUweight = new TFile("PUweight_Nov4JSON_Nov6PiileupJSON_Xsec72383_MCRunIISpring16MiniAODv2.root") ;
+  fPUweight = new TFile("PUweight_FinalJSON2016_PileupJSONFeb2017_Xsec69200nominal_MCRunIISummer16MiniAODv2_PUMoriond17.root") ;
   hPUweight      = (TH1D*) fPUweight->Get("PUweight_true");
   hPUweight_MBup = (TH1D*) fPUweight->Get("PUweight_true_MBup");
   hPUweight_MBdn = (TH1D*) fPUweight->Get("PUweight_true_MBdn");
        
-  std::cout<<"Test PU reweight file: "<<hPUweight->GetBinContent( hPUweight->GetXaxis()->FindBin( 30 ) )<<std::endl;
-    
-
-  // count_GenTruth_semileptonic =0;
-  // count_nMu_gt1 =0; 
-  // count_nEl_gt1 =0; 
-  // count_nMu_e1 =0; 
-  // count_nEl_e1 =0; 
-  // count_nLep_e1 =0; 
-  // count_JetPt300 =0; 
-  // count_JetPt300Eta =0; 
-  // count_JetPt300Eta_AK4 =0; 
-  // count_JetPt300Eta_muPt40 =0; 
-  // count_JetPt300Eta_muPt40_MET40 =0; 
-  // count_JetPt300Eta_muPt40_MET40_AK4 =0; 
-
+  std::cout<<"Test PU reweight file weights: "<<std::endl;
+  std::cout<<std::setw(5)<<" NPU "<<std::setw(10)<<" weight "<<std::endl;
+  for (int i=1; i<=50; i++ ){
+      std::cout<<std::setw(5)<<hPUweight->GetBinLowEdge( i )<<"   "<<std::setw(10)<<hPUweight->GetBinContent( i ) <<std::endl;
+  } 
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
 void 
 B2GTTbarTreeMaker::endJob() 
 {
-
-  // std::cout<<" nEvents GenTruth semileptonic  :" <<count_GenTruth_semileptonic<<std::endl;
-  // std::cout<<" nEvents nMu =1   :" <<count_nMu_e1 <<std::endl;
-  // std::cout<<" nEvents nEl =1   :" <<count_nEl_e1 <<std::endl;
-  // std::cout<<" nEvents nLepton =1   :" <<count_nLep_e1 <<std::endl;
-  // std::cout<<" nEvents nLepton =1 && JetPt300   :" <<count_JetPt300 <<std::endl;
-  // std::cout<<" nEvents nLepton =1 && JetPt300Eta   :" <<count_JetPt300Eta <<std::endl;
-  // std::cout<<" nEvents nLepton =1 && JetPt300Eta && AK4pt>20   :" <<count_JetPt300Eta_AK4 <<std::endl;
-  // std::cout<<" nEvents nLepton =1 && JetPt300Eta && muPt40   :" <<count_JetPt300Eta_muPt40 <<std::endl;
-  // std::cout<<" nEvents nLepton =1 && JetPt300Eta && muPt40 && MET40   :" <<count_JetPt300Eta_muPt40_MET40 <<std::endl;
-  // std::cout<<" nEvents nLepton =1 && JetPt300Eta && muPt40 && MET40 && AK4pt>20  :" <<count_JetPt300Eta_muPt40_MET40_AK4 <<std::endl;
-
 }
 
 // ------------ method fills 'descriptions' with the allowed parameters for the module  ------------
