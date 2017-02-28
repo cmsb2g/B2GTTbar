@@ -76,7 +76,7 @@ void tjetA__tau32()
    ttbar_T_sitop_T_copy21->SetBinError(19,1.278848);
    ttbar_T_sitop_T_copy21->SetBinError(20,0.2964401);
    ttbar_T_sitop_T_copy21->SetMinimum(0.0001);
-   ttbar_T_sitop_T_copy21->SetMaximum(145);
+   ttbar_T_sitop_T_copy21->SetMaximum(175);
    ttbar_T_sitop_T_copy21->SetEntries(24119.33);
    ttbar_T_sitop_T_copy21->SetDirectory(0);
    ttbar_T_sitop_T_copy21->SetStats(0);
@@ -368,7 +368,7 @@ void tjetA__tau32()
    ttbar_T_sitop_T_copy26->SetBinError(19,1.278848);
    ttbar_T_sitop_T_copy26->SetBinError(20,0.2964401);
    ttbar_T_sitop_T_copy26->SetMinimum(0.0001);
-   ttbar_T_sitop_T_copy26->SetMaximum(145);
+   ttbar_T_sitop_T_copy26->SetMaximum(175);
    ttbar_T_sitop_T_copy26->SetEntries(24119.33);
    ttbar_T_sitop_T_copy26->SetDirectory(0);
    ttbar_T_sitop_T_copy26->SetStats(0);
@@ -409,6 +409,7 @@ void tjetA__tau32()
    leg->SetLineWidth(1);
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
+   leg->SetTextSize(0.045);
    TLegendEntry *entry=leg->AddEntry("DATA_lept","Data","lep");
    entry->SetLineColor(1);
    entry->SetLineStyle(1);
@@ -417,7 +418,7 @@ void tjetA__tau32()
    entry->SetMarkerStyle(20);
    entry->SetMarkerSize(1.5);
    entry->SetTextFont(42);
-   entry=leg->AddEntry("ttbar_T_sitop_T","matched to top","f");
+   entry=leg->AddEntry("ttbar_T_sitop_T","Matched to top quark","f");
 
    ci = TColor::GetColor("#cc3333");
    entry->SetFillColor(ci);
@@ -431,7 +432,7 @@ void tjetA__tau32()
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
    entry->SetTextFont(42);
-   entry=leg->AddEntry("ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos","unmatched to top","f");
+   entry=leg->AddEntry("ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos","Unmatched to top quark","f");
 
    ci = TColor::GetColor("#0000ff");
    entry->SetFillColor(ci);
@@ -467,8 +468,8 @@ void tjetA__tau32()
    tex->SetTextSize(0.0825);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.181,0.71225,"AK8 jets with p_{T}>500 GeV, |#eta|<2.4, 110 GeV<M_{SD}<210 GeV");
-tex->SetNDC();
+   tex = new TLatex(0.181,0.71225,"AK8 jets with p_{T} > 500 GeV, |#eta| < 2.4, 110 GeV < M_{SD} < 210 GeV");
+   tex->SetNDC();
    tex->SetTextAlign(13);
    tex->SetTextFont(42);
    tex->SetTextSize(0.045);
@@ -550,7 +551,7 @@ tex->SetNDC();
    DATA_lept27->GetXaxis()->SetTickLength(0.09);
    DATA_lept27->GetXaxis()->SetTitleOffset(1.15);
    DATA_lept27->GetXaxis()->SetTitleFont(42);
-   DATA_lept27->GetYaxis()->SetTitle("Data/Bkg");
+   DATA_lept27->GetYaxis()->SetTitle("Data/bkg");
    DATA_lept27->GetYaxis()->CenterTitle(true);
    DATA_lept27->GetYaxis()->SetNdivisions(304);
    DATA_lept27->GetYaxis()->SetLabelFont(42);
@@ -685,7 +686,7 @@ tex->SetNDC();
    DATA_lept29->GetXaxis()->SetTickLength(0.09);
    DATA_lept29->GetXaxis()->SetTitleOffset(1.15);
    DATA_lept29->GetXaxis()->SetTitleFont(42);
-   DATA_lept29->GetYaxis()->SetTitle("Data/Bkg");
+   DATA_lept29->GetYaxis()->SetTitle("Data/bkg");
    DATA_lept29->GetYaxis()->CenterTitle(true);
    DATA_lept29->GetYaxis()->SetNdivisions(304);
    DATA_lept29->GetYaxis()->SetLabelFont(42);
@@ -891,7 +892,7 @@ tex->SetNDC();
    DATA_lept30->GetXaxis()->SetTickLength(0.09);
    DATA_lept30->GetXaxis()->SetTitleOffset(1.15);
    DATA_lept30->GetXaxis()->SetTitleFont(42);
-   DATA_lept30->GetYaxis()->SetTitle("Data/Bkg");
+   DATA_lept30->GetYaxis()->SetTitle("Data/bkg");
    DATA_lept30->GetYaxis()->CenterTitle(true);
    DATA_lept30->GetYaxis()->SetNdivisions(304);
    DATA_lept30->GetYaxis()->SetLabelFont(42);

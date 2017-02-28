@@ -757,6 +757,7 @@ void tjetA__Msdp()
    leg->SetLineWidth(1);
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
+   leg->SetTextSize(0.045);
    TLegendEntry *entry=leg->AddEntry("DATA_lept","Data","lep");
    entry->SetLineColor(1);
    entry->SetLineStyle(1);
@@ -765,7 +766,7 @@ void tjetA__Msdp()
    entry->SetMarkerStyle(20);
    entry->SetMarkerSize(1.5);
    entry->SetTextFont(42);
-   entry=leg->AddEntry("ttbar_T_sitop_T","matched to top","f");
+   entry=leg->AddEntry("ttbar_T_sitop_T","Matched to top quark","f");
 
    ci = TColor::GetColor("#cc3333");
    entry->SetFillColor(ci);
@@ -779,7 +780,7 @@ void tjetA__Msdp()
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
    entry->SetTextFont(42);
-   entry=leg->AddEntry("ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos","unmatched to top","f");
+   entry=leg->AddEntry("ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos","Unmatched to top quark","f");
 
    ci = TColor::GetColor("#0000ff");
    entry->SetFillColor(ci);
@@ -815,7 +816,7 @@ void tjetA__Msdp()
    tex->SetTextSize(0.0825);
    tex->SetLineWidth(2);
    tex->Draw();
-   tex = new TLatex(0.181,0.71225,"AK8 jets with p_{T}>500 GeV, |#eta|<2.4, #tau_{32}<0.69");
+   tex = new TLatex(0.181,0.71225,"AK8 jets with p_{T} > 500 GeV, |#eta| < 2.4, #tau_{32} < 0.69");
    tex->SetNDC();
    tex->SetTextAlign(13);
    tex->SetTextFont(42);
@@ -937,7 +938,7 @@ void tjetA__Msdp()
    DATA_lept67->SetLineWidth(2);
    DATA_lept67->SetMarkerStyle(20);
    DATA_lept67->SetMarkerSize(1.5);
-   DATA_lept67->GetXaxis()->SetTitle("Jet soft drop mass [GeV]");
+   DATA_lept67->GetXaxis()->SetTitle("Jet soft-drop mass [GeV]");
    DATA_lept67->GetXaxis()->SetRange(1,24);
    DATA_lept67->GetXaxis()->SetNdivisions(506);
    DATA_lept67->GetXaxis()->SetLabelFont(42);
@@ -947,7 +948,7 @@ void tjetA__Msdp()
    DATA_lept67->GetXaxis()->SetTickLength(0.09);
    DATA_lept67->GetXaxis()->SetTitleOffset(1.15);
    DATA_lept67->GetXaxis()->SetTitleFont(42);
-   DATA_lept67->GetYaxis()->SetTitle("Data/Bkg");
+   DATA_lept67->GetYaxis()->SetTitle("Data/bkg");
    DATA_lept67->GetYaxis()->CenterTitle(true);
    DATA_lept67->GetYaxis()->SetNdivisions(304);
    DATA_lept67->GetYaxis()->SetLabelFont(42);
@@ -1197,7 +1198,7 @@ void tjetA__Msdp()
    DATA_lept69->GetXaxis()->SetTickLength(0.09);
    DATA_lept69->GetXaxis()->SetTitleOffset(1.15);
    DATA_lept69->GetXaxis()->SetTitleFont(42);
-   DATA_lept69->GetYaxis()->SetTitle("Data/Bkg");
+   DATA_lept69->GetYaxis()->SetTitle("Data/bkg");
    DATA_lept69->GetYaxis()->CenterTitle(true);
    DATA_lept69->GetYaxis()->SetNdivisions(304);
    DATA_lept69->GetYaxis()->SetLabelFont(42);
@@ -1548,7 +1549,7 @@ void tjetA__Msdp()
    DATA_lept70->GetXaxis()->SetTickLength(0.09);
    DATA_lept70->GetXaxis()->SetTitleOffset(1.15);
    DATA_lept70->GetXaxis()->SetTitleFont(42);
-   DATA_lept70->GetYaxis()->SetTitle("Data/Bkg");
+   DATA_lept70->GetYaxis()->SetTitle("Data/bkg");
    DATA_lept70->GetYaxis()->CenterTitle(true);
    DATA_lept70->GetYaxis()->SetNdivisions(304);
    DATA_lept70->GetYaxis()->SetLabelFont(42);
