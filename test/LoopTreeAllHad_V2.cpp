@@ -42,7 +42,7 @@
 
 // --- Function Declaration
 // vector<string>  makeFileList  (string);
-void            looptree_trig (string, string, string, string, float, float, float, bool);
+void            looptree_trig (string, string, string, string, float, float, float);
 void            looptree      (string, string, string, string, float, float, float, float, float, string, bool, bool, bool, bool, bool, bool, bool, bool, bool,int, int, bool);
 bool            applySF       (bool, float, float);
 void            run1file      (string, bool, string);
@@ -80,9 +80,9 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
 
   if (savelabel=="" && runLoopTree) {cout<<"please provide a unique label for the savefile. example: run(\"BCD\",\"20161201addHist\",1,0)"<<endl; return;}
 
-  string date = "20161216";
+  string date = "20170310";
 
-  string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V4/";
+  string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/";
   string folder_input_tree_Zprime ="root://cmseos.fnal.gov//store/user/camclean/B2GAnaFW/Trees/80X_V4/";
   string folder_mistag     = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_22/src/Analysis/B2GTTbar/test/";
   string folder_modMass    = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/";
@@ -102,63 +102,79 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
   vector<string> input_folder;
   vector<string> file_name_tree;
   vector<bool> file_is_data;
-  vector<bool> file_is_RunHdata;
   vector<bool> file_is_QCDMC;
 
   //--- JetHT B-H
   if ( foundB   !=std::string::npos ){
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0000_partial.root");     file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);                      
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0001_partial.root");     file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);                      
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016B-23Sep2016-v3_JSONnov14_0002_partial.root");     file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0000.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0001.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0002.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0003.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0004.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0005.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0006.root");     file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                      
   }
   if ( foundC   !=std::string::npos ){
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016C-23Sep2016-v1_JSONnov14_All.root");              file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0000.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0001.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0002.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0003.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
   }
   if ( foundD   !=std::string::npos ){
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);                 
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016D-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0002.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0003.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0004.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0005.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
   }
   if ( foundE   !=std::string::npos ){
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016E-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_REDO_all.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
   }                
   if ( foundF   !=std::string::npos ){
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016F-23Sep2016-v1_JSONnov14_all.root");              file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0000.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false);      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0001.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false);      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0002.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false);      
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0003.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false);      
   }           
   if ( foundG   !=std::string::npos ){
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0000.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);            
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016G-23Sep2016-v1_JSONnov14_0001.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);  
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0002.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0003.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0004.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0005.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0006.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0007.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0008.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
   }
   if ( foundH   !=std::string::npos ){            
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0000.root");            file_is_data.push_back(true);     file_is_RunHdata.push_back(true);     file_is_QCDMC.push_back(false);               
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0001.root");            file_is_data.push_back(true);     file_is_RunHdata.push_back(true);     file_is_QCDMC.push_back(false);               
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v2_JSONnov14_0002.root");            file_is_data.push_back(true);     file_is_RunHdata.push_back(true);     file_is_QCDMC.push_back(false);               
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_JetHT_Run2016H-PromptReco-v3_JSONnov14_all.root");             file_is_data.push_back(true);     file_is_RunHdata.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0000.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0001.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0002.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0003.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0004.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0005.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0006.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0007.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0008.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0009.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver3_v1_JSONfinal_try2_all.root");            file_is_data.push_back(true);     file_is_QCDMC.push_back(false);               
   }                           
   //--- QCD HT binned
   if ( foundQ   !=std::string::npos ){            
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT100to200_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                              
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT200to300_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                              
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT300to500_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                              
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT500to700_RunIISpring16MiniAODv2_try2.root");             file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                              
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT700to1000_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                          
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT1000to1500_RunIISpring16MiniAODv2.root");                file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                           
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT1500to2000_RunIISpring16MiniAODv2_try4.root");           file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                                
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_QCD_HT2000toInf_RunIISpring16MiniAODv2.root");                 file_is_data.push_back(false);    file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(true);                          
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);                              
   }
   //--- TTbar 
   if ( foundTT1   !=std::string::npos ){            
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0000.root");  file_is_data.push_back(false);  file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);              
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0001.root");  file_is_data.push_back(false);  file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);               
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M1_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-PUSpring16_reHLT_ext3_try2_0002.root");  file_is_data.push_back(false);  file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false); 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("");  file_is_data.push_back(false);     file_is_QCDMC.push_back(false);              
   }  
   if ( foundTT2   !=std::string::npos ){            
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV4_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISpring16MiniAODv2-premix_withHLT_try3.root");            file_is_data.push_back(false);  file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);    
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("");            file_is_data.push_back(false);     file_is_QCDMC.push_back(false);    
   }
 
   //--- Z Prime
   if (foundZP   !=std::string::npos ){
-    input_folder.push_back(folder_input_tree_Zprime); file_name_tree.push_back("b2gtreeV4_ZprimeToTT_M-3000_W-30_RunIISpring16MiniAODv2_reHLT.root"); file_is_data.push_back(false); file_is_RunHdata.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree_Zprime); file_name_tree.push_back(""); file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
   }
 
   bool isFrozen            = true ;
@@ -205,8 +221,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
 		    file_name_tree[i],
 		    date,
 		    "trigEffStudies/run"+date+"/",
-		    ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut,
-		    file_is_RunHdata[i] //bool is Run H?
+		    ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut
 		    );
     } // end if (runLoopTree_trig)
   } // end file loop
@@ -271,8 +286,7 @@ void looptree_trig(
           string output_folder, 
           float topTagSDwindowLo, 
           float topTagSDwindowHi, 
-          float topTagTau32cut,
-	  bool isRunH
+          float topTagTau32cut
 		   )
 {
   
@@ -280,15 +294,25 @@ void looptree_trig(
   cout<<"opening "<<file_name<<endl;
   TFile *F1   = TFile::Open(file_name.c_str() );
 
-  // Get Tree entries                                                                                                                        
-  Float_t Jet0SDmass         ;
-  Float_t Jet1SDmass         ;
-  Float_t Jet0Mass           ;
-  Float_t Jet1Mass           ;
-  Float_t Jet0Pt             ;
-  Float_t Jet1Pt             ;
-  Float_t Jet0Phi             ;
-  Float_t Jet1Phi             ;
+  // Get Tree entries
+  Float_t Jet0SDmassRaw         ;
+  Float_t Jet1SDmassRaw         ;
+  Float_t Jet0MassRaw           ;
+  Float_t Jet1MassRaw           ;
+  Float_t Jet0PtRaw             ;
+  Float_t Jet1PtRaw             ;
+  Float_t Jet0EtaRaw             ;
+  Float_t Jet1EtaRaw             ;
+  Float_t Jet0PhiRaw             ;
+  Float_t Jet1PhiRaw             ;
+  
+  Float_t Jet0CorrFactor;
+  Float_t Jet1CorrFactor;
+  Float_t Jet0MassCorrFactor;
+  Float_t Jet1MassCorrFactor;
+  Float_t Jet0PtSmearFactor;
+  Float_t Jet1PtSmearFactor;
+  
   Float_t Jet0Tau32          ;
   Float_t Jet1Tau32          ;
   Float_t HT                 ;
@@ -299,14 +323,22 @@ void looptree_trig(
   double treeNentries = T1->GetEntries();
   cout<<"treeNentries = "<< treeNentries <<endl;
 
-  T1->SetBranchAddress("Jet0SDmass"                                      , & Jet0SDmass                                    );
-  T1->SetBranchAddress("Jet1SDmass"                                      , & Jet1SDmass                                    );
-  T1->SetBranchAddress("Jet0Mass"                                        , & Jet0Mass                                      );
-  T1->SetBranchAddress("Jet1Mass"                                        , & Jet1Mass                                      );
-  T1->SetBranchAddress("Jet0Pt"                                          , & Jet0Pt                                        );
-  T1->SetBranchAddress("Jet1Pt"                                          , & Jet1Pt                                        );
-  T1->SetBranchAddress("Jet0Phi"                                          , & Jet0Phi                                        );
-  T1->SetBranchAddress("Jet1Phi"                                          , & Jet1Phi                                        );
+  T1->SetBranchAddress("Jet0SDmassRaw"                                      , & Jet0SDmassRaw                                    );
+  T1->SetBranchAddress("Jet1SDmassRaw"                                      , & Jet1SDmassRaw                                    );
+  T1->SetBranchAddress("Jet0MassRaw"                                        , & Jet0MassRaw                                      );
+  T1->SetBranchAddress("Jet1MassRaw"                                        , & Jet1MassRaw                                      );
+  T1->SetBranchAddress("Jet0PtRaw"                                          , & Jet0PtRaw                                        );
+  T1->SetBranchAddress("Jet1PtRaw"                                          , & Jet1PtRaw                                        );
+  T1->SetBranchAddress("Jet0EtaRaw"                                          , & Jet0EtaRaw                                        );
+  T1->SetBranchAddress("Jet1EtaRaw"                                          , & Jet1EtaRaw                                        );
+  T1->SetBranchAddress("Jet0PhiRaw"                                          , & Jet0PhiRaw                                        );
+  T1->SetBranchAddress("Jet1PhiRaw"                                          , & Jet1PhiRaw                                        );
+  T1->SetBranchAddress("Jet0CorrFactor"                                          , & Jet0CorrFactor                                        );
+  T1->SetBranchAddress("Jet1CorrFactor"                                          , & Jet1CorrFactor                                        );
+  T1->SetBranchAddress("Jet0MassCorrFactor"                                          , & Jet0MassCorrFactor                                        );
+  T1->SetBranchAddress("Jet1MassCorrFactor"                                          , & Jet1MassCorrFactor                                        );
+  T1->SetBranchAddress("Jet0PtSmearFactor"                                          , & Jet0PtSmearFactor                                        );
+  T1->SetBranchAddress("Jet1PtSmearFactor"                                          , & Jet1PtSmearFactor                                        );
   T1->SetBranchAddress("Jet0Tau32"                                       , & Jet0Tau32                                     );
   T1->SetBranchAddress("Jet1Tau32"                                       , & Jet1Tau32                                     );
   T1->SetBranchAddress("HT"                                              , & HT                                            );
@@ -314,14 +346,22 @@ void looptree_trig(
 
   //ignore other branches                                                                                                                    
   T1->SetBranchStatus("*",0);
-  T1->SetBranchStatus("Jet0SDmass",1)          ;
-  T1->SetBranchStatus("Jet1SDmass",1)          ;
-  T1->SetBranchStatus("Jet0Mass",1)            ;
-  T1->SetBranchStatus("Jet1Mass",1)            ;
-  T1->SetBranchStatus("Jet0Pt",1)              ;
-  T1->SetBranchStatus("Jet1Pt",1)              ;
-  T1->SetBranchStatus("Jet0Phi",1)              ;
-  T1->SetBranchStatus("Jet1Phi",1)              ;
+  T1->SetBranchStatus("Jet0SDmassRaw",1)          ;
+  T1->SetBranchStatus("Jet1SDmassRaw",1)          ;
+  T1->SetBranchStatus("Jet0MassRaw",1)            ;
+  T1->SetBranchStatus("Jet1MassRaw",1)            ;
+  T1->SetBranchStatus("Jet0PtRaw",1)              ;
+  T1->SetBranchStatus("Jet1PtRaw",1)              ;
+  T1->SetBranchStatus("Jet0EtaRaw",1)              ;
+  T1->SetBranchStatus("Jet1EtaRaw",1)              ;
+  T1->SetBranchStatus("Jet0PhiRaw",1)              ;
+  T1->SetBranchStatus("Jet1PhiRaw",1)              ;
+  T1->SetBranchStatus("Jet0CorrFactor",1)              ;
+  T1->SetBranchStatus("Jet1CorrFactor",1)              ;
+  T1->SetBranchStatus("Jet0MassCorrFactor",1)              ;
+  T1->SetBranchStatus("Jet1MassCorrFactor",1)              ;
+  T1->SetBranchStatus("Jet0PtSmearFactor",1)              ;
+  T1->SetBranchStatus("Jet1PtSmearFactor",1)              ;
   T1->SetBranchStatus("Jet0Tau32",1)           ;
   T1->SetBranchStatus("Jet1Tau32",1)           ;
   T1->SetBranchStatus("HT",1)                  ;
@@ -357,35 +397,23 @@ void looptree_trig(
   ptCutLabels.push_back("_minpt500"); ptCuts.push_back(500.);
 
   //trigger numerators and denominators
-  if (!isRunH){//Runs B - G
-    numLabels.push_back("PFHT700TrimMass50"); numTrig.push_back(13);
-    numLabels.push_back("PFHT800"); numTrig.push_back(6);
-    numLabels.push_back("PFHT900"); numTrig.push_back(7);
+  //Problems with HT triggers in run H - need Or with single jet triggers                                                              
+  
+  numLabels.push_back("PFHT700TrimMass50"); numTrig.push_back(19);
+  numLabels.push_back("PFHT800"); numTrig.push_back(6);
+  numLabels.push_back("PFHT900"); numTrig.push_back(7);
+  
+  numOrLabels.push_back("PFJet450"); numOrTrig.push_back(13);
+  numOrLabels.push_back("AK8PFJet450"); numOrTrig.push_back(15);
+  numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(17);
+  
+  denomLabels.push_back("PFHT650");
+  denomLabels.push_back("Mu50orIsoMu24");
 
-    numOrLabels.push_back("PFJet450"); numOrTrig.push_back(10);
-    numOrLabels.push_back("AK8PFJet450"); numOrTrig.push_back(30);
-    numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(12);
-    numOrLabels.push_back("AK8DiPFJet280_200_TrimMass30"); numOrTrig.push_back(15);
-
-    denomLabels.push_back("PFHT650");
-    denomLabels.push_back("Mu50orIsoMu24");
-  }
-  else{ //Problems with HT triggers in run H - need Or with single jet triggers                                                              
-    numLabels.push_back("PFHT700TrimMass50"); numTrig.push_back(12);
-    numLabels.push_back("PFHT900"); numTrig.push_back(6);
-
-    numOrLabels.push_back("PFJet450"); numOrTrig.push_back(9);
-    numOrLabels.push_back("AK8PFJet450"); numOrTrig.push_back(27);
-    numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(11);
-    numOrLabels.push_back("AK8DiPFJet280_200_TrimMass30"); numOrTrig.push_back(14);
-
-    denomLabels.push_back("PFHT650");
-    denomLabels.push_back("Mu50orIsoMu24");
-  }
-  //denominator histograms                                                                                                                   
+  //denominator histograms
   TH1D *histos_denom[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()];
 
-  //numerator histograms                                                                                                                     
+  //numerator histograms
   TH1D *histos_num[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()];
   TH1D *histos_numOr[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()][numOrLabels.size()];
 
@@ -410,7 +438,25 @@ void looptree_trig(
 
     T1->GetEntry(i);
 
-    // Top-tagging bools                                                                                                                     
+    // Jet corrections                                                                                                                      
+    TLorentzVector Jet0P4Raw;
+    TLorentzVector Jet1P4Raw;
+    Jet0P4Raw.SetPtEtaPhiM( Jet0PtRaw, Jet0EtaRaw, Jet0PhiRaw, Jet0MassRaw);
+    Jet1P4Raw.SetPtEtaPhiM( Jet1PtRaw, Jet1EtaRaw, Jet1PhiRaw, Jet1MassRaw);
+
+    TLorentzVector Jet0P4 = Jet0P4Raw * Jet0CorrFactor * Jet0PtSmearFactor;
+    TLorentzVector Jet1P4 = Jet1P4Raw * Jet1CorrFactor * Jet1PtSmearFactor;
+
+    double Jet0Pt = Jet0P4.Perp();
+    double Jet1Pt = Jet1P4.Perp();
+    double Jet0Phi = Jet0P4.Phi();
+    double Jet1Phi = Jet1P4.Phi();
+    double Jet0Mass = Jet0P4.M();
+    double Jet1Mass = Jet1P4.M();
+    double Jet0SDmass = Jet0SDmassRaw * Jet0MassCorrFactor * Jet0PtSmearFactor;
+    double Jet1SDmass = Jet1SDmassRaw * Jet1MassCorrFactor * Jet1PtSmearFactor;
+
+    // Top-tagging bools
     bool j0_tag_mass  = Jet0SDmass > topTagSDwindowLo && Jet0SDmass < topTagSDwindowHi;
     bool j1_tag_mass  = Jet1SDmass > topTagSDwindowLo && Jet1SDmass < topTagSDwindowHi;
     bool j0_tag_tau32 = Jet0Tau32 < topTagTau32cut;
@@ -418,12 +464,15 @@ void looptree_trig(
     bool jets_tag_mass = j0_tag_mass && j1_tag_mass;
     bool jets_top_tag = jets_tag_mass && j0_tag_tau32 && j1_tag_tau32;
 
+    //kinematic variables
     float sumJetPt = Jet0Pt + Jet1Pt;
     float deltaPhi = abs(Jet0Phi - Jet1Phi);
 
+    //converting string of trigger bits to long
     string trigBitsString = AllHadTrigAcceptBits->c_str();
     int trigBits = std::stol(trigBitsString,nullptr,2);
 
+    //setting x-axis variables, fiducial cuts, and denominator trigger bits
     vector <float> xAxisVars;
     vector <bool> cuts;
     vector <bool> denomTrigPass;
@@ -438,9 +487,7 @@ void looptree_trig(
     cuts.push_back(jets_top_tag);
 
     denomTrigPass.push_back((trigBits>>5)&1);//PFHT650
-    //Mu50orIsoMu24 
-    if (!isRunH) denomTrigPass.push_back(((trigBits>>17)&1) || ((trigBits>>20)&1));
-    else denomTrigPass.push_back(((trigBits>>16)&1) || ((trigBits>>19)&1));
+    denomTrigPass.push_back(((trigBits>>23)&1) || ((trigBits>>27)&1));//Mu50orIsoMu24 
 
     //make sure vector lengths are consistent
     if (xAxisVars.size() != xAxisLabels.size()){
