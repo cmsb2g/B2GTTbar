@@ -2,7 +2,7 @@ void tjetA__Msdp()
 {
 //=========Macro generated from canvas: c1/c1
 //=========  (Wed Mar  9 16:23:38 2016) by ROOT version6.02/13
-      TCanvas *c1 = new TCanvas("c1", "c1",1,1,745,701);
+  TCanvas *c1 = new TCanvas("c1", "c1",1,1,745,701);
 
    // TCanvas *c1 = new TCanvas("c1", "c1",1,1,800,701);
    gStyle->SetOptFit(1);
@@ -147,14 +147,14 @@ void tjetA__Msdp()
    ttbar_T_sitop_T_copy61->SetDirectory(0);
    ttbar_T_sitop_T_copy61->SetStats(0);
 
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
-   ci = TColor::GetColor("#cc3333");
-   ttbar_T_sitop_T_copy61->SetFillColor(ci);
+   //Int_t ci;      // for color index setting
+   //TColor *color; // for color definition with alpha
+   //ci = TColor::GetColor("#cc3333");
+   ttbar_T_sitop_T_copy61->SetFillColor(kOrange+8);
 
-   ci = TColor::GetColor("#660000");
-   ttbar_T_sitop_T_copy61->SetLineColor(ci);
-   ttbar_T_sitop_T_copy61->SetLineWidth(2);
+   //ci = TColor::GetColor("#660000");
+   //ttbar_T_sitop_T_copy61->SetLineColor(ci);
+   ttbar_T_sitop_T_copy61->SetLineWidth(0);
    ttbar_T_sitop_T_copy61->SetMarkerStyle(20);
    ttbar_T_sitop_T_copy61->SetMarkerSize(0);
    ttbar_T_sitop_T_copy61->GetXaxis()->SetRange(1,24);
@@ -165,7 +165,7 @@ void tjetA__Msdp()
    ttbar_T_sitop_T_copy61->GetXaxis()->SetTickLength(0.045);
    ttbar_T_sitop_T_copy61->GetXaxis()->SetTitleOffset(1.15);
    ttbar_T_sitop_T_copy61->GetXaxis()->SetTitleFont(42);
-   ttbar_T_sitop_T_copy61->GetYaxis()->SetTitle("Events");
+   ttbar_T_sitop_T_copy61->GetYaxis()->SetTitle("Events/10 GeV");
    ttbar_T_sitop_T_copy61->GetYaxis()->SetNdivisions(506);
    ttbar_T_sitop_T_copy61->GetYaxis()->SetLabelFont(42);
    ttbar_T_sitop_T_copy61->GetYaxis()->SetLabelSize(0.06375);
@@ -281,12 +281,12 @@ void tjetA__Msdp()
    ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetBinError(49,0.003497587);
    ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetEntries(7656.435);
 
-   ci = TColor::GetColor("#0000ff");
-   ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetFillColor(ci);
+   //ci = TColor::GetColor("#0000ff");
+   ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetFillColor(kAzure+6);
 
-   ci = TColor::GetColor("#000099");
-   ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetLineColor(ci);
-   ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetLineWidth(2);
+   //ci = TColor::GetColor("#000099");
+   //ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetLineColor(ci);
+   ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetLineWidth(0);
    ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetMarkerStyle(20);
    ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetMarkerSize(0);
    ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->GetXaxis()->SetRange(1,240);
@@ -411,9 +411,9 @@ void tjetA__Msdp()
    ttbar_T_sitop_T63->SetFillColor(202);
    ttbar_T_sitop_T63->SetFillStyle(3254);
 
-   ci = TColor::GetColor("#660000");
-   ttbar_T_sitop_T63->SetLineColor(ci);
-   ttbar_T_sitop_T63->SetLineWidth(2);
+   //ci = TColor::GetColor("#660000");
+   //ttbar_T_sitop_T63->SetLineColor(ci);
+   ttbar_T_sitop_T63->SetLineWidth(0);
    ttbar_T_sitop_T63->SetMarkerStyle(20);
    ttbar_T_sitop_T63->SetMarkerSize(0);
    ttbar_T_sitop_T63->GetXaxis()->SetRange(1,240);
@@ -533,8 +533,8 @@ void tjetA__Msdp()
    zp01w300064->SetBinError(47,0.0689603);
    zp01w300064->SetBinError(49,0.06058001);
    zp01w300064->SetEntries(3960.034);
-   zp01w300064->SetFillColor(1);
    zp01w300064->SetFillStyle(0);
+   zp01w300064->SetLineColor(1);
    zp01w300064->SetLineStyle(2);
    zp01w300064->SetLineWidth(2);
    zp01w300064->SetMarkerStyle(20);
@@ -612,7 +612,7 @@ void tjetA__Msdp()
    DATA_lept65->GetZaxis()->SetLabelSize(0.0425);
    DATA_lept65->GetZaxis()->SetTitleSize(0.0475);
    DATA_lept65->GetZaxis()->SetTitleFont(42);
-   DATA_lept65->Draw("same,lep");
+   DATA_lept65->Draw("same,lepx0");
    
    TH1D *ttbar_T_sitop_T_copy66 = new TH1D("ttbar_T_sitop_T_copy66","",48,0,600);
    ttbar_T_sitop_T_copy66->SetBinContent(0,0.1809873);
@@ -721,12 +721,12 @@ void tjetA__Msdp()
    ttbar_T_sitop_T_copy66->SetDirectory(0);
    ttbar_T_sitop_T_copy66->SetStats(0);
 
-   ci = TColor::GetColor("#cc3333");
-   ttbar_T_sitop_T_copy66->SetFillColor(ci);
+   //ci = TColor::GetColor("#cc3333");
+   ttbar_T_sitop_T_copy66->SetFillColor(kOrange+8);
 
-   ci = TColor::GetColor("#660000");
-   ttbar_T_sitop_T_copy66->SetLineColor(ci);
-   ttbar_T_sitop_T_copy66->SetLineWidth(2);
+   //ci = TColor::GetColor("#660000");
+   //ttbar_T_sitop_T_copy66->SetLineColor(ci);
+   ttbar_T_sitop_T_copy66->SetLineWidth(0);
    ttbar_T_sitop_T_copy66->SetMarkerStyle(20);
    ttbar_T_sitop_T_copy66->SetMarkerSize(0);
    ttbar_T_sitop_T_copy66->GetXaxis()->SetRange(1,24);
@@ -737,7 +737,7 @@ void tjetA__Msdp()
    ttbar_T_sitop_T_copy66->GetXaxis()->SetTickLength(0.045);
    ttbar_T_sitop_T_copy66->GetXaxis()->SetTitleOffset(1.15);
    ttbar_T_sitop_T_copy66->GetXaxis()->SetTitleFont(42);
-   ttbar_T_sitop_T_copy66->GetYaxis()->SetTitle("Events");
+   ttbar_T_sitop_T_copy66->GetYaxis()->SetTitle("Events/10 GeV");
    ttbar_T_sitop_T_copy66->GetYaxis()->SetNdivisions(506);
    ttbar_T_sitop_T_copy66->GetYaxis()->SetLabelFont(42);
    ttbar_T_sitop_T_copy66->GetYaxis()->SetLabelSize(0.06375);
@@ -758,7 +758,7 @@ void tjetA__Msdp()
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
    leg->SetTextSize(0.045);
-   TLegendEntry *entry=leg->AddEntry("DATA_lept","Data","lep");
+   TLegendEntry *entry=leg->AddEntry("DATA_lept","Data","ep");
    entry->SetLineColor(1);
    entry->SetLineStyle(1);
    entry->SetLineWidth(2);
@@ -768,28 +768,28 @@ void tjetA__Msdp()
    entry->SetTextFont(42);
    entry=leg->AddEntry("ttbar_T_sitop_T","Matched to top quark","f");
 
-   ci = TColor::GetColor("#cc3333");
-   entry->SetFillColor(ci);
+   //ci = TColor::GetColor("#cc3333");
+   entry->SetFillColor(kOrange+8);
    entry->SetFillStyle(1001);
 
-   ci = TColor::GetColor("#660000");
-   entry->SetLineColor(ci);
+   //ci = TColor::GetColor("#660000");
+   //entry->SetLineColor(ci);
    entry->SetLineStyle(1);
-   entry->SetLineWidth(2);
+   entry->SetLineWidth(0);
    entry->SetMarkerColor(1);
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
    entry->SetTextFont(42);
    entry=leg->AddEntry("ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos","Unmatched to top quark","f");
 
-   ci = TColor::GetColor("#0000ff");
-   entry->SetFillColor(ci);
+   //ci = TColor::GetColor("#0000ff");
+   entry->SetFillColor(kAzure+6);
    entry->SetFillStyle(1001);
 
-   ci = TColor::GetColor("#000099");
-   entry->SetLineColor(ci);
+   //ci = TColor::GetColor("#000099");
+   //entry->SetLineColor(ci);
    entry->SetLineStyle(1);
-   entry->SetLineWidth(2);
+   entry->SetLineWidth(0);
    entry->SetMarkerColor(1);
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
@@ -809,11 +809,11 @@ void tjetA__Msdp()
    tex->SetTextSize(0.0825);
    tex->SetLineWidth(2);
    tex->Draw();
-   tex = new TLatex(0.96,0.916,"2.6 fb^{-1} (13 TeV)");
+   tex = new TLatex(0.96,0.895,"2.6 fb^{-1} (13 TeV)");
    tex->SetNDC();
    tex->SetTextAlign(31);
    tex->SetTextFont(42);
-   tex->SetTextSize(0.0825);
+   tex->SetTextSize(0.0575);
    tex->SetLineWidth(2);
    tex->Draw();
    tex = new TLatex(0.181,0.71225,"AK8 jets with p_{T} > 500 GeV, |#eta| < 2.4, #tau_{32} < 0.69");
@@ -821,6 +821,13 @@ void tjetA__Msdp()
    tex->SetTextAlign(13);
    tex->SetTextFont(42);
    tex->SetTextSize(0.045);
+   tex->SetLineWidth(2);
+   tex->Draw();
+   tex = new TLatex(0.14,0.895,"lepton+jets");
+   tex->SetNDC();
+   tex->SetTextAlign(11);
+   tex->SetTextFont(42);
+   tex->SetTextSize(0.0575);
    tex->SetLineWidth(2);
    tex->Draw();
    pad1->Modified();
@@ -961,7 +968,7 @@ void tjetA__Msdp()
    DATA_lept67->GetZaxis()->SetLabelSize(0.0425);
    DATA_lept67->GetZaxis()->SetTitleSize(0.0475);
    DATA_lept67->GetZaxis()->SetTitleFont(42);
-   DATA_lept67->Draw("lepe0");
+   DATA_lept67->Draw("lepe0x0");
    
    TH1D *ttbar_T_sitop_T68 = new TH1D("ttbar_T_sitop_T68","",48,0,600);
    ttbar_T_sitop_T68->SetBinContent(0,1);
@@ -1067,9 +1074,9 @@ void tjetA__Msdp()
    ttbar_T_sitop_T68->SetEntries(330.3496);
    ttbar_T_sitop_T68->SetFillColor(204);
 
-   ci = TColor::GetColor("#660000");
-   ttbar_T_sitop_T68->SetLineColor(ci);
-   ttbar_T_sitop_T68->SetLineWidth(2);
+   //ci = TColor::GetColor("#660000");
+   //ttbar_T_sitop_T68->SetLineColor(ci);
+   ttbar_T_sitop_T68->SetLineWidth(0);
    ttbar_T_sitop_T68->SetMarkerStyle(20);
    ttbar_T_sitop_T68->SetMarkerSize(0);
    ttbar_T_sitop_T68->GetXaxis()->SetTitle("Jet softdrop mass [GeV]");
@@ -1079,7 +1086,7 @@ void tjetA__Msdp()
    ttbar_T_sitop_T68->GetXaxis()->SetTitleSize(0.0475);
    ttbar_T_sitop_T68->GetXaxis()->SetTitleOffset(1.15);
    ttbar_T_sitop_T68->GetXaxis()->SetTitleFont(42);
-   ttbar_T_sitop_T68->GetYaxis()->SetTitle("Events");
+   ttbar_T_sitop_T68->GetYaxis()->SetTitle("Events/10 GeV");
    ttbar_T_sitop_T68->GetYaxis()->SetLabelFont(42);
    ttbar_T_sitop_T68->GetYaxis()->SetLabelSize(0.0425);
    ttbar_T_sitop_T68->GetYaxis()->SetTitleSize(0.0475);
@@ -1211,7 +1218,7 @@ void tjetA__Msdp()
    DATA_lept69->GetZaxis()->SetLabelSize(0.0425);
    DATA_lept69->GetZaxis()->SetTitleSize(0.0475);
    DATA_lept69->GetZaxis()->SetTitleFont(42);
-   DATA_lept69->Draw("same,lepe0");
+   DATA_lept69->Draw("same,lepe0x0");
    
    Double_t gerr__DATA_lept_fx3007[32] = {
    6.25,
@@ -1411,7 +1418,7 @@ void tjetA__Msdp()
    9.65095,
    15.3366,
    177.3657};
-   TGraphAsymmErrors *grae = new TGraphAsymmErrors(32,gerr__DATA_lept_fx3007,gerr__DATA_lept_fy3007,gerr__DATA_lept_felx3007,gerr__DATA_lept_fehx3007,gerr__DATA_lept_fely3007,gerr__DATA_lept_fehy3007);
+   TGraphAsymmErrors *grae = new TGraphAsymmErrors(32,gerr__DATA_lept_fx3007,gerr__DATA_lept_fy3007,0,0,gerr__DATA_lept_fely3007,gerr__DATA_lept_fehy3007);
    grae->SetName("gerr__DATA_lept");
    grae->SetTitle("gerr__TAG__vs__tjetA__Msdp");
    grae->SetFillColor(1);
@@ -1562,11 +1569,11 @@ void tjetA__Msdp()
    DATA_lept70->GetZaxis()->SetLabelSize(0.0425);
    DATA_lept70->GetZaxis()->SetTitleSize(0.0475);
    DATA_lept70->GetZaxis()->SetTitleFont(42);
-   DATA_lept70->Draw("same,axis");
+   DATA_lept70->Draw("same,axisx0");
    pad2->Modified();
    c1->cd();
    c1->Modified();
    c1->cd();
    c1->SetSelected(c1);
-   c1->SaveAs("tjetA__Msdp.pdf");
+   c1->SaveAs("plots_74X/plotsKinematic/tjetA__Msdp.pdf");
 }
