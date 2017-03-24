@@ -80,7 +80,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
 
   if (savelabel=="" && runLoopTree) {cout<<"please provide a unique label for the savefile. example: run(\"BCD\",\"20161201addHist\",1,0)"<<endl; return;}
 
-  string date = "20170310";
+  string date = "20170320";
 
   string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/";
   string folder_input_tree_Zprime ="root://cmseos.fnal.gov//store/user/camclean/B2GAnaFW/Trees/80X_V4/";
@@ -121,10 +121,10 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0003.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
   }
   if ( foundD   !=std::string::npos ){
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    /*input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0002.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0003.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0003.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);*/                 
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0004.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0005.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
   }
@@ -297,6 +297,8 @@ void looptree_trig(
   // Get Tree entries
   Float_t Jet0SDmassRaw         ;
   Float_t Jet1SDmassRaw         ;
+  Float_t Jet0PuppiSDmassRaw         ;
+  Float_t Jet1PuppiSDmassRaw         ;
   Float_t Jet0MassRaw           ;
   Float_t Jet1MassRaw           ;
   Float_t Jet0PtRaw             ;
@@ -312,6 +314,11 @@ void looptree_trig(
   Float_t Jet1MassCorrFactor;
   Float_t Jet0PtSmearFactor;
   Float_t Jet1PtSmearFactor;
+
+  Float_t Jet0PuppiCorrFactor;
+  Float_t Jet1PuppiCorrFactor;
+  Float_t Jet0PuppiPtSmearFactor;
+  Float_t Jet1PuppiPtSmearFactor;
   
   Float_t Jet0Tau32          ;
   Float_t Jet1Tau32          ;
@@ -325,6 +332,8 @@ void looptree_trig(
 
   T1->SetBranchAddress("Jet0SDmassRaw"                                      , & Jet0SDmassRaw                                    );
   T1->SetBranchAddress("Jet1SDmassRaw"                                      , & Jet1SDmassRaw                                    );
+  T1->SetBranchAddress("Jet0PuppiSDmassRaw"                                      , & Jet0PuppiSDmassRaw                                    );
+  T1->SetBranchAddress("Jet1PuppiSDmassRaw"                                      , & Jet1PuppiSDmassRaw                                    );
   T1->SetBranchAddress("Jet0MassRaw"                                        , & Jet0MassRaw                                      );
   T1->SetBranchAddress("Jet1MassRaw"                                        , & Jet1MassRaw                                      );
   T1->SetBranchAddress("Jet0PtRaw"                                          , & Jet0PtRaw                                        );
@@ -339,6 +348,10 @@ void looptree_trig(
   T1->SetBranchAddress("Jet1MassCorrFactor"                                          , & Jet1MassCorrFactor                                        );
   T1->SetBranchAddress("Jet0PtSmearFactor"                                          , & Jet0PtSmearFactor                                        );
   T1->SetBranchAddress("Jet1PtSmearFactor"                                          , & Jet1PtSmearFactor                                        );
+  T1->SetBranchAddress("Jet0PuppiCorrFactor"                                          , & Jet0PuppiCorrFactor                                        );
+  T1->SetBranchAddress("Jet1PuppiCorrFactor"                                          , & Jet1PuppiCorrFactor                                        );
+  T1->SetBranchAddress("Jet0PuppiPtSmearFactor"                                          , & Jet0PuppiPtSmearFactor                                        );
+  T1->SetBranchAddress("Jet1PuppiPtSmearFactor"                                          , & Jet1PuppiPtSmearFactor                                        );
   T1->SetBranchAddress("Jet0Tau32"                                       , & Jet0Tau32                                     );
   T1->SetBranchAddress("Jet1Tau32"                                       , & Jet1Tau32                                     );
   T1->SetBranchAddress("HT"                                              , & HT                                            );
@@ -348,6 +361,8 @@ void looptree_trig(
   T1->SetBranchStatus("*",0);
   T1->SetBranchStatus("Jet0SDmassRaw",1)          ;
   T1->SetBranchStatus("Jet1SDmassRaw",1)          ;
+  T1->SetBranchStatus("Jet0PuppiSDmassRaw",1)          ;
+  T1->SetBranchStatus("Jet1PuppiSDmassRaw",1)          ;
   T1->SetBranchStatus("Jet0MassRaw",1)            ;
   T1->SetBranchStatus("Jet1MassRaw",1)            ;
   T1->SetBranchStatus("Jet0PtRaw",1)              ;
@@ -362,12 +377,18 @@ void looptree_trig(
   T1->SetBranchStatus("Jet1MassCorrFactor",1)              ;
   T1->SetBranchStatus("Jet0PtSmearFactor",1)              ;
   T1->SetBranchStatus("Jet1PtSmearFactor",1)              ;
+  T1->SetBranchStatus("Jet0PuppiCorrFactor",1)              ;
+  T1->SetBranchStatus("Jet1PuppiCorrFactor",1)              ;
+  T1->SetBranchStatus("Jet0PuppiPtSmearFactor",1)              ;
+  T1->SetBranchStatus("Jet1PuppiPtSmearFactor",1)              ;
   T1->SetBranchStatus("Jet0Tau32",1)           ;
   T1->SetBranchStatus("Jet1Tau32",1)           ;
   T1->SetBranchStatus("HT",1)                  ;
   T1->SetBranchStatus("AllHadTrigAcceptBits",1);
 
   vector <string> xAxisLabels;
+  vector <string> twoDxAxisLabels;
+  vector <string> twoDyAxisLabels;
   vector <string> cutCats;
 
   vector <string> ptCutLabels;
@@ -385,10 +406,20 @@ void looptree_trig(
   xAxisLabels.push_back("Jet0Pt");
   xAxisLabels.push_back("Jet0Mass");
 
+  twoDxAxisLabels.push_back("sumJetPt");
+  twoDxAxisLabels.push_back("HT");
+
+  twoDyAxisLabels.push_back("JetMass");
+  twoDyAxisLabels.push_back("JetSoftDropMass");
+  twoDyAxisLabels.push_back("JetPUPPISoftDropMass");
+
   //adding top tag cuts
   cutCats.push_back("_");
+  cutCats.push_back("_1tagMass_");
   cutCats.push_back("_2tagMass_");
-  cutCats.push_back("_2tagMass_2tagTau32_");
+  cutCats.push_back("_1tagPUPPIMass_");
+  cutCats.push_back("_2tagPUPPIMass_");
+  //cutCats.push_back("_2tagMass_2tagTau32_");
 
   //adjusting the minimum jet pt
   ptCutLabels.push_back("_minpt300"); ptCuts.push_back(300.);
@@ -412,30 +443,42 @@ void looptree_trig(
 
   //denominator histograms
   TH1D *histos_denom[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()];
+  TH2D *histostwoD_denom[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()];
 
   //numerator histograms
   TH1D *histos_num[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()];
   TH1D *histos_numOr[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()][numOrLabels.size()];
+  TH2D *histostwoD_num[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()];
+  TH2D *histostwoD_numOr[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()][numOrLabels.size()];
 
   //naming histograms
-  for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-    for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){ 
-      for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-	for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
+  for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){ 
+    for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+      for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
+	for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
 	  histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels] = new TH1D(Form("h_pass%sdenom%s%s%s",denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
 	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
 	    histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels] = new TH1D(Form("h_pass%snum%sdenom%s%s%s",numLabels[i_numLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
 	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels] = new TH1D(Form("h_pass%sor%snum%sdenom%s%s%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
 	  }
 	}
+	for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
+	  for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
+	    histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels] = new TH2D(Form("h_pass%sdenom%s%s%svs%s",denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",800, 0,  8000, 800, 0,  8000);
+	    for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	      histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels] = new TH2D(Form("h_pass%snum%sdenom%s%s%svs%s",numLabels[i_numLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",800, 0,  8000, 800, 0,  8000);
+	      for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
+		histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels] = new TH2D(Form("h_pass%sor%snum%sdenom%s%s%svs%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",800, 0,  8000, 800, 0,  8000);
+	      }
+	    }
+	  }
+	}
       }
     }
   }
 
-	
   for (int i=0; i<treeNentries; i++ ){ //entries                                                                                                  
     if (i%10000==0) cout<<i<<"  / "<<treeNentries<<endl;
-
     T1->GetEntry(i);
 
     // Jet corrections                                                                                                                      
@@ -455,14 +498,21 @@ void looptree_trig(
     double Jet1Mass = Jet1P4.M();
     double Jet0SDmass = Jet0SDmassRaw * Jet0MassCorrFactor * Jet0PtSmearFactor;
     double Jet1SDmass = Jet1SDmassRaw * Jet1MassCorrFactor * Jet1PtSmearFactor;
+    double Jet0PuppiSDmass = Jet0PuppiSDmassRaw * Jet0PuppiCorrFactor * Jet0PuppiPtSmearFactor;
+    double Jet1PuppiSDmass = Jet1PuppiSDmassRaw * Jet1PuppiCorrFactor * Jet1PuppiPtSmearFactor;
 
     // Top-tagging bools
     bool j0_tag_mass  = Jet0SDmass > topTagSDwindowLo && Jet0SDmass < topTagSDwindowHi;
     bool j1_tag_mass  = Jet1SDmass > topTagSDwindowLo && Jet1SDmass < topTagSDwindowHi;
-    bool j0_tag_tau32 = Jet0Tau32 < topTagTau32cut;
-    bool j1_tag_tau32 = Jet1Tau32 < topTagTau32cut;
+    bool j0_tag_puppimass  = Jet0PuppiSDmass > topTagSDwindowLo && Jet0PuppiSDmass < topTagSDwindowHi;
+    bool j1_tag_puppimass  = Jet1PuppiSDmass > topTagSDwindowLo && Jet1PuppiSDmass < topTagSDwindowHi;
+    //bool j0_tag_tau32 = Jet0Tau32 < topTagTau32cut;
+    //bool j1_tag_tau32 = Jet1Tau32 < topTagTau32cut;
+    bool j0orj1_tag_mass = j0_tag_mass || j1_tag_mass;
     bool jets_tag_mass = j0_tag_mass && j1_tag_mass;
-    bool jets_top_tag = jets_tag_mass && j0_tag_tau32 && j1_tag_tau32;
+    bool j0orj1_tag_puppimass = j0_tag_puppimass || j1_tag_puppimass;
+    bool jets_tag_puppimass = j0_tag_puppimass && j1_tag_puppimass;
+    //bool jets_top_tag = jets_tag_mass && j0_tag_tau32 && j1_tag_tau32;
 
     //kinematic variables
     float sumJetPt = Jet0Pt + Jet1Pt;
@@ -474,6 +524,9 @@ void looptree_trig(
 
     //setting x-axis variables, fiducial cuts, and denominator trigger bits
     vector <float> xAxisVars;
+    vector <float> twoDxAxisVars;
+    vector <float> twoDyAxisVarsPt1;
+    vector <float> twoDyAxisVarsPt2;
     vector <bool> cuts;
     vector <bool> denomTrigPass;
 
@@ -482,9 +535,23 @@ void looptree_trig(
     xAxisVars.push_back(Jet0Pt);
     xAxisVars.push_back(Jet0Mass);
 
+    twoDxAxisVars.push_back(sumJetPt);
+    twoDxAxisVars.push_back(HT);
+    
+    twoDyAxisVarsPt1.push_back(Jet0Mass);
+    twoDyAxisVarsPt1.push_back(Jet0SDmass);
+    twoDyAxisVarsPt1.push_back(Jet0PuppiSDmass);
+
+    twoDyAxisVarsPt2.push_back(Jet1Mass);
+    twoDyAxisVarsPt2.push_back(Jet1SDmass);
+    twoDyAxisVarsPt2.push_back(Jet1PuppiSDmass);
+
     cuts.push_back(1);
+    cuts.push_back(j0orj1_tag_mass);
     cuts.push_back(jets_tag_mass);
-    cuts.push_back(jets_top_tag);
+    cuts.push_back(j0orj1_tag_puppimass);
+    cuts.push_back(jets_tag_puppimass);
+    //cuts.push_back(jets_top_tag);
 
     denomTrigPass.push_back((trigBits>>5)&1);//PFHT650
     denomTrigPass.push_back(((trigBits>>23)&1) || ((trigBits>>27)&1));//Mu50orIsoMu24 
@@ -520,6 +587,24 @@ void looptree_trig(
 		      }
 		    }
 		  }
+		  for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
+		    for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
+		      histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
+		      histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
+		      for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+			if ((trigBits>>numTrig[i_numLabels])&1){
+			  histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
+ histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
+			}
+			for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
+			  if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) {
+			    histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
+			    histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
+			  }
+			}
+		      }
+		    }
+		  }
 		}
 	      }
             }
@@ -529,6 +614,9 @@ void looptree_trig(
     }
     
     xAxisVars.clear(); 
+    twoDxAxisVars.clear(); 
+    twoDyAxisVarsPt1.clear(); 
+    twoDyAxisVarsPt2.clear(); 
     cuts.clear();
     denomTrigPass.clear();
   }
@@ -539,19 +627,65 @@ void looptree_trig(
   Out->cd();
 
   //writing histograms
-  for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-    for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){
-      for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-	for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
+  for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){
+    for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+      for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
+	for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
 	  histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Write();
 	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
 	    histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Write();
 	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Write();
 	  }
 	}
+	for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
+	  for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
+	    histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Write();
+	    for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	      histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Write();
+	      for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Write();
+	    }
+	  }
+	}
       }
     }
   }
+
+  //deleting histograms
+  for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){
+    for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+      for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
+	for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+	  histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Delete();
+	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	    histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Delete();
+	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Delete();
+	  }
+	}
+	for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
+	  for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
+	    histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Delete();
+	    for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	      histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Delete();
+	      for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Delete();
+	    }
+	  }
+	}
+      }
+    }
+  }
+
+  xAxisLabels.clear();
+  twoDxAxisLabels.clear();
+  twoDyAxisLabels.clear();
+  cutCats.clear();
+  ptCutLabels.clear();
+  ptCuts.clear();
+  numLabels.clear();
+  numOrLabels.clear();
+  numTrig.clear();
+  numOrTrig.clear();
+  denomLabels.clear();
+
   
   Out->Close();
 }
