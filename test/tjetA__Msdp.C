@@ -150,7 +150,7 @@ void tjetA__Msdp()
    //Int_t ci;      // for color index setting
    //TColor *color; // for color definition with alpha
    //ci = TColor::GetColor("#cc3333");
-   ttbar_T_sitop_T_copy61->SetFillColor(kOrange+8);
+   ttbar_T_sitop_T_copy61->SetFillColor(kOrange+10);
 
    //ci = TColor::GetColor("#660000");
    //ttbar_T_sitop_T_copy61->SetLineColor(ci);
@@ -282,7 +282,7 @@ void tjetA__Msdp()
    ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetEntries(7656.435);
 
    //ci = TColor::GetColor("#0000ff");
-   ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetFillColor(kAzure+6);
+   ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetFillColor(kAzure+8);
 
    //ci = TColor::GetColor("#000099");
    //ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos62->SetLineColor(ci);
@@ -722,7 +722,7 @@ void tjetA__Msdp()
    ttbar_T_sitop_T_copy66->SetStats(0);
 
    //ci = TColor::GetColor("#cc3333");
-   ttbar_T_sitop_T_copy66->SetFillColor(kOrange+8);
+   ttbar_T_sitop_T_copy66->SetFillColor(kOrange+10);
 
    //ci = TColor::GetColor("#660000");
    //ttbar_T_sitop_T_copy66->SetLineColor(ci);
@@ -769,7 +769,7 @@ void tjetA__Msdp()
    entry=leg->AddEntry("ttbar_T_sitop_T","Matched to top quark","f");
 
    //ci = TColor::GetColor("#cc3333");
-   entry->SetFillColor(kOrange+8);
+   entry->SetFillColor(kOrange+10);
    entry->SetFillStyle(1001);
 
    //ci = TColor::GetColor("#660000");
@@ -783,7 +783,7 @@ void tjetA__Msdp()
    entry=leg->AddEntry("ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos","Unmatched to top quark","f");
 
    //ci = TColor::GetColor("#0000ff");
-   entry->SetFillColor(kAzure+6);
+   entry->SetFillColor(kAzure+8);
    entry->SetFillStyle(1001);
 
    //ci = TColor::GetColor("#000099");
@@ -1576,4 +1576,6 @@ void tjetA__Msdp()
    c1->cd();
    c1->SetSelected(c1);
    c1->SaveAs("plots_74X/plotsKinematic/tjetA__Msdp.pdf");
+   /*c1->SetGrayscale();
+     c1->SaveAs("plots_74X/plotsKinematic/grayscale_tjetA__Msdp.pdf");*/
 }

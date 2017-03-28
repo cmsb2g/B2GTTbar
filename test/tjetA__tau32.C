@@ -84,7 +84,7 @@ void tjetA__tau32()
    //Int_t ci;      // for color index setting
    //TColor *color; // for color definition with alpha
    //ci = TColor::GetColor("#cc3333");
-   ttbar_T_sitop_T_copy21->SetFillColor(kOrange+8);
+   ttbar_T_sitop_T_copy21->SetFillColor(kOrange+10);
 
    //ci = TColor::GetColor("#660000");
    //ttbar_T_sitop_T_copy21->SetLineColor(ci);
@@ -149,7 +149,7 @@ void tjetA__tau32()
    ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos22->SetEntries(14589.48);
 
    //ci = TColor::GetColor("#0000ff");
-   ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos22->SetFillColor(kAzure+6);
+   ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos22->SetFillColor(kAzure+8);
 
    //ci = TColor::GetColor("#000099");
    //ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos22->SetLineColor(ci);
@@ -374,7 +374,7 @@ void tjetA__tau32()
    ttbar_T_sitop_T_copy26->SetStats(0);
 
    //ci = TColor::GetColor("#cc3333");
-   ttbar_T_sitop_T_copy26->SetFillColor(kOrange+8);
+   ttbar_T_sitop_T_copy26->SetFillColor(kOrange+10);
 
    //ci = TColor::GetColor("#660000");
    //ttbar_T_sitop_T_copy26->SetLineColor(ci);
@@ -421,7 +421,7 @@ void tjetA__tau32()
    entry=leg->AddEntry("ttbar_T_sitop_T","Matched to top quark","f");
 
    //ci = TColor::GetColor("#cc3333");
-   entry->SetFillColor(kOrange+8);
+   entry->SetFillColor(kOrange+10);
    entry->SetFillStyle(1001);
 
    //ci = TColor::GetColor("#660000");
@@ -435,7 +435,7 @@ void tjetA__tau32()
    entry=leg->AddEntry("ttbar_L_wjetL_wjetH_sitop_L_zjets_dibos","Unmatched to top quark","f");
 
    //ci = TColor::GetColor("#0000ff");
-   entry->SetFillColor(kAzure+6);
+   entry->SetFillColor(kAzure+8);
    entry->SetFillStyle(1001);
 
    //ci = TColor::GetColor("#000099");
