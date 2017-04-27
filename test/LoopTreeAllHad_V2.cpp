@@ -1,6 +1,6 @@
 // ** Edit top-tag window if it has changed
 // root[] .L LoopTreeAllHad_V2.cpp++
-// root[] run("BCD","20161206addHist", 1, 0)  // dataset, savelabel, run looptree, run looptree_trig
+// root[] run("BCD","20161206addHist", 1, 0, 0)  // dataset, savelabel, run looptree, run looptree_trig, run looptree_topTag
 
 //To-do:
 //Update scale factors
@@ -32,6 +32,10 @@
 // --- Predicted Distribution
 #include "Analysis/PredictedDistribution/interface/PredictedDistribution.h"
 
+// Utilities
+#include "DataFormats/Math/interface/deltaR.h"
+#include "DataFormats/Math/interface/deltaPhi.h"
+
 // --- btag SF
 //#include "CondFormats/BTauObjects/interface/BTagCalibration.h"
 //#include "CondTools/BTau/interface/BTagCalibration2Reader.h"
@@ -43,6 +47,7 @@
 // --- Function Declaration
 // vector<string>  makeFileList  (string);
 void            looptree_trig (string, string, string, string, float, float, float);
+void            looptree_topTag (string, string, string, bool);
 void            looptree      (string, string, string, string, float, float, float, float, float, string, bool, bool, bool, bool, bool, bool, bool, bool, bool,int, int, bool);
 bool            applySF       (bool, float, float);
 void            run1file      (string, bool, string);
@@ -50,7 +55,7 @@ void            run1file      (string, bool, string);
 // --- Analysis
 
 // example: run("BCD", "20161205addHisto", 1, 1)
-void run(string dataset_shortname = "none", string savelabel = "", bool runLoopTree = 1, bool runLoopTree_trig = 0)
+void run(string dataset_shortname = "none", string savelabel = "", bool runLoopTree = 1, bool runLoopTree_trig = 0, bool runLoopTree_topTag = 0)
 {
   std::size_t foundB   = dataset_shortname.find( "B"   );
   std::size_t foundC   = dataset_shortname.find( "C"   );
@@ -83,7 +88,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
   string date = "20170320";
 
   string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/";
-  string folder_input_tree_Zprime ="root://cmseos.fnal.gov//store/user/camclean/B2GAnaFW/Trees/80X_V4/";
+  //string folder_input_tree_Zprime ="root://cmseos.fnal.gov//store/user/camclean/B2GAnaFW/Trees/80X_V4/";
   string folder_mistag     = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_22/src/Analysis/B2GTTbar/test/";
   string folder_modMass    = "/uscms/home/camclean/nobackup/CMSSW_8_0_13/src/Analysis/B2GTTbar/test/runs/run20161010/";
   string mistag_file_data  = folder_mistag + "MistagRate_nbins_11_20161206test1_nom_data_subtract_ttbar.root";
@@ -121,12 +126,12 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0003.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
   }
   if ( foundD   !=std::string::npos ){
-    /*input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0002.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0003.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);*/                 
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0003.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0004.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0005.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
+      input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0005.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);                 
   }
   if ( foundE   !=std::string::npos ){
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_REDO_all.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false); 
@@ -138,6 +143,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0003.root");              file_is_data.push_back(true);     file_is_QCDMC.push_back(false);      
   }           
   if ( foundG   !=std::string::npos ){
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0000.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0001.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0002.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0003.root");             file_is_data.push_back(true);     file_is_QCDMC.push_back(false);            
@@ -162,7 +168,21 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
   }                           
   //--- QCD HT binned
   if ( foundQ   !=std::string::npos ){            
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);                              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_backup.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_try2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_600to800_pythia8_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);                              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_600to800_pythia8_RunIISummer16MiniAODv2_ext1.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);                              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2_try3.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);                              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2_ext1.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);                              
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2_ext1.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2_ext1.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_1800to2400_pythia8_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_1800to2400_pythia8_RunIISummer16MiniAODv2_ext1.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_2400to3200_pythia8_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_2400to3200_pythia8_RunIISummer16MiniAODv2_ext1.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_3200toInf_pythia8_RunIISummer16MiniAODv2_try3.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
   }
   //--- TTbar 
   if ( foundTT1   !=std::string::npos ){            
@@ -174,7 +194,22 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
 
   //--- Z Prime
   if (foundZP   !=std::string::npos ){
-    input_folder.push_back(folder_input_tree_Zprime); file_name_tree.push_back(""); file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-125_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-150_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2_all.root"); file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-200_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2500_W-250_RunIISummer16MiniAODv2_try2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2_all.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-300_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3500_W-350_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3500_W-35_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
   }
 
   bool isFrozen            = true ;
@@ -224,6 +259,14 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
 		    ttagSDwindowLo, ttagSDwindowHi, ttagTau32cut
 		    );
     } // end if (runLoopTree_trig)
+    if (runLoopTree_topTag){
+      looptree_topTag(
+		    input_folder[i],
+		    file_name_tree[i],
+		    date,
+		    file_is_QCDMC[i]
+		    );
+    } // end if (runLoopTree_topTag)
   } // end file loop
 }// end run()
 
@@ -278,6 +321,472 @@ void run1file(string filename, bool isData, string savelabel){
 
 
 
+void looptree_topTag(
+          string input_folder, 
+          string input_file, 
+          string date, 
+	  bool isQCDMC
+		   )
+{
+  
+  string file_name =  input_folder + input_file;
+  cout<<"opening "<<file_name<<endl;
+  TFile *F1   = TFile::Open(file_name.c_str() );
+
+  // Get Tree entries
+  Float_t Jet0SDmassRaw         ;
+  Float_t Jet1SDmassRaw         ;
+  Float_t Jet0PuppiSDmassRaw         ;
+  Float_t Jet1PuppiSDmassRaw         ;
+  Float_t Jet0MassRaw           ;
+  Float_t Jet1MassRaw           ;
+  Float_t Jet0PtRaw             ;
+  Float_t Jet1PtRaw             ;
+  Float_t Jet0EtaRaw             ;
+  Float_t Jet1EtaRaw             ;
+  Float_t Jet0PhiRaw             ;
+  Float_t Jet1PhiRaw             ;
+  
+  Float_t Jet0CorrFactor;
+  Float_t Jet1CorrFactor;
+  Float_t Jet0MassCorrFactor;
+  Float_t Jet1MassCorrFactor;
+  Float_t Jet0PtSmearFactor;
+  Float_t Jet1PtSmearFactor;
+
+  Float_t Jet0PuppiCorrFactor;
+  Float_t Jet1PuppiCorrFactor;
+  Float_t Jet0PuppiPtSmearFactor;
+  Float_t Jet1PuppiPtSmearFactor;
+  
+  Float_t Jet0Tau32          ;
+  Float_t Jet1Tau32          ;
+  Float_t Jet0PuppiTau32          ;
+  Float_t Jet1PuppiTau32          ;
+  Float_t AllHadNvtx                 ;
+
+  Float_t Jet0MassPruned                            ;
+  Float_t Jet0MassTrimmed                           ;
+  Float_t Jet0SDmaxbdisc                            ;
+  Float_t Jet0SDmaxbdiscflavParton                  ;
+
+  Float_t Jet0PuppiMassPruned                            ;
+  Float_t Jet0PuppiMassTrimmed                           ;
+  Float_t Jet0PuppiSDmaxbdisc                            ;
+  Float_t Jet0PuppiSDmaxbdiscflavParton                  ;
+
+  Int_t   Jet0GenMatched_TopHadronic                ;
+  Float_t Jet0GenMatched_TopPt                      ;
+  Float_t Jet0GenMatched_TopEta                     ;
+  Float_t Jet0GenMatched_TopPhi                     ;
+  Float_t Jet0GenMatched_DeltaR_jet_t               ;
+  Float_t Jet0GenMatched_DeltaR_t_b                 ;
+  Float_t Jet0GenMatched_DeltaR_t_Wd1               ;
+  Float_t Jet0GenMatched_DeltaR_t_Wd2               ;
+  Float_t Jet0GenMatched_partonPt                   ;
+  Float_t Jet0GenMatched_partonEta                  ;
+  Float_t Jet0GenMatched_partonPhi                  ;
+  Float_t Jet0GenMatched_partonID                   ;
+  Float_t Jet0GenMatched_DeltaRjetParton            ;
+
+  Float_t Jet1MassPruned                            ;
+  Float_t Jet1MassTrimmed                           ;
+  Float_t Jet1SDmaxbdisc                            ;
+  Float_t Jet1SDmaxbdiscflavParton                  ;
+
+  Float_t Jet1PuppiMassPruned                            ;
+  Float_t Jet1PuppiMassTrimmed                           ;
+  Float_t Jet1PuppiSDmaxbdisc                            ;
+  Float_t Jet1PuppiSDmaxbdiscflavParton                  ;
+
+  Int_t   Jet1GenMatched_TopHadronic                ;
+  Float_t Jet1GenMatched_TopPt                      ;
+  Float_t Jet1GenMatched_TopEta                     ;
+  Float_t Jet1GenMatched_TopPhi                     ;
+  Float_t Jet1GenMatched_DeltaR_jet_t               ;
+  Float_t Jet1GenMatched_DeltaR_t_b                 ;
+  Float_t Jet1GenMatched_DeltaR_t_Wd1               ;
+  Float_t Jet1GenMatched_DeltaR_t_Wd2               ;
+  Float_t Jet1GenMatched_partonPt                   ;
+  Float_t Jet1GenMatched_partonEta                  ;
+  Float_t Jet1GenMatched_partonPhi                  ;
+  Float_t Jet1GenMatched_partonID                   ;
+  Float_t Jet1GenMatched_DeltaRjetParton            ;
+
+  TTree *T1    = (TTree*)  F1     ->Get("ana/TreeAllHad");
+
+  double treeNentries = T1->GetEntries();
+  cout<<"treeNentries = "<< treeNentries <<endl;
+
+  T1->SetBranchAddress("Jet0SDmassRaw"                                      , & Jet0SDmassRaw                                    );
+  T1->SetBranchAddress("Jet1SDmassRaw"                                      , & Jet1SDmassRaw                                    );
+  T1->SetBranchAddress("Jet0PuppiSDmassRaw"                                      , & Jet0PuppiSDmassRaw                                    );
+  T1->SetBranchAddress("Jet1PuppiSDmassRaw"                                      , & Jet1PuppiSDmassRaw                                    );
+  T1->SetBranchAddress("Jet0MassRaw"                                        , & Jet0MassRaw                                      );
+  T1->SetBranchAddress("Jet1MassRaw"                                        , & Jet1MassRaw                                      );
+  T1->SetBranchAddress("Jet0PtRaw"                                          , & Jet0PtRaw                                        );
+  T1->SetBranchAddress("Jet1PtRaw"                                          , & Jet1PtRaw                                        );
+  T1->SetBranchAddress("Jet0EtaRaw"                                          , & Jet0EtaRaw                                        );
+  T1->SetBranchAddress("Jet1EtaRaw"                                          , & Jet1EtaRaw                                        );
+  T1->SetBranchAddress("Jet0PhiRaw"                                          , & Jet0PhiRaw                                        );
+  T1->SetBranchAddress("Jet1PhiRaw"                                          , & Jet1PhiRaw                                        );
+  T1->SetBranchAddress("Jet0CorrFactor"                                          , & Jet0CorrFactor                                        );
+  T1->SetBranchAddress("Jet1CorrFactor"                                          , & Jet1CorrFactor                                        );
+  T1->SetBranchAddress("Jet0MassCorrFactor"                                          , & Jet0MassCorrFactor                                        );
+  T1->SetBranchAddress("Jet1MassCorrFactor"                                          , & Jet1MassCorrFactor                                        );
+  T1->SetBranchAddress("Jet0PtSmearFactor"                                          , & Jet0PtSmearFactor                                        );
+  T1->SetBranchAddress("Jet1PtSmearFactor"                                          , & Jet1PtSmearFactor                                        );
+  T1->SetBranchAddress("Jet0PuppiCorrFactor"                                          , & Jet0PuppiCorrFactor                                        );
+  T1->SetBranchAddress("Jet1PuppiCorrFactor"                                          , & Jet1PuppiCorrFactor                                        );
+  T1->SetBranchAddress("Jet0PuppiPtSmearFactor"                                          , & Jet0PuppiPtSmearFactor                                        );
+  T1->SetBranchAddress("Jet1PuppiPtSmearFactor"                                          , & Jet1PuppiPtSmearFactor                                        );
+  T1->SetBranchAddress("Jet0Tau32"                                       , & Jet0Tau32                                     );
+  T1->SetBranchAddress("Jet1Tau32"                                       , & Jet1Tau32                                     );
+  T1->SetBranchAddress("Jet0PuppiTau32"                                       , & Jet0PuppiTau32                                     );
+  T1->SetBranchAddress("Jet1PuppiTau32"                                       , & Jet1PuppiTau32                                     );
+  T1->SetBranchAddress("AllHadNvtx"                                       , & AllHadNvtx                                     );
+
+  T1->SetBranchAddress("Jet0MassPruned"            , & Jet0MassPruned);
+  T1->SetBranchAddress("Jet0MassTrimmed"            , & Jet0MassTrimmed);
+  T1->SetBranchAddress("Jet0SDmaxbdisc"            , & Jet0SDmaxbdisc);
+  T1->SetBranchAddress("Jet0SDmaxbdiscflavParton"            , & Jet0SDmaxbdiscflavParton);
+
+  T1->SetBranchAddress("Jet0PuppiMassPruned"            , & Jet0PuppiMassPruned);
+  T1->SetBranchAddress("Jet0PuppiMassTrimmed"            , & Jet0PuppiMassTrimmed);
+  T1->SetBranchAddress("Jet0PuppiSDmaxbdisc"            , & Jet0PuppiSDmaxbdisc);
+  T1->SetBranchAddress("Jet0PuppiSDmaxbdiscflavParton"            , & Jet0PuppiSDmaxbdiscflavParton);
+  T1->SetBranchAddress("Jet0GenMatched_TopHadronic"            , & Jet0GenMatched_TopHadronic);
+  T1->SetBranchAddress("Jet0GenMatched_TopPt"                  , & Jet0GenMatched_TopPt);
+  T1->SetBranchAddress("Jet0GenMatched_TopEta"                 , & Jet0GenMatched_TopEta);
+  T1->SetBranchAddress("Jet0GenMatched_TopPhi"                 , & Jet0GenMatched_TopPhi);
+  T1->SetBranchAddress("Jet0GenMatched_DeltaR_jet_t"           , & Jet0GenMatched_DeltaR_jet_t);
+  T1->SetBranchAddress("Jet0GenMatched_DeltaR_t_b"           , & Jet0GenMatched_DeltaR_t_b);
+  T1->SetBranchAddress("Jet0GenMatched_DeltaR_t_Wd1"           , & Jet0GenMatched_DeltaR_t_Wd1);
+  T1->SetBranchAddress("Jet0GenMatched_DeltaR_t_Wd2"           , & Jet0GenMatched_DeltaR_t_Wd2);
+  T1->SetBranchAddress("Jet0GenMatched_partonPt"               , & Jet0GenMatched_partonPt);      
+  T1->SetBranchAddress("Jet0GenMatched_partonEta"              , & Jet0GenMatched_partonEta);      
+  T1->SetBranchAddress("Jet0GenMatched_partonPhi"              , & Jet0GenMatched_partonPhi);      
+  T1->SetBranchAddress("Jet0GenMatched_partonID"               , & Jet0GenMatched_partonID);      
+  T1->SetBranchAddress("Jet0GenMatched_DeltaRjetParton"        , & Jet0GenMatched_DeltaRjetParton);
+
+  T1->SetBranchAddress("Jet1MassPruned"            , & Jet1MassPruned);
+  T1->SetBranchAddress("Jet1MassTrimmed"            , & Jet1MassTrimmed);
+  T1->SetBranchAddress("Jet1SDmaxbdisc"            , & Jet1SDmaxbdisc);
+  T1->SetBranchAddress("Jet1SDmaxbdiscflavParton"            , & Jet1SDmaxbdiscflavParton);
+
+  T1->SetBranchAddress("Jet1PuppiMassPruned"            , & Jet1PuppiMassPruned);
+  T1->SetBranchAddress("Jet1PuppiMassTrimmed"            , & Jet1PuppiMassTrimmed);
+  T1->SetBranchAddress("Jet1PuppiSDmaxbdisc"            , & Jet1PuppiSDmaxbdisc);
+  T1->SetBranchAddress("Jet1PuppiSDmaxbdiscflavParton"            , & Jet1PuppiSDmaxbdiscflavParton);
+
+  T1->SetBranchAddress("Jet1GenMatched_TopHadronic"            , & Jet1GenMatched_TopHadronic);
+  T1->SetBranchAddress("Jet1GenMatched_TopPt"                  , & Jet1GenMatched_TopPt);
+  T1->SetBranchAddress("Jet1GenMatched_TopEta"                 , & Jet1GenMatched_TopEta);
+  T1->SetBranchAddress("Jet1GenMatched_TopPhi"                 , & Jet1GenMatched_TopPhi);
+  T1->SetBranchAddress("Jet1GenMatched_DeltaR_jet_t"           , & Jet1GenMatched_DeltaR_jet_t);
+  T1->SetBranchAddress("Jet1GenMatched_DeltaR_t_b"           , & Jet1GenMatched_DeltaR_t_b);
+  T1->SetBranchAddress("Jet1GenMatched_DeltaR_t_Wd1"           , & Jet1GenMatched_DeltaR_t_Wd1);
+  T1->SetBranchAddress("Jet1GenMatched_DeltaR_t_Wd2"           , & Jet1GenMatched_DeltaR_t_Wd2);
+  T1->SetBranchAddress("Jet1GenMatched_partonPt"               , & Jet1GenMatched_partonPt);      
+  T1->SetBranchAddress("Jet1GenMatched_partonEta"              , & Jet1GenMatched_partonEta);      
+  T1->SetBranchAddress("Jet1GenMatched_partonPhi"              , & Jet1GenMatched_partonPhi);      
+  T1->SetBranchAddress("Jet1GenMatched_partonID"               , & Jet1GenMatched_partonID);      
+  T1->SetBranchAddress("Jet1GenMatched_DeltaRjetParton"        , & Jet1GenMatched_DeltaRjetParton);
+
+  //Ignore other branches 
+  T1->SetBranchStatus("*",0);
+  T1->SetBranchStatus("Jet0SDmassRaw",1)          ;
+  T1->SetBranchStatus("Jet1SDmassRaw",1)          ;
+  T1->SetBranchStatus("Jet0PuppiSDmassRaw",1)          ;
+  T1->SetBranchStatus("Jet1PuppiSDmassRaw",1)          ;
+  T1->SetBranchStatus("Jet0MassRaw",1)            ;
+  T1->SetBranchStatus("Jet1MassRaw",1)            ;
+  T1->SetBranchStatus("Jet0PtRaw",1)              ;
+  T1->SetBranchStatus("Jet1PtRaw",1)              ;
+  T1->SetBranchStatus("Jet0EtaRaw",1)              ;
+  T1->SetBranchStatus("Jet1EtaRaw",1)              ;
+  T1->SetBranchStatus("Jet0PhiRaw",1)              ;
+  T1->SetBranchStatus("Jet1PhiRaw",1)              ;
+  T1->SetBranchStatus("Jet0CorrFactor",1)              ;
+  T1->SetBranchStatus("Jet1CorrFactor",1)              ;
+  T1->SetBranchStatus("Jet0MassCorrFactor",1)              ;
+  T1->SetBranchStatus("Jet1MassCorrFactor",1)              ;
+  T1->SetBranchStatus("Jet0PtSmearFactor",1)              ;
+  T1->SetBranchStatus("Jet1PtSmearFactor",1)              ;
+  T1->SetBranchStatus("Jet0PuppiCorrFactor",1)              ;
+  T1->SetBranchStatus("Jet1PuppiCorrFactor",1)              ;
+  T1->SetBranchStatus("Jet0PuppiPtSmearFactor",1)              ;
+  T1->SetBranchStatus("Jet1PuppiPtSmearFactor",1)              ;
+  T1->SetBranchStatus("Jet0Tau32",1)           ;
+  T1->SetBranchStatus("Jet1Tau32",1)           ;
+  T1->SetBranchStatus("Jet0PuppiTau32",1)           ;
+  T1->SetBranchStatus("Jet1PuppiTau32",1)           ;
+  T1->SetBranchStatus("AllHadNvtx",1);
+
+  T1->SetBranchStatus("Jet0MassPruned",1)                            ;
+  T1->SetBranchStatus("Jet0MassTrimmed",1)                           ;
+  T1->SetBranchStatus("Jet0SDmaxbdisc",1)                            ;
+  T1->SetBranchStatus("Jet0SDmaxbdiscflavParton",1)                  ;
+
+  T1->SetBranchStatus("Jet0PuppiMassPruned",1)                            ;
+  T1->SetBranchStatus("Jet0PuppiMassTrimmed",1)                           ;
+  T1->SetBranchStatus("Jet0PuppiSDmaxbdisc",1)                            ;
+  T1->SetBranchStatus("Jet0PuppiSDmaxbdiscflavParton",1)                  ;
+
+  T1->SetBranchStatus("Jet0GenMatched_TopHadronic",1);
+  T1->SetBranchStatus("Jet0GenMatched_TopPt",1);
+  T1->SetBranchStatus("Jet0GenMatched_TopEta",1);
+  T1->SetBranchStatus("Jet0GenMatched_TopPhi",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_jet_t",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_t_b",1)                 ;
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_t_Wd1",1)               ;
+  T1->SetBranchStatus("Jet0GenMatched_DeltaR_t_Wd2",1)               ;
+  T1->SetBranchStatus("Jet0GenMatched_partonPt",1);
+  T1->SetBranchStatus("Jet0GenMatched_partonEta",1);
+  T1->SetBranchStatus("Jet0GenMatched_partonPhi",1);
+  T1->SetBranchStatus("Jet0GenMatched_partonID",1);
+  T1->SetBranchStatus("Jet0GenMatched_DeltaRjetParton",1);
+
+  T1->SetBranchStatus("Jet1MassPruned",1)                            ;
+  T1->SetBranchStatus("Jet1MassTrimmed",1)                           ;
+  T1->SetBranchStatus("Jet1SDmaxbdisc",1)                            ;
+  T1->SetBranchStatus("Jet1SDmaxbdiscflavParton",1)                  ;
+
+  T1->SetBranchStatus("Jet1PuppiMassPruned",1)                            ;
+  T1->SetBranchStatus("Jet1PuppiMassTrimmed",1)                           ;
+  T1->SetBranchStatus("Jet1PuppiSDmaxbdisc",1)                            ;
+  T1->SetBranchStatus("Jet1PuppiSDmaxbdiscflavParton",1)                  ;
+
+  T1->SetBranchStatus("Jet1GenMatched_TopHadronic",1);
+  T1->SetBranchStatus("Jet1GenMatched_TopPt",1);
+  T1->SetBranchStatus("Jet1GenMatched_TopEta",1);
+  T1->SetBranchStatus("Jet1GenMatched_TopPhi",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_jet_t",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_t_b",1)                 ;
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_t_Wd1",1)               ;
+  T1->SetBranchStatus("Jet1GenMatched_DeltaR_t_Wd2",1)               ;
+  T1->SetBranchStatus("Jet1GenMatched_partonPt",1);
+  T1->SetBranchStatus("Jet1GenMatched_partonEta",1);
+  T1->SetBranchStatus("Jet1GenMatched_partonPhi",1);
+  T1->SetBranchStatus("Jet1GenMatched_partonID",1);
+  T1->SetBranchStatus("Jet1GenMatched_DeltaRjetParton",1);
+
+  //new file
+  string outName = "topTagStudies/v5/topTag_"+input_file;
+  TFile * Out = new TFile(outName.c_str(),"RECREATE");
+
+  //Output tree
+  //make one entry for each gen particle
+  TTree *tree_topTag = new TTree("tree_topTag", "tree_topTag");
+  std::map<std::string, float> topTagTreeVars;
+
+  //tree variables
+  vector <string> listOfVars;
+  //gen values
+  listOfVars.push_back("npv");
+  listOfVars.push_back("pt");
+  listOfVars.push_back("eta");
+  listOfVars.push_back("phi");
+  listOfVars.push_back("top_size");
+  listOfVars.push_back("partonID");
+  
+  //gen-matched reco jets
+  listOfVars.push_back("ak08_pt");
+  listOfVars.push_back("ak08_eta");
+  listOfVars.push_back("ak08_phi");
+  listOfVars.push_back("ak08_mass");
+  listOfVars.push_back("ak08_tau32");
+  listOfVars.push_back("ak08_btag");
+  listOfVars.push_back("ak08_deltaRgen");
+
+  listOfVars.push_back("ak08softdropz10b00_mass");
+  listOfVars.push_back("ak08pruned_mass");
+  listOfVars.push_back("ak08trimmed_mass");
+  listOfVars.push_back("ak08softdropz10b00_btag");
+  listOfVars.push_back("ak08softdropz10b00_btagSubjetPartonFlavor");
+
+  listOfVars.push_back("ak08Puppi_tau32");
+  listOfVars.push_back("ak08Puppisoftdropz10b00_mass");
+  listOfVars.push_back("ak08Puppipruned_mass");
+  listOfVars.push_back("ak08Puppitrimmed_mass");
+  listOfVars.push_back("ak08Puppisoftdropz10b00_btag");
+  listOfVars.push_back("ak08Puppisoftdropz10b00_btagSubjetPartonFlavor");
+
+  for (unsigned i_vars = 0; i_vars < listOfVars.size(); i_vars++){
+    topTagTreeVars[ listOfVars[i_vars] ] = -999.99;
+    tree_topTag->Branch( (listOfVars[i_vars]).c_str() , &(topTagTreeVars[ listOfVars[i_vars] ]), (listOfVars[i_vars]+"/F").c_str() );
+  }
+
+  for (int i=0; i<treeNentries; i++ ){ //entries                                                                                                  
+    if (i%10000==0) cout<<i<<"  / "<<treeNentries<<endl;
+    T1->GetEntry(i);
+
+    // Jet corrections                                                                                                                      
+    TLorentzVector Jet0P4Raw;
+    TLorentzVector Jet1P4Raw;
+    Jet0P4Raw.SetPtEtaPhiM( Jet0PtRaw, Jet0EtaRaw, Jet0PhiRaw, Jet0MassRaw);
+    Jet1P4Raw.SetPtEtaPhiM( Jet1PtRaw, Jet1EtaRaw, Jet1PhiRaw, Jet1MassRaw);
+
+    TLorentzVector Jet0P4 = Jet0P4Raw * Jet0CorrFactor * Jet0PtSmearFactor;
+    TLorentzVector Jet1P4 = Jet1P4Raw * Jet1CorrFactor * Jet1PtSmearFactor;
+
+    double Jet0Pt = Jet0P4.Perp();
+    double Jet1Pt = Jet1P4.Perp();
+    double Jet0Eta = Jet0P4.Eta();
+    double Jet1Eta = Jet1P4.Eta();
+    double Jet0Phi = Jet0P4.Phi();
+    double Jet1Phi = Jet1P4.Phi();
+    double Jet0Mass = Jet0P4.M();
+    double Jet1Mass = Jet1P4.M();
+    double Jet0SDmass = Jet0SDmassRaw * Jet0MassCorrFactor * Jet0PtSmearFactor;
+    double Jet1SDmass = Jet1SDmassRaw * Jet1MassCorrFactor * Jet1PtSmearFactor;
+    double Jet0PuppiSDmass = Jet0PuppiSDmassRaw * Jet0PuppiCorrFactor * Jet0PuppiPtSmearFactor;
+    double Jet1PuppiSDmass = Jet1PuppiSDmassRaw * Jet1PuppiCorrFactor * Jet1PuppiPtSmearFactor;
+
+    //Z'
+    if (!isQCDMC){
+      if ((Jet0GenMatched_TopHadronic == 1) && ( Jet0GenMatched_DeltaR_jet_t < 0.6)){//want hadronically decaying tops
+	topTagTreeVars["npv"] = AllHadNvtx;
+	topTagTreeVars["pt"] = Jet0GenMatched_TopPt;
+	topTagTreeVars["eta"] = Jet0GenMatched_TopEta;
+	topTagTreeVars["phi"] = Jet0GenMatched_TopPhi;
+
+	topTagTreeVars["ak08_pt"] = Jet0Pt;
+	topTagTreeVars["ak08_eta"] = Jet0Eta;
+	topTagTreeVars["ak08_phi"] = Jet0Phi;
+	topTagTreeVars["ak08_mass"] = Jet0Mass;
+	topTagTreeVars["ak08_deltaRgen"] = Jet0GenMatched_DeltaR_jet_t;
+
+	topTagTreeVars["ak08_tau32"] = Jet0Tau32;
+	topTagTreeVars["ak08softdropz10b00_mass"] = Jet0SDmass;
+	topTagTreeVars["ak08pruned_mass"] = Jet0MassPruned;
+	topTagTreeVars["ak08trimmed_mass"] = Jet0MassTrimmed;
+	topTagTreeVars["ak08softdropz10b00_btag"] = Jet0SDmaxbdisc;
+	topTagTreeVars["ak08softdropz10b00_btagSubjetPartonFlavor"] = Jet0SDmaxbdiscflavParton;
+
+	topTagTreeVars["ak08Puppi_tau32"] = Jet0PuppiTau32;
+	topTagTreeVars["ak08Puppisoftdropz10b00_mass"] = Jet0PuppiSDmass;
+	topTagTreeVars["ak08Puppipruned_mass"] = Jet0PuppiMassPruned;
+	topTagTreeVars["ak08Puppitrimmed_mass"] = Jet0PuppiMassTrimmed;
+	topTagTreeVars["ak08Puppisoftdropz10b00_btag"] = Jet0PuppiSDmaxbdisc;
+	topTagTreeVars["ak08Puppisoftdropz10b00_btagSubjetPartonFlavor"] = Jet0PuppiSDmaxbdiscflavParton;
+
+	//top size: max delta R between top and subjets
+	double top_size = Jet0GenMatched_DeltaR_t_b;
+	if (Jet0GenMatched_DeltaR_t_Wd1 > top_size) top_size = Jet0GenMatched_DeltaR_t_Wd1;
+	if (Jet0GenMatched_DeltaR_t_Wd2 > top_size) top_size = Jet0GenMatched_DeltaR_t_Wd2;
+	topTagTreeVars["top_size"] = top_size;
+
+	tree_topTag->Fill();
+      
+      }//end jet 0
+      if ((Jet1GenMatched_TopHadronic == 1) && ( Jet1GenMatched_DeltaR_jet_t < 0.6)){//want hadronically decaying tops
+	topTagTreeVars["npv"] = AllHadNvtx;
+	topTagTreeVars["pt"] = Jet1GenMatched_TopPt;
+	topTagTreeVars["eta"] = Jet1GenMatched_TopEta;
+	topTagTreeVars["phi"] = Jet1GenMatched_TopPhi;
+
+	topTagTreeVars["ak08_pt"] = Jet1Pt;
+	topTagTreeVars["ak08_eta"] = Jet1Eta;
+	topTagTreeVars["ak08_phi"] = Jet1Phi;
+	topTagTreeVars["ak08_mass"] = Jet1Mass;
+	topTagTreeVars["ak08_deltaRgen"] = Jet1GenMatched_DeltaR_jet_t;
+
+	topTagTreeVars["ak08_tau32"] = Jet1Tau32;
+	topTagTreeVars["ak08softdropz10b00_mass"] = Jet1SDmass;
+	topTagTreeVars["ak08pruned_mass"] = Jet1MassPruned;
+	topTagTreeVars["ak08trimmed_mass"] = Jet1MassTrimmed;
+	topTagTreeVars["ak08softdropz10b00_btag"] = Jet1SDmaxbdisc;
+	topTagTreeVars["ak08softdropz10b00_btagSubjetPartonFlavor"] = Jet1SDmaxbdiscflavParton;
+
+	topTagTreeVars["ak08Puppi_tau32"] = Jet1PuppiTau32;
+	topTagTreeVars["ak08Puppisoftdropz10b00_mass"] = Jet1PuppiSDmass;
+	topTagTreeVars["ak08Puppipruned_mass"] = Jet1PuppiMassPruned;
+	topTagTreeVars["ak08Puppitrimmed_mass"] = Jet1PuppiMassTrimmed;
+	topTagTreeVars["ak08Puppisoftdropz10b00_btag"] = Jet1PuppiSDmaxbdisc;
+	topTagTreeVars["ak08Puppisoftdropz10b00_btagSubjetPartonFlavor"] = Jet1PuppiSDmaxbdiscflavParton;
+
+	//top size: max delta R between top and subjets
+	double top_size = Jet1GenMatched_DeltaR_t_b;
+	if (Jet1GenMatched_DeltaR_t_Wd1 > top_size) top_size = Jet1GenMatched_DeltaR_t_Wd1;
+	if (Jet1GenMatched_DeltaR_t_Wd2 > top_size) top_size = Jet1GenMatched_DeltaR_t_Wd2;
+	topTagTreeVars["top_size"] = top_size;
+
+	tree_topTag->Fill();
+      
+      }//end jet 1
+    }//end Z'
+    
+    //QCD
+    else{
+      if (Jet0GenMatched_DeltaRjetParton < 0.6){//want qcd matched to hardon partons
+	topTagTreeVars["npv"] = AllHadNvtx;
+	topTagTreeVars["pt"] = Jet0GenMatched_partonPt;
+	topTagTreeVars["eta"] = Jet0GenMatched_partonEta;
+	topTagTreeVars["phi"] = Jet0GenMatched_partonPhi;
+	topTagTreeVars["partonID"] = Jet0GenMatched_partonID;
+
+	topTagTreeVars["ak08_pt"] = Jet0Pt;
+	topTagTreeVars["ak08_eta"] = Jet0Eta;
+	topTagTreeVars["ak08_phi"] = Jet0Phi;
+	topTagTreeVars["ak08_mass"] = Jet0Mass;
+	topTagTreeVars["ak08_deltaRgen"] = Jet0GenMatched_DeltaRjetParton;
+
+	topTagTreeVars["ak08_tau32"] = Jet0Tau32;
+	topTagTreeVars["ak08softdropz10b00_mass"] = Jet0SDmass;
+	topTagTreeVars["ak08pruned_mass"] = Jet0MassPruned;
+	topTagTreeVars["ak08trimmed_mass"] = Jet0MassTrimmed;
+	topTagTreeVars["ak08softdropz10b00_btag"] = Jet0SDmaxbdisc;
+	topTagTreeVars["ak08softdropz10b00_btagSubjetPartonFlavor"] = Jet0SDmaxbdiscflavParton;
+
+	topTagTreeVars["ak08Puppi_tau32"] = Jet0PuppiTau32;
+	topTagTreeVars["ak08Puppisoftdropz10b00_mass"] = Jet0PuppiSDmass;
+	topTagTreeVars["ak08Puppipruned_mass"] = Jet0PuppiMassPruned;
+	topTagTreeVars["ak08Puppitrimmed_mass"] = Jet0PuppiMassTrimmed;
+	topTagTreeVars["ak08Puppisoftdropz10b00_btag"] = Jet0PuppiSDmaxbdisc;
+	topTagTreeVars["ak08Puppisoftdropz10b00_btagSubjetPartonFlavor"] = Jet0PuppiSDmaxbdiscflavParton;
+
+	tree_topTag->Fill();
+      
+      }//end jet 0
+      if (Jet1GenMatched_DeltaRjetParton < 0.6){//want qcd matched to hardon partons
+	topTagTreeVars["npv"] = AllHadNvtx;
+	topTagTreeVars["pt"] = Jet1GenMatched_partonPt;
+	topTagTreeVars["eta"] = Jet1GenMatched_partonEta;
+	topTagTreeVars["phi"] = Jet1GenMatched_partonPhi;
+	topTagTreeVars["partonID"] = Jet1GenMatched_partonID;
+
+	topTagTreeVars["ak08_pt"] = Jet1Pt;
+	topTagTreeVars["ak08_eta"] = Jet1Eta;
+	topTagTreeVars["ak08_phi"] = Jet1Phi;
+	topTagTreeVars["ak08_mass"] = Jet1Mass;
+	topTagTreeVars["ak08_deltaRgen"] = Jet1GenMatched_DeltaRjetParton;
+
+	topTagTreeVars["ak08_tau32"] = Jet1Tau32;
+	topTagTreeVars["ak08softdropz10b00_mass"] = Jet1SDmass;
+	topTagTreeVars["ak08pruned_mass"] = Jet1MassPruned;
+	topTagTreeVars["ak08trimmed_mass"] = Jet1MassTrimmed;
+	topTagTreeVars["ak08softdropz10b00_btag"] = Jet1SDmaxbdisc;
+	topTagTreeVars["ak08softdropz10b00_btagSubjetPartonFlavor"] = Jet1SDmaxbdiscflavParton;
+
+	topTagTreeVars["ak08Puppi_tau32"] = Jet1PuppiTau32;
+	topTagTreeVars["ak08Puppisoftdropz10b00_mass"] = Jet1PuppiSDmass;
+	topTagTreeVars["ak08Puppipruned_mass"] = Jet1PuppiMassPruned;
+	topTagTreeVars["ak08Puppitrimmed_mass"] = Jet1PuppiMassTrimmed;
+	topTagTreeVars["ak08Puppisoftdropz10b00_btag"] = Jet1PuppiSDmaxbdisc;
+	topTagTreeVars["ak08Puppisoftdropz10b00_btagSubjetPartonFlavor"] = Jet1PuppiSDmaxbdiscflavParton;
+
+	tree_topTag->Fill();
+      
+      }//end jet 0
+    }//end QCD
+
+  }//end event loop
+
+  Out->cd();
+  tree_topTag->Write();
+  Out->Close();
+}
 
 void looptree_trig(
           string input_folder, 
@@ -399,7 +908,10 @@ void looptree_trig(
   vector <int> numTrig;
   vector <int> numOrTrig;
 
-  vector <string> denomLabels;
+  vector <string> numAddOnLabels;
+
+  //vector <string> denomLabels;
+
 
   xAxisLabels.push_back("sumJetPt");
   xAxisLabels.push_back("HT");
@@ -437,40 +949,51 @@ void looptree_trig(
   numOrLabels.push_back("PFJet450"); numOrTrig.push_back(13);
   numOrLabels.push_back("AK8PFJet450"); numOrTrig.push_back(15);
   numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(17);
-  
-  denomLabels.push_back("PFHT650");
-  denomLabels.push_back("Mu50orIsoMu24");
+
+  numAddOnLabels.push_back("PFHT800orPFHT900");
+  numAddOnLabels.push_back("PFHT800orPFHT900PFHT700TrimMass50");
+  numAddOnLabels.push_back("PFHT800orPFHT900AK8PFJet450");
+  numAddOnLabels.push_back("PFHT800orPFHT900PFJet360TrimMass30");
+  numAddOnLabels.push_back("PFHT800orPFHT900PFHT700TrimMass50orAK8PFJet450");
+  numAddOnLabels.push_back("PFHT800orPFHT900PFHT700TrimMass50orPFJet360TrimMass30");
+  numAddOnLabels.push_back("PFHT800orPFHT900AK8PFJet450orPFJet360TrimMass30");
+  numAddOnLabels.push_back("PFHT800orPFHT900PFHT700TrimMass50orAK8PFJet450orPFJet360TrimMass30");
+ 
+  //denomLabels.push_back("PFHT650");
+  //denomLabels.push_back("Mu50orIsoMu24");
 
   //denominator histograms
-  TH1D *histos_denom[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()];
-  TH2D *histostwoD_denom[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()];
+  TH1D *histos_denom[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()];
+  TH2D *histostwoD_denom[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()];
 
   //numerator histograms
-  TH1D *histos_num[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()];
-  TH1D *histos_numOr[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()][numOrLabels.size()];
-  TH2D *histostwoD_num[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()];
-  TH2D *histostwoD_numOr[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()][denomLabels.size()][numLabels.size()][numOrLabels.size()];
+  TH1D *histos_num[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][numLabels.size()];
+  TH1D *histos_numOr[xAxisLabels.size()][ptCutLabels.size()][cutCats.size()][numLabels.size()][numOrLabels.size()];
+  TH2D *histostwoD_num[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()][numLabels.size()];
+  TH2D *histostwoD_numOr[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()][numLabels.size()][numOrLabels.size()];
+  TH2D *histostwoD_numAddOn[twoDxAxisLabels.size()][twoDyAxisLabels.size()][ptCutLabels.size()][cutCats.size()][numAddOnLabels.size()];
 
   //naming histograms
   for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){ 
     for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-      for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
-	for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-	  histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels] = new TH1D(Form("h_pass%sdenom%s%s%s",denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
-	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-	    histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels] = new TH1D(Form("h_pass%snum%sdenom%s%s%s",numLabels[i_numLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
-	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels] = new TH1D(Form("h_pass%sor%snum%sdenom%s%s%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
-	  }
+      for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+	histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats] = new TH1D(Form("h_passMu50orIsoMu24denom%s%s%s",ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",400, 0, 4000);
+	for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	  histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels] = new TH1D(Form("h_pass%snumMu50orIsoMu24denom%s%s%s",numLabels[i_numLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",400, 0, 4000);
+	  for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels][i_numOrLabels] = new TH1D(Form("h_pass%sor%snumMu50orIsoMu24denom%s%s%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",400, 0, 4000);
 	}
-	for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
-	  for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
-	    histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels] = new TH2D(Form("h_pass%sdenom%s%s%svs%s",denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",800, 0,  8000, 800, 0,  8000);
-	    for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-	      histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels] = new TH2D(Form("h_pass%snum%sdenom%s%s%svs%s",numLabels[i_numLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",800, 0,  8000, 800, 0,  8000);
-	      for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
-		histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels] = new TH2D(Form("h_pass%sor%snum%sdenom%s%s%svs%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),denomLabels[i_denomLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",800, 0,  8000, 800, 0,  8000);
-	      }
+      }
+      for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
+	for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
+	  histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats] = new TH2D(Form("h_passMu50orIsoMu24denom%s%s%svs%s",ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",400, 0,  4000, 40, 0,  400);
+	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	    histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels] = new TH2D(Form("h_pass%snumMu50orIsoMu24denom%s%s%svs%s",numLabels[i_numLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",400, 0,  4000, 40, 0,  400);
+	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
+	      histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels][i_numOrLabels] = new TH2D(Form("h_pass%sor%snumMu50orIsoMu24denom%s%s%svs%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",400, 0,  4000, 40, 0,  400);
 	    }
+	  }
+	  for (unsigned int i_numAddOnLabels=0; i_numAddOnLabels<numAddOnLabels.size(); i_numAddOnLabels++){
+	    histostwoD_numAddOn[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numAddOnLabels] = new TH2D(Form("h_pass%snumMu50orIsoMu24denom%s%s%svs%s",numAddOnLabels[i_numAddOnLabels].c_str(),ptCutLabels[i_ptCutLabels].c_str(),cutCats[i_cutCats].c_str(),twoDyAxisLabels[i_twoDyAxisLabels].c_str(),twoDxAxisLabels[i_twoDxAxisLabels].c_str()),"",400, 0,  4000, 40, 0,  400);
 	  }
 	}
       }
@@ -528,7 +1051,8 @@ void looptree_trig(
     vector <float> twoDyAxisVarsPt1;
     vector <float> twoDyAxisVarsPt2;
     vector <bool> cuts;
-    vector <bool> denomTrigPass;
+    vector <bool> numAddOnTrigPass;
+    //vector <bool> denomTrigPass;
 
     xAxisVars.push_back(sumJetPt);
     xAxisVars.push_back(HT);
@@ -553,55 +1077,77 @@ void looptree_trig(
     cuts.push_back(jets_tag_puppimass);
     //cuts.push_back(jets_top_tag);
 
-    denomTrigPass.push_back((trigBits>>5)&1);//PFHT650
-    denomTrigPass.push_back(((trigBits>>23)&1) || ((trigBits>>27)&1));//Mu50orIsoMu24 
+    //"Add-on hists will all have an or with PFHT800 and PFHT900"
+    numAddOnTrigPass.push_back(((trigBits>>6)&1) || ((trigBits>>7)&1)); //PFHT800 or PFHT900
+    numAddOnTrigPass.push_back(((trigBits>>6)&1) || ((trigBits>>7)&1) || ((trigBits>>19)&1)); //PFHT800 or PFHT900 or PFHT700TrimMass50
+    numAddOnTrigPass.push_back(((trigBits>>6)&1) || ((trigBits>>7)&1) || ((trigBits>>15)&1)); //PFHT800 or PFHT900 or AK8PFJet450
+    numAddOnTrigPass.push_back(((trigBits>>6)&1) || ((trigBits>>7)&1) || ((trigBits>>17)&1)); //PFHT800 or PFHT900 or PFJet360TrimMass30
+    numAddOnTrigPass.push_back(((trigBits>>6)&1) || ((trigBits>>7)&1) || ((trigBits>>19)&1) || ((trigBits>>15)&1)); //PFHT800 or PFHT900 or PFHT700TrimMass50 or AK8PFJet450
+    numAddOnTrigPass.push_back(((trigBits>>6)&1) || ((trigBits>>7)&1) || ((trigBits>>19)&1) || ((trigBits>>17)&1)); //PFHT800 or PFHT900 or PFHT700TrimMass50 or PFJet360TrimMass30
+    numAddOnTrigPass.push_back(((trigBits>>6)&1) || ((trigBits>>7)&1) || ((trigBits>>15)&1) || ((trigBits>>17)&1)); //PFHT800 or PFHT900 or AK8PFJet450 or PFJet360TrimMass30
+    numAddOnTrigPass.push_back(((trigBits>>6)&1) || ((trigBits>>7)&1) || ((trigBits>>19)&1) || ((trigBits>>15)&1) || ((trigBits>>17)&1)); //PFHT800 or PFHT900 or PFHT700TrimMass50 or AK8PFJet450 or PFJet360TrimMass30
+
+    //denomTrigPass.push_back((trigBits>>5)&1);//PFHT650
+    //denomTrigPass.push_back(((trigBits>>23)&1) || ((trigBits>>27)&1));//Mu50orIsoMu24 
 
     //make sure vector lengths are consistent
     if (xAxisVars.size() != xAxisLabels.size()){
       break;
       cout << "Incorrect length of x axis variable vector!" << endl;
     }
+    if (twoDxAxisVars.size() != twoDxAxisLabels.size()){
+      break;
+      cout << "Incorrect length of 2D x axis variable vector!" << endl;
+    }
+    if ((twoDyAxisVarsPt1.size() != twoDyAxisLabels.size()) || (twoDyAxisVarsPt2.size() != twoDyAxisLabels.size())){
+      break;
+      cout << "Incorrect length of 2D y axis variable vector!" << endl;
+    }
     if (cuts.size() != cutCats.size()){
       break;
       cout << "Incorrect length of cuts vector!" << endl;
     }
-    if (denomTrigPass.size() != denomLabels.size()){
+    if (numAddOnTrigPass.size() != numAddOnLabels.size()){
       break;
-      cout << "Incorrect length of denominator vector!" << endl;
+      cout << "Incorrect length of numerator trigger boolean vector!" << endl;
     }
-    
+
     //filling histograms
     if (deltaPhi > 2.1){
       for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){
 	if ((Jet0Pt > ptCuts[i_ptCutLabels]) && (Jet1Pt > ptCuts[i_ptCutLabels])){
 	  for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
 	    if (cuts[i_cutCats]){
-	      for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
-		if (denomTrigPass[i_denomLabels]){
-		  for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-		    histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Fill(xAxisVars[i_xAxisLabels]);
-		    for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-		      if ((trigBits>>numTrig[i_numLabels])&1) histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Fill(xAxisVars[i_xAxisLabels]);
-		      for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
-			if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Fill(xAxisVars[i_xAxisLabels]);
-		      }
+	      if (((trigBits>>23)&1) || ((trigBits>>27)&1)){//Mu50orIsoMu24
+		for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+		  histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats]->Fill(xAxisVars[i_xAxisLabels]);
+		  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+		    if ((trigBits>>numTrig[i_numLabels])&1) histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels]->Fill(xAxisVars[i_xAxisLabels]);
+		    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
+		      if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels][i_numOrLabels]->Fill(xAxisVars[i_xAxisLabels]);
 		    }
 		  }
-		  for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
-		    for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
-		      histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
-		      histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
-		      for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-			if ((trigBits>>numTrig[i_numLabels])&1){
-			  histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
- histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
+		}
+		for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
+		  for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
+		    histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
+		    histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
+		    for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+		      if ((trigBits>>numTrig[i_numLabels])&1){
+			histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
+			histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
+		      }
+		      for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
+			if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) {
+			  histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels][i_numOrLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
+			  histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels][i_numOrLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
 			}
-			for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
-			  if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) {
-			    histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
-			    histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
-			  }
-			}
+		      }
+		    }
+		    for (unsigned int i_numAddOnLabels=0; i_numAddOnLabels<numAddOnLabels.size(); i_numAddOnLabels++){
+		      if (numAddOnTrigPass[i_numAddOnLabels]){
+			histostwoD_numAddOn[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numAddOnLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt1[i_twoDyAxisLabels]);
+			histostwoD_numAddOn[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numAddOnLabels]->Fill(twoDxAxisVars[i_twoDxAxisLabels],twoDyAxisVarsPt2[i_twoDyAxisLabels]);
 		      }
 		    }
 		  }
@@ -618,7 +1164,8 @@ void looptree_trig(
     twoDyAxisVarsPt1.clear(); 
     twoDyAxisVarsPt2.clear(); 
     cuts.clear();
-    denomTrigPass.clear();
+    numAddOnTrigPass.clear();
+    //denomTrigPass.clear();
   }
 
   string outName = output_folder+"outRunTrigEff_"+date+"_"+input_file;
@@ -629,22 +1176,21 @@ void looptree_trig(
   //writing histograms
   for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){
     for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-      for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
-	for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-	  histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Write();
-	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-	    histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Write();
-	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Write();
-	  }
+      for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+	histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats]->Write();
+	for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	  histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels]->Write();
+	  for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels][i_numOrLabels]->Write();
 	}
-	for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
-	  for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
-	    histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Write();
-	    for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-	      histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Write();
-	      for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Write();
-	    }
+      }
+      for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
+	for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
+	  histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats]->Write();
+	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	    histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels]->Write();
+	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels][i_numOrLabels]->Write();
 	  }
+	  for (unsigned int i_numAddOnLabels=0; i_numAddOnLabels<numAddOnLabels.size(); i_numAddOnLabels++) histostwoD_numAddOn[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numAddOnLabels]->Write();
 	}
       }
     }
@@ -653,22 +1199,21 @@ void looptree_trig(
   //deleting histograms
   for (unsigned int i_ptCutLabels=0; i_ptCutLabels<ptCutLabels.size(); i_ptCutLabels++){
     for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-      for (unsigned int i_denomLabels=0; i_denomLabels<denomLabels.size(); i_denomLabels++){
-	for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-	  histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Delete();
-	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-	    histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Delete();
-	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Delete();
-	  }
+      for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+	histos_denom[i_xAxisLabels][i_ptCutLabels][i_cutCats]->Delete();
+	for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	  histos_num[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels]->Delete();
+	  for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels][i_numOrLabels]->Delete();
 	}
-	for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
-	  for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
-	    histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels]->Delete();
-	    for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-	      histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels]->Delete();
-	      for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_denomLabels][i_numLabels][i_numOrLabels]->Delete();
-	    }
+      }
+      for (unsigned int i_twoDxAxisLabels=0; i_twoDxAxisLabels<twoDxAxisLabels.size(); i_twoDxAxisLabels++){
+	for (unsigned int i_twoDyAxisLabels=0; i_twoDyAxisLabels<twoDyAxisLabels.size(); i_twoDyAxisLabels++){
+	  histostwoD_denom[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats]->Delete();
+	  for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+	    histostwoD_num[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels]->Delete();
+	    for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histostwoD_numOr[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numLabels][i_numOrLabels]->Delete();
 	  }
+	  for (unsigned int i_numAddOnLabels=0; i_numAddOnLabels<numAddOnLabels.size(); i_numAddOnLabels++) histostwoD_numAddOn[i_twoDxAxisLabels][i_twoDyAxisLabels][i_ptCutLabels][i_cutCats][i_numAddOnLabels]->Delete();
 	}
       }
     }
@@ -681,10 +1226,11 @@ void looptree_trig(
   ptCutLabels.clear();
   ptCuts.clear();
   numLabels.clear();
-  numOrLabels.clear();
   numTrig.clear();
+  numOrLabels.clear();
   numOrTrig.clear();
-  denomLabels.clear();
+  numAddOnLabels.clear();
+  //denomLabels.clear();
 
   
   Out->Close();

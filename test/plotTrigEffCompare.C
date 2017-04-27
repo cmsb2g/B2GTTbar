@@ -30,12 +30,14 @@
 void plotEff(string, string, string, string, string, string);
 void plotEffMixed(string, string, string, string, string, string, string, string, string, string);
 void plotEffMixed2D(string, string, string, string, string, string, string);
+void plotEffMixed2D_AddOn(string, string, string, string, string);
 
 void plotTrigEffCompare(){
   //function definitions: 
   //plotEff(string dataFile, string runLabel, string runLabelOutFile, string date, string PFHTmainTrigger, string denom)
   //void plotEffMixed(string dataFile1, string dataFile2, string fileLabel1, string fileLabel2, string runLabel, string runLabelOutFile, string date, string PFHTmainTrigger1, string PFHTmainTrigger2, string denom)
-  //void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, string fileLabel2, string runLabel, string runLabelOutFile, string date){
+  //void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, string fileLabel2, string runLabel, string runLabelOutFile, string date)
+  //void plotEffMixed2D_AddOn(string dataFile1, string dataFile2, string runLabel, string runLabelOutFile, string date)
 
   string date = "20170320";
   /*plotEff("outRunTrigEff_20161216_b2gtreeV4_JetHT_Run2016H-PromptReco_JSONnov14_all.root", "Run H Data (13 TeV)", "RunHdata", date,"PFHT900","Mu50orIsoMu24");
@@ -49,7 +51,8 @@ void plotTrigEffCompare(){
   plotEff("outRunTrigEff_20161206_b2gtreeV4_JetHT_Run2016BtoG-23Sep2016-v1_JSONnov14.root", "Runs B-G Data (13 TeV)", "RunsBtoGdata", date,"PFHT800","PFHT650");*/
   //plotEffMixed("outRunTrigEff_20161216_b2gtreeV4_JetHT_Run2016BtoG-23Sep2016-v1_JSONnov14.root", "outRunTrigEff_20161216_b2gtreeV4_JetHT_Run2016H-PromptReco_JSONnov14_all.root", "B-G", "H", "36.2 fb^{-1} (13 TeV)", "RunsBtoHdata", date, "PFHT800", "PFHT900", "Mu50orIsoMu24");
   //plotEffMixed("outRunTrigEff_20170313_b2gtreeV5_JetHT_Run2016BtoG-03Feb2017_JSONfinal.root", "outRunTrigEff_20170313_b2gtreeV5_JetHT_Run2016H-03Feb2017_JSONfinal.root", "B-G", "H", "36 fb^{-1} (13 TeV)", "RunsBtoHdata", date, "PFHT800", "PFHT900", "Mu50orIsoMu24");
-  plotEffMixed2D("outRunTrigEff_20170320_b2gtreeV5_JetHT_Run2016BtoG-03Feb2017_JSONfinal.root", "outRunTrigEff_20170320_b2gtreeV5_JetHT_Run2016H-03Feb2017_JSONfinal.root", "B-G", "H", "36 fb^{-1} (13 TeV)", "RunsBtoHdata", date);
+  //plotEffMixed2D("outRunTrigEff_20170320_b2gtreeV5_JetHT_Run2016BtoG-03Feb2017_JSONfinal.root", "outRunTrigEff_20170320_b2gtreeV5_JetHT_Run2016H-03Feb2017_JSONfinal.root", "B-G", "H", "36 fb^{-1} (13 TeV)", "RunsBtoHdata", date);
+  plotEffMixed2D_AddOn("outRunTrigEff_20170320_b2gtreeV5_JetHT_Run2016BtoG-03Feb2017_JSONfinal.root", "outRunTrigEff_20170320_b2gtreeV5_JetHT_Run2016H-03Feb2017_JSONfinal.root", "36 fb^{-1} (13 TeV)", "RunsBtoHdata", date);
 }
 void plotEff(string dataFile, string runLabel, string runLabelOutFile, string date, string PFHTmainTrigger, string denom){
   gStyle->SetOptStat(0);
@@ -483,6 +486,7 @@ void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, strin
   vector <string> ptCutVec;
   vector <string> ptCutPaveVec;
   vector <string> cutVec;
+  vector <double> cutPaveVecY;
 
   numVecBtoG.push_back("PFHT700TrimMass50");
   numVecBtoG.push_back("PFHT800");
@@ -493,7 +497,7 @@ void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, strin
   numOrVec.push_back("AK8PFJet450");
   numOrVec.push_back("PFJet360TrimMass30");
 
-  //xVarVec.push_back("sumJetPt"); xTitleVec.push_back("Jet 0 p_{T} + Jet 1 p_{T} [GeV]");
+  xVarVec.push_back("sumJetPt"); xTitleVec.push_back("Jet 0 p_{T} + Jet 1 p_{T} [GeV]");
   xVarVec.push_back("HT"); xTitleVec.push_back("H_{T} [GeV]");
 
   //yVarVec.push_back("JetMass"); yTitleVec.push_back("Ungroomed Jet Mass [GeV]");
@@ -504,10 +508,10 @@ void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, strin
   ptCutVec.push_back("_minpt450"); ptCutPaveVec.push_back("p_{T} > 450 GeV");
   ptCutVec.push_back("_minpt500"); ptCutPaveVec.push_back("p_{T} > 500 GeV");
   
-  cutVec.push_back("");
-  cutVec.push_back("_1tagMass");
+  cutVec.push_back(""); cutPaveVecY.push_back(0.82);
+  cutVec.push_back("_1tagMass"); cutPaveVecY.push_back(0.76);
   //cutVec.push_back("_2tagMass");
-  cutVec.push_back("_1tagPUPPIMass");
+  cutVec.push_back("_1tagPUPPIMass"); cutPaveVecY.push_back(0.76);
   //cutVec.push_back("_2tagPUPPIMass");
 
   unsigned int numOrVecSize = numOrVec.size() + 1;
@@ -538,6 +542,7 @@ void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, strin
 	  h_dataDenom1->Sumw2();
 	  h_dataDenom2->Sumw2();
 	  h_dataDenom1->Add(h_dataDenom2);
+	  h_dataDenom1->Rebin2D(2,2);
 
 	  for (unsigned int i_numVecBtoG=0; i_numVecBtoG<numVecBtoG.size(); i_numVecBtoG++){    
 	    for (unsigned int i_numOrVecBtoG=0; i_numOrVecBtoG<numOrVecSize; i_numOrVecBtoG++){    
@@ -556,7 +561,7 @@ void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, strin
 
 	      h_dataNum1 = (TH2D*)F_data1 ->Get(numHistName1.c_str());
 	      h_dataNum1->Sumw2();
- 
+
 	      for (unsigned int i_numVecH=0; i_numVecH<numVecH.size(); i_numVecH++){
 		for (unsigned int i_numOrVecH=0; i_numOrVecH<numOrVecSize; i_numOrVecH++){
 
@@ -576,6 +581,7 @@ void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, strin
 		  h_dataNum2->Sumw2();
 
 		  h_dataNum2->Add(h_dataNum1);
+		  h_dataNum2->Rebin2D(2,2);
 		  h_dataNum2->Divide(h_dataNum2, h_dataDenom1, 1, 1, "B");
 
 		  string title = ";" + xTitleVec[i_xVarVec] + ";" + yTitleVec[i_yVarVec] + ";Trigger Efficiency";
@@ -625,7 +631,7 @@ void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, strin
 		  tex->Draw();
 
 		  string trigVec = "#splitline{#splitline{[" + trigVec1 + "]}{(" + trigVec2 + ")}}{#splitline{over Mu50 or IsoMu24}{for [Runs " + fileLabel1 + "] (Run " + fileLabel2 + ")}}";
-		  tex = new TLatex(0.51,0.82,trigVec.c_str());
+		  tex = new TLatex(0.51,cutPaveVecY[i_cutVec],trigVec.c_str());//0.51,0.82
 		  tex->SetNDC();
 		  tex->SetTextAlign(13);
 		  tex->SetTextFont(42);
@@ -657,6 +663,236 @@ void plotEffMixed2D(string dataFile1, string dataFile2, string fileLabel1, strin
 	  }//end Runs B-G primary numerator loop
 	  h_dataDenom1->Delete();
 	  h_dataDenom2->Delete();
+	}//end x variable loop
+      }//end y variable loop
+    }//end mass cut loop
+  }//end pt cut loop
+}//end plotEffMixed2D function
+
+void plotEffMixed2D_AddOn(string dataFile1, string dataFile2, string runLabel, string runLabelOutFile, string date){
+  gStyle->SetOptStat(0);
+  gROOT->UseCurrentStyle();
+  gROOT->ForceStyle();
+
+  gROOT->Reset();
+  gROOT->ForceStyle(); 
+  TCanvas *c1237= new TCanvas("c1237","",1,1,745,640);
+
+  // TCanvas *c1 = new TCanvas("c1", "c1",1,1,745,701);
+  gStyle->SetOptFit(1);
+  gStyle->SetOptStat(0);
+  c1237->SetHighLightColor(2);
+  c1237->Range(0,0,1,1);
+  c1237->SetFillColor(0);
+  c1237->SetBorderMode(0);
+  c1237->SetBorderSize(2);
+  c1237->SetTickx(1);
+  c1237->SetTicky(1);
+  c1237->SetLeftMargin(0.1);
+  c1237->SetRightMargin(0.11);
+  c1237->SetTopMargin(0.08);
+  c1237->SetBottomMargin(0.1);
+  c1237->SetFrameFillStyle(0);
+  c1237->SetFrameBorderMode(0);
+
+  dataFile1 = "trigEffStudies/run"+date+"/"+dataFile1;
+  TFile * F_data1 =  new TFile( dataFile1.c_str());
+  cout << "Opening " << dataFile1 << endl;
+
+  dataFile2 = "trigEffStudies/run"+date+"/"+dataFile2;
+  TFile * F_data2 =  new TFile( dataFile2.c_str());
+  cout << "Opening " << dataFile2 << endl;
+
+  vector <string> numOrVec;
+  vector <string> numOrPave;
+
+  vector <string> xVarVec;
+  vector <string> xTitleVec;
+  vector <string> yVarVec;
+  vector <string> yTitleVec;
+
+  vector <string> ptCutVec;
+  vector <string> ptCutPaveVec;
+  vector <string> cutVec;
+  vector <double> cutPaveVecY;
+
+  numOrVec.push_back("PFHT700TrimMass50");  numOrPave.push_back("}{or PFHT700TrimMass50}");
+  numOrVec.push_back("AK8PFJet450");  numOrPave.push_back("}{or AK8PFJet450}");
+  numOrVec.push_back("PFJet360TrimMass30");  numOrPave.push_back("}{or PFJet360TrimMass30}");
+  numOrVec.push_back("PFHT700TrimMass50orAK8PFJet450");  numOrPave.push_back("}{#splitline{or PFHT700TrimMass50}{or AK8PFJet450}}");
+  numOrVec.push_back("PFHT700TrimMass50orPFJet360TrimMass30");  numOrPave.push_back("}{#splitline{or PFHT700TrimMass50}{or PFJet360TrimMass30}}");
+  numOrVec.push_back("AK8PFJet450orPFJet360TrimMass30");  numOrPave.push_back("}{#splitline{or AK8PFJet450}{or PFJet360TrimMass30}}");
+  numOrVec.push_back("PFHT700TrimMass50orAK8PFJet450orPFJet360TrimMass30");  numOrPave.push_back("}{or PFHT700TrimMass50}}{#splitline{or AK8PFJet450}{or PFJet360TrimMass30}}");
+
+  xVarVec.push_back("sumJetPt"); xTitleVec.push_back("Jet 0 p_{T} + Jet 1 p_{T} [GeV]");
+  xVarVec.push_back("HT"); xTitleVec.push_back("H_{T} [GeV]");
+
+  //yVarVec.push_back("JetMass"); yTitleVec.push_back("Ungroomed Jet Mass [GeV]");
+  //yVarVec.push_back("JetSoftDropMass"); yTitleVec.push_back("CHS Soft Drop Mass [GeV]");
+  yVarVec.push_back("JetPUPPISoftDropMass"); yTitleVec.push_back("PUPPI Soft Drop Mass [GeV]");
+
+  ptCutVec.push_back("_minpt400"); ptCutPaveVec.push_back("p_{T} > 400 GeV");
+  //ptCutVec.push_back("_minpt450"); ptCutPaveVec.push_back("p_{T} > 450 GeV");
+  ptCutVec.push_back("_minpt500"); ptCutPaveVec.push_back("p_{T} > 500 GeV");
+  
+  cutVec.push_back(""); cutPaveVecY.push_back(0.82);
+  //cutVec.push_back("_1tagMass"); cutPaveVecY.push_back(0.76);
+  //cutVec.push_back("_2tagMass");
+  cutVec.push_back("_1tagPUPPIMass"); cutPaveVecY.push_back(0.76);
+  //cutVec.push_back("_2tagPUPPIMass");
+
+  TH2D *h_dataDenom1;
+  TH2D *h_dataDenom2;
+  TH2D *h_dataNum1;
+  TH2D *h_dataNum2;
+	
+  for (unsigned int i_ptCutVec=0; i_ptCutVec<ptCutVec.size(); i_ptCutVec++){    
+
+    vector <string> cutPaveVec;
+    cutPaveVec.push_back(Form("AK8 jets, |#Delta#phi| > 2.1, %s",ptCutPaveVec[i_ptCutVec].c_str()));
+    //cutPaveVec.push_back(Form("#splitline{AK8 jets, |#Delta#phi| > 2.1, %s,}{1+ jet: 110 < M_{SD} < 210 GeV}",ptCutPaveVec[i_ptCutVec].c_str()));
+    //cutPaveVec.push_back(Form("#splitline{AK8 jets, |#Delta#phi| > 2.1, %s,}{Both jets: 110 < M_{SD} < 210 GeV}",ptCutPaveVec[i_ptCutVec].c_str()));
+    cutPaveVec.push_back(Form("#splitline{AK8 jets, |#Delta#phi| > 2.1, %s,}{1+ jet: 110 < M_{PUPPI + SD} < 210 GeV}",ptCutPaveVec[i_ptCutVec].c_str()));
+    //cutPaveVec.push_back(Form("#splitline{AK8 jets, |#Delta#phi| > 2.1, %s,}{Both jets: 110 < M_{PUPPI + SD} < 210 GeV}",ptCutPaveVec[i_ptCutVec].c_str()));
+    
+    for (unsigned int i_cutVec=0; i_cutVec<cutVec.size(); i_cutVec++){    
+      //cout << cutVec[i_cutVec] << endl;
+      for (unsigned int i_yVarVec=0; i_yVarVec<yVarVec.size(); i_yVarVec++){    
+	//cout << yVarVec[i_yVarVec] << endl;
+	for (unsigned int i_xVarVec=0; i_xVarVec<xVarVec.size(); i_xVarVec++){    
+
+	  //cout << xVarVec[i_xVarVec] << endl;
+
+	  //denominator histograms
+	  string endHistName = "Mu50orIsoMu24denom" + ptCutVec[i_ptCutVec] + cutVec[i_cutVec] + "_" + yVarVec[i_yVarVec] + "vs" + xVarVec[i_xVarVec];
+	  string denomHistName = "h_pass" + endHistName;
+	  h_dataDenom1 = (TH2D*)F_data1 ->Get(denomHistName.c_str());
+	  h_dataDenom2 = (TH2D*)F_data2 ->Get(denomHistName.c_str());
+
+	  //cout << "Denominator histograms, " + denomHistName + ", acquired!" << endl;
+
+	  h_dataDenom1->Sumw2();
+	  h_dataDenom2->Sumw2();
+	  h_dataDenom1->Add(h_dataDenom2);
+	  h_dataDenom1->Rebin2D(2,2);
+
+	  for (unsigned int i_numOrVec=0; i_numOrVec<numOrVec.size(); i_numOrVec++){    
+
+	    string PFHTmainTrigger = "PFHT800orPFHT900";
+	    string PFHTmainTrigger1, PFHTmainTrigger2;
+	    string numPave = "PFHT800 or PFHT900";
+	    if (i_numOrVec != numOrVec.size()){
+	      PFHTmainTrigger1 = PFHTmainTrigger + numOrVec[i_numOrVec];
+	      PFHTmainTrigger2 = PFHTmainTrigger + "or" + numOrVec[i_numOrVec];
+	      if (i_numOrVec == (numOrVec.size())-1) numPave = "#splitline{#splitline{" + numPave + numOrPave[i_numOrVec];
+	      else numPave = "#splitline{" + numPave + numOrPave[i_numOrVec];
+	    }
+	    string numHistName1 = "h_pass" + PFHTmainTrigger1 + "num" + endHistName;
+	    string numHistName2 = "h_pass" + PFHTmainTrigger2 + "num" + endHistName;
+
+	    h_dataNum1 = (TH2D*)F_data1 ->Get(numHistName1.c_str());
+	    h_dataNum1->Sumw2();
+
+	    h_dataNum2 = (TH2D*)F_data2 ->Get(numHistName2.c_str());
+	    h_dataNum2->Sumw2();
+	    
+	    //cout << "Numerator histograms, " + numHistName1 + ", acquired!" << endl;
+
+	    h_dataNum2->Add(h_dataNum1);
+	    h_dataNum2->Rebin2D(2,2);
+	    h_dataNum2->Divide(h_dataNum2, h_dataDenom1, 1, 1, "B");
+
+	    //cout << "Efficiency histogram created!" << endl;
+
+	    string title = ";" + xTitleVec[i_xVarVec] + ";" + yTitleVec[i_yVarVec] + ";Trigger Efficiency";
+	    h_dataNum2->SetTitle(title.c_str());
+	    h_dataNum2->GetXaxis()->SetNoExponent();
+	    h_dataNum2->GetXaxis()->SetMoreLogLabels();
+	  
+	    h_dataNum2->GetXaxis()->SetTitleOffset(1.15);
+	    h_dataNum2->GetXaxis()->SetTitleFont(42);
+	    h_dataNum2->GetXaxis()->SetRangeUser(200,2200);
+
+	    h_dataNum2->GetXaxis()->SetNoExponent();
+	    h_dataNum2->GetXaxis()->SetMoreLogLabels();
+
+	    h_dataNum2->GetYaxis()->SetTitleOffset(1.25);//0.9);
+	    h_dataNum2->GetYaxis()->SetTitleFont(42);
+	    h_dataNum2->GetYaxis()->SetRangeUser(0,400);
+
+	    h_dataNum2->GetZaxis()->SetTitleOffset(0.7);
+	    h_dataNum2->GetZaxis()->SetTitleFont(42);
+	    h_dataNum2->GetZaxis()->SetRangeUser(0.1,1.0);
+	  
+	    h_dataNum2->Draw("colz");
+      
+	    TLatex *   tex = new TLatex(0.12,0.83,"#font[62]{CMS} #font[52]{Preliminary}");
+	    tex->SetNDC();
+	    tex->SetTextFont(42);
+	    tex->SetTextSize(0.0625);
+	    tex->SetLineWidth(2);
+	    tex->Draw();
+
+	    tex = new TLatex(0.89,0.936, runLabel.c_str());
+	    tex->SetNDC();
+	    tex->SetTextAlign(31);
+	    tex->SetTextFont(42);
+	    // tex->SetTextSize(0.0625);
+	    tex->SetTextSize(0.0575);
+	    tex->SetLineWidth(2);
+	    tex->Draw();
+		  
+	    tex = new TLatex(0.51,0.87,cutPaveVec[i_cutVec].c_str());
+	    tex->SetNDC();
+	    tex->SetTextAlign(13);
+	    tex->SetTextFont(42);
+	    tex->SetTextSize(0.032);
+	    tex->SetLineWidth(2);
+	    tex->Draw();
+
+	    //cout << "Cut vector drawn!" << endl;
+
+	    string trigVec = "#splitline{" + numPave + "}{over Mu50 or IsoMu24}";
+	    //cout << "Trigger label," + trigVec;
+
+	    tex = new TLatex(0.51,cutPaveVecY[i_cutVec],trigVec.c_str());//0.51,0.82
+	    tex->SetNDC();
+	    tex->SetTextAlign(13);
+	    tex->SetTextFont(42);
+	    tex->SetTextSize(0.032);
+	    tex->SetLineWidth(2);
+	    tex->Draw();
+
+	    //cout << ", drawn." << endl;
+
+	    gPad->RedrawAxis();
+		  
+	    c1237->SetLogz();
+
+	    string savename = "trigEffStudies/run" + date + "/RunsB-H" + PFHTmainTrigger2 + "numsMu50orIsoMu24denom_trigEff_" + yVarVec[i_yVarVec] + "vs" + xVarVec[i_xVarVec] + cutVec[i_cutVec] + ptCutVec[i_ptCutVec] + runLabelOutFile;
+	    c1237->SaveAs(Form("%s.pdf",savename.c_str()));    
+	    c1237->SaveAs(Form("%s.root",savename.c_str()));
+	  
+	    h_dataNum2->GetZaxis()->SetRangeUser(0.5,1.0);
+	    c1237->SaveAs(Form("%s_zoomZaxis.pdf",savename.c_str()));    
+
+	    h_dataNum2->GetXaxis()->SetRangeUser(800,1100);
+	    h_dataNum2->GetYaxis()->SetRangeUser(0,250);
+	    h_dataNum2->GetZaxis()->SetRangeUser(0.89,1.0);
+	    //h_dataNum2->SetNdivisions(519,"Z");
+	    //gPad->RedrawAxis();
+	    c1237->SaveAs(Form("%s_zoom.pdf",savename.c_str()));    
+
+	    h_dataNum2->GetZaxis()->SetRangeUser(0.98,1.0);
+	    c1237->SaveAs(Form("%s_zoomXYandExtraZ.pdf",savename.c_str()));    
+
+	    h_dataNum2->Delete();
+	    h_dataNum1->Delete();
+	    //cout << "Nums deleted!" << endl;
+	  }//end numerator loop
+	  h_dataDenom1->Delete();
+	  h_dataDenom2->Delete();
+	  //cout << "Denoms deleted!" << endl;
 	}//end x variable loop
       }//end y variable loop
     }//end mass cut loop
