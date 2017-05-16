@@ -299,7 +299,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
 
   bool isFrozen            = true   ;
   bool do_PUreweighting    = true   ;
-
+  bool do_HTreweighting    = false  ;
   // ---- SD mass cut 
   float ttagSDwindowLo_CHS = 105. ;  
   float ttagSDwindowHi_CHS = 220. ;
@@ -369,7 +369,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
   vsyst.push_back(-5) ;  //systType = "q2_dn"   ;
   vsyst.push_back( 6) ;  //systType = "PU_up"   ;
   vsyst.push_back(-6) ;  //systType = "PU_dn"   ;
-  vsyst.push_back( 7) ;  //systType = "JMRsmear_wjet_nom"   ;
+  // vsyst.push_back( 7) ;  //systType = "JMRsmear_wjet_nom"   ;
 
   // This is now an input to the function
   // vector<string> btagWP;
