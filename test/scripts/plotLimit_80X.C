@@ -1,6 +1,19 @@
 #include "tdrstyle.C"
 #include "CMS_lumi.C"
 
+double roundToSignificantFigures(double num, int n) {
+  if(num == 0) {
+    return 0;
+  }
+
+  double d = ceil(log10(num < 0 ? -num: num));
+  int power = n - (int) d;
+
+  double magnitude = pow(10, power);
+  long shifted = round(num*magnitude);
+  return shifted/magnitude;
+}
+
 void plotLimit_80X(int signal = 0, bool expectedOnly = 1, string workingPoint="ht950_pt400_WPB", string date="20170512"){
 //signal: 0 = ZPN, 1 = ZPW, 2 = ZPXW, 3 = RSG  
 
@@ -92,15 +105,8 @@ while (!infile.eof()){
   //infile >> mass >> exp >>  dn2 >> up2 >> dn1 >> up1;
   //obs = exp;	
 
-  if (expectedOnly){
-    infile >> mass >> exp >>  dn2 >> up2 >> dn1 >> up1;
-    cout << mass << " & " << exp << " & " << "["<<dn1<<", "<<up1<<"] & ["<<dn2<<", "<<up2<<"] \\" << endl;
-  }
-  else{
-    infile >> mass >> obs >> exp >>  dn2 >> up2 >> dn1 >> up1;
-    cout << mass << " & " << obs << " & " << exp << " & " << "["<<dn1<<", "<<up1<<"] & ["<<dn2<<", "<<up2<<"] \\" << endl;
-  }
-
+  if (expectedOnly) infile >> mass >> exp >>  dn2 >> up2 >> dn1 >> up1;
+  else infile >> mass >> obs >> exp >>  dn2 >> up2 >> dn1 >> up1;
 
   double sf = 1.0;
   if (mass == 2500) sf = 0.01;
@@ -110,6 +116,9 @@ while (!infile.eof()){
   if (mass == 4500) sf = 0.0001;
   if (mass == 5000) sf = 0.0001;
 
+  if (expectedOnly) cout << mass << " & " <<roundToSignificantFigures(sf*dn2,2)<<" & "<<roundToSignificantFigures(sf*dn1,2)<<" & textbf{"<<roundToSignificantFigures(sf*exp,2)<< "} & "<<roundToSignificantFigures(sf*up1,2)<<" & "<<roundToSignificantFigures(sf*up2,2)<<" # " << endl;
+
+  else cout << mass << " & textbf{" <<roundToSignificantFigures(sf*obs,2)<< "} & "<<roundToSignificantFigures(sf*dn2,2)<<" & "<<roundToSignificantFigures(sf*dn1,2)<< " & textbf{"<<roundToSignificantFigures(sf*exp,2)<<"} & "<<roundToSignificantFigures(sf*up1,2)<<" & "<<roundToSignificantFigures(sf*up2,2)<<" # " << endl;
 
   limit_obs->SetPoint(point, mass, obs*sf);
   limit_exp->SetPoint(point, mass, exp*sf);
