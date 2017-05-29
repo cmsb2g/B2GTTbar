@@ -1,8 +1,10 @@
 //Script to make templates for shape analysis using Theta
 //to do: set up for extra wide, 4.5 TeV Z' narrow and RSG, and 5 TeV RSG samples
+//add boolean for blinded/unblinded
 //
-//
-//
+//root -l
+//.L makeTemplates_80X.cc
+//makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool ttReweighting = 1, string workingPoint = "ht950_pt400_WPB", string inFileDate = "20160512fullFix")
 
 #include <cstdlib>
 #include "TClonesArray.h"
@@ -208,6 +210,11 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     histos[h][5] = new TH1F();
     histos[h][6] = new TH1F();
   }
+
+  //for yield table
+  float TTerr[nTagCats];
+  float QCDerr[nTagCats];
+  float BKGerr[nTagCats];
   
   TString dir = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/runs/histsBkgdEst_";
   TString infileMiddle = "_alt40_alt260_bM_PUw_TTw_";
@@ -1240,6 +1247,10 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     cout << "Region " << tag << " Total QCD: " << histos[names::QCD][tag]->Integral() << " +/- " << totalQCDErr <<endl;
     cout << "Region " << tag << " Total ttbar: " << histos[names::TT][tag]->Integral() << " +/- " << totalTopErr <<endl;
 
+    TTerr[tag] = totalTopErr;
+    QCDerr[tag] = totalQCDErr;
+    BKGerr[tag] = totalHistErr;
+
     THStack *stack = new THStack();
     stack->Add(histos[names::TT][tag]);
     stack->Add(histos[names::QCD][tag]);
@@ -1618,6 +1629,22 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     if (signal < 2) histos[names::ZPN50_PUDN][tag]->Write( Form("btag%d__Zprime5000__pileup__down", tag) );  
 
   }  
+
+  //yields tables for AN
+  cout << "High delta y" <<endl;
+  cout << "NTMJ                & $ " << (int) histos[names::QCD][3]->Integral() << " #pm " << (int) QCDerr[3] << " $ & $ " << (int) histos[names::QCD][4]->Integral() << " #pm " << (int) QCDerr[4] << " $ & $ " << (int) histos[names::QCD][5]->Integral() << " #pm " << (int) QCDerr[5] << " $ ##" <<endl;
+  cout << "SM #ttbar           & $ " << (int) histos[names::TT][3]->Integral() << " #pm " << (int) TTerr[3] << " $ & $ " << (int) histos[names::TT][4]->Integral() << " #pm " << (int) TTerr[4] << " $ & $ " << (int) histos[names::TT][5]->Integral() << " #pm " << (int) TTerr[5] << " $ ##" <<endl;
+  cout <<"#hline"<<endl;
+  cout <<""<<endl;
+  cout << "Total Background    & $ " << (int) histos[names::TT][3]->Integral() + (int) histos[names::QCD][3]->Integral() << " #pm " << (int) BKGerr[3] << " $ & $ " << (int) histos[names::QCD][4]->Integral() + (int) histos[names::TT][4]->Integral()<< " #pm " << (int) BKGerr[4] << " $ & $ " << (int) histos[names::TT][5]->Integral() + (int) histos[names::QCD][5]->Integral() << " #pm " << (int) BKGerr[5] << " $ ##" <<endl;
+
+  cout <<""<<endl;
+  cout << "Low delta y" <<endl;
+  cout << "NTMJ                & $ " << (int) histos[names::QCD][0]->Integral() << " #pm " << (int) QCDerr[0] << " $ & $ " << (int) histos[names::QCD][1]->Integral() << " #pm " << (int) QCDerr[1] << " $ & $ " << (int) histos[names::QCD][2]->Integral() << " #pm " << (int) QCDerr[2] << " $ ##" <<endl;
+  cout << "SM #ttbar           & $ " << (int) histos[names::TT][0]->Integral() << " #pm " << (int) TTerr[0] << " $ & $ " << (int) histos[names::TT][1]->Integral() << " #pm " << (int) TTerr[1] << " $ & $ " << (int) histos[names::TT][2]->Integral() << " #pm " << (int) TTerr[2] << " $ ##" <<endl;
+  cout <<"#hline"<<endl;
+  cout <<""<<endl;
+  cout << "Total Background    & $ " << (int) histos[names::TT][0]->Integral() + (int) histos[names::QCD][0]->Integral() << " #pm " << (int) BKGerr[0] << " $ & $ " << (int) histos[names::QCD][1]->Integral() + (int) histos[names::TT][1]->Integral()<< " #pm " << (int) BKGerr[1] << " $ & $ " << (int) histos[names::TT][2]->Integral() + (int) histos[names::QCD][2]->Integral() << " #pm " << (int) BKGerr[2] << " $ ##" <<endl;
 
 
   if (!postFit) outFile->Close();
