@@ -965,6 +965,9 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t JetGenMatched_TopMass                  ;
       Float_t JetGenMatched_bPt                      ;
       Float_t JetGenMatched_WPt                      ;
+      Float_t JetGenMatched_WEta                     ;
+      Float_t JetGenMatched_WPhi                     ;
+      Float_t JetGenMatched_WMass                    ;
       Float_t JetGenMatched_Wd1Pt                    ;
       Float_t JetGenMatched_Wd2Pt                    ;
       Float_t JetGenMatched_Wd1ID                    ;
@@ -1984,7 +1987,10 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("JetGenMatched_TopPhi"                 , & JetGenMatched_TopPhi              ,    "JetGenMatched_TopPhi/F"                   );      
   TreeSemiLept->Branch("JetGenMatched_TopMass"                , & JetGenMatched_TopMass             ,    "JetGenMatched_TopMass/F"                  );      
   TreeSemiLept->Branch("JetGenMatched_bPt"                    , & JetGenMatched_bPt                 ,    "JetGenMatched_bPt/F"                      );      
-  TreeSemiLept->Branch("JetGenMatched_WPt"                    , & JetGenMatched_WPt                 ,    "JetGenMatched_WPt/F"                      );      
+  TreeSemiLept->Branch("JetGenMatched_WPt"                    , & JetGenMatched_WPt                 ,    "JetGenMatched_WPt/F"                      ); 
+  TreeSemiLept->Branch("JetGenMatched_WEta"                   , & JetGenMatched_WEta                ,    "JetGenMatched_WEta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_WPhi"                   , & JetGenMatched_WPhi                ,    "JetGenMatched_WPhi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_WMass"                  , & JetGenMatched_WMass               ,    "JetGenMatched_WMass/F"                    );     
   TreeSemiLept->Branch("JetGenMatched_Wd1Pt"                  , & JetGenMatched_Wd1Pt               ,    "JetGenMatched_Wd1Pt/F"                    );      
   TreeSemiLept->Branch("JetGenMatched_Wd2Pt"                  , & JetGenMatched_Wd2Pt               ,    "JetGenMatched_Wd2Pt/F"                    );      
   TreeSemiLept->Branch("JetGenMatched_Wd1ID"                  , & JetGenMatched_Wd1ID               ,    "JetGenMatched_Wd1ID/F"                    );      
@@ -2184,6 +2190,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   TLorentzVector b2_p4;
   TLorentzVector W1_p4;
   TLorentzVector W2_p4;
+  TLorentzVector Wp_p4;
+  TLorentzVector Wm_p4;
   TLorentzVector W1d1_p4;
   TLorentzVector W1d2_p4;
   TLorentzVector W2d1_p4;
@@ -2299,6 +2307,16 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         t2_p4.SetPxPyPzE( px, py, pz, e ); 
         parton2id = id;
         if (verboseGen_) cout<<"..atop (hard)"<<endl;//" with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton2id = "<<parton2id<<endl;
+      }
+      if (id==24 && status<30 && status>=20) {
+        Wp_p4.SetPxPyPzE( px, py, pz, e ); 
+        parton1id = id;
+        if (verboseGen_) cout<<"..Wplus (hard)"<<endl;//" with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+      }
+      if (id==-24 && status<30 && status>=20) {
+        Wm_p4.SetPxPyPzE( px, py, pz, e ); 
+        parton2id = id;
+        if (verboseGen_) cout<<"..Wminus (hard)"<<endl;//" with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton2id = "<<parton2id<<endl;
       }
 
       // Get the tops which decay - record b and W information
@@ -5732,7 +5750,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
             JetGenMatched_TopPhi              = t1_p4.Phi()                    ;
             JetGenMatched_TopMass             = t1_p4.M()                      ;
             JetGenMatched_bPt                 = b1_p4.Perp()                   ;
-            JetGenMatched_WPt                 = W1_p4.Perp()                   ;
+            JetGenMatched_WPt                 = Wp_p4.Perp()                   ;
+            JetGenMatched_WEta                = Wp_p4.Eta()                    ;
+            JetGenMatched_WPhi                = Wp_p4.Phi()                    ;
+            JetGenMatched_WMass               = Wp_p4.M()                      ;
             JetGenMatched_Wd1Pt               = W1d1_p4.Perp()                 ;
             JetGenMatched_Wd2Pt               = W1d2_p4.Perp()                 ;
             JetGenMatched_Wd1ID               = W1d1_id                        ;
@@ -5775,7 +5796,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
             JetGenMatched_TopPhi              = t2_p4.Phi()            ;
             JetGenMatched_TopMass             = t2_p4.M()              ;
             JetGenMatched_bPt                 = b2_p4.Perp()           ;
-            JetGenMatched_WPt                 = W2_p4.Perp()           ;
+            JetGenMatched_WPt                 = Wm_p4.Perp()           ;
+            JetGenMatched_WEta                = Wm_p4.Eta()            ;
+            JetGenMatched_WPhi                = Wm_p4.Phi()            ;
+            JetGenMatched_WMass               = Wm_p4.M()              ;
             JetGenMatched_Wd1Pt               = W2d1_p4.Perp()         ;
             JetGenMatched_Wd2Pt               = W2d2_p4.Perp()         ;
             JetGenMatched_Wd1ID               = W2d1_id                ;
