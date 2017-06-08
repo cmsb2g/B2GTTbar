@@ -66,6 +66,9 @@
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
 #include "DataFormats/PatCandidates/interface/VIDCutFlowResult.h"
 
+// Photon
+#include "DataFormats/PatCandidates/interface/Photon.h"
+
 // Trigger
 #include "FWCore/Common/interface/TriggerNames.h"
 #include "DataFormats/Common/interface/TriggerResults.h"
@@ -163,6 +166,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       edm::EDGetTokenT<bool>                                   badChargedCandidateFilterToken_  ;
       edm::EDGetTokenT<pat::MuonCollection>                    muonToken_                       ;
       edm::EDGetTokenT<edm::View<pat::Electron>>               electronToken_                   ;  
+      edm::EDGetTokenT<edm::View<pat::Photon>>                 photonToken_                     ;  
       edm::EDGetTokenT<pat::METCollection>                     metToken_                        ;
       edm::EDGetTokenT<std::vector<PileupSummaryInfo>>         pileupInfoToken_                 ;
       edm::EDGetTokenT<LHEEventProduct>                        lheSrc_                          ;
@@ -779,6 +783,23 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       // std::vector<float> *SemiLeptAK4m       = new std::vector<float>;
       // std::vector<float> *SemiLeptAK4bdisc   = new std::vector<float>;
 
+      //Chad
+      std::vector<float> *v_AK8PuppiPt       = new std::vector<float>;
+      std::vector<float> *v_AK8PuppiEta      = new std::vector<float>;
+      std::vector<float> *v_AK8PuppiPhi      = new std::vector<float>;
+      std::vector<float> *v_AK8PuppiM        = new std::vector<float>;
+      std::vector<float> *v_AK8PuppiArea     = new std::vector<float>;
+
+      std::vector<float> *v_AK8PuppiSdPt       = new std::vector<float>;
+      std::vector<float> *v_AK8PuppiSdEta      = new std::vector<float>;
+      std::vector<float> *v_AK8PuppiSdPhi      = new std::vector<float>;
+      std::vector<float> *v_AK8PuppiSdM        = new std::vector<float>;
+      std::vector<float> *v_AK8PuppiSdCorr     = new std::vector<float>;
+
+      std::vector<float> *v_photonPt               = new std::vector<float>;
+      std::vector<float> *v_photonSupClustEta      = new std::vector<float>;
+      std::vector<float> *v_photonSigIEtaIEta      = new std::vector<float>;
+      std::vector<float> *v_photonFullSigIEtaIEta  = new std::vector<float>;
 
       std::string SemiLeptTrigAcceptBits;
 
@@ -1129,6 +1150,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
     badChargedCandidateFilterToken_(consumes<bool>(edm::InputTag("BadChargedCandidateFilter",""))),
     muonToken_(consumes<pat::MuonCollection>(edm::InputTag("slimmedMuons"))),
     electronToken_(consumes<edm::View<pat::Electron>>(edm::InputTag("slimmedElectrons"))), //Collection
+    photonToken_(consumes<edm::View<pat::Photon>>(edm::InputTag("slimmedPhotons"))), //Collection
     metToken_(consumes<pat::METCollection>(edm::InputTag("slimmedMETs","","Ana"))),
     pileupInfoToken_(consumes<std::vector<PileupSummaryInfo>>(edm::InputTag("slimmedAddPileupInfo"))),
     lheSrc_(consumes<LHEEventProduct>(iConfig.getParameter<edm::InputTag>("lheSrc"))),
@@ -1797,6 +1819,22 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   // TreeSemiLept->Branch("SemiLeptAK4m"       , "vector<float>", &SemiLeptAK4m      );
   // TreeSemiLept->Branch("SemiLeptAK4bdisc"   , "vector<float>", &SemiLeptAK4bdisc  );
 
+  TreeSemiLept->Branch("v_AK8PuppiPt"    , "vector<float>", &v_AK8PuppiPt    );
+  TreeSemiLept->Branch("v_AK8PuppiEta"   , "vector<float>", &v_AK8PuppiEta   );
+  TreeSemiLept->Branch("v_AK8PuppiPhi"   , "vector<float>", &v_AK8PuppiPhi   );
+  TreeSemiLept->Branch("v_AK8PuppiM"     , "vector<float>", &v_AK8PuppiM     );
+  TreeSemiLept->Branch("v_AK8PuppiArea"  , "vector<float>", &v_AK8PuppiArea     );
+
+  TreeSemiLept->Branch("v_AK8PuppiSdPt"    , "vector<float>", &v_AK8PuppiSdPt    );
+  TreeSemiLept->Branch("v_AK8PuppiSdEta"   , "vector<float>", &v_AK8PuppiSdEta   );
+  TreeSemiLept->Branch("v_AK8PuppiSdPhi"   , "vector<float>", &v_AK8PuppiSdPhi   );
+  TreeSemiLept->Branch("v_AK8PuppiSdM"     , "vector<float>", &v_AK8PuppiSdM     );
+  TreeSemiLept->Branch("v_AK8PuppiSdCorr"  , "vector<float>", &v_AK8PuppiSdCorr     );
+
+  TreeSemiLept->Branch("v_photonPt"              , "vector<float>", &v_photonPt    );
+  TreeSemiLept->Branch("v_photonSupClustEta"     , "vector<float>", &v_photonSupClustEta    );
+  TreeSemiLept->Branch("v_photonSigIEtaIEta"     , "vector<float>", &v_photonSigIEtaIEta    );
+  TreeSemiLept->Branch("v_photonFullSigIEtaIEta" , "vector<float>", &v_photonFullSigIEtaIEta    );
 
   TreeSemiLept->Branch("JetPtRaw"                             , & JetPtRaw                          ,    "JetPtRaw/F"                               );                                  
   TreeSemiLept->Branch("JetEtaRaw"                            , & JetEtaRaw                         ,    "JetEtaRaw/F"                              );                                   
@@ -3577,6 +3615,27 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<"HT_AK4_pt30_smearDn  "<<HT_AK4_pt30_smearDn <<endl;
   }
 
+  // PHOTONS (FANCY BIG WRITING!)
+
+  if (runSemiLeptTree_) {
+
+    v_photonPt              ->clear();
+    v_photonSupClustEta     ->clear();
+    v_photonSigIEtaIEta     ->clear();
+    v_photonFullSigIEtaIEta ->clear();
+
+    edm::Handle<edm::View<pat::Photon>> photons;
+    iEvent.getByToken(photonToken_, photons);
+    for (const pat::Photon &pho : *photons) {
+      if (pho.pt() < 20 or pho.chargedHadronIso()/pho.pt() > 0.3) continue;
+
+        v_photonPt              ->push_back( pho.pt() );
+        v_photonSupClustEta     ->push_back( pho.superCluster()->eta() );
+        v_photonSigIEtaIEta     ->push_back( pho.sigmaIetaIeta() );
+        v_photonFullSigIEtaIEta ->push_back( pho.full5x5_sigmaIetaIeta() );
+    }
+  }
+
   //      
   //         d8888 888    d8P   .d8888b.       .d8888b.  888    888  .d8888b.         d8b          888             
   //        d88888 888   d8P   d88P  Y88b     d88P  Y88b 888    888 d88P  Y88b        Y8P          888             
@@ -3633,6 +3692,17 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   if (verbose_) cout<<"\nAK8 jet loop"<<endl;
 
+  v_AK8PuppiPt  ->clear();
+  v_AK8PuppiEta ->clear();
+  v_AK8PuppiPhi ->clear();
+  v_AK8PuppiM   ->clear();
+  v_AK8PuppiArea->clear();
+
+  v_AK8PuppiSdPt  ->clear();
+  v_AK8PuppiSdEta ->clear();
+  v_AK8PuppiSdPhi ->clear();
+  v_AK8PuppiSdM   ->clear();
+  v_AK8PuppiSdCorr->clear();
 
   for (const pat::Jet &ijet : *AK8CHS) {
     // if (count_AK8CHS>1) break;
@@ -5520,6 +5590,21 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         }
       }   
     } 
+
+    //Chad
+    if (runSemiLeptTree_) {
+      v_AK8PuppiPt  ->push_back( puppi_pt );
+      v_AK8PuppiEta ->push_back( puppi_eta );
+      v_AK8PuppiPhi ->push_back( puppi_phi );
+      v_AK8PuppiM   ->push_back( puppi_mass );
+      v_AK8PuppiArea->push_back( puppi_area );
+
+      v_AK8PuppiSdPt  ->push_back( sumPUPsubjets_P4_uncorr.Perp() );
+      v_AK8PuppiSdEta ->push_back( sumPUPsubjets_P4_uncorr.Eta() );
+      v_AK8PuppiSdPhi ->push_back( sumPUPsubjets_P4_uncorr.Phi() );
+      v_AK8PuppiSdM   ->push_back( sumPUPsubjets_P4_uncorr.M() );
+      v_AK8PuppiSdCorr->push_back( sumPUPsubjets_P4_L23res.M() / sumPUPsubjets_P4_uncorr.M() );
+    }
 
     // Semilept Jet opposite lepton
     if (verbose_) cout<<"count_lep "<<count_lep<<endl;
