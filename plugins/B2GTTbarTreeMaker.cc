@@ -1102,10 +1102,14 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Int_t   LepHemiContainsAK4BtagTight            ;
 
 
-      Float_t LeptonPhi                              ;
-      Float_t LeptonPt                               ;
-      Float_t LeptonEta                              ;
-      Float_t LeptonMass                             ;
+      Float_t LeptonPhi0                              ;
+      Float_t LeptonPt0                               ;
+      Float_t LeptonEta0                              ;
+      Float_t LeptonMass0                             ;
+      Float_t LeptonPhi1                              ;
+      Float_t LeptonPt1                               ;
+      Float_t LeptonEta1                              ;
+      Float_t LeptonMass1                             ;
       Float_t PtRel                                  ;
       Int_t   LeptonIsMu                             ;
       Int_t   MuHighPt                                ;
@@ -2147,10 +2151,14 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("LepHemiContainsAK4BtagMedium"         , & LepHemiContainsAK4BtagMedium      , "LepHemiContainsAK4BtagMedium/I"   );  
   TreeSemiLept->Branch("LepHemiContainsAK4BtagTight"          , & LepHemiContainsAK4BtagTight       , "LepHemiContainsAK4BtagTight/I"    );  
 
-  TreeSemiLept->Branch("LeptonPhi"                            , &  LeptonPhi                        , "LeptonPhi/F"                      ); 
-  TreeSemiLept->Branch("LeptonPt"                             , &  LeptonPt                         , "LeptonPt/F"                       ); 
-  TreeSemiLept->Branch("LeptonEta"                            , &  LeptonEta                        , "LeptonEta/F"                      ); 
-  TreeSemiLept->Branch("LeptonMass"                           , &  LeptonMass                       , "LeptonMass/F"                     ); 
+  TreeSemiLept->Branch("LeptonPhi0"                            , &  LeptonPhi0                        , "LeptonPhi0/F"                      ); 
+  TreeSemiLept->Branch("LeptonPt0"                             , &  LeptonPt0                         , "LeptonPt0/F"                       ); 
+  TreeSemiLept->Branch("LeptonEta0"                            , &  LeptonEta0                        , "LeptonEta0/F"                      ); 
+  TreeSemiLept->Branch("LeptonMass0"                           , &  LeptonMass0                       , "LeptonMass0/F"                     );
+  TreeSemiLept->Branch("LeptonPhi1"                            , &  LeptonPhi1                        , "LeptonPhi1/F"                      ); 
+  TreeSemiLept->Branch("LeptonPt1"                             , &  LeptonPt1                         , "LeptonPt1/F"                       ); 
+  TreeSemiLept->Branch("LeptonEta1"                            , &  LeptonEta1                        , "LeptonEta1/F"                      ); 
+  TreeSemiLept->Branch("LeptonMass1"                           , &  LeptonMass1                       , "LeptonMass1/F"                     ); 
   TreeSemiLept->Branch("PtRel"                                , &  PtRel                            , "PtRel/F"                          ); 
   TreeSemiLept->Branch("LeptonIsMu"                           , &  LeptonIsMu                       , "LeptonIsMu/I"                     ); 
   TreeSemiLept->Branch("MuMedium"                             , &  MuMedium                         , "MuMedium/I"                       ); 
@@ -3051,6 +3059,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   iEvent.getByToken(muonToken_, muons);
 
   TLorentzVector mu0_p4;
+  TLorentzVector mu1_p4;
   bool mu0_isTight=false;
   bool mu0_isMedium=false;
   bool mu0_isHighPt = false;
@@ -3104,6 +3113,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         }
         if (verbose_) cout<<"Muon pT "<<mu.pt()<<" iso04 "<<iso04<<" isMedium "<<mu0_isTight<<" isTight "<<mu0_isTight<<" isHighPt "<<mu0_isHighPt<<endl;
       } 
+      if (count_mu==1){
+        mu1_p4.SetPtEtaPhiM( mu.pt(), mu.eta(), mu.phi(), mu.mass() );
+  }
       // printf("muon with pt %4.1f, dz(PV) %+5.3f, POG loose id %d, tight id %d\n",
       // mu.pt(), mu.muonBestTrack()->dz(PV.position()), mu.isLooseMuon(), mu.isTightMuon(PV));
       count_mu++;
@@ -3263,6 +3275,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           elFootprint.push_back(el->sourceCandidatePtr(i));
         }
       } 
+      if (count_el==1){
+        el1_p4.SetPtEtaPhiM( el->pt(), el->eta(), el->phi(), el->mass() );
+      }
       count_el++;
     }
     //printf("elec with pt %4.1f, supercluster eta %+5.3f, sigmaIetaIeta %.3f (%.3f with full5x5 shower shapes), lost hits %d, pass conv veto %d\n",
@@ -3270,12 +3285,28 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   }
 
   TLorentzVector lep0_p4;
+  TLorentzVector lep1_p4;
 
   int count_lep = count_mu + count_el;
   if (count_lep==1){
     if (count_mu==1 && count_el==0)  lep0_p4 = mu0_p4;
     if (count_mu==0 && count_el==1)  lep0_p4 = el0_p4; 
   }
+  if (count_lep==2){
+    if (count_mu==2 && count_el==0) {
+      lep0_p4 = mu0_p4;
+      lep1_p4 = mu1_p4;
+    }
+    if (count_mu==0 && count_el==2) {
+      lep0_p4 = el0_p4; 
+      lep1_p4 = el1_p4; 
+
+    }  
+    if (count_mu==1 && count_el==1) { 
+      lep0_p4 = el0_p4; 
+      lep1_p4 = mu0_p4; 
+    }
+  } // end if 2 leptons loop
 
   if (verbose_){
     cout<<"count_mu  "<<count_mu<<endl;
@@ -6224,10 +6255,14 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         LepHemiContainsAK4BtagMedium = (int)  ak4_btag_medium;
         LepHemiContainsAK4BtagTight  = (int)  ak4_btag_tight;
 
-        LeptonPhi   = lep0_p4.Phi()  ; 
-        LeptonPt    = lep0_p4.Perp() ;  
-        LeptonEta   = lep0_p4.Eta()  ; 
-        LeptonMass  = lep0_p4.M() ; 
+        LeptonPhi0   = lep0_p4.Phi()  ; 
+        LeptonPt0    = lep0_p4.Perp() ;  
+        LeptonEta0   = lep0_p4.Eta()  ; 
+        LeptonMass0  = lep0_p4.M() ; 
+        LeptonPhi1   = lep1_p4.Phi()  ; 
+        LeptonPt1    = lep1_p4.Perp() ;  
+        LeptonEta1   = lep1_p4.Eta()  ; 
+        LeptonMass1  = lep1_p4.M() ;
 
 
         if      (count_mu==1 && count_el==0) LeptonIsMu  = 1  ; 
