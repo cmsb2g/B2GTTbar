@@ -87,11 +87,11 @@ void plot_topTag_WPeff(){
     vector<string> WPlabel;
     vector<string> WPfileLabel;
     
-    WPtau32cut.push_back("0.40"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.40}{#varepsilon_{B} = 0.1%, #varepsilon_{S} = 14%}"); WPfileLabel.push_back("WP80X_800to1000_0p1EffBkg");
-    WPtau32cut.push_back("0.46"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.46}{#varepsilon_{B} = 0.3%, #varepsilon_{S} = 25%}"); WPfileLabel.push_back("WP80X_800to1000_0p3EffBkg_WP76X_0p1EffBkg");
-    WPtau32cut.push_back("0.54"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.54}{#varepsilon_{B} = 1%, #varepsilon_{S} = 43%}"); WPfileLabel.push_back("WP80X_800to1000_1pEffBkg_WP76X_0p3EffBkg");
-    WPtau32cut.push_back("0.64"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.64}{#varepsilon_{B} = 3%, #varepsilon_{S} = 61%}"); WPfileLabel.push_back("WP80X_800to1000_3pEffBkg_WP76X_1pEffBkg");
-    WPtau32cut.push_back("0.79"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.79}{#varepsilon_{B} = 10%, #varepsilon_{S} = 79%}"); WPfileLabel.push_back("WP80X_800to1000_10pEffBkg_WP76X_3pEffBkg");
+    //WPtau32cut.push_back("0.40"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.40}{#varepsilon_{B} = 0.1%, #varepsilon_{S} = 14%}"); WPfileLabel.push_back("WP80X_800to1000_0p1EffBkg");
+    //WPtau32cut.push_back("0.46"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.46}{#varepsilon_{B} = 0.3%, #varepsilon_{S} = 25%}"); WPfileLabel.push_back("WP80X_800to1000_0p3EffBkg_WP76X_0p1EffBkg");
+    //WPtau32cut.push_back("0.54"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.54}{#varepsilon_{B} = 1%, #varepsilon_{S} = 43%}"); WPfileLabel.push_back("WP80X_800to1000_1pEffBkg_WP76X_0p3EffBkg");
+    WPtau32cut.push_back("0.65"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.65}{#varepsilon_{B} = 3%, #varepsilon_{S} = 61%}"); WPfileLabel.push_back("WP80X_800to1000_3pEffBkg_WP76X_1pEffBkg");
+    WPtau32cut.push_back("0.80"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.80}{#varepsilon_{B} = 10%, #varepsilon_{S} = 79%}"); WPfileLabel.push_back("WP80X_800to1000_10pEffBkg_WP76X_3pEffBkg");
 
     for (unsigned int j=0; j< xVars.size(); j++){
       for (unsigned int k=0; k<WPtau32cut.size(); k++)	plotter(file_names[i], pt_cutsLow[i], pt_cutsHigh[i], extraCut[i], samplePaveLabel[i], xVars[j], xVars_pretty[j], nbinsx[j], xmin[j], xmax[j], WPtau32cut[k], WPlabel[k], WPfileLabel[k], 1);
