@@ -1,8 +1,7 @@
-// ** Edit top-tag window if it has changed
-// void run(string dataset_shortname = "none", string savelabel = "", bool runKinematic=false, bool runAntiTag=true, bool runbkgdEst=true, bool ttreweight=false   )
-// root[] .L LoopTreeAllHad_V5.cpp++
+// root[] .L LoopTreeAllHad_TreeV5_Ana.cpp++
 // root[] run("BCD","20161206addHist",true,true,false,false)  // dataset, savelabel, runKinematic, runAntiTag, runbkgdEst, ttreweight
-
+// void run(string dataset_shortname = "none", string savelabel = "", bool runKinematic=false, bool runAntiTag=true, bool runbkgdEst=true, bool ttreweight=false   )
+// SEE https://twiki.cern.ch/twiki/bin/view/CMS/B2GZprimeAllHadronicBoostedRunIIDetails2016 for full instructions
 
 #include <vector>
 #include <algorithm>
@@ -37,7 +36,6 @@
 #include "BTagCalibrationStandalone.h"
 
 // --- Function Declaration
-// vector<string>  makeFileList  (string);
 void  looptree_trig (string, string, string, string, float, float, float);
 bool  applySF       (bool, float, float);
 void  run1file      (string, bool, bool, bool, string);
@@ -75,8 +73,9 @@ void  looptree(
         bool verbose_
         );
 
+
 // --- Analysis
-void run(string dataset_shortname = "none", string savelabel = "", bool runKinematic=false, bool runAntiTag=true, bool runbkgdEst=true, bool ttreweight=false, string s_btagWP="M"   )
+void run(string dataset_shortname = "none", string savelabel = "", bool runKinematic=false, bool runAntiTag=true, bool runbkgdEst=true, bool ttreweight=false, bool runSystematics=false, string s_btagWP="M"   )
 {  
   std::size_t foundB     = dataset_shortname.find( "B"     );
   std::size_t foundC     = dataset_shortname.find( "C"     );
@@ -208,7 +207,6 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_QCD_HT1500to2000_RunIISummer16MiniAODv2_ext1.root");                                        file_type.push_back(1);  
     file_name_tree.push_back("b2gtreeV5_QCD_HT2000toInf_RunIISummer16MiniAODv2_ext1.root");                                         file_type.push_back(1);  
 
-
   }
     //--- QCD2 pt binned
   if ( foundQ2   !=std::string::npos ){ 
@@ -248,7 +246,9 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_orig_and_backup_missing2.root");   file_type.push_back(2);     
   }
   //--- ZPrime 
-  if ( foundZP   !=std::string::npos ){                  
+  if ( foundZP   !=std::string::npos ){  
+    
+    // narrow                
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
@@ -257,9 +257,10 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3500_W-35_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    // file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-45_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-45_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-50_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     
+    // wide
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-125_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-150_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
@@ -271,6 +272,13 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-450_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
 
+    // very wide
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-600_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-1200_RunIISummer16MiniAODv2.root");                file_type.push_back(3); 
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-1500_RunIISummer16MiniAODv2.root");                file_type.push_back(3); 
+
+    // amcatnlo
     // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-1000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
     // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-2000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
     // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-3000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
@@ -297,17 +305,19 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
   }
 
+  // ---- run options ---- 
   bool isFrozen            = true   ;
   bool do_PUreweighting    = true   ;
   bool do_HTreweighting    = false  ;
-  // ---- SD mass cut 
+ 
+  // ---- SD mass cut ---- 
   float ttagSDwindowLo_CHS = 105. ;  
   float ttagSDwindowHi_CHS = 220. ;
 
   float ttagSDwindowLo_PUP = 105. ;  
   float ttagSDwindowHi_PUP = 210. ;
   
-  // ---- Tau32 working point
+  // ---- Tau32 working point ----
   vector<double> taucut;
   vector<string> wplabel;
   // taucut.push_back(0.80);    wplabel.push_back("A");       
@@ -315,26 +325,14 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
   // taucut.push_back(0.54);    wplabel.push_back("C");       
   // taucut.push_back(0.46);    wplabel.push_back("D");       
 
-  // Workign points PUPPI: mass (105,210)
-  // WP A : tau32 < 0.80 
-  // WP B : tau32 < 0.65 
-  // WP C : tau32 < 0.54 
-  // WP D : tau32 < 0.46 
-
-  // My workign points PUPPI: mass (105,240)
-  // WP E : tau32 < 0.80 
-  // WP F : tau32 < 0.65 
-  // WP G : tau32 < 0.54 
-  // WP H : tau32 < 0.46 
-
-  // ---- Jet pT cut
+  // ---- Jet pT cut ----
   vector<double> ptcut;
   ptcut.push_back(400);
   // ptcut.push_back(450);
   // ptcut.push_back(500);
   // ptcut.push_back(600);
 
-  // ---- HT cut 
+  // ---- HT cut ---- 
   vector<double> htcut;
   // htcut.push_back(0);
   // htcut.push_back(850);
@@ -342,33 +340,35 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
   htcut.push_back(950);
   // htcut.push_back(1000);
 
-  // ---- Sideband definition - PUPPI SD mass from alt1 -> ttagSDwindowLo_PUP
+  // ---- Sideband definition - PUPPI SD mass from alt1 -> ttagSDwindowLo_PUP ----
   vector<double> alt1;
   alt1.push_back(40);
   // alt1.push_back(60);
   // alt1.push_back(80);
 
-  // ---- experiment with a different sideband definition - PUPPI SD mass from ttagSDwindowHi_PUP -> alt2
+  // ---- experiment with a different sideband definition - PUPPI SD mass from ttagSDwindowHi_PUP -> alt2 ----
   vector<double> alt2;
   // alt2.push_back(240);
   alt2.push_back(260);
   // alt2.push_back(280);
 
-  // ---- Select which systematic variations to run
+  // ---- Select which systematic variations to run ----
   vector<int> vsyst;
   vsyst.push_back( 0) ;  //systType = "nom"     ;  
-  vsyst.push_back( 1) ;  //systType = "jec_up"  ;
-  vsyst.push_back(-1) ;  //systType = "jec_dn"  ;
-  vsyst.push_back( 2) ;  //systType = "jer_up"  ;
-  vsyst.push_back(-2) ;  //systType = "jer_dn"  ;
-  vsyst.push_back( 3) ;  //systType = "bTag_up" ;
-  vsyst.push_back(-3) ;  //systType = "bTag_dn" ;
-  vsyst.push_back( 4) ;  //systType = "pdf_up"  ;
-  vsyst.push_back(-4) ;  //systType = "pdf_dn"  ;
-  vsyst.push_back( 5) ;  //systType = "q2_up"   ;
-  vsyst.push_back(-5) ;  //systType = "q2_dn"   ;
-  vsyst.push_back( 6) ;  //systType = "PU_up"   ;
-  vsyst.push_back(-6) ;  //systType = "PU_dn"   ;
+  if (runSystematics){
+    vsyst.push_back( 1) ;  //systType = "jec_up"  ;
+    vsyst.push_back(-1) ;  //systType = "jec_dn"  ;
+    vsyst.push_back( 2) ;  //systType = "jer_up"  ;
+    vsyst.push_back(-2) ;  //systType = "jer_dn"  ;
+    vsyst.push_back( 3) ;  //systType = "bTag_up" ;
+    vsyst.push_back(-3) ;  //systType = "bTag_dn" ;
+    vsyst.push_back( 4) ;  //systType = "pdf_up"  ;
+    vsyst.push_back(-4) ;  //systType = "pdf_dn"  ;
+    vsyst.push_back( 5) ;  //systType = "q2_up"   ;
+    vsyst.push_back(-5) ;  //systType = "q2_dn"   ;
+    vsyst.push_back( 6) ;  //systType = "PU_up"   ;
+    vsyst.push_back(-6) ;  //systType = "PU_dn"   ;
+  }
   // vsyst.push_back( 7) ;  //systType = "JMRsmear_wjet_nom"   ;
 
   // This is now an input to the function
@@ -385,25 +385,62 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     for (unsigned int  itau=0;  itau < taucut.size();  itau++ ){
     for (unsigned int   ipt=0;   ipt <  ptcut.size();   ipt++ ){
     for (unsigned int   iht=0;   iht <  htcut.size();   iht++ ){
-    // for (unsigned int    ib=0;    ib < btagWP.size();    ib++ ){
+    // for (unsigned int    ib=0;    ib < btagWP.size();    ib++ ){ // ->Now an option
 
         // pick the right mistag file
-      //20160420_ht1000_pt500_WP
-        string mistag_file_data_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160512full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
-        string mistag_file_data_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160512full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
-        string mistag_file_data_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160512full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
+   
+        string mistag_file_data_0btag      = "";
+        string mistag_file_data_1btag      = "";
+        string mistag_file_data_2btag      = "";
+        string mistag_file_data_0btag_ttw  = "";
+        string mistag_file_data_1btag_ttw  = "";
+        string mistag_file_data_2btag_ttw  = "";
+        string mistag_file_QCD1_0btag      = "";
+        string mistag_file_QCD1_1btag      = "";
+        string mistag_file_QCD1_2btag      = "";
+        string mistag_file_QCD2_0btag      = "";
+        string mistag_file_QCD2_1btag      = "";
+        string mistag_file_QCD2_2btag      = "";
 
-        string mistag_file_data_0btag_ttw   = folder_mistag + "MistagRate_"+"0btag_"    +"20160512full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
-        string mistag_file_data_1btag_ttw   = folder_mistag + "MistagRate_"+"1btagtail_"+"20160512full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
-        string mistag_file_data_2btag_ttw   = folder_mistag + "MistagRate_"+"2btag_"    +"20160512full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
+        if (ptcut[ipt]==400 && htcut[iht] == 950){
+// 20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw
+          mistag_file_data_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
 
-        string mistag_file_QCD1_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
-        string mistag_file_QCD1_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
-        string mistag_file_QCD1_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+          mistag_file_data_0btag_ttw   = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
+          mistag_file_data_1btag_ttw   = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
+          mistag_file_data_2btag_ttw   = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
 
-        string mistag_file_QCD2_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
-        string mistag_file_QCD2_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ;
-        string mistag_file_QCD2_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
+          mistag_file_QCD1_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+          mistag_file_QCD1_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+          mistag_file_QCD1_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+
+          mistag_file_QCD2_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
+          mistag_file_QCD2_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ;
+          mistag_file_QCD2_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
+        }
+        else if (ptcut[ipt]==500 && htcut[iht] == 1000){
+
+          mistag_file_data_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
+
+          mistag_file_data_0btag_ttw   = folder_mistag + "MistagRate_"+"0btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
+          mistag_file_data_1btag_ttw   = folder_mistag + "MistagRate_"+"1btagtail_"+"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
+          mistag_file_data_2btag_ttw   = folder_mistag + "MistagRate_"+"2btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
+
+          mistag_file_QCD1_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+          mistag_file_QCD1_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+          mistag_file_QCD1_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+
+          mistag_file_QCD2_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
+          mistag_file_QCD2_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ;
+          mistag_file_QCD2_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
+        }
+        else{
+          cout<<"Mistag File does not exist"<<endl;
+        }
 
         string mistag_file_0btag;
         string mistag_file_1btag;
@@ -440,10 +477,21 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
 
         // Pick the right modmass file
 
-        // histsModMass_20160512full_ht950_pt400_WPB_alt40_alt260_bM_PUw_noTTw_nom_b2gtreeV5_JetHT_all.root
-        string modmass_file_data  = folder_modMass+ "histsModMass_20160512full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_noTTw_nom_b2gtreeV5_JetHT_all.root";
-        string modmass_file_QCD1  = folder_modMass+ "histsModMass_20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_noTTw_nom_b2gtreeV5_QCD_HTscaled.root";
-        string modmass_file_QCD2  = folder_modMass+ "histsModMass_20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_noTTw_nom_b2gtreeV5_QCD_Ptscaled.root";
+        string modmass_file_data = "";
+        string modmass_file_QCD1 = "";
+        string modmass_file_QCD2 = "";
+
+        // if (ptcut[ipt]==400 && htcut[iht] == 950){
+        modmass_file_data  = folder_modMass+ "histsModMass_20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_TTw_nom_b2gtreeV5_JetHT_all.root";
+        modmass_file_QCD1  = folder_modMass+ "histsModMass_20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_TTw_nom_b2gtreeV5_QCD_HTscaled.root";
+        modmass_file_QCD2  = folder_modMass+ "histsModMass_20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_TTw_nom_b2gtreeV5_QCD_Ptscaled.root";
+        // }
+        if (ptcut[ipt]==500 && htcut[iht] == 1000){
+          modmass_file_data  = folder_modMass+ "histsModMass_20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_noTTw_nom_b2gtreeV5_JetHT_all.root";
+          modmass_file_QCD1  = folder_modMass+ "histsModMass_20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_noTTw_nom_b2gtreeV5_QCD_HTscaled.root";
+          modmass_file_QCD2  = folder_modMass+ "histsModMass_20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_noTTw_nom_b2gtreeV5_QCD_Ptscaled.root";
+        }
+
         string modmass_file_QCD   = "";
 
         string modmass_file;
@@ -470,7 +518,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
                 ttagSDwindowLo_PUP, ttagSDwindowHi_PUP, taucut[itau] ,   //ttagTau32cut_PUP,
                 alt1[ia1], alt2[ia1],
                 wplabel[itau]        , // label the top tagging working point
-                s_btagWP             , //btagWP[ib]           , // btag working point: L for Loose, M for medium
+                s_btagWP             , // btag working point: L for Loose, M for medium  btagWP[ib] 
                 savelabel            , // string insert in savefile name
                 file_type[i]         , // int: 0=data, 1=QCDMC, 2=ttbarMC, 3= ZprimeMC
                 isFrozen             , // bool is Frozen?
@@ -480,7 +528,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
                 do_PUreweighting     , // bool do PUreweighting    ?
                 do_HTreweighting     , // bool do HTreweighting    ?
                 ttreweight           , // bool do ttbarReweighting ?
-                vsyst[isyst]                , // int Systematics: 0 = nom , 1/-1 = jec_up/dn , 2/-2 = jer_up/dn , 3/-3 = btag_up/btag , 4/-4 = pdf_up/dn , 5/-5 = q2_up/dn , 6/-6 = PU_up/dn 
+                vsyst[isyst]         , // int Systematics: 0 = nom , 1/-1 = jec_up/dn , 2/-2 = jer_up/dn , 3/-3 = btag_up/btag , 4/-4 = pdf_up/dn , 5/-5 = q2_up/dn , 6/-6 = PU_up/dn 
                 -1                   , // int Nevents (set to -1 for all events)
                 false                  // bool verbose
             );
@@ -495,188 +543,6 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
 }// end run()
 
 
-
-
-
-
-void looptree_trig(
-          string input_folder, 
-          string input_file, 
-          string date, 
-          string output_folder, 
-          float topTagSDwindowLo, 
-          float topTagSDwindowHi, 
-          float topTagTau32cut)
-{
-  
-  string file_name =  input_folder+input_file;
-  TFile *F1   = new TFile(file_name.c_str() );
-  cout << file_name <<endl;
-
-  // Get Tree entries                                                                                                                        
-  Float_t Jet0SDmass         ;
-  Float_t Jet1SDmass         ;
-  Float_t Jet0Mass           ;
-  Float_t Jet1Mass           ;
-  Float_t Jet0Pt             ;
-  Float_t Jet1Pt             ;
-  Float_t Jet0Tau32          ;
-  Float_t Jet1Tau32          ;
-  std::string *AllHadTrigAcceptBits = new std::string;
-
-  TTree *T1    = (TTree*)  F1     ->Get("ana/TreeAllHad");
-
-  double treeNentries = T1->GetEntries();
-  cout<<"treeNentries = "<< treeNentries <<endl;
-
-  T1->SetBranchAddress("Jet0SDmass"                                      , & Jet0SDmass                                    );
-  T1->SetBranchAddress("Jet1SDmass"                                      , & Jet1SDmass                                    );
-  T1->SetBranchAddress("Jet0Mass"                                        , & Jet0Mass                                      );
-  T1->SetBranchAddress("Jet1Mass"                                        , & Jet1Mass                                      );
-  T1->SetBranchAddress("Jet0Pt"                                          , & Jet0Pt                                        );
-  T1->SetBranchAddress("Jet1Pt"                                          , & Jet1Pt                                        );
-  T1->SetBranchAddress("Jet0Tau32"                                       , & Jet0Tau32                                     );
-  T1->SetBranchAddress("Jet1Tau32"                                       , & Jet1Tau32                                     );
-  T1->SetBranchAddress("AllHadTrigAcceptBits"                            , & AllHadTrigAcceptBits                          );
-
-  //ignore other branches                                                                                                                    
-  T1->SetBranchStatus("*",0);
-  T1->SetBranchStatus("Jet0SDmass",1)          ;
-  T1->SetBranchStatus("Jet1SDmass",1)          ;
-  T1->SetBranchStatus("Jet0Mass",1)            ;
-  T1->SetBranchStatus("Jet1Mass",1)            ;
-  T1->SetBranchStatus("Jet0Pt",1)              ;
-  T1->SetBranchStatus("Jet1Pt",1)              ;
-  T1->SetBranchStatus("Jet0Tau32",1)           ;
-  T1->SetBranchStatus("Jet1Tau32",1)           ;
-  T1->SetBranchStatus("AllHadTrigAcceptBits",1);
-
-  vector <string> xAxisLabels;
-  vector <string> cutCats;
-
-  vector <string> numLabels;
-  vector <string> numOrLabels;
-  vector <int> numTrig;
-  vector <int> numOrTrig;
-
-  xAxisLabels.push_back("sumJetPt");
-  xAxisLabels.push_back("Jet0Pt");
-  xAxisLabels.push_back("Jet0Mass");
-
-  cutCats.push_back("_");
-  cutCats.push_back("_2tagMass_");
-  cutCats.push_back("_2tagMass_2tagTau32_");
-
-  numLabels.push_back("PFHT700TrimMass50"); numTrig.push_back(13);
-  numLabels.push_back("PFHT800"); numTrig.push_back(6);
-  numLabels.push_back("PFHT900"); numTrig.push_back(7);
-
-  numOrLabels.push_back("PFJet450"); numOrTrig.push_back(10);
-  numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(12);
-  
-  //denominator histograms
-  TH1D *histos_passPFHT650denom[xAxisLabels.size()][cutCats.size()];
-
-  //numerator histograms
-  TH1D *histos_num[xAxisLabels.size()][cutCats.size()][numLabels.size()];
-  TH1D *histos_numOr[xAxisLabels.size()][cutCats.size()][numLabels.size()][numOrLabels.size()];
-
-  //naming histograms
-  for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-    for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-      histos_passPFHT650denom[i_xAxisLabels][i_cutCats] = new TH1D(Form("h_passPFHT650denom%s%s",cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
-      for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-        histos_num[i_xAxisLabels][i_cutCats][i_numLabels] = new TH1D(Form("h_pass%snumPFHT650denom%s%s",numLabels[i_numLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
-        for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels] = new TH1D(Form("h_pass%sor%snumPFHT650denom%s%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
-      }
-    }
-  }
-
-  for (int i=0; i<treeNentries; i++ ){ //entries                                                                                                  
-    if (i%10000==0) cout<<i<<"  / "<<treeNentries<<endl;
-
-    T1->GetEntry(i);
-
-    // Top-tagging bools                                                                                                                     
-    bool j0_tag_mass  = Jet0SDmass > topTagSDwindowLo && Jet0SDmass < topTagSDwindowHi;
-    bool j1_tag_mass  = Jet1SDmass > topTagSDwindowLo && Jet1SDmass < topTagSDwindowHi;
-    bool j0_tag_tau32 = Jet0Tau32 < topTagTau32cut;
-    bool j1_tag_tau32 = Jet1Tau32 < topTagTau32cut;
-    bool jets_tag_mass = j0_tag_mass && j1_tag_mass;
-    bool jets_top_tag = jets_tag_mass && j0_tag_tau32 && j1_tag_tau32;
-
-    float sumJetPt = Jet0Pt + Jet1Pt;
-    string trigBitsString = AllHadTrigAcceptBits->c_str();
-    int trigBits = std::stoi(trigBitsString,nullptr,2);
-
-    vector <float> xAxisVars;
-    vector <bool> cuts;
-
-    xAxisVars.push_back(sumJetPt);
-    xAxisVars.push_back(Jet0Pt);
-    xAxisVars.push_back(Jet0Mass);
-
-    cuts.push_back(1);
-    cuts.push_back(jets_tag_mass);
-    cuts.push_back(jets_top_tag);
-
-    //make sure vector lengths are consistent
-    if (xAxisVars.size() != xAxisLabels.size()){
-      break;
-      cout << "Incorrect length of x axis variable vector!" << endl;
-    }
-    if (cuts.size() != cutCats.size()){
-      break;
-      cout << "Incorrect length of cuts vector!" << endl;
-    }
-
-    //filling histograms
-    for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-      for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-        if (cuts[i_cutCats] && ((trigBits>>5)&1)){
-          histos_passPFHT650denom[i_xAxisLabels][i_cutCats]->Fill(xAxisVars[i_xAxisLabels]);
-          for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-            if ((trigBits>>numTrig[i_numLabels])&1) histos_num[i_xAxisLabels][i_cutCats][i_numLabels]->Fill(xAxisVars[i_xAxisLabels]);
-            for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
-              if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels]->Fill(xAxisVars[i_xAxisLabels]);
-            }
-          }
-        }
-      }
-    }
-    
-    xAxisVars.clear(); 
-    cuts.clear();
-  }
-
-  string outName = output_folder+"outRunTrigEff_"+date+"_"+input_file;
-  cout << outName << endl;
-  TFile * Out = new TFile(outName.c_str(),"RECREATE");
-  Out->cd();
-
-  //writing histograms
-  for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
-    for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
-      histos_passPFHT650denom[i_xAxisLabels][i_cutCats]->Write();
-      for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
-        histos_num[i_xAxisLabels][i_cutCats][i_numLabels]->Write();
-        for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels]->Write();
-      }
-    }
-  }
-  
-  Out->Close();
-}
-
-
-
-//--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
 
 
 void looptree(
@@ -1149,6 +1015,19 @@ void looptree(
   Float_t Jet1CEF                                   ;
   Float_t Jet1MF                                    ;
   Float_t Jet1Mult                                  ;
+
+
+  Float_t Jet1PuppiCHF                                   ;
+  Float_t Jet1PuppiNHF                                   ;
+  Float_t Jet1PuppiCM                                    ;
+  Float_t Jet1PuppiNM                                    ;
+  Float_t Jet1PuppiNEF                                   ;
+  Float_t Jet1PuppiCEF                                   ;
+  Float_t Jet1PuppiMF                                    ;
+  Float_t Jet1PuppiMult                                  ;
+
+
+
   Float_t Jet1MassCorrFactor                        ;
   Float_t Jet1MassCorrFactorUp                      ;
   Float_t Jet1MassCorrFactorDn                      ;
@@ -1624,6 +1503,17 @@ void looptree(
   T1->SetBranchAddress("Jet1CEF"                               , & Jet1CEF                             );                                
   T1->SetBranchAddress("Jet1MF"                                , & Jet1MF                              );                               
   T1->SetBranchAddress("Jet1Mult"                              , & Jet1Mult                            );                                 
+  
+  T1->SetBranchAddress("Jet1PuppiCHF"                               , & Jet1PuppiCHF                             );                                
+  T1->SetBranchAddress("Jet1PuppiNHF"                               , & Jet1PuppiNHF                             );                                
+  T1->SetBranchAddress("Jet1PuppiCM"                                , & Jet1PuppiCM                              );                               
+  T1->SetBranchAddress("Jet1PuppiNM"                                , & Jet1PuppiNM                              );                               
+  T1->SetBranchAddress("Jet1PuppiNEF"                               , & Jet1PuppiNEF                             );                                
+  T1->SetBranchAddress("Jet1PuppiCEF"                               , & Jet1PuppiCEF                             );                                
+  T1->SetBranchAddress("Jet1PuppiMF"                                , & Jet1PuppiMF                              );                               
+  T1->SetBranchAddress("Jet1PuppiMult"                              , & Jet1PuppiMult                            );  
+
+
   T1->SetBranchAddress("Jet1MassCorrFactor"                    , & Jet1MassCorrFactor                  );                                           
   T1->SetBranchAddress("Jet1MassCorrFactorUp"                  , & Jet1MassCorrFactorUp                );                                             
   T1->SetBranchAddress("Jet1MassCorrFactorDn"                  , & Jet1MassCorrFactorDn                );                                             
@@ -2309,6 +2199,18 @@ void looptree(
   TH1D * h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag       ;            
   TH1D * h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu       ;            
 
+  
+  TH1D * h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag            ;     
+  TH1D * h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag            ;     
+  TH1D * h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag            ;     
+  TH1D * h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclu            ;  
+  
+  TH1D * h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag            ;     
+  TH1D * h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag            ;     
+  TH1D * h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag            ;     
+  TH1D * h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclu            ;  
+
+
 
   if (run_bkgdest){
 
@@ -2376,7 +2278,19 @@ void looptree(
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag         = (TH1D *) Fmistag2->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
 
-    // mistag rate for PUPPI tag definition
+
+    h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag");
+    h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag         = (TH1D *) Fmistag1->Get("h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag");
+    h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag         = (TH1D *) Fmistag2->Get("h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag");
+    h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclusive");
+
+    h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag");
+    h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag         = (TH1D *) Fmistag1->Get("h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag");
+    h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag         = (TH1D *) Fmistag2->Get("h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag");
+    h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclusive");
+
+
+    // mistag rate for alt PUPPI tag definition
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     = (TH1D *) Fmistag1->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
@@ -2392,7 +2306,7 @@ void looptree(
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
 
-    // mistag rate for PUPPI tag definition
+    // mistag rate for alt2 PUPPI tag definition
     h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     = (TH1D *) Fmistag1->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
@@ -2669,19 +2583,182 @@ void looptree(
   cout<<"make new histograms"<<endl;
 
   TH1D *  h_CutFlow                                                    = new TH1D("h_CutFlow"              , "",  25,    0,  25); 
-  TH1D *  h_EventWeight                                                = new TH1D("h_EventWeight"          , "", 500, -100, 200);
+  TH1D *  h_EventWeight                                                = new TH1D("h_EventWeight"          , "", 500, -2, 20);
+  
   TH1D *  h_BtagCategoriesPreSF                                        = new TH1D("h_BtagCategoriesPreSF"  , "", 3, 0, 3);
   TH1D *  h_BtagCategoriesPostSF                                       = new TH1D("h_BtagCategoriesPostSF" , "", 3, 0, 3);
-
   TH1D *  h_DoubleTopTag_BtagCategoriesPreSF                           = new TH1D("h_DoubleTopTag_BtagCategoriesPreSF"  , "", 3, 0, 3);
   TH1D *  h_DoubleTopTag_BtagCategoriesPostSF                          = new TH1D("h_DoubleTopTag_BtagCategoriesPostSF" , "", 3, 0, 3);
   TH1D *  h_DoublePupTag_BtagCategoriesPreSF                           = new TH1D("h_DoublePupTag_BtagCategoriesPreSF"  , "", 3, 0, 3);
   TH1D *  h_DoublePupTag_BtagCategoriesPostSF                          = new TH1D("h_DoublePupTag_BtagCategoriesPostSF" , "", 3, 0, 3);
 
 
+  TH1D *  h_BtagCategoriesPuppiPreSF                                        = new TH1D("h_BtagCategoriesPuppiPreSF"               , "", 3, 0, 3);
+  TH1D *  h_BtagCategoriesPuppiPostSF                                       = new TH1D("h_BtagCategoriesPuppiPostSF"              , "", 3, 0, 3);
+  TH1D *  h_DoublePupTag_BtagCategoriesPuppiPreSF                           = new TH1D("h_DoublePupTag_BtagCategoriesPuppiPreSF"  , "", 3, 0, 3);
+  TH1D *  h_DoublePupTag_BtagCategoriesPuppiPostSF                          = new TH1D("h_DoublePupTag_BtagCategoriesPuppiPostSF" , "", 3, 0, 3);
+        
+
+
   // --- Kinematic plots
 
-  // Measure b-tag efficiency 
+
+
+  // event                        
+  TH1D *  h_DijetMass_dRapIn                              = new TH1D( "h_DijetMass_dRapIn"                            , "",   400,      0,     8000  ); 
+  TH1D *  h_DijetMass_dRapLo                              = new TH1D( "h_DijetMass_dRapLo"                            , "",   400,      0,     8000  ); 
+  TH1D *  h_DijetMass_dRapHi                              = new TH1D( "h_DijetMass_dRapHi"                            , "",   400,      0,     8000  ); 
+    
+  TH1D *  h_DijetMassPlusNeighbor_dRapIn                  = new TH1D( "h_DijetMassPlusNeighbor_dRapIn"                , "",   400,      0,     8000  ); 
+  TH1D *  h_DijetMassPlusNeighbor_dRapLo                  = new TH1D( "h_DijetMassPlusNeighbor_dRapLo"                , "",   400,      0,     8000  ); 
+  TH1D *  h_DijetMassPlusNeighbor_dRapHi                  = new TH1D( "h_DijetMassPlusNeighbor_dRapHi"                , "",   400,      0,     8000  ); 
+  
+
+  TH1D *  h_DeltaRap                                      = new TH1D( "h_DeltaRap"                                    , "",   500,      0,        5  ); 
+  TH1D *  h_DeltaRap_mTTgt1                               = new TH1D( "h_DeltaRap_mTTgt1"                             , "",   500,      0,        5  ); 
+  TH1D *  h_DeltaRap_mTTgt2                               = new TH1D( "h_DeltaRap_mTTgt2"                             , "",   500,      0,        5  ); 
+  TH1D *  h_DeltaRap_mTTgt3                               = new TH1D( "h_DeltaRap_mTTgt3"                             , "",   500,      0,        5  ); 
+  TH1D *  h_DeltaPhi                                      = new TH1D( "h_DeltaPhi"                                    , "",   400,      2,      3.2  ); 
+  TH1D *  h_DeltaPhi_PreCut                               = new TH1D( "h_DeltaPhi_PreCut"                             , "",   400,      0,      3.2  ); 
+  TH1D *  h_HT                                            = new TH1D( "h_HT"                                          , "",   600,      0,    12000  ); 
+  TH1D *  h_MET                                           = new TH1D( "h_MET"                                         , "",   400,      0,     4000  ); 
+  TH1D *  h_METphi                                        = new TH1D( "h_METphi"                                      , "",   400,   -3.2,     3.2   ); 
+  TH1D *  h_Nvtx                                          = new TH1D( "h_Nvtx"                                        , "",   100,      0,      100  ); 
+ 
+  // Jet0
+  TH1D *  h_Jet0P                                         = new TH1D( "h_Jet0P"                                       , "",   700,      0,     7000  ); 
+  TH1D *  h_Jet0Pt                                        = new TH1D( "h_Jet0Pt"                                      , "",   500,      0,     5000  ); 
+  TH1D *  h_Jet0Phi                                       = new TH1D( "h_Jet0Phi"                                     , "",   400,   -3.2,      3.2  ); 
+  TH1D *  h_Jet0Rap                                       = new TH1D( "h_Jet0Rap"                                     , "",   400,     -3,        3  ); 
+  TH1D *  h_Jet0sdmass                                    = new TH1D( "h_Jet0sdmass"                                  , "",   400,      0,      400  ); 
+  TH1D *  h_Jet0Tau1                                      = new TH1D( "h_Jet0Tau1"                                    , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0Tau2                                      = new TH1D( "h_Jet0Tau2"                                    , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0Tau3                                      = new TH1D( "h_Jet0Tau3"                                    , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0Tau4                                      = new TH1D( "h_Jet0Tau4"                                    , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0SDmaxbdisc                                = new TH1D( "h_Jet0SDmaxbdisc"                              , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0SDsubjet0pt                               = new TH1D( "h_Jet0SDsubjet0pt"                             , "",   800,      0,     4000  ); 
+  TH1D *  h_Jet0SDsubjet0mass                             = new TH1D( "h_Jet0SDsubjet0mass"                           , "",   800,      0,      800  ); 
+  TH1D *  h_Jet0SDsubjet0tau1                             = new TH1D( "h_Jet0SDsubjet0tau1"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0SDsubjet0tau2                             = new TH1D( "h_Jet0SDsubjet0tau2"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0SDsubjet0tau3                             = new TH1D( "h_Jet0SDsubjet0tau3"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0SDsubjet0bdisc                            = new TH1D( "h_Jet0SDsubjet0bdisc"                          , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0SDsubjet1pt                               = new TH1D( "h_Jet0SDsubjet1pt"                             , "",   800,      0,     4000  ); 
+  TH1D *  h_Jet0SDsubjet1mass                             = new TH1D( "h_Jet0SDsubjet1mass"                           , "",   800,      0,      800  ); 
+  TH1D *  h_Jet0SDsubjet1tau1                             = new TH1D( "h_Jet0SDsubjet1tau1"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0SDsubjet1tau2                             = new TH1D( "h_Jet0SDsubjet1tau2"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0SDsubjet1tau3                             = new TH1D( "h_Jet0SDsubjet1tau3"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0SDsubjet1bdisc                            = new TH1D( "h_Jet0SDsubjet1bdisc"                          , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiPt                                   = new TH1D( "h_Jet0PuppiPt"                                 , "",   400,      0,     4000  ); 
+  TH1D *  h_Jet0PuppiMass                                 = new TH1D( "h_Jet0PuppiMass"                               , "",   400,      0,      300  ); 
+  TH1D *  h_Jet0PuppiSDpt                                 = new TH1D( "h_Jet0PuppiSDpt"                               , "",   400,      0,     4000  ); 
+  TH1D *  h_Jet0PuppiTau1                                 = new TH1D( "h_Jet0PuppiTau1"                               , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiTau2                                 = new TH1D( "h_Jet0PuppiTau2"                               , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiTau3                                 = new TH1D( "h_Jet0PuppiTau3"                               , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiTau4                                 = new TH1D( "h_Jet0PuppiTau4"                               , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiTau32                                = new TH1D( "h_Jet0PuppiTau32"                              , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiTau21                                = new TH1D( "h_Jet0PuppiTau21"                              , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDmaxbdisc                           = new TH1D( "h_Jet0PuppiSDmaxbdisc"                         , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet0pt                          = new TH1D( "h_Jet0PuppiSDsubjet0pt"                        , "",   400,      0,     4000  ); 
+  TH1D *  h_Jet0PuppiSDsubjet0mass                        = new TH1D( "h_Jet0PuppiSDsubjet0mass"                      , "",   400,      0,      800  ); 
+  TH1D *  h_Jet0PuppiSDsubjet0tau1                        = new TH1D( "h_Jet0PuppiSDsubjet0tau1"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet0tau2                        = new TH1D( "h_Jet0PuppiSDsubjet0tau2"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet0tau3                        = new TH1D( "h_Jet0PuppiSDsubjet0tau3"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet0tau21                       = new TH1D( "h_Jet0PuppiSDsubjet0tau21"                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet0bdisc                       = new TH1D( "h_Jet0PuppiSDsubjet0bdisc"                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet1pt                          = new TH1D( "h_Jet0PuppiSDsubjet1pt"                        , "",   800,      0,     4000  ); 
+  TH1D *  h_Jet0PuppiSDsubjet1mass                        = new TH1D( "h_Jet0PuppiSDsubjet1mass"                      , "",   800,      0,      800  ); 
+  TH1D *  h_Jet0PuppiSDsubjet1tau1                        = new TH1D( "h_Jet0PuppiSDsubjet1tau1"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet1tau2                        = new TH1D( "h_Jet0PuppiSDsubjet1tau2"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet1tau3                        = new TH1D( "h_Jet0PuppiSDsubjet1tau3"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet1tau21                       = new TH1D( "h_Jet0PuppiSDsubjet1tau21"                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiSDsubjet1bdisc                       = new TH1D( "h_Jet0PuppiSDsubjet1bdisc"                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0CHF                                       = new TH1D( "h_Jet0CHF"                                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0NHF                                       = new TH1D( "h_Jet0NHF"                                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0CM                                        = new TH1D( "h_Jet0CM"                                      , "",   200,      0,      200  ); 
+  TH1D *  h_Jet0NM                                        = new TH1D( "h_Jet0NM"                                      , "",   200,      0,      200  ); 
+  TH1D *  h_Jet0NEF                                       = new TH1D( "h_Jet0NEF"                                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0CEF                                       = new TH1D( "h_Jet0CEF"                                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0MF                                        = new TH1D( "h_Jet0MF"                                      , "",    10,      0,       10  ); 
+  TH1D *  h_Jet0Mult                                      = new TH1D( "h_Jet0Mult"                                    , "",   400,      0,      400  ); 
+  TH1D *  h_Jet0PuppiCHF                                  = new TH1D( "h_Jet0PuppiCHF"                                , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiNHF                                  = new TH1D( "h_Jet0PuppiNHF"                                , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiCM                                   = new TH1D( "h_Jet0PuppiCM"                                 , "",   200,      0,      200  ); 
+  TH1D *  h_Jet0PuppiNM                                   = new TH1D( "h_Jet0PuppiNM"                                 , "",   200,      0,      200  ); 
+  TH1D *  h_Jet0PuppiNEF                                  = new TH1D( "h_Jet0PuppiNEF"                                , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiCEF                                  = new TH1D( "h_Jet0PuppiCEF"                                , "",   400,      0,        1  ); 
+  TH1D *  h_Jet0PuppiMF                                   = new TH1D( "h_Jet0PuppiMF"                                 , "",    10,      0,       10  ); 
+  TH1D *  h_Jet0PuppiMult                                 = new TH1D( "h_Jet0PuppiMult"                               , "",   400,      0,      400  ); 
+  TH1D *  h_Jet0puppisdmass                               = new TH1D( "h_Jet0puppisdmass"                             , "",   400,      0,      400  ); 
+  TH1D *  h_Jet0NsubjetsSDPuppi                           = new TH1D( "h_Jet0NsubjetsSDPuppi"                         , "",     3,      0,        3  ); 
+
+
+
+  TH1D *  h_Jet1P                                         = new TH1D( "h_Jet1P"                                       , "",   700,      0,     7000  ); 
+  TH1D *  h_Jet1Pt                                        = new TH1D( "h_Jet1Pt"                                      , "",   500,      0,     5000  ); 
+  TH1D *  h_Jet1Phi                                       = new TH1D( "h_Jet1Phi"                                     , "",   400,   -3.2,      3.2  ); 
+  TH1D *  h_Jet1Rap                                       = new TH1D( "h_Jet1Rap"                                     , "",   400,     -3,        3  ); 
+  TH1D *  h_Jet1sdmass                                    = new TH1D( "h_Jet1sdmass"                                  , "",   400,      0,      400  ); 
+  TH1D *  h_Jet1Tau1                                      = new TH1D( "h_Jet1Tau1"                                    , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1Tau2                                      = new TH1D( "h_Jet1Tau2"                                    , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1Tau3                                      = new TH1D( "h_Jet1Tau3"                                    , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1Tau4                                      = new TH1D( "h_Jet1Tau4"                                    , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1SDmaxbdisc                                = new TH1D( "h_Jet1SDmaxbdisc"                              , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1SDsubjet0pt                               = new TH1D( "h_Jet1SDsubjet0pt"                             , "",   800,      0,     4000  ); 
+  TH1D *  h_Jet1SDsubjet0mass                             = new TH1D( "h_Jet1SDsubjet0mass"                           , "",   800,      0,      800  ); 
+  TH1D *  h_Jet1SDsubjet0tau1                             = new TH1D( "h_Jet1SDsubjet0tau1"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1SDsubjet0tau2                             = new TH1D( "h_Jet1SDsubjet0tau2"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1SDsubjet0tau3                             = new TH1D( "h_Jet1SDsubjet0tau3"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1SDsubjet0bdisc                            = new TH1D( "h_Jet1SDsubjet0bdisc"                          , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1SDsubjet1pt                               = new TH1D( "h_Jet1SDsubjet1pt"                             , "",   800,      0,     4000  ); 
+  TH1D *  h_Jet1SDsubjet1mass                             = new TH1D( "h_Jet1SDsubjet1mass"                           , "",   800,      0,      800  ); 
+  TH1D *  h_Jet1SDsubjet1tau1                             = new TH1D( "h_Jet1SDsubjet1tau1"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1SDsubjet1tau2                             = new TH1D( "h_Jet1SDsubjet1tau2"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1SDsubjet1tau3                             = new TH1D( "h_Jet1SDsubjet1tau3"                           , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1SDsubjet1bdisc                            = new TH1D( "h_Jet1SDsubjet1bdisc"                          , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiPt                                   = new TH1D( "h_Jet1PuppiPt"                                 , "",   400,      0,     4000  ); 
+  TH1D *  h_Jet1PuppiMass                                 = new TH1D( "h_Jet1PuppiMass"                               , "",   400,      0,      300  ); 
+  TH1D *  h_Jet1PuppiSDpt                                 = new TH1D( "h_Jet1PuppiSDpt"                               , "",   400,      0,     4000  ); 
+  TH1D *  h_Jet1PuppiTau1                                 = new TH1D( "h_Jet1PuppiTau1"                               , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiTau2                                 = new TH1D( "h_Jet1PuppiTau2"                               , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiTau3                                 = new TH1D( "h_Jet1PuppiTau3"                               , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiTau4                                 = new TH1D( "h_Jet1PuppiTau4"                               , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiTau32                                = new TH1D( "h_Jet1PuppiTau32"                              , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiTau21                                = new TH1D( "h_Jet1PuppiTau21"                              , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDmaxbdisc                           = new TH1D( "h_Jet1PuppiSDmaxbdisc"                         , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet0pt                          = new TH1D( "h_Jet1PuppiSDsubjet0pt"                        , "",   400,      0,     4000  ); 
+  TH1D *  h_Jet1PuppiSDsubjet0mass                        = new TH1D( "h_Jet1PuppiSDsubjet0mass"                      , "",   400,      0,      800  ); 
+  TH1D *  h_Jet1PuppiSDsubjet0tau1                        = new TH1D( "h_Jet1PuppiSDsubjet0tau1"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet0tau2                        = new TH1D( "h_Jet1PuppiSDsubjet0tau2"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet0tau3                        = new TH1D( "h_Jet1PuppiSDsubjet0tau3"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet0tau21                       = new TH1D( "h_Jet1PuppiSDsubjet0tau21"                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet0bdisc                       = new TH1D( "h_Jet1PuppiSDsubjet0bdisc"                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet1pt                          = new TH1D( "h_Jet1PuppiSDsubjet1pt"                        , "",   800,      0,     4000  ); 
+  TH1D *  h_Jet1PuppiSDsubjet1mass                        = new TH1D( "h_Jet1PuppiSDsubjet1mass"                      , "",   800,      0,      800  ); 
+  TH1D *  h_Jet1PuppiSDsubjet1tau1                        = new TH1D( "h_Jet1PuppiSDsubjet1tau1"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet1tau2                        = new TH1D( "h_Jet1PuppiSDsubjet1tau2"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet1tau3                        = new TH1D( "h_Jet1PuppiSDsubjet1tau3"                      , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet1tau21                       = new TH1D( "h_Jet1PuppiSDsubjet1tau21"                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiSDsubjet1bdisc                       = new TH1D( "h_Jet1PuppiSDsubjet1bdisc"                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1CHF                                       = new TH1D( "h_Jet1CHF"                                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1NHF                                       = new TH1D( "h_Jet1NHF"                                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1CM                                        = new TH1D( "h_Jet1CM"                                      , "",   200,      0,      200  ); 
+  TH1D *  h_Jet1NM                                        = new TH1D( "h_Jet1NM"                                      , "",   200,      0,      200  ); 
+  TH1D *  h_Jet1NEF                                       = new TH1D( "h_Jet1NEF"                                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1CEF                                       = new TH1D( "h_Jet1CEF"                                     , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1MF                                        = new TH1D( "h_Jet1MF"                                      , "",    10,      0,       10  ); 
+  TH1D *  h_Jet1Mult                                      = new TH1D( "h_Jet1Mult"                                    , "",   400,      0,      400  ); 
+  TH1D *  h_Jet1PuppiCHF                                  = new TH1D( "h_Jet1PuppiCHF"                                , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiNHF                                  = new TH1D( "h_Jet1PuppiNHF"                                , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiCM                                   = new TH1D( "h_Jet1PuppiCM"                                 , "",   200,      0,      200  ); 
+  TH1D *  h_Jet1PuppiNM                                   = new TH1D( "h_Jet1PuppiNM"                                 , "",   200,      0,      200  ); 
+  TH1D *  h_Jet1PuppiNEF                                  = new TH1D( "h_Jet1PuppiNEF"                                , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiCEF                                  = new TH1D( "h_Jet1PuppiCEF"                                , "",   400,      0,        1  ); 
+  TH1D *  h_Jet1PuppiMF                                   = new TH1D( "h_Jet1PuppiMF"                                 , "",    10,      0,       10  ); 
+  TH1D *  h_Jet1PuppiMult                                 = new TH1D( "h_Jet1PuppiMult"                               , "",   400,      0,      400  ); 
+  TH1D *  h_Jet1puppisdmass                               = new TH1D( "h_Jet1puppisdmass"                             , "",   400,      0,      400  ); 
+
+
+  //  b-tag diagnostic plots
   TH1D * h_check_Jet0SDmaxbdisc                                             = new TH1D("h_check_Jet0SDmaxbdisc"                , "", 200,   0,    1);             
   TH1D * h_check_Jet0SDmaxbdiscflavParton                                   = new TH1D("h_check_Jet0SDmaxbdiscflavParton"      , "",  60, -30,   30);                       
   TH1D * h_check_Jet0SDsubjet0bdisc                                         = new TH1D("h_check_Jet0SDsubjet0bdisc"            , "", 200,   0,    1);                 
@@ -2697,6 +2774,31 @@ void looptree(
   TH1D * h_check_Jet0GenMatched_partonPt                                    = new TH1D("h_check_Jet0GenMatched_partonPt"       , "",1400,   0, 7000);                      
   TH1D * h_check_Jet0GenMatched_partonID                                    = new TH1D("h_check_Jet0GenMatched_partonID"       , "",  60, -30,   30);                      
 
+  TH1D * h_check_Jet1SDmaxbdisc                                             = new TH1D("h_check_Jet1SDmaxbdisc"                , "", 200,   0,    1);             
+  TH1D * h_check_Jet1SDmaxbdiscflavParton                                   = new TH1D("h_check_Jet1SDmaxbdiscflavParton"      , "",  60, -30,   30);                       
+  TH1D * h_check_Jet1SDsubjet0bdisc                                         = new TH1D("h_check_Jet1SDsubjet0bdisc"            , "", 200,   0,    1);                 
+  TH1D * h_check_Jet1SDsubjet0flavParton                                    = new TH1D("h_check_Jet1SDsubjet0flavParton"       , "",  60, -30,   30);                      
+  TH1D * h_check_Jet1SDsubjet1bdisc                                         = new TH1D("h_check_Jet1SDsubjet1bdisc"            , "", 200,   0,    1);                 
+  TH1D * h_check_Jet1SDsubjet1flavParton                                    = new TH1D("h_check_Jet1SDsubjet1flavParton"       , "",  60, -30,   30);                      
+  TH1D * h_check_Jet1PuppiSDmaxbdisc                                        = new TH1D("h_check_Jet1PuppiSDmaxbdisc"           , "", 200,   0,    1);                  
+  TH1D * h_check_Jet1PuppiSDmaxbdiscflavParton                              = new TH1D("h_check_Jet1PuppiSDmaxbdiscflavParton" , "",  60, -30,   30);                            
+  TH1D * h_check_Jet1PuppiSDsubjet0bdisc                                    = new TH1D("h_check_Jet1PuppiSDsubjet0bdisc"       , "", 200,   0,    1);                      
+  TH1D * h_check_Jet1PuppiSDsubjet0flavParton                               = new TH1D("h_check_Jet1PuppiSDsubjet0flavParton"  , "",  60, -30,   30);                           
+  TH1D * h_check_Jet1PuppiSDsubjet1bdisc                                    = new TH1D("h_check_Jet1PuppiSDsubjet1bdisc"       , "", 200,   0,    1);                      
+  TH1D * h_check_Jet1PuppiSDsubjet1flavParton                               = new TH1D("h_check_Jet1PuppiSDsubjet1flavParton"  , "",  60, -30,   30);                           
+  TH1D * h_check_Jet1GenMatched_partonPt                                    = new TH1D("h_check_Jet1GenMatched_partonPt"       , "",1400,   0, 7000);                      
+  TH1D * h_check_Jet1GenMatched_partonID                                    = new TH1D("h_check_Jet1GenMatched_partonID"       , "",  60, -30,   30);                      
+
+  TH1D * h_deltaR_Jet0_sub0_sub1                                            = new TH1D("h_deltaR_Jet0_sub0_sub1"       , "", 200,   0,    5);                      
+  TH1D * h_deltaR_Jet1_sub0_sub1                                            = new TH1D("h_deltaR_Jet1_sub0_sub1"       , "", 200,   0,    5);                      
+  TH1D * h_deltaR_Jet0_pup0_pup1                                            = new TH1D("h_deltaR_Jet0_pup0_pup1"       , "", 200,   0,    5);                      
+  TH1D * h_deltaR_Jet1_pup0_pup1                                            = new TH1D("h_deltaR_Jet1_pup0_pup1"       , "", 200,   0,    5);                      
+  TH1D * h_deltaR_Jet0_sub0_pup0                                            = new TH1D("h_deltaR_Jet0_sub0_pup0"       , "", 200,   0,    5);                      
+  TH1D * h_deltaR_Jet0_sub1_pup1                                            = new TH1D("h_deltaR_Jet0_sub1_pup1"       , "", 200,   0,    5);                      
+  TH1D * h_deltaR_Jet1_sub0_pup0                                            = new TH1D("h_deltaR_Jet1_sub0_pup0"       , "", 200,   0,    5);                      
+  TH1D * h_deltaR_Jet1_sub1_pup1                                            = new TH1D("h_deltaR_Jet1_sub1_pup1"       , "", 200,   0,    5);                      
+
+  //  b-tag efficiency measurement
   TH1D * h_BeforeBtag_Inclusive_Jet0Pt                                      = new TH1D("h_BeforeBtag_Inclusive_Jet0Pt"         , "",1400,   0, 7000);                      
   TH1D * h_BeforeBtag_Inclusive_Jet0P                                       = new TH1D("h_BeforeBtag_Inclusive_Jet0P"          , "",1400,   0, 7000);                      
   TH1D * h_BeforeBtag_Inclusive_Jet0Rap                                     = new TH1D("h_BeforeBtag_Inclusive_Jet0Rap"        , "", 200,  -4,    4);                      
@@ -2763,20 +2865,6 @@ void looptree(
   TH1D * h_AfterBtag_bHad_Jet0P                                             = new TH1D("h_AfterBtag_bHad_Jet0P"                  , "",1400,   0, 7000);                      
   TH1D * h_AfterBtag_bHad_Jet0Rap                                           = new TH1D("h_AfterBtag_bHad_Jet0Rap"                , "", 200,  -4,    4);                      
 
-  TH1D * h_check_Jet1SDmaxbdisc                                             = new TH1D("h_check_Jet1SDmaxbdisc"                , "", 200,   0,    1);             
-  TH1D * h_check_Jet1SDmaxbdiscflavParton                                   = new TH1D("h_check_Jet1SDmaxbdiscflavParton"      , "",  60, -30,   30);                       
-  TH1D * h_check_Jet1SDsubjet0bdisc                                         = new TH1D("h_check_Jet1SDsubjet0bdisc"            , "", 200,   0,    1);                 
-  TH1D * h_check_Jet1SDsubjet0flavParton                                    = new TH1D("h_check_Jet1SDsubjet0flavParton"       , "",  60, -30,   30);                      
-  TH1D * h_check_Jet1SDsubjet1bdisc                                         = new TH1D("h_check_Jet1SDsubjet1bdisc"            , "", 200,   0,    1);                 
-  TH1D * h_check_Jet1SDsubjet1flavParton                                    = new TH1D("h_check_Jet1SDsubjet1flavParton"       , "",  60, -30,   30);                      
-  TH1D * h_check_Jet1PuppiSDmaxbdisc                                        = new TH1D("h_check_Jet1PuppiSDmaxbdisc"           , "", 200,   0,    1);                  
-  TH1D * h_check_Jet1PuppiSDmaxbdiscflavParton                              = new TH1D("h_check_Jet1PuppiSDmaxbdiscflavParton" , "",  60, -30,   30);                            
-  TH1D * h_check_Jet1PuppiSDsubjet0bdisc                                    = new TH1D("h_check_Jet1PuppiSDsubjet0bdisc"       , "", 200,   0,    1);                      
-  TH1D * h_check_Jet1PuppiSDsubjet0flavParton                               = new TH1D("h_check_Jet1PuppiSDsubjet0flavParton"  , "",  60, -30,   30);                           
-  TH1D * h_check_Jet1PuppiSDsubjet1bdisc                                    = new TH1D("h_check_Jet1PuppiSDsubjet1bdisc"       , "", 200,   0,    1);                      
-  TH1D * h_check_Jet1PuppiSDsubjet1flavParton                               = new TH1D("h_check_Jet1PuppiSDsubjet1flavParton"  , "",  60, -30,   30);                           
-  TH1D * h_check_Jet1GenMatched_partonPt                                    = new TH1D("h_check_Jet1GenMatched_partonPt"       , "",1400,   0, 7000);                      
-  TH1D * h_check_Jet1GenMatched_partonID                                    = new TH1D("h_check_Jet1GenMatched_partonID"       , "",  60, -30,   30);                      
 
   TH1D * h_BeforeBtag_Inclusive_Jet1Pt                                      = new TH1D("h_BeforeBtag_Inclusive_Jet1Pt"         , "",1400,   0, 7000);                      
   TH1D * h_BeforeBtag_Inclusive_Jet1P                                       = new TH1D("h_BeforeBtag_Inclusive_Jet1P"          , "",1400,   0, 7000);                      
@@ -2912,123 +3000,6 @@ void looptree(
 
 
 
-  // event                        
-  TH1D *  h_DijetMass_dRapIn                              = new TH1D( "h_DijetMass_dRapIn"                            , "",   400,      0,     8000  ); 
-  TH1D *  h_DijetMass_dRapLo                              = new TH1D( "h_DijetMass_dRapLo"                            , "",   400,      0,     8000  ); 
-  TH1D *  h_DijetMass_dRapHi                              = new TH1D( "h_DijetMass_dRapHi"                            , "",   400,      0,     8000  ); 
-    
-  TH1D *  h_DijetMassPlusNeighbor_dRapIn                  = new TH1D( "h_DijetMassPlusNeighbor_dRapIn"                , "",   400,      0,     8000  ); 
-  TH1D *  h_DijetMassPlusNeighbor_dRapLo                  = new TH1D( "h_DijetMassPlusNeighbor_dRapLo"                , "",   400,      0,     8000  ); 
-  TH1D *  h_DijetMassPlusNeighbor_dRapHi                  = new TH1D( "h_DijetMassPlusNeighbor_dRapHi"                , "",   400,      0,     8000  ); 
-  
-
-  TH1D *  h_DeltaRap                                      = new TH1D( "h_DeltaRap"                                    , "",   400,      0,        6  ); 
-  TH1D *  h_DeltaPhi                                      = new TH1D( "h_DeltaPhi"                                    , "",   400,      0,      3.2  ); 
-  TH1D *  h_HT                                            = new TH1D( "h_HT"                                          , "",   600,      0,    12000  ); 
-  TH1D *  h_MET                                           = new TH1D( "h_MET"                                         , "",   400,      0,     4000  ); 
-  TH1D *  h_METphi                                        = new TH1D( "h_METphi"                                      , "",   400,   -3.2,     3.2   ); 
-  TH1D *  h_Nvtx                                          = new TH1D( "h_Nvtx"                                        , "",   100,      0,      100  ); 
- 
-  // Jet0
-  TH1D *  h_Jet0P                                         = new TH1D( "h_Jet0P"                                       , "",   700,      0,     7000  ); 
-  TH1D *  h_Jet0Pt                                        = new TH1D( "h_Jet0Pt"                                      , "",   500,      0,     5000  ); 
-  TH1D *  h_Jet0Phi                                       = new TH1D( "h_Jet0Phi"                                     , "",   400,   -3.2,      3.2  ); 
-  TH1D *  h_Jet0Rap                                       = new TH1D( "h_Jet0Rap"                                     , "",   400,     -3,        3  ); 
-  TH1D *  h_Jet0sdmass                                    = new TH1D( "h_Jet0sdmass"                                  , "",   400,      0,      400  ); 
-  TH1D *  h_Jet0Tau1                                      = new TH1D( "h_Jet0Tau1"                                    , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0Tau2                                      = new TH1D( "h_Jet0Tau2"                                    , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0Tau3                                      = new TH1D( "h_Jet0Tau3"                                    , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0Tau4                                      = new TH1D( "h_Jet0Tau4"                                    , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0SDmaxbdisc                                = new TH1D( "h_Jet0SDmaxbdisc"                              , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0SDsubjet0pt                               = new TH1D( "h_Jet0SDsubjet0pt"                             , "",   800,      0,     4000  ); 
-  TH1D *  h_Jet0SDsubjet0mass                             = new TH1D( "h_Jet0SDsubjet0mass"                           , "",   800,      0,      800  ); 
-  TH1D *  h_Jet0SDsubjet0tau1                             = new TH1D( "h_Jet0SDsubjet0tau1"                           , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0SDsubjet0tau2                             = new TH1D( "h_Jet0SDsubjet0tau2"                           , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0SDsubjet0tau3                             = new TH1D( "h_Jet0SDsubjet0tau3"                           , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0SDsubjet0bdisc                            = new TH1D( "h_Jet0SDsubjet0bdisc"                          , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0SDsubjet1pt                               = new TH1D( "h_Jet0SDsubjet1pt"                             , "",   800,      0,     4000  ); 
-  TH1D *  h_Jet0SDsubjet1mass                             = new TH1D( "h_Jet0SDsubjet1mass"                           , "",   800,      0,      800  ); 
-  TH1D *  h_Jet0SDsubjet1tau1                             = new TH1D( "h_Jet0SDsubjet1tau1"                           , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0SDsubjet1tau2                             = new TH1D( "h_Jet0SDsubjet1tau2"                           , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0SDsubjet1tau3                             = new TH1D( "h_Jet0SDsubjet1tau3"                           , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0SDsubjet1bdisc                            = new TH1D( "h_Jet0SDsubjet1bdisc"                          , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiPt                                   = new TH1D( "h_Jet0PuppiPt"                                 , "",   400,      0,     4000  ); 
-  TH1D *  h_Jet0PuppiMass                                 = new TH1D( "h_Jet0PuppiMass"                               , "",   400,      0,      300  ); 
-  TH1D *  h_Jet0PuppiSDpt                                 = new TH1D( "h_Jet0PuppiSDpt"                               , "",   400,      0,     4000  ); 
-  TH1D *  h_Jet0PuppiTau1                                 = new TH1D( "h_Jet0PuppiTau1"                               , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiTau2                                 = new TH1D( "h_Jet0PuppiTau2"                               , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiTau3                                 = new TH1D( "h_Jet0PuppiTau3"                               , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiTau4                                 = new TH1D( "h_Jet0PuppiTau4"                               , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiSDmaxbdisc                           = new TH1D( "h_Jet0PuppiSDmaxbdisc"                         , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiSDsubjet0pt                          = new TH1D( "h_Jet0PuppiSDsubjet0pt"                        , "",   400,      0,     4000  ); 
-  TH1D *  h_Jet0PuppiSDsubjet0mass                        = new TH1D( "h_Jet0PuppiSDsubjet0mass"                      , "",   400,      0,      800  ); 
-  TH1D *  h_Jet0PuppiSDsubjet0tau1                        = new TH1D( "h_Jet0PuppiSDsubjet0tau1"                      , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiSDsubjet0tau2                        = new TH1D( "h_Jet0PuppiSDsubjet0tau2"                      , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiSDsubjet0tau3                        = new TH1D( "h_Jet0PuppiSDsubjet0tau3"                      , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiSDsubjet0bdisc                       = new TH1D( "h_Jet0PuppiSDsubjet0bdisc"                     , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiSDsubjet1pt                          = new TH1D( "h_Jet0PuppiSDsubjet1pt"                        , "",   800,      0,     4000  ); 
-  TH1D *  h_Jet0PuppiSDsubjet1mass                        = new TH1D( "h_Jet0PuppiSDsubjet1mass"                      , "",   800,      0,      800  ); 
-  TH1D *  h_Jet0PuppiSDsubjet1tau1                        = new TH1D( "h_Jet0PuppiSDsubjet1tau1"                      , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiSDsubjet1tau2                        = new TH1D( "h_Jet0PuppiSDsubjet1tau2"                      , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiSDsubjet1tau3                        = new TH1D( "h_Jet0PuppiSDsubjet1tau3"                      , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiSDsubjet1bdisc                       = new TH1D( "h_Jet0PuppiSDsubjet1bdisc"                     , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0CHF                                       = new TH1D( "h_Jet0CHF"                                     , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0NHF                                       = new TH1D( "h_Jet0NHF"                                     , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0CM                                        = new TH1D( "h_Jet0CM"                                      , "",   200,      0,      200  ); 
-  TH1D *  h_Jet0NM                                        = new TH1D( "h_Jet0NM"                                      , "",   200,      0,      200  ); 
-  TH1D *  h_Jet0NEF                                       = new TH1D( "h_Jet0NEF"                                     , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0CEF                                       = new TH1D( "h_Jet0CEF"                                     , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0MF                                        = new TH1D( "h_Jet0MF"                                      , "",    10,      0,       10  ); 
-  TH1D *  h_Jet0Mult                                      = new TH1D( "h_Jet0Mult"                                    , "",   400,      0,      400  ); 
-  TH1D *  h_Jet0PuppiCHF                                  = new TH1D( "h_Jet0PuppiCHF"                                , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiNHF                                  = new TH1D( "h_Jet0PuppiNHF"                                , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiCM                                   = new TH1D( "h_Jet0PuppiCM"                                 , "",   200,      0,      200  ); 
-  TH1D *  h_Jet0PuppiNM                                   = new TH1D( "h_Jet0PuppiNM"                                 , "",   200,      0,      200  ); 
-  TH1D *  h_Jet0PuppiNEF                                  = new TH1D( "h_Jet0PuppiNEF"                                , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiCEF                                  = new TH1D( "h_Jet0PuppiCEF"                                , "",   400,      0,        1  ); 
-  TH1D *  h_Jet0PuppiMF                                   = new TH1D( "h_Jet0PuppiMF"                                 , "",    10,      0,       10  ); 
-  TH1D *  h_Jet0PuppiMult                                 = new TH1D( "h_Jet0PuppiMult"                               , "",   400,      0,      400  ); 
-  TH1D *  h_Jet0puppisdmass                               = new TH1D( "h_Jet0puppisdmass"                             , "",   400,      0,      400  ); 
-
-
-  TH1D *  h_Jet1Pt                                        = new TH1D( "h_Jet1Pt"                                      , "",   400,      0,       4000); 
-  TH1D *  h_Jet1Rap                                       = new TH1D( "h_Jet1Rap"                                     , "",   400,     -5,          5);
-  TH1D *  h_Jet1sdmass                                    = new TH1D( "h_Jet1sdmass"                                  , "",   400,      0,      400  ); 
-  TH1D *  h_Jet1puppisdmass                               = new TH1D( "h_Jet1puppisdmass"                             , "",   400,      0,      400  ); 
-  
-  // TH1D *  h_Jet0puppisdmass                               = new TH1D( "h_Jet0puppisdmass"                    , "",   400,      0,      400  ); 
-  // TH1D *  h_Jet0PuppiSDmass_CorrOfficial                  = new TH1D( "h_Jet0puppisdmassOfficialCorr"          , "",   400,      0,      400  ); 
-  // TH1D *  h_Jet0puppisdmassNoSmear                        = new TH1D( "h_Jet0puppisdmassNoSmear"          , "",   400,      0,      400  ); 
-    
-       
-  // TH1D *  h_DijetMass_masstag                             = new TH1D("h_DijetMass_masstag"                      , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p30                = new TH1D("h_DijetMass_masstag_tau32_lt0p30"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p35                = new TH1D("h_DijetMass_masstag_tau32_lt0p35"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p40                = new TH1D("h_DijetMass_masstag_tau32_lt0p40"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p45                = new TH1D("h_DijetMass_masstag_tau32_lt0p45"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p48                = new TH1D("h_DijetMass_masstag_tau32_lt0p48"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p50                = new TH1D("h_DijetMass_masstag_tau32_lt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p53                = new TH1D("h_DijetMass_masstag_tau32_lt0p53"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p55                = new TH1D("h_DijetMass_masstag_tau32_lt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p58                = new TH1D("h_DijetMass_masstag_tau32_lt0p58"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p60                = new TH1D("h_DijetMass_masstag_tau32_lt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p63                = new TH1D("h_DijetMass_masstag_tau32_lt0p63"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p65                = new TH1D("h_DijetMass_masstag_tau32_lt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p68                = new TH1D("h_DijetMass_masstag_tau32_lt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p70                = new TH1D("h_DijetMass_masstag_tau32_lt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p72                = new TH1D("h_DijetMass_masstag_tau32_lt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p75                = new TH1D("h_DijetMass_masstag_tau32_lt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_lt0p80                = new TH1D("h_DijetMass_masstag_tau32_lt0p80"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_gt0p50                = new TH1D("h_DijetMass_masstag_tau32_gt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_gt0p55                = new TH1D("h_DijetMass_masstag_tau32_gt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_gt0p60                = new TH1D("h_DijetMass_masstag_tau32_gt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_gt0p65                = new TH1D("h_DijetMass_masstag_tau32_gt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_gt0p68                = new TH1D("h_DijetMass_masstag_tau32_gt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_gt0p70                = new TH1D("h_DijetMass_masstag_tau32_gt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_gt0p72                = new TH1D("h_DijetMass_masstag_tau32_gt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_gt0p75                = new TH1D("h_DijetMass_masstag_tau32_gt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_masstag_tau32_gt0p80                = new TH1D("h_DijetMass_masstag_tau32_gt0p80"         , "", 900, 0,  9000);
- 
   TH1D *  h_DijetMass_masspuptag                          = new TH1D("h_DijetMass_masspuptag"                   , "", 900, 0,  9000);
   TH1D *  h_DijetMass_masspuptag_puppitau32_lt0p30        = new TH1D("h_DijetMass_masspuptag_puppitau32_lt0p30" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_masspuptag_puppitau32_lt0p35        = new TH1D("h_DijetMass_masspuptag_puppitau32_lt0p35" , "", 900, 0,  9000);
@@ -3056,63 +3027,7 @@ void looptree(
   TH1D *  h_DijetMass_masspuptag_puppitau32_gt0p72        = new TH1D("h_DijetMass_masspuptag_puppitau32_gt0p72" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_masspuptag_puppitau32_gt0p75        = new TH1D("h_DijetMass_masspuptag_puppitau32_gt0p75" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_masspuptag_puppitau32_gt0p80        = new TH1D("h_DijetMass_masspuptag_puppitau32_gt0p80" , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag                 = new TH1D("h_DijetMassPlusNeighbor_masstag"                      , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p30    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p30"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p35    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p35"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p40    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p40"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p45    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p45"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p48    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p48"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p50    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p53    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p53"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p55    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p58    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p58"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p60    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p63    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p63"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p65    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p68    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p70    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p72    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p75    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_lt0p80    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_lt0p80"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_gt0p50    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_gt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_gt0p55    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_gt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_gt0p60    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_gt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_gt0p65    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_gt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_gt0p68    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_gt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_gt0p70    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_gt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_gt0p72    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_gt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_gt0p75    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_gt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_masstag_tau32_gt0p80    = new TH1D("h_DijetMassPlusNeighbor_masstag_tau32_gt0p80"         , "", 900, 0,  9000);
- 
-
- 
-  // TH1D *  h_DijetMass_1btag_masstag                             = new TH1D("h_DijetMass_1btag_masstag"                      , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p30                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p30"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p35                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p35"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p40                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p40"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p45                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p45"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p48                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p48"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p50                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p53                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p53"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p55                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p58                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p58"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p60                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p63                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p63"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p65                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p68                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p70                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p72                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p75                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_lt0p80                = new TH1D("h_DijetMass_1btag_masstag_tau32_lt0p80"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_gt0p50                = new TH1D("h_DijetMass_1btag_masstag_tau32_gt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_gt0p55                = new TH1D("h_DijetMass_1btag_masstag_tau32_gt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_gt0p60                = new TH1D("h_DijetMass_1btag_masstag_tau32_gt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_gt0p65                = new TH1D("h_DijetMass_1btag_masstag_tau32_gt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_gt0p68                = new TH1D("h_DijetMass_1btag_masstag_tau32_gt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_gt0p70                = new TH1D("h_DijetMass_1btag_masstag_tau32_gt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_gt0p72                = new TH1D("h_DijetMass_1btag_masstag_tau32_gt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_gt0p75                = new TH1D("h_DijetMass_1btag_masstag_tau32_gt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_1btag_masstag_tau32_gt0p80                = new TH1D("h_DijetMass_1btag_masstag_tau32_gt0p80"         , "", 900, 0,  9000);
+  
   TH1D *  h_DijetMass_1btag_masspuptag                          = new TH1D("h_DijetMass_1btag_masspuptag"                   , "", 900, 0,  9000);
   TH1D *  h_DijetMass_1btag_masspuptag_puppitau32_lt0p30        = new TH1D("h_DijetMass_1btag_masspuptag_puppitau32_lt0p30" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_1btag_masspuptag_puppitau32_lt0p35        = new TH1D("h_DijetMass_1btag_masspuptag_puppitau32_lt0p35" , "", 900, 0,  9000);
@@ -3140,63 +3055,7 @@ void looptree(
   TH1D *  h_DijetMass_1btag_masspuptag_puppitau32_gt0p72        = new TH1D("h_DijetMass_1btag_masspuptag_puppitau32_gt0p72" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_1btag_masspuptag_puppitau32_gt0p75        = new TH1D("h_DijetMass_1btag_masspuptag_puppitau32_gt0p75" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_1btag_masspuptag_puppitau32_gt0p80        = new TH1D("h_DijetMass_1btag_masspuptag_puppitau32_gt0p80" , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag                 = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag"                      , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p30    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p30"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p35    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p35"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p40    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p40"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p45    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p45"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p48    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p48"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p50    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p53    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p53"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p55    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p58    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p58"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p60    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p63    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p63"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p65    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p68    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p70    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p72    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p75    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p80    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_lt0p80"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p50    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p55    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p60    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p65    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p68    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p70    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p72    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p75    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p80    = new TH1D("h_DijetMassPlusNeighbor_1btag_masstag_tau32_gt0p80"         , "", 900, 0,  9000);
  
-
- 
-  // TH1D *  h_DijetMass_2btag_masstag                             = new TH1D("h_DijetMass_2btag_masstag"                      , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p30                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p30"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p35                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p35"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p40                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p40"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p45                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p45"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p48                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p48"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p50                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p53                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p53"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p55                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p58                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p58"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p60                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p63                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p63"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p65                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p68                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p70                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p72                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p75                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_lt0p80                = new TH1D("h_DijetMass_2btag_masstag_tau32_lt0p80"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_gt0p50                = new TH1D("h_DijetMass_2btag_masstag_tau32_gt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_gt0p55                = new TH1D("h_DijetMass_2btag_masstag_tau32_gt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_gt0p60                = new TH1D("h_DijetMass_2btag_masstag_tau32_gt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_gt0p65                = new TH1D("h_DijetMass_2btag_masstag_tau32_gt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_gt0p68                = new TH1D("h_DijetMass_2btag_masstag_tau32_gt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_gt0p70                = new TH1D("h_DijetMass_2btag_masstag_tau32_gt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_gt0p72                = new TH1D("h_DijetMass_2btag_masstag_tau32_gt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_gt0p75                = new TH1D("h_DijetMass_2btag_masstag_tau32_gt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_2btag_masstag_tau32_gt0p80                = new TH1D("h_DijetMass_2btag_masstag_tau32_gt0p80"         , "", 900, 0,  9000);
   TH1D *  h_DijetMass_2btag_masspuptag                          = new TH1D("h_DijetMass_2btag_masspuptag"                   , "", 900, 0,  9000);
   TH1D *  h_DijetMass_2btag_masspuptag_puppitau32_lt0p30        = new TH1D("h_DijetMass_2btag_masspuptag_puppitau32_lt0p30" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_2btag_masspuptag_puppitau32_lt0p35        = new TH1D("h_DijetMass_2btag_masspuptag_puppitau32_lt0p35" , "", 900, 0,  9000);
@@ -3224,67 +3083,7 @@ void looptree(
   TH1D *  h_DijetMass_2btag_masspuptag_puppitau32_gt0p72        = new TH1D("h_DijetMass_2btag_masspuptag_puppitau32_gt0p72" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_2btag_masspuptag_puppitau32_gt0p75        = new TH1D("h_DijetMass_2btag_masspuptag_puppitau32_gt0p75" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_2btag_masspuptag_puppitau32_gt0p80        = new TH1D("h_DijetMass_2btag_masspuptag_puppitau32_gt0p80" , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag                 = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag"                      , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p30    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p30"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p35    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p35"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p40    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p40"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p45    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p45"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p48    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p48"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p50    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p53    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p53"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p55    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p58    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p58"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p60    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p63    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p63"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p65    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p68    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p70    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p72    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p75    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p80    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_lt0p80"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p50    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p55    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p60    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p65    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p68    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p70    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p72    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p75    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p80    = new TH1D("h_DijetMassPlusNeighbor_2btag_masstag_tau32_gt0p80"         , "", 900, 0,  9000);
  
-
- 
-
-
-
- 
-  // TH1D *  h_DijetMass_0btag_masstag                             = new TH1D("h_DijetMass_0btag_masstag"                      , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p30                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p30"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p35                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p35"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p40                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p40"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p45                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p45"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p48                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p48"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p50                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p53                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p53"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p55                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p58                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p58"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p60                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p63                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p63"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p65                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p68                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p70                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p72                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p75                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_lt0p80                = new TH1D("h_DijetMass_0btag_masstag_tau32_lt0p80"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_gt0p50                = new TH1D("h_DijetMass_0btag_masstag_tau32_gt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_gt0p55                = new TH1D("h_DijetMass_0btag_masstag_tau32_gt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_gt0p60                = new TH1D("h_DijetMass_0btag_masstag_tau32_gt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_gt0p65                = new TH1D("h_DijetMass_0btag_masstag_tau32_gt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_gt0p68                = new TH1D("h_DijetMass_0btag_masstag_tau32_gt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_gt0p70                = new TH1D("h_DijetMass_0btag_masstag_tau32_gt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_gt0p72                = new TH1D("h_DijetMass_0btag_masstag_tau32_gt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_gt0p75                = new TH1D("h_DijetMass_0btag_masstag_tau32_gt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMass_0btag_masstag_tau32_gt0p80                = new TH1D("h_DijetMass_0btag_masstag_tau32_gt0p80"         , "", 900, 0,  9000);
   TH1D *  h_DijetMass_0btag_masspuptag                          = new TH1D("h_DijetMass_0btag_masspuptag"                   , "", 900, 0,  9000);
   TH1D *  h_DijetMass_0btag_masspuptag_puppitau32_lt0p30        = new TH1D("h_DijetMass_0btag_masspuptag_puppitau32_lt0p30" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_0btag_masspuptag_puppitau32_lt0p35        = new TH1D("h_DijetMass_0btag_masspuptag_puppitau32_lt0p35" , "", 900, 0,  9000);
@@ -3312,33 +3111,6 @@ void looptree(
   TH1D *  h_DijetMass_0btag_masspuptag_puppitau32_gt0p72        = new TH1D("h_DijetMass_0btag_masspuptag_puppitau32_gt0p72" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_0btag_masspuptag_puppitau32_gt0p75        = new TH1D("h_DijetMass_0btag_masspuptag_puppitau32_gt0p75" , "", 900, 0,  9000);
   TH1D *  h_DijetMass_0btag_masspuptag_puppitau32_gt0p80        = new TH1D("h_DijetMass_0btag_masspuptag_puppitau32_gt0p80" , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag                 = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag"                      , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p30    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p30"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p35    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p35"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p40    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p40"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p45    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p45"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p48    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p48"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p50    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p53    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p53"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p55    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p58    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p58"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p60    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p63    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p63"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p65    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p68    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p70    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p72    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p75    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p80    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_lt0p80"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p50    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p50"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p55    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p55"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p60    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p60"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p65    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p65"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p68    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p68"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p70    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p70"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p72    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p72"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p75    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p75"         , "", 900, 0,  9000);
-  // TH1D *  h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p80    = new TH1D("h_DijetMassPlusNeighbor_0btag_masstag_tau32_gt0p80"         , "", 900, 0,  9000);
  
 
 
@@ -3369,1410 +3141,6 @@ void looptree(
   TH1D *  h_PreSelection_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_PreSelection_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
   TH1D *  h_PreSelection_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_PreSelection_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
 
-  // TH1D *  h_AK8CHSpt200_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt200_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt200_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt200_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt200_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt200_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt200_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt200_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt200_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt200_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt200_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt200_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt200_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt200_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt200_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt200_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt200_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt200_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt200_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt200_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt200_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt200_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt200_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt200_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt200_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt200_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt200_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt200_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt200_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt200_Jet0Tau32                           = new TH1D( "h_AK8CHSpt200_Jet0Tau32"                          , "", 200, 0,    1);  
-
-  
-  // TH1D *  h_AK8CHSpt400_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt400_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt400_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt400_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt400_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt400_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt400_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt400_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt400_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt400_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt400_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt400_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt400_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt400_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt400_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt400_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt400_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt400_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt400_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt400_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt400_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt400_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt400_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt400_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt400_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt400_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt400_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt400_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt400_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400_Jet0Tau32                           = new TH1D( "h_AK8CHSpt400_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-  // TH1D *  h_AK8CHSpt400to500_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt400to500_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt400to500_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt400to500_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt400to500_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt400to500_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt400to500_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt400to500_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt400to500_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt400to500_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt400to500_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt400to500_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt400to500_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt400to500_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt400to500_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt400to500_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt400to500_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt400to500_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt400to500_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt400to500_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt400to500_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt400to500_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt400to500_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt400to500_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt400to500_Jet0Tau32                           = new TH1D( "h_AK8CHSpt400to500_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-  // TH1D *  h_AK8CHSpt500to600_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt500to600_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt500to600_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt500to600_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt500to600_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt500to600_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt500to600_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt500to600_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt500to600_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt500to600_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt500to600_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt500to600_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt500to600_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt500to600_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt500to600_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt500to600_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt500to600_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt500to600_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt500to600_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt500to600_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt500to600_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt500to600_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt500to600_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt500to600_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt500to600_Jet0Tau32                           = new TH1D( "h_AK8CHSpt500to600_Jet0Tau32"                          , "", 200, 0,    1);  
-
-  // TH1D *  h_AK8CHSpt600to700_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt600to700_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt600to700_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt600to700_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt600to700_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt600to700_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt600to700_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt600to700_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt600to700_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt600to700_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt600to700_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt600to700_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt600to700_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt600to700_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt600to700_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt600to700_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt600to700_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt600to700_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt600to700_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt600to700_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt600to700_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt600to700_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt600to700_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt600to700_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt600to700_Jet0Tau32                           = new TH1D( "h_AK8CHSpt600to700_Jet0Tau32"                          , "", 200, 0,    1);  
-
-  // TH1D *  h_AK8CHSpt700to800_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt700to800_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt700to800_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt700to800_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt700to800_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt700to800_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt700to800_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt700to800_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt700to800_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt700to800_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt700to800_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt700to800_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt700to800_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt700to800_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt700to800_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt700to800_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt700to800_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt700to800_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt700to800_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt700to800_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt700to800_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt700to800_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt700to800_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt700to800_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt700to800_Jet0Tau32                           = new TH1D( "h_AK8CHSpt700to800_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-  // TH1D *  h_AK8CHSpt800to1000_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt800to1000_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt800to1000_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt800to1000_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt800to1000_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt800to1000_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt800to1000_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt800to1000_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt800to1000_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt800to1000_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt800to1000_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt800to1000_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt800to1000_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt800to1000_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt800to1000_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt800to1000_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt800to1000_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt800to1000_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt800to1000_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt800to1000_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt800to1000_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt800to1000_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt800to1000_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt800to1000_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt800to1000_Jet0Tau32                           = new TH1D( "h_AK8CHSpt800to1000_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt1000to1500_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt1000to1500_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt1000to1500_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt1000to1500_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt1000to1500_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt1000to1500_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt1000to1500_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt1000to1500_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt1000to1500_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt1000to1500_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt1000to1500_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1000to1500_Jet0Tau32                           = new TH1D( "h_AK8CHSpt1000to1500_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt1500to2000_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt1500to2000_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt1500to2000_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt1500to2000_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt1500to2000_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt1500to2000_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt1500to2000_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt1500to2000_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt1500to2000_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt1500to2000_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt1500to2000_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt1500to2000_Jet0Tau32                           = new TH1D( "h_AK8CHSpt1500to2000_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt2000to3000_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt2000to3000_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt2000to3000_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt2000to3000_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt2000to3000_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt2000to3000_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt2000to3000_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt2000to3000_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt2000to3000_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt2000to3000_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt2000to3000_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt2000to3000_Jet0Tau32                           = new TH1D( "h_AK8CHSpt2000to3000_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0mass_NoCorr                     = new TH1D( "h_AK8CHSpt3000toInf_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0mass_Corr                       = new TH1D( "h_AK8CHSpt3000toInf_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0mass_CorrUp                     = new TH1D( "h_AK8CHSpt3000toInf_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0mass_CorrDn                     = new TH1D( "h_AK8CHSpt3000toInf_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0mass_CorrSmear                  = new TH1D( "h_AK8CHSpt3000toInf_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0mass_CorrSmearUp                = new TH1D( "h_AK8CHSpt3000toInf_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0mass_CorrSmearDn                = new TH1D( "h_AK8CHSpt3000toInf_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDmass_NoCorr                   = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDmass_Corr                     = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDmass_CorrUp                   = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDmass_CorrDn                   = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDmass_CorrSmear                = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearUp              = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearDn              = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_Corr                = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0MassPruned                      = new TH1D( "h_AK8CHSpt3000toInf_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0MassTrimmed                     = new TH1D( "h_AK8CHSpt3000toInf_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDsubjet0mass                   = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDsubjet1mass                   = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDsubjet0area                   = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDsubjet1area                   = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDsubjet0tau32                  = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0SDsubjet0tau21                  = new TH1D( "h_AK8CHSpt3000toInf_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0MatchedGenJetMass               = new TH1D( "h_AK8CHSpt3000toInf_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_AK8CHSpt3000toInf_Jet0Tau32                           = new TH1D( "h_AK8CHSpt3000toInf_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-
-  // TH1D *  h_CHSsubjetpt400_Jet0mass_NoCorr                     = new TH1D( "h_CHSsubjetpt400_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0mass_Corr                       = new TH1D( "h_CHSsubjetpt400_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0mass_CorrUp                     = new TH1D( "h_CHSsubjetpt400_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0mass_CorrDn                     = new TH1D( "h_CHSsubjetpt400_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0mass_CorrSmear                  = new TH1D( "h_CHSsubjetpt400_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0mass_CorrSmearUp                = new TH1D( "h_CHSsubjetpt400_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0mass_CorrSmearDn                = new TH1D( "h_CHSsubjetpt400_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDmass_NoCorr                   = new TH1D( "h_CHSsubjetpt400_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDmass_Corr                     = new TH1D( "h_CHSsubjetpt400_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDmass_CorrUp                   = new TH1D( "h_CHSsubjetpt400_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDmass_CorrDn                   = new TH1D( "h_CHSsubjetpt400_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDmass_CorrSmear                = new TH1D( "h_CHSsubjetpt400_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDmass_CorrSmearUp              = new TH1D( "h_CHSsubjetpt400_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDmass_CorrSmearDn              = new TH1D( "h_CHSsubjetpt400_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_Corr                = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_CHSsubjetpt400_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0MassPruned                      = new TH1D( "h_CHSsubjetpt400_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0MassTrimmed                     = new TH1D( "h_CHSsubjetpt400_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDsubjet0mass                   = new TH1D( "h_CHSsubjetpt400_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDsubjet1mass                   = new TH1D( "h_CHSsubjetpt400_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDsubjet0area                   = new TH1D( "h_CHSsubjetpt400_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDsubjet1area                   = new TH1D( "h_CHSsubjetpt400_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDsubjet0tau32                  = new TH1D( "h_CHSsubjetpt400_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_CHSsubjetpt400_Jet0SDsubjet0tau21                  = new TH1D( "h_CHSsubjetpt400_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_CHSsubjetpt400_Jet0MatchedGenJetMass               = new TH1D( "h_CHSsubjetpt400_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_CHSsubjetpt400_Jet0Tau32                           = new TH1D( "h_CHSsubjetpt400_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-
-  // TH1D *  h_PUPsubjetpt400_Jet0mass_NoCorr                     = new TH1D( "h_PUPsubjetpt400_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0mass_Corr                       = new TH1D( "h_PUPsubjetpt400_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0mass_CorrUp                     = new TH1D( "h_PUPsubjetpt400_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0mass_CorrDn                     = new TH1D( "h_PUPsubjetpt400_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0mass_CorrSmear                  = new TH1D( "h_PUPsubjetpt400_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0mass_CorrSmearUp                = new TH1D( "h_PUPsubjetpt400_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0mass_CorrSmearDn                = new TH1D( "h_PUPsubjetpt400_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDmass_NoCorr                   = new TH1D( "h_PUPsubjetpt400_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDmass_Corr                     = new TH1D( "h_PUPsubjetpt400_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDmass_CorrUp                   = new TH1D( "h_PUPsubjetpt400_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDmass_CorrDn                   = new TH1D( "h_PUPsubjetpt400_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDmass_CorrSmear                = new TH1D( "h_PUPsubjetpt400_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDmass_CorrSmearUp              = new TH1D( "h_PUPsubjetpt400_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDmass_CorrSmearDn              = new TH1D( "h_PUPsubjetpt400_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_Corr                = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_PUPsubjetpt400_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0MassPruned                      = new TH1D( "h_PUPsubjetpt400_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0MassTrimmed                     = new TH1D( "h_PUPsubjetpt400_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDsubjet0mass                   = new TH1D( "h_PUPsubjetpt400_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDsubjet1mass                   = new TH1D( "h_PUPsubjetpt400_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDsubjet0area                   = new TH1D( "h_PUPsubjetpt400_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDsubjet1area                   = new TH1D( "h_PUPsubjetpt400_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDsubjet0tau32                  = new TH1D( "h_PUPsubjetpt400_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_PUPsubjetpt400_Jet0SDsubjet0tau21                  = new TH1D( "h_PUPsubjetpt400_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_PUPsubjetpt400_Jet0MatchedGenJetMass               = new TH1D( "h_PUPsubjetpt400_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_PUPsubjetpt400_Jet0Tau32                           = new TH1D( "h_PUPsubjetpt400_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-  // //-----------------------------------------
-
-
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt200_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt200_Jet0Tau32"                          , "", 200, 0,    1);  
-
-  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt400_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt400to500_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt400to500_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt500to600_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt500to600_Jet0Tau32"                          , "", 200, 0,    1);  
-
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt600to700_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt600to700_Jet0Tau32"                          , "", 200, 0,    1);  
-
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt700to800_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt700to800_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt800to1000_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt800to1000_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1000to1500_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt1000to1500_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt1500to2000_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt1500to2000_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt2000to3000_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt2000to3000_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0mass_Corr                       = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0MassPruned                      = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_AK8CHSpt3000toInf_Jet0Tau32                           = new TH1D( "h_dRmatch_AK8CHSpt3000toInf_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0mass_Corr                       = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0MassPruned                      = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_CHSsubjetpt400_Jet0Tau32                           = new TH1D( "h_dRmatch_CHSsubjetpt400_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-
-
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0mass_NoCorr                     = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0mass_Corr                       = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0mass_CorrUp                     = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0mass_CorrDn                     = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0mass_CorrSmear                  = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0mass_CorrSmearUp                = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0mass_CorrSmearDn                = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDmass_NoCorr                   = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDmass_Corr                     = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrUp                   = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrDn                   = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSmear                = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSmearUp              = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSmearDn              = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_Corr                = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0MassPruned                      = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0MassPruned"                     , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0MassTrimmed                     = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0MassTrimmed"                    , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDsubjet0mass                   = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDsubjet0mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDsubjet1mass                   = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDsubjet1mass"                  , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDsubjet0area                   = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDsubjet0area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDsubjet1area                   = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDsubjet1area"                  , "", 200, 0,    4);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDsubjet0tau32                  = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDsubjet0tau32"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0SDsubjet0tau21                  = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0SDsubjet0tau21"                 , "", 200, 0,    1);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0MatchedGenJetMass               = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0MatchedGenJetMass"              , "", 200, 0,  500);  
-  // TH1D *  h_dRmatch_PUPsubjetpt400_Jet0Tau32                           = new TH1D( "h_dRmatch_PUPsubjetpt400_Jet0Tau32"                          , "", 200, 0,    1);  
-
-
-  // //-----------------------------------------
-
-
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_PreSelection_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt200_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt400_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt400to500_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt500to600_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt600to700_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt700to800_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt800to1000_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt1000to1500_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt1500to2000_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt2000to3000_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_AK8CHSpt3000toInf_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_CHSsubjetpt400_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
-
-
-
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_NoCorr                     = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_NoCorr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_Corr                       = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_Corr"                      , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrUp                     = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrUp"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrDn                     = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrDn"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrSmear                  = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrSmear"                 , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrSmearUp                = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrSmearUp"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrSmearDn                = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0mass_CorrSmearDn"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_NoCorr                   = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_NoCorr"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_Corr                     = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_Corr"                    , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrUp                   = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrUp"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrDn                   = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrDn"                  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSmear                = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSmear"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSmearUp              = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSmearUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSmearDn              = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSmearDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_NoCorr              = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_NoCorr"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_Corr                = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_Corr"               , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrUp              = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrUp"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrDn              = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrDn"             , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmear           = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmear"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearUp         = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearUp"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearDn         = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrSmearDn"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficial        = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficial"       , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear   = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrOfficialSmear"  , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrSubjets         = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0PuppiSDmass_CorrSubjets"        , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL23           = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL23"          , "", 200, 0,  500);  
-  // TH1D *  h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL123          = new TH1D( "h_Tau32lt0p7_PUPsubjetpt400_Jet0SDmass_CorrSubjetsL123"         , "", 200, 0,  500);  
 
 
 
@@ -5444,20 +3812,20 @@ void looptree(
          
 
   // double tagged
-  TH1D *  h_2ttag_inclu_dRapIn_DijetMass                  = new TH1D( "h_2ttag_inclu_dRapIn_DijetMass"                , "", 400, 0, 8000); 
-  TH1D *  h_2ttag_0btag_dRapIn_DijetMass                  = new TH1D( "h_2ttag_0btag_dRapIn_DijetMass"                , "", 400, 0, 8000); 
-  TH1D *  h_2ttag_1btag_dRapIn_DijetMass                  = new TH1D( "h_2ttag_1btag_dRapIn_DijetMass"                , "", 400, 0, 8000); 
-  TH1D *  h_2ttag_2btag_dRapIn_DijetMass                  = new TH1D( "h_2ttag_2btag_dRapIn_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_inclu_dRapIn_DijetMass                       = new TH1D( "h_2ttag_inclu_dRapIn_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_0btag_dRapIn_DijetMass                       = new TH1D( "h_2ttag_0btag_dRapIn_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_1btag_dRapIn_DijetMass                       = new TH1D( "h_2ttag_1btag_dRapIn_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_2btag_dRapIn_DijetMass                       = new TH1D( "h_2ttag_2btag_dRapIn_DijetMass"                , "", 400, 0, 8000); 
   
-  TH1D *  h_2ttag_inclu_dRapLo_DijetMass                  = new TH1D( "h_2ttag_inclu_dRapLo_DijetMass"                , "", 400, 0, 8000); 
-  TH1D *  h_2ttag_0btag_dRapLo_DijetMass                  = new TH1D( "h_2ttag_0btag_dRapLo_DijetMass"                , "", 400, 0, 8000); 
-  TH1D *  h_2ttag_1btag_dRapLo_DijetMass                  = new TH1D( "h_2ttag_1btag_dRapLo_DijetMass"                , "", 400, 0, 8000); 
-  TH1D *  h_2ttag_2btag_dRapLo_DijetMass                  = new TH1D( "h_2ttag_2btag_dRapLo_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_inclu_dRapLo_DijetMass                       = new TH1D( "h_2ttag_inclu_dRapLo_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_0btag_dRapLo_DijetMass                       = new TH1D( "h_2ttag_0btag_dRapLo_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_1btag_dRapLo_DijetMass                       = new TH1D( "h_2ttag_1btag_dRapLo_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_2btag_dRapLo_DijetMass                       = new TH1D( "h_2ttag_2btag_dRapLo_DijetMass"                , "", 400, 0, 8000); 
   
-  TH1D *  h_2ttag_inclu_dRapHi_DijetMass                  = new TH1D( "h_2ttag_inclu_dRapHi_DijetMass"                , "", 400, 0, 8000); 
-  TH1D *  h_2ttag_0btag_dRapHi_DijetMass                  = new TH1D( "h_2ttag_0btag_dRapHi_DijetMass"                , "", 400, 0, 8000); 
-  TH1D *  h_2ttag_1btag_dRapHi_DijetMass                  = new TH1D( "h_2ttag_1btag_dRapHi_DijetMass"                , "", 400, 0, 8000); 
-  TH1D *  h_2ttag_2btag_dRapHi_DijetMass                  = new TH1D( "h_2ttag_2btag_dRapHi_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_inclu_dRapHi_DijetMass                       = new TH1D( "h_2ttag_inclu_dRapHi_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_0btag_dRapHi_DijetMass                       = new TH1D( "h_2ttag_0btag_dRapHi_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_1btag_dRapHi_DijetMass                       = new TH1D( "h_2ttag_1btag_dRapHi_DijetMass"                , "", 400, 0, 8000); 
+  TH1D *  h_2ttag_2btag_dRapHi_DijetMass                       = new TH1D( "h_2ttag_2btag_dRapHi_DijetMass"                , "", 400, 0, 8000); 
 
   TH1D *  h_2ttag_inclu_dRapIn_DijetMassPuppi                  = new TH1D( "h_2ttag_inclu_dRapIn_DijetMassPuppi"                , "", 400, 0, 8000); 
   TH1D *  h_2ttag_0btag_dRapIn_DijetMassPuppi                  = new TH1D( "h_2ttag_0btag_dRapIn_DijetMassPuppi"                , "", 400, 0, 8000); 
@@ -5473,11 +3841,6 @@ void looptree(
   TH1D *  h_2ttag_0btag_dRapHi_DijetMassPuppi                  = new TH1D( "h_2ttag_0btag_dRapHi_DijetMassPuppi"                , "", 400, 0, 8000); 
   TH1D *  h_2ttag_1btag_dRapHi_DijetMassPuppi                  = new TH1D( "h_2ttag_1btag_dRapHi_DijetMassPuppi"                , "", 400, 0, 8000); 
   TH1D *  h_2ttag_2btag_dRapHi_DijetMassPuppi                  = new TH1D( "h_2ttag_2btag_dRapHi_DijetMassPuppi"                , "", 400, 0, 8000); 
-
-
-
-  
-
 
 
   TH1D *  h_2ttag_inclu_dRapIn_DijetMassPlusNeighbor      = new TH1D( "h_2ttag_inclu_dRapIn_DijetMassPlusNeighbor"    , "", 400, 0, 8000); 
@@ -5496,15 +3859,35 @@ void looptree(
   TH1D *  h_2ttag_2btag_dRapHi_DijetMassPlusNeighbor      = new TH1D( "h_2ttag_2btag_dRapHi_DijetMassPlusNeighbor"    , "", 400, 0, 8000); 
 
 
-  TH1D *  h_2ttag_inclu_DeltaRap                               = new TH1D( "h_2ttag_inclu_DeltaRap"                                           , "", 400, 0,    6); 
-  TH1D *  h_2ttag_0btag_DeltaRap                               = new TH1D( "h_2ttag_0btag_DeltaRap"                                           , "", 400, 0,    6); 
-  TH1D *  h_2ttag_1btag_DeltaRap                               = new TH1D( "h_2ttag_1btag_DeltaRap"                                           , "", 400, 0,    6); 
-  TH1D *  h_2ttag_2btag_DeltaRap                               = new TH1D( "h_2ttag_2btag_DeltaRap"                                           , "", 400, 0,    6); 
+  TH1D *  h_2ttag_inclu_DeltaRap                               = new TH1D( "h_2ttag_inclu_DeltaRap"                                           , "", 500, 0,    5); 
+  TH1D *  h_2ttag_0btag_DeltaRap                               = new TH1D( "h_2ttag_0btag_DeltaRap"                                           , "", 500, 0,    5); 
+  TH1D *  h_2ttag_1btag_DeltaRap                               = new TH1D( "h_2ttag_1btag_DeltaRap"                                           , "", 500, 0,    5); 
+  TH1D *  h_2ttag_2btag_DeltaRap                               = new TH1D( "h_2ttag_2btag_DeltaRap"                                           , "", 500, 0,    5); 
 
-  TH1D *  h_2ttag_inclu_DeltaPhi                               = new TH1D( "h_2ttag_inclu_DeltaPhi"                                           , "", 400, 0,  3.2); 
-  TH1D *  h_2ttag_0btag_DeltaPhi                               = new TH1D( "h_2ttag_0btag_DeltaPhi"                                           , "", 400, 0,  3.2); 
-  TH1D *  h_2ttag_1btag_DeltaPhi                               = new TH1D( "h_2ttag_1btag_DeltaPhi"                                           , "", 400, 0,  3.2); 
-  TH1D *  h_2ttag_2btag_DeltaPhi                               = new TH1D( "h_2ttag_2btag_DeltaPhi"                                           , "", 400, 0,  3.2); 
+  TH1D *  h_2ttag_inclu_DeltaRap_mTTgt1                        = new TH1D("h_2ttag_inclu_DeltaRap_mTTgt1"                                     , "", 500,   0,    5 ); 
+  TH1D *  h_2ttag_inclu_DeltaRap_mTTgt2                        = new TH1D("h_2ttag_inclu_DeltaRap_mTTgt2"                                     , "", 500,   0,    5 ); 
+  TH1D *  h_2ttag_inclu_DeltaRap_mTTgt3                        = new TH1D("h_2ttag_inclu_DeltaRap_mTTgt3"                                     , "", 500,   0,    5 ); 
+
+  TH1D *  h_2ttag_0btag_DeltaRap_mTTgt1                        = new TH1D("h_2ttag_0btag_DeltaRap_mTTgt1"                                     , "", 500,   0,    5 ); 
+  TH1D *  h_2ttag_0btag_DeltaRap_mTTgt2                        = new TH1D("h_2ttag_0btag_DeltaRap_mTTgt2"                                     , "", 500,   0,    5 ); 
+  TH1D *  h_2ttag_0btag_DeltaRap_mTTgt3                        = new TH1D("h_2ttag_0btag_DeltaRap_mTTgt3"                                     , "", 500,   0,    5 ); 
+
+  TH1D *  h_2ttag_1btag_DeltaRap_mTTgt1                        = new TH1D("h_2ttag_1btag_DeltaRap_mTTgt1"                                     , "", 500,   0,    5 ); 
+  TH1D *  h_2ttag_1btag_DeltaRap_mTTgt2                        = new TH1D("h_2ttag_1btag_DeltaRap_mTTgt2"                                     , "", 500,   0,    5 ); 
+  TH1D *  h_2ttag_1btag_DeltaRap_mTTgt3                        = new TH1D("h_2ttag_1btag_DeltaRap_mTTgt3"                                     , "", 500,   0,    5 ); 
+
+  TH1D *  h_2ttag_2btag_DeltaRap_mTTgt1                        = new TH1D("h_2ttag_2btag_DeltaRap_mTTgt1"                                     , "", 500,   0,    5 ); 
+  TH1D *  h_2ttag_2btag_DeltaRap_mTTgt2                        = new TH1D("h_2ttag_2btag_DeltaRap_mTTgt2"                                     , "", 500,   0,    5 ); 
+  TH1D *  h_2ttag_2btag_DeltaRap_mTTgt3                        = new TH1D("h_2ttag_2btag_DeltaRap_mTTgt3"                                     , "", 500,   0,    5 ); 
+
+
+
+
+
+  TH1D *  h_2ttag_inclu_DeltaPhi                               = new TH1D( "h_2ttag_inclu_DeltaPhi"                                           , "", 400, 2,  3.2); 
+  TH1D *  h_2ttag_0btag_DeltaPhi                               = new TH1D( "h_2ttag_0btag_DeltaPhi"                                           , "", 400, 2,  3.2); 
+  TH1D *  h_2ttag_1btag_DeltaPhi                               = new TH1D( "h_2ttag_1btag_DeltaPhi"                                           , "", 400, 2,  3.2); 
+  TH1D *  h_2ttag_2btag_DeltaPhi                               = new TH1D( "h_2ttag_2btag_DeltaPhi"                                           , "", 400, 2,  3.2); 
 
   TH1D *  h_2ttag_inclu_HT                                     = new TH1D( "h_2ttag_inclu_HT"                                                 , "", 400, 0,  8000); 
   TH1D *  h_2ttag_0btag_HT                                     = new TH1D( "h_2ttag_0btag_HT"                                                 , "", 400, 0,  8000); 
@@ -5550,26 +3933,6 @@ void looptree(
   TH1D *  h_2ttag_inclu_Jet0SDsubjet1tau2                      = new TH1D( "h_2ttag_inclu_Jet0SDsubjet1tau2"                                 ,"", 400, 0, 1); 
   TH1D *  h_2ttag_inclu_Jet0SDsubjet1tau3                      = new TH1D( "h_2ttag_inclu_Jet0SDsubjet1tau3"                                 ,"", 400, 0, 1); 
   TH1D *  h_2ttag_inclu_Jet0SDsubjet1bdisc                     = new TH1D( "h_2ttag_inclu_Jet0SDsubjet1bdisc"                                ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiPt                            = new TH1D( "h_2ttag_inclu_Jet0PuppiPt"                                       ,"", 400, 0, 4000); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiMass                          = new TH1D( "h_2ttag_inclu_Jet0PuppiMass"                                     ,"", 400, 0, 300); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDpt                          = new TH1D( "h_2ttag_inclu_Jet0PuppiSDpt"                                     ,"", 400, 0, 4000); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiTau1                          = new TH1D( "h_2ttag_inclu_Jet0PuppiTau1"                                     ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiTau2                          = new TH1D( "h_2ttag_inclu_Jet0PuppiTau2"                                     ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiTau3                          = new TH1D( "h_2ttag_inclu_Jet0PuppiTau3"                                     ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiTau4                          = new TH1D( "h_2ttag_inclu_Jet0PuppiTau4"                                     ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDmaxbdisc                    = new TH1D( "h_2ttag_inclu_Jet0PuppiSDmaxbdisc"                               ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0pt                   = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0pt"                              ,"", 400, 0, 2000); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0mass                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0mass"                            ,"", 400, 0, 300); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0tau1                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0tau1"                            ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0tau2                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0tau2"                            ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0tau3                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0tau3"                            ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0bdisc                = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0bdisc"                           ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1pt                   = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1pt"                              ,"", 400, 0, 2000); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1mass                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1mass"                            ,"", 400, 0, 300); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1tau1                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1tau1"                            ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1tau2                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1tau2"                            ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1tau3                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1tau3"                            ,"", 400, 0, 1); 
-  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc                = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_inclu_Jet0CHF                                = new TH1D( "h_2ttag_inclu_Jet0CHF"                                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_inclu_Jet0NHF                                = new TH1D( "h_2ttag_inclu_Jet0NHF"                                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_inclu_Jet0CM                                 = new TH1D( "h_2ttag_inclu_Jet0CM"                                            ,"", 200, 0, 200); 
@@ -5578,18 +3941,121 @@ void looptree(
   TH1D *  h_2ttag_inclu_Jet0CEF                                = new TH1D( "h_2ttag_inclu_Jet0CEF"                                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_inclu_Jet0MF                                 = new TH1D( "h_2ttag_inclu_Jet0MF"                                            ,"", 10, 0, 10); 
   TH1D *  h_2ttag_inclu_Jet0Mult                               = new TH1D( "h_2ttag_inclu_Jet0Mult"                                          ,"", 400, 0, 400); 
+ 
+  TH1D *  h_2ttag_inclu_Jet1P                                  = new TH1D( "h_2ttag_inclu_Jet1P"                                             ,"", 400, 0, 6000); 
+  TH1D *  h_2ttag_inclu_Jet1Pt                                 = new TH1D( "h_2ttag_inclu_Jet1Pt"                                            ,"", 400, 0, 4000); 
+  TH1D *  h_2ttag_inclu_Jet1Phi                                = new TH1D( "h_2ttag_inclu_Jet1Phi"                                           ,"", 400, -3.2, 3.2); 
+  TH1D *  h_2ttag_inclu_Jet1Rap                                = new TH1D( "h_2ttag_inclu_Jet1Rap"                                           ,"", 400, -5, 5); 
+  TH1D *  h_2ttag_inclu_Jet1SDmass                             = new TH1D( "h_2ttag_inclu_Jet1SDmass"                                        ,"", 400, 0, 400); 
+  TH1D *  h_2ttag_inclu_Jet1SDmassCorrL23                      = new TH1D( "h_2ttag_inclu_Jet1SDmassCorrL23"                                 ,"", 400, 0, 400); 
+  TH1D *  h_2ttag_inclu_Jet1SDmassCorrL23Up                    = new TH1D( "h_2ttag_inclu_Jet1SDmassCorrL23Up"                               ,"", 400, 0, 400); 
+  TH1D *  h_2ttag_inclu_Jet1Tau1                               = new TH1D( "h_2ttag_inclu_Jet1Tau1"                                          ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1Tau2                               = new TH1D( "h_2ttag_inclu_Jet1Tau2"                                          ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1Tau3                               = new TH1D( "h_2ttag_inclu_Jet1Tau3"                                          ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1Tau4                               = new TH1D( "h_2ttag_inclu_Jet1Tau4"                                          ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1SDmaxbdisc                         = new TH1D( "h_2ttag_inclu_Jet1SDmaxbdisc"                                    ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet0pt                        = new TH1D( "h_2ttag_inclu_Jet1SDsubjet0pt"                                   ,"", 400, 0, 2000); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet0mass                      = new TH1D( "h_2ttag_inclu_Jet1SDsubjet0mass"                                 ,"", 400, 0, 300); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet0tau1                      = new TH1D( "h_2ttag_inclu_Jet1SDsubjet0tau1"                                 ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet0tau2                      = new TH1D( "h_2ttag_inclu_Jet1SDsubjet0tau2"                                 ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet0tau3                      = new TH1D( "h_2ttag_inclu_Jet1SDsubjet0tau3"                                 ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet0bdisc                     = new TH1D( "h_2ttag_inclu_Jet1SDsubjet0bdisc"                                ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet1pt                        = new TH1D( "h_2ttag_inclu_Jet1SDsubjet1pt"                                   ,"", 400, 0, 2000); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet1mass                      = new TH1D( "h_2ttag_inclu_Jet1SDsubjet1mass"                                 ,"", 400, 0, 300); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet1tau1                      = new TH1D( "h_2ttag_inclu_Jet1SDsubjet1tau1"                                 ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet1tau2                      = new TH1D( "h_2ttag_inclu_Jet1SDsubjet1tau2"                                 ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet1tau3                      = new TH1D( "h_2ttag_inclu_Jet1SDsubjet1tau3"                                 ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1SDsubjet1bdisc                     = new TH1D( "h_2ttag_inclu_Jet1SDsubjet1bdisc"                                ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1CHF                                = new TH1D( "h_2ttag_inclu_Jet1CHF"                                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1NHF                                = new TH1D( "h_2ttag_inclu_Jet1NHF"                                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1CM                                 = new TH1D( "h_2ttag_inclu_Jet1CM"                                            ,"", 200, 0, 200); 
+  TH1D *  h_2ttag_inclu_Jet1NM                                 = new TH1D( "h_2ttag_inclu_Jet1NM"                                            ,"", 200, 0, 200); 
+  TH1D *  h_2ttag_inclu_Jet1NEF                                = new TH1D( "h_2ttag_inclu_Jet1NEF"                                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1CEF                                = new TH1D( "h_2ttag_inclu_Jet1CEF"                                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1MF                                 = new TH1D( "h_2ttag_inclu_Jet1MF"                                            ,"", 10, 0, 10); 
+  TH1D *  h_2ttag_inclu_Jet1Mult                               = new TH1D( "h_2ttag_inclu_Jet1Mult"                                          ,"", 400, 0, 400); 
+ 
+
+
+  TH1D *  h_2ttag_inclu_Jet0PuppiPt                            = new TH1D( "h_2ttag_inclu_Jet0PuppiPt"                                       ,"", 400, 0, 4000); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDmass                        = new TH1D( "h_2ttag_inclu_Jet0PuppiSDmass"                                   ,"", 400, 0, 300); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDpt                          = new TH1D( "h_2ttag_inclu_Jet0PuppiSDpt"                                     ,"", 400, 0, 4000); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiTau1                          = new TH1D( "h_2ttag_inclu_Jet0PuppiTau1"                                     ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiTau2                          = new TH1D( "h_2ttag_inclu_Jet0PuppiTau2"                                     ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiTau3                          = new TH1D( "h_2ttag_inclu_Jet0PuppiTau3"                                     ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiTau4                          = new TH1D( "h_2ttag_inclu_Jet0PuppiTau4"                                     ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiTau32                         = new TH1D( "h_2ttag_inclu_Jet0PuppiTau32"                                    ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDmaxbdisc                    = new TH1D( "h_2ttag_inclu_Jet0PuppiSDmaxbdisc"                               ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0pt                   = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0pt"                              ,"", 400, 0, 2000); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0mass                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0mass"                            ,"", 400, 0, 300); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0tau1                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0tau1"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0tau2                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0tau2"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0tau3                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0tau21                = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0tau21"                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet0bdisc                = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet0bdisc"                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1pt                   = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1pt"                              ,"", 400, 0, 2000); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1mass                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1mass"                            ,"", 400, 0, 300); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1tau1                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1tau1"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1tau2                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1tau2"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1tau3                 = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1tau21                = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1tau21"                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc                = new TH1D( "h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc"                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiCHF                           = new TH1D( "h_2ttag_inclu_Jet0PuppiCHF"                                      ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiNHF                           = new TH1D( "h_2ttag_inclu_Jet0PuppiNHF"                                      ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiCM                            = new TH1D( "h_2ttag_inclu_Jet0PuppiCM"                                       ,"", 200, 0, 200); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiNM                            = new TH1D( "h_2ttag_inclu_Jet0PuppiNM"                                       ,"", 200, 0, 200); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiNEF                           = new TH1D( "h_2ttag_inclu_Jet0PuppiNEF"                                      ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiCEF                           = new TH1D( "h_2ttag_inclu_Jet0PuppiCEF"                                      ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiMF                            = new TH1D( "h_2ttag_inclu_Jet0PuppiMF"                                       ,"", 10, 0, 10); 
+  TH1D *  h_2ttag_inclu_Jet0PuppiMult                          = new TH1D( "h_2ttag_inclu_Jet0PuppiMult"                                     ,"", 400, 0, 400); 
+ 
+
+  TH1D *  h_2ttag_inclu_Jet1PuppiPt                            = new TH1D( "h_2ttag_inclu_Jet1PuppiPt"                                       ,"", 400, 0, 4000); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDmass                        = new TH1D( "h_2ttag_inclu_Jet1PuppiSDmass"                                   ,"", 400, 0, 300); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDpt                          = new TH1D( "h_2ttag_inclu_Jet1PuppiSDpt"                                     ,"", 400, 0, 4000); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiTau1                          = new TH1D( "h_2ttag_inclu_Jet1PuppiTau1"                                     ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiTau2                          = new TH1D( "h_2ttag_inclu_Jet1PuppiTau2"                                     ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiTau3                          = new TH1D( "h_2ttag_inclu_Jet1PuppiTau3"                                     ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiTau4                          = new TH1D( "h_2ttag_inclu_Jet1PuppiTau4"                                     ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiTau32                         = new TH1D( "h_2ttag_inclu_Jet1PuppiTau32"                                    ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDmaxbdisc                    = new TH1D( "h_2ttag_inclu_Jet1PuppiSDmaxbdisc"                               ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet0pt                   = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet0pt"                              ,"", 400, 0, 2000); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet0mass                 = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet0mass"                            ,"", 400, 0, 300); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet0tau1                 = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet0tau1"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet0tau2                 = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet0tau2"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet0tau3                 = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet0tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet0bdisc                = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet0bdisc"                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet1pt                   = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet1pt"                              ,"", 400, 0, 2000); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet1mass                 = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet1mass"                            ,"", 400, 0, 300); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet1tau1                 = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet1tau1"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet1tau2                 = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet1tau2"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet1tau3                 = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet1tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiSDsubjet1bdisc                = new TH1D( "h_2ttag_inclu_Jet1PuppiSDsubjet1bdisc"                           ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiCHF                           = new TH1D( "h_2ttag_inclu_Jet1PuppiCHF"                                      ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiNHF                           = new TH1D( "h_2ttag_inclu_Jet1PuppiNHF"                                      ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiCM                            = new TH1D( "h_2ttag_inclu_Jet1PuppiCM"                                       ,"", 200, 0, 200); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiNM                            = new TH1D( "h_2ttag_inclu_Jet1PuppiNM"                                       ,"", 200, 0, 200); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiNEF                           = new TH1D( "h_2ttag_inclu_Jet1PuppiNEF"                                      ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiCEF                           = new TH1D( "h_2ttag_inclu_Jet1PuppiCEF"                                      ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiMF                            = new TH1D( "h_2ttag_inclu_Jet1PuppiMF"                                       ,"", 10, 0, 10); 
+  TH1D *  h_2ttag_inclu_Jet1PuppiMult                          = new TH1D( "h_2ttag_inclu_Jet1PuppiMult"                                     ,"", 400, 0, 400); 
+ 
+
+
 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet0pt                   = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet0pt"                              ,"", 400, 0, 2000);
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet0mass                 = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet0mass"                            ,"", 400, 0, 300); 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet0tau1                 = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet0tau1"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet0tau2                 = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet0tau2"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet0tau3                 = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet0tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet0tau21                = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet0tau21"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet0bdisc                = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet0bdisc"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet1pt                   = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet1pt"                              ,"", 400, 0, 2000);
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet1mass                 = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet1mass"                            ,"", 400, 0, 300); 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet1tau1                 = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet1tau1"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet1tau2                 = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet1tau2"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet1tau3                 = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet1tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet1tau21                = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet1tau21"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_2btag_Jet0PuppiSDsubjet1bdisc                = new TH1D( "h_2ttag_2btag_Jet0PuppiSDsubjet1bdisc"                           ,"", 400, 0, 1); 
 
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet0pt                   = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet0pt"                              ,"", 400, 0, 2000);
@@ -5597,12 +4063,14 @@ void looptree(
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet0tau1                 = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet0tau1"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet0tau2                 = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet0tau2"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet0tau3                 = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet0tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet0tau21                = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet0tau21"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet0bdisc                = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet0bdisc"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet1pt                   = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet1pt"                              ,"", 400, 0, 2000);
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet1mass                 = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet1mass"                            ,"", 400, 0, 300); 
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet1tau1                 = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet1tau1"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet1tau2                 = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet1tau2"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet1tau3                 = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet1tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet1tau21                = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet1tau21"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_1btag_Jet0PuppiSDsubjet1bdisc                = new TH1D( "h_2ttag_1btag_Jet0PuppiSDsubjet1bdisc"                           ,"", 400, 0, 1); 
 
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet0pt                   = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet0pt"                              ,"", 400, 0, 2000);
@@ -5610,18 +4078,26 @@ void looptree(
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet0tau1                 = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet0tau1"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet0tau2                 = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet0tau2"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet0tau3                 = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet0tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet0tau21                = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet0tau21"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet0bdisc                = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet0bdisc"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet1pt                   = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet1pt"                              ,"", 400, 0, 2000);
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet1mass                 = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet1mass"                            ,"", 400, 0, 300); 
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet1tau1                 = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet1tau1"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet1tau2                 = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet1tau2"                            ,"", 400, 0, 1); 
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet1tau3                 = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet1tau3"                            ,"", 400, 0, 1); 
+  TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet1tau21                = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet1tau21"                           ,"", 400, 0, 1); 
   TH1D *  h_2ttag_0btag_Jet0PuppiSDsubjet1bdisc                = new TH1D( "h_2ttag_0btag_Jet0PuppiSDsubjet1bdisc"                           ,"", 400, 0, 1); 
 
 
 
   TH1D *  h_2btag_DijetMass                                    = new TH1D("h_2btag_DijetMass"                                                , "", 700,   0, 7000 );
   TH1D *  h_2btag_DeltaRap                                     = new TH1D("h_2btag_DeltaRap"                                                 , "", 500,   0,    5 );
+  TH1D *  h_2btag_DeltaRap_mTTgt1                              = new TH1D("h_2btag_DeltaRap_mTTgt1"                                          , "", 500,   0,    5 ); 
+  TH1D *  h_2btag_DeltaRap_mTTgt2                              = new TH1D("h_2btag_DeltaRap_mTTgt2"                                          , "", 500,   0,    5 ); 
+  TH1D *  h_2btag_DeltaRap_mTTgt3                              = new TH1D("h_2btag_DeltaRap_mTTgt3"                                          , "", 500,   0,    5 ); 
+  
+  TH1D *  h_2btag_jet0Pt                                       = new TH1D("h_2btag_jet0Pt"                                                   , "", 400,   0, 4000 );
+  TH1D *  h_2btag_jet1Pt                                       = new TH1D("h_2btag_jet1Pt"                                                   , "", 400,   0, 4000 );
   TH1D *  h_2btag_jet0massSD                                   = new TH1D("h_2btag_jet0massSD"                                               , "", 500,   0,  500 );
   TH1D *  h_2btag_jet0massSDpuppi                              = new TH1D("h_2btag_jet0massSDpuppi"                                          , "", 500,   0,  500 );
   TH1D *  h_2btag_jet0tau32                                    = new TH1D("h_2btag_jet0tau32"                                                , "", 200,   0,    1 );
@@ -5784,31 +4260,40 @@ void looptree(
   TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag"                  , "", 1400, 0, 7000 );     
   TH1D * h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag"                  , "", 1400, 0, 7000 );  
 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive"                       , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_0btag"                           , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_1btag"                           , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_2btag"                           , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive"                       , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_0btag"                           , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_1btag"                           , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_2btag"                           , "", 1400, 0, 7000 ); 
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive"                       , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_0btag"                           , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_1btag"                           , "", 1400, 0, 7000 );   
-  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_2btag"                           , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive"              , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag"                  , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag"                  , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag"                  , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive"              , "", 1400, 0, 7000 );
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag"                  , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag"                  , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag"                  , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive"              , "", 1400, 0, 7000 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag"                  , "", 1400, 0, 7000 );     
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag"                  , "", 1400, 0, 7000 );     
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag"                  , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive"                     , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_0btag"                         , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_1btag"                         , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapIn_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapIn_2btag"                         , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive"                     , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_0btag"                         , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_1btag"                         , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapHi_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapHi_2btag"                         , "", 1400, 0, 7000 ); 
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive"                     , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_0btag"                         , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_1btag"                         , "", 1400, 0, 7000 );   
+  TH1D * h_AntiTagPuppi_Probe_jetP_dRapLo_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_jetP_dRapLo_2btag"                         , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive"            , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag"                , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag"                , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag"                , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive"            , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag"                , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag"                , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag"                , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive"            , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag"                , "", 1400, 0, 7000 );     
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag"                , "", 1400, 0, 7000 );     
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag"                , "", 1400, 0, 7000 );  
 
+  TH1D * h_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclusive                     = new TH1D( "h_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclusive"                 , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag                         = new TH1D( "h_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag"                     , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag                         = new TH1D( "h_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag"                     , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag                         = new TH1D( "h_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag"                     , "", 1400, 0, 7000 );  
+  
+  TH1D * h_AntiTagPuppi_TagTau32_jetP_dRapIn_inclusive                      = new TH1D( "h_AntiTagPuppi_TagTau32_jetP_dRapIn_inclusive"                  , "", 1400, 0, 7000 );
+  TH1D * h_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag                          = new TH1D( "h_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag"                      , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag                          = new TH1D( "h_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag"                      , "", 1400, 0, 7000 );  
+  TH1D * h_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag                          = new TH1D( "h_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag"                      , "", 1400, 0, 7000 );  
 
   TH1D * h_AntiTagCHS_Probe_Nvtx_dRapIn_inclusive                           = new TH1D( "h_AntiTagCHS_Probe_Nvtx_dRapIn_inclusive"                       , "", 120, 0, 120 );
   TH1D * h_AntiTagCHS_Probe_Nvtx_dRapIn_0btag                               = new TH1D( "h_AntiTagCHS_Probe_Nvtx_dRapIn_0btag"                           , "", 120, 0, 120 );  
@@ -5835,30 +4320,40 @@ void looptree(
   TH1D * h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapLo_1btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapLo_1btag"                  , "", 120, 0, 120 );     
   TH1D * h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapLo_2btag                      = new TH1D( "h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapLo_2btag"                  , "", 120, 0, 120 );  
 
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapIn_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapIn_inclusive"                       , "", 120, 0, 120 );
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapIn_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapIn_0btag"                           , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapIn_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapIn_1btag"                           , "", 120, 0, 120 ); 
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapIn_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapIn_2btag"                           , "", 120, 0, 120 ); 
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapHi_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapHi_inclusive"                       , "", 120, 0, 120 );
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapHi_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapHi_0btag"                           , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapHi_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapHi_1btag"                           , "", 120, 0, 120 ); 
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapHi_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapHi_2btag"                           , "", 120, 0, 120 ); 
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapLo_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapLo_inclusive"                       , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapLo_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapLo_0btag"                           , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapLo_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapLo_1btag"                           , "", 120, 0, 120 );   
-  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapLo_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapLo_2btag"                           , "", 120, 0, 120 );
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_inclusive"              , "", 120, 0, 120 );
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_0btag"                  , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_1btag"                  , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_2btag"                  , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_inclusive"              , "", 120, 0, 120 );
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_0btag"                  , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_1btag"                  , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_2btag"                  , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_inclusive"              , "", 120, 0, 120 );  
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_0btag"                  , "", 120, 0, 120 );     
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_1btag"                  , "", 120, 0, 120 );     
-  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_2btag"                  , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapIn_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapIn_inclusive"                     , "", 120, 0, 120 );
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapIn_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapIn_0btag"                         , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapIn_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapIn_1btag"                         , "", 120, 0, 120 ); 
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapIn_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapIn_2btag"                         , "", 120, 0, 120 ); 
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapHi_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapHi_inclusive"                     , "", 120, 0, 120 );
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapHi_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapHi_0btag"                         , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapHi_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapHi_1btag"                         , "", 120, 0, 120 ); 
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapHi_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapHi_2btag"                         , "", 120, 0, 120 ); 
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapLo_inclusive                         = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapLo_inclusive"                     , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapLo_0btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapLo_0btag"                         , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapLo_1btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapLo_1btag"                         , "", 120, 0, 120 );   
+  TH1D * h_AntiTagPuppi_Probe_Nvtx_dRapLo_2btag                             = new TH1D( "h_AntiTagPuppi_Probe_Nvtx_dRapLo_2btag"                         , "", 120, 0, 120 );
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_inclusive"            , "", 120, 0, 120 );
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_0btag"                , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_1btag"                , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_2btag"                , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_inclusive"            , "", 120, 0, 120 );
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_0btag"                , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_1btag"                , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_2btag"                , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_inclusive                = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_inclusive"            , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_0btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_0btag"                , "", 120, 0, 120 );     
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_1btag"                , "", 120, 0, 120 );     
+  TH1D * h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_2btag"                , "", 120, 0, 120 );  
+
+  TH1D * h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_inclusive                     = new TH1D( "h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_inclusive"                 , "", 120, 0, 120 );
+  TH1D * h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_0btag                         = new TH1D( "h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_0btag"                     , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_1btag                         = new TH1D( "h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_1btag"                     , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_2btag                         = new TH1D( "h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_2btag"                     , "", 120, 0, 120 ); 
+
+  TH1D * h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_inclusive                      = new TH1D( "h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_inclusive"                  , "", 120, 0, 120 );
+  TH1D * h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_0btag                          = new TH1D( "h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_0btag"                      , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_1btag                          = new TH1D( "h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_1btag"                      , "", 120, 0, 120 );  
+  TH1D * h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_2btag                          = new TH1D( "h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_2btag"                      , "", 120, 0, 120 ); 
 
   TH1D * h_AntiTagCHS_Probe_jetY_dRapIn_inclusive                           = new TH1D( "h_AntiTagCHS_Probe_jetY_dRapIn_inclusive"                       , "", 200, -3, 3 );
   TH1D * h_AntiTagCHS_Probe_jetY_dRapIn_0btag                               = new TH1D( "h_AntiTagCHS_Probe_jetY_dRapIn_0btag"                           , "", 200, -3, 3 );  
@@ -5911,7 +4406,15 @@ void looptree(
   TH1D * h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_1btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_1btag"                  , "", 200, -3, 3 );     
   TH1D * h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_2btag                    = new TH1D( "h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_2btag"                  , "", 200, -3, 3 );  
 
-
+  TH1D * h_AntiTagPuppi_TagMassSD_jetY_dRapIn_inclusive                     = new TH1D( "h_AntiTagPuppi_TagMassSD_jetY_dRapIn_inclusive"                   , "", 200, -3, 3 );
+  TH1D * h_AntiTagPuppi_TagMassSD_jetY_dRapIn_0btag                         = new TH1D( "h_AntiTagPuppi_TagMassSD_jetY_dRapIn_0btag"                       , "", 200, -3, 3 );  
+  TH1D * h_AntiTagPuppi_TagMassSD_jetY_dRapIn_1btag                         = new TH1D( "h_AntiTagPuppi_TagMassSD_jetY_dRapIn_1btag"                       , "", 200, -3, 3 );  
+  TH1D * h_AntiTagPuppi_TagMassSD_jetY_dRapIn_2btag                         = new TH1D( "h_AntiTagPuppi_TagMassSD_jetY_dRapIn_2btag"                       , "", 200, -3, 3 );  
+  
+  TH1D * h_AntiTagPuppi_TagTau32_jetY_dRapIn_inclusive                      = new TH1D( "h_AntiTagPuppi_TagTau32_jetY_dRapIn_inclusive"                    , "", 200, -3, 3 );
+  TH1D * h_AntiTagPuppi_TagTau32_jetY_dRapIn_0btag                          = new TH1D( "h_AntiTagPuppi_TagTau32_jetY_dRapIn_0btag"                        , "", 200, -3, 3 );  
+  TH1D * h_AntiTagPuppi_TagTau32_jetY_dRapIn_1btag                          = new TH1D( "h_AntiTagPuppi_TagTau32_jetY_dRapIn_1btag"                        , "", 200, -3, 3 );  
+  TH1D * h_AntiTagPuppi_TagTau32_jetY_dRapIn_2btag                          = new TH1D( "h_AntiTagPuppi_TagTau32_jetY_dRapIn_2btag"                        , "", 200, -3, 3 );  
 
   TH2D * h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_inclusive                         = new TH2D( "h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_inclusive"                       , "", 70, 0, 7000, 60, -3, 3  );
   TH2D * h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_0btag                             = new TH2D( "h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_0btag"                           , "", 70, 0, 7000, 60, -3, 3  );  
@@ -6612,9 +5115,6 @@ void looptree(
 
 
 
-
-
-
   // --- Puppi
   // -- dRapHi
   // - 0btag
@@ -6662,6 +5162,8 @@ void looptree(
   PredictedDistribution * predDist_Puppi_SR_dRapHi_inclu_JetTau32                    ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_inclu_maxbdisc                    ;
  
+
+
   // -- dRapLo
   // - 0btag
   PredictedDistribution * predDist_Puppi_SR_dRapLo_0btag_DijetMass                   ;
@@ -7039,14 +5541,13 @@ void looptree(
  
 
   if (run_bkgdest){
-
+    cout<<"Setting up PredictedDistribution"<<endl;
     cout<<"Check mistag Integral "<<h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag ->Integral() <<endl;
 
     // --- CHS
     // -- dRapHi
     // - 0btag
     predDist_CHS_SR_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_SR_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
-    cout<<"debug1"<<endl;
     predDist_CHS_SR_dRapHi_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_SR_dRapHi_0btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_CHS_SR_dRapHi_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_SR_dRapHi_0btag_HT"           , "", 1000, 0, 10000);
     predDist_CHS_SR_dRapHi_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_SR_dRapHi_0btag_DeltaRap"     , "",  500, 0,     5);
@@ -7089,7 +5590,7 @@ void looptree(
     predDist_CHS_SR_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_SR_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_CHS_SR_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_SR_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_CHS_SR_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_SR_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
-   cout<<"debug2"<<endl;
+
     // -- dRapLo
     // - 0btag
     predDist_CHS_SR_dRapLo_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_CHS_SR_dRapLo_0btag_DijetMass"    , "",  900, 0,  9000);
@@ -7135,7 +5636,7 @@ void looptree(
     predDist_CHS_SR_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_SR_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_CHS_SR_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_SR_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_CHS_SR_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_SR_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
-      cout<<"debug3"<<endl;
+ 
 
     // -- dRapIn
     // - 0btag
@@ -7182,7 +5683,7 @@ void looptree(
     predDist_CHS_SR_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_SR_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_CHS_SR_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_SR_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_CHS_SR_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_SR_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
-         cout<<"debug4"<<endl;
+        
 
 
     // --- Alternative tag definition for closur test - CHS
@@ -7231,7 +5732,7 @@ void looptree(
     predDist_CHS_SB1_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_SB1_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_CHS_SB1_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_SB1_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_CHS_SB1_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_SB1_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
-            cout<<"debug5"<<endl;
+          
 
     // -- dRapLo
     // - 0btag
@@ -7278,7 +5779,7 @@ void looptree(
     predDist_CHS_SB1_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_SB1_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_CHS_SB1_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_SB1_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_CHS_SB1_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_SB1_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
-               cout<<"debug6"<<endl;
+             
 
     // -- dRapIn
     // - 0btag
@@ -7326,7 +5827,7 @@ void looptree(
     predDist_CHS_SB1_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_SB1_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_CHS_SB1_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_SB1_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
    
-               cout<<"debug7"<<endl;
+              
 
 
 
@@ -7376,7 +5877,7 @@ void looptree(
     predDist_CHS_SB2_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_SB2_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_CHS_SB2_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_SB2_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_CHS_SB2_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_CHS_SB2_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
-                  cout<<"debug8"<<endl;
+               
 
     // -- dRapLo
     // - 0btag
@@ -7423,7 +5924,7 @@ void looptree(
     predDist_CHS_SB2_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_SB2_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_CHS_SB2_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_SB2_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_CHS_SB2_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_CHS_SB2_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
-                  cout<<"debug9"<<endl;
+                 
 
     // -- dRapIn
     // - 0btag
@@ -7470,11 +5971,9 @@ void looptree(
     predDist_CHS_SB2_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_SB2_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_CHS_SB2_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_SB2_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_CHS_SB2_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_CHS_SB2_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
-                  cout<<"debug10"<<endl;
+                  
 
-
-
-
+    cout<<"Done setting up CHS PredictedDistribution"<<endl;
 
 
 
@@ -7524,7 +6023,6 @@ void looptree(
     predDist_Puppi_SR_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SR_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
-                  cout<<"debug11"<<endl;
 
     // -- dRapLo
     // - 0btag
@@ -7571,7 +6069,6 @@ void looptree(
     predDist_Puppi_SR_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SR_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
-                     cout<<"debug12"<<endl;
 
     // -- dRapIn
     // - 0btag
@@ -7582,8 +6079,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetY"         , "",  300,-3,     3);
-    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetSDmass"    , "",  700, 0,   700);
-    predDist_Puppi_SR_dRapIn_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetTau32"     , "",  200, 0,     1);
+    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetSDmass"    , "",  700, 0,   700);
+    predDist_Puppi_SR_dRapIn_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapIn_0btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_maxbdisc"     , "",  200, 0,     1);
     // - 1btag
     predDist_Puppi_SR_dRapIn_1btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_DijetMass"    , "",  900, 0,  9000);
@@ -7593,8 +6090,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetY"         , "",  300,-3,     3);
-    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetSDmass"    , "",  700, 0,   700);
-    predDist_Puppi_SR_dRapIn_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetTau32"     , "",  200, 0,     1);
+    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetSDmass"    , "",  700, 0,   700);
+    predDist_Puppi_SR_dRapIn_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapIn_1btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_maxbdisc"     , "",  200, 0,     1);
     // - 2btag
     predDist_Puppi_SR_dRapIn_2btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_DijetMass"    , "",  900, 0,  9000);
@@ -7604,8 +6101,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetY"         , "",  300,-3,     3);
-    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetSDmass"    , "",  700, 0,   700);
-    predDist_Puppi_SR_dRapIn_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetTau32"     , "",  200, 0,     1);
+    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetSDmass"    , "",  700, 0,   700);
+    predDist_Puppi_SR_dRapIn_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapIn_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_maxbdisc"     , "",  200, 0,     1);
     // - btag inclusive
     predDist_Puppi_SR_dRapIn_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_DijetMass"    , "",  900, 0,  9000);
@@ -7615,11 +6112,19 @@ void looptree(
     predDist_Puppi_SR_dRapIn_inclu_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_inclu_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_inclu_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetY"         , "",  300,-3,     3);
-    predDist_Puppi_SR_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
-    predDist_Puppi_SR_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
+    predDist_Puppi_SR_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
+    predDist_Puppi_SR_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
    
-                     cout<<"debug13"<<endl;
+   // Special mistag hists
+  // h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag  
+  // h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag  
+  // h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag  
+  // h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclu  
+  // h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag   
+  // h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag   
+  // h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag   
+  // h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclu   
 
 
     // --- Alternative tag definition for closure test - Puppi
@@ -7668,7 +6173,6 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SB1_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SB1_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
-                        cout<<"debug14"<<endl;
 
     // -- dRapLo
     // - 0btag
@@ -7715,7 +6219,6 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SB1_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SB1_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
-                           cout<<"debug15"<<endl;
 
     // -- dRapIn
     // - 0btag
@@ -7763,8 +6266,6 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SB1_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
    
-                           cout<<"debug16"<<endl;
-
 
 
     // --- Alternative tag definition 2 for closur test - Puppi
@@ -7813,7 +6314,6 @@ void looptree(
     predDist_Puppi_SB2_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB2_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SB2_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB2_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SB2_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB2_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
-                              cout<<"debug17"<<endl;
 
     // -- dRapLo
     // - 0btag
@@ -7907,15 +6407,11 @@ void looptree(
     predDist_Puppi_SB2_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB2_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SB2_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB2_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
    
-    cout<<"debug2"<<endl;
+    cout<<"Done setting up PUPPI PredictedDistribution"<<endl;
 
  }
 
-
-
-
-
-  cout<<"done setting up bkgdest"<<endl;
+  cout<<"Done setting up bkgdest"<<endl;
 
   int n_topTag0MaxBdiscM_True  = 0;
   int n_topTag0MaxBdiscM_False = 0;
@@ -8004,8 +6500,8 @@ void looptree(
     double puppi1_jec_groomedmass_corr  = 1.0; 
     double puppi0_ptsmear               = 1.0; 
     double puppi1_ptsmear               = 1.0; 
-    double puppi0_masssmear               = 1.0; 
-    double puppi1_masssmear               = 1.0; 
+    double puppi0_masssmear             = 1.0; 
+    double puppi1_masssmear             = 1.0; 
 
     double ht = 0;
     double event_top_pt_weight = 1;
@@ -8310,6 +6806,7 @@ void looptree(
     h_CutFlow->Fill("all",evWeight);
     if (jet0pt < minAK8Pt || jet1pt < minAK8Pt) continue;   h_CutFlow->Fill("pt",evWeight);
     if (ht < minHT) continue;                               h_CutFlow->Fill("HT",evWeight);
+    h_DeltaPhi_PreCut   ->Fill( DijetDeltaPhi            , evWeight );        
     if (fabs(DijetDeltaPhi)<2.1) continue;                  h_CutFlow->Fill("dPhi",evWeight);
     // Reject noise events
     // if (PassMETFilters==0) continue;                        h_CutFlow->Fill(4,evWeight);
@@ -8593,13 +7090,21 @@ void looptree(
       j1_puptag_b =  j1_puptag_b_noSF ;
     }
 
-    if ( !j0_tag_b_noSF && !j1_tag_b_noSF  )                                     h_BtagCategoriesPreSF   ->Fill(0.5 , evWeight);
-    if ( (!j0_tag_b_noSF && j1_tag_b_noSF)||(j0_tag_b_noSF && !j1_tag_b_noSF)  ) h_BtagCategoriesPreSF   ->Fill(1.5 , evWeight);
-    if ( j0_tag_b_noSF && j1_tag_b_noSF  )                                       h_BtagCategoriesPreSF   ->Fill(2.5 , evWeight);
+    if ( !j0_tag_b_noSF && !j1_tag_b_noSF  )                                     h_BtagCategoriesPreSF        ->Fill(0.5 , evWeight);
+    if ( (!j0_tag_b_noSF && j1_tag_b_noSF)||(j0_tag_b_noSF && !j1_tag_b_noSF)  ) h_BtagCategoriesPreSF        ->Fill(1.5 , evWeight);
+    if ( j0_tag_b_noSF && j1_tag_b_noSF  )                                       h_BtagCategoriesPreSF        ->Fill(2.5 , evWeight);
     
-    if ( !j0_tag_b && !j1_tag_b  )                           h_BtagCategoriesPostSF   ->Fill(0.5, evWeight);
-    if ( (!j0_tag_b && j1_tag_b)||(j0_tag_b && !j1_tag_b)  ) h_BtagCategoriesPostSF   ->Fill(1.5, evWeight);
-    if ( j0_tag_b && j1_tag_b  )                             h_BtagCategoriesPostSF   ->Fill(2.5, evWeight);
+    if ( !j0_tag_b && !j1_tag_b  )                                               h_BtagCategoriesPostSF       ->Fill(0.5, evWeight);
+    if ( (!j0_tag_b && j1_tag_b)||(j0_tag_b && !j1_tag_b)  )                     h_BtagCategoriesPostSF       ->Fill(1.5, evWeight);
+    if ( j0_tag_b && j1_tag_b  )                                                 h_BtagCategoriesPostSF       ->Fill(2.5, evWeight);
+
+    if ( !j0_puptag_b_noSF && !j1_puptag_b_noSF  )                                           h_BtagCategoriesPuppiPreSF   ->Fill(0.5 , evWeight);
+    if ( (!j0_puptag_b_noSF && j1_puptag_b_noSF)||(j0_puptag_b_noSF && !j1_puptag_b_noSF)  ) h_BtagCategoriesPuppiPreSF   ->Fill(1.5 , evWeight);
+    if ( j0_puptag_b_noSF && j1_puptag_b_noSF  )                                             h_BtagCategoriesPuppiPreSF   ->Fill(2.5 , evWeight);
+    
+    if ( !j0_puptag_b && !j1_puptag_b  )                                                     h_BtagCategoriesPuppiPostSF  ->Fill(0.5, evWeight);
+    if ( (!j0_puptag_b && j1_puptag_b)||(j0_puptag_b && !j1_puptag_b)  )                     h_BtagCategoriesPuppiPostSF  ->Fill(1.5, evWeight);
+    if ( j0_puptag_b && j1_puptag_b  )                                                       h_BtagCategoriesPuppiPostSF  ->Fill(2.5, evWeight);
 
     if(verbose_){
 
@@ -8925,17 +7430,29 @@ void looptree(
         //---------- (PUPPI JETS) - anti-tag tau32, keep jet in SD mass window 
         if (j0_antipuptag_tau32_puptag_mass){
           
-          // btag inclusive
+          // Probe  - dRap inclusive - btag inclusive 
           h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                                    ->Fill( jet1P       , evWeight ); 
           h_AntiTagPuppi_Probe_jetY_dRapIn_inclusive                                    ->Fill( jet1Y       , evWeight ); 
           h_AntiTagPuppi_Probe_Nvtx_dRapIn_inclusive                                    ->Fill( nvtxg       , evWeight ); 
           h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_inclusive                              ->Fill( jet1P , jet1Y      , evWeight ); 
 
+          // Tag - dRap inclusive - btag inclusive - t-tag
           if (j1_puptag_t)    h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive       ->Fill( jet1P       , evWeight );
           if (j1_puptag_t)    h_AntiTagPuppi_TagMassSDTau32_jetY_dRapIn_inclusive       ->Fill( jet1Y       , evWeight );
           if (j1_puptag_t)    h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_inclusive       ->Fill( nvtxg       , evWeight );
           if (j1_puptag_t)    h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapIn_inclusive ->Fill( jet1P , jet1Y        , evWeight );
+          
+          // Tag - dRap inclusive - btag inclusive - mass tag
+          if (j1_puptag_mass)  h_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclusive           ->Fill( jet1P       , evWeight );
+          if (j1_puptag_mass)  h_AntiTagPuppi_TagMassSD_jetY_dRapIn_inclusive           ->Fill( jet1Y       , evWeight );
+          if (j1_puptag_mass)  h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_inclusive           ->Fill( nvtxg       , evWeight );
 
+          // Tag - dRap inclusive - btag inclusive - tau32-tag
+          if (j1_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetP_dRapIn_inclusive           ->Fill( jet1P       , evWeight );
+          if (j1_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetY_dRapIn_inclusive           ->Fill( jet1Y       , evWeight );
+          if (j1_puptag_tau32)  h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_inclusive           ->Fill( nvtxg       , evWeight );
+
+          // Probe + Tag - b-tag inclusive
           if (DijetDeltaRap<=1.0){
             h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                              ->Fill( jet1P       , evWeight );
             if (j1_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive   ->Fill( jet1P       , evWeight );
@@ -8945,10 +7462,14 @@ void looptree(
             if (j1_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive   ->Fill( jet1P       , evWeight );
           }
 
-          // 2 btag        
+          // Probe + Tag - 2 b-tag          
           if (j0_puptag_b && j1_puptag_b){
+          
             h_AntiTagPuppi_Probe_jetP_dRapIn_2btag                                  ->Fill( jet1P       , evWeight );
-            if (j1_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag       ->Fill( jet1P       , evWeight );
+            if (j1_puptag_t)      h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag   ->Fill( jet1P       , evWeight );
+            if (j1_puptag_mass)   h_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag        ->Fill( jet1P       , evWeight );
+            if (j1_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag         ->Fill( jet1P       , evWeight );
+
             if (DijetDeltaRap<=1.0){
               h_AntiTagPuppi_Probe_jetP_dRapLo_2btag                                ->Fill( jet1P       , evWeight );
               if (j1_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ->Fill( jet1P       , evWeight );
@@ -8959,10 +7480,14 @@ void looptree(
             }
           }
           
-          // 1 btag
+          // Probe + Tag - 1 b-tag    
           if ( (j0_puptag_b && !j1_puptag_b) || (j1_puptag_b && !j0_puptag_b) ){
+          
             h_AntiTagPuppi_Probe_jetP_dRapIn_1btag                                  ->Fill( jet1P       , evWeight );
-            if (j1_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag       ->Fill( jet1P       , evWeight );
+            if (j1_puptag_t)      h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag   ->Fill( jet1P       , evWeight );
+            if (j1_puptag_mass)   h_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag        ->Fill( jet1P       , evWeight );
+            if (j1_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag         ->Fill( jet1P       , evWeight );
+
             if (DijetDeltaRap<=1.0){
               h_AntiTagPuppi_Probe_jetP_dRapLo_1btag                                ->Fill( jet1P       , evWeight );
               if (j1_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ->Fill( jet1P       , evWeight );
@@ -8973,10 +7498,14 @@ void looptree(
             }
           }
          
-          // 0 btag
+          // Probe + Tag - 0 b-tag    
           if (!j0_puptag_b && ! j1_puptag_b){
+           
             h_AntiTagPuppi_Probe_jetP_dRapIn_0btag                                  ->Fill( jet1P       , evWeight );
-            if (j1_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag       ->Fill( jet1P       , evWeight );
+            if (j1_puptag_t)      h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag   ->Fill( jet1P       , evWeight );
+            if (j1_puptag_mass)   h_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag        ->Fill( jet1P       , evWeight );
+            if (j1_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag         ->Fill( jet1P       , evWeight );
+
             if (DijetDeltaRap<=1.0){
               h_AntiTagPuppi_Probe_jetP_dRapLo_0btag                                ->Fill( jet1P       , evWeight );
               if (j1_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ->Fill( jet1P       , evWeight );
@@ -9053,19 +7582,29 @@ void looptree(
         //---------- (PUPPI jets) anti-puptag tau32, keep jet in SD mass window
         if (j1_antipuptag_tau32_puptag_mass){
 
-          h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                             ->Fill( jet0P       , evWeight ); 
-          h_AntiTagPuppi_Probe_jetY_dRapIn_inclusive                             ->Fill( jet0Y       , evWeight ); 
-          h_AntiTagPuppi_Probe_Nvtx_dRapIn_inclusive                             ->Fill( nvtxg       , evWeight ); 
-          h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_inclusive                       ->Fill( jet0P , jet0Y      , evWeight ); 
+          // Probe  - dRap inclusive - btag inclusive 
+          h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                                      ->Fill( jet0P       , evWeight ); 
+          h_AntiTagPuppi_Probe_jetY_dRapIn_inclusive                                      ->Fill( jet0Y       , evWeight ); 
+          h_AntiTagPuppi_Probe_Nvtx_dRapIn_inclusive                                      ->Fill( nvtxg       , evWeight ); 
+          h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_inclusive                                ->Fill( jet0P , jet0Y      , evWeight ); 
 
-          if (j0_puptag_t)    h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive   ->Fill( jet0P       , evWeight );
-          if (j0_puptag_t)    h_AntiTagPuppi_TagMassSDTau32_jetY_dRapIn_inclusive   ->Fill( jet0Y       , evWeight );
-          if (j0_puptag_t)    h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_inclusive   ->Fill( nvtxg       , evWeight );
-          if (j0_puptag_t)    h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapIn_inclusive     ->Fill( jet0P , jet0Y        , evWeight );
+          // Tag - dRap inclusive - btag inclusive - t-tag
+          if (j0_puptag_t)    h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive         ->Fill( jet0P       , evWeight );
+          if (j0_puptag_t)    h_AntiTagPuppi_TagMassSDTau32_jetY_dRapIn_inclusive         ->Fill( jet0Y       , evWeight );
+          if (j0_puptag_t)    h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_inclusive         ->Fill( nvtxg       , evWeight );
+          if (j0_puptag_t)    h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapIn_inclusive   ->Fill( jet0P , jet0Y      , evWeight );
+          
+          // Tag - dRap inclusive - btag inclusive - mass tagg
+          if (j0_puptag_mass)  h_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclusive             ->Fill( jet0P       , evWeight );
+          if (j0_puptag_mass)  h_AntiTagPuppi_TagMassSD_jetY_dRapIn_inclusive             ->Fill( jet0Y       , evWeight );
+          if (j0_puptag_mass)  h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_inclusive             ->Fill( nvtxg       , evWeight );
 
+          // Tag - dRap inclusive - btag inclusive - tau32-tag
+          if (j0_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetP_dRapIn_inclusive             ->Fill( jet0P       , evWeight );
+          if (j0_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetY_dRapIn_inclusive             ->Fill( jet0Y       , evWeight );
+          if (j0_puptag_tau32)  h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_inclusive             ->Fill( nvtxg       , evWeight );
 
-          // h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                                ->Fill( jet0P       , evWeight );
-          // if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive     ->Fill( jet0P       , evWeight );
+          // Probe + Tag - b-tag inclusive
           if (DijetDeltaRap<=1.0){
             h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                              ->Fill( jet0P       , evWeight );
             if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive   ->Fill( jet0P       , evWeight );
@@ -9074,10 +7613,15 @@ void looptree(
             h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                              ->Fill( jet0P       , evWeight );
             if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive   ->Fill( jet0P       , evWeight );
           }
-                   
+           
+          // Probe + Tag - 2 b-tag                    
           if (j0_puptag_b && j1_puptag_b){
+            
             h_AntiTagPuppi_Probe_jetP_dRapIn_2btag                                  ->Fill( jet0P       , evWeight );
-            if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag       ->Fill( jet0P       , evWeight );
+            if (j0_puptag_t)      h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag   ->Fill( jet0P       , evWeight );
+            if (j0_puptag_mass)   h_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag        ->Fill( jet0P       , evWeight );
+            if (j0_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag         ->Fill( jet0P       , evWeight );
+
             if (DijetDeltaRap<=1.0){
               h_AntiTagPuppi_Probe_jetP_dRapLo_2btag                                ->Fill( jet0P       , evWeight );
               if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ->Fill( jet0P       , evWeight );
@@ -9087,9 +7631,14 @@ void looptree(
               if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ->Fill( jet0P       , evWeight );
             }
           }
+          // Probe + Tag - 1 b-tag  
           if ( (j0_puptag_b && !j1_puptag_b) || (j1_puptag_b && !j0_puptag_b) ){
+
             h_AntiTagPuppi_Probe_jetP_dRapIn_1btag                                  ->Fill( jet0P       , evWeight );
-            if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag       ->Fill( jet0P       , evWeight );
+            if (j0_puptag_t)      h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag   ->Fill( jet0P       , evWeight );
+            if (j0_puptag_mass)   h_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag        ->Fill( jet0P       , evWeight );
+            if (j0_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag         ->Fill( jet0P       , evWeight );
+
             if (DijetDeltaRap<=1.0){
               h_AntiTagPuppi_Probe_jetP_dRapLo_1btag                                ->Fill( jet0P       , evWeight );
               if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ->Fill( jet0P       , evWeight );
@@ -9099,9 +7648,14 @@ void looptree(
               if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ->Fill( jet0P       , evWeight );
             }
           }
-          if (!j0_puptag_b && ! j1_puptag_b){
+          // Probe + Tag - 0 b-tag  
+          if (!j0_puptag_b && !j1_puptag_b){
+
             h_AntiTagPuppi_Probe_jetP_dRapIn_0btag                                  ->Fill( jet0P       , evWeight );
-            if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag       ->Fill( jet0P       , evWeight );
+            if (j0_puptag_t)      h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag   ->Fill( jet0P       , evWeight );
+            if (j0_puptag_mass)   h_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag        ->Fill( jet0P       , evWeight );
+            if (j0_puptag_tau32)  h_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag         ->Fill( jet0P       , evWeight );
+
             if (DijetDeltaRap<=1.0){
               h_AntiTagPuppi_Probe_jetP_dRapLo_0btag                                ->Fill( jet0P       , evWeight );
               if (j0_puptag_t)  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ->Fill( jet0P       , evWeight );
@@ -9224,50 +7778,50 @@ void looptree(
         //----------anti-puptag tau32 Puppi, keep jet in SD mass window - alt
         if (j0_antipuptag_tau32_puptag_alt_mass){
 
-          h_alt_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                                  ->Fill( jet1P       , evWeight ); 
+          h_alt_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                                     ->Fill( jet1P       , evWeight ); 
           if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive      ->Fill( jet1P       , evWeight );
           if (DijetDeltaRap<=1.0){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                                ->Fill( jet1P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                                   ->Fill( jet1P       , evWeight );
             if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive    ->Fill( jet1P       , evWeight );
           }
           if (DijetDeltaRap>1.0){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                                ->Fill( jet1P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                                   ->Fill( jet1P       , evWeight );
             if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive    ->Fill( jet1P       , evWeight );
           }
                    
           if (j0_puptag_b && j1_puptag_b){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_2btag                                    ->Fill( jet1P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_2btag                                       ->Fill( jet1P       , evWeight );
             if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag        ->Fill( jet1P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_2btag                                  ->Fill( jet1P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_2btag                                     ->Fill( jet1P       , evWeight );
               if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag      ->Fill( jet1P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_2btag                                  ->Fill( jet1P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_2btag                                     ->Fill( jet1P       , evWeight );
               if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag      ->Fill( jet1P       , evWeight );
             }
           }
           if ( (j0_puptag_b && !j1_puptag_b) || (j1_puptag_b && !j0_puptag_b) ){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_1btag                                    ->Fill( jet1P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_1btag                                       ->Fill( jet1P       , evWeight );
             if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag        ->Fill( jet1P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_1btag                                  ->Fill( jet1P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_1btag                                     ->Fill( jet1P       , evWeight );
               if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag      ->Fill( jet1P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_1btag                                  ->Fill( jet1P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_1btag                                     ->Fill( jet1P       , evWeight );
               if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag      ->Fill( jet1P       , evWeight );
             }
           }
           if (!j0_puptag_b && ! j1_puptag_b){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_0btag                                    ->Fill( jet1P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_0btag                                       ->Fill( jet1P       , evWeight );
             if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag        ->Fill( jet1P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_0btag                                  ->Fill( jet1P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_0btag                                     ->Fill( jet1P       , evWeight );
               if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag      ->Fill( jet1P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_0btag                                  ->Fill( jet1P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_0btag                                     ->Fill( jet1P       , evWeight );
               if (j1_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag      ->Fill( jet1P        , evWeight );
             }
           }
@@ -9333,38 +7887,38 @@ void looptree(
         //----------anti-tag tau32 CHS, keep jet in SD mass window - alt
         if (j1_antitag_tau32_tag_alt_mass){
           h_alt_AntiTagCHS_Probe_jetP_dRapIn_inclusive                                  ->Fill( jet0P       , evWeight );
-          if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive     ->Fill( jet0P       , evWeight );
+          if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive      ->Fill( jet0P       , evWeight );
           if (DijetDeltaRap<=1.0){
             h_alt_AntiTagCHS_Probe_jetP_dRapLo_inclusive                                ->Fill( jet0P       , evWeight );
-            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive   ->Fill( jet0P       , evWeight );
+            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive    ->Fill( jet0P       , evWeight );
           }
           if (DijetDeltaRap>1.0){
             h_alt_AntiTagCHS_Probe_jetP_dRapHi_inclusive                                ->Fill( jet0P       , evWeight );
-            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive   ->Fill( jet0P       , evWeight );
+            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive    ->Fill( jet0P       , evWeight );
           }
                    
           if (j0_tag_b && j1_tag_b){
             h_alt_AntiTagCHS_Probe_jetP_dRapIn_2btag                                    ->Fill( jet0P       , evWeight );
-            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag       ->Fill( jet0P       , evWeight );
+            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag        ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapLo_2btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag      ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapHi_2btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag      ->Fill( jet0P       , evWeight );
             }
           }
           if ( (j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b) ){
             h_alt_AntiTagCHS_Probe_jetP_dRapIn_1btag                                    ->Fill( jet0P       , evWeight );
-            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag       ->Fill( jet0P       , evWeight );
+            if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag        ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapLo_1btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag      ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
               h_alt_AntiTagCHS_Probe_jetP_dRapHi_1btag                                  ->Fill( jet0P       , evWeight );
-              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag     ->Fill( jet0P       , evWeight );
+              if (j0_tag_alt_t)  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag      ->Fill( jet0P       , evWeight );
             }
           }
           if (!j0_tag_b && ! j1_tag_b){
@@ -9419,14 +7973,14 @@ void looptree(
             }
           }
           if (!j0_tag_b && ! j1_tag_b){
-            h_alt2_AntiTagCHS_Probe_jetP_dRapIn_0btag                                    ->Fill( jet0P       , evWeight );
+            h_alt2_AntiTagCHS_Probe_jetP_dRapIn_0btag                                     ->Fill( jet0P       , evWeight );
             if (j0_tag_alt2_t)  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag        ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt2_AntiTagCHS_Probe_jetP_dRapLo_0btag                                  ->Fill( jet0P       , evWeight );
+              h_alt2_AntiTagCHS_Probe_jetP_dRapLo_0btag                                   ->Fill( jet0P       , evWeight );
               if (j0_tag_alt2_t)  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag      ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt2_AntiTagCHS_Probe_jetP_dRapHi_0btag                                  ->Fill( jet0P       , evWeight );
+              h_alt2_AntiTagCHS_Probe_jetP_dRapHi_0btag                                   ->Fill( jet0P       , evWeight );
               if (j0_tag_alt2_t)  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag      ->Fill( jet0P       , evWeight );
             }
           }
@@ -9435,50 +7989,50 @@ void looptree(
 
         //----------anti-puptag tau32 Puppi, keep jet in SD mass window - alt
         if (j1_antipuptag_tau32_puptag_alt_mass){
-          h_alt_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                                  ->Fill( jet0P       , evWeight );
+          h_alt_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                                    ->Fill( jet0P       , evWeight );
           if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive     ->Fill( jet0P       , evWeight );
           if (DijetDeltaRap<=1.0){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                                ->Fill( jet0P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                                  ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive   ->Fill( jet0P       , evWeight );
           }
           if (DijetDeltaRap>1.0){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                                ->Fill( jet0P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                                  ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive   ->Fill( jet0P       , evWeight );
           }
                    
           if (j0_puptag_b && j1_puptag_b){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_2btag                                    ->Fill( jet0P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_2btag                                      ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag       ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_2btag                                  ->Fill( jet0P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_2btag                                    ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_2btag                                  ->Fill( jet0P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_2btag                                    ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ->Fill( jet0P       , evWeight );
             }
           }
           if ( (j0_puptag_b && !j1_puptag_b) || (j1_puptag_b && !j0_puptag_b) ){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_1btag                                    ->Fill( jet0P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_1btag                                      ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag       ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_1btag                                  ->Fill( jet0P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_1btag                                    ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_1btag                                  ->Fill( jet0P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_1btag                                    ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ->Fill( jet0P       , evWeight );
             }
           }
           if (!j0_puptag_b && ! j1_puptag_b){
-            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_0btag                                    ->Fill( jet0P       , evWeight );
+            h_alt_AntiTagPuppi_Probe_jetP_dRapIn_0btag                                       ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag        ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_0btag                                  ->Fill( jet0P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapLo_0btag                                     ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag      ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_0btag                                  ->Fill( jet0P       , evWeight );
+              h_alt_AntiTagPuppi_Probe_jetP_dRapHi_0btag                                     ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt_t)  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag      ->Fill( jet0P       , evWeight );
             }
           }
@@ -9486,56 +8040,54 @@ void looptree(
 
         //----------anti-puptag tau32 Puppi, keep jet in SD mass window - alt2
         if (j1_antipuptag_tau32_puptag_alt2_mass){
-          h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                                  ->Fill( jet0P       , evWeight );
+          h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                                     ->Fill( jet0P       , evWeight );
           if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive     ->Fill( jet0P       , evWeight );
           if (DijetDeltaRap<=1.0){
-            h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                                ->Fill( jet0P       , evWeight );
+            h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                                   ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive   ->Fill( jet0P       , evWeight );
           }
           if (DijetDeltaRap>1.0){
-            h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                                ->Fill( jet0P       , evWeight );
+            h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                                   ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive   ->Fill( jet0P       , evWeight );
           }
                    
           if (j0_puptag_b && j1_puptag_b){
-            h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_2btag                                    ->Fill( jet0P       , evWeight );
+            h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_2btag                                       ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag       ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_2btag                                  ->Fill( jet0P       , evWeight );
+              h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_2btag                                     ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_2btag                                  ->Fill( jet0P       , evWeight );
+              h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_2btag                                     ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ->Fill( jet0P       , evWeight );
             }
           }
           if ( (j0_puptag_b && !j1_puptag_b) || (j1_puptag_b && !j0_puptag_b) ){
-            h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_1btag                                    ->Fill( jet0P       , evWeight );
+            h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_1btag                                       ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag       ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_1btag                                  ->Fill( jet0P       , evWeight );
+              h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_1btag                                     ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_1btag                                  ->Fill( jet0P       , evWeight );
+              h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_1btag                                     ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ->Fill( jet0P       , evWeight );
             }
           }
           if (!j0_puptag_b && ! j1_puptag_b){
-            h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_0btag                                    ->Fill( jet0P       , evWeight );
+            h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_0btag                                        ->Fill( jet0P       , evWeight );
             if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag        ->Fill( jet0P       , evWeight );
             if (DijetDeltaRap<=1.0){
-              h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_0btag                                  ->Fill( jet0P       , evWeight );
+              h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_0btag                                      ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag      ->Fill( jet0P       , evWeight );
             }
             if (DijetDeltaRap>1.0){
-              h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_0btag                                  ->Fill( jet0P       , evWeight );
+              h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_0btag                                      ->Fill( jet0P       , evWeight );
               if (j0_puptag_alt2_t)  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag      ->Fill( jet0P       , evWeight );
             }
           }
         }
-
-
 
       }
 
@@ -9673,8 +8225,172 @@ void looptree(
   
     if (run_kinematic){
 
+   
+      // ---- Basic Histograms - preselection ----
 
-      // -- Measure b-tag efficiency in QCD
+      // Dijet mass
+      h_DijetMass_dRapIn                                     ->Fill( dijetMass                , evWeight );
+      if (DijetDeltaRap  <1) h_DijetMass_dRapLo              ->Fill( dijetMass                , evWeight );
+      if (DijetDeltaRap >=1) h_DijetMass_dRapHi              ->Fill( dijetMass                , evWeight );                           
+       
+      h_DijetMassPlusNeighbor_dRapIn                         ->Fill( mass_dijet_PlusNeighborJet_ratio20                , evWeight );
+      if (DijetDeltaRap  <1) h_DijetMassPlusNeighbor_dRapLo  ->Fill( mass_dijet_PlusNeighborJet_ratio20                , evWeight );
+      if (DijetDeltaRap >=1) h_DijetMassPlusNeighbor_dRapHi  ->Fill( mass_dijet_PlusNeighborJet_ratio20                , evWeight );                           
+         
+      // Delta Rapidity                     
+      h_DeltaRap                                             ->Fill( DijetDeltaRap            , evWeight );         
+      if (dijetMass>1000) h_DeltaRap_mTTgt1                  ->Fill( DijetDeltaRap            , evWeight );         
+      if (dijetMass>2000) h_DeltaRap_mTTgt2                  ->Fill( DijetDeltaRap            , evWeight );         
+      if (dijetMass>3000) h_DeltaRap_mTTgt3                  ->Fill( DijetDeltaRap            , evWeight );         
+
+      // Event variables
+      h_DeltaPhi                                 ->Fill( DijetDeltaPhi            , evWeight );        
+      h_HT                                       ->Fill( ht                       , evWeight );   
+      h_MET                                      ->Fill( AllHadMETpt              , evWeight );   
+      h_METphi                                   ->Fill( AllHadMETphi             , evWeight );   
+      h_Nvtx                                     ->Fill( AllHadNvtx               , evWeight );   
+      h_EventWeight                              ->Fill( evWeight                            );         
+
+      // Jet 0 CHS variables
+      h_Jet0P                                    ->Fill( jet0P                    , evWeight );          
+      h_Jet0Pt                                   ->Fill( jet0pt                   , evWeight );          
+      h_Jet0Phi                                  ->Fill( jet0P4.Phi()             , evWeight );          
+      h_Jet0Rap                                  ->Fill( jet0P4.Rapidity()        , evWeight );          
+      h_Jet0sdmass                               ->Fill( jet0sdmass               , evWeight );          
+      h_Jet0Tau1                                 ->Fill( Jet0Tau1                 , evWeight );          
+      h_Jet0Tau2                                 ->Fill( Jet0Tau2                 , evWeight );          
+      h_Jet0Tau3                                 ->Fill( Jet0Tau3                 , evWeight );          
+      h_Jet0Tau4                                 ->Fill( Jet0Tau4                 , evWeight );                                                                
+      h_Jet0SDmaxbdisc                           ->Fill( Jet0SDmaxbdisc           , evWeight );        
+      h_Jet0SDsubjet0pt                          ->Fill( Jet0SDsubjet0pt          , evWeight );          
+      h_Jet0SDsubjet0mass                        ->Fill( Jet0SDsubjet0mass        , evWeight );                   
+      h_Jet0SDsubjet0tau1                        ->Fill( Jet0SDsubjet0tau1        , evWeight );          
+      h_Jet0SDsubjet0tau2                        ->Fill( Jet0SDsubjet0tau2        , evWeight );          
+      h_Jet0SDsubjet0tau3                        ->Fill( Jet0SDsubjet0tau3        , evWeight );          
+      h_Jet0SDsubjet0bdisc                       ->Fill( Jet0SDsubjet0bdisc       , evWeight );          
+      h_Jet0SDsubjet1pt                          ->Fill( Jet0SDsubjet1pt          , evWeight );          
+      h_Jet0SDsubjet1mass                        ->Fill( Jet0SDsubjet1mass        , evWeight );                                     
+      h_Jet0SDsubjet1tau1                        ->Fill( Jet0SDsubjet1tau1        , evWeight );          
+      h_Jet0SDsubjet1tau2                        ->Fill( Jet0SDsubjet1tau2        , evWeight );          
+      h_Jet0SDsubjet1tau3                        ->Fill( Jet0SDsubjet1tau3        , evWeight );          
+      h_Jet0SDsubjet1bdisc                       ->Fill( Jet0SDsubjet1bdisc       , evWeight );          
+      h_Jet0CHF                                  ->Fill( Jet0CHF                  , evWeight );          
+      h_Jet0NHF                                  ->Fill( Jet0NHF                  , evWeight );          
+      h_Jet0CM                                   ->Fill( Jet0CM                   , evWeight );          
+      h_Jet0NM                                   ->Fill( Jet0NM                   , evWeight );          
+      h_Jet0NEF                                  ->Fill( Jet0NEF                  , evWeight );          
+      h_Jet0CEF                                  ->Fill( Jet0CEF                  , evWeight );          
+      h_Jet0MF                                   ->Fill( Jet0MF                   , evWeight );          
+      h_Jet0Mult                                 ->Fill( Jet0Mult                 , evWeight );   
+
+      // Jet 0 PUPPI variables
+      h_Jet0PuppiPt                              ->Fill( puppi0pt                 , evWeight );                                
+      h_Jet0PuppiMass                            ->Fill( puppi0P4.M()             , evWeight );                         
+      h_Jet0PuppiSDpt                            ->Fill( jet0sdpt                 , evWeight );                              
+      h_Jet0PuppiTau1                            ->Fill( Jet0PuppiTau1            , evWeight );          
+      h_Jet0PuppiTau2                            ->Fill( Jet0PuppiTau2            , evWeight );          
+      h_Jet0PuppiTau3                            ->Fill( Jet0PuppiTau3            , evWeight );          
+      h_Jet0PuppiTau4                            ->Fill( Jet0PuppiTau4            , evWeight );                              
+      h_Jet0PuppiTau32                           ->Fill( Jet0PuppiTau32           , evWeight );                              
+      h_Jet0PuppiTau21                           ->Fill( Jet0PuppiTau21           , evWeight );                              
+      h_Jet0PuppiSDmaxbdisc                      ->Fill( Jet0PuppiSDmaxbdisc      , evWeight ); 
+      h_Jet0puppisdmass                          ->Fill( puppi0sdmass             , evWeight );                 
+      h_Jet0NsubjetsSDPuppi                      ->Fill( Jet0NsubjetsSDPuppi             , evWeight );                 
+      h_Jet0PuppiSDsubjet0pt                     ->Fill( Jet0PuppiSDsubjet0pt     , evWeight );          
+      h_Jet0PuppiSDsubjet0mass                   ->Fill( Jet0PuppiSDsubjet0mass   , evWeight );          
+      h_Jet0PuppiSDsubjet0tau1                   ->Fill( Jet0PuppiSDsubjet0tau1   , evWeight );          
+      h_Jet0PuppiSDsubjet0tau2                   ->Fill( Jet0PuppiSDsubjet0tau2   , evWeight );          
+      h_Jet0PuppiSDsubjet0tau3                   ->Fill( Jet0PuppiSDsubjet0tau3   , evWeight );          
+      h_Jet0PuppiSDsubjet0tau21                  ->Fill( Jet0PuppiSDsubjet0tau2/Jet0PuppiSDsubjet0tau1   , evWeight );          
+      h_Jet0PuppiSDsubjet0bdisc                  ->Fill( Jet0PuppiSDsubjet0bdisc  , evWeight );          
+      h_Jet0PuppiSDsubjet1pt                     ->Fill( Jet0PuppiSDsubjet1pt     , evWeight );          
+      h_Jet0PuppiSDsubjet1mass                   ->Fill( Jet0PuppiSDsubjet1mass   , evWeight );          
+      h_Jet0PuppiSDsubjet1tau1                   ->Fill( Jet0PuppiSDsubjet1tau1   , evWeight );          
+      h_Jet0PuppiSDsubjet1tau2                   ->Fill( Jet0PuppiSDsubjet1tau2   , evWeight );          
+      h_Jet0PuppiSDsubjet1tau3                   ->Fill( Jet0PuppiSDsubjet1tau3   , evWeight );          
+      h_Jet0PuppiSDsubjet1tau21                  ->Fill( Jet0PuppiSDsubjet1tau2/Jet0PuppiSDsubjet1tau1   , evWeight );          
+      h_Jet0PuppiSDsubjet1bdisc                  ->Fill( Jet0PuppiSDsubjet1bdisc  , evWeight );       
+      h_Jet0PuppiCHF                             ->Fill( Jet0PuppiCHF             , evWeight );          
+      h_Jet0PuppiNHF                             ->Fill( Jet0PuppiNHF             , evWeight );          
+      h_Jet0PuppiCM                              ->Fill( Jet0PuppiCM              , evWeight );          
+      h_Jet0PuppiNM                              ->Fill( Jet0PuppiNM              , evWeight );          
+      h_Jet0PuppiNEF                             ->Fill( Jet0PuppiNEF             , evWeight );          
+      h_Jet0PuppiCEF                             ->Fill( Jet0PuppiCEF             , evWeight );          
+      h_Jet0PuppiMF                              ->Fill( Jet0PuppiMF              , evWeight );          
+      h_Jet0PuppiMult                            ->Fill( Jet0PuppiMult            , evWeight );          
+
+
+      // Jet 1 CHS variables
+      h_Jet1P                                    ->Fill( jet1P                    , evWeight );          
+      h_Jet1Pt                                   ->Fill( jet1pt                   , evWeight );          
+      h_Jet1Phi                                  ->Fill( jet1P4.Phi()             , evWeight );          
+      h_Jet1Rap                                  ->Fill( jet1P4.Rapidity()        , evWeight );          
+      h_Jet1sdmass                               ->Fill( jet1sdmass               , evWeight );          
+      h_Jet1Tau1                                 ->Fill( Jet1Tau1                 , evWeight );          
+      h_Jet1Tau2                                 ->Fill( Jet1Tau2                 , evWeight );          
+      h_Jet1Tau3                                 ->Fill( Jet1Tau3                 , evWeight );          
+      h_Jet1Tau4                                 ->Fill( Jet1Tau4                 , evWeight );                                 
+      h_Jet1SDmaxbdisc                           ->Fill( Jet1SDmaxbdisc           , evWeight );        
+      h_Jet1SDsubjet0pt                          ->Fill( Jet1SDsubjet0pt          , evWeight );          
+      h_Jet1SDsubjet0mass                        ->Fill( Jet1SDsubjet0mass        , evWeight );                   
+      h_Jet1SDsubjet0tau1                        ->Fill( Jet1SDsubjet0tau1        , evWeight );          
+      h_Jet1SDsubjet0tau2                        ->Fill( Jet1SDsubjet0tau2        , evWeight );          
+      h_Jet1SDsubjet0tau3                        ->Fill( Jet1SDsubjet0tau3        , evWeight );          
+      h_Jet1SDsubjet0bdisc                       ->Fill( Jet1SDsubjet0bdisc       , evWeight );          
+      h_Jet1SDsubjet1pt                          ->Fill( Jet1SDsubjet1pt          , evWeight );          
+      h_Jet1SDsubjet1mass                        ->Fill( Jet1SDsubjet1mass        , evWeight );                                     
+      h_Jet1SDsubjet1tau1                        ->Fill( Jet1SDsubjet1tau1        , evWeight );          
+      h_Jet1SDsubjet1tau2                        ->Fill( Jet1SDsubjet1tau2        , evWeight );          
+      h_Jet1SDsubjet1tau3                        ->Fill( Jet1SDsubjet1tau3        , evWeight );          
+      h_Jet1SDsubjet1bdisc                       ->Fill( Jet1SDsubjet1bdisc       , evWeight );          
+      h_Jet1CHF                                  ->Fill( Jet1CHF                  , evWeight );          
+      h_Jet1NHF                                  ->Fill( Jet1NHF                  , evWeight );          
+      h_Jet1CM                                   ->Fill( Jet1CM                   , evWeight );          
+      h_Jet1NM                                   ->Fill( Jet1NM                   , evWeight );          
+      h_Jet1NEF                                  ->Fill( Jet1NEF                  , evWeight );          
+      h_Jet1CEF                                  ->Fill( Jet1CEF                  , evWeight );          
+      h_Jet1MF                                   ->Fill( Jet1MF                   , evWeight );          
+      h_Jet1Mult                                 ->Fill( Jet1Mult                 , evWeight ); 
+
+      // Jet 1 PUPPI variables
+      h_Jet1PuppiPt                              ->Fill( puppi1pt                 , evWeight );                                
+      h_Jet1PuppiMass                            ->Fill( puppi1P4.M()             , evWeight );                         
+      h_Jet1PuppiSDpt                            ->Fill( jet1sdpt                 , evWeight );                              
+      h_Jet1PuppiTau1                            ->Fill( Jet1PuppiTau1            , evWeight );          
+      h_Jet1PuppiTau2                            ->Fill( Jet1PuppiTau2            , evWeight );          
+      h_Jet1PuppiTau3                            ->Fill( Jet1PuppiTau3            , evWeight );          
+      h_Jet1PuppiTau4                            ->Fill( Jet1PuppiTau4            , evWeight ); 
+      h_Jet1PuppiTau32                           ->Fill( Jet1PuppiTau32           , evWeight );                              
+      h_Jet1PuppiTau21                           ->Fill( Jet1PuppiTau21           , evWeight );                                 
+      h_Jet1PuppiSDmaxbdisc                      ->Fill( Jet1PuppiSDmaxbdisc      , evWeight ); 
+      h_Jet1puppisdmass                          ->Fill( puppi1sdmass             , evWeight );                 
+      h_Jet1PuppiSDsubjet0pt                     ->Fill( Jet1PuppiSDsubjet0pt     , evWeight );          
+      h_Jet1PuppiSDsubjet0mass                   ->Fill( Jet1PuppiSDsubjet0mass   , evWeight );          
+      h_Jet1PuppiSDsubjet0tau1                   ->Fill( Jet1PuppiSDsubjet0tau1   , evWeight );          
+      h_Jet1PuppiSDsubjet0tau2                   ->Fill( Jet1PuppiSDsubjet0tau2   , evWeight );          
+      h_Jet1PuppiSDsubjet0tau3                   ->Fill( Jet1PuppiSDsubjet0tau3   , evWeight );          
+      h_Jet1PuppiSDsubjet0tau21                  ->Fill( Jet1PuppiSDsubjet0tau2/Jet1PuppiSDsubjet0tau1   , evWeight );          
+      h_Jet1PuppiSDsubjet0bdisc                  ->Fill( Jet1PuppiSDsubjet0bdisc  , evWeight );          
+      h_Jet1PuppiSDsubjet1pt                     ->Fill( Jet1PuppiSDsubjet1pt     , evWeight );          
+      h_Jet1PuppiSDsubjet1mass                   ->Fill( Jet1PuppiSDsubjet1mass   , evWeight );          
+      h_Jet1PuppiSDsubjet1tau1                   ->Fill( Jet1PuppiSDsubjet1tau1   , evWeight );          
+      h_Jet1PuppiSDsubjet1tau2                   ->Fill( Jet1PuppiSDsubjet1tau2   , evWeight );          
+      h_Jet1PuppiSDsubjet1tau3                   ->Fill( Jet1PuppiSDsubjet1tau3   , evWeight );  
+      h_Jet1PuppiSDsubjet1tau21                  ->Fill( Jet1PuppiSDsubjet1tau2/Jet1PuppiSDsubjet1tau1   , evWeight );                  
+      h_Jet1PuppiSDsubjet1bdisc                  ->Fill( Jet1PuppiSDsubjet1bdisc  , evWeight );        
+      h_Jet1PuppiCHF                             ->Fill( Jet1PuppiCHF             , evWeight );          
+      h_Jet1PuppiNHF                             ->Fill( Jet1PuppiNHF             , evWeight );          
+      h_Jet1PuppiCM                              ->Fill( Jet1PuppiCM              , evWeight );          
+      h_Jet1PuppiNM                              ->Fill( Jet1PuppiNM              , evWeight );          
+      h_Jet1PuppiNEF                             ->Fill( Jet1PuppiNEF             , evWeight );          
+      h_Jet1PuppiCEF                             ->Fill( Jet1PuppiCEF             , evWeight );          
+      h_Jet1PuppiMF                              ->Fill( Jet1PuppiMF              , evWeight );          
+      h_Jet1PuppiMult                            ->Fill( Jet1PuppiMult            , evWeight );          
+
+
+      // ---- Measure b-tag efficiency in QCD ----
+
+      //  b-tag diagnostic plots
       h_check_Jet0SDmaxbdisc                   ->Fill( Jet0SDmaxbdisc                 , evWeight);              
       h_check_Jet0SDmaxbdiscflavParton         ->Fill( Jet0SDmaxbdiscflavParton       , evWeight);                        
       h_check_Jet0SDsubjet0bdisc               ->Fill( Jet0SDsubjet0bdisc             , evWeight);                  
@@ -9705,6 +8421,7 @@ void looptree(
       h_check_Jet1GenMatched_partonPt          ->Fill( Jet1GenMatched_partonPt        , evWeight);                       
       h_check_Jet1GenMatched_partonID          ->Fill( Jet1GenMatched_partonID        , evWeight);                       
 
+      // CHS subjet angular separation
       TLorentzVector Jet0SDsubjet0P4;
       TLorentzVector Jet0SDsubjet1P4;
       Jet0SDsubjet0P4.SetPtEtaPhiM( Jet0SDsubjet0pt, Jet0SDsubjet0eta, Jet0SDsubjet0phi, Jet0SDsubjet0mass);
@@ -9718,6 +8435,34 @@ void looptree(
       double deltaR_Jet0_subjet0_subjet1 = Jet0SDsubjet0P4.DeltaR( Jet0SDsubjet1P4 );
       double deltaR_Jet1_subjet0_subjet1 = Jet1SDsubjet0P4.DeltaR( Jet1SDsubjet1P4 );
 
+      h_deltaR_Jet0_sub0_sub1 ->Fill(deltaR_Jet0_subjet0_subjet1);
+      h_deltaR_Jet1_sub0_sub1 ->Fill(deltaR_Jet1_subjet0_subjet1);
+      
+      // PUPPI subjet angular separation
+      TLorentzVector Jet0PuppiSDsubjet0P4;
+      TLorentzVector Jet0PuppiSDsubjet1P4;
+      Jet0PuppiSDsubjet0P4.SetPtEtaPhiM( Jet0PuppiSDsubjet0pt, Jet0PuppiSDsubjet0eta, Jet0PuppiSDsubjet0phi, Jet0PuppiSDsubjet0mass);
+      Jet0PuppiSDsubjet0P4.SetPtEtaPhiM( Jet0PuppiSDsubjet1pt, Jet0PuppiSDsubjet1eta, Jet0PuppiSDsubjet1phi, Jet0PuppiSDsubjet1mass);
+
+      TLorentzVector Jet1PuppiSDsubjet0P4;
+      TLorentzVector Jet1PuppiSDsubjet1P4;
+      Jet1PuppiSDsubjet0P4.SetPtEtaPhiM( Jet1PuppiSDsubjet0pt, Jet1PuppiSDsubjet0eta, Jet1PuppiSDsubjet0phi, Jet1PuppiSDsubjet0mass);
+      Jet1PuppiSDsubjet0P4.SetPtEtaPhiM( Jet1PuppiSDsubjet1pt, Jet1PuppiSDsubjet1eta, Jet1PuppiSDsubjet1phi, Jet1PuppiSDsubjet1mass);
+
+      double pup_deltaR_Jet0_subjet0_subjet1 = Jet0PuppiSDsubjet0P4.DeltaR( Jet0PuppiSDsubjet1P4 );
+      double pup_deltaR_Jet1_subjet0_subjet1 = Jet1PuppiSDsubjet0P4.DeltaR( Jet1PuppiSDsubjet1P4 );
+
+      h_deltaR_Jet0_pup0_pup1 ->Fill(pup_deltaR_Jet0_subjet0_subjet1);
+      h_deltaR_Jet1_pup0_pup1 ->Fill(pup_deltaR_Jet1_subjet0_subjet1);
+
+      // CHS-PUPPI subjet angular separation
+      h_deltaR_Jet0_sub0_pup0 ->Fill( Jet0SDsubjet0P4.DeltaR( Jet0PuppiSDsubjet0P4 ) );
+      h_deltaR_Jet0_sub1_pup1 ->Fill( Jet0SDsubjet1P4.DeltaR( Jet0PuppiSDsubjet1P4 ) );
+      h_deltaR_Jet1_sub0_pup0 ->Fill( Jet1SDsubjet0P4.DeltaR( Jet1PuppiSDsubjet0P4 ) );
+      h_deltaR_Jet1_sub1_pup1 ->Fill( Jet1SDsubjet1P4.DeltaR( Jet1PuppiSDsubjet1P4 ) );
+
+      // -- B-tag Efficiency Probe + Tag for different flacors
+      // Probe Jet 0
       h_BeforeBtag_Inclusive_Jet0Pt   ->Fill( jet0pt             , evWeight);
       h_BeforeBtag_Inclusive_Jet0P    ->Fill( jet0P              , evWeight);
       h_BeforeBtag_Inclusive_Jet0Rap  ->Fill( jet0P4.Rapidity()  , evWeight);
@@ -9770,7 +8515,7 @@ void looptree(
         h_BeforeBtag_bHad_Jet0_SubjetMaxB_Pt             ->Fill(  j0_chs_maxbtag_subjet_pt     , evWeight);
         h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt         ->Fill(  j0_chs_maxbtag_subjet_eta    , j0_chs_maxbtag_subjet_pt , evWeight );
       }
-   
+      // Tag Jet 0
       if (j0_tag_b_noSF){
         h_AfterBtag_Inclusive_Jet0Pt   ->Fill( jet0pt            , evWeight);
         h_AfterBtag_Inclusive_Jet0P    ->Fill( jet0P             , evWeight);
@@ -9825,7 +8570,7 @@ void looptree(
           h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt         ->Fill(  j0_chs_maxbtag_subjet_eta    , j0_chs_maxbtag_subjet_pt , evWeight );
         }
       }
-
+      // Probe Jet 1
       h_BeforeBtag_Inclusive_Jet1Pt   ->Fill( jet1pt             , evWeight );
       h_BeforeBtag_Inclusive_Jet1P    ->Fill( jet1P              , evWeight );
       h_BeforeBtag_Inclusive_Jet1Rap  ->Fill( jet1P4.Rapidity()  , evWeight );
@@ -9878,7 +8623,7 @@ void looptree(
         h_BeforeBtag_bHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
         h_BeforeBtag_bHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight );
       }
-   
+      // Tag Jet 0
       if (j0_tag_b_noSF){
 
         h_AfterBtag_Inclusive_Jet1Pt   ->Fill( jet1pt            , evWeight );
@@ -9935,111 +8680,36 @@ void looptree(
         }
       }
 
-
-      // Basic Histograms - preselection
-
-      h_DijetMass_dRapIn                         ->Fill( dijetMass                , evWeight );
-      if (DijetDeltaRap  <1) h_DijetMass_dRapLo  ->Fill( dijetMass                , evWeight );
-      if (DijetDeltaRap >=1) h_DijetMass_dRapHi  ->Fill( dijetMass                , evWeight );                           
-       
-      h_DijetMassPlusNeighbor_dRapIn                         ->Fill( mass_dijet_PlusNeighborJet_ratio20                , evWeight );
-      if (DijetDeltaRap  <1) h_DijetMassPlusNeighbor_dRapLo  ->Fill( mass_dijet_PlusNeighborJet_ratio20                , evWeight );
-      if (DijetDeltaRap >=1) h_DijetMassPlusNeighbor_dRapHi  ->Fill( mass_dijet_PlusNeighborJet_ratio20                , evWeight );                           
-                           
-      h_EventWeight                              ->Fill( evWeight                            );         
-      h_DeltaRap                                 ->Fill( DijetDeltaRap            , evWeight );         
-      h_DeltaPhi                                 ->Fill( DijetDeltaPhi            , evWeight );        
-      h_HT                                       ->Fill( ht                       , evWeight );   
-      h_MET                                      ->Fill( AllHadMETpt              , evWeight );   
-      h_METphi                                   ->Fill( AllHadMETphi             , evWeight );   
-      h_Nvtx                                     ->Fill( AllHadNvtx               , evWeight );   
-      h_Jet0P                                    ->Fill( jet0P                    , evWeight );          
-      h_Jet0Pt                                   ->Fill( jet0pt                   , evWeight );          
-      h_Jet0Phi                                  ->Fill( jet0P4.Phi()             , evWeight );          
-      h_Jet0Rap                                  ->Fill( jet0P4.Rapidity()        , evWeight );          
-      h_Jet0sdmass                               ->Fill( jet0sdmass               , evWeight );          
-      h_Jet0Tau1                                 ->Fill( Jet0Tau1                 , evWeight );          
-      h_Jet0Tau2                                 ->Fill( Jet0Tau2                 , evWeight );          
-      h_Jet0Tau3                                 ->Fill( Jet0Tau3                 , evWeight );          
-      h_Jet0Tau4                                 ->Fill( Jet0Tau4                 , evWeight );                                 
-      h_Jet0SDmaxbdisc                           ->Fill( Jet0SDmaxbdisc           , evWeight );        
-      h_Jet0SDsubjet0pt                          ->Fill( Jet0SDsubjet0pt          , evWeight );          
-      h_Jet0SDsubjet0mass                        ->Fill( Jet0SDsubjet0mass        , evWeight );                   
-      h_Jet0SDsubjet0tau1                        ->Fill( Jet0SDsubjet0tau1        , evWeight );          
-      h_Jet0SDsubjet0tau2                        ->Fill( Jet0SDsubjet0tau2        , evWeight );          
-      h_Jet0SDsubjet0tau3                        ->Fill( Jet0SDsubjet0tau3        , evWeight );          
-      h_Jet0SDsubjet0bdisc                       ->Fill( Jet0SDsubjet0bdisc       , evWeight );          
-      h_Jet0SDsubjet1pt                          ->Fill( Jet0SDsubjet1pt          , evWeight );          
-      h_Jet0SDsubjet1mass                        ->Fill( Jet0SDsubjet1mass        , evWeight );                                     
-      h_Jet0SDsubjet1tau1                        ->Fill( Jet0SDsubjet1tau1        , evWeight );          
-      h_Jet0SDsubjet1tau2                        ->Fill( Jet0SDsubjet1tau2        , evWeight );          
-      h_Jet0SDsubjet1tau3                        ->Fill( Jet0SDsubjet1tau3        , evWeight );          
-      h_Jet0SDsubjet1bdisc                       ->Fill( Jet0SDsubjet1bdisc       , evWeight );          
-      h_Jet0PuppiPt                              ->Fill( puppi0pt                 , evWeight );                                
-      h_Jet0PuppiMass                            ->Fill( puppi0P4.M()             , evWeight );                         
-      h_Jet0PuppiSDpt                            ->Fill( jet0sdpt                 , evWeight );                              
-      h_Jet0PuppiTau1                            ->Fill( Jet0PuppiTau1            , evWeight );          
-      h_Jet0PuppiTau2                            ->Fill( Jet0PuppiTau2            , evWeight );          
-      h_Jet0PuppiTau3                            ->Fill( Jet0PuppiTau3            , evWeight );          
-      h_Jet0PuppiTau4                            ->Fill( Jet0PuppiTau4            , evWeight );                              
-      h_Jet0PuppiSDmaxbdisc                      ->Fill( Jet0PuppiSDmaxbdisc      , evWeight ); 
-      h_Jet0puppisdmass                          ->Fill( puppi0sdmass             , evWeight );
-                  
-      h_Jet0PuppiSDsubjet0pt                     ->Fill( Jet0PuppiSDsubjet0pt     , evWeight );          
-      h_Jet0PuppiSDsubjet0mass                   ->Fill( Jet0PuppiSDsubjet0mass   , evWeight );          
-      h_Jet0PuppiSDsubjet0tau1                   ->Fill( Jet0PuppiSDsubjet0tau1   , evWeight );          
-      h_Jet0PuppiSDsubjet0tau2                   ->Fill( Jet0PuppiSDsubjet0tau2   , evWeight );          
-      h_Jet0PuppiSDsubjet0tau3                   ->Fill( Jet0PuppiSDsubjet0tau3   , evWeight );          
-      h_Jet0PuppiSDsubjet0bdisc                  ->Fill( Jet0PuppiSDsubjet0bdisc  , evWeight );          
-      h_Jet0PuppiSDsubjet1pt                     ->Fill( Jet0PuppiSDsubjet1pt     , evWeight );          
-      h_Jet0PuppiSDsubjet1mass                   ->Fill( Jet0PuppiSDsubjet1mass   , evWeight );          
-      h_Jet0PuppiSDsubjet1tau1                   ->Fill( Jet0PuppiSDsubjet1tau1   , evWeight );          
-      h_Jet0PuppiSDsubjet1tau2                   ->Fill( Jet0PuppiSDsubjet1tau2   , evWeight );          
-      h_Jet0PuppiSDsubjet1tau3                   ->Fill( Jet0PuppiSDsubjet1tau3   , evWeight );          
-      h_Jet0PuppiSDsubjet1bdisc                  ->Fill( Jet0PuppiSDsubjet1bdisc  , evWeight );
-      h_Jet0CHF                                  ->Fill( Jet0CHF                  , evWeight );          
-      h_Jet0NHF                                  ->Fill( Jet0NHF                  , evWeight );          
-      h_Jet0CM                                   ->Fill( Jet0CM                   , evWeight );          
-      h_Jet0NM                                   ->Fill( Jet0NM                   , evWeight );          
-      h_Jet0NEF                                  ->Fill( Jet0NEF                  , evWeight );          
-      h_Jet0CEF                                  ->Fill( Jet0CEF                  , evWeight );          
-      h_Jet0MF                                   ->Fill( Jet0MF                   , evWeight );          
-      h_Jet0Mult                                 ->Fill( Jet0Mult                 , evWeight );          
-      h_Jet0PuppiCHF                             ->Fill( Jet0PuppiCHF             , evWeight );          
-      h_Jet0PuppiNHF                             ->Fill( Jet0PuppiNHF             , evWeight );          
-      h_Jet0PuppiCM                              ->Fill( Jet0PuppiCM              , evWeight );          
-      h_Jet0PuppiNM                              ->Fill( Jet0PuppiNM              , evWeight );          
-      h_Jet0PuppiNEF                             ->Fill( Jet0PuppiNEF             , evWeight );          
-      h_Jet0PuppiCEF                             ->Fill( Jet0PuppiCEF             , evWeight );          
-      h_Jet0PuppiMF                              ->Fill( Jet0PuppiMF              , evWeight );          
-      h_Jet0PuppiMult                            ->Fill( Jet0PuppiMult            , evWeight );          
-
-      h_Jet1Pt                                   ->Fill( jet1P4Raw.Perp()         , evWeight );          
-      h_Jet1Rap                                  ->Fill( jet1P4Raw.Rapidity()     , evWeight );          
-      h_Jet1sdmass                               ->Fill( jet1sdmass               , evWeight );          
-      h_Jet1puppisdmass                          ->Fill( puppi1sdmass             , evWeight );          
-
+      // b-tag categories after applying the t-tag event selection
 
       if (double_tag_t){
-        if ( !j0_tag_b_noSF && !j1_tag_b_noSF  )                                     h_DoubleTopTag_BtagCategoriesPreSF   ->Fill(0.5, evWeight);
-        if ( (!j0_tag_b_noSF && j1_tag_b_noSF)||(j0_tag_b_noSF && !j1_tag_b_noSF)  ) h_DoubleTopTag_BtagCategoriesPreSF   ->Fill(1.5, evWeight);
-        if ( j0_tag_b_noSF && j1_tag_b_noSF  )                                       h_DoubleTopTag_BtagCategoriesPreSF   ->Fill(2.5, evWeight);
+        if ( !j0_tag_b_noSF && !j1_tag_b_noSF  )                                                 h_DoubleTopTag_BtagCategoriesPreSF    ->Fill(0.5, evWeight);
+        if ( (!j0_tag_b_noSF && j1_tag_b_noSF)||(j0_tag_b_noSF && !j1_tag_b_noSF)  )             h_DoubleTopTag_BtagCategoriesPreSF    ->Fill(1.5, evWeight);
+        if ( j0_tag_b_noSF && j1_tag_b_noSF  )                                                   h_DoubleTopTag_BtagCategoriesPreSF    ->Fill(2.5, evWeight);
         
-        if ( !j0_tag_b && !j1_tag_b  )                           h_DoubleTopTag_BtagCategoriesPostSF   ->Fill(0.5, evWeight);
-        if ( (!j0_tag_b && j1_tag_b)||(j0_tag_b && !j1_tag_b)  ) h_DoubleTopTag_BtagCategoriesPostSF   ->Fill(1.5, evWeight);
-        if ( j0_tag_b && j1_tag_b  )                             h_DoubleTopTag_BtagCategoriesPostSF   ->Fill(2.5, evWeight);
+        if ( !j0_tag_b && !j1_tag_b  )                                                           h_DoubleTopTag_BtagCategoriesPostSF   ->Fill(0.5, evWeight);
+        if ( (!j0_tag_b && j1_tag_b)||(j0_tag_b && !j1_tag_b)  )                                 h_DoubleTopTag_BtagCategoriesPostSF   ->Fill(1.5, evWeight);
+        if ( j0_tag_b && j1_tag_b  )                                                             h_DoubleTopTag_BtagCategoriesPostSF   ->Fill(2.5, evWeight);
       }
       if (double_puptag_t){
-        if ( !j0_tag_b_noSF && !j1_tag_b_noSF  )                                     h_DoublePupTag_BtagCategoriesPreSF   ->Fill(0.5, evWeight);
-        if ( (!j0_tag_b_noSF && j1_tag_b_noSF)||(j0_tag_b_noSF && !j1_tag_b_noSF)  ) h_DoublePupTag_BtagCategoriesPreSF   ->Fill(1.5, evWeight);
-        if ( j0_tag_b_noSF && j1_tag_b_noSF  )                                       h_DoublePupTag_BtagCategoriesPreSF   ->Fill(2.5, evWeight);
+        if ( !j0_tag_b_noSF && !j1_tag_b_noSF  )                                                 h_DoublePupTag_BtagCategoriesPreSF   ->Fill(0.5, evWeight);
+        if ( (!j0_tag_b_noSF && j1_tag_b_noSF)||(j0_tag_b_noSF && !j1_tag_b_noSF)  )             h_DoublePupTag_BtagCategoriesPreSF   ->Fill(1.5, evWeight);
+        if ( j0_tag_b_noSF && j1_tag_b_noSF  )                                                   h_DoublePupTag_BtagCategoriesPreSF   ->Fill(2.5, evWeight);
         
-        if ( !j0_tag_b && !j1_tag_b  )                           h_DoublePupTag_BtagCategoriesPostSF   ->Fill(0.5, evWeight);
-        if ( (!j0_tag_b && j1_tag_b)||(j0_tag_b && !j1_tag_b)  ) h_DoublePupTag_BtagCategoriesPostSF   ->Fill(1.5, evWeight);
-        if ( j0_tag_b && j1_tag_b  )                             h_DoublePupTag_BtagCategoriesPostSF   ->Fill(2.5, evWeight);
+        if ( !j0_tag_b && !j1_tag_b  )                                                           h_DoublePupTag_BtagCategoriesPostSF   ->Fill(0.5, evWeight);
+        if ( (!j0_tag_b && j1_tag_b)||(j0_tag_b && !j1_tag_b)  )                                 h_DoublePupTag_BtagCategoriesPostSF   ->Fill(1.5, evWeight);
+        if ( j0_tag_b && j1_tag_b  )                                                             h_DoublePupTag_BtagCategoriesPostSF   ->Fill(2.5, evWeight);
+   
+        if ( !j0_puptag_b_noSF && !j1_puptag_b_noSF  )                                           h_DoublePupTag_BtagCategoriesPuppiPreSF   ->Fill(0.5 , evWeight);
+        if ( (!j0_puptag_b_noSF && j1_puptag_b_noSF)||(j0_puptag_b_noSF && !j1_puptag_b_noSF)  ) h_DoublePupTag_BtagCategoriesPuppiPreSF   ->Fill(1.5 , evWeight);
+        if ( j0_puptag_b_noSF && j1_puptag_b_noSF  )                                             h_DoublePupTag_BtagCategoriesPuppiPreSF   ->Fill(2.5 , evWeight);
+    
+        if ( !j0_puptag_b && !j1_puptag_b  )                                                     h_DoublePupTag_BtagCategoriesPuppiPostSF  ->Fill(0.5, evWeight);
+        if ( (!j0_puptag_b && j1_puptag_b)||(j0_puptag_b && !j1_puptag_b)  )                     h_DoublePupTag_BtagCategoriesPuppiPostSF  ->Fill(1.5, evWeight);
+        if ( j0_puptag_b && j1_puptag_b  )                                                       h_DoublePupTag_BtagCategoriesPuppiPostSF  ->Fill(2.5, evWeight);
       }
 
-
+      // Tau32 optimization studies
       if (double_puptag_mass){
                                                              h_DijetMass_masspuptag                    ->Fill( dijetMass , evWeight );  
         if (Jet0PuppiTau32 <0.30 && Jet1PuppiTau32 < 0.30 )  h_DijetMass_masspuptag_puppitau32_lt0p30  ->Fill( dijetMass , evWeight );  
@@ -10160,232 +8830,9 @@ void looptree(
 
 
 
-      //  TH2
 
-      h_runNumber_Jet0CHF          -> Fill(AllHadRunNum, Jet0CHF          , evWeight);
-      h_runNumber_Jet0NHF          -> Fill(AllHadRunNum, Jet0NHF          , evWeight);
-      h_runNumber_Jet0CM           -> Fill(AllHadRunNum, Jet0CM           , evWeight);
-      h_runNumber_Jet0NM           -> Fill(AllHadRunNum, Jet0NM           , evWeight);
-      h_runNumber_Jet0NEF          -> Fill(AllHadRunNum, Jet0NEF          , evWeight);
-      h_runNumber_Jet0CEF          -> Fill(AllHadRunNum, Jet0CEF          , evWeight);
-      h_runNumber_Jet0MF           -> Fill(AllHadRunNum, Jet0MF           , evWeight);
-      h_runNumber_Jet0Mult         -> Fill(AllHadRunNum, Jet0Mult         , evWeight);
-      h_runNumber_NvtxGood         -> Fill(AllHadRunNum, AllHadNvtxGood   , evWeight);
-      h_runNumber_Jet0Pt           -> Fill(AllHadRunNum, jet0P4.Perp()    , evWeight);
-      h_runNumber_Jet0SDmass       -> Fill(AllHadRunNum, jet0sdmass       , evWeight);
-      h_runNumber_Jet0Tau32        -> Fill(AllHadRunNum, Jet0Tau32        , evWeight);
-      h_runNumber_Jet0PuppiPt      -> Fill(AllHadRunNum, puppi0P4.Perp()  , evWeight);
-      h_runNumber_Jet0PuppiSDmass  -> Fill(AllHadRunNum, puppi0sdmass     , evWeight);
-      h_runNumber_Jet0PuppiTau32   -> Fill(AllHadRunNum, Jet0PuppiTau32     , evWeight);
-      h_runNumber_DijetMass        -> Fill(AllHadRunNum, dijetMass        , evWeight);
-      h_runNumber_HT               -> Fill(AllHadRunNum, HT               , evWeight);
-
-      h_NvtxGood_Jet0CHF           -> Fill(AllHadNvtxGood, Jet0CHF          , evWeight);
-      h_NvtxGood_Jet0NHF           -> Fill(AllHadNvtxGood, Jet0NHF          , evWeight);
-      h_NvtxGood_Jet0CM            -> Fill(AllHadNvtxGood, Jet0CM           , evWeight);
-      h_NvtxGood_Jet0NM            -> Fill(AllHadNvtxGood, Jet0NM           , evWeight);
-      h_NvtxGood_Jet0NEF           -> Fill(AllHadNvtxGood, Jet0NEF          , evWeight);
-      h_NvtxGood_Jet0CEF           -> Fill(AllHadNvtxGood, Jet0CEF          , evWeight);
-      h_NvtxGood_Jet0MF            -> Fill(AllHadNvtxGood, Jet0MF           , evWeight);
-      h_NvtxGood_Jet0Mult          -> Fill(AllHadNvtxGood, Jet0Mult         , evWeight);
-      h_NvtxGood_NvtxGood          -> Fill(AllHadNvtxGood, AllHadNvtxGood   , evWeight);
-      h_NvtxGood_Jet0Pt            -> Fill(AllHadNvtxGood, jet0P4.Perp()    , evWeight);
-      h_NvtxGood_Jet0SDmass        -> Fill(AllHadNvtxGood, jet0sdmass       , evWeight);
-      h_NvtxGood_Jet0Tau32         -> Fill(AllHadNvtxGood, Jet0Tau32        , evWeight);
-      h_NvtxGood_Jet0PuppiPt       -> Fill(AllHadNvtxGood, puppi0P4.Perp()  , evWeight);
-      h_NvtxGood_Jet0PuppiSDmass   -> Fill(AllHadNvtxGood, puppi0sdmass     , evWeight);
-      h_NvtxGood_Jet0PuppiTau32    -> Fill(AllHadNvtxGood, Jet0PuppiTau32     , evWeight);
-      h_NvtxGood_DijetMass         -> Fill(AllHadNvtxGood, dijetMass        , evWeight);
-      h_NvtxGood_HT                -> Fill(AllHadNvtxGood, HT               , evWeight);
-
-      h_GenJet0Pt_GenJet0Mass               ->Fill( Jet0MatchedGenJetPt   ,     Jet0MatchedGenJetMass , evWeight );
-      h_Jet0Pt_GenJet0Mass                  ->Fill( jet0P4.Perp()         ,     Jet0MatchedGenJetMass , evWeight );
-      h_Jet0P_GenJet0Mass                   ->Fill( jet0P4.P()            ,     Jet0MatchedGenJetMass , evWeight );
-
-      h_Jet0Pt_Jet0Mass                     ->Fill( jet0P4.Perp()     ,         jet0P4.M() , evWeight );
-      h_Jet0Pt_Jet0SDmass                   ->Fill( jet0P4.Perp()     ,         jet0sdmass , evWeight );
-      h_Jet0Pt_Jet0Tau32                    ->Fill( jet0P4.Perp()     ,         Jet0Tau32  , evWeight );
-   
-      h_Jet0Pt_Jet0PuppiMass                ->Fill( jet0P4.Perp()     ,       puppi0P4.M() , evWeight );
-      h_Jet0Pt_Jet0PuppiSDmass              ->Fill( jet0P4.Perp()     ,       puppi0sdmass , evWeight );
-      h_Jet0Pt_Jet0PuppiTau32               ->Fill( jet0P4.Perp()     ,     Jet0PuppiTau32 , evWeight );
-         
-      h_Jet0P_Jet0Mass                      ->Fill( jet0P4.P()        ,         jet0P4.M() , evWeight );
-      h_Jet0P_Jet0SDmass                    ->Fill( jet0P4.P()        ,         jet0sdmass , evWeight );
-      h_Jet0P_Jet0Tau32                     ->Fill( jet0P4.P()        ,         Jet0Tau32  , evWeight );
-   
-      h_Jet0P_Jet0PuppiMass                 ->Fill( jet0P4.P()        ,       puppi0P4.M() , evWeight );
-      h_Jet0P_Jet0PuppiSDmass               ->Fill( jet0P4.P()        ,       puppi0sdmass , evWeight );
-      h_Jet0P_Jet0PuppiTau32                ->Fill( jet0P4.P()        ,     Jet0PuppiTau32 , evWeight );
-         
-      h_Jet0Mass_Jet0Tau32                  ->Fill( jet0P4.M()        ,         Jet0Tau32  , evWeight );
-      h_Jet0SDmass_Jet0Tau32                ->Fill( jet0sdmass        ,         Jet0Tau32  , evWeight );
-      h_Jet0PuppiSDmass_Jet0PuppiTau32      ->Fill( puppi0sdmass      ,    Jet0PuppiTau32  , evWeight );
-
-
-
-
-      h_Jet0Y_Jet0Mass                      ->Fill( jet0P4.Rapidity() ,         jet0P4.M() , evWeight );
-      h_Jet0Y_Jet0SDmass                    ->Fill( jet0P4.Rapidity() ,         jet0sdmass , evWeight );
-      h_Jet0Y_Jet0Tau32                     ->Fill( jet0P4.Rapidity() ,          Jet0Tau32 , evWeight );
-      h_Jet0Y_Jet0PuppiMass                 ->Fill( jet0P4.Rapidity() ,       puppi0P4.M() , evWeight );
-      h_Jet0Y_Jet0PuppiSDmass               ->Fill( jet0P4.Rapidity() ,       puppi0sdmass , evWeight );
-      h_Jet0Y_Jet0PuppiTau32                ->Fill( jet0P4.Rapidity() ,     Jet0PuppiTau32 , evWeight );
-   
-
-      if ( jet0P4.Perp() > 500 && jet0P4.Perp() <520 ){
-        h_Pt500to520_Jet0Y_Jet0Mass           ->Fill( jet0P4.Rapidity() ,         jet0P4.M() , evWeight );
-        h_Pt500to520_Jet0Y_Jet0SDmass         ->Fill( jet0P4.Rapidity() ,         jet0sdmass , evWeight );
-        h_Pt500to520_Jet0Y_Jet0Tau32          ->Fill( jet0P4.Rapidity() ,          Jet0Tau32 , evWeight );
-        h_Pt500to520_Jet0Y_Jet0PuppiMass      ->Fill( jet0P4.Rapidity() ,       puppi0P4.M() , evWeight );
-        h_Pt500to520_Jet0Y_Jet0PuppiSDmass    ->Fill( jet0P4.Rapidity() ,       puppi0sdmass , evWeight );
-        h_Pt500to520_Jet0Y_Jet0PuppiTau32     ->Fill( jet0P4.Rapidity() ,     Jet0PuppiTau32 , evWeight );
-      }
-
-
-      h_Jet0Y_Jet1Y                         ->Fill( jet0P4.Rapidity() , jet1P4.Rapidity() , evWeight );
-      h_Jet0SDmass_Jet1SDmass               ->Fill( jet0sdmass        , jet1sdmass        , evWeight );
-      h_Jet0PuppiSDmass_Jet1PuppiSDmass     ->Fill( puppi0sdmass      , puppi1sdmass      , evWeight );
-      h_Jet0Tau32_Jet1Tau32                 ->Fill( Jet0Tau32         , Jet1Tau32         , evWeight );
-      h_Jet0PuppiTau32_Jet1PuppiTau32       ->Fill( Jet0PuppiTau32    , Jet1PuppiTau32    , evWeight );
-      h_Jet0PuppiTau1_Jet1PuppiTau1         ->Fill( Jet0PuppiTau1     , Jet1PuppiTau1     , evWeight );
-      h_Jet0PuppiTau2_Jet1PuppiTau2         ->Fill( Jet0PuppiTau2     , Jet1PuppiTau2     , evWeight );
-      h_Jet0PuppiTau3_Jet1PuppiTau3         ->Fill( Jet0PuppiTau3     , Jet1PuppiTau3     , evWeight );
-
-      double Asym  = jet0P4.Perp() / ( jet0P4.Perp() + jet1P4.Perp() );
-      double Asym2 = ( jet0P4.Perp() - jet1P4.Perp() ) / ( jet0P4.Perp() + jet1P4.Perp() );
-
-      h_Asym   ->Fill( Asym , evWeight );
-      h_Asym2  ->Fill( Asym2 , evWeight );
-     
-      h_Asym_Jet0SDmass                  ->Fill( Asym                 , jet0sdmass        , evWeight );
-      h_DeltaRap_Jet0SDmass              ->Fill( DijetDeltaRap        , jet0sdmass        , evWeight );
-
-
-
-      double jet0_rhoRatio                 =  log( jet0sdmass * jet0sdmass / ( jet0P4.Perp() * jet0P4.Perp() ) );
-      double jet0_rhoRatioPrime            =  log( jet0sdmass * jet0sdmass / ( jet0P4.Perp()                 ) );
-      double jet0_rhoRatioPmag             =  log( jet0sdmass * jet0sdmass / ( jet0P4.P()    * jet0P4.P()    ) );
-      double jet0_rhoRatioPmagPrime        =  log( jet0sdmass * jet0sdmass / ( jet0P4.P()                    ) );
-  
-      double jet0_rhoRatioPuppi            =  log( puppi0sdmass * puppi0sdmass / (puppi0P4.Perp() * puppi0P4.Perp() ) );
-      double jet0_rhoRatioPuppiPrime       =  log( puppi0sdmass * puppi0sdmass / (puppi0P4.Perp()                   ) );
-      double jet0_rhoRatioPuppiPmag        =  log( puppi0sdmass * puppi0sdmass / (puppi0P4.P()    * puppi0P4.P()    ) );
-      double jet0_rhoRatioPuppiPmagPrime   =  log( puppi0sdmass * puppi0sdmass / (puppi0P4.P()                      ) );
-  
-      double jet1_rhoRatio                 =  log( jet1sdmass * jet1sdmass / ( jet1P4.Perp() * jet1P4.Perp() ) );
-      double jet1_rhoRatioPrime            =  log( jet1sdmass * jet1sdmass / ( jet1P4.Perp()                 ) );
-      double jet1_rhoRatioPmag             =  log( jet1sdmass * jet1sdmass / ( jet1P4.P()    * jet1P4.P()    ) );
-      double jet1_rhoRatioPmagPrime        =  log( jet1sdmass * jet1sdmass / ( jet1P4.P()                    ) );
-  
-      double jet1_rhoRatioPuppi            =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.Perp() * puppi1P4.Perp() ) );
-      double jet1_rhoRatioPuppiPrime       =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.Perp()                  ) );
-      double jet1_rhoRatioPuppiPmag        =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.P()    * puppi1P4.P()   ) );
-      double jet1_rhoRatioPuppiPmagPrime   =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.P()                     ) );
-  
-      h_jet0_rhoRatio                      ->Fill( jet0_rhoRatio                , evWeight );
-      h_jet0_rhoRatioPrime                 ->Fill( jet0_rhoRatioPrime           , evWeight );
-      h_jet0_rhoRatioPmag                  ->Fill( jet0_rhoRatioPmag            , evWeight );
-      h_jet0_rhoRatioPmagPrime             ->Fill( jet0_rhoRatioPmagPrime       , evWeight );
-      h_jet0_rhoRatioPuppi                 ->Fill( jet0_rhoRatioPuppi           , evWeight );
-      h_jet0_rhoRatioPuppiPrime            ->Fill( jet0_rhoRatioPuppiPrime      , evWeight );
-      h_jet0_rhoRatioPuppiPmag             ->Fill( jet0_rhoRatioPuppiPmag       , evWeight );
-      h_jet0_rhoRatioPuppiPmagPrime        ->Fill( jet0_rhoRatioPuppiPmagPrime  , evWeight );
-      h_jet1_rhoRatio                      ->Fill( jet1_rhoRatio                , evWeight );
-      h_jet1_rhoRatioPrime                 ->Fill( jet1_rhoRatioPrime           , evWeight );
-      h_jet1_rhoRatioPmag                  ->Fill( jet1_rhoRatioPmag            , evWeight );
-      h_jet1_rhoRatioPmagPrime             ->Fill( jet1_rhoRatioPmagPrime       , evWeight );
-      h_jet1_rhoRatioPuppi                 ->Fill( jet1_rhoRatioPuppi           , evWeight );
-      h_jet1_rhoRatioPuppiPrime            ->Fill( jet1_rhoRatioPuppiPrime      , evWeight );
-      h_jet1_rhoRatioPuppiPmag             ->Fill( jet1_rhoRatioPuppiPmag       , evWeight );
-      h_jet1_rhoRatioPuppiPmagPrime        ->Fill( jet1_rhoRatioPuppiPmagPrime  , evWeight );
-
-      h_jet0_tau32_rhoRatio                ->Fill( jet0_rhoRatio               ,  Jet0Tau32      , evWeight );
-      h_jet0_tau32_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  Jet0Tau32      , evWeight );
-      h_jet0_tau32_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  Jet0Tau32      , evWeight );
-      h_jet0_tau32_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  Jet0Tau32      , evWeight );
-      h_jet0_tau32_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  Jet0PuppiTau32 , evWeight );
-      h_jet0_tau32_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  Jet0PuppiTau32 , evWeight );
-      h_jet0_tau32_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  Jet0PuppiTau32 , evWeight );
-      h_jet0_tau32_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  Jet0PuppiTau32 , evWeight );
-      h_jet1_tau32_rhoRatio                ->Fill( jet1_rhoRatio               ,  Jet1Tau32      , evWeight );
-      h_jet1_tau32_rhoRatioPrime           ->Fill( jet1_rhoRatioPrime          ,  Jet1Tau32      , evWeight );
-      h_jet1_tau32_rhoRatioPmag            ->Fill( jet1_rhoRatioPmag           ,  Jet1Tau32      , evWeight );
-      h_jet1_tau32_rhoRatioPmagPrime       ->Fill( jet1_rhoRatioPmagPrime      ,  Jet1Tau32      , evWeight );
-      h_jet1_tau32_rhoRatioPuppi           ->Fill( jet1_rhoRatioPuppi          ,  Jet1PuppiTau32 , evWeight );
-      h_jet1_tau32_rhoRatioPuppiPrime      ->Fill( jet1_rhoRatioPuppiPrime     ,  Jet1PuppiTau32 , evWeight );
-      h_jet1_tau32_rhoRatioPuppiPmag       ->Fill( jet1_rhoRatioPuppiPmag      ,  Jet1PuppiTau32 , evWeight );
-      h_jet1_tau32_rhoRatioPuppiPmagPrime  ->Fill( jet1_rhoRatioPuppiPmagPrime ,  Jet1PuppiTau32 , evWeight );
-
-
-      h_jet0_tau21_rhoRatio                ->Fill( jet0_rhoRatio               ,  Jet0Tau21      , evWeight);
-      h_jet0_tau21_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  Jet0Tau21      , evWeight);
-      h_jet0_tau21_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  Jet0Tau21      , evWeight);
-      h_jet0_tau21_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  Jet0Tau21      , evWeight);
-      h_jet0_tau21_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  Jet0PuppiTau21 , evWeight);
-      h_jet0_tau21_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  Jet0PuppiTau21 , evWeight);
-      h_jet0_tau21_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  Jet0PuppiTau21 , evWeight);
-      h_jet0_tau21_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  Jet0PuppiTau21 , evWeight);
-      h_jet1_tau21_rhoRatio                ->Fill( jet1_rhoRatio               ,  Jet1Tau21      , evWeight);
-      h_jet1_tau21_rhoRatioPrime           ->Fill( jet1_rhoRatioPrime          ,  Jet1Tau21      , evWeight);
-      h_jet1_tau21_rhoRatioPmag            ->Fill( jet1_rhoRatioPmag           ,  Jet1Tau21      , evWeight);
-      h_jet1_tau21_rhoRatioPmagPrime       ->Fill( jet1_rhoRatioPmagPrime      ,  Jet1Tau21      , evWeight);
-      h_jet1_tau21_rhoRatioPuppi           ->Fill( jet1_rhoRatioPuppi          ,  Jet1PuppiTau21 , evWeight);
-      h_jet1_tau21_rhoRatioPuppiPrime      ->Fill( jet1_rhoRatioPuppiPrime     ,  Jet1PuppiTau21 , evWeight);
-      h_jet1_tau21_rhoRatioPuppiPmag       ->Fill( jet1_rhoRatioPuppiPmag      ,  Jet1PuppiTau21 , evWeight);
-      h_jet1_tau21_rhoRatioPuppiPmagPrime  ->Fill( jet1_rhoRatioPuppiPmagPrime ,  Jet1PuppiTau21 , evWeight);
-
-      if (jet0sdmass>110 && jet0sdmass<210){
-        h_topMass_jet0_tau32_rhoRatio                ->Fill( jet0_rhoRatio               ,  Jet0Tau32    , evWeight );
-        h_topMass_jet0_tau32_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  Jet0Tau32    , evWeight );
-        h_topMass_jet0_tau32_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  Jet0Tau32    , evWeight );
-        h_topMass_jet0_tau32_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  Jet0Tau32    , evWeight );
-        h_topMass_jet0_tau21_rhoRatio                ->Fill( jet0_rhoRatio               ,  Jet0Tau21    , evWeight );
-        h_topMass_jet0_tau21_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  Jet0Tau21    , evWeight );
-        h_topMass_jet0_tau21_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  Jet0Tau21    , evWeight );
-        h_topMass_jet0_tau21_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  Jet0Tau21    , evWeight );
-      }
-
-      if (jet0sdmass>110 && jet0sdmass<210){
-        h_topMass_jet0_tau32_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  Jet0PuppiTau32 , evWeight );
-        h_topMass_jet0_tau32_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  Jet0PuppiTau32 , evWeight );
-        h_topMass_jet0_tau32_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  Jet0PuppiTau32 , evWeight );
-        h_topMass_jet0_tau32_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  Jet0PuppiTau32 , evWeight );
-        h_topMass_jet0_tau21_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  Jet0PuppiTau21 , evWeight );
-        h_topMass_jet0_tau21_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  Jet0PuppiTau21 , evWeight );
-        h_topMass_jet0_tau21_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  Jet0PuppiTau21 , evWeight );
-        h_topMass_jet0_tau21_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  Jet0PuppiTau21 , evWeight );
-      }
-
-      double jet0tau42   = 99;
-      double jet1tau42   = 99;
-      double puppi0tau42 = 99;
-      double puppi1tau42 = 99;
-      if (Jet0Tau2>0)      jet0tau42   = Jet0Tau4 / Jet0Tau2;
-      if (Jet1Tau2>0)      jet1tau42   = Jet1Tau4 / Jet1Tau2;
-      if (Jet0PuppiTau2>0) puppi0tau42 = Jet0PuppiTau4 / Jet0PuppiTau2 ;
-      if (Jet1PuppiTau2>0) puppi1tau42 = Jet1PuppiTau4 / Jet1PuppiTau2 ;
-
-      h_jet0_tau42_rhoRatio                ->Fill( jet0_rhoRatio               ,  jet0tau42    , evWeight );
-      h_jet0_tau42_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  jet0tau42    , evWeight );
-      h_jet0_tau42_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  jet0tau42    , evWeight );
-      h_jet0_tau42_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  jet0tau42    , evWeight );
-      h_jet0_tau42_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  puppi0tau42  , evWeight );
-      h_jet0_tau42_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  puppi0tau42  , evWeight );
-      h_jet0_tau42_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  puppi0tau42  , evWeight );
-      h_jet0_tau42_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  puppi0tau42  , evWeight );
-      h_jet1_tau42_rhoRatio                ->Fill( jet1_rhoRatio               ,  jet1tau42    , evWeight );
-      h_jet1_tau42_rhoRatioPrime           ->Fill( jet1_rhoRatioPrime          ,  jet1tau42    , evWeight );
-      h_jet1_tau42_rhoRatioPmag            ->Fill( jet1_rhoRatioPmag           ,  jet1tau42    , evWeight );
-      h_jet1_tau42_rhoRatioPmagPrime       ->Fill( jet1_rhoRatioPmagPrime      ,  jet1tau42    , evWeight );
-      h_jet1_tau42_rhoRatioPuppi           ->Fill( jet1_rhoRatioPuppi          ,  puppi1tau42  , evWeight );
-      h_jet1_tau42_rhoRatioPuppiPrime      ->Fill( jet1_rhoRatioPuppiPrime     ,  puppi1tau42  , evWeight );
-      h_jet1_tau42_rhoRatioPuppiPmag       ->Fill( jet1_rhoRatioPuppiPmag      ,  puppi1tau42  , evWeight );
-      h_jet1_tau42_rhoRatioPuppiPmagPrime  ->Fill( jet1_rhoRatioPuppiPmagPrime ,  puppi1tau42  , evWeight );
-
-
-      // kinematics in double tagged events
-      if (double_tag_t){
+      // kinematics in double t-tagged events
+      if (double_puptag_t){
 	
       	if (!isFrozen || !isData ){    
       	  h_2ttag_inclu_dRapIn_DijetMass                        ->Fill( dijetMass , evWeight );  
@@ -10406,6 +8853,16 @@ void looptree(
         h_2ttag_inclu_MET                                       ->Fill( AllHadMETpt              , evWeight );   
         h_2ttag_inclu_METphi                                    ->Fill( AllHadMETphi             , evWeight );   
         h_2ttag_inclu_Nvtx                                      ->Fill( AllHadNvtx               , evWeight );                
+        
+
+      
+        if (dijetMass>1000) h_2ttag_inclu_DeltaRap_mTTgt1                                 ->Fill( DijetDeltaRap            , evWeight );         
+        if (dijetMass>2000) h_2ttag_inclu_DeltaRap_mTTgt2                                 ->Fill( DijetDeltaRap            , evWeight );         
+        if (dijetMass>3000) h_2ttag_inclu_DeltaRap_mTTgt3                                 ->Fill( DijetDeltaRap            , evWeight );         
+
+
+
+
         h_2ttag_inclu_Jet0P                                     ->Fill( jet0P                    , evWeight );          
         h_2ttag_inclu_Jet0Pt                                    ->Fill( jet0P4.Perp()            , evWeight );          
         h_2ttag_inclu_Jet0Phi                                   ->Fill( jet0P4.Phi()             , evWeight );          
@@ -10430,13 +8887,24 @@ void looptree(
         h_2ttag_inclu_Jet0SDsubjet1tau2                         ->Fill( Jet0SDsubjet1tau2        , evWeight );          
         h_2ttag_inclu_Jet0SDsubjet1tau3                         ->Fill( Jet0SDsubjet1tau3        , evWeight );          
         h_2ttag_inclu_Jet0SDsubjet1bdisc                        ->Fill( Jet0SDsubjet1bdisc       , evWeight );          
-        h_2ttag_inclu_Jet0PuppiPt                               ->Fill( Jet0PuppiPtRaw           , evWeight );                                
-        h_2ttag_inclu_Jet0PuppiMass                             ->Fill( puppi0sdmass             , evWeight );                         
-        h_2ttag_inclu_Jet0PuppiSDpt                             ->Fill( puppi0P4.Perp()          , evWeight );                              
+ 
+        h_2ttag_inclu_Jet0CHF                                   ->Fill( Jet0CHF                  , evWeight );          
+        h_2ttag_inclu_Jet0NHF                                   ->Fill( Jet0NHF                  , evWeight );          
+        h_2ttag_inclu_Jet0CM                                    ->Fill( Jet0CM                   , evWeight );          
+        h_2ttag_inclu_Jet0NM                                    ->Fill( Jet0NM                   , evWeight );          
+        h_2ttag_inclu_Jet0NEF                                   ->Fill( Jet0NEF                  , evWeight );          
+        h_2ttag_inclu_Jet0CEF                                   ->Fill( Jet0CEF                  , evWeight );          
+        h_2ttag_inclu_Jet0MF                                    ->Fill( Jet0MF                   , evWeight );          
+        h_2ttag_inclu_Jet0Mult                                  ->Fill( Jet0Mult                 , evWeight );    
+       
+        h_2ttag_inclu_Jet0PuppiPt                               ->Fill( puppi0pt                 , evWeight );                                
+        h_2ttag_inclu_Jet0PuppiSDmass                           ->Fill( puppi0sdmass             , evWeight ); 
+        h_2ttag_inclu_Jet0PuppiSDpt                             ->Fill( puppi0sdpt               , evWeight );                              
         h_2ttag_inclu_Jet0PuppiTau1                             ->Fill( Jet0PuppiTau1            , evWeight );          
         h_2ttag_inclu_Jet0PuppiTau2                             ->Fill( Jet0PuppiTau2            , evWeight );          
         h_2ttag_inclu_Jet0PuppiTau3                             ->Fill( Jet0PuppiTau3            , evWeight );          
         h_2ttag_inclu_Jet0PuppiTau4                             ->Fill( Jet0PuppiTau4            , evWeight );                              
+        h_2ttag_inclu_Jet0PuppiTau32                            ->Fill( Jet0PuppiTau32           , evWeight );                              
         h_2ttag_inclu_Jet0PuppiSDmaxbdisc                       ->Fill( Jet0PuppiSDmaxbdisc      , evWeight );             
         h_2ttag_inclu_Jet0PuppiSDsubjet0pt                      ->Fill( Jet0PuppiSDsubjet0pt     , evWeight );          
         h_2ttag_inclu_Jet0PuppiSDsubjet0mass                    ->Fill( Jet0PuppiSDsubjet0mass   , evWeight );          
@@ -10450,17 +8918,90 @@ void looptree(
         h_2ttag_inclu_Jet0PuppiSDsubjet1tau2                    ->Fill( Jet0PuppiSDsubjet1tau2   , evWeight );          
         h_2ttag_inclu_Jet0PuppiSDsubjet1tau3                    ->Fill( Jet0PuppiSDsubjet1tau3   , evWeight );          
         h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc                   ->Fill( Jet0PuppiSDsubjet1bdisc  , evWeight );
-        h_2ttag_inclu_Jet0CHF                                   ->Fill( Jet0CHF                  , evWeight );          
-        h_2ttag_inclu_Jet0NHF                                   ->Fill( Jet0NHF                  , evWeight );          
-        h_2ttag_inclu_Jet0CM                                    ->Fill( Jet0CM                   , evWeight );          
-        h_2ttag_inclu_Jet0NM                                    ->Fill( Jet0NM                   , evWeight );          
-        h_2ttag_inclu_Jet0NEF                                   ->Fill( Jet0NEF                  , evWeight );          
-        h_2ttag_inclu_Jet0CEF                                   ->Fill( Jet0CEF                  , evWeight );          
-        h_2ttag_inclu_Jet0MF                                    ->Fill( Jet0MF                   , evWeight );          
-        h_2ttag_inclu_Jet0Mult                                  ->Fill( Jet0Mult                 , evWeight );          
+
+        h_2ttag_inclu_Jet0PuppiSDsubjet0tau21                    ->Fill( Jet0PuppiSDsubjet0tau2/ Jet0PuppiSDsubjet0tau1  , evWeight );          
+        h_2ttag_inclu_Jet0PuppiSDsubjet1tau21                    ->Fill( Jet0PuppiSDsubjet0tau2/ Jet0PuppiSDsubjet1tau1  , evWeight );          
+
+        h_2ttag_inclu_Jet0PuppiCHF                              ->Fill( Jet0PuppiCHF             , evWeight );          
+        h_2ttag_inclu_Jet0PuppiNHF                              ->Fill( Jet0PuppiNHF             , evWeight );          
+        h_2ttag_inclu_Jet0PuppiCM                               ->Fill( Jet0PuppiCM              , evWeight );          
+        h_2ttag_inclu_Jet0PuppiNM                               ->Fill( Jet0PuppiNM              , evWeight );          
+        h_2ttag_inclu_Jet0PuppiNEF                              ->Fill( Jet0PuppiNEF             , evWeight );          
+        h_2ttag_inclu_Jet0PuppiCEF                              ->Fill( Jet0PuppiCEF             , evWeight );          
+        h_2ttag_inclu_Jet0PuppiMF                               ->Fill( Jet0PuppiMF              , evWeight );          
+        h_2ttag_inclu_Jet0PuppiMult                             ->Fill( Jet0PuppiMult            , evWeight );  
+
+  
+        h_2ttag_inclu_Jet1P                                     ->Fill( jet1P                    , evWeight );          
+        h_2ttag_inclu_Jet1Pt                                    ->Fill( jet1P4.Perp()            , evWeight );          
+        h_2ttag_inclu_Jet1Phi                                   ->Fill( jet1P4.Phi()             , evWeight );          
+        h_2ttag_inclu_Jet1Rap                                   ->Fill( jet1P4.Rapidity()        , evWeight );          
+        h_2ttag_inclu_Jet1SDmass                                ->Fill( jet1sdmass               , evWeight );                           
+        h_2ttag_inclu_Jet1SDmassCorrL23                         ->Fill( Jet1SDmassSubjetCorrL23  , evWeight );          
+        h_2ttag_inclu_Jet1SDmassCorrL23Up                       ->Fill( Jet1SDmassSubjetCorrL23  , evWeight );                        
+        h_2ttag_inclu_Jet1Tau1                                  ->Fill( Jet1Tau1                 , evWeight );          
+        h_2ttag_inclu_Jet1Tau2                                  ->Fill( Jet1Tau2                 , evWeight );          
+        h_2ttag_inclu_Jet1Tau3                                  ->Fill( Jet1Tau3                 , evWeight );    
+        h_2ttag_inclu_Jet1Tau4                                  ->Fill( Jet1Tau4                 , evWeight );
+        h_2ttag_inclu_Jet1SDmaxbdisc                            ->Fill( Jet1SDmaxbdisc           , evWeight );        
+        h_2ttag_inclu_Jet1SDsubjet0pt                           ->Fill( Jet1SDsubjet0pt          , evWeight );          
+        h_2ttag_inclu_Jet1SDsubjet0mass                         ->Fill( Jet1SDsubjet0mass        , evWeight );                   
+        h_2ttag_inclu_Jet1SDsubjet0tau1                         ->Fill( Jet1SDsubjet0tau1        , evWeight );          
+        h_2ttag_inclu_Jet1SDsubjet0tau2                         ->Fill( Jet1SDsubjet0tau2        , evWeight );          
+        h_2ttag_inclu_Jet1SDsubjet0tau3                         ->Fill( Jet1SDsubjet0tau3        , evWeight );          
+        h_2ttag_inclu_Jet1SDsubjet0bdisc                        ->Fill( Jet1SDsubjet0bdisc       , evWeight );          
+        h_2ttag_inclu_Jet1SDsubjet1pt                           ->Fill( Jet1SDsubjet1pt          , evWeight );          
+        h_2ttag_inclu_Jet1SDsubjet1mass                         ->Fill( Jet1SDsubjet1mass        , evWeight );
+        h_2ttag_inclu_Jet1SDsubjet1tau1                         ->Fill( Jet1SDsubjet1tau1        , evWeight );          
+        h_2ttag_inclu_Jet1SDsubjet1tau2                         ->Fill( Jet1SDsubjet1tau2        , evWeight );          
+        h_2ttag_inclu_Jet1SDsubjet1tau3                         ->Fill( Jet1SDsubjet1tau3        , evWeight );          
+        h_2ttag_inclu_Jet1SDsubjet1bdisc                        ->Fill( Jet1SDsubjet1bdisc       , evWeight );          
+
+        h_2ttag_inclu_Jet1CHF                                   ->Fill( Jet1CHF                  , evWeight );          
+        h_2ttag_inclu_Jet1NHF                                   ->Fill( Jet1NHF                  , evWeight );          
+        h_2ttag_inclu_Jet1CM                                    ->Fill( Jet1CM                   , evWeight );          
+        h_2ttag_inclu_Jet1NM                                    ->Fill( Jet1NM                   , evWeight );          
+        h_2ttag_inclu_Jet1NEF                                   ->Fill( Jet1NEF                  , evWeight );          
+        h_2ttag_inclu_Jet1CEF                                   ->Fill( Jet1CEF                  , evWeight );          
+        h_2ttag_inclu_Jet1MF                                    ->Fill( Jet1MF                   , evWeight );          
+        h_2ttag_inclu_Jet1Mult                                  ->Fill( Jet1Mult                 , evWeight );    
+       
+        h_2ttag_inclu_Jet1PuppiPt                               ->Fill( puppi1pt                 , evWeight );                                
+        h_2ttag_inclu_Jet1PuppiSDmass                           ->Fill( puppi1sdmass             , evWeight ); 
+        h_2ttag_inclu_Jet1PuppiSDpt                             ->Fill( puppi1sdpt               , evWeight );                              
+        h_2ttag_inclu_Jet1PuppiTau1                             ->Fill( Jet1PuppiTau1            , evWeight );          
+        h_2ttag_inclu_Jet1PuppiTau2                             ->Fill( Jet1PuppiTau2            , evWeight );          
+        h_2ttag_inclu_Jet1PuppiTau3                             ->Fill( Jet1PuppiTau3            , evWeight );          
+        h_2ttag_inclu_Jet1PuppiTau4                             ->Fill( Jet1PuppiTau4            , evWeight );                              
+        h_2ttag_inclu_Jet1PuppiTau32                            ->Fill( Jet1PuppiTau32           , evWeight );                              
+        h_2ttag_inclu_Jet1PuppiSDmaxbdisc                       ->Fill( Jet1PuppiSDmaxbdisc      , evWeight );             
+        h_2ttag_inclu_Jet1PuppiSDsubjet0pt                      ->Fill( Jet1PuppiSDsubjet0pt     , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet0mass                    ->Fill( Jet1PuppiSDsubjet0mass   , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet0tau1                    ->Fill( Jet1PuppiSDsubjet0tau1   , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet0tau2                    ->Fill( Jet1PuppiSDsubjet0tau2   , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet0tau3                    ->Fill( Jet1PuppiSDsubjet0tau3   , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet0bdisc                   ->Fill( Jet1PuppiSDsubjet0bdisc  , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet1pt                      ->Fill( Jet1PuppiSDsubjet1pt     , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet1mass                    ->Fill( Jet1PuppiSDsubjet1mass   , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet1tau1                    ->Fill( Jet1PuppiSDsubjet1tau1   , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet1tau2                    ->Fill( Jet1PuppiSDsubjet1tau2   , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet1tau3                    ->Fill( Jet1PuppiSDsubjet1tau3   , evWeight );          
+        h_2ttag_inclu_Jet1PuppiSDsubjet1bdisc                   ->Fill( Jet1PuppiSDsubjet1bdisc  , evWeight );
+ 
+        h_2ttag_inclu_Jet1PuppiCHF                              ->Fill( Jet1PuppiCHF             , evWeight );          
+        h_2ttag_inclu_Jet1PuppiNHF                              ->Fill( Jet1PuppiNHF             , evWeight );          
+        h_2ttag_inclu_Jet1PuppiCM                               ->Fill( Jet1PuppiCM              , evWeight );          
+        h_2ttag_inclu_Jet1PuppiNM                               ->Fill( Jet1PuppiNM              , evWeight );          
+        h_2ttag_inclu_Jet1PuppiNEF                              ->Fill( Jet1PuppiNEF             , evWeight );          
+        h_2ttag_inclu_Jet1PuppiCEF                              ->Fill( Jet1PuppiCEF             , evWeight );          
+        h_2ttag_inclu_Jet1PuppiMF                               ->Fill( Jet1PuppiMF              , evWeight );          
+        h_2ttag_inclu_Jet1PuppiMult                             ->Fill( Jet1PuppiMult            , evWeight );  
+
+
       }
 
-      if (double_tag_t_b){
+      // kinematics in double t-tagged & double b-tagged events
+      if (double_puptag_t_b){
         if (!isFrozen || !isData ){       
           h_2ttag_2btag_dRapIn_DijetMass                        ->Fill( dijetMass                , evWeight );  
           if (DijetDeltaRap >=1) h_2ttag_2btag_dRapLo_DijetMass ->Fill( dijetMass                , evWeight );                          
@@ -10480,6 +9021,11 @@ void looptree(
         h_2ttag_2btag_METphi                                    ->Fill( AllHadMETphi             , evWeight );   
         h_2ttag_2btag_METphi                                    ->Fill( AllHadNvtx               , evWeight );   
 
+        if (dijetMass>1000) h_2ttag_2btag_DeltaRap_mTTgt1                                 ->Fill( DijetDeltaRap            , evWeight );         
+        if (dijetMass>2000) h_2ttag_2btag_DeltaRap_mTTgt2                                 ->Fill( DijetDeltaRap            , evWeight );         
+        if (dijetMass>3000) h_2ttag_2btag_DeltaRap_mTTgt3                                 ->Fill( DijetDeltaRap            , evWeight );         
+
+
         h_2ttag_2btag_Jet0PuppiSDsubjet0pt                      ->Fill( Jet0PuppiSDsubjet0pt     , evWeight );          
         h_2ttag_2btag_Jet0PuppiSDsubjet0mass                    ->Fill( Jet0PuppiSDsubjet0mass   , evWeight );          
         h_2ttag_2btag_Jet0PuppiSDsubjet0tau1                    ->Fill( Jet0PuppiSDsubjet0tau1   , evWeight );          
@@ -10492,8 +9038,14 @@ void looptree(
         h_2ttag_2btag_Jet0PuppiSDsubjet1tau2                    ->Fill( Jet0PuppiSDsubjet1tau2   , evWeight );          
         h_2ttag_2btag_Jet0PuppiSDsubjet1tau3                    ->Fill( Jet0PuppiSDsubjet1tau3   , evWeight );          
         h_2ttag_2btag_Jet0PuppiSDsubjet1bdisc                   ->Fill( Jet0PuppiSDsubjet1bdisc  , evWeight );
+    
+        h_2ttag_2btag_Jet0PuppiSDsubjet0tau21                    ->Fill( Jet0PuppiSDsubjet0tau2/ Jet0PuppiSDsubjet0tau1  , evWeight );          
+        h_2ttag_2btag_Jet0PuppiSDsubjet1tau21                    ->Fill( Jet0PuppiSDsubjet0tau2/ Jet0PuppiSDsubjet1tau1  , evWeight );          
+
       }
-      if (double_tag_t_single_tag_b){
+
+      // kinematics in double t-tagged & single b-tagged events
+      if (double_puptag_t_single_puptag_b){
         if (!isFrozen || !isData ){      
           h_2ttag_1btag_dRapIn_DijetMass                        ->Fill( dijetMass                , evWeight );  
           if (DijetDeltaRap >=1) h_2ttag_1btag_dRapLo_DijetMass ->Fill( dijetMass                , evWeight );                          
@@ -10514,6 +9066,11 @@ void looptree(
         h_2ttag_1btag_METphi                                    ->Fill( AllHadNvtx               , evWeight );  
 
 
+        if (dijetMass>1000) h_2ttag_1btag_DeltaRap_mTTgt1                                 ->Fill( DijetDeltaRap            , evWeight );         
+        if (dijetMass>2000) h_2ttag_1btag_DeltaRap_mTTgt2                                 ->Fill( DijetDeltaRap            , evWeight );         
+        if (dijetMass>3000) h_2ttag_1btag_DeltaRap_mTTgt3                                 ->Fill( DijetDeltaRap            , evWeight );         
+
+
         h_2ttag_1btag_Jet0PuppiSDsubjet0pt                      ->Fill( Jet0PuppiSDsubjet0pt     , evWeight );          
         h_2ttag_1btag_Jet0PuppiSDsubjet0mass                    ->Fill( Jet0PuppiSDsubjet0mass   , evWeight );          
         h_2ttag_1btag_Jet0PuppiSDsubjet0tau1                    ->Fill( Jet0PuppiSDsubjet0tau1   , evWeight );          
@@ -10526,8 +9083,15 @@ void looptree(
         h_2ttag_1btag_Jet0PuppiSDsubjet1tau2                    ->Fill( Jet0PuppiSDsubjet1tau2   , evWeight );          
         h_2ttag_1btag_Jet0PuppiSDsubjet1tau3                    ->Fill( Jet0PuppiSDsubjet1tau3   , evWeight );          
         h_2ttag_1btag_Jet0PuppiSDsubjet1bdisc                   ->Fill( Jet0PuppiSDsubjet1bdisc  , evWeight );
+
+        h_2ttag_1btag_Jet0PuppiSDsubjet0tau21                    ->Fill( Jet0PuppiSDsubjet0tau2/ Jet0PuppiSDsubjet0tau1  , evWeight );          
+        h_2ttag_1btag_Jet0PuppiSDsubjet1tau21                    ->Fill( Jet0PuppiSDsubjet0tau2/ Jet0PuppiSDsubjet1tau1  , evWeight );          
+
+
       }     
-      if (double_tag_t_no_b){
+
+      // kinematics in double t-tagged & 0 b-tagged events
+      if (double_puptag_t_no_b){
         if (!isFrozen || !isData ){      
           h_2ttag_0btag_dRapIn_DijetMass                        ->Fill( dijetMass                , evWeight );  
           if (DijetDeltaRap >=1) h_2ttag_0btag_dRapLo_DijetMass ->Fill( dijetMass                , evWeight );                          
@@ -10549,6 +9113,12 @@ void looptree(
         h_2ttag_0btag_METphi                                    ->Fill( AllHadMETphi             , evWeight );   
         h_2ttag_0btag_METphi                                    ->Fill( AllHadNvtx               , evWeight );  
 
+
+        if (dijetMass>1000) h_2ttag_0btag_DeltaRap_mTTgt1                                 ->Fill( DijetDeltaRap            , evWeight );         
+        if (dijetMass>2000) h_2ttag_0btag_DeltaRap_mTTgt2                                 ->Fill( DijetDeltaRap            , evWeight );         
+        if (dijetMass>3000) h_2ttag_0btag_DeltaRap_mTTgt3                                 ->Fill( DijetDeltaRap            , evWeight );         
+
+
         h_2ttag_0btag_Jet0PuppiSDsubjet0pt                      ->Fill( Jet0PuppiSDsubjet0pt     , evWeight );          
         h_2ttag_0btag_Jet0PuppiSDsubjet0mass                    ->Fill( Jet0PuppiSDsubjet0mass   , evWeight );          
         h_2ttag_0btag_Jet0PuppiSDsubjet0tau1                    ->Fill( Jet0PuppiSDsubjet0tau1   , evWeight );          
@@ -10561,9 +9131,160 @@ void looptree(
         h_2ttag_0btag_Jet0PuppiSDsubjet1tau2                    ->Fill( Jet0PuppiSDsubjet1tau2   , evWeight );          
         h_2ttag_0btag_Jet0PuppiSDsubjet1tau3                    ->Fill( Jet0PuppiSDsubjet1tau3   , evWeight );          
         h_2ttag_0btag_Jet0PuppiSDsubjet1bdisc                   ->Fill( Jet0PuppiSDsubjet1bdisc  , evWeight );
-      }     
 
-      // Jet mass with different tagging requirements
+        h_2ttag_0btag_Jet0PuppiSDsubjet0tau21                    ->Fill( Jet0PuppiSDsubjet0tau2/ Jet0PuppiSDsubjet0tau1  , evWeight );          
+        h_2ttag_0btag_Jet0PuppiSDsubjet1tau21                    ->Fill( Jet0PuppiSDsubjet0tau2/ Jet0PuppiSDsubjet1tau1  , evWeight );          
+
+
+      } 
+
+      // kinematics in double b-tagged events
+      if (j0_puptag_b && j1_puptag_b){
+          
+          h_2btag_DijetMass                         ->Fill( dijetMass                   , evWeight );
+          h_2btag_DeltaRap                          ->Fill( DijetDeltaRap               , evWeight );
+          
+
+          if (dijetMass>1000) h_2btag_DeltaRap_mTTgt1                                 ->Fill( DijetDeltaRap            , evWeight );         
+          if (dijetMass>2000) h_2btag_DeltaRap_mTTgt2                                 ->Fill( DijetDeltaRap            , evWeight );         
+          if (dijetMass>3000) h_2btag_DeltaRap_mTTgt3                                 ->Fill( DijetDeltaRap            , evWeight );         
+
+          h_2btag_jet0Pt                            ->Fill( jet0P4.Perp()               , evWeight );          
+          h_2btag_jet1Pt                            ->Fill( jet1P4.Perp()               , evWeight );          
+          h_2btag_jet0massSD                        ->Fill( jet0sdmass                  , evWeight );
+          h_2btag_jet0massSDpuppi                   ->Fill( puppi0sdmass                , evWeight );
+          h_2btag_jet0tau32                         ->Fill( Jet0Tau32                   , evWeight );
+          h_2btag_jet0tau21                         ->Fill( Jet0Tau21                   , evWeight );
+          h_2btag_jet0tau1                          ->Fill( Jet0Tau1                    , evWeight );
+          h_2btag_jet0tau2                          ->Fill( Jet0Tau2                    , evWeight );
+          h_2btag_jet0tau3                          ->Fill( Jet0Tau3                    , evWeight );
+          h_2btag_jet0subjet0mass                   ->Fill( Jet0SDsubjet0mass           , evWeight );
+          h_2btag_jet0subjet1mass                   ->Fill( Jet0SDsubjet1mass           , evWeight );
+          h_2btag_jet0subjet0mass_jet0subjet1mass   ->Fill( Jet0SDsubjet0mass           , Jet0SDsubjet1mass  , evWeight );
+          h_2btag_jet0subjet0bdisc_jet0subjet1bdisc ->Fill( Jet0SDsubjet0bdisc          , Jet0SDsubjet1bdisc , evWeight );
+          h_2btag_jet1massSD                        ->Fill( jet1sdmass                  , evWeight );
+          h_2btag_jet1massSDpuppi                   ->Fill( puppi1sdmass                , evWeight );
+          h_2btag_jet1tau32                         ->Fill( Jet1Tau32                   , evWeight );
+          h_2btag_jet1tau21                         ->Fill( Jet1Tau21                   , evWeight );
+          h_2btag_jet1tau1                          ->Fill( Jet1Tau1                    , evWeight );
+          h_2btag_jet1tau2                          ->Fill( Jet1Tau2                    , evWeight );
+          h_2btag_jet1tau3                          ->Fill( Jet1Tau3                    , evWeight );
+          h_2btag_jet1subjet0mass                   ->Fill( Jet1SDsubjet0mass           , evWeight );
+          h_2btag_jet1subjet1mass                   ->Fill( Jet1SDsubjet1mass           , evWeight );
+          h_2btag_jet1subjet0mass_jet1subjet1mass   ->Fill( Jet1SDsubjet0mass           , Jet1SDsubjet1mass  , evWeight );
+          h_2btag_jet1subjet0bdisc_jet1subjet1bdisc ->Fill( Jet1SDsubjet0bdisc          , Jet1SDsubjet1bdisc , evWeight );
+
+          if (j1_tag_t){
+            h_2btag_jet1ttag_jet0massSD                        ->Fill( jet0sdmass                  , evWeight );
+            h_2btag_jet1ttag_jet0tau32                         ->Fill( Jet0Tau32                   , evWeight );
+            h_2btag_jet1ttag_jet0tau21                         ->Fill( Jet0Tau21                   , evWeight );
+            h_2btag_jet1ttag_jet0tau1                          ->Fill( Jet0Tau1                    , evWeight );
+            h_2btag_jet1ttag_jet0tau2                          ->Fill( Jet0Tau2                    , evWeight );
+            h_2btag_jet1ttag_jet0tau3                          ->Fill( Jet0Tau3                    , evWeight );
+            h_2btag_jet1ttag_jet0subjet0mass                   ->Fill( Jet0SDsubjet0mass           , evWeight );
+            h_2btag_jet1ttag_jet0subjet1mass                   ->Fill( Jet0SDsubjet1mass           , evWeight );
+            h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass   ->Fill( Jet0SDsubjet0mass       ,      Jet0SDsubjet1mass , evWeight );
+            h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc ->Fill( Jet0SDsubjet0bdisc      ,     Jet0SDsubjet1bdisc , evWeight );
+
+            if (j0_tag_tau32) h_2btag_jet1ttag_jet0tautag_jet0massSD           ->Fill( jet0sdmass                  , evWeight );
+
+            if (j0_tag_mass){
+              h_2btag_jet1ttag_jet0masstag_jet0tau32                         ->Fill( Jet0Tau32                   , evWeight );
+              h_2btag_jet1ttag_jet0masstag_jet0tau21                         ->Fill( Jet0Tau21                   , evWeight );
+              h_2btag_jet1ttag_jet0masstag_jet0tau1                          ->Fill( Jet0Tau1                    , evWeight );
+              h_2btag_jet1ttag_jet0masstag_jet0tau2                          ->Fill( Jet0Tau2                    , evWeight );
+              h_2btag_jet1ttag_jet0masstag_jet0tau3                          ->Fill( Jet0Tau3                    , evWeight );
+            }
+          }
+
+          if (j0_tag_t){
+            h_2btag_jet0ttag_jet1massSD                        ->Fill( jet1sdmass                  , evWeight );
+            h_2btag_jet0ttag_jet1tau32                         ->Fill( Jet1Tau32                   , evWeight );
+            h_2btag_jet0ttag_jet1tau21                         ->Fill( Jet1Tau21                   , evWeight );
+            h_2btag_jet0ttag_jet1tau1                          ->Fill( Jet1Tau1                    , evWeight );
+            h_2btag_jet0ttag_jet1tau2                          ->Fill( Jet1Tau2                    , evWeight );
+            h_2btag_jet0ttag_jet1tau3                          ->Fill( Jet1Tau3                    , evWeight );
+            h_2btag_jet0ttag_jet1subjet0mass                   ->Fill( Jet1SDsubjet0mass                  , evWeight );
+            h_2btag_jet0ttag_jet1subjet1mass                   ->Fill( Jet1SDsubjet1mass                  , evWeight );
+            h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass   ->Fill( Jet1SDsubjet0mass       ,      Jet1SDsubjet1mass , evWeight );
+            h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc ->Fill( Jet1SDsubjet0bdisc      ,     Jet1SDsubjet1bdisc , evWeight );
+
+            if (j1_tag_tau32) h_2btag_jet0ttag_jet1tautag_jet1massSD           ->Fill( jet1sdmass                  , evWeight );
+
+            if (j1_tag_mass){
+              h_2btag_jet0ttag_jet1masstag_jet1tau32                         ->Fill( Jet1Tau32                   , evWeight );
+              h_2btag_jet0ttag_jet1masstag_jet1tau21                         ->Fill( Jet1Tau21                   , evWeight );
+              h_2btag_jet0ttag_jet1masstag_jet1tau1                          ->Fill( Jet1Tau1                    , evWeight );
+              h_2btag_jet0ttag_jet1masstag_jet1tau2                          ->Fill( Jet1Tau2                    , evWeight );
+              h_2btag_jet0ttag_jet1masstag_jet1tau3                          ->Fill( Jet1Tau3                    , evWeight );     
+            }
+          }
+      } // end if double b-tagged
+
+      //fill double t-tagged dijet distributions  -- not sure why i made these
+      if (j0_tag_t && j1_tag_t){
+        if (DijetDeltaRap >= 1){
+          //inclusive 
+          h_mttMass_tagMassSDTau32_dRapHi_inclusive->Fill( dijetMass   , evWeight );
+          if (j0_tag_b && j1_tag_b) h_mttMass_tagMassSDTau32_dRapHi_2btag->Fill( dijetMass   , evWeight );  //2btag
+          if ((j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b)) h_mttMass_tagMassSDTau32_dRapHi_1btag->Fill( dijetMass   , evWeight ); //1btag 
+        }                                        
+        if (DijetDeltaRap < 1){
+          //inclusive 
+          h_mttMass_tagMassSDTau32_dRapLo_inclusive->Fill( dijetMass   , evWeight );
+          if (j0_tag_b && j1_tag_b) h_mttMass_tagMassSDTau32_dRapLo_2btag->Fill( dijetMass   , evWeight );  //2btag
+          if ((j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b)) h_mttMass_tagMassSDTau32_dRapLo_1btag->Fill( dijetMass   , evWeight ); //1btag 
+        }                                        
+
+        h_topTag_jet0subjet0pt                     ->Fill( Jet0SDsubjet0pt               , evWeight );
+        h_topTag_jet0subjet0mass                   ->Fill( Jet0SDsubjet0mass             , evWeight );
+        h_topTag_jet0subjet0bdisc                  ->Fill( Jet0SDsubjet0bdisc            , evWeight );
+        h_topTag_jet0subjet0flav                   ->Fill( abs(Jet0SDsubjet0flavParton)  , evWeight ); 
+
+        h_topTag_jet0subjet1pt                     ->Fill( Jet0SDsubjet1pt         , evWeight );
+        h_topTag_jet0subjet1mass                   ->Fill( Jet0SDsubjet1mass       , evWeight );
+        h_topTag_jet0subjet1bdisc                  ->Fill( Jet0SDsubjet1bdisc      , evWeight );
+        //h_topTag_jet0subjet1flav                   ->Fill( abs(Jet0SDsubjet1flav)  , evWeight ); 
+
+        h_topTag_jet0maxBdisc                      ->Fill(Jet0SDmaxbdisc            , evWeight );
+        //h_topTag_jet0maxBdiscflav                  ->Fill( abs(maxbdiscflav_jet0_)   , evWeight ); 
+
+        h_topTag_jet0pt                            ->Fill( jet0P4.Perp()             , evWeight );
+
+        h_topTag_jet0pt_jet0subjet0pt              ->Fill( jet0P4.Perp()           ,      Jet0SDsubjet0pt   , evWeight );
+        h_topTag_jet0pt_jet0subjet1pt              ->Fill( jet0P4.Perp()           ,      Jet0SDsubjet1pt   , evWeight );
+        h_topTag_jet0subjet0pt_jet0subjet1pt       ->Fill( Jet0SDsubjet0pt         ,      Jet0SDsubjet1pt   , evWeight );
+        h_topTag_jet0subjet0mass_jet0subjet1mass   ->Fill( Jet0SDsubjet0mass       ,      Jet0SDsubjet1mass , evWeight );
+        //h_topTag_jet0subjet0flav_jet0subjet1flav   ->Fill( abs(Jet0SDsubjet0flav)  , abs(Jet0SDsubjet1flav) , evWeight ); 
+        h_topTag_jet0subjet0bdisc_jet0subjet1bdisc ->Fill( Jet0SDsubjet0bdisc      ,     Jet0SDsubjet1bdisc , evWeight );
+
+        if (j0_tag_b){
+          h_topTagbTag_jet0subjet0pt                     ->Fill( Jet0SDsubjet0pt         , evWeight );
+          h_topTagbTag_jet0subjet0mass                   ->Fill( Jet0SDsubjet0mass       , evWeight );
+          h_topTagbTag_jet0subjet0bdisc                  ->Fill( Jet0SDsubjet0bdisc      , evWeight );
+          //h_topTagbTag_jet0subjet0flav                   ->Fill( abs(Jet0SDsubjet0flav)  , evWeight ); 
+
+          h_topTagbTag_jet0subjet1pt                     ->Fill( Jet0SDsubjet1pt         , evWeight );
+          h_topTagbTag_jet0subjet1mass                   ->Fill( Jet0SDsubjet1mass       , evWeight );
+          h_topTagbTag_jet0subjet1bdisc                  ->Fill( Jet0SDsubjet1bdisc      , evWeight );
+          //h_topTagbTag_jet0subjet1flav                   ->Fill( abs(Jet0SDsubjet1flav)  , evWeight ); 
+
+          h_topTagbTag_jet0maxBdisc                      ->Fill(Jet0SDmaxbdisc            , evWeight );
+          //h_topTagbTag_jet0maxBdiscflav                  ->Fill( abs(maxbdiscflav_jet0_)   , evWeight ); 
+
+          h_topTagbTag_jet0pt                            ->Fill( jet0P4.Perp()             , evWeight );
+
+          h_topTagbTag_jet0pt_jet0subjet0pt              ->Fill( jet0P4.Perp()  ,      Jet0SDsubjet0pt   , evWeight );
+          h_topTagbTag_jet0pt_jet0subjet1pt              ->Fill( jet0P4.Perp()  ,      Jet0SDsubjet1pt   , evWeight );
+          h_topTagbTag_jet0subjet0pt_jet0subjet1pt       ->Fill( Jet0SDsubjet0pt         ,      Jet0SDsubjet1pt   , evWeight );
+          h_topTagbTag_jet0subjet0mass_jet0subjet1mass   ->Fill( Jet0SDsubjet0mass       ,      Jet0SDsubjet1mass , evWeight );
+          //h_topTagbTag_jet0subjet0flav_jet0subjet1flav   ->Fill( abs(Jet0SDsubjet0flav)  , abs(Jet0SDsubjet1flav) , evWeight ); 
+          h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc ->Fill( Jet0SDsubjet0bdisc      ,     Jet0SDsubjet1bdisc , evWeight );
+        }// end if jet 0 b-tagged
+      } // end if double t-tagged
+
+
+      // Jet variables with different tagging requirements
       h_Jet0SDmass                                                                                   ->Fill( jet0sdmass , evWeight );  
       if (j0_tag_b)                                  h_Jet0SDmass_JetTag_b                           ->Fill( jet0sdmass , evWeight );
       if (j0_tag_tau32)                              h_Jet0SDmass_JetTag_tau32                       ->Fill( jet0sdmass , evWeight );
@@ -11013,144 +9734,239 @@ void looptree(
 
 
 
-        // double b-tagged plots
-        if (j0_tag_b && j1_tag_b){
-          h_2btag_DijetMass                         ->Fill( dijetMass                   , evWeight );
-          h_2btag_DeltaRap                          ->Fill( DijetDeltaRap               , evWeight );
-          h_2btag_jet0massSD                        ->Fill( jet0sdmass                  , evWeight );
-          h_2btag_jet0massSDpuppi                   ->Fill( puppi0sdmass                , evWeight );
-          h_2btag_jet0tau32                         ->Fill( Jet0Tau32                   , evWeight );
-          h_2btag_jet0tau21                         ->Fill( Jet0Tau21                   , evWeight );
-          h_2btag_jet0tau1                          ->Fill( Jet0Tau1                    , evWeight );
-          h_2btag_jet0tau2                          ->Fill( Jet0Tau2                    , evWeight );
-          h_2btag_jet0tau3                          ->Fill( Jet0Tau3                    , evWeight );
-          h_2btag_jet0subjet0mass                   ->Fill( Jet0SDsubjet0mass           , evWeight );
-          h_2btag_jet0subjet1mass                   ->Fill( Jet0SDsubjet1mass           , evWeight );
-          h_2btag_jet0subjet0mass_jet0subjet1mass   ->Fill( Jet0SDsubjet0mass           , Jet0SDsubjet1mass  , evWeight );
-          h_2btag_jet0subjet0bdisc_jet0subjet1bdisc ->Fill( Jet0SDsubjet0bdisc          , Jet0SDsubjet1bdisc , evWeight );
-          h_2btag_jet1massSD                        ->Fill( jet1sdmass                  , evWeight );
-          h_2btag_jet1massSDpuppi                   ->Fill( puppi1sdmass                , evWeight );
-          h_2btag_jet1tau32                         ->Fill( Jet1Tau32                   , evWeight );
-          h_2btag_jet1tau21                         ->Fill( Jet1Tau21                   , evWeight );
-          h_2btag_jet1tau1                          ->Fill( Jet1Tau1                    , evWeight );
-          h_2btag_jet1tau2                          ->Fill( Jet1Tau2                    , evWeight );
-          h_2btag_jet1tau3                          ->Fill( Jet1Tau3                    , evWeight );
-          h_2btag_jet1subjet0mass                   ->Fill( Jet1SDsubjet0mass           , evWeight );
-          h_2btag_jet1subjet1mass                   ->Fill( Jet1SDsubjet1mass           , evWeight );
-          h_2btag_jet1subjet0mass_jet1subjet1mass   ->Fill( Jet1SDsubjet0mass           , Jet1SDsubjet1mass  , evWeight );
-          h_2btag_jet1subjet0bdisc_jet1subjet1bdisc ->Fill( Jet1SDsubjet0bdisc          , Jet1SDsubjet1bdisc , evWeight );
+      //-----------------------------------------------------------------------------
+      //---- 2D Histograms TH2 ----
+      //-----------------------------------------------------------------------------
 
-          if (j1_tag_t){
-            h_2btag_jet1ttag_jet0massSD                        ->Fill( jet0sdmass                  , evWeight );
-            h_2btag_jet1ttag_jet0tau32                         ->Fill( Jet0Tau32                   , evWeight );
-            h_2btag_jet1ttag_jet0tau21                         ->Fill( Jet0Tau21                   , evWeight );
-            h_2btag_jet1ttag_jet0tau1                          ->Fill( Jet0Tau1                    , evWeight );
-            h_2btag_jet1ttag_jet0tau2                          ->Fill( Jet0Tau2                    , evWeight );
-            h_2btag_jet1ttag_jet0tau3                          ->Fill( Jet0Tau3                    , evWeight );
-            h_2btag_jet1ttag_jet0subjet0mass                   ->Fill( Jet0SDsubjet0mass           , evWeight );
-            h_2btag_jet1ttag_jet0subjet1mass                   ->Fill( Jet0SDsubjet1mass           , evWeight );
-            h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass   ->Fill( Jet0SDsubjet0mass       ,      Jet0SDsubjet1mass , evWeight );
-            h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc ->Fill( Jet0SDsubjet0bdisc      ,     Jet0SDsubjet1bdisc , evWeight );
+      h_runNumber_Jet0CHF          -> Fill(AllHadRunNum, Jet0CHF          , evWeight);
+      h_runNumber_Jet0NHF          -> Fill(AllHadRunNum, Jet0NHF          , evWeight);
+      h_runNumber_Jet0CM           -> Fill(AllHadRunNum, Jet0CM           , evWeight);
+      h_runNumber_Jet0NM           -> Fill(AllHadRunNum, Jet0NM           , evWeight);
+      h_runNumber_Jet0NEF          -> Fill(AllHadRunNum, Jet0NEF          , evWeight);
+      h_runNumber_Jet0CEF          -> Fill(AllHadRunNum, Jet0CEF          , evWeight);
+      h_runNumber_Jet0MF           -> Fill(AllHadRunNum, Jet0MF           , evWeight);
+      h_runNumber_Jet0Mult         -> Fill(AllHadRunNum, Jet0Mult         , evWeight);
+      h_runNumber_NvtxGood         -> Fill(AllHadRunNum, AllHadNvtxGood   , evWeight);
+      h_runNumber_Jet0Pt           -> Fill(AllHadRunNum, jet0P4.Perp()    , evWeight);
+      h_runNumber_Jet0SDmass       -> Fill(AllHadRunNum, jet0sdmass       , evWeight);
+      h_runNumber_Jet0Tau32        -> Fill(AllHadRunNum, Jet0Tau32        , evWeight);
+      h_runNumber_Jet0PuppiPt      -> Fill(AllHadRunNum, puppi0P4.Perp()  , evWeight);
+      h_runNumber_Jet0PuppiSDmass  -> Fill(AllHadRunNum, puppi0sdmass     , evWeight);
+      h_runNumber_Jet0PuppiTau32   -> Fill(AllHadRunNum, Jet0PuppiTau32     , evWeight);
+      h_runNumber_DijetMass        -> Fill(AllHadRunNum, dijetMass        , evWeight);
+      h_runNumber_HT               -> Fill(AllHadRunNum, HT               , evWeight);
 
-            if (j0_tag_tau32) h_2btag_jet1ttag_jet0tautag_jet0massSD           ->Fill( jet0sdmass                  , evWeight );
+      h_NvtxGood_Jet0CHF           -> Fill(AllHadNvtxGood, Jet0CHF          , evWeight);
+      h_NvtxGood_Jet0NHF           -> Fill(AllHadNvtxGood, Jet0NHF          , evWeight);
+      h_NvtxGood_Jet0CM            -> Fill(AllHadNvtxGood, Jet0CM           , evWeight);
+      h_NvtxGood_Jet0NM            -> Fill(AllHadNvtxGood, Jet0NM           , evWeight);
+      h_NvtxGood_Jet0NEF           -> Fill(AllHadNvtxGood, Jet0NEF          , evWeight);
+      h_NvtxGood_Jet0CEF           -> Fill(AllHadNvtxGood, Jet0CEF          , evWeight);
+      h_NvtxGood_Jet0MF            -> Fill(AllHadNvtxGood, Jet0MF           , evWeight);
+      h_NvtxGood_Jet0Mult          -> Fill(AllHadNvtxGood, Jet0Mult         , evWeight);
+      h_NvtxGood_NvtxGood          -> Fill(AllHadNvtxGood, AllHadNvtxGood   , evWeight);
+      h_NvtxGood_Jet0Pt            -> Fill(AllHadNvtxGood, jet0P4.Perp()    , evWeight);
+      h_NvtxGood_Jet0SDmass        -> Fill(AllHadNvtxGood, jet0sdmass       , evWeight);
+      h_NvtxGood_Jet0Tau32         -> Fill(AllHadNvtxGood, Jet0Tau32        , evWeight);
+      h_NvtxGood_Jet0PuppiPt       -> Fill(AllHadNvtxGood, puppi0P4.Perp()  , evWeight);
+      h_NvtxGood_Jet0PuppiSDmass   -> Fill(AllHadNvtxGood, puppi0sdmass     , evWeight);
+      h_NvtxGood_Jet0PuppiTau32    -> Fill(AllHadNvtxGood, Jet0PuppiTau32     , evWeight);
+      h_NvtxGood_DijetMass         -> Fill(AllHadNvtxGood, dijetMass        , evWeight);
+      h_NvtxGood_HT                -> Fill(AllHadNvtxGood, HT               , evWeight);
 
-            if (j0_tag_mass){
-              h_2btag_jet1ttag_jet0masstag_jet0tau32                         ->Fill( Jet0Tau32                   , evWeight );
-              h_2btag_jet1ttag_jet0masstag_jet0tau21                         ->Fill( Jet0Tau21                   , evWeight );
-              h_2btag_jet1ttag_jet0masstag_jet0tau1                          ->Fill( Jet0Tau1                    , evWeight );
-              h_2btag_jet1ttag_jet0masstag_jet0tau2                          ->Fill( Jet0Tau2                    , evWeight );
-              h_2btag_jet1ttag_jet0masstag_jet0tau3                          ->Fill( Jet0Tau3                    , evWeight );
-            }
-          }
+      h_GenJet0Pt_GenJet0Mass               ->Fill( Jet0MatchedGenJetPt   ,     Jet0MatchedGenJetMass , evWeight );
+      h_Jet0Pt_GenJet0Mass                  ->Fill( jet0P4.Perp()         ,     Jet0MatchedGenJetMass , evWeight );
+      h_Jet0P_GenJet0Mass                   ->Fill( jet0P4.P()            ,     Jet0MatchedGenJetMass , evWeight );
 
-          if (j0_tag_t){
-            h_2btag_jet0ttag_jet1massSD                        ->Fill( jet1sdmass                  , evWeight );
-            h_2btag_jet0ttag_jet1tau32                         ->Fill( Jet1Tau32                   , evWeight );
-            h_2btag_jet0ttag_jet1tau21                         ->Fill( Jet1Tau21                   , evWeight );
-            h_2btag_jet0ttag_jet1tau1                          ->Fill( Jet1Tau1                    , evWeight );
-            h_2btag_jet0ttag_jet1tau2                          ->Fill( Jet1Tau2                    , evWeight );
-            h_2btag_jet0ttag_jet1tau3                          ->Fill( Jet1Tau3                    , evWeight );
-            h_2btag_jet0ttag_jet1subjet0mass                   ->Fill( Jet1SDsubjet0mass                  , evWeight );
-            h_2btag_jet0ttag_jet1subjet1mass                   ->Fill( Jet1SDsubjet1mass                  , evWeight );
-            h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass   ->Fill( Jet1SDsubjet0mass       ,      Jet1SDsubjet1mass , evWeight );
-            h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc ->Fill( Jet1SDsubjet0bdisc      ,     Jet1SDsubjet1bdisc , evWeight );
-
-            if (j1_tag_tau32) h_2btag_jet0ttag_jet1tautag_jet1massSD           ->Fill( jet1sdmass                  , evWeight );
-
-            if (j1_tag_mass){
-              h_2btag_jet0ttag_jet1masstag_jet1tau32                         ->Fill( Jet1Tau32                   , evWeight );
-              h_2btag_jet0ttag_jet1masstag_jet1tau21                         ->Fill( Jet1Tau21                   , evWeight );
-              h_2btag_jet0ttag_jet1masstag_jet1tau1                          ->Fill( Jet1Tau1                    , evWeight );
-              h_2btag_jet0ttag_jet1masstag_jet1tau2                          ->Fill( Jet1Tau2                    , evWeight );
-              h_2btag_jet0ttag_jet1masstag_jet1tau3                          ->Fill( Jet1Tau3                    , evWeight );     
-            }
-          }
-        } // end if double b-tagged
-
-        //fill double t-tagged dijet distributions
-        if (j0_tag_t && j1_tag_t){
-          if (DijetDeltaRap >= 1){
-            //inclusive 
-            h_mttMass_tagMassSDTau32_dRapHi_inclusive->Fill( dijetMass   , evWeight );
-            if (j0_tag_b && j1_tag_b) h_mttMass_tagMassSDTau32_dRapHi_2btag->Fill( dijetMass   , evWeight );  //2btag
-            if ((j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b)) h_mttMass_tagMassSDTau32_dRapHi_1btag->Fill( dijetMass   , evWeight ); //1btag 
-          }                                        
-          if (DijetDeltaRap < 1){
-            //inclusive 
-            h_mttMass_tagMassSDTau32_dRapLo_inclusive->Fill( dijetMass   , evWeight );
-            if (j0_tag_b && j1_tag_b) h_mttMass_tagMassSDTau32_dRapLo_2btag->Fill( dijetMass   , evWeight );  //2btag
-            if ((j0_tag_b && !j1_tag_b) || (j1_tag_b && !j0_tag_b)) h_mttMass_tagMassSDTau32_dRapLo_1btag->Fill( dijetMass   , evWeight ); //1btag 
-          }                                        
-
-          h_topTag_jet0subjet0pt                     ->Fill( Jet0SDsubjet0pt               , evWeight );
-          h_topTag_jet0subjet0mass                   ->Fill( Jet0SDsubjet0mass             , evWeight );
-          h_topTag_jet0subjet0bdisc                  ->Fill( Jet0SDsubjet0bdisc            , evWeight );
-          h_topTag_jet0subjet0flav                   ->Fill( abs(Jet0SDsubjet0flavParton)  , evWeight ); 
-
-          h_topTag_jet0subjet1pt                     ->Fill( Jet0SDsubjet1pt         , evWeight );
-          h_topTag_jet0subjet1mass                   ->Fill( Jet0SDsubjet1mass       , evWeight );
-          h_topTag_jet0subjet1bdisc                  ->Fill( Jet0SDsubjet1bdisc      , evWeight );
-          //h_topTag_jet0subjet1flav                   ->Fill( abs(Jet0SDsubjet1flav)  , evWeight ); 
-
-          h_topTag_jet0maxBdisc                      ->Fill(Jet0SDmaxbdisc            , evWeight );
-          //h_topTag_jet0maxBdiscflav                  ->Fill( abs(maxbdiscflav_jet0_)   , evWeight ); 
-
-          h_topTag_jet0pt                            ->Fill( jet0P4.Perp()             , evWeight );
-
-          h_topTag_jet0pt_jet0subjet0pt              ->Fill( jet0P4.Perp()           ,      Jet0SDsubjet0pt   , evWeight );
-          h_topTag_jet0pt_jet0subjet1pt              ->Fill( jet0P4.Perp()           ,      Jet0SDsubjet1pt   , evWeight );
-          h_topTag_jet0subjet0pt_jet0subjet1pt       ->Fill( Jet0SDsubjet0pt         ,      Jet0SDsubjet1pt   , evWeight );
-          h_topTag_jet0subjet0mass_jet0subjet1mass   ->Fill( Jet0SDsubjet0mass       ,      Jet0SDsubjet1mass , evWeight );
-          //h_topTag_jet0subjet0flav_jet0subjet1flav   ->Fill( abs(Jet0SDsubjet0flav)  , abs(Jet0SDsubjet1flav) , evWeight ); 
-          h_topTag_jet0subjet0bdisc_jet0subjet1bdisc ->Fill( Jet0SDsubjet0bdisc      ,     Jet0SDsubjet1bdisc , evWeight );
-
-          if (j0_tag_b){
-            h_topTagbTag_jet0subjet0pt                     ->Fill( Jet0SDsubjet0pt         , evWeight );
-            h_topTagbTag_jet0subjet0mass                   ->Fill( Jet0SDsubjet0mass       , evWeight );
-            h_topTagbTag_jet0subjet0bdisc                  ->Fill( Jet0SDsubjet0bdisc      , evWeight );
-            //h_topTagbTag_jet0subjet0flav                   ->Fill( abs(Jet0SDsubjet0flav)  , evWeight ); 
-
-            h_topTagbTag_jet0subjet1pt                     ->Fill( Jet0SDsubjet1pt         , evWeight );
-            h_topTagbTag_jet0subjet1mass                   ->Fill( Jet0SDsubjet1mass       , evWeight );
-            h_topTagbTag_jet0subjet1bdisc                  ->Fill( Jet0SDsubjet1bdisc      , evWeight );
-            //h_topTagbTag_jet0subjet1flav                   ->Fill( abs(Jet0SDsubjet1flav)  , evWeight ); 
-
-            h_topTagbTag_jet0maxBdisc                      ->Fill(Jet0SDmaxbdisc            , evWeight );
-            //h_topTagbTag_jet0maxBdiscflav                  ->Fill( abs(maxbdiscflav_jet0_)   , evWeight ); 
-
-            h_topTagbTag_jet0pt                            ->Fill( jet0P4.Perp()             , evWeight );
-
-            h_topTagbTag_jet0pt_jet0subjet0pt              ->Fill( jet0P4.Perp()  ,      Jet0SDsubjet0pt   , evWeight );
-            h_topTagbTag_jet0pt_jet0subjet1pt              ->Fill( jet0P4.Perp()  ,      Jet0SDsubjet1pt   , evWeight );
-            h_topTagbTag_jet0subjet0pt_jet0subjet1pt       ->Fill( Jet0SDsubjet0pt         ,      Jet0SDsubjet1pt   , evWeight );
-            h_topTagbTag_jet0subjet0mass_jet0subjet1mass   ->Fill( Jet0SDsubjet0mass       ,      Jet0SDsubjet1mass , evWeight );
-            //h_topTagbTag_jet0subjet0flav_jet0subjet1flav   ->Fill( abs(Jet0SDsubjet0flav)  , abs(Jet0SDsubjet1flav) , evWeight ); 
-            h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc ->Fill( Jet0SDsubjet0bdisc      ,     Jet0SDsubjet1bdisc , evWeight );
-          }// end if jet 0 b-tagged
-        } // end if double t-tagged
+      h_Jet0Pt_Jet0Mass                     ->Fill( jet0P4.Perp()     ,         jet0P4.M() , evWeight );
+      h_Jet0Pt_Jet0SDmass                   ->Fill( jet0P4.Perp()     ,         jet0sdmass , evWeight );
+      h_Jet0Pt_Jet0Tau32                    ->Fill( jet0P4.Perp()     ,         Jet0Tau32  , evWeight );
+   
+      h_Jet0Pt_Jet0PuppiMass                ->Fill( jet0P4.Perp()     ,       puppi0P4.M() , evWeight );
+      h_Jet0Pt_Jet0PuppiSDmass              ->Fill( jet0P4.Perp()     ,       puppi0sdmass , evWeight );
+      h_Jet0Pt_Jet0PuppiTau32               ->Fill( jet0P4.Perp()     ,     Jet0PuppiTau32 , evWeight );
+         
+      h_Jet0P_Jet0Mass                      ->Fill( jet0P4.P()        ,         jet0P4.M() , evWeight );
+      h_Jet0P_Jet0SDmass                    ->Fill( jet0P4.P()        ,         jet0sdmass , evWeight );
+      h_Jet0P_Jet0Tau32                     ->Fill( jet0P4.P()        ,         Jet0Tau32  , evWeight );
+   
+      h_Jet0P_Jet0PuppiMass                 ->Fill( jet0P4.P()        ,       puppi0P4.M() , evWeight );
+      h_Jet0P_Jet0PuppiSDmass               ->Fill( jet0P4.P()        ,       puppi0sdmass , evWeight );
+      h_Jet0P_Jet0PuppiTau32                ->Fill( jet0P4.P()        ,     Jet0PuppiTau32 , evWeight );
+         
+      h_Jet0Mass_Jet0Tau32                  ->Fill( jet0P4.M()        ,         Jet0Tau32  , evWeight );
+      h_Jet0SDmass_Jet0Tau32                ->Fill( jet0sdmass        ,         Jet0Tau32  , evWeight );
+      h_Jet0PuppiSDmass_Jet0PuppiTau32      ->Fill( puppi0sdmass      ,    Jet0PuppiTau32  , evWeight );
 
 
-      // Gen Studies
+
+
+      h_Jet0Y_Jet0Mass                      ->Fill( jet0P4.Rapidity() ,         jet0P4.M() , evWeight );
+      h_Jet0Y_Jet0SDmass                    ->Fill( jet0P4.Rapidity() ,         jet0sdmass , evWeight );
+      h_Jet0Y_Jet0Tau32                     ->Fill( jet0P4.Rapidity() ,          Jet0Tau32 , evWeight );
+      h_Jet0Y_Jet0PuppiMass                 ->Fill( jet0P4.Rapidity() ,       puppi0P4.M() , evWeight );
+      h_Jet0Y_Jet0PuppiSDmass               ->Fill( jet0P4.Rapidity() ,       puppi0sdmass , evWeight );
+      h_Jet0Y_Jet0PuppiTau32                ->Fill( jet0P4.Rapidity() ,     Jet0PuppiTau32 , evWeight );
+   
+
+      if ( jet0P4.Perp() > 500 && jet0P4.Perp() <520 ){
+        h_Pt500to520_Jet0Y_Jet0Mass           ->Fill( jet0P4.Rapidity() ,         jet0P4.M() , evWeight );
+        h_Pt500to520_Jet0Y_Jet0SDmass         ->Fill( jet0P4.Rapidity() ,         jet0sdmass , evWeight );
+        h_Pt500to520_Jet0Y_Jet0Tau32          ->Fill( jet0P4.Rapidity() ,          Jet0Tau32 , evWeight );
+        h_Pt500to520_Jet0Y_Jet0PuppiMass      ->Fill( jet0P4.Rapidity() ,       puppi0P4.M() , evWeight );
+        h_Pt500to520_Jet0Y_Jet0PuppiSDmass    ->Fill( jet0P4.Rapidity() ,       puppi0sdmass , evWeight );
+        h_Pt500to520_Jet0Y_Jet0PuppiTau32     ->Fill( jet0P4.Rapidity() ,     Jet0PuppiTau32 , evWeight );
+      }
+
+
+      h_Jet0Y_Jet1Y                         ->Fill( jet0P4.Rapidity() , jet1P4.Rapidity() , evWeight );
+      h_Jet0SDmass_Jet1SDmass               ->Fill( jet0sdmass        , jet1sdmass        , evWeight );
+      h_Jet0PuppiSDmass_Jet1PuppiSDmass     ->Fill( puppi0sdmass      , puppi1sdmass      , evWeight );
+      h_Jet0Tau32_Jet1Tau32                 ->Fill( Jet0Tau32         , Jet1Tau32         , evWeight );
+      h_Jet0PuppiTau32_Jet1PuppiTau32       ->Fill( Jet0PuppiTau32    , Jet1PuppiTau32    , evWeight );
+      h_Jet0PuppiTau1_Jet1PuppiTau1         ->Fill( Jet0PuppiTau1     , Jet1PuppiTau1     , evWeight );
+      h_Jet0PuppiTau2_Jet1PuppiTau2         ->Fill( Jet0PuppiTau2     , Jet1PuppiTau2     , evWeight );
+      h_Jet0PuppiTau3_Jet1PuppiTau3         ->Fill( Jet0PuppiTau3     , Jet1PuppiTau3     , evWeight );
+
+
+      double Asym  = jet0P4.Perp() / ( jet0P4.Perp() + jet1P4.Perp() );
+      double Asym2 = ( jet0P4.Perp() - jet1P4.Perp() ) / ( jet0P4.Perp() + jet1P4.Perp() );
+
+      h_Asym   ->Fill( Asym , evWeight );
+      h_Asym2  ->Fill( Asym2 , evWeight );
+     
+      h_Asym_Jet0SDmass                  ->Fill( Asym                 , jet0sdmass        , evWeight );
+      h_DeltaRap_Jet0SDmass              ->Fill( DijetDeltaRap        , jet0sdmass        , evWeight );
+
+      //-----------------------------------------------------------------------------
+      //---- Rho ratio studies ----
+      //-----------------------------------------------------------------------------
+
+      double jet0_rhoRatio                 =  log( jet0sdmass * jet0sdmass / ( jet0P4.Perp() * jet0P4.Perp() ) );
+      double jet0_rhoRatioPrime            =  log( jet0sdmass * jet0sdmass / ( jet0P4.Perp()                 ) );
+      double jet0_rhoRatioPmag             =  log( jet0sdmass * jet0sdmass / ( jet0P4.P()    * jet0P4.P()    ) );
+      double jet0_rhoRatioPmagPrime        =  log( jet0sdmass * jet0sdmass / ( jet0P4.P()                    ) );
+  
+      double jet0_rhoRatioPuppi            =  log( puppi0sdmass * puppi0sdmass / (puppi0P4.Perp() * puppi0P4.Perp() ) );
+      double jet0_rhoRatioPuppiPrime       =  log( puppi0sdmass * puppi0sdmass / (puppi0P4.Perp()                   ) );
+      double jet0_rhoRatioPuppiPmag        =  log( puppi0sdmass * puppi0sdmass / (puppi0P4.P()    * puppi0P4.P()    ) );
+      double jet0_rhoRatioPuppiPmagPrime   =  log( puppi0sdmass * puppi0sdmass / (puppi0P4.P()                      ) );
+  
+      double jet1_rhoRatio                 =  log( jet1sdmass * jet1sdmass / ( jet1P4.Perp() * jet1P4.Perp() ) );
+      double jet1_rhoRatioPrime            =  log( jet1sdmass * jet1sdmass / ( jet1P4.Perp()                 ) );
+      double jet1_rhoRatioPmag             =  log( jet1sdmass * jet1sdmass / ( jet1P4.P()    * jet1P4.P()    ) );
+      double jet1_rhoRatioPmagPrime        =  log( jet1sdmass * jet1sdmass / ( jet1P4.P()                    ) );
+  
+      double jet1_rhoRatioPuppi            =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.Perp() * puppi1P4.Perp() ) );
+      double jet1_rhoRatioPuppiPrime       =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.Perp()                  ) );
+      double jet1_rhoRatioPuppiPmag        =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.P()    * puppi1P4.P()   ) );
+      double jet1_rhoRatioPuppiPmagPrime   =  log( puppi1sdmass * puppi1sdmass / ( puppi1P4.P()                     ) );
+  
+      h_jet0_rhoRatio                      ->Fill( jet0_rhoRatio                , evWeight );
+      h_jet0_rhoRatioPrime                 ->Fill( jet0_rhoRatioPrime           , evWeight );
+      h_jet0_rhoRatioPmag                  ->Fill( jet0_rhoRatioPmag            , evWeight );
+      h_jet0_rhoRatioPmagPrime             ->Fill( jet0_rhoRatioPmagPrime       , evWeight );
+      h_jet0_rhoRatioPuppi                 ->Fill( jet0_rhoRatioPuppi           , evWeight );
+      h_jet0_rhoRatioPuppiPrime            ->Fill( jet0_rhoRatioPuppiPrime      , evWeight );
+      h_jet0_rhoRatioPuppiPmag             ->Fill( jet0_rhoRatioPuppiPmag       , evWeight );
+      h_jet0_rhoRatioPuppiPmagPrime        ->Fill( jet0_rhoRatioPuppiPmagPrime  , evWeight );
+      h_jet1_rhoRatio                      ->Fill( jet1_rhoRatio                , evWeight );
+      h_jet1_rhoRatioPrime                 ->Fill( jet1_rhoRatioPrime           , evWeight );
+      h_jet1_rhoRatioPmag                  ->Fill( jet1_rhoRatioPmag            , evWeight );
+      h_jet1_rhoRatioPmagPrime             ->Fill( jet1_rhoRatioPmagPrime       , evWeight );
+      h_jet1_rhoRatioPuppi                 ->Fill( jet1_rhoRatioPuppi           , evWeight );
+      h_jet1_rhoRatioPuppiPrime            ->Fill( jet1_rhoRatioPuppiPrime      , evWeight );
+      h_jet1_rhoRatioPuppiPmag             ->Fill( jet1_rhoRatioPuppiPmag       , evWeight );
+      h_jet1_rhoRatioPuppiPmagPrime        ->Fill( jet1_rhoRatioPuppiPmagPrime  , evWeight );
+
+      h_jet0_tau32_rhoRatio                ->Fill( jet0_rhoRatio               ,  Jet0Tau32      , evWeight );
+      h_jet0_tau32_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  Jet0Tau32      , evWeight );
+      h_jet0_tau32_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  Jet0Tau32      , evWeight );
+      h_jet0_tau32_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  Jet0Tau32      , evWeight );
+      h_jet0_tau32_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  Jet0PuppiTau32 , evWeight );
+      h_jet0_tau32_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  Jet0PuppiTau32 , evWeight );
+      h_jet0_tau32_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  Jet0PuppiTau32 , evWeight );
+      h_jet0_tau32_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  Jet0PuppiTau32 , evWeight );
+      h_jet1_tau32_rhoRatio                ->Fill( jet1_rhoRatio               ,  Jet1Tau32      , evWeight );
+      h_jet1_tau32_rhoRatioPrime           ->Fill( jet1_rhoRatioPrime          ,  Jet1Tau32      , evWeight );
+      h_jet1_tau32_rhoRatioPmag            ->Fill( jet1_rhoRatioPmag           ,  Jet1Tau32      , evWeight );
+      h_jet1_tau32_rhoRatioPmagPrime       ->Fill( jet1_rhoRatioPmagPrime      ,  Jet1Tau32      , evWeight );
+      h_jet1_tau32_rhoRatioPuppi           ->Fill( jet1_rhoRatioPuppi          ,  Jet1PuppiTau32 , evWeight );
+      h_jet1_tau32_rhoRatioPuppiPrime      ->Fill( jet1_rhoRatioPuppiPrime     ,  Jet1PuppiTau32 , evWeight );
+      h_jet1_tau32_rhoRatioPuppiPmag       ->Fill( jet1_rhoRatioPuppiPmag      ,  Jet1PuppiTau32 , evWeight );
+      h_jet1_tau32_rhoRatioPuppiPmagPrime  ->Fill( jet1_rhoRatioPuppiPmagPrime ,  Jet1PuppiTau32 , evWeight );
+
+
+      h_jet0_tau21_rhoRatio                ->Fill( jet0_rhoRatio               ,  Jet0Tau21      , evWeight);
+      h_jet0_tau21_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  Jet0Tau21      , evWeight);
+      h_jet0_tau21_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  Jet0Tau21      , evWeight);
+      h_jet0_tau21_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  Jet0Tau21      , evWeight);
+      h_jet0_tau21_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  Jet0PuppiTau21 , evWeight);
+      h_jet0_tau21_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  Jet0PuppiTau21 , evWeight);
+      h_jet0_tau21_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  Jet0PuppiTau21 , evWeight);
+      h_jet0_tau21_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  Jet0PuppiTau21 , evWeight);
+      h_jet1_tau21_rhoRatio                ->Fill( jet1_rhoRatio               ,  Jet1Tau21      , evWeight);
+      h_jet1_tau21_rhoRatioPrime           ->Fill( jet1_rhoRatioPrime          ,  Jet1Tau21      , evWeight);
+      h_jet1_tau21_rhoRatioPmag            ->Fill( jet1_rhoRatioPmag           ,  Jet1Tau21      , evWeight);
+      h_jet1_tau21_rhoRatioPmagPrime       ->Fill( jet1_rhoRatioPmagPrime      ,  Jet1Tau21      , evWeight);
+      h_jet1_tau21_rhoRatioPuppi           ->Fill( jet1_rhoRatioPuppi          ,  Jet1PuppiTau21 , evWeight);
+      h_jet1_tau21_rhoRatioPuppiPrime      ->Fill( jet1_rhoRatioPuppiPrime     ,  Jet1PuppiTau21 , evWeight);
+      h_jet1_tau21_rhoRatioPuppiPmag       ->Fill( jet1_rhoRatioPuppiPmag      ,  Jet1PuppiTau21 , evWeight);
+      h_jet1_tau21_rhoRatioPuppiPmagPrime  ->Fill( jet1_rhoRatioPuppiPmagPrime ,  Jet1PuppiTau21 , evWeight);
+
+      if (jet0sdmass>110 && jet0sdmass<210){
+        h_topMass_jet0_tau32_rhoRatio                ->Fill( jet0_rhoRatio               ,  Jet0Tau32    , evWeight );
+        h_topMass_jet0_tau32_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  Jet0Tau32    , evWeight );
+        h_topMass_jet0_tau32_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  Jet0Tau32    , evWeight );
+        h_topMass_jet0_tau32_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  Jet0Tau32    , evWeight );
+        h_topMass_jet0_tau21_rhoRatio                ->Fill( jet0_rhoRatio               ,  Jet0Tau21    , evWeight );
+        h_topMass_jet0_tau21_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  Jet0Tau21    , evWeight );
+        h_topMass_jet0_tau21_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  Jet0Tau21    , evWeight );
+        h_topMass_jet0_tau21_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  Jet0Tau21    , evWeight );
+      }
+
+      if (jet0sdmass>110 && jet0sdmass<210){
+        h_topMass_jet0_tau32_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  Jet0PuppiTau32 , evWeight );
+        h_topMass_jet0_tau32_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  Jet0PuppiTau32 , evWeight );
+        h_topMass_jet0_tau32_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  Jet0PuppiTau32 , evWeight );
+        h_topMass_jet0_tau32_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  Jet0PuppiTau32 , evWeight );
+        h_topMass_jet0_tau21_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  Jet0PuppiTau21 , evWeight );
+        h_topMass_jet0_tau21_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  Jet0PuppiTau21 , evWeight );
+        h_topMass_jet0_tau21_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  Jet0PuppiTau21 , evWeight );
+        h_topMass_jet0_tau21_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  Jet0PuppiTau21 , evWeight );
+      }
+
+      double jet0tau42   = 99;
+      double jet1tau42   = 99;
+      double puppi0tau42 = 99;
+      double puppi1tau42 = 99;
+      if (Jet0Tau2>0)      jet0tau42   = Jet0Tau4 / Jet0Tau2;
+      if (Jet1Tau2>0)      jet1tau42   = Jet1Tau4 / Jet1Tau2;
+      if (Jet0PuppiTau2>0) puppi0tau42 = Jet0PuppiTau4 / Jet0PuppiTau2 ;
+      if (Jet1PuppiTau2>0) puppi1tau42 = Jet1PuppiTau4 / Jet1PuppiTau2 ;
+
+      h_jet0_tau42_rhoRatio                ->Fill( jet0_rhoRatio               ,  jet0tau42    , evWeight );
+      h_jet0_tau42_rhoRatioPrime           ->Fill( jet0_rhoRatioPrime          ,  jet0tau42    , evWeight );
+      h_jet0_tau42_rhoRatioPmag            ->Fill( jet0_rhoRatioPmag           ,  jet0tau42    , evWeight );
+      h_jet0_tau42_rhoRatioPmagPrime       ->Fill( jet0_rhoRatioPmagPrime      ,  jet0tau42    , evWeight );
+      h_jet0_tau42_rhoRatioPuppi           ->Fill( jet0_rhoRatioPuppi          ,  puppi0tau42  , evWeight );
+      h_jet0_tau42_rhoRatioPuppiPrime      ->Fill( jet0_rhoRatioPuppiPrime     ,  puppi0tau42  , evWeight );
+      h_jet0_tau42_rhoRatioPuppiPmag       ->Fill( jet0_rhoRatioPuppiPmag      ,  puppi0tau42  , evWeight );
+      h_jet0_tau42_rhoRatioPuppiPmagPrime  ->Fill( jet0_rhoRatioPuppiPmagPrime ,  puppi0tau42  , evWeight );
+      h_jet1_tau42_rhoRatio                ->Fill( jet1_rhoRatio               ,  jet1tau42    , evWeight );
+      h_jet1_tau42_rhoRatioPrime           ->Fill( jet1_rhoRatioPrime          ,  jet1tau42    , evWeight );
+      h_jet1_tau42_rhoRatioPmag            ->Fill( jet1_rhoRatioPmag           ,  jet1tau42    , evWeight );
+      h_jet1_tau42_rhoRatioPmagPrime       ->Fill( jet1_rhoRatioPmagPrime      ,  jet1tau42    , evWeight );
+      h_jet1_tau42_rhoRatioPuppi           ->Fill( jet1_rhoRatioPuppi          ,  puppi1tau42  , evWeight );
+      h_jet1_tau42_rhoRatioPuppiPrime      ->Fill( jet1_rhoRatioPuppiPrime     ,  puppi1tau42  , evWeight );
+      h_jet1_tau42_rhoRatioPuppiPmag       ->Fill( jet1_rhoRatioPuppiPmag      ,  puppi1tau42  , evWeight );
+      h_jet1_tau42_rhoRatioPuppiPmagPrime  ->Fill( jet1_rhoRatioPuppiPmagPrime ,  puppi1tau42  , evWeight );
+
+
+
+      //-----------------------------------------------------------------------------
+      //---- Gen Studies ----
+      //-----------------------------------------------------------------------------
 
       if (!isData && Jet1GenMatched_TopHadronic==1) {
         double gen_match_condition = 0.75;
@@ -11375,6 +10191,7 @@ void looptree(
           else                                                      h_Jet0Tau32_BtagM_MassTag_unmatched ->Fill( Jet0PuppiTau32 , evWeight );
         }
       }
+
     }//End run_kinematic
   
     // 888888b.   888                    888 8888888888          888    
@@ -11739,6 +10556,8 @@ void looptree(
         } // end if chs jet 0 tagged
 
         // ---- Puppi tag definition
+
+
         if (j0_puptag_t){
           // --- dRapIn
           // -- btag inclusive
@@ -11749,8 +10568,8 @@ void looptree(
           predDist_Puppi_SR_dRapIn_inclu_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
           predDist_Puppi_SR_dRapIn_inclu_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
           predDist_Puppi_SR_dRapIn_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
-          predDist_Puppi_SR_dRapIn_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
-          predDist_Puppi_SR_dRapIn_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+          predDist_Puppi_SR_dRapIn_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
+          predDist_Puppi_SR_dRapIn_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );
           predDist_Puppi_SR_dRapIn_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
         
           // -- 0btag       
@@ -11762,8 +10581,8 @@ void looptree(
             predDist_Puppi_SR_dRapIn_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
-            predDist_Puppi_SR_dRapIn_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapIn_0btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_SR_dRapIn_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
+            predDist_Puppi_SR_dRapIn_0btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );
             predDist_Puppi_SR_dRapIn_0btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
           }
 
@@ -11776,8 +10595,8 @@ void looptree(
             predDist_Puppi_SR_dRapIn_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
-            predDist_Puppi_SR_dRapIn_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapIn_1btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_SR_dRapIn_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
+            predDist_Puppi_SR_dRapIn_1btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );
             predDist_Puppi_SR_dRapIn_1btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
           }
 
@@ -11790,8 +10609,8 @@ void looptree(
             predDist_Puppi_SR_dRapIn_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
-            predDist_Puppi_SR_dRapIn_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapIn_2btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_SR_dRapIn_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
+            predDist_Puppi_SR_dRapIn_2btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );
             predDist_Puppi_SR_dRapIn_2btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
           }
           
@@ -13756,6 +12575,9 @@ void looptree(
     h_BtagCategoriesPreSF                                         ->Write();                   
     h_BtagCategoriesPostSF                                        ->Write();                   
              
+
+
+
     h_Effic_Denom_pup0P                                ->Write(); 
     h_Effic_Denom_jet0P                                ->Write(); 
     h_Effic_Denom_jet0Y                                ->Write(); 
@@ -13884,6 +12706,15 @@ void looptree(
     h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag               ->Write();
     h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag               ->Write();
        
+    h_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclusive              ->Write();
+    h_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag                  ->Write();
+    h_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag                  ->Write();
+    h_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag                  ->Write();
+    h_AntiTagPuppi_TagTau32_jetP_dRapIn_inclusive               ->Write();
+    h_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag                   ->Write();
+    h_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag                   ->Write();
+    h_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag                   ->Write();
+
     h_AntiTagCHS_Probe_Nvtx_dRapIn_inclusive                    ->Write();
     h_AntiTagCHS_Probe_Nvtx_dRapIn_0btag                        ->Write();
     h_AntiTagCHS_Probe_Nvtx_dRapIn_1btag                        ->Write();
@@ -13932,6 +12763,17 @@ void looptree(
     h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_0btag             ->Write();
     h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_1btag             ->Write();
     h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_2btag             ->Write();
+
+    h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_inclusive              ->Write();
+    h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_0btag                  ->Write();
+    h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_1btag                  ->Write();
+    h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_2btag                  ->Write();
+    h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_inclusive               ->Write();
+    h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_0btag                   ->Write();
+    h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_1btag                   ->Write();
+    h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_2btag                   ->Write();
+
+
     h_AntiTagCHS_Probe_jetY_dRapIn_inclusive                    ->Write();
     h_AntiTagCHS_Probe_jetY_dRapIn_0btag                        ->Write();
     h_AntiTagCHS_Probe_jetY_dRapIn_1btag                        ->Write();
@@ -13980,6 +12822,16 @@ void looptree(
     h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_0btag             ->Write();
     h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_1btag             ->Write();
     h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_2btag             ->Write();
+
+    h_AntiTagPuppi_TagMassSD_jetY_dRapIn_inclusive              ->Write();
+    h_AntiTagPuppi_TagMassSD_jetY_dRapIn_0btag                  ->Write();
+    h_AntiTagPuppi_TagMassSD_jetY_dRapIn_1btag                  ->Write();
+    h_AntiTagPuppi_TagMassSD_jetY_dRapIn_2btag                  ->Write();
+    h_AntiTagPuppi_TagTau32_jetY_dRapIn_inclusive               ->Write();
+    h_AntiTagPuppi_TagTau32_jetY_dRapIn_0btag                   ->Write();
+    h_AntiTagPuppi_TagTau32_jetY_dRapIn_1btag                   ->Write();
+    h_AntiTagPuppi_TagTau32_jetY_dRapIn_2btag                   ->Write();
+
     h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_inclusive            ->Write();
     h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_0btag                ->Write();
     h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_1btag                ->Write();
@@ -14142,6 +12994,15 @@ void looptree(
     h_DoubleTopTag_BtagCategoriesPostSF    ->Write();
     h_DoublePupTag_BtagCategoriesPreSF     ->Write();
     h_DoublePupTag_BtagCategoriesPostSF    ->Write();
+
+
+    h_BtagCategoriesPuppiPreSF                                       ->Write();
+    h_BtagCategoriesPuppiPostSF                                      ->Write();
+    h_DoublePupTag_BtagCategoriesPuppiPreSF                           ->Write();
+    h_DoublePupTag_BtagCategoriesPuppiPostSF                          ->Write();
+ 
+
+
 
 
     h_PreSelection_Jet0mass_NoCorr               ->Write();
@@ -15608,10 +14469,10 @@ void looptree(
 
 
 
-h_NNPDF3weight_CorrUp ->Write();
-h_NNPDF3weight_CorrDn ->Write();
-h_Q2weight_CorrUp     ->Write();
-h_Q2weight_CorrDn     ->Write();
+    h_NNPDF3weight_CorrUp ->Write();
+    h_NNPDF3weight_CorrDn ->Write();
+    h_Q2weight_CorrUp     ->Write();
+    h_Q2weight_CorrDn     ->Write();
 
     h_check_Jet0SDmaxbdisc                         ->Write();
     h_check_Jet0SDmaxbdiscflavParton               ->Write();
@@ -15694,6 +14555,15 @@ h_Q2weight_CorrDn     ->Write();
     h_check_Jet1PuppiSDsubjet1flavParton           ->Write();
     h_check_Jet1GenMatched_partonPt                ->Write();
     h_check_Jet1GenMatched_partonID                ->Write();
+
+    h_deltaR_Jet0_sub0_sub1                ->Write();
+    h_deltaR_Jet1_sub0_sub1                ->Write();
+    h_deltaR_Jet0_pup0_pup1                ->Write();
+    h_deltaR_Jet1_pup0_pup1                ->Write();
+    h_deltaR_Jet0_sub0_pup0                ->Write();
+    h_deltaR_Jet0_sub1_pup1                ->Write();
+    h_deltaR_Jet1_sub0_pup0                ->Write();
+    h_deltaR_Jet1_sub1_pup1                ->Write();
 
     h_BeforeBtag_Inclusive_Jet1Pt                  ->Write();
     h_BeforeBtag_Inclusive_Jet1P                   ->Write();
@@ -15808,6 +14678,11 @@ h_Q2weight_CorrDn     ->Write();
 
                   
     h_DeltaRap                                                    ->Write();                   
+    h_DeltaRap_mTTgt1                                             ->Write();  
+    h_DeltaRap_mTTgt2                                             ->Write();  
+    h_DeltaRap_mTTgt3                                             ->Write();  
+
+    h_DeltaPhi_PreCut                                                    ->Write();                   
     h_DeltaPhi                                                    ->Write();                   
     h_HT                                                          ->Write();                   
     h_MET                                                         ->Write();                   
@@ -15843,18 +14718,22 @@ h_Q2weight_CorrDn     ->Write();
     h_Jet0PuppiTau2                                               ->Write();                   
     h_Jet0PuppiTau3                                               ->Write();                   
     h_Jet0PuppiTau4                                               ->Write();                   
+    h_Jet0PuppiTau32                                              ->Write();                   
+    h_Jet0PuppiTau21                                              ->Write();                   
     h_Jet0PuppiSDmaxbdisc                                         ->Write();                   
     h_Jet0PuppiSDsubjet0pt                                        ->Write();                   
     h_Jet0PuppiSDsubjet0mass                                      ->Write();                   
     h_Jet0PuppiSDsubjet0tau1                                      ->Write();                   
     h_Jet0PuppiSDsubjet0tau2                                      ->Write();                   
     h_Jet0PuppiSDsubjet0tau3                                      ->Write();                   
+    h_Jet0PuppiSDsubjet0tau21                                     ->Write();                   
     h_Jet0PuppiSDsubjet0bdisc                                     ->Write();                   
     h_Jet0PuppiSDsubjet1pt                                        ->Write();                   
     h_Jet0PuppiSDsubjet1mass                                      ->Write();                   
     h_Jet0PuppiSDsubjet1tau1                                      ->Write();                   
     h_Jet0PuppiSDsubjet1tau2                                      ->Write();                   
     h_Jet0PuppiSDsubjet1tau3                                      ->Write();                   
+    h_Jet0PuppiSDsubjet1tau21                                     ->Write();                   
     h_Jet0PuppiSDsubjet1bdisc                                     ->Write();                   
     h_Jet0CHF                                                     ->Write();                   
     h_Jet0NHF                                                     ->Write();                   
@@ -15872,13 +14751,75 @@ h_Q2weight_CorrDn     ->Write();
     h_Jet0PuppiCEF                                                ->Write();                   
     h_Jet0PuppiMF                                                 ->Write();                   
     h_Jet0PuppiMult                                               ->Write();                   
-    h_Jet1Pt                                                      ->Write();                   
-    h_Jet1Rap                                                     ->Write();   
-    h_Jet1Pt                                                      ->Write();
-    h_Jet1Rap                                                     ->Write();
-    h_Jet1sdmass                                                  ->Write();
-    h_Jet1puppisdmass                                             ->Write();
     h_Jet0puppisdmass                                             ->Write();
+    h_Jet0NsubjetsSDPuppi                                           ->Write();
+
+    // Jet1                                 
+    h_Jet1P                                                       ->Write();                   
+    h_Jet1Pt                                                      ->Write();                   
+    h_Jet1Phi                                                     ->Write();                   
+    h_Jet1Rap                                                     ->Write();                   
+    h_Jet1sdmass                                                  ->Write();                   
+    h_Jet1Tau1                                                    ->Write();                   
+    h_Jet1Tau2                                                    ->Write();                   
+    h_Jet1Tau3                                                    ->Write();                   
+    h_Jet1Tau4                                                    ->Write();                   
+    h_Jet1SDmaxbdisc                                              ->Write();                   
+    h_Jet1SDsubjet0pt                                             ->Write();                   
+    h_Jet1SDsubjet0mass                                           ->Write();                   
+    h_Jet1SDsubjet0tau1                                           ->Write();                   
+    h_Jet1SDsubjet0tau2                                           ->Write();                   
+    h_Jet1SDsubjet0tau3                                           ->Write();                   
+    h_Jet1SDsubjet0bdisc                                          ->Write();                   
+    h_Jet1SDsubjet1pt                                             ->Write();                   
+    h_Jet1SDsubjet1mass                                           ->Write();                   
+    h_Jet1SDsubjet1tau1                                           ->Write();                   
+    h_Jet1SDsubjet1tau2                                           ->Write();                   
+    h_Jet1SDsubjet1tau3                                           ->Write();                   
+    h_Jet1SDsubjet1bdisc                                          ->Write();                   
+    h_Jet1PuppiPt                                                 ->Write();                   
+    h_Jet1PuppiMass                                               ->Write();                   
+    h_Jet1PuppiSDpt                                               ->Write();                   
+    h_Jet1PuppiTau1                                               ->Write();                   
+    h_Jet1PuppiTau2                                               ->Write();                   
+    h_Jet1PuppiTau3                                               ->Write();                   
+    h_Jet1PuppiTau4                                               ->Write();                   
+    h_Jet1PuppiTau32                                              ->Write();                   
+    h_Jet1PuppiTau21                                              ->Write();                   
+    h_Jet1PuppiSDmaxbdisc                                         ->Write();                   
+    h_Jet1PuppiSDsubjet0pt                                        ->Write();                   
+    h_Jet1PuppiSDsubjet0mass                                      ->Write();                   
+    h_Jet1PuppiSDsubjet0tau1                                      ->Write();                   
+    h_Jet1PuppiSDsubjet0tau2                                      ->Write();                   
+    h_Jet1PuppiSDsubjet0tau3                                      ->Write();                   
+    h_Jet1PuppiSDsubjet0tau21                                     ->Write();                   
+    h_Jet1PuppiSDsubjet0bdisc                                     ->Write();                   
+    h_Jet1PuppiSDsubjet1pt                                        ->Write();                   
+    h_Jet1PuppiSDsubjet1mass                                      ->Write();                   
+    h_Jet1PuppiSDsubjet1tau1                                      ->Write();                   
+    h_Jet1PuppiSDsubjet1tau2                                      ->Write();                   
+    h_Jet1PuppiSDsubjet1tau3                                      ->Write();                   
+    h_Jet1PuppiSDsubjet1tau21                                     ->Write();                   
+    h_Jet1PuppiSDsubjet1bdisc                                     ->Write();                   
+    h_Jet1CHF                                                     ->Write();                   
+    h_Jet1NHF                                                     ->Write();                   
+    h_Jet1CM                                                      ->Write();                   
+    h_Jet1NM                                                      ->Write();                   
+    h_Jet1NEF                                                     ->Write();                   
+    h_Jet1CEF                                                     ->Write();                   
+    h_Jet1MF                                                      ->Write();                   
+    h_Jet1Mult                                                    ->Write();                   
+    h_Jet1PuppiCHF                                                ->Write();                   
+    h_Jet1PuppiNHF                                                ->Write();                   
+    h_Jet1PuppiCM                                                 ->Write();                   
+    h_Jet1PuppiNM                                                 ->Write();                   
+    h_Jet1PuppiNEF                                                ->Write();                   
+    h_Jet1PuppiCEF                                                ->Write();                   
+    h_Jet1PuppiMF                                                 ->Write();                   
+    h_Jet1PuppiMult                                               ->Write();                   
+    h_Jet1puppisdmass                                             ->Write();
+
+
     // h_Jet0PuppiSDmass_CorrOfficial ->Write();
     // h_Jet0puppisdmassNoSmear      ->Write();
 
@@ -16785,7 +15726,21 @@ h_Q2weight_CorrDn     ->Write();
     h_2ttag_0btag_MET                                            ->Write();    
     h_2ttag_1btag_MET                                            ->Write();    
     h_2ttag_2btag_MET                                            ->Write();    
-                                   
+   
+
+    h_2ttag_inclu_DeltaRap_mTTgt1 ->Write();
+    h_2ttag_inclu_DeltaRap_mTTgt2 ->Write();
+    h_2ttag_inclu_DeltaRap_mTTgt3 ->Write();
+    h_2ttag_0btag_DeltaRap_mTTgt1 ->Write();
+    h_2ttag_0btag_DeltaRap_mTTgt2 ->Write();
+    h_2ttag_0btag_DeltaRap_mTTgt3 ->Write();
+    h_2ttag_1btag_DeltaRap_mTTgt1 ->Write();
+    h_2ttag_1btag_DeltaRap_mTTgt2 ->Write();
+    h_2ttag_1btag_DeltaRap_mTTgt3 ->Write();
+    h_2ttag_2btag_DeltaRap_mTTgt1 ->Write();
+    h_2ttag_2btag_DeltaRap_mTTgt2 ->Write();
+    h_2ttag_2btag_DeltaRap_mTTgt3 ->Write();
+
     h_2ttag_inclu_METphi                                         ->Write();    
     h_2ttag_0btag_METphi                                         ->Write();    
     h_2ttag_1btag_METphi                                         ->Write();    
@@ -16821,13 +15776,59 @@ h_Q2weight_CorrDn     ->Write();
     h_2ttag_inclu_Jet0SDsubjet1tau2                              ->Write();        
     h_2ttag_inclu_Jet0SDsubjet1tau3                              ->Write();        
     h_2ttag_inclu_Jet0SDsubjet1bdisc                             ->Write();        
+   
+    h_2ttag_inclu_Jet0CHF                                        ->Write();        
+    h_2ttag_inclu_Jet0NHF                                        ->Write();        
+    h_2ttag_inclu_Jet0CM                                         ->Write();        
+    h_2ttag_inclu_Jet0NM                                         ->Write();        
+    h_2ttag_inclu_Jet0NEF                                        ->Write();        
+    h_2ttag_inclu_Jet0CEF                                        ->Write();        
+    h_2ttag_inclu_Jet0MF                                         ->Write();        
+    h_2ttag_inclu_Jet0Mult                                       ->Write();        
+    
+                                  
+    h_2ttag_inclu_Jet1P                                          ->Write();        
+    h_2ttag_inclu_Jet1Pt                                         ->Write();        
+    h_2ttag_inclu_Jet1Phi                                        ->Write();        
+    h_2ttag_inclu_Jet1Rap                                        ->Write();        
+    h_2ttag_inclu_Jet1SDmass                                     ->Write();        
+    h_2ttag_inclu_Jet1SDmassCorrL23                              ->Write();        
+    h_2ttag_inclu_Jet1SDmassCorrL23Up                            ->Write();        
+    h_2ttag_inclu_Jet1Tau1                                       ->Write();        
+    h_2ttag_inclu_Jet1Tau2                                       ->Write();        
+    h_2ttag_inclu_Jet1Tau3                                       ->Write();        
+    h_2ttag_inclu_Jet1Tau4                                       ->Write();        
+    h_2ttag_inclu_Jet1SDmaxbdisc                                 ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet0pt                                ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet0mass                              ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet0tau1                              ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet0tau2                              ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet0tau3                              ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet0bdisc                             ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet1pt                                ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet1mass                              ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet1tau1                              ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet1tau2                              ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet1tau3                              ->Write();        
+    h_2ttag_inclu_Jet1SDsubjet1bdisc                             ->Write();        
+   
+    h_2ttag_inclu_Jet1CHF                                        ->Write();        
+    h_2ttag_inclu_Jet1NHF                                        ->Write();        
+    h_2ttag_inclu_Jet1CM                                         ->Write();        
+    h_2ttag_inclu_Jet1NM                                         ->Write();        
+    h_2ttag_inclu_Jet1NEF                                        ->Write();        
+    h_2ttag_inclu_Jet1CEF                                        ->Write();        
+    h_2ttag_inclu_Jet1MF                                         ->Write();        
+    h_2ttag_inclu_Jet1Mult                                       ->Write();        
+    
     h_2ttag_inclu_Jet0PuppiPt                                    ->Write();        
-    h_2ttag_inclu_Jet0PuppiMass                                  ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDmass                                ->Write();        
     h_2ttag_inclu_Jet0PuppiSDpt                                  ->Write();        
     h_2ttag_inclu_Jet0PuppiTau1                                  ->Write();        
     h_2ttag_inclu_Jet0PuppiTau2                                  ->Write();        
     h_2ttag_inclu_Jet0PuppiTau3                                  ->Write();        
     h_2ttag_inclu_Jet0PuppiTau4                                  ->Write();        
+    h_2ttag_inclu_Jet0PuppiTau32                                 ->Write();        
     h_2ttag_inclu_Jet0PuppiSDmaxbdisc                            ->Write();        
     h_2ttag_inclu_Jet0PuppiSDsubjet0pt                           ->Write();        
     h_2ttag_inclu_Jet0PuppiSDsubjet0mass                         ->Write();        
@@ -16841,53 +15842,109 @@ h_Q2weight_CorrDn     ->Write();
     h_2ttag_inclu_Jet0PuppiSDsubjet1tau2                         ->Write();        
     h_2ttag_inclu_Jet0PuppiSDsubjet1tau3                         ->Write();        
     h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc                        ->Write();        
-    h_2ttag_inclu_Jet0CHF                                        ->Write();        
-    h_2ttag_inclu_Jet0NHF                                        ->Write();        
-    h_2ttag_inclu_Jet0CM                                         ->Write();        
-    h_2ttag_inclu_Jet0NM                                         ->Write();        
-    h_2ttag_inclu_Jet0NEF                                        ->Write();        
-    h_2ttag_inclu_Jet0CEF                                        ->Write();        
-    h_2ttag_inclu_Jet0MF                                         ->Write();        
-    h_2ttag_inclu_Jet0Mult                                       ->Write();        
+   
+    h_2ttag_inclu_Jet0PuppiSDsubjet0tau21                         ->Write();        
+    h_2ttag_inclu_Jet0PuppiSDsubjet1tau21                         ->Write();        
+
+
+    h_2ttag_inclu_Jet0PuppiCHF                                   ->Write();        
+    h_2ttag_inclu_Jet0PuppiNHF                                   ->Write();        
+    h_2ttag_inclu_Jet0PuppiCM                                    ->Write();        
+    h_2ttag_inclu_Jet0PuppiNM                                    ->Write();        
+    h_2ttag_inclu_Jet0PuppiNEF                                   ->Write();        
+    h_2ttag_inclu_Jet0PuppiCEF                                   ->Write();        
+    h_2ttag_inclu_Jet0PuppiMF                                    ->Write();        
+    h_2ttag_inclu_Jet0PuppiMult                                  ->Write();        
+     
+    h_2ttag_inclu_Jet1PuppiPt                                    ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDmass                                ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDpt                                  ->Write();        
+    h_2ttag_inclu_Jet1PuppiTau1                                  ->Write();        
+    h_2ttag_inclu_Jet1PuppiTau2                                  ->Write();        
+    h_2ttag_inclu_Jet1PuppiTau3                                  ->Write();        
+    h_2ttag_inclu_Jet1PuppiTau4                                  ->Write();        
+    h_2ttag_inclu_Jet1PuppiTau32                                 ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDmaxbdisc                            ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet0pt                           ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet0mass                         ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet0tau1                         ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet0tau2                         ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet0tau3                         ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet0bdisc                        ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet1pt                           ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet1mass                         ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet1tau1                         ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet1tau2                         ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet1tau3                         ->Write();        
+    h_2ttag_inclu_Jet1PuppiSDsubjet1bdisc                        ->Write();        
+   
+    h_2ttag_inclu_Jet1PuppiCHF                                   ->Write();        
+    h_2ttag_inclu_Jet1PuppiNHF                                   ->Write();        
+    h_2ttag_inclu_Jet1PuppiCM                                    ->Write();        
+    h_2ttag_inclu_Jet1PuppiNM                                    ->Write();        
+    h_2ttag_inclu_Jet1PuppiNEF                                   ->Write();        
+    h_2ttag_inclu_Jet1PuppiCEF                                   ->Write();        
+    h_2ttag_inclu_Jet1PuppiMF                                    ->Write();        
+    h_2ttag_inclu_Jet1PuppiMult                                  ->Write();        
+     
+
+
     h_2ttag_2btag_Jet0PuppiSDsubjet0pt                           ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet0mass                         ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet0tau1                         ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet0tau2                         ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet0tau3                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet0tau21                         ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet0bdisc                        ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet1pt                           ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet1mass                         ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet1tau1                         ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet1tau2                         ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet1tau3                         ->Write();        
+    h_2ttag_2btag_Jet0PuppiSDsubjet1tau21                         ->Write();        
     h_2ttag_2btag_Jet0PuppiSDsubjet1bdisc                        ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet0pt                           ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet0mass                         ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet0tau1                         ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet0tau2                         ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet0tau3                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet0tau21                         ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet0bdisc                        ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet1pt                           ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet1mass                         ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet1tau1                         ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet1tau2                         ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet1tau3                         ->Write();        
+    h_2ttag_1btag_Jet0PuppiSDsubjet1tau21                         ->Write();        
     h_2ttag_1btag_Jet0PuppiSDsubjet1bdisc                        ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet0pt                           ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet0mass                         ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet0tau1                         ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet0tau2                         ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet0tau3                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet0tau21                         ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet0bdisc                        ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet1pt                           ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet1mass                         ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet1tau1                         ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet1tau2                         ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet1tau3                         ->Write();        
+    h_2ttag_0btag_Jet0PuppiSDsubjet1tau21                         ->Write();        
     h_2ttag_0btag_Jet0PuppiSDsubjet1bdisc                        ->Write();        
                                    
     h_2btag_DijetMass                                            ->Write();                    
     h_2btag_DeltaRap                                             ->Write();                    
+    h_2btag_DeltaRap_mTTgt1                                   ->Write();   
+    h_2btag_DeltaRap_mTTgt2                                   ->Write();   
+    h_2btag_DeltaRap_mTTgt3                                   ->Write();     
+
+    h_2btag_jet0Pt ->Write();
+    h_2btag_jet1Pt ->Write();
+
+
+
+
+
     h_2btag_jet0massSD                                           ->Write();                    
     h_2btag_jet0massSDpuppi                                      ->Write();                    
     h_2btag_jet0tau32                                            ->Write();                    
@@ -19061,6 +18118,190 @@ h_Q2weight_CorrDn     ->Write();
   F1->Close();
 
 } 
+
+
+
+
+
+void looptree_trig(
+          string input_folder, 
+          string input_file, 
+          string date, 
+          string output_folder, 
+          float topTagSDwindowLo, 
+          float topTagSDwindowHi, 
+          float topTagTau32cut)
+{
+  
+  string file_name =  input_folder+input_file;
+  TFile *F1   = new TFile(file_name.c_str() );
+  cout << file_name <<endl;
+
+  // Get Tree entries                                                                                                                        
+  Float_t Jet0SDmass         ;
+  Float_t Jet1SDmass         ;
+  Float_t Jet0Mass           ;
+  Float_t Jet1Mass           ;
+  Float_t Jet0Pt             ;
+  Float_t Jet1Pt             ;
+  Float_t Jet0Tau32          ;
+  Float_t Jet1Tau32          ;
+  std::string *AllHadTrigAcceptBits = new std::string;
+
+  TTree *T1    = (TTree*)  F1     ->Get("ana/TreeAllHad");
+
+  double treeNentries = T1->GetEntries();
+  cout<<"treeNentries = "<< treeNentries <<endl;
+
+  T1->SetBranchAddress("Jet0SDmass"                                      , & Jet0SDmass                                    );
+  T1->SetBranchAddress("Jet1SDmass"                                      , & Jet1SDmass                                    );
+  T1->SetBranchAddress("Jet0Mass"                                        , & Jet0Mass                                      );
+  T1->SetBranchAddress("Jet1Mass"                                        , & Jet1Mass                                      );
+  T1->SetBranchAddress("Jet0Pt"                                          , & Jet0Pt                                        );
+  T1->SetBranchAddress("Jet1Pt"                                          , & Jet1Pt                                        );
+  T1->SetBranchAddress("Jet0Tau32"                                       , & Jet0Tau32                                     );
+  T1->SetBranchAddress("Jet1Tau32"                                       , & Jet1Tau32                                     );
+  T1->SetBranchAddress("AllHadTrigAcceptBits"                            , & AllHadTrigAcceptBits                          );
+
+  //ignore other branches                                                                                                                    
+  T1->SetBranchStatus("*",0);
+  T1->SetBranchStatus("Jet0SDmass",1)          ;
+  T1->SetBranchStatus("Jet1SDmass",1)          ;
+  T1->SetBranchStatus("Jet0Mass",1)            ;
+  T1->SetBranchStatus("Jet1Mass",1)            ;
+  T1->SetBranchStatus("Jet0Pt",1)              ;
+  T1->SetBranchStatus("Jet1Pt",1)              ;
+  T1->SetBranchStatus("Jet0Tau32",1)           ;
+  T1->SetBranchStatus("Jet1Tau32",1)           ;
+  T1->SetBranchStatus("AllHadTrigAcceptBits",1);
+
+  vector <string> xAxisLabels;
+  vector <string> cutCats;
+
+  vector <string> numLabels;
+  vector <string> numOrLabels;
+  vector <int> numTrig;
+  vector <int> numOrTrig;
+
+  xAxisLabels.push_back("sumJetPt");
+  xAxisLabels.push_back("Jet0Pt");
+  xAxisLabels.push_back("Jet0Mass");
+
+  cutCats.push_back("_");
+  cutCats.push_back("_2tagMass_");
+  cutCats.push_back("_2tagMass_2tagTau32_");
+
+  numLabels.push_back("PFHT700TrimMass50"); numTrig.push_back(13);
+  numLabels.push_back("PFHT800"); numTrig.push_back(6);
+  numLabels.push_back("PFHT900"); numTrig.push_back(7);
+
+  numOrLabels.push_back("PFJet450"); numOrTrig.push_back(10);
+  numOrLabels.push_back("PFJet360TrimMass30"); numOrTrig.push_back(12);
+  
+  //denominator histograms
+  TH1D *histos_passPFHT650denom[xAxisLabels.size()][cutCats.size()];
+
+  //numerator histograms
+  TH1D *histos_num[xAxisLabels.size()][cutCats.size()][numLabels.size()];
+  TH1D *histos_numOr[xAxisLabels.size()][cutCats.size()][numLabels.size()][numOrLabels.size()];
+
+  //naming histograms
+  for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+    for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+      histos_passPFHT650denom[i_xAxisLabels][i_cutCats] = new TH1D(Form("h_passPFHT650denom%s%s",cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+      for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+        histos_num[i_xAxisLabels][i_cutCats][i_numLabels] = new TH1D(Form("h_pass%snumPFHT650denom%s%s",numLabels[i_numLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+        for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels] = new TH1D(Form("h_pass%sor%snumPFHT650denom%s%s",numLabels[i_numLabels].c_str(),numOrLabels[i_numOrLabels].c_str(),cutCats[i_cutCats].c_str(),xAxisLabels[i_xAxisLabels].c_str()),"",800, 0,  8000);
+      }
+    }
+  }
+
+  for (int i=0; i<treeNentries; i++ ){ //entries                                                                                                  
+    if (i%10000==0) cout<<i<<"  / "<<treeNentries<<endl;
+
+    T1->GetEntry(i);
+
+    // Top-tagging bools                                                                                                                     
+    bool j0_tag_mass  = Jet0SDmass > topTagSDwindowLo && Jet0SDmass < topTagSDwindowHi;
+    bool j1_tag_mass  = Jet1SDmass > topTagSDwindowLo && Jet1SDmass < topTagSDwindowHi;
+    bool j0_tag_tau32 = Jet0Tau32 < topTagTau32cut;
+    bool j1_tag_tau32 = Jet1Tau32 < topTagTau32cut;
+    bool jets_tag_mass = j0_tag_mass && j1_tag_mass;
+    bool jets_top_tag = jets_tag_mass && j0_tag_tau32 && j1_tag_tau32;
+
+    float sumJetPt = Jet0Pt + Jet1Pt;
+    string trigBitsString = AllHadTrigAcceptBits->c_str();
+    int trigBits = std::stoi(trigBitsString,nullptr,2);
+
+    vector <float> xAxisVars;
+    vector <bool> cuts;
+
+    xAxisVars.push_back(sumJetPt);
+    xAxisVars.push_back(Jet0Pt);
+    xAxisVars.push_back(Jet0Mass);
+
+    cuts.push_back(1);
+    cuts.push_back(jets_tag_mass);
+    cuts.push_back(jets_top_tag);
+
+    //make sure vector lengths are consistent
+    if (xAxisVars.size() != xAxisLabels.size()){
+      break;
+      cout << "Incorrect length of x axis variable vector!" << endl;
+    }
+    if (cuts.size() != cutCats.size()){
+      break;
+      cout << "Incorrect length of cuts vector!" << endl;
+    }
+
+    //filling histograms
+    for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+      for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+        if (cuts[i_cutCats] && ((trigBits>>5)&1)){
+          histos_passPFHT650denom[i_xAxisLabels][i_cutCats]->Fill(xAxisVars[i_xAxisLabels]);
+          for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+            if ((trigBits>>numTrig[i_numLabels])&1) histos_num[i_xAxisLabels][i_cutCats][i_numLabels]->Fill(xAxisVars[i_xAxisLabels]);
+            for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++){
+              if (((trigBits>>numTrig[i_numLabels])&1) || ((trigBits>>numOrTrig[i_numOrLabels])&1)) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels]->Fill(xAxisVars[i_xAxisLabels]);
+            }
+          }
+        }
+      }
+    }
+    
+    xAxisVars.clear(); 
+    cuts.clear();
+  }
+
+  string outName = output_folder+"outRunTrigEff_"+date+"_"+input_file;
+  cout << outName << endl;
+  TFile * Out = new TFile(outName.c_str(),"RECREATE");
+  Out->cd();
+
+  //writing histograms
+  for (unsigned int i_xAxisLabels=0; i_xAxisLabels<xAxisLabels.size(); i_xAxisLabels++){
+    for (unsigned int i_cutCats=0; i_cutCats<cutCats.size(); i_cutCats++){
+      histos_passPFHT650denom[i_xAxisLabels][i_cutCats]->Write();
+      for (unsigned int i_numLabels=0; i_numLabels<numLabels.size(); i_numLabels++){
+        histos_num[i_xAxisLabels][i_cutCats][i_numLabels]->Write();
+        for (unsigned int i_numOrLabels=0; i_numOrLabels<numOrLabels.size(); i_numOrLabels++) histos_numOr[i_xAxisLabels][i_cutCats][i_numLabels][i_numOrLabels]->Write();
+      }
+    }
+  }
+  
+  Out->Close();
+}
+
+
+
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+
 
 
 
