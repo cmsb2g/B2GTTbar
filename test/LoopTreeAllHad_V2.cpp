@@ -65,8 +65,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
   std::size_t foundG   = dataset_shortname.find( "G"   );
   std::size_t foundH   = dataset_shortname.find( "H"   );
   std::size_t foundQ   = dataset_shortname.find( "Q"   );
-  std::size_t foundTT1 = dataset_shortname.find( "TT1" );
-  std::size_t foundTT2 = dataset_shortname.find( "TT2" );
+  std::size_t foundTT = dataset_shortname.find( "TT" );
   std::size_t foundZP  = dataset_shortname.find( "ZP"  );
   std::size_t foundRS  = dataset_shortname.find( "RS"  );
   std::size_t foundNone  = dataset_shortname.find( "none"  );
@@ -79,8 +78,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
   if ( foundG   !=std::string::npos ) { cout<<"JetHT_Run2016G queued"<<endl; }
   if ( foundH   !=std::string::npos ) { cout<<"JetHT_Run2016H queued"<<endl; }
   if ( foundQ   !=std::string::npos ) { cout<<"QCD queued"           <<endl; }
-  if ( foundTT1 !=std::string::npos ) { cout<<"ttbar MT1 queued"     <<endl; }
-  if ( foundTT2 !=std::string::npos ) { cout<<"ttbar MT2 queued"     <<endl; }
+  if ( foundTT !=std::string::npos ) { cout<<"ttbar MT1 queued"     <<endl; }
   if ( foundZP  !=std::string::npos ) { cout<<"all Zprime queued"    <<endl; }
   if ( foundRS  !=std::string::npos ) { cout<<"all RS Gluon queued"    <<endl; }
   if ( foundNone  !=std::string::npos ) { cout<<"No input dataset provided" <<endl; return; }
@@ -189,21 +187,18 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runLoopT
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_QCD_Pt_3200toInf_pythia8_RunIISummer16MiniAODv2_try3.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(true);
   }
   //--- TTbar 
-  if ( foundTT1   !=std::string::npos ){            
+  if ( foundTT   !=std::string::npos ){            
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_orig_and_backup_missing2.root");  file_is_data.push_back(false);     file_is_QCDMC.push_back(false);              
   }  
-  if ( foundTT2   !=std::string::npos ){            
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("");            file_is_data.push_back(false);     file_is_QCDMC.push_back(false);    
-  }
 
   //--- Z Prime
   if (foundZP   !=std::string::npos ){
-    /*input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
-      input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);*/
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+      input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
-    /*input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-125_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-125_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
-    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-150_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);*/
+    input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-150_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2.root"); file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
     input_folder.push_back(folder_input_tree); file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-200_RunIISummer16MiniAODv2.root");             file_is_data.push_back(false);     file_is_QCDMC.push_back(false);
