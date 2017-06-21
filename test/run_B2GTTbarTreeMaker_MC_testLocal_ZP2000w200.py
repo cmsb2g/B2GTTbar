@@ -60,6 +60,7 @@ for idmod in my_id_modules:
 
 #----------------------------------------------------------------------------------------
 ### Puppi (https://twiki.cern.ch/twiki/bin/viewauth/CMS/PUPPI)
+
 process.load('CommonTools/PileupAlgos/Puppi_cff')
 process.puppi.candName = cms.InputTag('packedPFCandidates')
 process.puppi.vertexName = cms.InputTag('offlineSlimmedPrimaryVertices')
@@ -88,7 +89,7 @@ runMetCorAndUncFromMiniAOD(process,
 from JMEAnalysis.JetToolbox.jetToolbox_cff import jetToolbox
 
 ak8Cut    = 'pt > 30 && abs(eta) < 2.5'
-ak8pupCut = 'pt > 140 && abs(eta) < 2.5'
+ak8pupCut = 'pt > 30 && abs(eta) < 2.5'
 
 listBTagInfos = [
      'pfInclusiveSecondaryVertexFinderTagInfos',
@@ -165,6 +166,23 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   addNsubSubjets = True, 
   subjetMaxTau = 3 )
 
+
+### AK8GenJetsSoftDrop ###
+from RecoJets.Configuration.RecoGenJets_cff import ak4GenJets
+from RecoJets.JetProducers.SubJetParameters_cfi import SubJetParameters
+
+process.ak8GenJetsSoftDrop = ak4GenJets.clone(
+                               SubJetParameters,
+                               src = cms.InputTag("packedGenParticlesForJetsNoNu"),
+                               useSoftDrop = cms.bool(True),
+                               rParam = cms.double(0.8),
+                               useExplicitGhosts=cms.bool(True),
+                               R0= cms.double(0.8),
+                               beta=cms.double(0.0),
+                               writeCompound = cms.bool(True),
+                               jetCollInstanceName=cms.string("SubJets")
+                             )
+
 #----------------------------------------------------------------------------------------
 ### Analyzer
 
@@ -177,13 +195,13 @@ JERtxtlocation = '../../../JMEAnalysis/JRDatabase/textFiles/Spring16_25nsV10_MC/
 
 process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
 
-    verbose         = cms.bool(True),
-    verboseGen      = cms.bool(True),
+    verbose         = cms.bool(False),
+    verboseGen      = cms.bool(False),
     useToolbox      = cms.bool(True),
 
     runGenLoop      = cms.bool(True),
-    runAllHadTree   = cms.bool(True),
-    runSemiLeptTree = cms.bool(False),
+    runAllHadTree   = cms.bool(False),
+    runSemiLeptTree = cms.bool(True),
     
     isZprime        = cms.bool(True),
     isttbar         = cms.bool(False),
@@ -191,6 +209,7 @@ process.ana = cms.EDAnalyzer('B2GTTbarTreeMaker',
     isRun2016F      = cms.bool(False),
 
 
+    ak8GenJetsSoftDropInput = cms.InputTag("ak8GenJetsSoftDrop", "SubJets"),
     ak8chsInput          = cms.InputTag("selectedPatJetsAK8PFCHS"),   
     ak8puppiInput        = cms.InputTag("selectedPatJetsAK8PFPuppi"),
     ak8chsSubjetsInput   = cms.InputTag("selectedPatJetsAK8PFCHSSoftDropPacked","SubJets"),
@@ -310,6 +329,7 @@ process.p = cms.Path(
   process.BadPFMuonFilter*
   process.egmGsfElectronIDSequence*
   process.fullPatMetSequence *
+  process.ak8GenJetsSoftDrop *
   process.ana
 )
 

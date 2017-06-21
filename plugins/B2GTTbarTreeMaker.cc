@@ -155,6 +155,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       edm::EDGetTokenT<pat::JetCollection>                     ak8PuppiSoftDropSubjetsToken_    ;
       edm::EDGetTokenT<reco::GenJetCollection>                 ak4genjetToken_                  ;
       edm::EDGetTokenT<reco::GenJetCollection>                 ak8genjetToken_                  ;               
+      edm::EDGetTokenT<reco::GenJetCollection>                 ak8genjetSDToken_                  ;
       edm::EDGetTokenT<edm::View<reco::GenParticle>>           prunedGenToken_                  ;               
       edm::EDGetTokenT<double>                                 rhoToken_                        ;
       edm::EDGetTokenT<std::vector<reco::Vertex>>              vtxToken_                        ;
@@ -801,6 +802,18 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       std::vector<float> *v_photonSigIEtaIEta      = new std::vector<float>;
       std::vector<float> *v_photonFullSigIEtaIEta  = new std::vector<float>;
 
+      std::vector<float> *v_genJetPt        = new std::vector<float>;
+      std::vector<float> *v_genJetEta       = new std::vector<float>;
+      std::vector<float> *v_genJetPhi       = new std::vector<float>;
+      std::vector<float> *v_genJetMass      = new std::vector<float>;
+      std::vector<float> *v_genJetArea      = new std::vector<float>;
+
+      std::vector<float> *v_genJetSdPt        = new std::vector<float>;
+      std::vector<float> *v_genJetSdEta       = new std::vector<float>;
+      std::vector<float> *v_genJetSdPhi       = new std::vector<float>;
+      std::vector<float> *v_genJetSdMass      = new std::vector<float>;
+      std::vector<float> *v_genJetSdArea      = new std::vector<float>;
+
       std::string SemiLeptTrigAcceptBits;
 
       Float_t JetPtRaw                               ;      
@@ -1102,6 +1115,8 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Int_t   LepHemiContainsAK4BtagTight            ;
 
 
+      Char_t  lep0flavor                             ;
+      Char_t  lep1flavor                             ;
       Float_t LeptonPhi0                              ;
       Float_t LeptonPt0                               ;
       Float_t LeptonEta0                              ;
@@ -1147,6 +1162,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
     ak8PuppiSoftDropSubjetsToken_(consumes<pat::JetCollection>(iConfig.getParameter<edm::InputTag>("ak8puppiSubjetsInput"))),
     ak4genjetToken_(consumes<reco::GenJetCollection>(edm::InputTag("slimmedGenJets"))),
     ak8genjetToken_(consumes<reco::GenJetCollection>(edm::InputTag("slimmedGenJetsAK8"))),
+    ak8genjetSDToken_(consumes<reco::GenJetCollection>( iConfig.getParameter<edm::InputTag>("ak8GenJetsSoftDropInput"))),
     prunedGenToken_(consumes<edm::View<reco::GenParticle> >(edm::InputTag("prunedGenParticles"))),
     rhoToken_(consumes<double>(edm::InputTag("fixedGridRhoFastjetAll"))),
     vtxToken_(consumes<std::vector<reco::Vertex> >(edm::InputTag("offlineSlimmedPrimaryVertices"))),
@@ -1844,6 +1860,18 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("v_photonSigIEtaIEta"     , "vector<float>", &v_photonSigIEtaIEta    );
   TreeSemiLept->Branch("v_photonFullSigIEtaIEta" , "vector<float>", &v_photonFullSigIEtaIEta    );
 
+  TreeSemiLept->Branch("v_genJetPt"              , "vector<float>", &v_genJetPt      );
+  TreeSemiLept->Branch("v_genJetEta"             , "vector<float>", &v_genJetEta     );
+  TreeSemiLept->Branch("v_genJetPhi"             , "vector<float>", &v_genJetPhi     );
+  TreeSemiLept->Branch("v_genJetMass"            , "vector<float>", &v_genJetMass    );
+  TreeSemiLept->Branch("v_genJetArea"            , "vector<float>", &v_genJetArea    );
+
+  TreeSemiLept->Branch("v_genJetSdPt"              , "vector<float>", &v_genJetSdPt      );
+  TreeSemiLept->Branch("v_genJetSdEta"             , "vector<float>", &v_genJetSdEta     );
+  TreeSemiLept->Branch("v_genJetSdPhi"             , "vector<float>", &v_genJetSdPhi     );
+  TreeSemiLept->Branch("v_genJetSdMass"            , "vector<float>", &v_genJetSdMass    );
+  TreeSemiLept->Branch("v_genJetSdArea"            , "vector<float>", &v_genJetSdArea    );
+
   TreeSemiLept->Branch("JetPtRaw"                             , & JetPtRaw                          ,    "JetPtRaw/F"                               );                                  
   TreeSemiLept->Branch("JetEtaRaw"                            , & JetEtaRaw                         ,    "JetEtaRaw/F"                              );                                   
   TreeSemiLept->Branch("JetPhiRaw"                            , & JetPhiRaw                         ,    "JetPhiRaw/F"                              );                                   
@@ -2151,6 +2179,8 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("LepHemiContainsAK4BtagMedium"         , & LepHemiContainsAK4BtagMedium      , "LepHemiContainsAK4BtagMedium/I"   );  
   TreeSemiLept->Branch("LepHemiContainsAK4BtagTight"          , & LepHemiContainsAK4BtagTight       , "LepHemiContainsAK4BtagTight/I"    );  
 
+  TreeSemiLept->Branch("lep0flavor"                            , &  lep0flavor                        , "lep0flavor/B"                      ); 
+  TreeSemiLept->Branch("lep1flavor"                            , &  lep1flavor                        , "lep1flavor/B"                      ); 
   TreeSemiLept->Branch("LeptonPhi0"                            , &  LeptonPhi0                        , "LeptonPhi0/F"                      ); 
   TreeSemiLept->Branch("LeptonPt0"                             , &  LeptonPt0                         , "LeptonPt0/F"                       ); 
   TreeSemiLept->Branch("LeptonEta0"                            , &  LeptonEta0                        , "LeptonEta0/F"                      ); 
@@ -3058,15 +3088,14 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   edm::Handle<pat::MuonCollection> muons;
   iEvent.getByToken(muonToken_, muons);
 
-  TLorentzVector mu0_p4;
-  TLorentzVector mu1_p4;
+  TLorentzVector mu0_p4, mu1_p4;
   bool mu0_isTight=false;
   bool mu0_isMedium=false;
   bool mu0_isHighPt = false;
   double mu0_iso04=0;
   int count_mu=0;
 
-  std::vector<reco::CandidatePtr> muFootprint;
+  std::vector<reco::CandidatePtr> muFootprint0, muFootprint1;
 
   for (const pat::Muon &mu : *muons) {
 
@@ -3109,13 +3138,17 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         mu0_iso04 = iso04;
 
         for (unsigned int i = 0, n = mu.numberOfSourceCandidatePtrs(); i < n; ++i) {
-          muFootprint.push_back(mu.sourceCandidatePtr(i));
+          muFootprint0.push_back(mu.sourceCandidatePtr(i));
         }
         if (verbose_) cout<<"Muon pT "<<mu.pt()<<" iso04 "<<iso04<<" isMedium "<<mu0_isTight<<" isTight "<<mu0_isTight<<" isHighPt "<<mu0_isHighPt<<endl;
       } 
-      if (count_mu==1){
+      else if (count_mu==1){
         mu1_p4.SetPtEtaPhiM( mu.pt(), mu.eta(), mu.phi(), mu.mass() );
-  }
+
+        for (unsigned int i = 0, n = mu.numberOfSourceCandidatePtrs(); i < n; ++i) {
+          muFootprint1.push_back(mu.sourceCandidatePtr(i));
+        }
+      }
       // printf("muon with pt %4.1f, dz(PV) %+5.3f, POG loose id %d, tight id %d\n",
       // mu.pt(), mu.muonBestTrack()->dz(PV.position()), mu.isLooseMuon(), mu.isTightMuon(PV));
       count_mu++;
@@ -3170,8 +3203,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   iEvent.getByToken(eleIdFullInfoMapToken_Tight_    ,   cutflow_eleId_Tight   );
   iEvent.getByToken(eleIdFullInfoMapToken_HEEP_     ,   cutflow_eleId_HEEP    );
 
-  TLorentzVector el0_p4;
-  TLorentzVector el1_p4;
+  TLorentzVector el0_p4, el1_p4;
   Float_t el0_absiso           =0;
   Float_t el0_relIsoWithDBeta  =0;
   Float_t el0_absiso_EA        =0;
@@ -3187,7 +3219,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   int el0_noiso_passHEEP    = 0;
   int count_el=0;
 
-  std::vector<reco::CandidatePtr> elFootprint;
+  std::vector<reco::CandidatePtr> elFootprint0, elFootprint1;
 
   for (size_t i = 0; i < electrons->size(); ++i){   
     const auto el = electrons->ptrAt(i);          // easier if we use ptrs for the id
@@ -3272,11 +3304,15 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         el0_noiso_passHEEP    = (int) noiso_passHEEP   ;
 
         for (unsigned int i = 0, n = el->numberOfSourceCandidatePtrs(); i < n; ++i) {
-          elFootprint.push_back(el->sourceCandidatePtr(i));
+          elFootprint0.push_back(el->sourceCandidatePtr(i));
         }
       } 
-      if (count_el==1){
+      else if (count_el==1){
         el1_p4.SetPtEtaPhiM( el->pt(), el->eta(), el->phi(), el->mass() );
+
+        for (unsigned int i = 0, n = el->numberOfSourceCandidatePtrs(); i < n; ++i) {
+          elFootprint1.push_back(el->sourceCandidatePtr(i));
+        }
       }
       count_el++;
     }
@@ -3288,25 +3324,38 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   TLorentzVector lep1_p4;
 
   int count_lep = count_mu + count_el;
-  if (count_lep==1){
-    if (count_mu==1 && count_el==0)  lep0_p4 = mu0_p4;
-    if (count_mu==0 && count_el==1)  lep0_p4 = el0_p4; 
-  }
-  if (count_lep==2){
-    if (count_mu==2 && count_el==0) {
-      lep0_p4 = mu0_p4;
-      lep1_p4 = mu1_p4;
-    }
-    if (count_mu==0 && count_el==2) {
-      lep0_p4 = el0_p4; 
-      lep1_p4 = el1_p4; 
 
-    }  
-    if (count_mu==1 && count_el==1) { 
-      lep0_p4 = el0_p4; 
-      lep1_p4 = mu0_p4; 
+  //these are initialized to zero if empty
+  if (el0_p4.Pt() > mu0_p4.Pt()) {
+
+    lep0_p4 = el0_p4;
+    lep0flavor = 'e';
+
+    if (el1_p4.Pt() > mu0_p4.Pt()) {
+      lep1_p4 = el1_p4;
+      lep1flavor = 'e';
     }
-  } // end if 2 leptons loop
+    else {
+      lep1_p4 = mu0_p4;
+      lep1flavor = 'm';
+    }
+  }
+  else {
+
+    lep0_p4 = mu0_p4;
+    lep0flavor = 'm';
+
+    if (mu1_p4.Pt() > el0_p4.Pt()) {
+      lep1_p4 = mu1_p4;
+      lep1flavor = 'm';
+    }
+    else {
+      lep1_p4 = el0_p4;
+      lep1flavor = 'e';
+    }
+  }
+  if (lep0_p4.E() == 0) lep0flavor = 'x';
+  if (lep1_p4.E() == 0) lep1flavor = 'x';
 
   if (verbose_){
     cout<<"count_mu  "<<count_mu<<endl;
@@ -3413,14 +3462,23 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     for ( auto & constituent : jetConstituents ) {
 
       // If this constituent is part of a muon, remove the constituent's four vector
-      if ( std::find(muFootprint.begin(), muFootprint.end(), constituent ) != muFootprint.end() ) {
+      if ( std::find(muFootprint0.begin(), muFootprint0.end(), constituent ) != muFootprint0.end() ) {
         uncorrJet -= constituent->p4();
-        if ( verbose_ ) cout << "     -> REMOVED part of muon" << endl;
-        }
+        if ( verbose_ ) cout << "     -> REMOVED part of muon0" << endl;
+      }
+      else if ( std::find(muFootprint1.begin(), muFootprint1.end(), constituent ) != muFootprint1.end() ) {
+        uncorrJet -= constituent->p4();
+        if ( verbose_ ) cout << "     -> REMOVED part of muon1" << endl;
+      }
+
       // If this constituent is part of an electron, remove the constituent's four vector
-      if ( std::find(elFootprint.begin(), elFootprint.end(), constituent ) != elFootprint.end() ) {
+      else if ( std::find(elFootprint0.begin(), elFootprint0.end(), constituent ) != elFootprint0.end() ) {
         uncorrJet -= constituent->p4();
-        if ( verbose_ ) cout << "     -> REMOVED part of electron" << endl;
+        if ( verbose_ ) cout << "     -> REMOVED part of electron0" << endl;
+      }
+      else if ( std::find(elFootprint1.begin(), elFootprint1.end(), constituent ) != elFootprint1.end() ) {
+        uncorrJet -= constituent->p4();
+        if ( verbose_ ) cout << "     -> REMOVED part of electron1" << endl;
       }
     }
     if ( verbose_ ) cout << "   -> after lepton cleaning uncorr pt,eta,phi,m = " << uncorrJet.pt() << ", " << uncorrJet.eta() << ", " << uncorrJet.phi() << ", " << uncorrJet.mass() << endl;
@@ -3667,7 +3725,65 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<"HT_AK4_pt30_smearDn  "<<HT_AK4_pt30_smearDn <<endl;
   }
 
-  // PHOTONS (FANCY BIG WRITING!)
+                                                                                        
+  //    ,ad8888ba,                                        88                                  
+  //   d8"'    `"8b                                       88                ,d                
+  //  d8'                                                 88                88                
+  //  88              ,adPPYba,  8b,dPPYba,               88   ,adPPYba,  MM88MMM  ,adPPYba,  
+  //  88      88888  a8P_____88  88P'   `"8a              88  a8P_____88    88     I8[    ""  
+  //  Y8,        88  8PP"""""""  88       88              88  8PP"""""""    88      `"Y8ba,   
+  //   Y8a.    .a88  "8b,   ,aa  88       88      88,   ,d88  "8b,   ,aa    88,    aa    ]8I  
+  //    `"Y88888P"    `"Ybbd8"'  88       88       "Y8888P"    `"Ybbd8"'    "Y888  `"YbbdP"'  
+
+  if (runSemiLeptTree_ && !iEvent.isRealData()) {
+
+    v_genJetPt    ->clear();
+    v_genJetEta   ->clear();
+    v_genJetPhi   ->clear();
+    v_genJetMass  ->clear();
+    v_genJetArea  ->clear();
+
+    edm::Handle<reco::GenJetCollection> AK8GENJET;  
+    iEvent.getByToken(ak8genjetToken_, AK8GENJET);
+
+    for (const reco::GenJet &ijet : *AK8GENJET) {
+      if ( ijet.pt() < 15 ) continue;
+
+      v_genJetPt  ->push_back( ijet.pt() );
+      v_genJetEta ->push_back( ijet.eta() );
+      v_genJetPhi ->push_back( ijet.phi() );
+      v_genJetMass->push_back( ijet.mass() );
+      v_genJetArea->push_back( ijet.jetArea() );
+    }
+
+    v_genJetSdPt    ->clear();
+    v_genJetSdEta   ->clear();
+    v_genJetSdPhi   ->clear();
+    v_genJetSdMass  ->clear();
+    v_genJetSdArea  ->clear();
+
+    edm::Handle<reco::GenJetCollection> AK8GENJETSD;  
+    iEvent.getByToken(ak8genjetSDToken_, AK8GENJETSD);
+
+    for (const reco::GenJet &ijet : *AK8GENJETSD) {
+      if ( ijet.pt() < 15 ) continue;
+
+      v_genJetSdPt  ->push_back( ijet.pt() );
+      v_genJetSdEta ->push_back( ijet.eta() );
+      v_genJetSdPhi ->push_back( ijet.phi() );
+      v_genJetSdMass->push_back( ijet.mass() );
+      v_genJetSdArea->push_back( ijet.jetArea() );
+    }
+  }
+                                                                                     
+  //  88888888ba   88                                                                      
+  //  88      "8b  88                          ,d                                          
+  //  88      ,8P  88                          88                                          
+  //  88aaaaaa8P'  88,dPPYba,    ,adPPYba,   MM88MMM   ,adPPYba,   8b,dPPYba,   ,adPPYba,  
+  //  88""""""'    88P'    "8a  a8"     "8a    88     a8"     "8a  88P'   `"8a  I8[    ""  
+  //  88           88       88  8b       d8    88     8b       d8  88       88   `"Y8ba,   
+  //  88           88       88  "8a,   ,a8"    88,    "8a,   ,a8"  88       88  aa    ]8I  
+  //  88           88       88   `"YbbdP"'     "Y888   `"YbbdP"'   88       88  `"YbbdP"'  
 
   if (runSemiLeptTree_) {
 
@@ -3703,9 +3819,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   edm::Handle<pat::JetCollection> AK8CHS;
   iEvent.getByToken(ak8jetToken_, AK8CHS);
-
-  edm::Handle<reco::GenJetCollection> AK8GENJET;  
-  iEvent.getByToken(ak8genjetToken_, AK8GENJET);
 
   edm::Handle<pat::JetCollection> AK8CHSsub;
   edm::Handle<pat::JetCollection> AK8PUPPI;
@@ -5660,7 +5773,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     // Semilept Jet opposite lepton
     if (verbose_) cout<<"count_lep "<<count_lep<<endl;
-    if (runSemiLeptTree_ && count_lep ==1){
+    if (runSemiLeptTree_ && count_lep >=1 ){
       double deltaPhi_lep_jet = fabs( deltaPhi(corrJet.phi(), lep0_p4.Phi() )) ;
       if (verbose_) cout<<"  -> deltaPhi_lep_jet "<<deltaPhi_lep_jet<<endl;
       // AK8 jet should be in opposite hemisphere from lepton. If leading jet matches then use it. If it doensn't then check the second leading jet.
@@ -6112,7 +6225,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //                                                                888                                                       
   //                                                                888       
      
-  if (count_lep ==1  && verbose_){
+  if ( count_lep >=1 && verbose_){
     cout<<" ak8pt  "<< AK8jet_SemiLept_P4corr.Perp() <<endl;
     cout<<" mu pt  "<< mu0_p4.Perp()                 <<endl;
     cout<<" el pt  "<< el0_p4.Perp()                 <<endl;
@@ -6126,7 +6239,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //  lep0_p4.Perp()>30 && met.pt() > 30 ){
 
   if (verbose_) cout<<"count_fill_leptTree "<<count_fill_leptTree<<endl;
-  if (runSemiLeptTree_ && count_lep ==1){
+  if (runSemiLeptTree_ && count_lep >=1 ){
     h_cutflow_semilept   ->Fill(1.5);
 
     if ( AK8jet_SemiLept_P4corr.Perp()>200){
