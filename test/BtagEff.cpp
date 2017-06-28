@@ -1,9 +1,11 @@
-void plotAndCalcEff(string, string, string);
+void plotAndCalcEff(string, string);
 
 void BtagEff(){
-  plotAndCalcEff("bTagEffMeasurement20170613","B","M");
+  //plotAndCalcEff("bTagPuppiEffMeasurement20170623","M");
+  //plotAndCalcEff("bTagPuppiEffMeasurement20170623","L");
+  plotAndCalcEff("bTagEffMeasurement20170613","M");
 }
-void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
+void plotAndCalcEff(string saveLabel, string bWP){
 
     gROOT->SetBatch(); 
 
@@ -148,9 +150,10 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 	TCanvas *c1 = new TCanvas("c1","",900,700);
 
 
-	TFile * OutFile       = new TFile(     Form("BtagEff_WP%s_b%s.root", tauWP.c_str(), bWP.c_str())       , "RECREATE");
+	TFile * OutFile       = new TFile(     Form("BtagEff_b%s_%s.root", bWP.c_str(), saveLabel.c_str())       , "RECREATE");
 
-	TFile * InFile        = new TFile( Form("runs/histsKinemat_%s_ht950_pt400_WP%s_alt40_alt260_b%s_PUw_noTTw_nom_b2gtreeV5_QCD_Ptscaled.root", saveLabel.c_str(), tauWP.c_str(), bWP.c_str())      );
+	TFile * InFile        = new TFile( Form("runs/histsKinemat_%s_ht950_pt400_WPB_alt40_alt260_b%s_PUw_noTTw_nom_b2gtreeV5_QCD_Ptscaled.root", saveLabel.c_str(), bWP.c_str())      );
+	TFile * InFile2D        = new TFile( Form("runs/histsKinemat_2D_%s_ht950_pt400_WPB_alt40_alt260_b%s_PUw_noTTw_nom_b2gtreeV5_QCD_Ptscaled.root", saveLabel.c_str(), bWP.c_str())      );
 
 ///Users/jdolen/NoBackup/B2G2016/V5/runs/
  	//----------------------------------------------------------------------------------------------------------------------------
@@ -290,8 +293,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 	legA->SetLineColor(0);
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0Pt_hadron.pdf", tauWP.c_str(), bWP.c_str()));
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0Pt_hadron.png", tauWP.c_str(), bWP.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
 
 	aaa4_numer->SetTitle(";Jet 0 p_{T} [GeV];b-tag rate");
 	aaa4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -313,8 +316,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 	legB->SetLineColor(0);
 	legB->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0Pt_parton.pdf", tauWP.c_str(), bWP.c_str()));
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0Pt_parton.png", tauWP.c_str(), bWP.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Pt_parton.pdf", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Pt_parton.png", bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -443,8 +446,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0P_hadron.pdf", tauWP.c_str(), bWP.c_str()));
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0P_hadron.png", tauWP.c_str(), bWP.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0P_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0P_hadron.png", bWP.c_str(), saveLabel.c_str()));
 
 	bbb4_numer->SetTitle(";Jet 0 momentum [GeV];b-tag rate");
 	bbb4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -458,8 +461,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 
 	legB->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0P_parton.pdf", tauWP.c_str(), bWP.c_str()));
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0P_parton.png", tauWP.c_str(), bWP.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0P_parton.pdf", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0P_parton.png", bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -587,8 +590,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0Rap_hadron.pdf", tauWP.c_str(), bWP.c_str()));
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0Rap_hadron.png", tauWP.c_str(), bWP.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Rap_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Rap_hadron.png", bWP.c_str(), saveLabel.c_str()));
 
 	ccc4_numer->SetTitle(";Jet 0 rapidity [GeV];b-tag rate");
 	ccc4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -602,8 +605,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 
 	legB->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0Rap_parton.pdf", tauWP.c_str(), bWP.c_str()));
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0Rap_parton.png", tauWP.c_str(), bWP.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Rap_parton.pdf", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Rap_parton.png", bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -733,8 +736,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_SubjetMaxB_Pt_hadron.pdf", tauWP.c_str(), bWP.c_str()));
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_SubjetMaxB_Pt_hadron.png", tauWP.c_str(), bWP.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
 
 	// eee4_numer->SetTitle(";Jet 0 p_{T} [GeV];b-tag rate");
 	// eee4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -755,8 +758,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 	// leg->SetLineColor(0);
 	// leg->Draw("same");
 
-	// c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_SubjetMaxB_Pt_parton.pdf", tauWP.c_str(), bWP.c_str()));
-	// c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_SubjetMaxB_Pt_parton.png", tauWP.c_str(), bWP.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Pt_parton.pdf", bWP.c_str(), saveLabel.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Pt_parton.png", bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -884,8 +887,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_SubjetMaxB_Eta_hadron.pdf", tauWP.c_str(), bWP.c_str()));
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_SubjetMaxB_Eta_hadron.png", tauWP.c_str(), bWP.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Eta_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Eta_hadron.png", bWP.c_str(), saveLabel.c_str()));
 
 	// fff4_numer->SetTitle(";Jet 0 p_{T} [GeV];b-tag rate");
 	// fff4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -906,8 +909,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 	// leg->SetLineColor(0);
 	// leg->Draw("same");
 
-	// c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_SubjetMaxB_Eta_parton.pdf", tauWP.c_str(), bWP.c_str()));
-	// c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_SubjetMaxB_Eta_parton.png", tauWP.c_str(), bWP.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Eta_parton.pdf", bWP.c_str(), saveLabel.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Eta_parton.png", bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -1036,8 +1039,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_DeltaRsubjets_hadron.pdf", tauWP.c_str(), bWP.c_str()));
-	c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_DeltaRsubjets_hadron.png", tauWP.c_str(), bWP.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_DeltaRsubjets_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_DeltaRsubjets_hadron.png", bWP.c_str(), saveLabel.c_str()));
 
 	// ggg4_numer->SetTitle(";Jet 0 p_{T} [GeV];b-tag rate");
 	// ggg4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -1058,16 +1061,16 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 	// leg->SetLineColor(0);
 	// leg->Draw("same");
 
-	// c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_DeltaRsubjets_parton.pdf", tauWP.c_str(), bWP.c_str()));
-	// c1->SaveAs(Form("plots/btagEff_WP%s_b%s_rate_Jet0_DeltaRsubjets_parton.png", tauWP.c_str(), bWP.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_DeltaRsubjets_parton.pdf", bWP.c_str(), saveLabel.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_DeltaRsubjets_parton.png", bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
  	//----------------------------------------------------------------------------------------------------------------------------
 	cout<<"Draw hadron rate 2D"<<endl;
 
 
-	TH2D * hhh6_numer = (TH2D*) InFile->Get(  "h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugA"<<endl;
-	TH2D * hhh6_denom = (TH2D*) InFile->Get( "h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugB"<<endl;
+	TH2D * hhh6_numer = (TH2D*) InFile2D->Get(  "h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugA"<<endl;
+	TH2D * hhh6_denom = (TH2D*) InFile2D->Get( "h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugB"<<endl;
 	hhh6_numer  ->Sumw2(); cout<<"debugA"<<endl;
 	hhh6_denom  ->Sumw2(); cout<<"debugB"<<endl;
 	// hhh6_numer  ->RebinY(50);                            cout<<"debugC"<<endl;      
@@ -1076,8 +1079,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 	// hhh6_denom  ->RebinX(10);                            cout<<"debugC"<<endl;      
 	hhh6_numer->Divide(hhh6_numer, hhh6_denom,1,1,"B");  cout<<"debugC"<<endl;                                
 
-	TH2D * hhh7_numer = (TH2D*) InFile->Get(  "h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugD"<<endl;
-	TH2D * hhh7_denom = (TH2D*) InFile->Get( "h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugE"<<endl;
+	TH2D * hhh7_numer = (TH2D*) InFile2D->Get(  "h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugD"<<endl;
+	TH2D * hhh7_denom = (TH2D*) InFile2D->Get( "h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugE"<<endl;
 	hhh7_numer  ->Sumw2();
 	hhh7_denom  ->Sumw2();
 	// hhh7_numer  ->RebinY(50);                            cout<<"debugF"<<endl;   
@@ -1087,8 +1090,8 @@ void plotAndCalcEff(string saveLabel, string tauWP, string bWP){
 	hhh7_numer->Divide(hhh7_numer, hhh7_denom,1,1,"B");  cout<<"debugF"<<endl;                             
 cout<<"debug"<<endl;
 
-	TH2D * hhh8_numer = (TH2D*) InFile->Get(  "h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt"   );
-	TH2D * hhh8_denom = (TH2D*) InFile->Get( "h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt"   );
+	TH2D * hhh8_numer = (TH2D*) InFile2D->Get(  "h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt"   );
+	TH2D * hhh8_denom = (TH2D*) InFile2D->Get( "h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt"   );
 	hhh8_numer  ->Sumw2();
 	hhh8_denom  ->Sumw2();
 	// hhh8_numer  ->RebinY(50);
@@ -1142,18 +1145,18 @@ cout<<"debug"<<endl;
 
 	hhh6_numer->SetTitle("b-tag rate - light hadron;max b-disc subjet #eta;max b-disc subjet pT [GeV]");
 	hhh6_numer->Draw("COLZTEXT");
-	c2->SaveAs(Form("plots/btagEff_WP%s_b%s_h2_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", tauWP.c_str(), bWP.c_str()));
-	c2->SaveAs(Form("plots/btagEff_WP%s_b%s_h2_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", tauWP.c_str(), bWP.c_str()));
+	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
+	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
 
 	hhh7_numer->SetTitle("b-tag rate - c hadron;max b-disc subjet #eta;max b-disc subjet pT [GeV]");
 	hhh7_numer->Draw("COLZTEXT");
-	c2->SaveAs(Form("plots/btagEff_WP%s_b%s_h2_rate_cHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", tauWP.c_str(), bWP.c_str()));
-	c2->SaveAs(Form("plots/btagEff_WP%s_b%s_h2_rate_cHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", tauWP.c_str(), bWP.c_str()));
+	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_cHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
+	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_cHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
 
 	hhh8_numer->SetTitle("b-tag rate - b hadron;max b-disc subjet #eta;max b-disc subjet pT [GeV]");
 	hhh8_numer->Draw("COLZTEXT");
-	c2->SaveAs(Form("plots/btagEff_WP%s_b%s_h2_rate_bHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", tauWP.c_str(), bWP.c_str()));
-	c2->SaveAs(Form("plots/btagEff_WP%s_b%s_h2_rate_bHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", tauWP.c_str(), bWP.c_str()));
+	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_bHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
+	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_bHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
 
 
  	//----------------------------------------------------------------------------------------------------------------------------

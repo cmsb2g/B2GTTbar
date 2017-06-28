@@ -87,26 +87,28 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
   std::size_t foundQ1    = dataset_shortname.find( "Q1"    );
   std::size_t foundQ2    = dataset_shortname.find( "Q2"    );
   std::size_t foundTT    = dataset_shortname.find( "TT"    );
+  std::size_t foundT2    = dataset_shortname.find( "T2"    );
   std::size_t foundZP    = dataset_shortname.find( "ZP"    );
   std::size_t foundRS    = dataset_shortname.find( "RS"    );
   std::size_t foundTest  = dataset_shortname.find( "test"  );
   std::size_t foundZP4   = dataset_shortname.find( "zp4"   );
   std::size_t foundNone  = dataset_shortname.find( "none"  );
 
-  if ( foundB     !=std::string::npos ) { cout<<"JetHT_Run2016B queued"     <<endl; }
-  if ( foundC     !=std::string::npos ) { cout<<"JetHT_Run2016C queued"     <<endl; }
-  if ( foundD     !=std::string::npos ) { cout<<"JetHT_Run2016D queued"     <<endl; }
-  if ( foundE     !=std::string::npos ) { cout<<"JetHT_Run2016E queued"     <<endl; }
-  if ( foundF     !=std::string::npos ) { cout<<"JetHT_Run2016F queued"     <<endl; }
-  if ( foundG     !=std::string::npos ) { cout<<"JetHT_Run2016G queued"     <<endl; }
-  if ( foundH     !=std::string::npos ) { cout<<"JetHT_Run2016H queued"     <<endl; }
-  if ( foundQ1    !=std::string::npos ) { cout<<"QCD queued"                <<endl; }
-  if ( foundQ2    !=std::string::npos ) { cout<<"QCD queued"                <<endl; }
-  if ( foundTT    !=std::string::npos ) { cout<<"ttbar MT2 queued"          <<endl; }
-  if ( foundZP    !=std::string::npos ) { cout<<"all Zprime queued"         <<endl; }
-  if ( foundRS    !=std::string::npos ) { cout<<"all Randal Sundrum queued"         <<endl; }
-  if ( foundTest  !=std::string::npos ) { cout<<"test queued"               <<endl; }
-  if ( foundZP4   !=std::string::npos ) { cout<<"zp4 queued"               <<endl; }
+  if ( foundB     !=std::string::npos ) { cout<<"JetHT_Run2016B queued"                  <<endl; }
+  if ( foundC     !=std::string::npos ) { cout<<"JetHT_Run2016C queued"                  <<endl; }
+  if ( foundD     !=std::string::npos ) { cout<<"JetHT_Run2016D queued"                  <<endl; }
+  if ( foundE     !=std::string::npos ) { cout<<"JetHT_Run2016E queued"                  <<endl; }
+  if ( foundF     !=std::string::npos ) { cout<<"JetHT_Run2016F queued"                  <<endl; }
+  if ( foundG     !=std::string::npos ) { cout<<"JetHT_Run2016G queued"                  <<endl; }
+  if ( foundH     !=std::string::npos ) { cout<<"JetHT_Run2016H queued"                  <<endl; }
+  if ( foundQ1    !=std::string::npos ) { cout<<"QCD queued"                             <<endl; }
+  if ( foundQ2    !=std::string::npos ) { cout<<"QCD queued"                             <<endl; }
+  if ( foundTT    !=std::string::npos ) { cout<<"ttbar Powheg TuneCUETP8M2T4 queued"     <<endl; }
+  if ( foundT2    !=std::string::npos ) { cout<<"ttbar non-primary queued"               <<endl; }
+  if ( foundZP    !=std::string::npos ) { cout<<"all Zprime queued"                      <<endl; }
+  if ( foundRS    !=std::string::npos ) { cout<<"all Randal Sundrum queued"              <<endl; }
+  if ( foundTest  !=std::string::npos ) { cout<<"test queued"                            <<endl; }
+  if ( foundZP4   !=std::string::npos ) { cout<<"zp4 queued"                             <<endl; }
 
   if ( foundNone  !=std::string::npos ) { cout<<"No input dataset provided" <<endl; return; }
 
@@ -179,7 +181,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0007.root");                                file_type.push_back(0);               
     file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0008.root");                                file_type.push_back(0);               
     file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0009.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver3_v1_JSONfinal_try2_all.root");                            file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver3_v1_JSONfinal_try2_all.root");                            file_type.push_back(0);      
   }                           
   //--- QCD HT binned
   if ( foundQ1   !=std::string::npos ){      
@@ -217,7 +219,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     // mistag_file_QCD_2btag    = mistag_file_QCD2_2btag;        
     // modmass_file_QCD         = modmass_file_QCD2;        
 
-    /*file_name_tree.push_back("b2gtreeV5_QCD_Pt_120to170_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
+    file_name_tree.push_back("b2gtreeV5_QCD_Pt_120to170_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_170to300_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_try2.root");                                 file_type.push_back(1);                               
@@ -227,7 +229,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_1800to2400_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_2400to3200_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_3200toInf_pythia8_RunIISummer16MiniAODv2_try3.root");                                file_type.push_back(1);                               */
+    file_name_tree.push_back("b2gtreeV5_QCD_Pt_3200toInf_pythia8_RunIISummer16MiniAODv2_try3.root");                                file_type.push_back(1);
 
     // extension and backup QCD Pt binned samples
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2_ext1.root");                                 file_type.push_back(1);  
@@ -245,13 +247,21 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
   if ( foundTT   !=std::string::npos ){            
     file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_orig_and_backup_missing2.root");   file_type.push_back(2);     
   }
+
+  //--- TTbar 
+  if ( foundT2   !=std::string::npos ){            
+    file_name_tree.push_back("b2gtreeV5_TT_TuneEE5C_13TeV_powheg_herwigpp_RunIISummer16MiniAODv2_all.root");   file_type.push_back(2);     
+    file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_hdampDOWN.root");   file_type.push_back(2);     
+    file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_hdampUP.root");   file_type.push_back(2);     
+  }
+
   //--- ZPrime 
   if ( foundZP   !=std::string::npos ){  
     
     // narrow                
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+      file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);  
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2.root ");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
@@ -270,7 +280,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3500_W-350_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-450_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);
 
     // very wide
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
@@ -295,11 +305,15 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-3000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-3500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-4000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);     
+    //file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-4500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);
+    //file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-5000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);     
   }  
 
   //--- test 
   if ( foundTest   !=std::string::npos ){                  
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all.root");              file_type.push_back(3);   
+    // file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all.root");              file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-4500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);     
+    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-5000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
     }
   if ( foundZP4   !=std::string::npos ){                  
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
@@ -320,9 +334,9 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
   // ---- Tau32 working point ----
   vector<double> taucut;
   vector<string> wplabel;
-  // taucut.push_back(0.80);    wplabel.push_back("A");       
+  taucut.push_back(0.80);    wplabel.push_back("A");       
   taucut.push_back(0.65);    wplabel.push_back("B");    
-  // taucut.push_back(0.54);    wplabel.push_back("C");       
+  taucut.push_back(0.54);    wplabel.push_back("C");       
   // taucut.push_back(0.46);    wplabel.push_back("D");       
 
   // ---- Jet pT cut ----
@@ -625,8 +639,8 @@ void looptree(
   // input b-tag efficiency histograms
   cout<<"get mistag histograms"<<endl;
   TFile * Fbtag ;
-  if (btagWP=="M") Fbtag            = new TFile("BtagEff_WPB_bM.root"); 
-  if (btagWP=="L") Fbtag            = new TFile("BtagEff_bL.root"); 
+  if (btagWP=="M") Fbtag            = new TFile("BtagPuppiEff_bM_bTagPuppiEffMeasurement20170623.root"); 
+  if (btagWP=="L") Fbtag            = new TFile("BtagPuppiEff_bL_bTagPuppiEffMeasurement20170623.root"); 
 
   TH2D * btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt  = (TH2D *) Fbtag->Get("btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt");
   TH2D * btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt      = (TH2D *) Fbtag->Get("btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt");
@@ -2767,13 +2781,23 @@ void looptree(
   TH1D * h_check_Jet0SDsubjet1flavParton                                    = new TH1D("h_check_Jet0SDsubjet1flavParton"       , "",  60, -30,   30);                      
   TH1D * h_check_Jet0PuppiSDmaxbdisc                                        = new TH1D("h_check_Jet0PuppiSDmaxbdisc"           , "", 200,   0,    1);                  
   TH1D * h_check_Jet0PuppiSDmaxbdiscflavParton                              = new TH1D("h_check_Jet0PuppiSDmaxbdiscflavParton" , "",  60, -30,   30);                            
+  TH1D * h_check_Jet0PuppiSDmaxbdiscflavHadron                              = new TH1D("h_check_Jet0PuppiSDmaxbdiscflavHadron" , "",  60, -30,   30);                            
   TH1D * h_check_Jet0PuppiSDsubjet0bdisc                                    = new TH1D("h_check_Jet0PuppiSDsubjet0bdisc"       , "", 200,   0,    1);                      
   TH1D * h_check_Jet0PuppiSDsubjet0flavParton                               = new TH1D("h_check_Jet0PuppiSDsubjet0flavParton"  , "",  60, -30,   30);                           
+  TH1D * h_check_Jet0PuppiSDsubjet0flavHadron                               = new TH1D("h_check_Jet0PuppiSDsubjet0flavHadron"  , "",  60, -30,   30);                           
   TH1D * h_check_Jet0PuppiSDsubjet1bdisc                                    = new TH1D("h_check_Jet0PuppiSDsubjet1bdisc"       , "", 200,   0,    1);                      
   TH1D * h_check_Jet0PuppiSDsubjet1flavParton                               = new TH1D("h_check_Jet0PuppiSDsubjet1flavParton"  , "",  60, -30,   30);                           
+  TH1D * h_check_Jet0PuppiSDsubjet1flavHadron                               = new TH1D("h_check_Jet0PuppiSDsubjet1flavHadron"  , "",  60, -30,   30);                           
   TH1D * h_check_Jet0GenMatched_partonPt                                    = new TH1D("h_check_Jet0GenMatched_partonPt"       , "",1400,   0, 7000);                      
   TH1D * h_check_Jet0GenMatched_partonID                                    = new TH1D("h_check_Jet0GenMatched_partonID"       , "",  60, -30,   30);                      
 
+  TH1D * h_check_matchedtop_Jet0PuppiSDsubjet0bdisc                                    = new TH1D("h_check_matchedtop_Jet0PuppiSDsubjet0bdisc"       , "", 200,   0,    1);                      
+  TH1D * h_check_matchedtop_Jet0PuppiSDsubjet0flavParton                               = new TH1D("h_check_matchedtop_Jet0PuppiSDsubjet0flavParton"  , "",  60, -30,   30);                           
+  TH1D * h_check_matchedtop_Jet0PuppiSDsubjet0flavHadron                               = new TH1D("h_check_matchedtop_Jet0PuppiSDsubjet0flavHadron"  , "",  60, -30,   30);                           
+  TH1D * h_check_matchedtop_Jet0PuppiSDsubjet1bdisc                                    = new TH1D("h_check_matchedtop_Jet0PuppiSDsubjet1bdisc"       , "", 200,   0,    1);                      
+  TH1D * h_check_matchedtop_Jet0PuppiSDsubjet1flavParton                               = new TH1D("h_check_matchedtop_Jet0PuppiSDsubjet1flavParton"  , "",  60, -30,   30);                           
+  TH1D * h_check_matchedtop_Jet0PuppiSDsubjet1flavHadron                               = new TH1D("h_check_matchedtop_Jet0PuppiSDsubjet1flavHadron"  , "",  60, -30,   30);                           
+  
   TH1D * h_check_Jet1SDmaxbdisc                                             = new TH1D("h_check_Jet1SDmaxbdisc"                , "", 200,   0,    1);             
   TH1D * h_check_Jet1SDmaxbdiscflavParton                                   = new TH1D("h_check_Jet1SDmaxbdiscflavParton"      , "",  60, -30,   30);                       
   TH1D * h_check_Jet1SDsubjet0bdisc                                         = new TH1D("h_check_Jet1SDsubjet0bdisc"            , "", 200,   0,    1);                 
@@ -2937,16 +2961,35 @@ void looptree(
   TH1D * h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta     = new TH1D("h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta"                    , "",200,  -4,    4);
   TH1D * h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Pt      = new TH1D("h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Pt"                     , "",700,   0, 7000);
   TH2D * h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt  = new TH2D("h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt"                 , "",40,  -4,    4, 70,   0, 7000);
-  
+  TH1D * h_BeforeBtag_lightHad_Jet0_Subjet0_Eta        = new TH1D("h_BeforeBtag_lightHad_Jet0_Subjet0_Eta"                       , "",200,  -4,    4);
+  TH1D * h_BeforeBtag_lightHad_Jet0_Subjet0_Pt         = new TH1D("h_BeforeBtag_lightHad_Jet0_Subjet0_Pt"                        , "",700,   0, 7000);
+  TH2D * h_BeforeBtag_lightHad_Jet0_Subjet0_Eta_Pt     = new TH2D("h_BeforeBtag_lightHad_Jet0_Subjet0_Eta_Pt"                    , "",40,  -4,    4, 70,   0, 7000);
+  TH1D * h_BeforeBtag_lightHad_Jet0_Subjet1_Eta        = new TH1D("h_BeforeBtag_lightHad_Jet0_Subjet1_Eta"                       , "",200,  -4,    4);
+  TH1D * h_BeforeBtag_lightHad_Jet0_Subjet1_Pt         = new TH1D("h_BeforeBtag_lightHad_Jet0_Subjet1_Pt"                        , "",700,   0, 7000);
+  TH2D * h_BeforeBtag_lightHad_Jet0_Subjet1_Eta_Pt     = new TH2D("h_BeforeBtag_lightHad_Jet0_Subjet1_Eta_Pt"                    , "",40,  -4,    4, 70,   0, 7000);
+   
   TH1D * h_BeforeBtag_cHad_Jet0_DeltaRsubjets          = new TH1D("h_BeforeBtag_cHad_Jet0_DeltaRsubjets"                         , "",200,  0,    2);
   TH1D * h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta         = new TH1D("h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta"                        , "",200, -4,    4);
   TH1D * h_BeforeBtag_cHad_Jet0_SubjetMaxB_Pt          = new TH1D("h_BeforeBtag_cHad_Jet0_SubjetMaxB_Pt"                         , "",700,  0, 7000);
   TH2D * h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt      = new TH2D("h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt"                     , "",40,  -4,    4, 70,   0, 7000);
+  TH1D * h_BeforeBtag_cHad_Jet0_Subjet0_Eta            = new TH1D("h_BeforeBtag_cHad_Jet0_Subjet0_Eta"                           , "",200, -4,    4);
+  TH1D * h_BeforeBtag_cHad_Jet0_Subjet0_Pt             = new TH1D("h_BeforeBtag_cHad_Jet0_Subjet0_Pt"                            , "",700,  0, 7000);
+  TH2D * h_BeforeBtag_cHad_Jet0_Subjet0_Eta_Pt         = new TH2D("h_BeforeBtag_cHad_Jet0_Subjet0_Eta_Pt"                        , "",40,  -4,    4, 70,   0, 7000);
+  TH1D * h_BeforeBtag_cHad_Jet0_Subjet1_Eta            = new TH1D("h_BeforeBtag_cHad_Jet0_Subjet1_Eta"                           , "",200, -4,    4);
+  TH1D * h_BeforeBtag_cHad_Jet0_Subjet1_Pt             = new TH1D("h_BeforeBtag_cHad_Jet0_Subjet1_Pt"                            , "",700,  0, 7000);
+  TH2D * h_BeforeBtag_cHad_Jet0_Subjet1_Eta_Pt         = new TH2D("h_BeforeBtag_cHad_Jet0_Subjet1_Eta_Pt"                        , "",40,  -4,    4, 70,   0, 7000);
 
   TH1D * h_BeforeBtag_bHad_Jet0_DeltaRsubjets          = new TH1D("h_BeforeBtag_bHad_Jet0_DeltaRsubjets"                         , "",200,   0,    2);
   TH1D * h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta         = new TH1D("h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta"                        , "",200,  -4,    4);
   TH1D * h_BeforeBtag_bHad_Jet0_SubjetMaxB_Pt          = new TH1D("h_BeforeBtag_bHad_Jet0_SubjetMaxB_Pt"                         , "",700,   0, 7000);
   TH2D * h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt      = new TH2D("h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt"                     , "",40,   -4,    4, 70,   0, 7000);
+  TH1D * h_BeforeBtag_bHad_Jet0_Subjet0_Eta            = new TH1D("h_BeforeBtag_bHad_Jet0_Subjet0_Eta"                           , "",200,  -4,    4);
+  TH1D * h_BeforeBtag_bHad_Jet0_Subjet0_Pt             = new TH1D("h_BeforeBtag_bHad_Jet0_Subjet0_Pt"                            , "",700,   0, 7000);
+  TH2D * h_BeforeBtag_bHad_Jet0_Subjet0_Eta_Pt         = new TH2D("h_BeforeBtag_bHad_Jet0_Subjet0_Eta_Pt"                        , "",40,   -4,    4, 70,   0, 7000);
+  TH1D * h_BeforeBtag_bHad_Jet0_Subjet1_Eta            = new TH1D("h_BeforeBtag_bHad_Jet0_Subjet1_Eta"                           , "",200,  -4,    4);
+  TH1D * h_BeforeBtag_bHad_Jet0_Subjet1_Pt             = new TH1D("h_BeforeBtag_bHad_Jet0_Subjet1_Pt"                            , "",700,   0, 7000);
+  TH2D * h_BeforeBtag_bHad_Jet0_Subjet1_Eta_Pt         = new TH2D("h_BeforeBtag_bHad_Jet0_Subjet1_Eta_Pt"                        , "",40,   -4,    4, 70,   0, 7000);
+
 
 
 
@@ -2954,16 +2997,36 @@ void looptree(
   TH1D * h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta      = new TH1D("h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta"                    , "",200,  -4,    4);
   TH1D * h_AfterBtag_lightHad_Jet0_SubjetMaxB_Pt       = new TH1D("h_AfterBtag_lightHad_Jet0_SubjetMaxB_Pt"                     , "",700,   0, 7000);
   TH2D * h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt   = new TH2D("h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt"                 , "",40,  -4,    4, 70,   0, 7000);
-  
+  TH1D * h_AfterBtag_lightHad_Jet0_Subjet0_Eta         = new TH1D("h_AfterBtag_lightHad_Jet0_Subjet0_Eta"                       , "",200,  -4,    4);
+  TH1D * h_AfterBtag_lightHad_Jet0_Subjet0_Pt          = new TH1D("h_AfterBtag_lightHad_Jet0_Subjet0_Pt"                        , "",700,   0, 7000);
+  TH2D * h_AfterBtag_lightHad_Jet0_Subjet0_Eta_Pt      = new TH2D("h_AfterBtag_lightHad_Jet0_Subjet0_Eta_Pt"                    , "",40,  -4,    4, 70,   0, 7000);
+  TH1D * h_AfterBtag_lightHad_Jet0_Subjet1_Eta         = new TH1D("h_AfterBtag_lightHad_Jet0_Subjet1_Eta"                       , "",200,  -4,    4);
+  TH1D * h_AfterBtag_lightHad_Jet0_Subjet1_Pt          = new TH1D("h_AfterBtag_lightHad_Jet0_Subjet1_Pt"                        , "",700,   0, 7000);
+  TH2D * h_AfterBtag_lightHad_Jet0_Subjet1_Eta_Pt      = new TH2D("h_AfterBtag_lightHad_Jet0_Subjet1_Eta_Pt"                    , "",40,  -4,    4, 70,   0, 7000);
+   
   TH1D * h_AfterBtag_cHad_Jet0_DeltaRsubjets           = new TH1D("h_AfterBtag_cHad_Jet0_DeltaRsubjets"                         , "",200,   0,    2);
   TH1D * h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta          = new TH1D("h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta"                        , "",200,  -4,    4);
   TH1D * h_AfterBtag_cHad_Jet0_SubjetMaxB_Pt           = new TH1D("h_AfterBtag_cHad_Jet0_SubjetMaxB_Pt"                         , "",700,   0, 7000);
   TH2D * h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt       = new TH2D("h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt"                     , "",40,  -4,    4, 70,   0, 7000);
+  TH1D * h_AfterBtag_cHad_Jet0_Subjet0_Eta             = new TH1D("h_AfterBtag_cHad_Jet0_Subjet0_Eta"                           , "",200,  -4,    4);
+  TH1D * h_AfterBtag_cHad_Jet0_Subjet0_Pt              = new TH1D("h_AfterBtag_cHad_Jet0_Subjet0_Pt"                            , "",700,   0, 7000);
+  TH2D * h_AfterBtag_cHad_Jet0_Subjet0_Eta_Pt          = new TH2D("h_AfterBtag_cHad_Jet0_Subjet0_Eta_Pt"                        , "",40,  -4,    4, 70,   0, 7000);
+  TH1D * h_AfterBtag_cHad_Jet0_Subjet1_Eta             = new TH1D("h_AfterBtag_cHad_Jet0_Subjet1_Eta"                           , "",200,  -4,    4);
+  TH1D * h_AfterBtag_cHad_Jet0_Subjet1_Pt              = new TH1D("h_AfterBtag_cHad_Jet0_Subjet1_Pt"                            , "",700,   0, 7000);
+  TH2D * h_AfterBtag_cHad_Jet0_Subjet1_Eta_Pt          = new TH2D("h_AfterBtag_cHad_Jet0_Subjet1_Eta_Pt"                        , "",40,  -4,    4, 70,   0, 7000);
 
   TH1D * h_AfterBtag_bHad_Jet0_DeltaRsubjets           = new TH1D("h_AfterBtag_bHad_Jet0_DeltaRsubjets"                         , "",200,   0,    2);
   TH1D * h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta          = new TH1D("h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta"                        , "",200,  -4,    4);
   TH1D * h_AfterBtag_bHad_Jet0_SubjetMaxB_Pt           = new TH1D("h_AfterBtag_bHad_Jet0_SubjetMaxB_Pt"                         , "",700,   0, 7000);
   TH2D * h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt       = new TH2D("h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt"                     , "",40,  -4,    4, 70,   0, 7000);
+  TH1D * h_AfterBtag_bHad_Jet0_Subjet0_Eta             = new TH1D("h_AfterBtag_bHad_Jet0_Subjet0_Eta"                           , "",200,  -4,    4);
+  TH1D * h_AfterBtag_bHad_Jet0_Subjet0_Pt              = new TH1D("h_AfterBtag_bHad_Jet0_Subjet0_Pt"                            , "",700,   0, 7000);
+  TH2D * h_AfterBtag_bHad_Jet0_Subjet0_Eta_Pt          = new TH2D("h_AfterBtag_bHad_Jet0_Subjet0_Eta_Pt"                        , "",40,  -4,    4, 70,   0, 7000);
+  TH1D * h_AfterBtag_bHad_Jet0_Subjet1_Eta             = new TH1D("h_AfterBtag_bHad_Jet0_Subjet1_Eta"                           , "",200,  -4,    4);
+  TH1D * h_AfterBtag_bHad_Jet0_Subjet1_Pt              = new TH1D("h_AfterBtag_bHad_Jet0_Subjet1_Pt"                            , "",700,   0, 7000);
+  TH2D * h_AfterBtag_bHad_Jet0_Subjet1_Eta_Pt          = new TH2D("h_AfterBtag_bHad_Jet0_Subjet1_Eta_Pt"                        , "",40,  -4,    4, 70,   0, 7000);
+
+
 
 
   TH1D * h_BeforeBtag_lightHad_Jet1_DeltaRsubjets      = new TH1D("h_BeforeBtag_lightHad_Jet1_DeltaRsubjets"                     , "",200,   0,    2);
@@ -6862,8 +6925,8 @@ void looptree(
     //                                 Y8b d88P 
     //                                  "Y88P"  
 
-
-    // Of the 2 subjets, find the pt and eta of the one that has the max b-discriminant Use these values to calculate the SF.
+    /*
+    // Old method: Of the 2 subjets, find the pt and eta of the one that has the max b-discriminant Use these values to calculate the SF.
     bool j0_chs_subjet0_isMax = false;
     bool j0_chs_subjet1_isMax = false;
     bool j0_pup_subjet0_isMax = false;
@@ -7056,6 +7119,113 @@ void looptree(
       cout<<"j1_pup_subjet1_btag_scalefactor "<<j1_pup_maxbtag_subjet_scalefactor<<endl;
     }
 
+    */
+
+    // New method: Upgrade/downgralde both subjets in each jet based on the b-tag SF
+   
+    double j0_s0_btag_sf = 1.0;
+    double j0_s1_btag_sf = 1.0;
+    double j1_s0_btag_sf = 1.0;
+    double j1_s1_btag_sf = 1.0;
+
+    double j0_s0_btag_effic = 1.0; 
+    double j0_s1_btag_effic = 1.0; 
+    double j1_s0_btag_effic = 1.0; 
+    double j1_s1_btag_effic = 1.0; 
+
+    if (!isData){
+
+
+      // -- Get b-tag efficiency (used by applySF if the btag SF is greater than 1)
+      int j0_s0_binx   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetXaxis()->FindBin( Jet0PuppiSDsubjet0eta );
+      int j0_s0_biny   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetYaxis()->FindBin( Jet0PuppiSDsubjet0pt  );
+      int j0_s1_binx   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetXaxis()->FindBin( Jet0PuppiSDsubjet1eta );
+      int j0_s1_biny   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetYaxis()->FindBin( Jet0PuppiSDsubjet1pt  );
+      int j1_s0_binx   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetXaxis()->FindBin( Jet1PuppiSDsubjet0eta );
+      int j1_s0_biny   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetYaxis()->FindBin( Jet1PuppiSDsubjet0pt  );
+      int j1_s1_binx   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetXaxis()->FindBin( Jet1PuppiSDsubjet1eta );
+      int j1_s1_biny   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetYaxis()->FindBin( Jet1PuppiSDsubjet1pt  );
+
+      if      (fabs(Jet0PuppiSDsubjet0flavHadron)==5)   j0_s0_btag_effic = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j0_s0_binx, j0_s0_biny );
+      else if (fabs(Jet0PuppiSDsubjet0flavHadron)==4 )  j0_s0_btag_effic = btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j0_s0_binx, j0_s0_biny );
+      else                                              j0_s0_btag_effic = btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt     ->GetBinContent( j0_s0_binx, j0_s0_biny );                                    
+
+      if      (fabs(Jet0PuppiSDsubjet1flavHadron)==5)   j0_s1_btag_effic = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j0_s1_binx, j0_s1_biny );
+      else if (fabs(Jet0PuppiSDsubjet1flavHadron)==4 )  j0_s1_btag_effic = btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j0_s1_binx, j0_s1_biny );
+      else                                              j0_s1_btag_effic = btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt     ->GetBinContent( j0_s1_binx, j0_s1_biny );                                    
+           
+      if      (fabs(Jet1PuppiSDsubjet0flavHadron)==5)   j1_s0_btag_effic = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j1_s0_binx, j1_s0_biny );
+      else if (fabs(Jet1PuppiSDsubjet0flavHadron)==4 )  j1_s0_btag_effic = btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j1_s0_binx, j1_s0_biny );
+      else                                              j1_s0_btag_effic = btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt     ->GetBinContent( j1_s0_binx, j1_s0_biny );                                    
+      
+      if      (fabs(Jet1PuppiSDsubjet1flavHadron)==5)   j1_s1_btag_effic = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j1_s1_binx, j1_s1_biny );
+      else if (fabs(Jet1PuppiSDsubjet1flavHadron)==4 )  j1_s1_btag_effic = btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j1_s1_binx, j1_s1_biny );
+      else                                              j1_s1_btag_effic = btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt     ->GetBinContent( j1_s1_binx, j1_s1_biny );                                    
+
+
+      // -- get b-tag SF
+      //   NOTE: When using the eval_auto_bounds function from the BTagCalibration tool, the function now automatically double the uncertainty when above the measured subjet pt range
+      //   (SFlight: pt 20-1000 GeV, SFb(c) pt 30-450 GeV)
+
+      // b-tag SF scale up
+      if (Syst ==  3) {
+        if      ( fabs(Jet0PuppiSDsubjet0flavHadron)==5 )  j0_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else if ( fabs(Jet0PuppiSDsubjet0flavHadron)==4 )  j0_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else                                               j0_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet0PuppiSDsubjet1flavHadron)==5 )  j0_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else if ( fabs(Jet0PuppiSDsubjet1flavHadron)==4 )  j0_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else                                               j0_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );    
+     
+        if      ( fabs(Jet1PuppiSDsubjet0flavHadron)==5 )  j1_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else if ( fabs(Jet1PuppiSDsubjet0flavHadron)==4 )  j1_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else                                               j1_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet1PuppiSDsubjet1flavHadron)==5 )  j1_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else if ( fabs(Jet1PuppiSDsubjet1flavHadron)==4 )  j1_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else                                               j1_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );  
+      }
+      // b-tag SF scale down
+      else if (Syst ==  -3) {
+        if      ( fabs(Jet0PuppiSDsubjet0flavHadron)==5 )  j0_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else if ( fabs(Jet0PuppiSDsubjet0flavHadron)==4 )  j0_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else                                               j0_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet0PuppiSDsubjet1flavHadron)==5 )  j0_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else if ( fabs(Jet0PuppiSDsubjet1flavHadron)==4 )  j0_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else                                               j0_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );    
+      
+        if      ( fabs(Jet1PuppiSDsubjet0flavHadron)==5 )  j1_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else if ( fabs(Jet1PuppiSDsubjet0flavHadron)==4 )  j1_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else                                               j1_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet1PuppiSDsubjet1flavHadron)==5 )  j1_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else if ( fabs(Jet1PuppiSDsubjet1flavHadron)==4 )  j1_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else                                               j1_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );    
+      }
+      // nominal b-tag SF
+      else {
+        if      ( fabs(Jet0PuppiSDsubjet0flavHadron)==5 )  j0_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else if ( fabs(Jet0PuppiSDsubjet0flavHadron)==4 )  j0_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else                                               j0_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet0PuppiSDsubjet1flavHadron)==5 )  j0_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else if ( fabs(Jet0PuppiSDsubjet1flavHadron)==4 )  j0_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else                                               j0_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );    
+      
+        if      ( fabs(Jet1PuppiSDsubjet0flavHadron)==5 )  j1_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else if ( fabs(Jet1PuppiSDsubjet0flavHadron)==4 )  j1_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else                                               j1_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet1PuppiSDsubjet1flavHadron)==5 )  j1_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else if ( fabs(Jet1PuppiSDsubjet1flavHadron)==4 )  j1_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else                                               j1_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );    
+      }
+    
+    }
+
+  
+
     // -- btag bool
     // https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco
     // CSVv2L   0.5426 
@@ -7065,30 +7235,58 @@ void looptree(
     if (btagWP=="M") bcut = 0.8484; 
     if (btagWP=="L") bcut = 0.5426; 
 
-    bool j0_tag_b_noSF     = Jet0SDmaxbdisc      > bcut ;
-    bool j1_tag_b_noSF     = Jet1SDmaxbdisc      > bcut ;
-    bool j0_puptag_b_noSF  = Jet0PuppiSDmaxbdisc > bcut ;
-    bool j1_puptag_b_noSF  = Jet1PuppiSDmaxbdisc > bcut ;
+    bool j0_tag_b_noSF     = false; 
+    bool j1_tag_b_noSF     = false; 
+    bool j0_tag_b          = false; 
+    bool j1_tag_b          = false; 
 
-    bool j0_tag_b    = false;
-    bool j1_tag_b    = false;
-    bool j0_puptag_b = false;
-    bool j1_puptag_b = false;
+    bool j0_puptag_b_noSF  = false; //Jet0PuppiSDmaxbdisc > bcut ;
+    bool j1_puptag_b_noSF  = false; //Jet1PuppiSDmaxbdisc > bcut ;
+    bool j0_puptag_b       = false;
+    bool j1_puptag_b       = false;
+
+    bool j0_s0_puptag_b_noSF  = Jet0PuppiSDsubjet0bdisc > bcut ;
+    bool j0_s1_puptag_b_noSF  = Jet0PuppiSDsubjet1bdisc > bcut ;
+    bool j1_s0_puptag_b_noSF  = Jet1PuppiSDsubjet0bdisc > bcut ;
+    bool j1_s1_puptag_b_noSF  = Jet1PuppiSDsubjet1bdisc > bcut ;
+
+    bool j0_s0_puptag_b  = false ;
+    bool j0_s1_puptag_b  = false ;
+    bool j1_s0_puptag_b  = false ;
+    bool j1_s1_puptag_b  = false ;
+
+
 
     // -- Jet-by-Jet updating of b-tag status
     // https://twiki.cern.ch/twiki/bin/viewauth/CMS/BTagSFMethods#2a_Jet_by_jet_updating_of_the_b
     if (!isData){
-      j0_tag_b    =  bool( applySF ( j0_tag_b_noSF    , j0_chs_maxbtag_subjet_scalefactor , j0_Btag_eff) );
-      j1_tag_b    =  bool( applySF ( j1_tag_b_noSF    , j1_chs_maxbtag_subjet_scalefactor , j1_Btag_eff) );
-      j0_puptag_b =  bool( applySF ( j0_puptag_b_noSF , j0_pup_maxbtag_subjet_scalefactor , j0_Btag_eff_pup) );
-      j1_puptag_b =  bool( applySF ( j1_puptag_b_noSF , j1_pup_maxbtag_subjet_scalefactor , j1_Btag_eff_pup) );
-      }
-    else{
-      j0_tag_b    =  j0_tag_b_noSF    ;
-      j1_tag_b    =  j1_tag_b_noSF    ;
-      j0_puptag_b =  j0_puptag_b_noSF ;
-      j1_puptag_b =  j1_puptag_b_noSF ;
+      // j0_tag_b    =  bool( applySF ( j0_tag_b_noSF    , j0_chs_maxbtag_subjet_scalefactor , j0_Btag_eff) );
+      // j1_tag_b    =  bool( applySF ( j1_tag_b_noSF    , j1_chs_maxbtag_subjet_scalefactor , j1_Btag_eff) );
+      // j0_puptag_b =  bool( applySF ( j0_puptag_b_noSF , j0_pup_maxbtag_subjet_scalefactor , j0_Btag_eff_pup) );
+      // j1_puptag_b =  bool( applySF ( j1_puptag_b_noSF , j1_pup_maxbtag_subjet_scalefactor , j1_Btag_eff_pup) );
+
+      // Alternative (and probably correct ) method - update each subjet indvidually instead of just the max b-disc subjet 
+      j0_s0_puptag_b = bool( applySF ( j0_s0_puptag_b_noSF    , j0_s0_btag_sf ,  j0_s0_btag_effic) );
+      j0_s1_puptag_b = bool( applySF ( j0_s1_puptag_b_noSF    , j0_s1_btag_sf ,  j0_s1_btag_effic) );
+      j1_s0_puptag_b = bool( applySF ( j1_s0_puptag_b_noSF    , j1_s0_btag_sf ,  j1_s0_btag_effic) );
+      j1_s1_puptag_b = bool( applySF ( j1_s1_puptag_b_noSF    , j1_s1_btag_sf ,  j1_s1_btag_effic) );
     }
+    else{
+      // j0_tag_b    =  j0_tag_b_noSF    ;
+      // j1_tag_b    =  j1_tag_b_noSF    ;
+      // j0_puptag_b =  j0_puptag_b_noSF ;
+      // j1_puptag_b =  j1_puptag_b_noSF ;
+
+      j0_s0_puptag_b = j0_s0_puptag_b_noSF ;
+      j0_s1_puptag_b = j0_s1_puptag_b_noSF ;
+      j1_s0_puptag_b = j1_s0_puptag_b_noSF ;
+      j1_s1_puptag_b = j1_s1_puptag_b_noSF ;
+    }
+
+    if (j0_s0_puptag_b || j0_s1_puptag_b) j0_puptag_b = true;
+    if (j1_s0_puptag_b || j1_s1_puptag_b) j1_puptag_b = true;
+    if (j0_s0_puptag_b_noSF || j0_s1_puptag_b_noSF) j0_puptag_b_noSF = true;
+    if (j1_s0_puptag_b_noSF || j1_s1_puptag_b_noSF) j1_puptag_b_noSF = true;
 
     if ( !j0_tag_b_noSF && !j1_tag_b_noSF  )                                     h_BtagCategoriesPreSF        ->Fill(0.5 , evWeight);
     if ( (!j0_tag_b_noSF && j1_tag_b_noSF)||(j0_tag_b_noSF && !j1_tag_b_noSF)  ) h_BtagCategoriesPreSF        ->Fill(1.5 , evWeight);
@@ -7106,28 +7304,28 @@ void looptree(
     if ( (!j0_puptag_b && j1_puptag_b)||(j0_puptag_b && !j1_puptag_b)  )                     h_BtagCategoriesPuppiPostSF  ->Fill(1.5, evWeight);
     if ( j0_puptag_b && j1_puptag_b  )                                                       h_BtagCategoriesPuppiPostSF  ->Fill(2.5, evWeight);
 
-    if(verbose_){
+    // if(verbose_){
 
-      cout<<"Jet0SDmaxbdiscflavParton      "<<Jet0SDmaxbdiscflavParton<<endl;       
-      cout<<"Jet1SDmaxbdiscflavParton      "<<Jet1SDmaxbdiscflavParton<<endl;       
-      cout<<"Jet0PuppiSDmaxbdiscflavParton "<<Jet0PuppiSDmaxbdiscflavParton<<endl;            
-      cout<<"Jet1PuppiSDmaxbdiscflavParton "<<Jet1PuppiSDmaxbdiscflavParton<<endl;            
+    //   cout<<"Jet0SDmaxbdiscflavParton      "<<Jet0SDmaxbdiscflavParton<<endl;       
+    //   cout<<"Jet1SDmaxbdiscflavParton      "<<Jet1SDmaxbdiscflavParton<<endl;       
+    //   cout<<"Jet0PuppiSDmaxbdiscflavParton "<<Jet0PuppiSDmaxbdiscflavParton<<endl;            
+    //   cout<<"Jet1PuppiSDmaxbdiscflavParton "<<Jet1PuppiSDmaxbdiscflavParton<<endl;            
 
-      cout<<"j0_chs_maxbtag_subjet_scalefactor "<<j0_chs_maxbtag_subjet_scalefactor<<endl;
-      cout<<"j1_chs_maxbtag_subjet_scalefactor "<<j1_chs_maxbtag_subjet_scalefactor<<endl;
-      cout<<"j0_pup_maxbtag_subjet_scalefactor "<<j0_pup_maxbtag_subjet_scalefactor<<endl;
-      cout<<"j1_pup_maxbtag_subjet_scalefactor "<<j1_pup_maxbtag_subjet_scalefactor<<endl;
+    //   cout<<"j0_chs_maxbtag_subjet_scalefactor "<<j0_chs_maxbtag_subjet_scalefactor<<endl;
+    //   cout<<"j1_chs_maxbtag_subjet_scalefactor "<<j1_chs_maxbtag_subjet_scalefactor<<endl;
+    //   cout<<"j0_pup_maxbtag_subjet_scalefactor "<<j0_pup_maxbtag_subjet_scalefactor<<endl;
+    //   cout<<"j1_pup_maxbtag_subjet_scalefactor "<<j1_pup_maxbtag_subjet_scalefactor<<endl;
 
-      cout<<"j0_Btag_eff     "<<j0_Btag_eff<<endl;
-      cout<<"j1_Btag_eff     "<<j1_Btag_eff<<endl;
-      cout<<"j1_Btag_eff_pup "<<j1_Btag_eff_pup<<endl;
-      cout<<"j1_Btag_eff_pup "<<j1_Btag_eff_pup<<endl;
+    //   cout<<"j0_Btag_eff     "<<j0_Btag_eff<<endl;
+    //   cout<<"j1_Btag_eff     "<<j1_Btag_eff<<endl;
+    //   cout<<"j1_Btag_eff_pup "<<j1_Btag_eff_pup<<endl;
+    //   cout<<"j1_Btag_eff_pup "<<j1_Btag_eff_pup<<endl;
 
-      cout<<"chs jet 0 btag scale - bool before/after = "<< j0_tag_b_noSF    <<" / "<< j0_tag_b    <<endl;
-      cout<<"chs jet 0 btag scale - bool before/after = "<< j1_tag_b_noSF    <<" / "<< j1_tag_b    <<endl;
-      cout<<"pup jet 0 btag scale - bool before/after = "<< j0_puptag_b_noSF <<" / "<< j0_puptag_b <<endl;
-      cout<<"pup jet 0 btag scale - bool before/after = "<< j1_puptag_b_noSF <<" / "<< j1_puptag_b <<endl;
-    }
+    //   cout<<"chs jet 0 btag scale - bool before/after = "<< j0_tag_b_noSF    <<" / "<< j0_tag_b    <<endl;
+    //   cout<<"chs jet 0 btag scale - bool before/after = "<< j1_tag_b_noSF    <<" / "<< j1_tag_b    <<endl;
+    //   cout<<"pup jet 0 btag scale - bool before/after = "<< j0_puptag_b_noSF <<" / "<< j0_puptag_b <<endl;
+    //   cout<<"pup jet 0 btag scale - bool before/after = "<< j1_puptag_b_noSF <<" / "<< j1_puptag_b <<endl;
+    // }
 
     // 888           888                      
     // 888           888                      
@@ -8388,7 +8586,7 @@ void looptree(
       h_Jet1PuppiMult                            ->Fill( Jet1PuppiMult            , evWeight );          
 
 
-      // ---- Measure b-tag efficiency in QCD ----
+      // ---- Measure b-tag efficiency in MC ----
 
       //  b-tag diagnostic plots
       h_check_Jet0SDmaxbdisc                   ->Fill( Jet0SDmaxbdisc                 , evWeight);              
@@ -8399,13 +8597,26 @@ void looptree(
       h_check_Jet0SDsubjet1flavParton          ->Fill( Jet0SDsubjet1flavParton        , evWeight);                       
       h_check_Jet0PuppiSDmaxbdisc              ->Fill( Jet0PuppiSDmaxbdisc            , evWeight);                   
       h_check_Jet0PuppiSDmaxbdiscflavParton    ->Fill( Jet0PuppiSDmaxbdiscflavParton  , evWeight);                             
+      h_check_Jet0PuppiSDmaxbdiscflavHadron    ->Fill( Jet0PuppiSDmaxbdiscflavHadron  , evWeight);                             
       h_check_Jet0PuppiSDsubjet0bdisc          ->Fill( Jet0PuppiSDsubjet0bdisc        , evWeight);                       
       h_check_Jet0PuppiSDsubjet0flavParton     ->Fill( Jet0PuppiSDsubjet0flavParton   , evWeight);                            
+      h_check_Jet0PuppiSDsubjet0flavHadron     ->Fill( Jet0PuppiSDsubjet0flavHadron   , evWeight);                            
       h_check_Jet0PuppiSDsubjet1bdisc          ->Fill( Jet0PuppiSDsubjet1bdisc        , evWeight);                       
       h_check_Jet0PuppiSDsubjet1flavParton     ->Fill( Jet0PuppiSDsubjet1flavParton   , evWeight);                            
+      h_check_Jet0PuppiSDsubjet1flavHadron     ->Fill( Jet0PuppiSDsubjet1flavHadron   , evWeight);                            
       h_check_Jet0GenMatched_partonPt          ->Fill( Jet0GenMatched_partonPt        , evWeight);                       
       h_check_Jet0GenMatched_partonID          ->Fill( Jet0GenMatched_partonID        , evWeight);                       
 
+  
+      if (Jet0GenMatched_TopHadronic==1 && Jet0GenMatched_DeltaR_jet_t<0.8  && Jet0GenMatched_MaxDeltaRPartonTop < 0.8)
+      {
+            h_check_matchedtop_Jet0PuppiSDsubjet0bdisc          ->Fill( Jet0PuppiSDsubjet0bdisc        , evWeight);                       
+            h_check_matchedtop_Jet0PuppiSDsubjet0flavParton     ->Fill( Jet0PuppiSDsubjet0flavParton   , evWeight);                            
+            h_check_matchedtop_Jet0PuppiSDsubjet0flavHadron     ->Fill( Jet0PuppiSDsubjet0flavHadron   , evWeight);                            
+            h_check_matchedtop_Jet0PuppiSDsubjet1bdisc          ->Fill( Jet0PuppiSDsubjet1bdisc        , evWeight);                       
+            h_check_matchedtop_Jet0PuppiSDsubjet1flavParton     ->Fill( Jet0PuppiSDsubjet1flavParton   , evWeight);                            
+            h_check_matchedtop_Jet0PuppiSDsubjet1flavHadron     ->Fill( Jet0PuppiSDsubjet1flavHadron   , evWeight);  
+      }
       h_check_Jet1SDmaxbdisc                   ->Fill( Jet1SDmaxbdisc                 , evWeight);              
       h_check_Jet1SDmaxbdiscflavParton         ->Fill( Jet1SDmaxbdiscflavParton       , evWeight);                        
       h_check_Jet1SDsubjet0bdisc               ->Fill( Jet1SDsubjet0bdisc             , evWeight);                  
@@ -8461,59 +8672,86 @@ void looptree(
       h_deltaR_Jet1_sub0_pup0 ->Fill( Jet1SDsubjet0P4.DeltaR( Jet1PuppiSDsubjet0P4 ) );
       h_deltaR_Jet1_sub1_pup1 ->Fill( Jet1SDsubjet1P4.DeltaR( Jet1PuppiSDsubjet1P4 ) );
 
-      // -- B-tag Efficiency Probe + Tag for different flavors
+      // -- B-tag Efficiency Probe + Tag for different flacors
       // Probe Jet 0
       h_BeforeBtag_Inclusive_Jet0Pt   ->Fill( jet0pt             , evWeight);
       h_BeforeBtag_Inclusive_Jet0P    ->Fill( jet0P              , evWeight);
       h_BeforeBtag_Inclusive_Jet0Rap  ->Fill( jet0P4.Rapidity()  , evWeight);
 
-      if ( fabs(Jet0SDmaxbdiscflavParton) <=3){
+      if ( fabs(Jet0PuppiSDmaxbdiscflavParton) <=3){
         h_BeforeBtag_light_Jet0Pt   ->Fill( jet0pt            , evWeight );
         h_BeforeBtag_light_Jet0P    ->Fill( jet0P             , evWeight );
         h_BeforeBtag_light_Jet0Rap  ->Fill( jet0P4.Rapidity() , evWeight );
       }
-      if ( fabs(Jet0SDmaxbdiscflavParton) ==4){
+      if ( fabs(Jet0PuppiSDmaxbdiscflavParton) ==4){
         h_BeforeBtag_c_Jet0Pt   ->Fill(jet0pt             , evWeight);
         h_BeforeBtag_c_Jet0P    ->Fill(jet0P              , evWeight);
         h_BeforeBtag_c_Jet0Rap  ->Fill(jet0P4.Rapidity()  , evWeight);
       }
-      if ( fabs(Jet0SDmaxbdiscflavParton) ==5){
+      if ( fabs(Jet0PuppiSDmaxbdiscflavParton) ==5){
         h_BeforeBtag_b_Jet0Pt   ->Fill( jet0pt            , evWeight );
         h_BeforeBtag_b_Jet0P    ->Fill( jet0P             , evWeight );
         h_BeforeBtag_b_Jet0Rap  ->Fill( jet0P4.Rapidity() , evWeight );
       }
-      if ( fabs(Jet0SDmaxbdiscflavParton) ==21){
+      if ( fabs(Jet0PuppiSDmaxbdiscflavParton) ==21){
         h_BeforeBtag_g_Jet0Pt   ->Fill( jet0pt            , evWeight );
         h_BeforeBtag_g_Jet0P    ->Fill( jet0P             , evWeight );
         h_BeforeBtag_g_Jet0Rap  ->Fill( jet0P4.Rapidity() , evWeight );
       }
 
-      if ( fabs(Jet0SDmaxbdiscflavHadron) <=3){
+      if ( fabs(Jet0PuppiSDmaxbdiscflavHadron) <=3){
         h_BeforeBtag_lightHad_Jet0Pt   ->Fill( jet0pt             , evWeight);
         h_BeforeBtag_lightHad_Jet0P    ->Fill( jet0P              , evWeight);
         h_BeforeBtag_lightHad_Jet0Rap  ->Fill( jet0P4.Rapidity()  , evWeight);
-        h_BeforeBtag_lightHad_Jet0_DeltaRsubjets             ->Fill(  deltaR_Jet0_subjet0_subjet1  , evWeight);
-        h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta            ->Fill(  j0_chs_maxbtag_subjet_eta    , evWeight);
-        h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Pt             ->Fill(  j0_chs_maxbtag_subjet_pt     , evWeight);
-        h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt         ->Fill(  j0_chs_maxbtag_subjet_eta    , j0_chs_maxbtag_subjet_pt, evWeight  );
+        h_BeforeBtag_lightHad_Jet0_DeltaRsubjets          ->Fill(  pup_deltaR_Jet0_subjet0_subjet1  , evWeight);
+        h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+        h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+        h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+        h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+        h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+        h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
+        h_BeforeBtag_lightHad_Jet0_Subjet0_Eta            ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+        h_BeforeBtag_lightHad_Jet0_Subjet0_Pt             ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+        h_BeforeBtag_lightHad_Jet0_Subjet0_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+        h_BeforeBtag_lightHad_Jet0_Subjet1_Eta            ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+        h_BeforeBtag_lightHad_Jet0_Subjet1_Pt             ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+        h_BeforeBtag_lightHad_Jet0_Subjet1_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
       }
-      if ( fabs(Jet0SDmaxbdiscflavHadron) ==4){
+      if ( fabs(Jet0PuppiSDmaxbdiscflavHadron) ==4){
         h_BeforeBtag_cHad_Jet0Pt   ->Fill( jet0pt            , evWeight);
         h_BeforeBtag_cHad_Jet0P    ->Fill( jet0P             , evWeight);
         h_BeforeBtag_cHad_Jet0Rap  ->Fill( jet0P4.Rapidity() , evWeight);
-        h_BeforeBtag_cHad_Jet0_DeltaRsubjets             ->Fill(  deltaR_Jet0_subjet0_subjet1 , evWeight );
-        h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta            ->Fill(  j0_chs_maxbtag_subjet_eta   , evWeight );
-        h_BeforeBtag_cHad_Jet0_SubjetMaxB_Pt             ->Fill(  j0_chs_maxbtag_subjet_pt    , evWeight );
-        h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt         ->Fill(  j0_chs_maxbtag_subjet_eta    , j0_chs_maxbtag_subjet_pt  , evWeight);
+        h_BeforeBtag_cHad_Jet0_DeltaRsubjets          ->Fill(  pup_deltaR_Jet0_subjet0_subjet1  , evWeight);
+        h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+        h_BeforeBtag_cHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+        h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+        h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+        h_BeforeBtag_cHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+        h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
+        h_BeforeBtag_cHad_Jet0_Subjet0_Eta            ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+        h_BeforeBtag_cHad_Jet0_Subjet0_Pt             ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+        h_BeforeBtag_cHad_Jet0_Subjet0_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+        h_BeforeBtag_cHad_Jet0_Subjet1_Eta            ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+        h_BeforeBtag_cHad_Jet0_Subjet1_Pt             ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+        h_BeforeBtag_cHad_Jet0_Subjet1_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
       }
-      if ( fabs(Jet0SDmaxbdiscflavHadron) ==5){
+      if ( fabs(Jet0PuppiSDmaxbdiscflavHadron) ==5){
         h_BeforeBtag_bHad_Jet0Pt   ->Fill( jet0pt             , evWeight);
         h_BeforeBtag_bHad_Jet0P    ->Fill( jet0P              , evWeight);
         h_BeforeBtag_bHad_Jet0Rap  ->Fill( jet0P4.Rapidity()  , evWeight);
-        h_BeforeBtag_bHad_Jet0_DeltaRsubjets             ->Fill(  deltaR_Jet0_subjet0_subjet1  , evWeight);
-        h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta            ->Fill(  j0_chs_maxbtag_subjet_eta    , evWeight);
-        h_BeforeBtag_bHad_Jet0_SubjetMaxB_Pt             ->Fill(  j0_chs_maxbtag_subjet_pt     , evWeight);
-        h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt         ->Fill(  j0_chs_maxbtag_subjet_eta    , j0_chs_maxbtag_subjet_pt , evWeight );
+        h_BeforeBtag_bHad_Jet0_DeltaRsubjets          ->Fill(  pup_deltaR_Jet0_subjet0_subjet1  , evWeight);
+        h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+        h_BeforeBtag_bHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+        h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+        h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+        h_BeforeBtag_bHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+        h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
+        h_BeforeBtag_bHad_Jet0_Subjet0_Eta            ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+        h_BeforeBtag_bHad_Jet0_Subjet0_Pt             ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+        h_BeforeBtag_bHad_Jet0_Subjet0_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+        h_BeforeBtag_bHad_Jet0_Subjet1_Eta            ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+        h_BeforeBtag_bHad_Jet0_Subjet1_Pt             ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+        h_BeforeBtag_bHad_Jet0_Subjet1_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
       }
       // Tag Jet 0
       if (j0_puptag_b_noSF){
@@ -8521,53 +8759,81 @@ void looptree(
         h_AfterBtag_Inclusive_Jet0P    ->Fill( jet0P             , evWeight);
         h_AfterBtag_Inclusive_Jet0Rap  ->Fill( jet0P4.Rapidity() , evWeight);
 
-        if ( fabs(Jet0SDmaxbdiscflavParton) <=3){
+        if ( fabs(Jet0PuppiSDmaxbdiscflavParton) <=3){
           h_AfterBtag_light_Jet0Pt   ->Fill( jet0pt            , evWeight );
           h_AfterBtag_light_Jet0P    ->Fill( jet0P             , evWeight );
           h_AfterBtag_light_Jet0Rap  ->Fill( jet0P4.Rapidity() , evWeight );
         }
-        if ( fabs(Jet0SDmaxbdiscflavParton) ==4){
+        if ( fabs(Jet0PuppiSDmaxbdiscflavParton) ==4){
           h_AfterBtag_c_Jet0Pt   ->Fill( jet0pt             , evWeight);
           h_AfterBtag_c_Jet0P    ->Fill( jet0P              , evWeight);
           h_AfterBtag_c_Jet0Rap  ->Fill( jet0P4.Rapidity()  , evWeight);
         }
-        if ( fabs(Jet0SDmaxbdiscflavParton) ==5){
+        if ( fabs(Jet0PuppiSDmaxbdiscflavParton) ==5){
           h_AfterBtag_b_Jet0Pt   ->Fill(jet0pt            , evWeight );
           h_AfterBtag_b_Jet0P    ->Fill(jet0P             , evWeight );
           h_AfterBtag_b_Jet0Rap  ->Fill(jet0P4.Rapidity() , evWeight );
         }
-        if ( fabs(Jet0SDmaxbdiscflavParton) ==21){
+        if ( fabs(Jet0PuppiSDmaxbdiscflavParton) ==21){
           h_AfterBtag_g_Jet0Pt   ->Fill( jet0pt            , evWeight );
           h_AfterBtag_g_Jet0P    ->Fill( jet0P             , evWeight );
           h_AfterBtag_g_Jet0Rap  ->Fill( jet0P4.Rapidity() , evWeight );
         }
 
-        if ( fabs(Jet0SDmaxbdiscflavHadron) <=3){
+        if ( fabs(Jet0PuppiSDmaxbdiscflavHadron) <=3){
           h_AfterBtag_lightHad_Jet0Pt   ->Fill( jet0pt             , evWeight);
           h_AfterBtag_lightHad_Jet0P    ->Fill( jet0P              , evWeight);
           h_AfterBtag_lightHad_Jet0Rap  ->Fill( jet0P4.Rapidity()  , evWeight);
           h_AfterBtag_lightHad_Jet0_DeltaRsubjets             ->Fill(  deltaR_Jet0_subjet0_subjet1  , evWeight);
-          h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta            ->Fill(  j0_chs_maxbtag_subjet_eta    , evWeight);
-          h_AfterBtag_lightHad_Jet0_SubjetMaxB_Pt             ->Fill(  j0_chs_maxbtag_subjet_pt     , evWeight);
-          h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt         ->Fill(  j0_chs_maxbtag_subjet_eta    , j0_chs_maxbtag_subjet_pt , evWeight );
+          h_AfterBtag_lightHad_Jet0_DeltaRsubjets          ->Fill(  pup_deltaR_Jet0_subjet0_subjet1  , evWeight);
+          h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+          h_AfterBtag_lightHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+          h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+          h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+          h_AfterBtag_lightHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+          h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
+          h_AfterBtag_lightHad_Jet0_Subjet0_Eta            ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+          h_AfterBtag_lightHad_Jet0_Subjet0_Pt             ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+          h_AfterBtag_lightHad_Jet0_Subjet0_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+          h_AfterBtag_lightHad_Jet0_Subjet1_Eta            ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+          h_AfterBtag_lightHad_Jet0_Subjet1_Pt             ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+          h_AfterBtag_lightHad_Jet0_Subjet1_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
         }
-        if ( fabs(Jet0SDmaxbdiscflavHadron) ==4){
+        if ( fabs(Jet0PuppiSDmaxbdiscflavHadron) ==4){
           h_AfterBtag_cHad_Jet0Pt   ->Fill( jet0pt            , evWeight );
           h_AfterBtag_cHad_Jet0P    ->Fill( jet0P             , evWeight );
           h_AfterBtag_cHad_Jet0Rap  ->Fill( jet0P4.Rapidity() , evWeight );
-          h_AfterBtag_cHad_Jet0_DeltaRsubjets             ->Fill(  deltaR_Jet0_subjet0_subjet1 , evWeight );
-          h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta            ->Fill(  j0_chs_maxbtag_subjet_eta   , evWeight );
-          h_AfterBtag_cHad_Jet0_SubjetMaxB_Pt             ->Fill(  j0_chs_maxbtag_subjet_pt    , evWeight );
-          h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt         ->Fill(  j0_chs_maxbtag_subjet_eta    , j0_chs_maxbtag_subjet_pt , evWeight );
+          h_AfterBtag_cHad_Jet0_DeltaRsubjets          ->Fill(  pup_deltaR_Jet0_subjet0_subjet1  , evWeight);
+          h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+          h_AfterBtag_cHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+          h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+          h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+          h_AfterBtag_cHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+          h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
+          h_AfterBtag_cHad_Jet0_Subjet0_Eta            ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+          h_AfterBtag_cHad_Jet0_Subjet0_Pt             ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+          h_AfterBtag_cHad_Jet0_Subjet0_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+          h_AfterBtag_cHad_Jet0_Subjet1_Eta            ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+          h_AfterBtag_cHad_Jet0_Subjet1_Pt             ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+          h_AfterBtag_cHad_Jet0_Subjet1_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
         }
-        if ( fabs(Jet0SDmaxbdiscflavHadron) ==5){
+        if ( fabs(Jet0PuppiSDmaxbdiscflavHadron) ==5){
           h_AfterBtag_bHad_Jet0Pt   ->Fill( jet0pt            , evWeight );
           h_AfterBtag_bHad_Jet0P    ->Fill( jet0P             , evWeight );
           h_AfterBtag_bHad_Jet0Rap  ->Fill( jet0P4.Rapidity() , evWeight );
-          h_AfterBtag_bHad_Jet0_DeltaRsubjets             ->Fill(  deltaR_Jet0_subjet0_subjet1  , evWeight );
-          h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta            ->Fill(  j0_chs_maxbtag_subjet_eta    , evWeight );
-          h_AfterBtag_bHad_Jet0_SubjetMaxB_Pt             ->Fill(  j0_chs_maxbtag_subjet_pt     , evWeight );
-          h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt         ->Fill(  j0_chs_maxbtag_subjet_eta    , j0_chs_maxbtag_subjet_pt , evWeight );
+          h_AfterBtag_bHad_Jet0_DeltaRsubjets          ->Fill(  pup_deltaR_Jet0_subjet0_subjet1  , evWeight);
+          h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+          h_AfterBtag_bHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+          h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+          h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta         ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+          h_AfterBtag_bHad_Jet0_SubjetMaxB_Pt          ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+          h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt      ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
+          h_AfterBtag_bHad_Jet0_Subjet0_Eta            ->Fill(  Jet0PuppiSDsubjet0eta    , evWeight);  
+          h_AfterBtag_bHad_Jet0_Subjet0_Pt             ->Fill(  Jet0PuppiSDsubjet0pt     , evWeight);
+          h_AfterBtag_bHad_Jet0_Subjet0_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet0eta    , Jet0PuppiSDsubjet0pt , evWeight  );
+          h_AfterBtag_bHad_Jet0_Subjet1_Eta            ->Fill(  Jet0PuppiSDsubjet1eta    , evWeight);  
+          h_AfterBtag_bHad_Jet0_Subjet1_Pt             ->Fill(  Jet0PuppiSDsubjet1pt     , evWeight);
+          h_AfterBtag_bHad_Jet0_Subjet1_Eta_Pt         ->Fill(  Jet0PuppiSDsubjet1eta    , Jet0PuppiSDsubjet1pt , evWeight  );
         }
       }
       // Probe Jet 1
@@ -8601,30 +8867,30 @@ void looptree(
         h_BeforeBtag_lightHad_Jet1P    ->Fill( jet1P             , evWeight );
         h_BeforeBtag_lightHad_Jet1Rap  ->Fill( jet1P4.Rapidity() , evWeight );
         h_BeforeBtag_lightHad_Jet1_DeltaRsubjets             ->Fill(  deltaR_Jet1_subjet0_subjet1 , evWeight );
-        h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
-        h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
-        h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight  );
+        // h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
+        // h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
+        // h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight  );
       }
       if ( fabs(Jet1SDmaxbdiscflavHadron) ==4){
         h_BeforeBtag_cHad_Jet1Pt   ->Fill( jet1pt            , evWeight );
         h_BeforeBtag_cHad_Jet1P    ->Fill( jet1P             , evWeight );
         h_BeforeBtag_cHad_Jet1Rap  ->Fill( jet1P4.Rapidity() , evWeight );
         h_BeforeBtag_cHad_Jet1_DeltaRsubjets             ->Fill(  deltaR_Jet1_subjet0_subjet1 , evWeight );
-        h_BeforeBtag_cHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
-        h_BeforeBtag_cHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
-        h_BeforeBtag_cHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight );
+        // h_BeforeBtag_cHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
+        // h_BeforeBtag_cHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
+        // h_BeforeBtag_cHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight );
       }
       if ( fabs(Jet1SDmaxbdiscflavHadron) ==5){
         h_BeforeBtag_bHad_Jet1Pt   ->Fill( jet1pt             , evWeight );
         h_BeforeBtag_bHad_Jet1P    ->Fill( jet1P              , evWeight );
         h_BeforeBtag_bHad_Jet1Rap  ->Fill( jet1P4.Rapidity()  , evWeight );
         h_BeforeBtag_bHad_Jet1_DeltaRsubjets             ->Fill(  deltaR_Jet1_subjet0_subjet1 , evWeight );
-        h_BeforeBtag_bHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
-        h_BeforeBtag_bHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
-        h_BeforeBtag_bHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight );
+        // h_BeforeBtag_bHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
+        // h_BeforeBtag_bHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
+        // h_BeforeBtag_bHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight );
       }
-      // Tag Jet 1
-      if (j1_puptag_b_noSF){
+      // Tag Jet 0
+      if (j0_puptag_b_noSF){
 
         h_AfterBtag_Inclusive_Jet1Pt   ->Fill( jet1pt            , evWeight );
         h_AfterBtag_Inclusive_Jet1P    ->Fill( jet1P             , evWeight );
@@ -8656,27 +8922,27 @@ void looptree(
           h_AfterBtag_lightHad_Jet1P    ->Fill( jet1P             , evWeight  );
           h_AfterBtag_lightHad_Jet1Rap  ->Fill( jet1P4.Rapidity() , evWeight  );
           h_AfterBtag_lightHad_Jet1_DeltaRsubjets             ->Fill(  deltaR_Jet1_subjet0_subjet1  , evWeight );
-          h_AfterBtag_lightHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta    , evWeight );
-          h_AfterBtag_lightHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt     , evWeight );
-          h_AfterBtag_lightHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight  );
+          // h_AfterBtag_lightHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta    , evWeight );
+          // h_AfterBtag_lightHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt     , evWeight );
+          // h_AfterBtag_lightHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight  );
         }
         if ( fabs(Jet1SDmaxbdiscflavHadron) ==4){
           h_AfterBtag_cHad_Jet1Pt   ->Fill( jet1pt            , evWeight );
           h_AfterBtag_cHad_Jet1P    ->Fill( jet1P             , evWeight );
           h_AfterBtag_cHad_Jet1Rap  ->Fill( jet1P4.Rapidity() , evWeight );
           h_AfterBtag_cHad_Jet1_DeltaRsubjets             ->Fill(  deltaR_Jet1_subjet0_subjet1 , evWeight );
-          h_AfterBtag_cHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
-          h_AfterBtag_cHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
-          h_AfterBtag_cHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight );
+          // h_AfterBtag_cHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
+          // h_AfterBtag_cHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
+          // h_AfterBtag_cHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight );
         }
         if ( fabs(Jet1SDmaxbdiscflavHadron) ==5){
           h_AfterBtag_bHad_Jet1Pt   ->Fill( jet1pt             , evWeight);
           h_AfterBtag_bHad_Jet1P    ->Fill( jet1P              , evWeight);
           h_AfterBtag_bHad_Jet1Rap  ->Fill( jet1P4.Rapidity()  , evWeight);
           h_AfterBtag_bHad_Jet1_DeltaRsubjets             ->Fill(  deltaR_Jet1_subjet0_subjet1 , evWeight );
-          h_AfterBtag_bHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
-          h_AfterBtag_bHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
-          h_AfterBtag_bHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight );
+          // h_AfterBtag_bHad_Jet1_SubjetMaxB_Eta            ->Fill(  j1_chs_maxbtag_subjet_eta   , evWeight );
+          // h_AfterBtag_bHad_Jet1_SubjetMaxB_Pt             ->Fill(  j1_chs_maxbtag_subjet_pt    , evWeight );
+          // h_AfterBtag_bHad_Jet1_SubjetMaxB_Eta_Pt         ->Fill(  j1_chs_maxbtag_subjet_eta    , j1_chs_maxbtag_subjet_pt , evWeight );
         }
       }
 
@@ -8710,6 +8976,9 @@ void looptree(
       }
 
       // Tau32 optimization studies
+
+
+      
       if (double_puptag_mass){
                                                              h_DijetMass_masspuptag                    ->Fill( dijetMass , evWeight );  
         if (Jet0PuppiTau32 <0.30 && Jet1PuppiTau32 < 0.30 )  h_DijetMass_masspuptag_puppitau32_lt0p30  ->Fill( dijetMass , evWeight );  
@@ -9680,12 +9949,12 @@ void looptree(
 
       double j0maxb = -99;
       double j0minb = -99;
-      if (j0_pup_subjet0_isMax){  j0maxb = Jet0PuppiSDsubjet0bdisc; j0minb = Jet0PuppiSDsubjet1bdisc; }
-      else if (j0_pup_subjet1_isMax){  j0maxb = Jet0PuppiSDsubjet1bdisc; j0minb = Jet0PuppiSDsubjet0bdisc; }
+      // if (j0_pup_subjet0_isMax){  j0maxb = Jet0PuppiSDsubjet0bdisc; j0minb = Jet0PuppiSDsubjet1bdisc; }
+      // else if (j0_pup_subjet1_isMax){  j0maxb = Jet0PuppiSDsubjet1bdisc; j0minb = Jet0PuppiSDsubjet0bdisc; }
       double j1maxb = -99;
       double j1minb = -99;
-      if (j1_pup_subjet0_isMax){  j1maxb = Jet1PuppiSDsubjet0bdisc; j1minb = Jet0PuppiSDsubjet1bdisc; }
-      else if (j1_pup_subjet1_isMax){  j1maxb = Jet1PuppiSDsubjet1bdisc; j1minb = Jet0PuppiSDsubjet0bdisc; }
+      // if (j1_pup_subjet0_isMax){  j1maxb = Jet1PuppiSDsubjet0bdisc; j1minb = Jet0PuppiSDsubjet1bdisc; }
+      // else if (j1_pup_subjet1_isMax){  j1maxb = Jet1PuppiSDsubjet1bdisc; j1minb = Jet0PuppiSDsubjet0bdisc; }
 
 
 
@@ -14482,12 +14751,22 @@ void looptree(
     h_check_Jet0SDsubjet1flavParton                ->Write();
     h_check_Jet0PuppiSDmaxbdisc                    ->Write();
     h_check_Jet0PuppiSDmaxbdiscflavParton          ->Write();
+    h_check_Jet0PuppiSDmaxbdiscflavHadron          ->Write();
     h_check_Jet0PuppiSDsubjet0bdisc                ->Write();
     h_check_Jet0PuppiSDsubjet0flavParton           ->Write();
+    h_check_Jet0PuppiSDsubjet0flavHadron           ->Write();
     h_check_Jet0PuppiSDsubjet1bdisc                ->Write();
     h_check_Jet0PuppiSDsubjet1flavParton           ->Write();
+    h_check_Jet0PuppiSDsubjet1flavHadron           ->Write();
     h_check_Jet0GenMatched_partonPt                ->Write();
     h_check_Jet0GenMatched_partonID                ->Write();
+
+   h_check_matchedtop_Jet0PuppiSDsubjet0bdisc       ->Write();
+   h_check_matchedtop_Jet0PuppiSDsubjet0flavParton  ->Write();
+   h_check_matchedtop_Jet0PuppiSDsubjet0flavHadron  ->Write();
+   h_check_matchedtop_Jet0PuppiSDsubjet1bdisc       ->Write();
+   h_check_matchedtop_Jet0PuppiSDsubjet1flavParton  ->Write();
+   h_check_matchedtop_Jet0PuppiSDsubjet1flavHadron  ->Write();
 
     h_BeforeBtag_Inclusive_Jet0Pt                  ->Write();
     h_BeforeBtag_Inclusive_Jet0P                   ->Write();
@@ -14621,26 +14900,70 @@ void looptree(
     h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta      ->Write();
     h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Pt       ->Write();
     h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt   ->Write();
+    h_BeforeBtag_lightHad_Jet0_Subjet0_Eta         ->Write();
+    h_BeforeBtag_lightHad_Jet0_Subjet0_Pt          ->Write();
+    h_BeforeBtag_lightHad_Jet0_Subjet0_Eta_Pt      ->Write();
+    h_BeforeBtag_lightHad_Jet0_Subjet1_Eta         ->Write();
+    h_BeforeBtag_lightHad_Jet0_Subjet1_Pt          ->Write();
+    h_BeforeBtag_lightHad_Jet0_Subjet1_Eta_Pt      ->Write();
+
     h_BeforeBtag_cHad_Jet0_DeltaRsubjets           ->Write();
     h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta          ->Write();
     h_BeforeBtag_cHad_Jet0_SubjetMaxB_Pt           ->Write();
     h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt       ->Write();
+    h_BeforeBtag_cHad_Jet0_Subjet0_Eta             ->Write();
+    h_BeforeBtag_cHad_Jet0_Subjet0_Pt              ->Write();
+    h_BeforeBtag_cHad_Jet0_Subjet0_Eta_Pt          ->Write();
+    h_BeforeBtag_cHad_Jet0_Subjet1_Eta             ->Write();
+    h_BeforeBtag_cHad_Jet0_Subjet1_Pt              ->Write();
+    h_BeforeBtag_cHad_Jet0_Subjet1_Eta_Pt          ->Write();
+             
     h_BeforeBtag_bHad_Jet0_DeltaRsubjets           ->Write();
     h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta          ->Write();
     h_BeforeBtag_bHad_Jet0_SubjetMaxB_Pt           ->Write();
     h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt       ->Write();
+    h_BeforeBtag_bHad_Jet0_Subjet0_Eta             ->Write();
+    h_BeforeBtag_bHad_Jet0_Subjet0_Pt              ->Write();
+    h_BeforeBtag_bHad_Jet0_Subjet0_Eta_Pt          ->Write();
+    h_BeforeBtag_bHad_Jet0_Subjet1_Eta             ->Write();
+    h_BeforeBtag_bHad_Jet0_Subjet1_Pt              ->Write();
+    h_BeforeBtag_bHad_Jet0_Subjet1_Eta_Pt          ->Write();
+
+
     h_AfterBtag_lightHad_Jet0_DeltaRsubjets        ->Write();
     h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta       ->Write();
     h_AfterBtag_lightHad_Jet0_SubjetMaxB_Pt        ->Write();
     h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt    ->Write();
+    h_AfterBtag_lightHad_Jet0_Subjet0_Eta          ->Write();
+    h_AfterBtag_lightHad_Jet0_Subjet0_Pt           ->Write();
+    h_AfterBtag_lightHad_Jet0_Subjet0_Eta_Pt       ->Write();
+    h_AfterBtag_lightHad_Jet0_Subjet1_Eta          ->Write();
+    h_AfterBtag_lightHad_Jet0_Subjet1_Pt           ->Write();
+    h_AfterBtag_lightHad_Jet0_Subjet1_Eta_Pt       ->Write();
+
+  
     h_AfterBtag_cHad_Jet0_DeltaRsubjets            ->Write();
     h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta           ->Write();
     h_AfterBtag_cHad_Jet0_SubjetMaxB_Pt            ->Write();
     h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt        ->Write();
+    h_AfterBtag_cHad_Jet0_Subjet0_Eta              ->Write();
+    h_AfterBtag_cHad_Jet0_Subjet0_Pt               ->Write();
+    h_AfterBtag_cHad_Jet0_Subjet0_Eta_Pt           ->Write();
+    h_AfterBtag_cHad_Jet0_Subjet1_Eta              ->Write();
+    h_AfterBtag_cHad_Jet0_Subjet1_Pt               ->Write();
+    h_AfterBtag_cHad_Jet0_Subjet1_Eta_Pt           ->Write();
+
     h_AfterBtag_bHad_Jet0_DeltaRsubjets            ->Write();
     h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta           ->Write();
     h_AfterBtag_bHad_Jet0_SubjetMaxB_Pt            ->Write();
     h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt        ->Write();
+    h_AfterBtag_bHad_Jet0_Subjet0_Eta              ->Write();
+    h_AfterBtag_bHad_Jet0_Subjet0_Pt               ->Write();
+    h_AfterBtag_bHad_Jet0_Subjet0_Eta_Pt           ->Write();
+    h_AfterBtag_bHad_Jet0_Subjet1_Eta              ->Write();
+    h_AfterBtag_bHad_Jet0_Subjet1_Pt               ->Write();
+    h_AfterBtag_bHad_Jet0_Subjet1_Eta_Pt           ->Write();
+
     h_BeforeBtag_lightHad_Jet1_DeltaRsubjets       ->Write();
     h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Eta      ->Write();
     h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Pt       ->Write();
@@ -18025,13 +18348,1834 @@ void looptree(
 
 
     Out->Close();
+
+    predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_DijetMass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_DijetMassMod     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_HT               ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_DeltaRap         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetP             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetPt            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetY             ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetSDmass        ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetTau32         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_HT             ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetP           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetPt          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetY           ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetSDmass      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetTau32       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+
+    predDist_CHS_SB2_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+
+    predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+
+    predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_HT            ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetP          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetPt         ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+
+
+
+    // ---------------------------------------------------------------------------
+    // -- Delete Observed histograms (double tagged)
+    predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_DijetMass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_DijetMassMod     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_HT               ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_DeltaRap         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetP             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetPt            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetY             ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetSDmass        ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetTau32         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_HT             ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetP           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetPt          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetY           ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetSDmass      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetTau32       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+
+    predDist_CHS_SB2_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapHi_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapLo_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+
+   predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+
+    predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapHi_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapLo_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_0btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_1btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_HT            ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetP          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetPt         ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetY          ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+
+
+
+
+
+
+    // ---------------------------------------------------------------------------
+    // -- Delete taggable histograms 
+    predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_0btag_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_1btag_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_2btag_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapHi_inclu_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_0btag_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_1btag_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_2btag_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapLo_inclu_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_0btag_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_1btag_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_2btag_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_DijetMass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_DijetMassMod     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_HT               ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_DeltaRap         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetP             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetPt            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetY             ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetSDmass        ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_JetTau32         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_0btag_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_1btag_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_2btag_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_HT             ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetP           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetPt          ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetY           ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetSDmass      ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_JetTau32       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_0btag_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_1btag_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_2btag_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapHi_inclu_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_0btag_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_1btag_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_2btag_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapLo_inclu_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_0btag_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_1btag_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_2btag_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_DijetMassMod  ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_HT            ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_DeltaRap      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetP          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetPt         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetY          ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetSDmass     ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_JetTau32      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_maxbdisc      ->GetTaggableHist()   ->Delete();
+
   }
 
   // Make ModMass File
   if ( ( isQCDMC||isData ) && run_antitag){
     cout<<"Making new ModMass file"<<endl;
     // string modMassOutName = "runs/run"+savelabel+"/ModMass_Jetpt600HT1000_"+savelabel+"_"+input_file;
-
+    
     TFile * ModMassOut = new TFile(out_filename_modMass.c_str(),"RECREATE");
     ModMassOut->cd();
       
@@ -18042,7 +20186,7 @@ void looptree(
     h_mSDropAK8_ModMass->Write();
     h_mSDropAK8_ModMass_jet0->Write();
     h_mSDropAK8_ModMass_jet1->Write();
-
+    
     h_mSDropAK8_AltTag_ModMass       ->Write();
     h_mSDropAK8_AltTag_ModMass_jet0  ->Write();
     h_mSDropAK8_AltTag_ModMass_jet1  ->Write();
@@ -18101,7 +20245,7 @@ void looptree(
     ModMassOut->Close();
     cout<<"Done writing: "<<out_filename_modMass<<endl;
   }
-
+  
   cout<<"Nevents tree                     =  "<<std::fixed<< treeNentries                 <<endl;
   cout<<"Nevents Cutflow 0                =  "<<std::fixed<< h_CutFlow->GetBinContent(1)  <<endl;
   cout<<"Nevents Cutflow 1 (Jet0 Jet1 pT) =  "<<std::fixed<< h_CutFlow->GetBinContent(2)  <<endl;
@@ -18110,6 +20254,2060 @@ void looptree(
   cout<<"Nevents Cutflow 4 (NoiseFilters) =  "<<std::fixed<< h_CutFlow->GetBinContent(5)  <<endl;
   cout<<"Nevents doublecheck preselection =  "<<std::fixed<< h_Jet0Pt->Integral()         <<endl;
 
+  //Deleting histograms
+  h_CutFlow                                                     ->Delete();                   
+  h_EventWeight                                                 ->Delete();                   
+  h_BtagCategoriesPreSF                                         ->Delete();                   
+  h_BtagCategoriesPostSF                                        ->Delete();                   
+             
+
+
+
+  h_Effic_Denom_pup0P                                ->Delete(); 
+  h_Effic_Denom_jet0P                                ->Delete(); 
+  h_Effic_Denom_jet0Y                                ->Delete(); 
+  h_Effic_Denom_nvtxg                                ->Delete(); 
+  h_Effic_Denom_jet0P_TopMatch                       ->Delete(); 
+  h_Effic_Denom_jet0P_TopMatch_TopDist               ->Delete(); 
+
+  h_Effic_puptag_tau32_pup0P                   ->Delete(); 
+  h_Effic_puptag_tau32_jet0P                   ->Delete(); 
+  h_Effic_puptag_tau32_jet0Y                   ->Delete(); 
+  h_Effic_puptag_tau32_nvtxg                   ->Delete(); 
+  h_Effic_puptag_tau32_jet0P_TopMatch          ->Delete(); 
+  h_Effic_puptag_tau32_jet0P_TopMatch_TopDist  ->Delete(); 
+
+  h_Effic_chstag_tau32_pup0P                      ->Delete(); 
+  h_Effic_chstag_tau32_jet0P                      ->Delete(); 
+  h_Effic_chstag_tau32_jet0Y                      ->Delete(); 
+  h_Effic_chstag_tau32_nvtxg                      ->Delete(); 
+  h_Effic_chstag_tau32_jet0P_TopMatch             ->Delete(); 
+  h_Effic_chstag_tau32_jet0P_TopMatch_TopDist     ->Delete(); 
+
+  h_Effic_puptag_mass_pup0P                      ->Delete(); 
+  h_Effic_puptag_mass_jet0P                      ->Delete(); 
+  h_Effic_puptag_mass_jet0Y                      ->Delete(); 
+  h_Effic_puptag_mass_nvtxg                      ->Delete(); 
+  h_Effic_puptag_mass_jet0P_TopMatch             ->Delete(); 
+  h_Effic_puptag_mass_jet0P_TopMatch_TopDist     ->Delete(); 
+
+  h_Effic_chstag_mass_pup0P                      ->Delete(); 
+  h_Effic_chstag_mass_jet0P                      ->Delete(); 
+  h_Effic_chstag_mass_jet0Y                      ->Delete(); 
+  h_Effic_chstag_mass_nvtxg                      ->Delete(); 
+  h_Effic_chstag_mass_jet0P_TopMatch             ->Delete(); 
+  h_Effic_chstag_mass_jet0P_TopMatch_TopDist     ->Delete(); 
+
+  h_Effic_puptag_t_pup0P                      ->Delete(); 
+  h_Effic_puptag_t_jet0P                      ->Delete(); 
+  h_Effic_puptag_t_jet0Y                      ->Delete(); 
+  h_Effic_puptag_t_nvtxg                      ->Delete(); 
+  h_Effic_puptag_t_jet0P_TopMatch             ->Delete(); 
+  h_Effic_puptag_t_jet0P_TopMatch_TopDist     ->Delete(); 
+
+  h_Effic_chstag_t_pup0P                      ->Delete(); 
+  h_Effic_chstag_t_jet0P                      ->Delete(); 
+  h_Effic_chstag_t_jet0Y                      ->Delete(); 
+  h_Effic_chstag_t_nvtxg                      ->Delete(); 
+  h_Effic_chstag_t_jet0P_TopMatch             ->Delete(); 
+  h_Effic_chstag_t_jet0P_TopMatch_TopDist     ->Delete(); 
+
+  h_Effic_Denom_pup1P               ->Delete(); 
+  h_Effic_Denom_jet1P               ->Delete(); 
+  h_Effic_Denom_jet1Y               ->Delete(); 
+
+  h_Effic_puptag_tau32_pup1P   ->Delete(); 
+  h_Effic_puptag_tau32_jet1P   ->Delete(); 
+  h_Effic_puptag_tau32_jet1Y   ->Delete(); 
+
+  h_Effic_chstag_tau32_pup1P   ->Delete(); 
+  h_Effic_chstag_tau32_jet1P   ->Delete(); 
+  h_Effic_chstag_tau32_jet1Y   ->Delete(); 
+
+  h_Effic_puptag_mass_pup1P   ->Delete(); 
+  h_Effic_puptag_mass_jet1P   ->Delete(); 
+  h_Effic_puptag_mass_jet1Y   ->Delete(); 
+
+  h_Effic_chstag_mass_pup1P   ->Delete(); 
+  h_Effic_chstag_mass_jet1P   ->Delete(); 
+  h_Effic_chstag_mass_jet1Y   ->Delete(); 
+
+  h_Effic_puptag_t_pup1P   ->Delete();  
+  h_Effic_puptag_t_jet1P   ->Delete();  
+  h_Effic_puptag_t_jet1Y   ->Delete();  
+
+  h_Effic_chstag_t_pup1P   ->Delete();  
+  h_Effic_chstag_t_jet1P   ->Delete();  
+  h_Effic_chstag_t_jet1Y   ->Delete();  
+
+
+
+  h_AntiTagCHS_Probe_jetP_dRapIn_inclusive                      ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapIn_0btag                          ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapIn_1btag                          ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapIn_2btag                          ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapHi_inclusive                      ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapHi_0btag                          ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapHi_1btag                          ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapHi_2btag                          ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapLo_inclusive                      ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapLo_0btag                          ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapLo_1btag                          ->Delete();
+  h_AntiTagCHS_Probe_jetP_dRapLo_2btag                          ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive             ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag                 ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag                 ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag                 ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive             ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag                 ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag                 ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag                 ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive             ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag                 ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag                 ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag                 ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                    ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapIn_0btag                        ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapIn_1btag                        ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapIn_2btag                        ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                    ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapHi_0btag                        ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapHi_1btag                        ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapHi_2btag                        ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                    ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapLo_0btag                        ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapLo_1btag                        ->Delete();
+  h_AntiTagPuppi_Probe_jetP_dRapLo_2btag                        ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive           ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag               ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag               ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag               ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive           ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag               ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag               ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag               ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive           ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag               ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag               ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag               ->Delete();
+       
+  h_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclusive              ->Delete();
+  h_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag                  ->Delete();
+  h_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag                  ->Delete();
+  h_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag                  ->Delete();
+  h_AntiTagPuppi_TagTau32_jetP_dRapIn_inclusive               ->Delete();
+  h_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag                   ->Delete();
+  h_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag                   ->Delete();
+  h_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag                   ->Delete();
+
+  h_AntiTagCHS_Probe_Nvtx_dRapIn_inclusive                    ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapIn_0btag                        ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapIn_1btag                        ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapIn_2btag                        ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapHi_inclusive                    ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapHi_0btag                        ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapHi_1btag                        ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapHi_2btag                        ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapLo_inclusive                    ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapLo_0btag                        ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapLo_1btag                        ->Delete();
+  h_AntiTagCHS_Probe_Nvtx_dRapLo_2btag                        ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapIn_inclusive           ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapIn_0btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapIn_1btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapIn_2btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapHi_inclusive           ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapHi_0btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapHi_1btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapHi_2btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapLo_inclusive           ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapLo_0btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapLo_1btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_Nvtx_dRapLo_2btag               ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapIn_inclusive                  ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapIn_0btag                      ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapIn_1btag                      ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapIn_2btag                      ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapHi_inclusive                  ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapHi_0btag                      ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapHi_1btag                      ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapHi_2btag                      ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapLo_inclusive                  ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapLo_0btag                      ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapLo_1btag                      ->Delete();
+  h_AntiTagPuppi_Probe_Nvtx_dRapLo_2btag                      ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_inclusive         ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_0btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_1btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapIn_2btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_inclusive         ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_0btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_1btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapHi_2btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_inclusive         ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_0btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_1btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_Nvtx_dRapLo_2btag             ->Delete();
+
+  h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_inclusive              ->Delete();
+  h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_0btag                  ->Delete();
+  h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_1btag                  ->Delete();
+  h_AntiTagPuppi_TagMassSD_Nvtx_dRapIn_2btag                  ->Delete();
+  h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_inclusive               ->Delete();
+  h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_0btag                   ->Delete();
+  h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_1btag                   ->Delete();
+  h_AntiTagPuppi_TagTau32_Nvtx_dRapIn_2btag                   ->Delete();
+
+
+  h_AntiTagCHS_Probe_jetY_dRapIn_inclusive                    ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapIn_0btag                        ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapIn_1btag                        ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapIn_2btag                        ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapHi_inclusive                    ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapHi_0btag                        ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapHi_1btag                        ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapHi_2btag                        ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapLo_inclusive                    ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapLo_0btag                        ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapLo_1btag                        ->Delete();
+  h_AntiTagCHS_Probe_jetY_dRapLo_2btag                        ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapIn_inclusive           ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapIn_0btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapIn_1btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapIn_2btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapHi_inclusive           ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapHi_0btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapHi_1btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapHi_2btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapLo_inclusive           ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapLo_0btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapLo_1btag               ->Delete();
+  h_AntiTagCHS_TagMassSDTau32_jetY_dRapLo_2btag               ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapIn_inclusive                  ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapIn_0btag                      ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapIn_1btag                      ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapIn_2btag                      ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapHi_inclusive                  ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapHi_0btag                      ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapHi_1btag                      ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapHi_2btag                      ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapLo_inclusive                  ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapLo_0btag                      ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapLo_1btag                      ->Delete();
+  h_AntiTagPuppi_Probe_jetY_dRapLo_2btag                      ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapIn_inclusive         ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapIn_0btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapIn_1btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapIn_2btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapHi_inclusive         ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapHi_0btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapHi_1btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapHi_2btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_inclusive         ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_0btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_1btag             ->Delete();
+  h_AntiTagPuppi_TagMassSDTau32_jetY_dRapLo_2btag             ->Delete();
+
+  h_AntiTagPuppi_TagMassSD_jetY_dRapIn_inclusive              ->Delete();
+  h_AntiTagPuppi_TagMassSD_jetY_dRapIn_0btag                  ->Delete();
+  h_AntiTagPuppi_TagMassSD_jetY_dRapIn_1btag                  ->Delete();
+  h_AntiTagPuppi_TagMassSD_jetY_dRapIn_2btag                  ->Delete();
+  h_AntiTagPuppi_TagTau32_jetY_dRapIn_inclusive               ->Delete();
+  h_AntiTagPuppi_TagTau32_jetY_dRapIn_0btag                   ->Delete();
+  h_AntiTagPuppi_TagTau32_jetY_dRapIn_1btag                   ->Delete();
+  h_AntiTagPuppi_TagTau32_jetY_dRapIn_2btag                   ->Delete();
+
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_inclusive            ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_0btag                ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_1btag                ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapIn_2btag                ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapHi_inclusive            ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapHi_0btag                ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapHi_1btag                ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapHi_2btag                ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapLo_inclusive            ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapLo_0btag                ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapLo_1btag                ->Delete();
+  h2_AntiTagPuppi_Probe_jetP_jetY_dRapLo_2btag                ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapIn_inclusive   ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapIn_0btag       ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapIn_1btag       ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapIn_2btag       ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapHi_inclusive   ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapHi_0btag       ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapHi_1btag       ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapHi_2btag       ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapLo_inclusive   ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapLo_0btag       ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapLo_1btag       ->Delete();
+  h2_AntiTagPuppi_TagMassSDTau32_jetP_jetY_dRapLo_2btag       ->Delete();
+
+  h_alt_AntiTagCHS_Probe_jetP_dRapIn_inclusive                  ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapIn_0btag                      ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapIn_1btag                      ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapIn_2btag                      ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapHi_inclusive                  ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapHi_0btag                      ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapHi_1btag                      ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapHi_2btag                      ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapLo_inclusive                  ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapLo_0btag                      ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapLo_1btag                      ->Delete();
+  h_alt_AntiTagCHS_Probe_jetP_dRapLo_2btag                      ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive         ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag             ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag             ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag             ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive         ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag             ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag             ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag             ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive         ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag             ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag             ->Delete();
+  h_alt_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag             ->Delete();
+
+  h_alt2_AntiTagCHS_Probe_jetP_dRapIn_inclusive                  ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapIn_0btag                      ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapIn_1btag                      ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapIn_2btag                      ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapHi_inclusive                  ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapHi_0btag                      ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapHi_1btag                      ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapHi_2btag                      ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapLo_inclusive                  ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapLo_0btag                      ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapLo_1btag                      ->Delete();
+  h_alt2_AntiTagCHS_Probe_jetP_dRapLo_2btag                      ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive         ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_0btag             ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag             ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag             ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive         ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag             ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag             ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag             ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_inclusive         ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_0btag             ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_1btag             ->Delete();
+  h_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapLo_2btag             ->Delete();
+   
+  h_alt_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                  ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapIn_0btag                      ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapIn_1btag                      ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapIn_2btag                      ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                  ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapHi_0btag                      ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapHi_1btag                      ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapHi_2btag                      ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                  ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapLo_0btag                      ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapLo_1btag                      ->Delete();
+  h_alt_AntiTagPuppi_Probe_jetP_dRapLo_2btag                      ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive         ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag             ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag             ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag             ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive         ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag             ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag             ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag             ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive         ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag             ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag             ->Delete();
+  h_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag             ->Delete();
+
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_inclusive                  ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_0btag                      ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_1btag                      ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapIn_2btag                      ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_inclusive                  ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_0btag                      ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_1btag                      ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapHi_2btag                      ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_inclusive                  ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_0btag                      ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_1btag                      ->Delete();
+  h_alt2_AntiTagPuppi_Probe_jetP_dRapLo_2btag                      ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive         ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag             ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag             ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag             ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclusive         ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag             ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag             ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag             ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclusive         ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag             ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag             ->Delete();
+  h_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag             ->Delete();
+
+
+
+  h_AntiTagCHS40to60_Probe_jetP_dRapIn_inclusive              ->Delete();
+  h_AntiTagCHS60to80_Probe_jetP_dRapIn_inclusive              ->Delete();
+  h_AntiTagCHS80to110_Probe_jetP_dRapIn_inclusive              ->Delete();
+  h_AntiTagCHS100to120_Probe_jetP_dRapIn_inclusive              ->Delete();
+  h_AntiTagCHS120to140_Probe_jetP_dRapIn_inclusive              ->Delete();
+  h_AntiTagCHS140to180_Probe_jetP_dRapIn_inclusive              ->Delete();
+  h_AntiTagCHS180to220_Probe_jetP_dRapIn_inclusive              ->Delete();
+  h_AntiTagCHS220to300_Probe_jetP_dRapIn_inclusive              ->Delete();
+  h_AntiTagCHS40to60_TagMassSDTau32_jetP_dRapIn_inclusive     ->Delete();
+  h_AntiTagCHS60to80_TagMassSDTau32_jetP_dRapIn_inclusive     ->Delete();
+  h_AntiTagCHS80to110_TagMassSDTau32_jetP_dRapIn_inclusive     ->Delete();
+  h_AntiTagCHS100to120_TagMassSDTau32_jetP_dRapIn_inclusive     ->Delete();
+  h_AntiTagCHS120to140_TagMassSDTau32_jetP_dRapIn_inclusive     ->Delete();
+  h_AntiTagCHS140to180_TagMassSDTau32_jetP_dRapIn_inclusive     ->Delete();
+  h_AntiTagCHS180to220_TagMassSDTau32_jetP_dRapIn_inclusive     ->Delete();
+  h_AntiTagCHS220to300_TagMassSDTau32_jetP_dRapIn_inclusive     ->Delete();
+
+  h_DoubleTopTag_BtagCategoriesPreSF     ->Delete();
+  h_DoubleTopTag_BtagCategoriesPostSF    ->Delete();
+  h_DoublePupTag_BtagCategoriesPreSF     ->Delete();
+  h_DoublePupTag_BtagCategoriesPostSF    ->Delete();
+
+
+  h_BtagCategoriesPuppiPreSF                                       ->Delete();
+  h_BtagCategoriesPuppiPostSF                                      ->Delete();
+  h_DoublePupTag_BtagCategoriesPuppiPreSF                           ->Delete();
+  h_DoublePupTag_BtagCategoriesPuppiPostSF                          ->Delete();
+ 
+
+
+
+
+  h_PreSelection_Jet0mass_NoCorr               ->Delete();
+  h_PreSelection_Jet0mass_Corr                 ->Delete();
+  h_PreSelection_Jet0mass_CorrUp               ->Delete();
+  h_PreSelection_Jet0mass_CorrDn               ->Delete();
+  h_PreSelection_Jet0mass_CorrSmear            ->Delete();
+  h_PreSelection_Jet0mass_CorrSmearUp          ->Delete();
+  h_PreSelection_Jet0mass_CorrSmearDn          ->Delete();
+  h_PreSelection_Jet0SDmass_NoCorr             ->Delete();
+  h_PreSelection_Jet0SDmass_Corr               ->Delete();
+  h_PreSelection_Jet0SDmass_CorrUp             ->Delete();
+  h_PreSelection_Jet0SDmass_CorrDn             ->Delete();
+  h_PreSelection_Jet0SDmass_CorrSmear          ->Delete();
+  h_PreSelection_Jet0SDmass_CorrSmearUp        ->Delete();
+  h_PreSelection_Jet0SDmass_CorrSmearDn        ->Delete();    
+  h_PreSelection_Jet0PuppiSDmass_NoCorr        ->Delete();
+  h_PreSelection_Jet0PuppiSDmass_Corr          ->Delete();
+  h_PreSelection_Jet0PuppiSDmass_CorrUp        ->Delete();
+  h_PreSelection_Jet0PuppiSDmass_CorrDn        ->Delete();
+  h_PreSelection_Jet0PuppiSDmass_CorrSmear     ->Delete();
+  h_PreSelection_Jet0PuppiSDmass_CorrSmearUp   ->Delete();
+  h_PreSelection_Jet0PuppiSDmass_CorrSmearDn   ->Delete();
+  h_PreSelection_Jet0PuppiSDmass_CorrOfficial       ->Delete();
+  h_PreSelection_Jet0PuppiSDmass_CorrOfficialSmear  ->Delete();
+  h_PreSelection_Jet0PuppiSDmass_CorrSubjets        ->Delete();
+  h_PreSelection_Jet0SDmass_CorrSubjetsL23          ->Delete();
+  h_PreSelection_Jet0SDmass_CorrSubjetsL123         ->Delete();
+
+
+  h_NNPDF3weight_CorrUp ->Delete();
+  h_NNPDF3weight_CorrDn ->Delete();
+  h_Q2weight_CorrUp     ->Delete();
+  h_Q2weight_CorrDn     ->Delete();
+
+  h_check_Jet0SDmaxbdisc                         ->Delete();
+  h_check_Jet0SDmaxbdiscflavParton               ->Delete();
+  h_check_Jet0SDsubjet0bdisc                     ->Delete();
+  h_check_Jet0SDsubjet0flavParton                ->Delete();
+  h_check_Jet0SDsubjet1bdisc                     ->Delete();
+  h_check_Jet0SDsubjet1flavParton                ->Delete();
+  h_check_Jet0PuppiSDmaxbdisc                    ->Delete();
+  h_check_Jet0PuppiSDmaxbdiscflavParton          ->Delete();
+  h_check_Jet0PuppiSDmaxbdiscflavHadron          ->Delete();
+  h_check_Jet0PuppiSDsubjet0bdisc                ->Delete();
+  h_check_Jet0PuppiSDsubjet0flavParton           ->Delete();
+  h_check_Jet0PuppiSDsubjet0flavHadron           ->Delete();
+  h_check_Jet0PuppiSDsubjet1bdisc                ->Delete();
+  h_check_Jet0PuppiSDsubjet1flavParton           ->Delete();
+  h_check_Jet0PuppiSDsubjet1flavHadron           ->Delete();
+  h_check_Jet0GenMatched_partonPt                ->Delete();
+  h_check_Jet0GenMatched_partonID                ->Delete();
+
+  h_check_matchedtop_Jet0PuppiSDsubjet0bdisc       ->Delete();
+  h_check_matchedtop_Jet0PuppiSDsubjet0flavParton  ->Delete();
+  h_check_matchedtop_Jet0PuppiSDsubjet0flavHadron  ->Delete();
+  h_check_matchedtop_Jet0PuppiSDsubjet1bdisc       ->Delete();
+  h_check_matchedtop_Jet0PuppiSDsubjet1flavParton  ->Delete();
+  h_check_matchedtop_Jet0PuppiSDsubjet1flavHadron  ->Delete();
+
+  h_BeforeBtag_Inclusive_Jet0Pt                  ->Delete();
+  h_BeforeBtag_Inclusive_Jet0P                   ->Delete();
+  h_BeforeBtag_Inclusive_Jet0Rap                 ->Delete();
+  h_BeforeBtag_light_Jet0Pt                      ->Delete();
+  h_BeforeBtag_light_Jet0P                       ->Delete();
+  h_BeforeBtag_light_Jet0Rap                     ->Delete();
+  h_BeforeBtag_c_Jet0Pt                          ->Delete();
+  h_BeforeBtag_c_Jet0P                           ->Delete();
+  h_BeforeBtag_c_Jet0Rap                         ->Delete();
+  h_BeforeBtag_b_Jet0Pt                          ->Delete();
+  h_BeforeBtag_b_Jet0P                           ->Delete();
+  h_BeforeBtag_b_Jet0Rap                         ->Delete();
+  h_BeforeBtag_g_Jet0Pt                          ->Delete();
+  h_BeforeBtag_g_Jet0P                           ->Delete();
+  h_BeforeBtag_g_Jet0Rap                         ->Delete();
+
+  h_BeforeBtag_lightHad_Jet0Pt                      ->Delete();
+  h_BeforeBtag_lightHad_Jet0P                       ->Delete();
+  h_BeforeBtag_lightHad_Jet0Rap                     ->Delete();
+  h_BeforeBtag_cHad_Jet0Pt                          ->Delete();
+  h_BeforeBtag_cHad_Jet0P                           ->Delete();
+  h_BeforeBtag_cHad_Jet0Rap                         ->Delete();
+  h_BeforeBtag_bHad_Jet0Pt                          ->Delete();
+  h_BeforeBtag_bHad_Jet0P                           ->Delete();
+  h_BeforeBtag_bHad_Jet0Rap                         ->Delete();
+
+  h_AfterBtag_Inclusive_Jet0Pt                   ->Delete();
+  h_AfterBtag_Inclusive_Jet0P                    ->Delete();
+  h_AfterBtag_Inclusive_Jet0Rap                  ->Delete();
+  h_AfterBtag_light_Jet0Pt                       ->Delete();
+  h_AfterBtag_light_Jet0P                        ->Delete();
+  h_AfterBtag_light_Jet0Rap                      ->Delete();
+  h_AfterBtag_c_Jet0Pt                           ->Delete();
+  h_AfterBtag_c_Jet0P                            ->Delete();
+  h_AfterBtag_c_Jet0Rap                          ->Delete();
+  h_AfterBtag_b_Jet0Pt                           ->Delete();
+  h_AfterBtag_b_Jet0P                            ->Delete();
+  h_AfterBtag_b_Jet0Rap                          ->Delete();
+  h_AfterBtag_g_Jet0Pt                           ->Delete();
+  h_AfterBtag_g_Jet0P                            ->Delete();
+  h_AfterBtag_g_Jet0Rap                          ->Delete();
+
+  h_AfterBtag_lightHad_Jet0Pt                       ->Delete();
+  h_AfterBtag_lightHad_Jet0P                        ->Delete();
+  h_AfterBtag_lightHad_Jet0Rap                      ->Delete();
+  h_AfterBtag_cHad_Jet0Pt                           ->Delete();
+  h_AfterBtag_cHad_Jet0P                            ->Delete();
+  h_AfterBtag_cHad_Jet0Rap                          ->Delete();
+  h_AfterBtag_bHad_Jet0Pt                           ->Delete();
+  h_AfterBtag_bHad_Jet0P                            ->Delete();
+  h_AfterBtag_bHad_Jet0Rap                          ->Delete();
+
+  h_check_Jet1SDmaxbdisc                         ->Delete();
+  h_check_Jet1SDmaxbdiscflavParton               ->Delete();
+  h_check_Jet1SDsubjet0bdisc                     ->Delete();
+  h_check_Jet1SDsubjet0flavParton                ->Delete();
+  h_check_Jet1SDsubjet1bdisc                     ->Delete();
+  h_check_Jet1SDsubjet1flavParton                ->Delete();
+  h_check_Jet1PuppiSDmaxbdisc                    ->Delete();
+  h_check_Jet1PuppiSDmaxbdiscflavParton          ->Delete();
+  h_check_Jet1PuppiSDsubjet0bdisc                ->Delete();
+  h_check_Jet1PuppiSDsubjet0flavParton           ->Delete();
+  h_check_Jet1PuppiSDsubjet1bdisc                ->Delete();
+  h_check_Jet1PuppiSDsubjet1flavParton           ->Delete();
+  h_check_Jet1GenMatched_partonPt                ->Delete();
+  h_check_Jet1GenMatched_partonID                ->Delete();
+
+  h_deltaR_Jet0_sub0_sub1                ->Delete();
+  h_deltaR_Jet1_sub0_sub1                ->Delete();
+  h_deltaR_Jet0_pup0_pup1                ->Delete();
+  h_deltaR_Jet1_pup0_pup1                ->Delete();
+  h_deltaR_Jet0_sub0_pup0                ->Delete();
+  h_deltaR_Jet0_sub1_pup1                ->Delete();
+  h_deltaR_Jet1_sub0_pup0                ->Delete();
+  h_deltaR_Jet1_sub1_pup1                ->Delete();
+
+  h_BeforeBtag_Inclusive_Jet1Pt                  ->Delete();
+  h_BeforeBtag_Inclusive_Jet1P                   ->Delete();
+  h_BeforeBtag_Inclusive_Jet1Rap                 ->Delete();
+  h_BeforeBtag_light_Jet1Pt                      ->Delete();
+  h_BeforeBtag_light_Jet1P                       ->Delete();
+  h_BeforeBtag_light_Jet1Rap                     ->Delete();
+  h_BeforeBtag_c_Jet1Pt                          ->Delete();
+  h_BeforeBtag_c_Jet1P                           ->Delete();
+  h_BeforeBtag_c_Jet1Rap                         ->Delete();
+  h_BeforeBtag_b_Jet1Pt                          ->Delete();
+  h_BeforeBtag_b_Jet1P                           ->Delete();
+  h_BeforeBtag_b_Jet1Rap                         ->Delete();
+  h_BeforeBtag_g_Jet1Pt                          ->Delete();
+  h_BeforeBtag_g_Jet1P                           ->Delete();
+  h_BeforeBtag_g_Jet1Rap                         ->Delete();
+
+  h_BeforeBtag_lightHad_Jet1Pt                      ->Delete();
+  h_BeforeBtag_lightHad_Jet1P                       ->Delete();
+  h_BeforeBtag_lightHad_Jet1Rap                     ->Delete();
+  h_BeforeBtag_cHad_Jet1Pt                          ->Delete();
+  h_BeforeBtag_cHad_Jet1P                           ->Delete();
+  h_BeforeBtag_cHad_Jet1Rap                         ->Delete();
+  h_BeforeBtag_bHad_Jet1Pt                          ->Delete();
+  h_BeforeBtag_bHad_Jet1P                           ->Delete();
+  h_BeforeBtag_bHad_Jet1Rap                         ->Delete();
+
+  h_AfterBtag_Inclusive_Jet1Pt                   ->Delete();
+  h_AfterBtag_Inclusive_Jet1P                    ->Delete();
+  h_AfterBtag_Inclusive_Jet1Rap                  ->Delete();
+  h_AfterBtag_light_Jet1Pt                       ->Delete();
+  h_AfterBtag_light_Jet1P                        ->Delete();
+  h_AfterBtag_light_Jet1Rap                      ->Delete();
+  h_AfterBtag_c_Jet1Pt                           ->Delete();
+  h_AfterBtag_c_Jet1P                            ->Delete();
+  h_AfterBtag_c_Jet1Rap                          ->Delete();
+  h_AfterBtag_b_Jet1Pt                           ->Delete();
+  h_AfterBtag_b_Jet1P                            ->Delete();
+  h_AfterBtag_b_Jet1Rap                          ->Delete();
+  h_AfterBtag_g_Jet1Pt                           ->Delete();
+  h_AfterBtag_g_Jet1P                            ->Delete();
+  h_AfterBtag_g_Jet1Rap                          ->Delete();
+
+  h_AfterBtag_lightHad_Jet1Pt                       ->Delete();
+  h_AfterBtag_lightHad_Jet1P                        ->Delete();
+  h_AfterBtag_lightHad_Jet1Rap                      ->Delete();
+  h_AfterBtag_cHad_Jet1Pt                           ->Delete();
+  h_AfterBtag_cHad_Jet1P                            ->Delete();
+  h_AfterBtag_cHad_Jet1Rap                          ->Delete();
+  h_AfterBtag_bHad_Jet1Pt                           ->Delete();
+  h_AfterBtag_bHad_Jet1P                            ->Delete();
+  h_AfterBtag_bHad_Jet1Rap                          ->Delete();
+
+  h_BeforeBtag_lightHad_Jet0_DeltaRsubjets       ->Delete();
+  h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta      ->Delete();
+  h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Pt       ->Delete();
+  h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt   ->Delete();
+  h_BeforeBtag_lightHad_Jet0_Subjet0_Eta         ->Delete();
+  h_BeforeBtag_lightHad_Jet0_Subjet0_Pt          ->Delete();
+  h_BeforeBtag_lightHad_Jet0_Subjet0_Eta_Pt      ->Delete();
+  h_BeforeBtag_lightHad_Jet0_Subjet1_Eta         ->Delete();
+  h_BeforeBtag_lightHad_Jet0_Subjet1_Pt          ->Delete();
+  h_BeforeBtag_lightHad_Jet0_Subjet1_Eta_Pt      ->Delete();
+
+  h_BeforeBtag_cHad_Jet0_DeltaRsubjets           ->Delete();
+  h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta          ->Delete();
+  h_BeforeBtag_cHad_Jet0_SubjetMaxB_Pt           ->Delete();
+  h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt       ->Delete();
+  h_BeforeBtag_cHad_Jet0_Subjet0_Eta             ->Delete();
+  h_BeforeBtag_cHad_Jet0_Subjet0_Pt              ->Delete();
+  h_BeforeBtag_cHad_Jet0_Subjet0_Eta_Pt          ->Delete();
+  h_BeforeBtag_cHad_Jet0_Subjet1_Eta             ->Delete();
+  h_BeforeBtag_cHad_Jet0_Subjet1_Pt              ->Delete();
+  h_BeforeBtag_cHad_Jet0_Subjet1_Eta_Pt          ->Delete();
+             
+  h_BeforeBtag_bHad_Jet0_DeltaRsubjets           ->Delete();
+  h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta          ->Delete();
+  h_BeforeBtag_bHad_Jet0_SubjetMaxB_Pt           ->Delete();
+  h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt       ->Delete();
+  h_BeforeBtag_bHad_Jet0_Subjet0_Eta             ->Delete();
+  h_BeforeBtag_bHad_Jet0_Subjet0_Pt              ->Delete();
+  h_BeforeBtag_bHad_Jet0_Subjet0_Eta_Pt          ->Delete();
+  h_BeforeBtag_bHad_Jet0_Subjet1_Eta             ->Delete();
+  h_BeforeBtag_bHad_Jet0_Subjet1_Pt              ->Delete();
+  h_BeforeBtag_bHad_Jet0_Subjet1_Eta_Pt          ->Delete();
+
+
+  h_AfterBtag_lightHad_Jet0_DeltaRsubjets        ->Delete();
+  h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta       ->Delete();
+  h_AfterBtag_lightHad_Jet0_SubjetMaxB_Pt        ->Delete();
+  h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt    ->Delete();
+  h_AfterBtag_lightHad_Jet0_Subjet0_Eta          ->Delete();
+  h_AfterBtag_lightHad_Jet0_Subjet0_Pt           ->Delete();
+  h_AfterBtag_lightHad_Jet0_Subjet0_Eta_Pt       ->Delete();
+  h_AfterBtag_lightHad_Jet0_Subjet1_Eta          ->Delete();
+  h_AfterBtag_lightHad_Jet0_Subjet1_Pt           ->Delete();
+  h_AfterBtag_lightHad_Jet0_Subjet1_Eta_Pt       ->Delete();
+
+  
+  h_AfterBtag_cHad_Jet0_DeltaRsubjets            ->Delete();
+  h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta           ->Delete();
+  h_AfterBtag_cHad_Jet0_SubjetMaxB_Pt            ->Delete();
+  h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt        ->Delete();
+  h_AfterBtag_cHad_Jet0_Subjet0_Eta              ->Delete();
+  h_AfterBtag_cHad_Jet0_Subjet0_Pt               ->Delete();
+  h_AfterBtag_cHad_Jet0_Subjet0_Eta_Pt           ->Delete();
+  h_AfterBtag_cHad_Jet0_Subjet1_Eta              ->Delete();
+  h_AfterBtag_cHad_Jet0_Subjet1_Pt               ->Delete();
+  h_AfterBtag_cHad_Jet0_Subjet1_Eta_Pt           ->Delete();
+
+  h_AfterBtag_bHad_Jet0_DeltaRsubjets            ->Delete();
+  h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta           ->Delete();
+  h_AfterBtag_bHad_Jet0_SubjetMaxB_Pt            ->Delete();
+  h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta_Pt        ->Delete();
+  h_AfterBtag_bHad_Jet0_Subjet0_Eta              ->Delete();
+  h_AfterBtag_bHad_Jet0_Subjet0_Pt               ->Delete();
+  h_AfterBtag_bHad_Jet0_Subjet0_Eta_Pt           ->Delete();
+  h_AfterBtag_bHad_Jet0_Subjet1_Eta              ->Delete();
+  h_AfterBtag_bHad_Jet0_Subjet1_Pt               ->Delete();
+  h_AfterBtag_bHad_Jet0_Subjet1_Eta_Pt           ->Delete();
+
+  h_BeforeBtag_lightHad_Jet1_DeltaRsubjets       ->Delete();
+  h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Eta      ->Delete();
+  h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Pt       ->Delete();
+  h_BeforeBtag_lightHad_Jet1_SubjetMaxB_Eta_Pt   ->Delete();
+  h_BeforeBtag_cHad_Jet1_DeltaRsubjets           ->Delete();
+  h_BeforeBtag_cHad_Jet1_SubjetMaxB_Eta          ->Delete();
+  h_BeforeBtag_cHad_Jet1_SubjetMaxB_Pt           ->Delete();
+  h_BeforeBtag_cHad_Jet1_SubjetMaxB_Eta_Pt       ->Delete();
+  h_BeforeBtag_bHad_Jet1_DeltaRsubjets           ->Delete();
+  h_BeforeBtag_bHad_Jet1_SubjetMaxB_Eta          ->Delete();
+  h_BeforeBtag_bHad_Jet1_SubjetMaxB_Pt           ->Delete();
+  h_BeforeBtag_bHad_Jet1_SubjetMaxB_Eta_Pt       ->Delete();
+  h_AfterBtag_lightHad_Jet1_DeltaRsubjets        ->Delete();
+  h_AfterBtag_lightHad_Jet1_SubjetMaxB_Eta       ->Delete();
+  h_AfterBtag_lightHad_Jet1_SubjetMaxB_Pt        ->Delete();
+  h_AfterBtag_lightHad_Jet1_SubjetMaxB_Eta_Pt    ->Delete();
+  h_AfterBtag_cHad_Jet1_DeltaRsubjets            ->Delete();
+  h_AfterBtag_cHad_Jet1_SubjetMaxB_Eta           ->Delete();
+  h_AfterBtag_cHad_Jet1_SubjetMaxB_Pt            ->Delete();
+  h_AfterBtag_cHad_Jet1_SubjetMaxB_Eta_Pt        ->Delete();
+  h_AfterBtag_bHad_Jet1_DeltaRsubjets            ->Delete();
+  h_AfterBtag_bHad_Jet1_SubjetMaxB_Eta           ->Delete();
+  h_AfterBtag_bHad_Jet1_SubjetMaxB_Pt            ->Delete();
+  h_AfterBtag_bHad_Jet1_SubjetMaxB_Eta_Pt        ->Delete();
+
+
+  // event                                                      ->Delete();   
+  h_DijetMass_dRapIn                                            ->Delete();                   
+  h_DijetMass_dRapLo                                            ->Delete();                   
+  h_DijetMass_dRapHi                                            ->Delete(); 
+
+  h_DijetMassPlusNeighbor_dRapIn                                ->Delete(); 
+  h_DijetMassPlusNeighbor_dRapLo                                ->Delete(); 
+  h_DijetMassPlusNeighbor_dRapHi                                ->Delete(); 
+
+                  
+  h_DeltaRap                                                    ->Delete();                   
+  h_DeltaRap_mTTgt1                                             ->Delete();  
+  h_DeltaRap_mTTgt2                                             ->Delete();  
+  h_DeltaRap_mTTgt3                                             ->Delete();  
+
+  h_DeltaPhi_PreCut                                                    ->Delete();                   
+  h_DeltaPhi                                                    ->Delete();                   
+  h_HT                                                          ->Delete();                   
+  h_MET                                                         ->Delete();                   
+  h_METphi                                                      ->Delete();                   
+  h_Nvtx                                                        ->Delete();                   
+  // Jet0                                 
+  h_Jet0P                                                       ->Delete();                   
+  h_Jet0Pt                                                      ->Delete();                   
+  h_Jet0Phi                                                     ->Delete();                   
+  h_Jet0Rap                                                     ->Delete();                   
+  h_Jet0sdmass                                                  ->Delete();                   
+  h_Jet0Tau1                                                    ->Delete();                   
+  h_Jet0Tau2                                                    ->Delete();                   
+  h_Jet0Tau3                                                    ->Delete();                   
+  h_Jet0Tau4                                                    ->Delete();                   
+  h_Jet0SDmaxbdisc                                              ->Delete();                   
+  h_Jet0SDsubjet0pt                                             ->Delete();                   
+  h_Jet0SDsubjet0mass                                           ->Delete();                   
+  h_Jet0SDsubjet0tau1                                           ->Delete();                   
+  h_Jet0SDsubjet0tau2                                           ->Delete();                   
+  h_Jet0SDsubjet0tau3                                           ->Delete();                   
+  h_Jet0SDsubjet0bdisc                                          ->Delete();                   
+  h_Jet0SDsubjet1pt                                             ->Delete();                   
+  h_Jet0SDsubjet1mass                                           ->Delete();                   
+  h_Jet0SDsubjet1tau1                                           ->Delete();                   
+  h_Jet0SDsubjet1tau2                                           ->Delete();                   
+  h_Jet0SDsubjet1tau3                                           ->Delete();                   
+  h_Jet0SDsubjet1bdisc                                          ->Delete();                   
+  h_Jet0PuppiPt                                                 ->Delete();                   
+  h_Jet0PuppiMass                                               ->Delete();                   
+  h_Jet0PuppiSDpt                                               ->Delete();                   
+  h_Jet0PuppiTau1                                               ->Delete();                   
+  h_Jet0PuppiTau2                                               ->Delete();                   
+  h_Jet0PuppiTau3                                               ->Delete();                   
+  h_Jet0PuppiTau4                                               ->Delete();                   
+  h_Jet0PuppiTau32                                              ->Delete();                   
+  h_Jet0PuppiTau21                                              ->Delete();                   
+  h_Jet0PuppiSDmaxbdisc                                         ->Delete();                   
+  h_Jet0PuppiSDsubjet0pt                                        ->Delete();                   
+  h_Jet0PuppiSDsubjet0mass                                      ->Delete();                   
+  h_Jet0PuppiSDsubjet0tau1                                      ->Delete();                   
+  h_Jet0PuppiSDsubjet0tau2                                      ->Delete();                   
+  h_Jet0PuppiSDsubjet0tau3                                      ->Delete();                   
+  h_Jet0PuppiSDsubjet0tau21                                     ->Delete();                   
+  h_Jet0PuppiSDsubjet0bdisc                                     ->Delete();                   
+  h_Jet0PuppiSDsubjet1pt                                        ->Delete();                   
+  h_Jet0PuppiSDsubjet1mass                                      ->Delete();                   
+  h_Jet0PuppiSDsubjet1tau1                                      ->Delete();                   
+  h_Jet0PuppiSDsubjet1tau2                                      ->Delete();                   
+  h_Jet0PuppiSDsubjet1tau3                                      ->Delete();                   
+  h_Jet0PuppiSDsubjet1tau21                                     ->Delete();                   
+  h_Jet0PuppiSDsubjet1bdisc                                     ->Delete();                   
+  h_Jet0CHF                                                     ->Delete();                   
+  h_Jet0NHF                                                     ->Delete();                   
+  h_Jet0CM                                                      ->Delete();                   
+  h_Jet0NM                                                      ->Delete();                   
+  h_Jet0NEF                                                     ->Delete();                   
+  h_Jet0CEF                                                     ->Delete();                   
+  h_Jet0MF                                                      ->Delete();                   
+  h_Jet0Mult                                                    ->Delete();                   
+  h_Jet0PuppiCHF                                                ->Delete();                   
+  h_Jet0PuppiNHF                                                ->Delete();                   
+  h_Jet0PuppiCM                                                 ->Delete();                   
+  h_Jet0PuppiNM                                                 ->Delete();                   
+  h_Jet0PuppiNEF                                                ->Delete();                   
+  h_Jet0PuppiCEF                                                ->Delete();                   
+  h_Jet0PuppiMF                                                 ->Delete();                   
+  h_Jet0PuppiMult                                               ->Delete();                   
+  h_Jet0puppisdmass                                             ->Delete();
+  h_Jet0NsubjetsSDPuppi                                           ->Delete();
+
+  // Jet1                                 
+  h_Jet1P                                                       ->Delete();                   
+  h_Jet1Pt                                                      ->Delete();                   
+  h_Jet1Phi                                                     ->Delete();                   
+  h_Jet1Rap                                                     ->Delete();                   
+  h_Jet1sdmass                                                  ->Delete();                   
+  h_Jet1Tau1                                                    ->Delete();                   
+  h_Jet1Tau2                                                    ->Delete();                   
+  h_Jet1Tau3                                                    ->Delete();                   
+  h_Jet1Tau4                                                    ->Delete();                   
+  h_Jet1SDmaxbdisc                                              ->Delete();                   
+  h_Jet1SDsubjet0pt                                             ->Delete();                   
+  h_Jet1SDsubjet0mass                                           ->Delete();                   
+  h_Jet1SDsubjet0tau1                                           ->Delete();                   
+  h_Jet1SDsubjet0tau2                                           ->Delete();                   
+  h_Jet1SDsubjet0tau3                                           ->Delete();                   
+  h_Jet1SDsubjet0bdisc                                          ->Delete();                   
+  h_Jet1SDsubjet1pt                                             ->Delete();                   
+  h_Jet1SDsubjet1mass                                           ->Delete();                   
+  h_Jet1SDsubjet1tau1                                           ->Delete();                   
+  h_Jet1SDsubjet1tau2                                           ->Delete();                   
+  h_Jet1SDsubjet1tau3                                           ->Delete();                   
+  h_Jet1SDsubjet1bdisc                                          ->Delete();                   
+  h_Jet1PuppiPt                                                 ->Delete();                   
+  h_Jet1PuppiMass                                               ->Delete();                   
+  h_Jet1PuppiSDpt                                               ->Delete();                   
+  h_Jet1PuppiTau1                                               ->Delete();                   
+  h_Jet1PuppiTau2                                               ->Delete();                   
+  h_Jet1PuppiTau3                                               ->Delete();                   
+  h_Jet1PuppiTau4                                               ->Delete();                   
+  h_Jet1PuppiTau32                                              ->Delete();                   
+  h_Jet1PuppiTau21                                              ->Delete();                   
+  h_Jet1PuppiSDmaxbdisc                                         ->Delete();                   
+  h_Jet1PuppiSDsubjet0pt                                        ->Delete();                   
+  h_Jet1PuppiSDsubjet0mass                                      ->Delete();                   
+  h_Jet1PuppiSDsubjet0tau1                                      ->Delete();                   
+  h_Jet1PuppiSDsubjet0tau2                                      ->Delete();                   
+  h_Jet1PuppiSDsubjet0tau3                                      ->Delete();                   
+  h_Jet1PuppiSDsubjet0tau21                                     ->Delete();                   
+  h_Jet1PuppiSDsubjet0bdisc                                     ->Delete();                   
+  h_Jet1PuppiSDsubjet1pt                                        ->Delete();                   
+  h_Jet1PuppiSDsubjet1mass                                      ->Delete();                   
+  h_Jet1PuppiSDsubjet1tau1                                      ->Delete();                   
+  h_Jet1PuppiSDsubjet1tau2                                      ->Delete();                   
+  h_Jet1PuppiSDsubjet1tau3                                      ->Delete();                   
+  h_Jet1PuppiSDsubjet1tau21                                     ->Delete();                   
+  h_Jet1PuppiSDsubjet1bdisc                                     ->Delete();                   
+  h_Jet1CHF                                                     ->Delete();                   
+  h_Jet1NHF                                                     ->Delete();                   
+  h_Jet1CM                                                      ->Delete();                   
+  h_Jet1NM                                                      ->Delete();                   
+  h_Jet1NEF                                                     ->Delete();                   
+  h_Jet1CEF                                                     ->Delete();                   
+  h_Jet1MF                                                      ->Delete();                   
+  h_Jet1Mult                                                    ->Delete();                   
+  h_Jet1PuppiCHF                                                ->Delete();                   
+  h_Jet1PuppiNHF                                                ->Delete();                   
+  h_Jet1PuppiCM                                                 ->Delete();                   
+  h_Jet1PuppiNM                                                 ->Delete();                   
+  h_Jet1PuppiNEF                                                ->Delete();                   
+  h_Jet1PuppiCEF                                                ->Delete();                   
+  h_Jet1PuppiMF                                                 ->Delete();                   
+  h_Jet1PuppiMult                                               ->Delete();                   
+  h_Jet1puppisdmass                                             ->Delete();
+
+
+  h_DijetMass_masspuptag                       ->Delete();               
+  h_DijetMass_masspuptag_puppitau32_lt0p30          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p35          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p40          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p45          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p48          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p50          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p53          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p55          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p58          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p60          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p63          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p65          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p68          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p70          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p72          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p75          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_lt0p80          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_gt0p50          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_gt0p55          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_gt0p60          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_gt0p65          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_gt0p68          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_gt0p70          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_gt0p72          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_gt0p75          ->Delete();          
+  h_DijetMass_masspuptag_puppitau32_gt0p80          ->Delete();   
+
+  h_DijetMass_1btag_masspuptag                       ->Delete();               
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p30          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p35          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p40          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p45          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p48          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p50          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p53          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p55          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p58          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p60          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p63          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p65          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p68          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p70          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p72          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p75          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_lt0p80          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_gt0p50          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_gt0p55          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_gt0p60          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_gt0p65          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_gt0p68          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_gt0p70          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_gt0p72          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_gt0p75          ->Delete();          
+  h_DijetMass_1btag_masspuptag_puppitau32_gt0p80          ->Delete();   
+  h_DijetMass_2btag_masspuptag                       ->Delete();               
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p30          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p35          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p40          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p45          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p48          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p50          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p53          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p55          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p58          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p60          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p63          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p65          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p68          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p70          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p72          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p75          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_lt0p80          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_gt0p50          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_gt0p55          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_gt0p60          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_gt0p65          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_gt0p68          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_gt0p70          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_gt0p72          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_gt0p75          ->Delete();          
+  h_DijetMass_2btag_masspuptag_puppitau32_gt0p80          ->Delete();   
+  h_DijetMass_0btag_masspuptag                       ->Delete();               
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p30          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p35          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p40          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p45          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p48          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p50          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p53          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p55          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p58          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p60          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p63          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p65          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p68          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p70          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p72          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p75          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_lt0p80          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_gt0p50          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_gt0p55          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_gt0p60          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_gt0p65          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_gt0p68          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_gt0p70          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_gt0p72          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_gt0p75          ->Delete();          
+  h_DijetMass_0btag_masspuptag_puppitau32_gt0p80          ->Delete();   
+
+
+
+  // N-1 histograms                                 
+  h_Jet0SDmass                                                  ->Delete();                   
+  h_Jet0SDmass_JetTag_b                                         ->Delete();                   
+  h_Jet0SDmass_JetTag_tau32                                     ->Delete();                   
+  h_Jet0SDmass_JetTag_b_tau32                                   ->Delete();                   
+  h_Jet0SDmass_OppositeJetTag_t_b                               ->Delete();                   
+  h_Jet0SDmass_OppositeJetTag_t_b_JetTag_b                      ->Delete();                   
+  h_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32                ->Delete();                   
+  h_Jet1SDmass                                                  ->Delete();                   
+  h_Jet1SDmass_JetTag_b                                         ->Delete();                   
+  h_Jet1SDmass_JetTag_tau32                                     ->Delete();                   
+  h_Jet1SDmass_JetTag_b_tau32                                   ->Delete();                   
+  h_Jet1SDmass_OppositeJetTag_t_b                               ->Delete();                   
+  h_Jet1SDmass_OppositeJetTag_t_b_JetTag_b                      ->Delete();                   
+  h_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32                ->Delete();                   
+  h_JetSDmass                                                   ->Delete();                   
+  h_JetSDmass_JetTag_b                                          ->Delete();                   
+  h_JetSDmass_JetTag_tau32                                      ->Delete();                   
+  h_JetSDmass_JetTag_b_tau32                                    ->Delete();                   
+  h_JetSDmass_OppositeJetTag_t_b                                ->Delete();                   
+  h_JetSDmass_OppositeJetTag_t_b_JetTag_b                       ->Delete();                   
+  h_JetSDmass_OppositeJetTag_t_b_JetTag_b_tau32                 ->Delete();                   
+  h_Jet0Tau32                                                   ->Delete();                   
+  h_Jet0Tau32_JetTag_b                                          ->Delete();                   
+  h_Jet0Tau32_JetTag_mass                                       ->Delete();                   
+  h_Jet0Tau32_JetTag_b_mass                                     ->Delete();                   
+  h_Jet0Tau32_OppositeJetTag_t_b                                ->Delete();                   
+  h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b                       ->Delete();                   
+  h_Jet0Tau32_OppositeJetTag_t_b_JetTag_b_mass                  ->Delete();                   
+  h_Jet1Tau32                                                   ->Delete();                   
+  h_Jet1Tau32_JetTag_b                                          ->Delete();                   
+  h_Jet1Tau32_JetTag_mass                                       ->Delete();                   
+  h_Jet1Tau32_JetTag_b_mass                                     ->Delete();                   
+  h_Jet1Tau32_OppositeJetTag_t_b                                ->Delete();                   
+  h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b                       ->Delete();                   
+  h_Jet1Tau32_OppositeJetTag_t_b_JetTag_b_mass                  ->Delete();                   
+  h_JetTau32                                                    ->Delete();                   
+  h_JetTau32_JetTag_b                                           ->Delete();                   
+  h_JetTau32_JetTag_mass                                        ->Delete();                   
+  h_JetTau32_JetTag_b_mass                                      ->Delete();                   
+  h_JetTau32_OppositeJetTag_t_b                                 ->Delete();                   
+  h_JetTau32_OppositeJetTag_t_b_JetTag_b                        ->Delete();                   
+  h_JetTau32_OppositeJetTag_t_b_JetTag_b_mass                   ->Delete();                   
+                  
+  h_pup_Jet0SDmass                                       ->Delete();
+  h_pup_Jet0SDmass_JetTag_b                              ->Delete();
+  h_pup_Jet0SDmass_JetTag_tau32                          ->Delete();
+  h_pup_Jet0SDmass_JetTag_b_tau32                        ->Delete();
+  h_pup_Jet0SDmass_OppositeJetTag_t_b                    ->Delete();
+  h_pup_Jet0SDmass_OppositeJetTag_t_b_JetTag_b           ->Delete();
+  h_pup_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32     ->Delete();
+
+  h_pupSubjetCorr_Jet0SDmass                                       ->Delete();
+  h_pupSubjetCorr_Jet0SDmass_JetTag_b                              ->Delete();
+  h_pupSubjetCorr_Jet0SDmass_JetTag_tau32                          ->Delete();
+  h_pupSubjetCorr_Jet0SDmass_JetTag_b_tau32                        ->Delete();
+  h_pupSubjetCorr_Jet0SDmass_OppositeJetTag_t_b                    ->Delete();
+  h_pupSubjetCorr_Jet0SDmass_OppositeJetTag_t_b_JetTag_b           ->Delete();
+  h_pupSubjetCorr_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32     ->Delete();
+
+
+  h_pup_Jet1SDmass                                       ->Delete();
+  h_pup_Jet1SDmass_JetTag_b                              ->Delete();
+  h_pup_Jet1SDmass_JetTag_tau32                          ->Delete();
+  h_pup_Jet1SDmass_JetTag_b_tau32                        ->Delete();
+  h_pup_Jet1SDmass_OppositeJetTag_t_b                    ->Delete();
+  h_pup_Jet1SDmass_OppositeJetTag_t_b_JetTag_b           ->Delete();
+  h_pup_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32     ->Delete();
+  h_pup_JetSDmass                                        ->Delete();
+  h_pup_JetSDmass_JetTag_b                               ->Delete();
+  h_pup_JetSDmass_JetTag_tau32                           ->Delete();
+  h_pup_JetSDmass_JetTag_b_tau32                         ->Delete();
+  h_pup_JetSDmass_OppositeJetTag_t_b                     ->Delete();
+  h_pup_JetSDmass_OppositeJetTag_t_b_JetTag_b            ->Delete();
+  h_pup_JetSDmass_OppositeJetTag_t_b_JetTag_b_tau32      ->Delete();
+  h_pup_Jet0Tau32                                        ->Delete();
+  h_pup_Jet0Tau32_JetTag_b                               ->Delete();
+  h_pup_Jet0Tau32_JetTag_mass                            ->Delete();
+  h_pup_Jet0Tau32_JetTag_b_mass                          ->Delete();
+  h_pup_Jet0Tau32_OppositeJetTag_t_b                     ->Delete();
+  h_pup_Jet0Tau32_OppositeJetTag_t_b_JetTag_b            ->Delete();
+  h_pup_Jet0Tau32_OppositeJetTag_t_b_JetTag_b_mass       ->Delete();
+  h_pup_Jet1Tau32                                        ->Delete();
+  h_pup_Jet1Tau32_JetTag_b                               ->Delete();
+  h_pup_Jet1Tau32_JetTag_mass                            ->Delete();
+  h_pup_Jet1Tau32_JetTag_b_mass                          ->Delete();
+  h_pup_Jet1Tau32_OppositeJetTag_t_b                     ->Delete();
+  h_pup_Jet1Tau32_OppositeJetTag_t_b_JetTag_b            ->Delete();
+  h_pup_Jet1Tau32_OppositeJetTag_t_b_JetTag_b_mass       ->Delete();
+  h_pup_JetTau32                                         ->Delete();
+  h_pup_JetTau32_JetTag_b                                ->Delete();
+  h_pup_JetTau32_JetTag_mass                             ->Delete();
+  h_pup_JetTau32_JetTag_b_mass                           ->Delete();
+  h_pup_JetTau32_OppositeJetTag_t_b                      ->Delete();
+  h_pup_JetTau32_OppositeJetTag_t_b_JetTag_b             ->Delete();
+  h_pup_JetTau32_OppositeJetTag_t_b_JetTag_b_mass        ->Delete();
+
+  h_pup_JetTrimMass                                ->Delete();    
+  h_pup_JetTrimMass_JetTag_b                          ->Delete(); 
+  h_pup_JetTrimMass_JetTag_tau32                      ->Delete(); 
+  h_pup_JetTrimMass_JetTag_b_tau32                    ->Delete(); 
+  h_pup_JetTrimMass_OppositeJetTag_t_b                ->Delete(); 
+  h_pup_JetTrimMass_OppositeJetTag_t_b_JetTag_b       ->Delete(); 
+  h_pup_JetTrimMass_OppositeJetTag_t_b_JetTag_b_tau32 ->Delete(); 
+  h_pup_JetPruneMass                                  ->Delete(); 
+  h_pup_JetPruneMass_JetTag_b                         ->Delete(); 
+  h_pup_JetPruneMass_JetTag_tau32                     ->Delete(); 
+  h_pup_JetPruneMass_JetTag_b_tau32                   ->Delete(); 
+  h_pup_JetPruneMass_OppositeJetTag_t_b               ->Delete(); 
+  h_pup_JetPruneMass_OppositeJetTag_t_b_JetTag_b      ->Delete(); 
+  h_pup_JetPruneMass_OppositeJetTag_t_b_JetTag_b_tau32->Delete(); 
+  h_pup_Subjet0Mass                                   ->Delete(); 
+  h_pup_Subjet0Mass_JetTag_b                          ->Delete(); 
+  h_pup_Subjet0Mass_JetTag_mass                      ->Delete(); 
+  h_pup_Subjet0Mass_JetTag_b_mass                    ->Delete(); 
+  h_pup_Subjet0Mass_OppositeJetTag_t_b                ->Delete(); 
+  h_pup_Subjet0Mass_OppositeJetTag_t_b_JetTag_b       ->Delete(); 
+  h_pup_Subjet0Mass_OppositeJetTag_t_b_JetTag_b_mass  ->Delete(); 
+  h_pup_Subjet0Mass_OppositeJetTag_t_b_JetTag_b_t     ->Delete(); 
+  h_pup_Subjet0Tau21                                   ->Delete(); 
+  h_pup_Subjet0Tau21_JetTag_b                          ->Delete(); 
+  h_pup_Subjet0Tau21_JetTag_mass                       ->Delete(); 
+  h_pup_Subjet0Tau21_JetTag_b_mass                     ->Delete(); 
+  h_pup_Subjet0Tau21_OppositeJetTag_t_b                ->Delete(); 
+  h_pup_Subjet0Tau21_OppositeJetTag_t_b_JetTag_b       ->Delete(); 
+  h_pup_Subjet0Tau21_OppositeJetTag_t_b_JetTag_b_mass  ->Delete(); 
+  h_pup_Subjet0Tau21_OppositeJetTag_t_b_JetTag_b_t     ->Delete(); 
+  h_pup_MaxSubjetb                                    ->Delete(); 
+  h_pup_MaxSubjetb_JetTag_b                           ->Delete(); 
+  h_pup_MaxSubjetb_JetTag_mass                        ->Delete(); 
+  h_pup_MaxSubjetb_JetTag_b_mass                      ->Delete(); 
+  h_pup_MaxSubjetb_OppositeJetTag_t_b                 ->Delete(); 
+  h_pup_MaxSubjetb_OppositeJetTag_t_b_JetTag_b        ->Delete(); 
+  h_pup_MaxSubjetb_OppositeJetTag_t_b_JetTag_b_mass   ->Delete(); 
+  h_pup_MaxSubjetb_OppositeJetTag_t_b_JetTag_t        ->Delete(); 
+  h_pup_MaxSubjetb_OppositeJetTag_t_b_JetTag_b_t      ->Delete(); 
+  h_pup_MinSubjetb                                    ->Delete(); 
+  h_pup_MinSubjetb_JetTag_b                           ->Delete(); 
+  h_pup_MinSubjetb_JetTag_mass                        ->Delete(); 
+  h_pup_MinSubjetb_JetTag_b_mass                      ->Delete(); 
+  h_pup_MinSubjetb_OppositeJetTag_t_b                 ->Delete(); 
+  h_pup_MinSubjetb_OppositeJetTag_t_b_JetTag_b        ->Delete(); 
+  h_pup_MinSubjetb_OppositeJetTag_t_b_JetTag_b_mass   ->Delete(); 
+  h_pup_MinSubjetb_OppositeJetTag_t_b_JetTag_t        ->Delete(); 
+  h_pup_MinSubjetb_OppositeJetTag_t_b_JetTag_b_t      ->Delete();       
+
+
+
+  h_pup_match_Jet0SDmass                                              ->Delete();
+  h_pup_match_Jet0SDmass_JetTag_b                                     ->Delete();
+  h_pup_match_Jet0SDmass_JetTag_tau32                                 ->Delete();
+  h_pup_match_Jet0SDmass_JetTag_b_tau32                               ->Delete();
+  h_pup_match_Jet0SDmass_OppositeJetTag_t_b                           ->Delete();
+  h_pup_match_Jet0SDmass_OppositeJetTag_t_b_JetTag_b                  ->Delete();
+  h_pup_match_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32            ->Delete();
+  h_pup_match_col_Jet0SDmass                                          ->Delete();
+  h_pup_match_col_Jet0SDmass_JetTag_b                                 ->Delete();
+  h_pup_match_col_Jet0SDmass_JetTag_tau32                             ->Delete();
+  h_pup_match_col_Jet0SDmass_JetTag_b_tau32                           ->Delete();
+  h_pup_match_col_Jet0SDmass_OppositeJetTag_t_b                       ->Delete();
+  h_pup_match_col_Jet0SDmass_OppositeJetTag_t_b_JetTag_b              ->Delete();
+  h_pup_match_col_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32        ->Delete();
+
+  h_pup_match_Jet1SDmass                                              ->Delete();
+  h_pup_match_Jet1SDmass_JetTag_b                                     ->Delete();
+  h_pup_match_Jet1SDmass_JetTag_tau32                                 ->Delete();
+  h_pup_match_Jet1SDmass_JetTag_b_tau32                               ->Delete();
+  h_pup_match_Jet1SDmass_OppositeJetTag_t_b                           ->Delete();
+  h_pup_match_Jet1SDmass_OppositeJetTag_t_b_JetTag_b                  ->Delete();
+  h_pup_match_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32            ->Delete();
+  h_pup_match_col_Jet1SDmass                                          ->Delete();
+  h_pup_match_col_Jet1SDmass_JetTag_b                                 ->Delete();
+  h_pup_match_col_Jet1SDmass_JetTag_tau32                             ->Delete();
+  h_pup_match_col_Jet1SDmass_JetTag_b_tau32                           ->Delete();
+  h_pup_match_col_Jet1SDmass_OppositeJetTag_t_b                       ->Delete();
+  h_pup_match_col_Jet1SDmass_OppositeJetTag_t_b_JetTag_b              ->Delete();
+  h_pup_match_col_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32        ->Delete();
+
+  h2_pup_match_col_Jet0PtRecoMinusGenTop_Jet0SDmass       ->Delete();
+  h2_pup_match_col_Jet0PtRecoMinusGenParton_Jet0SDmass    ->Delete();
+  h2_pup_match_col_Jet0Rap_Jet0SDmass                     ->Delete();
+  h2_pup_match_col_GenTopPt_Jet0SDmass   ->Delete();              
+  h2_pup_match_col_Nvtx_Jet0SDmass       ->Delete();              
+
+  h2_pup_match_col_Jet0Pt_Jet0Tau32                        ->Delete();    
+  h2_pup_match_col_GenTopPt_Jet0Tau32                       ->Delete();    
+  h2_pup_match_col_Nvtx_Jet0Tau32                           ->Delete();    
+  h2_pup_match_col_Jet0PtRecoMinusGenTop_Jet0Tau32          ->Delete();    
+  h2_pup_match_col_Jet0PtRecoMinusGenParton_Jet0Tau32       ->Delete();    
+  h2_pup_match_col_Jet0Rap_Jet0Tau32                        ->Delete();    
+
+  h2_pup_Jet0Pt_Jet0SDmass                                            ->Delete();
+  h2_pup_Jet0Pt_Jet0SDmass_JetTag_b                                   ->Delete();
+  h2_pup_Jet0Pt_Jet0SDmass_JetTag_tau32                               ->Delete();
+  h2_pup_Jet0Pt_Jet0SDmass_JetTag_b_tau32                             ->Delete();
+  h2_pup_Jet0Pt_Jet0SDmass_OppositeJetTag_t_b                         ->Delete();
+  h2_pup_Jet0Pt_Jet0SDmass_OppositeJetTag_t_b_JetTag_b                ->Delete();
+  h2_pup_Jet0Pt_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32          ->Delete();
+  h2_pup_Jet0P_Jet0SDmass                                             ->Delete();
+  h2_pup_Jet0P_Jet0SDmass_JetTag_b                                    ->Delete();
+  h2_pup_Jet0P_Jet0SDmass_JetTag_tau32                                ->Delete();
+  h2_pup_Jet0P_Jet0SDmass_JetTag_b_tau32                              ->Delete();
+  h2_pup_Jet0P_Jet0SDmass_OppositeJetTag_t_b                          ->Delete();
+  h2_pup_Jet0P_Jet0SDmass_OppositeJetTag_t_b_JetTag_b                 ->Delete();
+  h2_pup_Jet0P_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32           ->Delete();
+  h2_pup_match_Jet0Pt_Jet0SDmass                                      ->Delete();
+  h2_pup_match_Jet0Pt_Jet0SDmass_JetTag_b                             ->Delete();
+  h2_pup_match_Jet0Pt_Jet0SDmass_JetTag_tau32                         ->Delete();
+  h2_pup_match_Jet0Pt_Jet0SDmass_JetTag_b_tau32                       ->Delete();
+  h2_pup_match_Jet0Pt_Jet0SDmass_OppositeJetTag_t_b                   ->Delete();
+  h2_pup_match_Jet0Pt_Jet0SDmass_OppositeJetTag_t_b_JetTag_b          ->Delete();
+  h2_pup_match_Jet0Pt_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32    ->Delete();
+  h2_pup_match_Jet0P_Jet0SDmass                                       ->Delete();
+  h2_pup_match_Jet0P_Jet0SDmass_JetTag_b                              ->Delete();
+  h2_pup_match_Jet0P_Jet0SDmass_JetTag_tau32                          ->Delete();
+  h2_pup_match_Jet0P_Jet0SDmass_JetTag_b_tau32                        ->Delete();
+  h2_pup_match_Jet0P_Jet0SDmass_OppositeJetTag_t_b                    ->Delete();
+  h2_pup_match_Jet0P_Jet0SDmass_OppositeJetTag_t_b_JetTag_b           ->Delete();
+  h2_pup_match_Jet0P_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32     ->Delete();
+  h2_pup_match_col_Jet0Pt_Jet0SDmass                                  ->Delete();
+  h2_pup_match_col_Jet0Pt_Jet0SDmass_JetTag_b                         ->Delete();
+  h2_pup_match_col_Jet0Pt_Jet0SDmass_JetTag_tau32                     ->Delete();
+  h2_pup_match_col_Jet0Pt_Jet0SDmass_JetTag_b_tau32                   ->Delete();
+  h2_pup_match_col_Jet0Pt_Jet0SDmass_OppositeJetTag_t_b               ->Delete();
+  h2_pup_match_col_Jet0Pt_Jet0SDmass_OppositeJetTag_t_b_JetTag_b      ->Delete();
+  h2_pup_match_col_Jet0Pt_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32->Delete();
+  h2_pup_match_col_Jet0P_Jet0SDmass                                   ->Delete();
+  h2_pup_match_col_Jet0P_Jet0SDmass_JetTag_b                          ->Delete();
+  h2_pup_match_col_Jet0P_Jet0SDmass_JetTag_tau32                      ->Delete();
+  h2_pup_match_col_Jet0P_Jet0SDmass_JetTag_b_tau32                    ->Delete();
+  h2_pup_match_col_Jet0P_Jet0SDmass_OppositeJetTag_t_b                ->Delete();
+  h2_pup_match_col_Jet0P_Jet0SDmass_OppositeJetTag_t_b_JetTag_b       ->Delete();
+  h2_pup_match_col_Jet0P_Jet0SDmass_OppositeJetTag_t_b_JetTag_b_tau32 ->Delete();
+  h2_pup_Jet1Pt_Jet1SDmass                                            ->Delete();
+  h2_pup_Jet1Pt_Jet1SDmass_JetTag_b                                   ->Delete();
+  h2_pup_Jet1Pt_Jet1SDmass_JetTag_tau32                               ->Delete();
+  h2_pup_Jet1Pt_Jet1SDmass_JetTag_b_tau32                             ->Delete();
+  h2_pup_Jet1Pt_Jet1SDmass_OppositeJetTag_t_b                         ->Delete();
+  h2_pup_Jet1Pt_Jet1SDmass_OppositeJetTag_t_b_JetTag_b                ->Delete();
+  h2_pup_Jet1Pt_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32          ->Delete();
+  h2_pup_Jet1P_Jet1SDmass                                             ->Delete();
+  h2_pup_Jet1P_Jet1SDmass_JetTag_b                                    ->Delete();
+  h2_pup_Jet1P_Jet1SDmass_JetTag_tau32                                ->Delete();
+  h2_pup_Jet1P_Jet1SDmass_JetTag_b_tau32                              ->Delete();
+  h2_pup_Jet1P_Jet1SDmass_OppositeJetTag_t_b                          ->Delete();
+  h2_pup_Jet1P_Jet1SDmass_OppositeJetTag_t_b_JetTag_b                 ->Delete();
+  h2_pup_Jet1P_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32           ->Delete();
+  h2_pup_match_Jet1Pt_Jet1SDmass                                      ->Delete();
+  h2_pup_match_Jet1Pt_Jet1SDmass_JetTag_b                             ->Delete();
+  h2_pup_match_Jet1Pt_Jet1SDmass_JetTag_tau32                         ->Delete();
+  h2_pup_match_Jet1Pt_Jet1SDmass_JetTag_b_tau32                       ->Delete();
+  h2_pup_match_Jet1Pt_Jet1SDmass_OppositeJetTag_t_b                   ->Delete();
+  h2_pup_match_Jet1Pt_Jet1SDmass_OppositeJetTag_t_b_JetTag_b          ->Delete();
+  h2_pup_match_Jet1Pt_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32    ->Delete();
+  h2_pup_match_Jet1P_Jet1SDmass                                       ->Delete();
+  h2_pup_match_Jet1P_Jet1SDmass_JetTag_b                              ->Delete();
+  h2_pup_match_Jet1P_Jet1SDmass_JetTag_tau32                          ->Delete();
+  h2_pup_match_Jet1P_Jet1SDmass_JetTag_b_tau32                        ->Delete();
+  h2_pup_match_Jet1P_Jet1SDmass_OppositeJetTag_t_b                    ->Delete();
+  h2_pup_match_Jet1P_Jet1SDmass_OppositeJetTag_t_b_JetTag_b           ->Delete();
+  h2_pup_match_Jet1P_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32     ->Delete();
+  h2_pup_match_col_Jet1Pt_Jet1SDmass                                  ->Delete();
+  h2_pup_match_col_Jet1Pt_Jet1SDmass_JetTag_b                         ->Delete();
+  h2_pup_match_col_Jet1Pt_Jet1SDmass_JetTag_tau32                     ->Delete();
+  h2_pup_match_col_Jet1Pt_Jet1SDmass_JetTag_b_tau32                   ->Delete();
+  h2_pup_match_col_Jet1Pt_Jet1SDmass_OppositeJetTag_t_b               ->Delete();
+  h2_pup_match_col_Jet1Pt_Jet1SDmass_OppositeJetTag_t_b_JetTag_b      ->Delete();
+  h2_pup_match_col_Jet1Pt_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32->Delete();
+  h2_pup_match_col_Jet1P_Jet1SDmass                                   ->Delete();
+  h2_pup_match_col_Jet1P_Jet1SDmass_JetTag_b                          ->Delete();
+  h2_pup_match_col_Jet1P_Jet1SDmass_JetTag_tau32                      ->Delete();
+  h2_pup_match_col_Jet1P_Jet1SDmass_JetTag_b_tau32                    ->Delete();
+  h2_pup_match_col_Jet1P_Jet1SDmass_OppositeJetTag_t_b                ->Delete();
+  h2_pup_match_col_Jet1P_Jet1SDmass_OppositeJetTag_t_b_JetTag_b       ->Delete();
+  h2_pup_match_col_Jet1P_Jet1SDmass_OppositeJetTag_t_b_JetTag_b_tau32 ->Delete();
+
+
+
+
+
+
+
+
+
+  // 2D                                 
+
+  h_runNumber_Jet0CHF                  ->Delete();      
+  h_runNumber_Jet0NHF                  ->Delete();      
+  h_runNumber_Jet0CM                   ->Delete();      
+  h_runNumber_Jet0NM                   ->Delete();      
+  h_runNumber_Jet0NEF                  ->Delete();      
+  h_runNumber_Jet0CEF                  ->Delete();      
+  h_runNumber_Jet0MF                   ->Delete();      
+  h_runNumber_Jet0Mult                 ->Delete();      
+  h_runNumber_NvtxGood                 ->Delete();      
+  h_runNumber_Jet0Pt                   ->Delete();      
+  h_runNumber_Jet0SDmass               ->Delete();      
+  h_runNumber_Jet0Tau32                ->Delete();      
+  h_runNumber_Jet0PuppiPt              ->Delete();      
+  h_runNumber_Jet0PuppiSDmass          ->Delete();      
+  h_runNumber_Jet0PuppiTau32           ->Delete();      
+  h_runNumber_DijetMass                ->Delete();      
+  h_runNumber_HT                       ->Delete();      
+  h_NvtxGood_Jet0CHF                   ->Delete();      
+  h_NvtxGood_Jet0NHF                   ->Delete();      
+  h_NvtxGood_Jet0CM                    ->Delete();      
+  h_NvtxGood_Jet0NM                    ->Delete();      
+  h_NvtxGood_Jet0NEF                   ->Delete();      
+  h_NvtxGood_Jet0CEF                   ->Delete();      
+  h_NvtxGood_Jet0MF                    ->Delete();      
+  h_NvtxGood_Jet0Mult                  ->Delete();      
+  h_NvtxGood_NvtxGood                  ->Delete();      
+  h_NvtxGood_Jet0Pt                    ->Delete();      
+  h_NvtxGood_Jet0SDmass                ->Delete();      
+  h_NvtxGood_Jet0Tau32                 ->Delete();      
+  h_NvtxGood_Jet0PuppiPt               ->Delete();      
+  h_NvtxGood_Jet0PuppiSDmass           ->Delete();      
+  h_NvtxGood_Jet0PuppiTau32            ->Delete();      
+  h_NvtxGood_DijetMass                 ->Delete();      
+  h_NvtxGood_HT                        ->Delete();      
+  h_GenJet0Pt_GenJet0Mass              ->Delete();     
+  h_Jet0Pt_GenJet0Mass                 ->Delete();     
+  h_Jet0P_GenJet0Mass                  ->Delete();     
+  h_Jet0Pt_Jet0Mass                    ->Delete();     
+  h_Jet0Pt_Jet0SDmass                  ->Delete();     
+  h_Jet0Pt_Jet0Tau32                   ->Delete();     
+  h_Jet0Pt_Jet0PuppiMass               ->Delete();     
+  h_Jet0Pt_Jet0PuppiSDmass             ->Delete();     
+  h_Jet0Pt_Jet0PuppiTau32              ->Delete();     
+  h_Jet0P_Jet0Mass                     ->Delete();     
+  h_Jet0P_Jet0SDmass                   ->Delete();     
+  h_Jet0P_Jet0Tau32                    ->Delete();     
+  h_Jet0P_Jet0PuppiMass                ->Delete();     
+  h_Jet0P_Jet0PuppiSDmass              ->Delete();     
+  h_Jet0P_Jet0PuppiTau32               ->Delete();     
+  h_Jet0Mass_Jet0Tau32                 ->Delete();     
+  h_Jet0SDmass_Jet0Tau32               ->Delete();     
+  h_Jet0PuppiSDmass_Jet0PuppiTau32     ->Delete();     
+  h_Jet0Y_Jet0Mass                     ->Delete();     
+  h_Jet0Y_Jet0SDmass                   ->Delete();     
+  h_Jet0Y_Jet0Tau32                    ->Delete();     
+  h_Jet0Y_Jet0PuppiMass                ->Delete();     
+  h_Jet0Y_Jet0PuppiSDmass              ->Delete();     
+  h_Jet0Y_Jet0PuppiTau32               ->Delete();     
+  h_Pt500to520_Jet0Y_Jet0Mass          ->Delete();     
+  h_Pt500to520_Jet0Y_Jet0SDmass        ->Delete();     
+  h_Pt500to520_Jet0Y_Jet0Tau32         ->Delete();     
+  h_Pt500to520_Jet0Y_Jet0PuppiMass     ->Delete();     
+  h_Pt500to520_Jet0Y_Jet0PuppiSDmass   ->Delete();     
+  h_Pt500to520_Jet0Y_Jet0PuppiTau32    ->Delete();     
+  h_Jet0Y_Jet1Y                        ->Delete();     
+  h_Jet0SDmass_Jet1SDmass              ->Delete();     
+  h_Jet0PuppiSDmass_Jet1PuppiSDmass    ->Delete();     
+  h_Jet0Tau32_Jet1Tau32                ->Delete();     
+  h_Jet0PuppiTau32_Jet1PuppiTau32      ->Delete();     
+  h_Jet0PuppiTau1_Jet1PuppiTau1        ->Delete();     
+  h_Jet0PuppiTau2_Jet1PuppiTau2        ->Delete();     
+  h_Jet0PuppiTau3_Jet1PuppiTau3        ->Delete();     
+  h_Asym                               ->Delete();     
+  h_Asym2                              ->Delete();     
+  h_Asym_Jet0SDmass                    ->Delete();     
+  h_DeltaRap_Jet0SDmass                ->Delete();     
+
+
+                            
+                                   
+  // MC study                                 
+  h_Jet0SDmass_matchedTop                               ->Delete();                     
+  h_Jet0SDmass_matchedTop_topDist                       ->Delete();                     
+  h_Jet0SDmass_outside                                  ->Delete();                     
+  h_Jet0SDmass_bq                                       ->Delete();                     
+  h_Jet0SDmass_qq                                       ->Delete();                     
+                                   
+  h_Jet0SDmass_all                                      ->Delete();                     
+  h_Jet0SDmass_in_b                                     ->Delete();                     
+  h_Jet0SDmass_in_q                                     ->Delete();                     
+  h_Jet0SDmass_in_qq                                    ->Delete();                     
+  h_Jet0SDmass_in_qb                                    ->Delete();                     
+  h_Jet0SDmass_in_qqb                                   ->Delete();                     
+  h_Jet0SDmass_unmatched                                ->Delete();    
+
+  h_Jet1SDmass_all                                      ->Delete();                     
+  h_Jet1SDmass_in_b                                     ->Delete();                     
+  h_Jet1SDmass_in_q                                     ->Delete();                     
+  h_Jet1SDmass_in_qq                                    ->Delete();                     
+  h_Jet1SDmass_in_qb                                    ->Delete();                     
+  h_Jet1SDmass_in_qqb                                   ->Delete();                     
+  h_Jet1SDmass_unmatched                                ->Delete();    
+
+
+                                 
+  h_Jet0mass_all                                      ->Delete();                     
+  h_Jet0mass_in_b                                     ->Delete();                     
+  h_Jet0mass_in_q                                     ->Delete();                     
+  h_Jet0mass_in_qq                                    ->Delete();                     
+  h_Jet0mass_in_qb                                    ->Delete();                     
+  h_Jet0mass_in_qqb                                   ->Delete();                     
+  h_Jet0mass_unmatched                                ->Delete();    
+
+                       
+  h_Jet0Tau32_all                                       ->Delete();                     
+  h_Jet0Tau32_in_b                                      ->Delete();                     
+  h_Jet0Tau32_in_q                                      ->Delete();                     
+  h_Jet0Tau32_in_qq                                     ->Delete();                     
+  h_Jet0Tau32_in_qb                                     ->Delete();                     
+  h_Jet0Tau32_in_qqb                                    ->Delete();                     
+  h_Jet0Tau32_unmatched                                 ->Delete();                     
+  h_Jet0SDmass_Pt600_all                                ->Delete();                     
+  h_Jet0SDmass_Pt600_in_b                               ->Delete();                     
+  h_Jet0SDmass_Pt600_in_q                               ->Delete();                     
+  h_Jet0SDmass_Pt600_in_qq                              ->Delete();                     
+  h_Jet0SDmass_Pt600_in_qb                              ->Delete();                     
+  h_Jet0SDmass_Pt600_in_qqb                             ->Delete();                     
+  h_Jet0SDmass_Pt600_unmatched                          ->Delete();                     
+  h_Jet0Tau32_Pt600_all                                 ->Delete();                     
+  h_Jet0Tau32_Pt600_in_b                                ->Delete();                     
+  h_Jet0Tau32_Pt600_in_q                                ->Delete();                     
+  h_Jet0Tau32_Pt600_in_qq                               ->Delete();                     
+  h_Jet0Tau32_Pt600_in_qb                               ->Delete();                     
+  h_Jet0Tau32_Pt600_in_qqb                              ->Delete();                     
+  h_Jet0Tau32_Pt600_unmatched                           ->Delete(); 
+    
+  h_Jet0SDmass_Pt1000_all                                ->Delete();                     
+  h_Jet0SDmass_Pt1000_in_b                               ->Delete();                     
+  h_Jet0SDmass_Pt1000_in_q                               ->Delete();                     
+  h_Jet0SDmass_Pt1000_in_qq                              ->Delete();                     
+  h_Jet0SDmass_Pt1000_in_qb                              ->Delete();                     
+  h_Jet0SDmass_Pt1000_in_qqb                             ->Delete();   
+  h_Jet0SDmass_Pt1000_unmatched                          ->Delete();                     
+
+  h_Jet0Tau32_Pt1000_all                                 ->Delete();                     
+  h_Jet0Tau32_Pt1000_in_b                                ->Delete();                     
+  h_Jet0Tau32_Pt1000_in_q                                ->Delete();                     
+  h_Jet0Tau32_Pt1000_in_qq                               ->Delete();                     
+  h_Jet0Tau32_Pt1000_in_qb                               ->Delete();                     
+  h_Jet0Tau32_Pt1000_in_qqb                              ->Delete();                     
+  h_Jet0Tau32_Pt1000_unmatched                           ->Delete(); 
+    
+  h_Jet0SDmass_Pt1400_all                                ->Delete();                     
+  h_Jet0SDmass_Pt1400_in_b                               ->Delete();                     
+  h_Jet0SDmass_Pt1400_in_q                               ->Delete();                     
+  h_Jet0SDmass_Pt1400_in_qq                              ->Delete();                     
+  h_Jet0SDmass_Pt1400_in_qb                              ->Delete();                     
+  h_Jet0SDmass_Pt1400_in_qqb                             ->Delete();   
+  h_Jet0SDmass_Pt1400_unmatched                          ->Delete();                     
+
+  
+  h_Jet0Tau32_Pt1400_all                                 ->Delete();                     
+  h_Jet0Tau32_Pt1400_in_b                                ->Delete();                     
+  h_Jet0Tau32_Pt1400_in_q                                ->Delete();                     
+  h_Jet0Tau32_Pt1400_in_qq                               ->Delete();                     
+  h_Jet0Tau32_Pt1400_in_qb                               ->Delete();                     
+  h_Jet0Tau32_Pt1400_in_qqb                              ->Delete();                     
+  h_Jet0Tau32_Pt1400_unmatched                           ->Delete();                     
+  h_Jet0SDmass_BtagM_all                                ->Delete();                     
+  h_Jet0SDmass_BtagM_in_b                               ->Delete();                     
+  h_Jet0SDmass_BtagM_in_q                               ->Delete();                     
+  h_Jet0SDmass_BtagM_in_qq                              ->Delete();                     
+  h_Jet0SDmass_BtagM_in_qb                              ->Delete();                     
+  h_Jet0SDmass_BtagM_in_qqb                             ->Delete();                     
+  h_Jet0SDmass_BtagM_unmatched                          ->Delete();                     
+  h_Jet0SDmass_BtagT_all                                ->Delete();                     
+  h_Jet0SDmass_BtagT_in_b                               ->Delete();                     
+  h_Jet0SDmass_BtagT_in_q                               ->Delete();                     
+  h_Jet0SDmass_BtagT_in_qq                              ->Delete();                     
+  h_Jet0SDmass_BtagT_in_qb                              ->Delete();                     
+  h_Jet0SDmass_BtagT_in_qqb                             ->Delete();                     
+  h_Jet0SDmass_BtagT_unmatched                          ->Delete();                     
+  h_Jet0Tau32_BtagM_all                                 ->Delete();                     
+  h_Jet0Tau32_BtagM_in_b                                ->Delete();                     
+  h_Jet0Tau32_BtagM_in_q                                ->Delete();                     
+  h_Jet0Tau32_BtagM_in_qq                               ->Delete();                     
+  h_Jet0Tau32_BtagM_in_qb                               ->Delete();                     
+  h_Jet0Tau32_BtagM_in_qqb                              ->Delete();                     
+  h_Jet0Tau32_BtagM_unmatched                           ->Delete();                     
+  h_Jet0Tau32_MassTag_all                               ->Delete();                     
+  h_Jet0Tau32_MassTag_in_b                              ->Delete();                     
+  h_Jet0Tau32_MassTag_in_q                              ->Delete();                     
+  h_Jet0Tau32_MassTag_in_qq                             ->Delete();                     
+  h_Jet0Tau32_MassTag_in_qb                             ->Delete();                     
+  h_Jet0Tau32_MassTag_in_qqb                            ->Delete();                     
+  h_Jet0Tau32_MassTag_unmatched                         ->Delete();                     
+  h_Jet0Tau32_BtagM_MassTag_all                         ->Delete();                     
+  h_Jet0Tau32_BtagM_MassTag_in_b                        ->Delete();                     
+  h_Jet0Tau32_BtagM_MassTag_in_q                        ->Delete();                     
+  h_Jet0Tau32_BtagM_MassTag_in_qq                       ->Delete();                     
+  h_Jet0Tau32_BtagM_MassTag_in_qb                       ->Delete();                     
+  h_Jet0Tau32_BtagM_MassTag_in_qqb                      ->Delete();                     
+  h_Jet0Tau32_BtagM_MassTag_unmatched                   ->Delete();                     
+  h_Jet0SDmass_TauTag_all                               ->Delete();                     
+  h_Jet0SDmass_TauTag_in_b                              ->Delete();                     
+  h_Jet0SDmass_TauTag_in_q                              ->Delete();                     
+  h_Jet0SDmass_TauTag_in_qq                             ->Delete();                     
+  h_Jet0SDmass_TauTag_in_qb                             ->Delete();                     
+  h_Jet0SDmass_TauTag_in_qqb                            ->Delete();                     
+  h_Jet0SDmass_TauTag_unmatched                         ->Delete();                     
+  h_Jet0SDmass_AntiTauTag_all                           ->Delete();                     
+  h_Jet0SDmass_AntiTauTag_in_b                          ->Delete();                     
+  h_Jet0SDmass_AntiTauTag_in_q                          ->Delete();                     
+  h_Jet0SDmass_AntiTauTag_in_qq                         ->Delete();                     
+  h_Jet0SDmass_AntiTauTag_in_qb                         ->Delete();                     
+  h_Jet0SDmass_AntiTauTag_in_qqb                        ->Delete();                     
+  h_Jet0SDmass_AntiTauTag_unmatched                     ->Delete();                     
+  h_Jet0SDmass_BtagM_TauTag_all                         ->Delete();                     
+  h_Jet0SDmass_BtagM_TauTag_in_b                        ->Delete();                     
+  h_Jet0SDmass_BtagM_TauTag_in_q                        ->Delete();                     
+  h_Jet0SDmass_BtagM_TauTag_in_qq                       ->Delete();                     
+  h_Jet0SDmass_BtagM_TauTag_in_qb                       ->Delete();                     
+  h_Jet0SDmass_BtagM_TauTag_in_qqb                      ->Delete();                     
+  h_Jet0SDmass_BtagM_TauTag_unmatched                   ->Delete();                     
+                                   
+  // double tagged                                 
+  h_2ttag_inclu_dRapIn_DijetMass                               ->Delete();    
+  h_2ttag_0btag_dRapIn_DijetMass                               ->Delete();    
+  h_2ttag_1btag_dRapIn_DijetMass                               ->Delete();    
+  h_2ttag_2btag_dRapIn_DijetMass                               ->Delete();    
+  h_2ttag_inclu_dRapLo_DijetMass                               ->Delete();    
+  h_2ttag_0btag_dRapLo_DijetMass                               ->Delete();    
+  h_2ttag_1btag_dRapLo_DijetMass                               ->Delete();    
+  h_2ttag_2btag_dRapLo_DijetMass                               ->Delete();    
+  h_2ttag_inclu_dRapHi_DijetMass                               ->Delete();    
+  h_2ttag_0btag_dRapHi_DijetMass                               ->Delete();    
+  h_2ttag_1btag_dRapHi_DijetMass                               ->Delete();    
+  h_2ttag_2btag_dRapHi_DijetMass                               ->Delete();   
+
+  h_2ttag_inclu_dRapIn_DijetMassPuppi                               ->Delete();    
+  h_2ttag_0btag_dRapIn_DijetMassPuppi                               ->Delete();    
+  h_2ttag_1btag_dRapIn_DijetMassPuppi                               ->Delete();    
+  h_2ttag_2btag_dRapIn_DijetMassPuppi                               ->Delete();    
+  h_2ttag_inclu_dRapLo_DijetMassPuppi                               ->Delete();    
+  h_2ttag_0btag_dRapLo_DijetMassPuppi                               ->Delete();    
+  h_2ttag_1btag_dRapLo_DijetMassPuppi                               ->Delete();    
+  h_2ttag_2btag_dRapLo_DijetMassPuppi                               ->Delete();    
+  h_2ttag_inclu_dRapHi_DijetMassPuppi                               ->Delete();    
+  h_2ttag_0btag_dRapHi_DijetMassPuppi                               ->Delete();    
+  h_2ttag_1btag_dRapHi_DijetMassPuppi                               ->Delete();    
+  h_2ttag_2btag_dRapHi_DijetMassPuppi                               ->Delete();   
+
+
+
+  h_2ttag_inclu_dRapIn_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_0btag_dRapIn_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_1btag_dRapIn_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_2btag_dRapIn_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_inclu_dRapLo_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_0btag_dRapLo_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_1btag_dRapLo_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_2btag_dRapLo_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_inclu_dRapHi_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_0btag_dRapHi_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_1btag_dRapHi_DijetMassPlusNeighbor                               ->Delete();    
+  h_2ttag_2btag_dRapHi_DijetMassPlusNeighbor                               ->Delete();    
+   
+ 
+  h_2ttag_inclu_DeltaRap                                       ->Delete();    
+  h_2ttag_0btag_DeltaRap                                       ->Delete();    
+  h_2ttag_1btag_DeltaRap                                       ->Delete();    
+  h_2ttag_2btag_DeltaRap                                       ->Delete();    
+  h_2ttag_inclu_DeltaPhi                                       ->Delete();    
+  h_2ttag_0btag_DeltaPhi                                       ->Delete();    
+  h_2ttag_1btag_DeltaPhi                                       ->Delete();    
+  h_2ttag_2btag_DeltaPhi                                       ->Delete();    
+  h_2ttag_inclu_HT                                             ->Delete();    
+  h_2ttag_0btag_HT                                             ->Delete();    
+  h_2ttag_1btag_HT                                             ->Delete();    
+  h_2ttag_2btag_HT                                             ->Delete();    
+  h_2ttag_inclu_MET                                            ->Delete();    
+  h_2ttag_0btag_MET                                            ->Delete();    
+  h_2ttag_1btag_MET                                            ->Delete();    
+  h_2ttag_2btag_MET                                            ->Delete();    
+   
+
+  h_2ttag_inclu_DeltaRap_mTTgt1 ->Delete();
+  h_2ttag_inclu_DeltaRap_mTTgt2 ->Delete();
+  h_2ttag_inclu_DeltaRap_mTTgt3 ->Delete();
+  h_2ttag_0btag_DeltaRap_mTTgt1 ->Delete();
+  h_2ttag_0btag_DeltaRap_mTTgt2 ->Delete();
+  h_2ttag_0btag_DeltaRap_mTTgt3 ->Delete();
+  h_2ttag_1btag_DeltaRap_mTTgt1 ->Delete();
+  h_2ttag_1btag_DeltaRap_mTTgt2 ->Delete();
+  h_2ttag_1btag_DeltaRap_mTTgt3 ->Delete();
+  h_2ttag_2btag_DeltaRap_mTTgt1 ->Delete();
+  h_2ttag_2btag_DeltaRap_mTTgt2 ->Delete();
+  h_2ttag_2btag_DeltaRap_mTTgt3 ->Delete();
+
+  h_2ttag_inclu_METphi                                         ->Delete();    
+  h_2ttag_0btag_METphi                                         ->Delete();    
+  h_2ttag_1btag_METphi                                         ->Delete();    
+  h_2ttag_2btag_METphi                                         ->Delete();    
+                                   
+  h_2ttag_inclu_Nvtx                                           ->Delete();    
+  h_2ttag_0btag_Nvtx                                           ->Delete();    
+  h_2ttag_1btag_Nvtx                                           ->Delete();    
+  h_2ttag_2btag_Nvtx                                           ->Delete();    
+                                   
+                                   
+  h_2ttag_inclu_Jet0P                                          ->Delete();        
+  h_2ttag_inclu_Jet0Pt                                         ->Delete();        
+  h_2ttag_inclu_Jet0Phi                                        ->Delete();        
+  h_2ttag_inclu_Jet0Rap                                        ->Delete();        
+  h_2ttag_inclu_Jet0SDmass                                     ->Delete();        
+  h_2ttag_inclu_Jet0SDmassCorrL23                              ->Delete();        
+  h_2ttag_inclu_Jet0SDmassCorrL23Up                            ->Delete();        
+  h_2ttag_inclu_Jet0Tau1                                       ->Delete();        
+  h_2ttag_inclu_Jet0Tau2                                       ->Delete();        
+  h_2ttag_inclu_Jet0Tau3                                       ->Delete();        
+  h_2ttag_inclu_Jet0Tau4                                       ->Delete();        
+  h_2ttag_inclu_Jet0SDmaxbdisc                                 ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet0pt                                ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet0mass                              ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet0tau1                              ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet0tau2                              ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet0tau3                              ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet0bdisc                             ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet1pt                                ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet1mass                              ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet1tau1                              ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet1tau2                              ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet1tau3                              ->Delete();        
+  h_2ttag_inclu_Jet0SDsubjet1bdisc                             ->Delete();        
+   
+  h_2ttag_inclu_Jet0CHF                                        ->Delete();        
+  h_2ttag_inclu_Jet0NHF                                        ->Delete();        
+  h_2ttag_inclu_Jet0CM                                         ->Delete();        
+  h_2ttag_inclu_Jet0NM                                         ->Delete();        
+  h_2ttag_inclu_Jet0NEF                                        ->Delete();        
+  h_2ttag_inclu_Jet0CEF                                        ->Delete();        
+  h_2ttag_inclu_Jet0MF                                         ->Delete();        
+  h_2ttag_inclu_Jet0Mult                                       ->Delete();        
+    
+                                  
+  h_2ttag_inclu_Jet1P                                          ->Delete();        
+  h_2ttag_inclu_Jet1Pt                                         ->Delete();        
+  h_2ttag_inclu_Jet1Phi                                        ->Delete();        
+  h_2ttag_inclu_Jet1Rap                                        ->Delete();        
+  h_2ttag_inclu_Jet1SDmass                                     ->Delete();        
+  h_2ttag_inclu_Jet1SDmassCorrL23                              ->Delete();        
+  h_2ttag_inclu_Jet1SDmassCorrL23Up                            ->Delete();        
+  h_2ttag_inclu_Jet1Tau1                                       ->Delete();        
+  h_2ttag_inclu_Jet1Tau2                                       ->Delete();        
+  h_2ttag_inclu_Jet1Tau3                                       ->Delete();        
+  h_2ttag_inclu_Jet1Tau4                                       ->Delete();        
+  h_2ttag_inclu_Jet1SDmaxbdisc                                 ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet0pt                                ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet0mass                              ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet0tau1                              ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet0tau2                              ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet0tau3                              ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet0bdisc                             ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet1pt                                ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet1mass                              ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet1tau1                              ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet1tau2                              ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet1tau3                              ->Delete();        
+  h_2ttag_inclu_Jet1SDsubjet1bdisc                             ->Delete();        
+   
+  h_2ttag_inclu_Jet1CHF                                        ->Delete();        
+  h_2ttag_inclu_Jet1NHF                                        ->Delete();        
+  h_2ttag_inclu_Jet1CM                                         ->Delete();        
+  h_2ttag_inclu_Jet1NM                                         ->Delete();        
+  h_2ttag_inclu_Jet1NEF                                        ->Delete();        
+  h_2ttag_inclu_Jet1CEF                                        ->Delete();        
+  h_2ttag_inclu_Jet1MF                                         ->Delete();        
+  h_2ttag_inclu_Jet1Mult                                       ->Delete();        
+    
+  h_2ttag_inclu_Jet0PuppiPt                                    ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDmass                                ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDpt                                  ->Delete();        
+  h_2ttag_inclu_Jet0PuppiTau1                                  ->Delete();        
+  h_2ttag_inclu_Jet0PuppiTau2                                  ->Delete();        
+  h_2ttag_inclu_Jet0PuppiTau3                                  ->Delete();        
+  h_2ttag_inclu_Jet0PuppiTau4                                  ->Delete();        
+  h_2ttag_inclu_Jet0PuppiTau32                                 ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDmaxbdisc                            ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet0pt                           ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet0mass                         ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet0tau1                         ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet0tau2                         ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet0tau3                         ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet0bdisc                        ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet1pt                           ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet1mass                         ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet1tau1                         ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet1tau2                         ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet1tau3                         ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet1bdisc                        ->Delete();        
+   
+  h_2ttag_inclu_Jet0PuppiSDsubjet0tau21                         ->Delete();        
+  h_2ttag_inclu_Jet0PuppiSDsubjet1tau21                         ->Delete();        
+
+
+  h_2ttag_inclu_Jet0PuppiCHF                                   ->Delete();        
+  h_2ttag_inclu_Jet0PuppiNHF                                   ->Delete();        
+  h_2ttag_inclu_Jet0PuppiCM                                    ->Delete();        
+  h_2ttag_inclu_Jet0PuppiNM                                    ->Delete();        
+  h_2ttag_inclu_Jet0PuppiNEF                                   ->Delete();        
+  h_2ttag_inclu_Jet0PuppiCEF                                   ->Delete();        
+  h_2ttag_inclu_Jet0PuppiMF                                    ->Delete();        
+  h_2ttag_inclu_Jet0PuppiMult                                  ->Delete();        
+     
+  h_2ttag_inclu_Jet1PuppiPt                                    ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDmass                                ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDpt                                  ->Delete();        
+  h_2ttag_inclu_Jet1PuppiTau1                                  ->Delete();        
+  h_2ttag_inclu_Jet1PuppiTau2                                  ->Delete();        
+  h_2ttag_inclu_Jet1PuppiTau3                                  ->Delete();        
+  h_2ttag_inclu_Jet1PuppiTau4                                  ->Delete();        
+  h_2ttag_inclu_Jet1PuppiTau32                                 ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDmaxbdisc                            ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet0pt                           ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet0mass                         ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet0tau1                         ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet0tau2                         ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet0tau3                         ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet0bdisc                        ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet1pt                           ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet1mass                         ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet1tau1                         ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet1tau2                         ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet1tau3                         ->Delete();        
+  h_2ttag_inclu_Jet1PuppiSDsubjet1bdisc                        ->Delete();        
+   
+  h_2ttag_inclu_Jet1PuppiCHF                                   ->Delete();        
+  h_2ttag_inclu_Jet1PuppiNHF                                   ->Delete();        
+  h_2ttag_inclu_Jet1PuppiCM                                    ->Delete();        
+  h_2ttag_inclu_Jet1PuppiNM                                    ->Delete();        
+  h_2ttag_inclu_Jet1PuppiNEF                                   ->Delete();        
+  h_2ttag_inclu_Jet1PuppiCEF                                   ->Delete();        
+  h_2ttag_inclu_Jet1PuppiMF                                    ->Delete();        
+  h_2ttag_inclu_Jet1PuppiMult                                  ->Delete();        
+     
+
+
+  h_2ttag_2btag_Jet0PuppiSDsubjet0pt                           ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet0mass                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet0tau1                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet0tau2                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet0tau3                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet0tau21                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet0bdisc                        ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet1pt                           ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet1mass                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet1tau1                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet1tau2                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet1tau3                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet1tau21                         ->Delete();        
+  h_2ttag_2btag_Jet0PuppiSDsubjet1bdisc                        ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet0pt                           ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet0mass                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet0tau1                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet0tau2                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet0tau3                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet0tau21                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet0bdisc                        ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet1pt                           ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet1mass                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet1tau1                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet1tau2                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet1tau3                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet1tau21                         ->Delete();        
+  h_2ttag_1btag_Jet0PuppiSDsubjet1bdisc                        ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet0pt                           ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet0mass                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet0tau1                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet0tau2                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet0tau3                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet0tau21                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet0bdisc                        ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet1pt                           ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet1mass                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet1tau1                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet1tau2                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet1tau3                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet1tau21                         ->Delete();        
+  h_2ttag_0btag_Jet0PuppiSDsubjet1bdisc                        ->Delete();        
+                                   
+  h_2btag_DijetMass                                            ->Delete();                    
+  h_2btag_DeltaRap                                             ->Delete();                    
+  h_2btag_DeltaRap_mTTgt1                                   ->Delete();   
+  h_2btag_DeltaRap_mTTgt2                                   ->Delete();   
+  h_2btag_DeltaRap_mTTgt3                                   ->Delete();     
+
+  h_2btag_jet0Pt ->Delete();
+  h_2btag_jet1Pt ->Delete();
+
+
+
+
+
+  h_2btag_jet0massSD                                           ->Delete();                    
+  h_2btag_jet0massSDpuppi                                      ->Delete();                    
+  h_2btag_jet0tau32                                            ->Delete();                    
+  h_2btag_jet0tau21                                            ->Delete();                    
+  h_2btag_jet0tau1                                             ->Delete();                    
+  h_2btag_jet0tau2                                             ->Delete();                    
+  h_2btag_jet0tau3                                             ->Delete();                    
+  h_2btag_jet0subjet0mass                                      ->Delete();                    
+  h_2btag_jet0subjet1mass                                      ->Delete();                    
+  h_2btag_jet0subjet0mass_jet0subjet1mass                      ->Delete();                    
+  h_2btag_jet0subjet0bdisc_jet0subjet1bdisc                    ->Delete();                    
+  h_2btag_jet1massSD                                           ->Delete();                    
+  h_2btag_jet1massSDpuppi                                      ->Delete();                    
+  h_2btag_jet1tau32                                            ->Delete();                    
+  h_2btag_jet1tau21                                            ->Delete();                    
+  h_2btag_jet1tau1                                             ->Delete();                    
+  h_2btag_jet1tau2                                             ->Delete();                    
+  h_2btag_jet1tau3                                             ->Delete();                    
+  h_2btag_jet1subjet0mass                                      ->Delete();                    
+  h_2btag_jet1subjet1mass                                      ->Delete();                    
+  h_2btag_jet1subjet0mass_jet1subjet1mass                      ->Delete();                    
+  h_2btag_jet1subjet0bdisc_jet1subjet1bdisc                    ->Delete();                    
+  h_2btag_jet1ttag_jet0massSD                                  ->Delete();                    
+  h_2btag_jet1ttag_jet0tau32                                   ->Delete();                    
+  h_2btag_jet1ttag_jet0tau21                                   ->Delete();                    
+  h_2btag_jet1ttag_jet0tau1                                    ->Delete();                    
+  h_2btag_jet1ttag_jet0tau2                                    ->Delete();                    
+  h_2btag_jet1ttag_jet0tau3                                    ->Delete();                    
+  h_2btag_jet1ttag_jet0subjet0mass                             ->Delete();                    
+  h_2btag_jet1ttag_jet0subjet1mass                             ->Delete();                    
+  h_2btag_jet1ttag_jet0subjet0mass_jet0subjet1mass             ->Delete();                    
+  h_2btag_jet1ttag_jet0subjet0bdisc_jet0subjet1bdisc           ->Delete();                    
+  h_2btag_jet0ttag_jet1massSD                                  ->Delete();                    
+  h_2btag_jet0ttag_jet1tau32                                   ->Delete();                    
+  h_2btag_jet0ttag_jet1tau21                                   ->Delete();                    
+  h_2btag_jet0ttag_jet1tau1                                    ->Delete();                    
+  h_2btag_jet0ttag_jet1tau2                                    ->Delete();                    
+  h_2btag_jet0ttag_jet1tau3                                    ->Delete();                    
+  h_2btag_jet0ttag_jet1subjet0mass                             ->Delete();                    
+  h_2btag_jet0ttag_jet1subjet1mass                             ->Delete();                    
+  h_2btag_jet0ttag_jet1subjet0mass_jet1subjet1mass             ->Delete();                    
+  h_2btag_jet0ttag_jet1subjet0bdisc_jet1subjet1bdisc           ->Delete();                    
+  h_2btag_jet1ttag_jet0tautag_jet0massSD                       ->Delete();                    
+  h_2btag_jet1ttag_jet0masstag_jet0tau32                       ->Delete();                    
+  h_2btag_jet1ttag_jet0masstag_jet0tau21                       ->Delete();                    
+  h_2btag_jet1ttag_jet0masstag_jet0tau1                        ->Delete();                    
+  h_2btag_jet1ttag_jet0masstag_jet0tau2                        ->Delete();                    
+  h_2btag_jet1ttag_jet0masstag_jet0tau3                        ->Delete();                    
+  h_2btag_jet0ttag_jet1tautag_jet1massSD                       ->Delete();                    
+  h_2btag_jet0ttag_jet1masstag_jet1tau32                       ->Delete();                    
+  h_2btag_jet0ttag_jet1masstag_jet1tau21                       ->Delete();                    
+  h_2btag_jet0ttag_jet1masstag_jet1tau1                        ->Delete();                    
+  h_2btag_jet0ttag_jet1masstag_jet1tau2                        ->Delete();                    
+  h_2btag_jet0ttag_jet1masstag_jet1tau3                        ->Delete();                    
+  h_topTag_jet0subjet0pt                                       ->Delete();                    
+  h_topTag_jet0subjet1pt                                       ->Delete();                    
+  h_topTag_jet0pt                                              ->Delete();                    
+  h_topTag_jet0pt_jet0subjet0pt                                ->Delete();                    
+  h_topTag_jet0pt_jet0subjet1pt                                ->Delete();                    
+  h_topTag_jet0subjet0pt_jet0subjet1pt                         ->Delete();                    
+  h_topTag_jet0subjet0mass_jet0subjet1mass                     ->Delete();                    
+  h_topTag_jet0subjet0bdisc_jet0subjet1bdisc                   ->Delete();                    
+  h_topTag_jet0subjet0mass                                     ->Delete();                    
+  h_topTag_jet0subjet1mass                                     ->Delete();                    
+  h_topTag_jet0subjet0bdisc                                    ->Delete();                    
+  h_topTag_jet0subjet1bdisc                                    ->Delete();                    
+  h_topTag_jet0maxBdisc                                        ->Delete();                    
+  h_topTagbTag_jet0subjet0pt                                   ->Delete();                    
+  h_topTagbTag_jet0subjet1pt                                   ->Delete();                    
+  h_topTagbTag_jet0pt                                          ->Delete();                    
+  h_topTagbTag_jet0pt_jet0subjet0pt                            ->Delete();                    
+  h_topTagbTag_jet0pt_jet0subjet1pt                            ->Delete();                    
+  h_topTagbTag_jet0subjet0pt_jet0subjet1pt                     ->Delete();                    
+  h_topTagbTag_jet0subjet0mass_jet0subjet1mass                 ->Delete();                    
+  h_topTagbTag_jet0subjet0bdisc_jet0subjet1bdisc               ->Delete();                    
+  h_topTagbTag_jet0subjet0mass                                 ->Delete();                    
+  h_topTagbTag_jet0subjet1mass                                 ->Delete();                    
+  h_topTagbTag_jet0subjet0bdisc                                ->Delete();                    
+  h_topTagbTag_jet0subjet1bdisc                                ->Delete();                    
+  h_topTagbTag_jet0maxBdisc                                    ->Delete();                    
+                                   
+                                   
+  // DDT tests                                 
+  h_jet0_rhoRatio                                              ->Delete();      
+  h_jet0_rhoRatioPrime                                         ->Delete();      
+  h_jet0_rhoRatioPmag                                          ->Delete();      
+  h_jet0_rhoRatioPmagPrime                                     ->Delete();      
+  h_jet0_rhoRatioPuppi                                         ->Delete();      
+  h_jet0_rhoRatioPuppiPrime                                    ->Delete();      
+  h_jet0_rhoRatioPuppiPmag                                     ->Delete();      
+  h_jet0_rhoRatioPuppiPmagPrime                                ->Delete();      
+  h_jet1_rhoRatio                                              ->Delete();      
+  h_jet1_rhoRatioPrime                                         ->Delete();      
+  h_jet1_rhoRatioPmag                                          ->Delete();      
+  h_jet1_rhoRatioPmagPrime                                     ->Delete();      
+  h_jet1_rhoRatioPuppi                                         ->Delete();      
+  h_jet1_rhoRatioPuppiPrime                                    ->Delete();      
+  h_jet1_rhoRatioPuppiPmag                                     ->Delete();      
+  h_jet1_rhoRatioPuppiPmagPrime                                ->Delete();      
+  h_jet0_tau32_rhoRatio                                ->Delete();              
+  h_jet0_tau32_rhoRatioPrime                           ->Delete();              
+  h_jet0_tau32_rhoRatioPmag                            ->Delete();              
+  h_jet0_tau32_rhoRatioPmagPrime                       ->Delete();              
+  h_jet0_tau32_rhoRatioPuppi                           ->Delete();              
+  h_jet0_tau32_rhoRatioPuppiPrime                      ->Delete();              
+  h_jet0_tau32_rhoRatioPuppiPmag                       ->Delete();              
+  h_jet0_tau32_rhoRatioPuppiPmagPrime                  ->Delete();              
+  h_jet1_tau32_rhoRatio                                ->Delete();              
+  h_jet1_tau32_rhoRatioPrime                           ->Delete();              
+  h_jet1_tau32_rhoRatioPmag                            ->Delete();              
+  h_jet1_tau32_rhoRatioPmagPrime                       ->Delete();              
+  h_jet1_tau32_rhoRatioPuppi                           ->Delete();              
+  h_jet1_tau32_rhoRatioPuppiPrime                      ->Delete();              
+  h_jet1_tau32_rhoRatioPuppiPmag                       ->Delete();              
+  h_jet1_tau32_rhoRatioPuppiPmagPrime                  ->Delete();              
+  h_jet0_tau21_rhoRatio                                ->Delete();              
+  h_jet0_tau21_rhoRatioPrime                           ->Delete();              
+  h_jet0_tau21_rhoRatioPmag                            ->Delete();              
+  h_jet0_tau21_rhoRatioPmagPrime                       ->Delete();              
+  h_jet0_tau21_rhoRatioPuppi                           ->Delete();              
+  h_jet0_tau21_rhoRatioPuppiPrime                      ->Delete();              
+  h_jet0_tau21_rhoRatioPuppiPmag                       ->Delete();              
+  h_jet0_tau21_rhoRatioPuppiPmagPrime                  ->Delete();              
+  h_jet1_tau21_rhoRatio                                ->Delete();              
+  h_jet1_tau21_rhoRatioPrime                           ->Delete();              
+  h_jet1_tau21_rhoRatioPmag                            ->Delete();              
+  h_jet1_tau21_rhoRatioPmagPrime                       ->Delete();              
+  h_jet1_tau21_rhoRatioPuppi                           ->Delete();              
+  h_jet1_tau21_rhoRatioPuppiPrime                      ->Delete();              
+  h_jet1_tau21_rhoRatioPuppiPmag                       ->Delete();              
+  h_jet1_tau21_rhoRatioPuppiPmagPrime                  ->Delete();              
+  h_jet0_tau42_rhoRatio                                ->Delete();              
+  h_jet0_tau42_rhoRatioPrime                           ->Delete();              
+  h_jet0_tau42_rhoRatioPmag                            ->Delete();              
+  h_jet0_tau42_rhoRatioPmagPrime                       ->Delete();              
+  h_jet0_tau42_rhoRatioPuppi                           ->Delete();              
+  h_jet0_tau42_rhoRatioPuppiPrime                      ->Delete();              
+  h_jet0_tau42_rhoRatioPuppiPmag                       ->Delete();              
+  h_jet0_tau42_rhoRatioPuppiPmagPrime                  ->Delete();              
+  h_jet1_tau42_rhoRatio                                ->Delete();              
+  h_jet1_tau42_rhoRatioPrime                           ->Delete();              
+  h_jet1_tau42_rhoRatioPmag                            ->Delete();              
+  h_jet1_tau42_rhoRatioPmagPrime                       ->Delete();              
+  h_jet1_tau42_rhoRatioPuppi                           ->Delete();              
+  h_jet1_tau42_rhoRatioPuppiPrime                      ->Delete();              
+  h_jet1_tau42_rhoRatioPuppiPmag                       ->Delete();              
+  h_jet1_tau42_rhoRatioPuppiPmagPrime                  ->Delete();              
+                                   
+  h_topMass_jet0_tau32_rhoRatio                        ->Delete();
+  h_topMass_jet0_tau32_rhoRatioPrime                   ->Delete();
+  h_topMass_jet0_tau32_rhoRatioPmag                    ->Delete();
+  h_topMass_jet0_tau32_rhoRatioPmagPrime               ->Delete();
+  h_topMass_jet0_tau21_rhoRatio                        ->Delete();
+  h_topMass_jet0_tau21_rhoRatioPrime                   ->Delete();
+  h_topMass_jet0_tau21_rhoRatioPmag                    ->Delete();
+  h_topMass_jet0_tau21_rhoRatioPmagPrime               ->Delete();
+  h_topMass_jet0_tau32_rhoRatioPuppi                   ->Delete();
+  h_topMass_jet0_tau32_rhoRatioPuppiPrime              ->Delete();
+  h_topMass_jet0_tau32_rhoRatioPuppiPmag               ->Delete();
+  h_topMass_jet0_tau32_rhoRatioPuppiPmagPrime          ->Delete();
+  h_topMass_jet0_tau21_rhoRatioPuppi                   ->Delete();
+  h_topMass_jet0_tau21_rhoRatioPuppiPrime              ->Delete();
+  h_topMass_jet0_tau21_rhoRatioPuppiPmag               ->Delete();
+  h_topMass_jet0_tau21_rhoRatioPuppiPmagPrime          ->Delete();
+
+  //Hadronic mtt selection and background estimaion            ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapHi_inclusive                    ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapHi_0btag                        ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapHi_1btag                        ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapHi_2btag                        ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapLo_inclusive                    ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapLo_0btag                        ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapLo_1btag                        ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapLo_2btag                        ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapIn_inclusive                    ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapIn_0btag                        ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapIn_1btag                        ->Delete();                  
+  h_mttMass_tagMassSDTau32_dRapIn_2btag                        ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapHi_inclusive                    ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapHi_0btag                        ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapHi_1btag                        ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapHi_2btag                        ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapLo_inclusive                    ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapLo_0btag                        ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapLo_1btag                        ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapLo_2btag                        ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapIn_inclusive                    ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapIn_0btag                        ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapIn_1btag                        ->Delete();                  
+  h_bkgdEst_tagMassSDTau32_dRapIn_2btag                        ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapHi_inclusive            ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapHi_0btag                ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapHi_1btag                ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapHi_2btag                ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_inclusive            ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_0btag                ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_1btag                ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapLo_2btag                ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_inclusive            ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_0btag                ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_1btag                ->Delete();                  
+  h_bkgdEst_modMass_tagMassSDTau32_dRapIn_2btag                ->Delete();
+
+  // ---------------------------------------------------------------------------
+  // -- Delete additional test histograms
+  h_DijetMass_modMass_jet0                                     ->Delete();                                                               
+  h_DijetMass_modMass_jet1                                     ->Delete();  
+  h_DijetMass_modMass_alt_jet0                                     ->Delete();                                                               
+  h_DijetMass_modMass_alt_jet1                                     ->Delete();  
+  h_DijetMass_modMass_alt2_jet0                                     ->Delete();                                                               
+  h_DijetMass_modMass_alt2_jet1                                     ->Delete();  
+  h_DijetMass_modMass_puppi_jet0                                     ->Delete();                                                               
+  h_DijetMass_modMass_puppi_jet1                                     ->Delete();  
+  h_DijetMass_modMass_puppi_alt_jet0                                     ->Delete();                                                               
+  h_DijetMass_modMass_puppi_alt_jet1                                     ->Delete();  
+  h_DijetMass_modMass_puppi_alt2_jet0                                     ->Delete();                                                               
+  h_DijetMass_modMass_puppi_alt2_jet1                                     ->Delete();  
+
+  h_DijetMass                                     ->Delete();  
+  h_DijetMassPuppi                                     ->Delete();
+
+  h_mAK8_ModMass->Delete();
+  h_mAK8_ModMass_jet0->Delete();
+  h_mAK8_ModMass_jet1->Delete();
+
+  h_mSDropAK8_ModMass->Delete();
+  h_mSDropAK8_ModMass_jet0->Delete();
+  h_mSDropAK8_ModMass_jet1->Delete();
+
+  h_mSDropAK8_AltTag_ModMass       ->Delete();
+  h_mSDropAK8_AltTag_ModMass_jet0  ->Delete();
+  h_mSDropAK8_AltTag_ModMass_jet1  ->Delete();
+
+  h_mSDropAK8_AltTag2_ModMass       ->Delete();
+  h_mSDropAK8_AltTag2_ModMass_jet0  ->Delete();
+  h_mSDropAK8_AltTag2_ModMass_jet1  ->Delete();
+
+
+
+  h_mPuppiSDropAK8_ModMass->Delete();
+  h_mPuppiSDropAK8_ModMass_jet0->Delete();
+  h_mPuppiSDropAK8_ModMass_jet1->Delete();
+
+  h_mPuppiSDropAK8_AltTag_ModMass->Delete();
+  h_mPuppiSDropAK8_AltTag_ModMass_jet0->Delete();
+  h_mPuppiSDropAK8_AltTag_ModMass_jet1->Delete();
+
+  h_mPuppiSDropAK8_AltTag2_ModMass->Delete();
+  h_mPuppiSDropAK8_AltTag2_ModMass_jet0->Delete();
+  h_mPuppiSDropAK8_AltTag2_ModMass_jet1->Delete();
+
+
+
+
+  h_pT_mSDropAK8_ModMass               ->Delete();
+  h_pT_mSDropAK8_ModMass_jet0          ->Delete();
+  h_pT_mSDropAK8_ModMass_jet1          ->Delete();
+
+  h_pT_mSDropAK8_AltTag_ModMass        ->Delete();
+  h_pT_mSDropAK8_AltTag_ModMass_jet0   ->Delete();
+  h_pT_mSDropAK8_AltTag_ModMass_jet1   ->Delete();
+
+
+  h_pT_mPuppiSDropAK8_ModMass          ->Delete();
+  h_pT_mPuppiSDropAK8_ModMass_jet0     ->Delete();
+  h_pT_mPuppiSDropAK8_ModMass_jet1     ->Delete();      
+  h_pT_mPuppiSDropAK8_AltTag_ModMass        ->Delete();  
+  h_pT_mPuppiSDropAK8_AltTag_ModMass_jet0   ->Delete();  
+  h_pT_mPuppiSDropAK8_AltTag_ModMass_jet1   ->Delete();  
+  h_pT_mPuppiSDropAK8_AltTag2_ModMass       ->Delete();  
+  h_pT_mPuppiSDropAK8_AltTag2_ModMass_jet0  ->Delete();  
+  h_pT_mPuppiSDropAK8_AltTag2_ModMass_jet1  ->Delete();  
+
+
+  h_p_mPuppiSDropAK8_ModMass                 ->Delete();
+  h_p_mPuppiSDropAK8_ModMass_jet0            ->Delete();
+  h_p_mPuppiSDropAK8_ModMass_jet1            ->Delete();      
+  h_p_mPuppiSDropAK8_AltTag_ModMass          ->Delete();  
+  h_p_mPuppiSDropAK8_AltTag_ModMass_jet0     ->Delete();  
+  h_p_mPuppiSDropAK8_AltTag_ModMass_jet1     ->Delete();  
+  h_p_mPuppiSDropAK8_AltTag2_ModMass         ->Delete();  
+  h_p_mPuppiSDropAK8_AltTag2_ModMass_jet0    ->Delete();  
+  h_p_mPuppiSDropAK8_AltTag2_ModMass_jet1    ->Delete();  
+
+  h_topTag_jet0subjet0flav_jet0subjet1flav->Delete();
+  h_topTag_jet0subjet0flav->Delete();
+  h_topTag_jet0subjet1flav->Delete();
+  h_topTag_jet0maxBdiscflav->Delete();
+  h_topTagbTag_jet0subjet0flav_jet0subjet1flav->Delete();
+  h_topTagbTag_jet0subjet0flav->Delete();
+  h_topTagbTag_jet0subjet1flav->Delete();
+  h_topTagbTag_jet0maxBdiscflav->Delete();
+
+  h_pT_mSDropAK8_AltTag2_ModMass->Delete();
+  h_pT_mSDropAK8_AltTag2_ModMass_jet0->Delete();
+  h_pT_mSDropAK8_AltTag2_ModMass_jet1->Delete();
+  
+                  
   file->Close();
   Fmistag0->Close();
   Fmistag1->Close();
