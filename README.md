@@ -34,6 +34,30 @@ cd CondFormats/BTauObjects
 scramv1 b
 cd ../../Analysis/B2GTTbar/test/
 *run loop tree*
+
+```
+
+To run with the lastest fastjet-contrib, copy the following into the fastjet-contrib file in
+
+```
+$CMSSW_RELEASE_BASE/config/toolbox/slc6_amd64_gcc530/tools/selected/fastjet-contrib.xml
+
+
+  <tool name="fastjet-contrib" version="1.026">
+    <info url="http://fastjet.hepforge.org/contrib/"/>
+    <lib name="fastjetcontribfragile"/>
+    <client>
+      <environment name="FASTJET_CONTRIB_BASE" default="/cvmfs/cms-ib.cern.ch/nweek-02479/slc6_amd64_gcc530/external/fastjet-contrib/1.026"/>
+      <environment name="LIBDIR" default="$FASTJET_CONTRIB_BASE/lib"/>
+      <environment name="INCLUDE" default="$FASTJET_CONTRIB_BASE/include"/>
+    </client>
+  </tool>
+```
+  
+  Then set it up with : 
+  
+```  
+  scram setup fastjet-contrib
 ```
 
 
