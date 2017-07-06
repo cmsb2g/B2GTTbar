@@ -164,7 +164,8 @@ jetToolbox( process, 'ak8', 'ak8JetSubs', 'out',
   addCMSTopTagger = False, 
   Cut = ak8pupCut , 
   addNsubSubjets = True, 
-  subjetMaxTau = 3 )
+  subjetMaxTau = 3, 
+  addEnergyCorrFunc=True, ecfBeta = 1.0, maxECF=3 )
 
 
 ### AK8GenJetsSoftDrop ###
