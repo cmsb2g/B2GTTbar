@@ -260,7 +260,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     
     // narrow                
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-      file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);  
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2.root ");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
@@ -418,13 +418,13 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
 
         if (ptcut[ipt]==400 && htcut[iht] == 950){
 // 20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw
-          mistag_file_data_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
-          mistag_file_data_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
-          mistag_file_data_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw"+"_data_subtract_ttbar.root"; 
 
-          mistag_file_data_0btag_ttw   = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
-          mistag_file_data_1btag_ttw   = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
-          mistag_file_data_2btag_ttw   = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
+          mistag_file_data_0btag_ttw   = folder_mistag + "MistagRate_"+"0btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
+          mistag_file_data_1btag_ttw   = folder_mistag + "MistagRate_"+"1btagtail_"+"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
+          mistag_file_data_2btag_ttw   = folder_mistag + "MistagRate_"+"2btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
 
           mistag_file_QCD1_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
           mistag_file_QCD1_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
@@ -496,9 +496,9 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
         string modmass_file_QCD2 = "";
 
         // if (ptcut[ipt]==400 && htcut[iht] == 950){
-        modmass_file_data  = folder_modMass+ "histsModMass_20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_TTw_nom_b2gtreeV5_JetHT_all.root";
-        modmass_file_QCD1  = folder_modMass+ "histsModMass_20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_TTw_nom_b2gtreeV5_QCD_HTscaled.root";
-        modmass_file_QCD2  = folder_modMass+ "histsModMass_20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_TTw_nom_b2gtreeV5_QCD_Ptscaled.root";
+        modmass_file_data  = folder_modMass+ "histsModMass_20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw_TTw_nom_b2gtreeV5_JetHT_all.root";
+        modmass_file_QCD1  = "root://cmseos.fnal.gov//store/user/camclean/B2G2016/80X/runs/histsModMass_ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WPB_alt40_alt260_bM_PUw_TTw_nom_b2gtreeV5_QCD_HTscaled.root";
+        modmass_file_QCD2  = folder_modMass+ "histsModMass_20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw_TTw_nom_b2gtreeV5_QCD_Ptscaled.root";
         // }
         if (ptcut[ipt]==500 && htcut[iht] == 1000){
           modmass_file_data  = folder_modMass+ "histsModMass_20160420_ht1000_pt500_WP"+wplabel[itau]+"_alt40_alt260_bM_PUw_noTTw_nom_b2gtreeV5_JetHT_all.root";
@@ -2229,7 +2229,7 @@ void looptree(
   if (run_bkgdest){
 
     // mistag rate from CHS tag defintion
-    h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag");
+    /*h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag");
     h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag         = (TH1D *) Fmistag1->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_1btag");
     h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag         = (TH1D *) Fmistag2->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_2btag");
     h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_inclusive");
@@ -2275,25 +2275,25 @@ void looptree(
     h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag     = (TH1D *) Fmistag1->Get("h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_2btag");
     h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt2_AntiTagCHS_TagMassSDTau32_jetP_dRapIn_inclusive");
-
+    */
     // mistag rate for PUPPI tag definition
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag         = (TH1D *) Fmistag1->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag         = (TH1D *) Fmistag2->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
-    h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
+    //h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
 
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag         = (TH1D *) Fmistag1->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag         = (TH1D *) Fmistag2->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
-    h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
+    //h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
 
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag         = (TH1D *) Fmistag1->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag         = (TH1D *) Fmistag2->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
-    h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
+    //h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
 
 
-    h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag");
+    /*h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag");
     h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag         = (TH1D *) Fmistag1->Get("h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag");
     h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag         = (TH1D *) Fmistag2->Get("h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag");
     h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclusive");
@@ -2301,11 +2301,11 @@ void looptree(
     h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag");
     h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag         = (TH1D *) Fmistag1->Get("h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag");
     h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag         = (TH1D *) Fmistag2->Get("h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag");
-    h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclusive");
+    h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclu         = (TH1D *) Fmistag0->Get("h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclusive");*/
 
 
     // mistag rate for alt PUPPI tag definition
-    h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
+    /*h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     = (TH1D *) Fmistag1->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
@@ -2334,7 +2334,7 @@ void looptree(
     h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     = (TH1D *) Fmistag1->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
-    h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
+    h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");*/
   }
 
 
@@ -2429,7 +2429,7 @@ void looptree(
 
   // input MODMASS histograms from file
   cout<<"Get modmass histograms from file "<<modmassFile<<endl;
-  TFile * FmodMass = new TFile(modmassFile.c_str());
+  TFile * FmodMass = TFile::Open(modmassFile.c_str(),"READ");
 
   TH1F * h_modMass_SD                 ;
   TH1F * h_modMass_SD_jet0            ;
@@ -5605,12 +5605,12 @@ void looptree(
 
   if (run_bkgdest){
     cout<<"Setting up PredictedDistribution"<<endl;
-    cout<<"Check mistag Integral "<<h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag ->Integral() <<endl;
+    cout<<"Check mistag Integral "<<h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag ->Integral() <<endl;
 
     // --- CHS
     // -- dRapHi
     // - 0btag
-    predDist_CHS_SR_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_SR_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
+    /*predDist_CHS_SR_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_SR_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
     predDist_CHS_SR_dRapHi_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_SR_dRapHi_0btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_CHS_SR_dRapHi_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_SR_dRapHi_0btag_HT"           , "", 1000, 0, 10000);
     predDist_CHS_SR_dRapHi_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagCHS_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_CHS_SR_dRapHi_0btag_DeltaRap"     , "",  500, 0,     5);
@@ -6037,7 +6037,7 @@ void looptree(
                   
 
     cout<<"Done setting up CHS PredictedDistribution"<<endl;
-
+    */
 
 
     // --- Puppi
@@ -6076,7 +6076,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SR_dRapHi_2btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapHi_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SR_dRapHi_2btag_maxbdisc"     , "",  200, 0,     1);
     // - btag inclusive
-    predDist_Puppi_SR_dRapHi_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_DijetMass"    , "",  900, 0,  9000);
+    /*predDist_Puppi_SR_dRapHi_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_DijetMass"    , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_inclu_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SR_dRapHi_inclu_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_DeltaRap"     , "",  500, 0,     5);
@@ -6086,7 +6086,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SR_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SR_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
-
+    */
     // -- dRapLo
     // - 0btag
     predDist_Puppi_SR_dRapLo_0btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_SR_dRapLo_0btag_DijetMass"    , "",  900, 0,  9000);
@@ -6122,7 +6122,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SR_dRapLo_2btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapLo_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SR_dRapLo_2btag_maxbdisc"     , "",  200, 0,     1);
     // - btag inclusive
-    predDist_Puppi_SR_dRapLo_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_DijetMass"    , "",  900, 0,  9000);
+    /*predDist_Puppi_SR_dRapLo_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_DijetMass"    , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_inclu_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SR_dRapLo_inclu_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_DeltaRap"     , "",  500, 0,     5);
@@ -6131,7 +6131,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_inclu_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_JetY"         , "",  300,-3,     3);
     predDist_Puppi_SR_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SR_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
-    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SR_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);*/
 
     // -- dRapIn
     // - 0btag
@@ -6142,8 +6142,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetY"         , "",  300,-3,     3);
-    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetSDmass"    , "",  700, 0,   700);
-    predDist_Puppi_SR_dRapIn_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetTau32"     , "",  200, 0,     1);
+    //predDist_Puppi_SR_dRapIn_0btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetSDmass"    , "",  700, 0,   700);
+    //predDist_Puppi_SR_dRapIn_0btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapIn_0btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     ,  "predDist_Puppi_SR_dRapIn_0btag_maxbdisc"     , "",  200, 0,     1);
     // - 1btag
     predDist_Puppi_SR_dRapIn_1btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_DijetMass"    , "",  900, 0,  9000);
@@ -6153,8 +6153,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetY"         , "",  300,-3,     3);
-    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetSDmass"    , "",  700, 0,   700);
-    predDist_Puppi_SR_dRapIn_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetTau32"     , "",  200, 0,     1);
+    //predDist_Puppi_SR_dRapIn_1btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetSDmass"    , "",  700, 0,   700);
+    //predDist_Puppi_SR_dRapIn_1btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapIn_1btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     ,  "predDist_Puppi_SR_dRapIn_1btag_maxbdisc"     , "",  200, 0,     1);
     // - 2btag
     predDist_Puppi_SR_dRapIn_2btag_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_DijetMass"    , "",  900, 0,  9000);
@@ -6164,11 +6164,11 @@ void looptree(
     predDist_Puppi_SR_dRapIn_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetY"         , "",  300,-3,     3);
-    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetSDmass"    , "",  700, 0,   700);
-    predDist_Puppi_SR_dRapIn_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetTau32"     , "",  200, 0,     1);
+    //predDist_Puppi_SR_dRapIn_2btag_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetSDmass"    , "",  700, 0,   700);
+    //predDist_Puppi_SR_dRapIn_2btag_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SR_dRapIn_2btag_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SR_dRapIn_2btag_maxbdisc"     , "",  200, 0,     1);
     // - btag inclusive
-    predDist_Puppi_SR_dRapIn_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_DijetMass"    , "",  900, 0,  9000);
+    /*predDist_Puppi_SR_dRapIn_inclu_DijetMass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_DijetMass"    , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapIn_inclu_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SR_dRapIn_inclu_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_DeltaRap"     , "",  500, 0,     5);
@@ -6177,7 +6177,7 @@ void looptree(
     predDist_Puppi_SR_dRapIn_inclu_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetY"         , "",  300,-3,     3);
     predDist_Puppi_SR_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_AntiTagPuppi_TagTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SR_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
-    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SR_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);*/
    
    // Special mistag hists
   // h_mistag_AntiTagPuppi_TagMassSD_jetP_dRapIn_0btag  
@@ -6193,7 +6193,7 @@ void looptree(
     // --- Alternative tag definition for closure test - Puppi
     // -- dRapHi
     // - 0btag
-    predDist_Puppi_SB1_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
+    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapHi_0btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_DeltaRap"     , "",  500, 0,     5);
@@ -6469,7 +6469,7 @@ void looptree(
     predDist_Puppi_SB2_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB2_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SB2_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB2_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SB2_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB2_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
-   
+    */
     cout<<"Done setting up PUPPI PredictedDistribution"<<endl;
 
  }
@@ -10477,7 +10477,6 @@ void looptree(
 
     if (run_bkgdest)
     {
-      
       //Modmass
       float dijetMass_modMass_jet0             = dijetMass;
       float dijetMass_modMass_jet1             = dijetMass;
@@ -10497,7 +10496,7 @@ void looptree(
       float dijetMass_modMass_flat_jet1        = dijetMass;
 
       //----- 
-      // randomly sample from QCD mass distribution in [110,210] 
+      // randomly sample from QCD mass distribution in [105,210] 
       // ROOT.gRandom.SetSeed(0) // make sure =0 -> TRandom3 - Set the random generator sequence if seed is 0 (default value) a TUUID is generated and used to fill the first 8 integers of the seed                      
       TRandom3 gRandom(0);
 
@@ -10579,9 +10578,7 @@ void looptree(
       TVector3 p_vec_jet1_PUPPI_ALT2_SD ( jet1P4_modMass_PUPPI_ALT2_SD.Px(), jet1P4_modMass_PUPPI_ALT2_SD.Py(), jet1P4_modMass_PUPPI_ALT2_SD.Pz());
       jet1P4_modMass_PUPPI_ALT2_SD.SetVectM( p_vec_jet1_PUPPI_ALT2_SD, randMass_QCD_PUPPI_ALT2_SD_jet1);
 
-
-
-      // //sample from a uniform distribution in [110,210] 
+      // //sample from a uniform distribution in [105,210] 
       TRandom3 rand(0);
       double rand_mass_flat = rand.Uniform(topTagSDwindowLo_CHS,topTagSDwindowHi_CHS);
 
@@ -10595,7 +10592,7 @@ void looptree(
 
 
       // if jet 0 is outside of the top mass window, force it to have mass in the window 
-      if (jet0sdmass < topTagSDwindowLo_CHS || jet0sdmass > topTagSDwindowHi_PUP){
+      if (jet0sdmass < topTagSDwindowLo_CHS || jet0sdmass > topTagSDwindowHi_CHS){
         dijetMass_modMass_jet0       = ( jet1P4 + jet0P4_modMass      ).M();
         dijetMass_modMass_flat_jet0  = ( jet1P4 + jet0P4_modMass_flat ).M();
       }
@@ -10606,8 +10603,6 @@ void looptree(
       if (puppi0sdmass < topTagSDwindowLo_PUP || puppi0sdmass > topTagSDwindowHi_PUP)  dijetMass_modMass_puppi_jet0      = ( jet1P4 + jet0P4_modMass_PUPPI_SD      ).M();
       if (puppi0sdmass < alttagSDwindowLo     || puppi0sdmass > topTagSDwindowLo_PUP)  dijetMass_modMass_puppi_alt_jet0  = ( jet1P4 + jet0P4_modMass_PUPPI_ALT_SD  ).M();
       if (puppi0sdmass < topTagSDwindowHi_PUP || puppi0sdmass > alt2tagSDwindowHi)     dijetMass_modMass_puppi_alt2_jet0 = ( jet1P4 + jet0P4_modMass_PUPPI_ALT2_SD ).M();
-
-
 
 
       // if jet 1 is outside of the top mass window, force it to have mass in the window 
@@ -10642,7 +10637,6 @@ void looptree(
       h_DijetMass                 ->Fill( dijetMass         , evWeight );
       h_DijetMassPuppi            ->Fill( dijetMassPuppi    , evWeight );
 
-
       //Fill predicted distribution
       TRandom3 rand1(0);
       double rand_bkgdest  = rand1.Uniform(0,1.0);
@@ -10651,7 +10645,7 @@ void looptree(
       if (rand_bkgdest < 0.5){
         
         // ---- CHS tag definition
-        if (j0_tag_t){
+        /*if (j0_tag_t){
 
           // --- dRapIn
           // -- btag inclusive
@@ -10822,7 +10816,7 @@ void looptree(
               predDist_CHS_SR_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_t, evWeight );
             }
           }
-        } // end if chs jet 0 tagged
+	  } // end if chs jet 0 tagged*/
 
         // ---- Puppi tag definition
 
@@ -10830,7 +10824,7 @@ void looptree(
         if (j0_puptag_t){
           // --- dRapIn
           // -- btag inclusive
-          predDist_Puppi_SR_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+          /*predDist_Puppi_SR_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
           predDist_Puppi_SR_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_t, evWeight );
           predDist_Puppi_SR_dRapIn_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
           predDist_Puppi_SR_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
@@ -10839,7 +10833,7 @@ void looptree(
           predDist_Puppi_SR_dRapIn_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
           predDist_Puppi_SR_dRapIn_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
           predDist_Puppi_SR_dRapIn_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );
-          predDist_Puppi_SR_dRapIn_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+          predDist_Puppi_SR_dRapIn_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );*/
         
           // -- 0btag       
           if (!j0_puptag_b && !j1_puptag_b){
@@ -10850,8 +10844,8 @@ void looptree(
             predDist_Puppi_SR_dRapIn_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
-            predDist_Puppi_SR_dRapIn_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
-            predDist_Puppi_SR_dRapIn_0btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );
+            /*predDist_Puppi_SR_dRapIn_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
+	      predDist_Puppi_SR_dRapIn_0btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );*/
             predDist_Puppi_SR_dRapIn_0btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
           }
 
@@ -10864,8 +10858,8 @@ void looptree(
             predDist_Puppi_SR_dRapIn_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
-            predDist_Puppi_SR_dRapIn_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
-            predDist_Puppi_SR_dRapIn_1btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );
+            /*predDist_Puppi_SR_dRapIn_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
+	      predDist_Puppi_SR_dRapIn_1btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );*/
             predDist_Puppi_SR_dRapIn_1btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
           }
 
@@ -10878,8 +10872,8 @@ void looptree(
             predDist_Puppi_SR_dRapIn_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
-            predDist_Puppi_SR_dRapIn_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
-            predDist_Puppi_SR_dRapIn_2btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );
+            /*predDist_Puppi_SR_dRapIn_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_tau32, evWeight );
+	      predDist_Puppi_SR_dRapIn_2btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_mass, evWeight );*/
             predDist_Puppi_SR_dRapIn_2btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
           }
           
@@ -10887,7 +10881,7 @@ void looptree(
           if (DijetDeltaRap >= 1){
 
             // -- btag inclusive
-            predDist_Puppi_SR_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+            /*predDist_Puppi_SR_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
             predDist_Puppi_SR_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_t, evWeight );
             predDist_Puppi_SR_dRapHi_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
             predDist_Puppi_SR_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
@@ -10896,7 +10890,7 @@ void looptree(
             predDist_Puppi_SR_dRapHi_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapHi_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
             predDist_Puppi_SR_dRapHi_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapHi_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_SR_dRapHi_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );*/
             
             // -- 0btag       
             if (!j0_puptag_b && !j1_puptag_b){
@@ -10908,7 +10902,7 @@ void looptree(
               predDist_Puppi_SR_dRapHi_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
-              predDist_Puppi_SR_dRapHi_0btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
+	      predDist_Puppi_SR_dRapHi_0btag_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
               predDist_Puppi_SR_dRapHi_0btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
             }
 
@@ -10944,7 +10938,7 @@ void looptree(
           if (DijetDeltaRap < 1){
             
             // -- btag inclusive
-            predDist_Puppi_SR_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
+            /*predDist_Puppi_SR_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_t, evWeight );
             predDist_Puppi_SR_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_t, evWeight );
             predDist_Puppi_SR_dRapLo_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
             predDist_Puppi_SR_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
@@ -10953,7 +10947,7 @@ void looptree(
             predDist_Puppi_SR_dRapLo_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapLo_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_t, evWeight );
             predDist_Puppi_SR_dRapLo_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapLo_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );
+            predDist_Puppi_SR_dRapLo_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_t, evWeight );*/
             
             // -- 0btag       
             if (!j0_puptag_b && !j1_puptag_b){
@@ -11000,7 +10994,7 @@ void looptree(
         } // end if puppi jet 0 tagged
 
         // ---- Closure test - alternative tag definition 1 (CHS)
-        if (j0_tag_alt_t){
+        /*if (j0_tag_alt_t){
 
           // --- dRapIn
           // -- btag inclusive
@@ -11171,7 +11165,7 @@ void looptree(
               predDist_CHS_SB1_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt_t, evWeight );
             }
           }
-        } // end if alternative tag (sideband) jet 0 tagged
+	  } // end if alternative tag (sideband) jet 0 tagged
 
         // ---- Closure test - alternative tag definition 2 (CHS)
         if (j0_tag_alt2_t){
@@ -11345,10 +11339,10 @@ void looptree(
               predDist_CHS_SB2_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet1SDmaxbdisc, jet1P4.P(), j1_tag_alt2_t, evWeight );
             }
           }
-        } // end if alternative tag (sideband) jet 0 tagged
+	  } // end if alternative tag (sideband) jet 0 tagged */
 
         // ---- Closure test - alternative tag definition 1 (Puppi)
-        if (j0_puptag_alt_t){
+        /*if (j0_puptag_alt_t){
           // --- dRapIn
           // -- btag inclusive
           predDist_Puppi_SB1_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_alt_t, evWeight );
@@ -11691,7 +11685,7 @@ void looptree(
               predDist_Puppi_SB2_dRapLo_2btag_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_alt2_t, evWeight );
             }
           }
-        } // end if puppi jet 0 tagged
+	  } // end if puppi jet 0 tagged */
 
 
       } // end random # < 0.5
@@ -11701,7 +11695,7 @@ void looptree(
     
        
         // ---- CHS tag definition
-        if (j1_tag_t){
+        /*if (j1_tag_t){
 
           // --- dRapIn
           // -- btag inclusive
@@ -11872,13 +11866,13 @@ void looptree(
               predDist_CHS_SR_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_t, evWeight );
             }
           }
-        } // end if chs jet 1 tagged
+	  } // end if chs jet 1 tagged*/
 
         // ---- Puppi tag definition
         if (j1_puptag_t){
           // --- dRapIn
           // -- btag inclusive
-          predDist_Puppi_SR_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+          /*predDist_Puppi_SR_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
           predDist_Puppi_SR_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet0, jet0P4.P(), j0_puptag_t, evWeight );
           predDist_Puppi_SR_dRapIn_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
           predDist_Puppi_SR_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
@@ -11887,7 +11881,7 @@ void looptree(
           predDist_Puppi_SR_dRapIn_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
           predDist_Puppi_SR_dRapIn_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
           predDist_Puppi_SR_dRapIn_inclu_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
-          predDist_Puppi_SR_dRapIn_inclu_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+          predDist_Puppi_SR_dRapIn_inclu_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );*/
          
           // -- 0btag       
           if (!j0_puptag_b && !j1_puptag_b){
@@ -11898,8 +11892,8 @@ void looptree(
             predDist_Puppi_SR_dRapIn_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
-            predDist_Puppi_SR_dRapIn_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapIn_0btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+            /*predDist_Puppi_SR_dRapIn_0btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+	      predDist_Puppi_SR_dRapIn_0btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );*/
             predDist_Puppi_SR_dRapIn_0btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
           }
 
@@ -11912,8 +11906,8 @@ void looptree(
             predDist_Puppi_SR_dRapIn_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
-            predDist_Puppi_SR_dRapIn_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapIn_1btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+            /*predDist_Puppi_SR_dRapIn_1btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+	      predDist_Puppi_SR_dRapIn_1btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );*/
             predDist_Puppi_SR_dRapIn_1btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
           }
 
@@ -11926,8 +11920,8 @@ void looptree(
             predDist_Puppi_SR_dRapIn_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapIn_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
-            predDist_Puppi_SR_dRapIn_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapIn_2btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
+            /*predDist_Puppi_SR_dRapIn_2btag_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_SR_dRapIn_2btag_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );*/
             predDist_Puppi_SR_dRapIn_2btag_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
           }
           
@@ -11935,7 +11929,7 @@ void looptree(
           if (DijetDeltaRap >= 1){
 
             // -- btag inclusive
-            predDist_Puppi_SR_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+            /*predDist_Puppi_SR_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
             predDist_Puppi_SR_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet0, jet0P4.P(), j0_puptag_t, evWeight );
             predDist_Puppi_SR_dRapHi_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
             predDist_Puppi_SR_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
@@ -11944,7 +11938,7 @@ void looptree(
             predDist_Puppi_SR_dRapHi_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapHi_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
             predDist_Puppi_SR_dRapHi_inclu_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapHi_inclu_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_SR_dRapHi_inclu_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );*/
             
             // -- 0btag       
             if (!j0_puptag_b && !j1_puptag_b){
@@ -11992,7 +11986,7 @@ void looptree(
           if (DijetDeltaRap < 1){
             
             // -- btag inclusive
-            predDist_Puppi_SR_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
+            /*predDist_Puppi_SR_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_t, evWeight );
             predDist_Puppi_SR_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet0, jet0P4.P(), j0_puptag_t, evWeight );
             predDist_Puppi_SR_dRapLo_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
             predDist_Puppi_SR_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
@@ -12001,7 +11995,7 @@ void looptree(
             predDist_Puppi_SR_dRapLo_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
             predDist_Puppi_SR_dRapLo_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet0P4.P(), j0_puptag_t, evWeight );
             predDist_Puppi_SR_dRapLo_inclu_JetTau32        ->Accumulate(         Jet0PuppiTau32, jet0P4.P(), j0_puptag_t, evWeight );
-            predDist_Puppi_SR_dRapLo_inclu_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );
+            predDist_Puppi_SR_dRapLo_inclu_maxbdisc        ->Accumulate(    Jet0PuppiSDmaxbdisc, jet0P4.P(), j0_puptag_t, evWeight );*/
             
             // -- 0btag       
             if (!j0_puptag_b && !j1_puptag_b){
@@ -12048,7 +12042,7 @@ void looptree(
         } // end if puppi jet 1 tagged
 
         // ---- Closure test - alternative tag definition 1 (CHS)
-        if (j1_tag_alt_t){
+        /*if (j1_tag_alt_t){
 
           // --- dRapIn
           // -- btag inclusive
@@ -12393,10 +12387,10 @@ void looptree(
               predDist_CHS_SB2_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_tag_alt2_t, evWeight );
             }
           }
-        } // end if alternative tag (sideband) jet 1 tagged
+	  } // end if alternative tag (sideband) jet 1 tagged*/
 
         // ---- Closure test - alternative tag definition 1 (Puppi)
-        if (j1_puptag_alt_t){
+        /*if (j1_puptag_alt_t){
 
           // --- dRapIn
           // -- btag inclusive
@@ -12741,7 +12735,7 @@ void looptree(
               predDist_Puppi_SB2_dRapLo_2btag_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_puptag_alt2_t, evWeight );
             }
           }
-        } // end if alternative puptag (sideband) jet 1 puptagged
+	  } // end if alternative puptag (sideband) jet 1 puptagged*/
 
       } // end random # > 0.5
     } // end background estimate
@@ -16497,7 +16491,7 @@ void looptree(
     // Write Predicted
 
 
-    predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetPredictedHist()   ->Write();
+    /*predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetPredictedHist()   ->Write();
     predDist_CHS_SR_dRapHi_0btag_DijetMassMod     ->GetPredictedHist()   ->Write();
     predDist_CHS_SR_dRapHi_0btag_HT               ->GetPredictedHist()   ->Write();
     predDist_CHS_SR_dRapHi_0btag_DeltaRap         ->GetPredictedHist()   ->Write();
@@ -16616,7 +16610,8 @@ void looptree(
     predDist_CHS_SR_dRapIn_inclu_JetY             ->GetPredictedHist()   ->Write();
     predDist_CHS_SR_dRapIn_inclu_JetSDmass        ->GetPredictedHist()   ->Write();
     predDist_CHS_SR_dRapIn_inclu_JetTau32         ->GetPredictedHist()   ->Write();
-    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetPredictedHist()   ->Write();
+    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetPredictedHist()   ->Write();*/
+
     predDist_Puppi_SR_dRapHi_0btag_DijetMass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetPredictedHist()   ->Write();
@@ -16647,7 +16642,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_JetSDmass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetTau32       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_maxbdisc       ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetPredictedHist()   ->Write();
+    /*predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_HT             ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_DeltaRap       ->GetPredictedHist()   ->Write();
@@ -16656,7 +16651,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_inclu_JetY           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_JetSDmass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_JetTau32       ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetPredictedHist()   ->Write();*/
     predDist_Puppi_SR_dRapLo_0btag_DijetMass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetPredictedHist()   ->Write();
@@ -16687,7 +16682,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_JetSDmass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetTau32       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_maxbdisc       ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetPredictedHist()   ->Write();
+    /*predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_HT             ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_DeltaRap       ->GetPredictedHist()   ->Write();
@@ -16696,7 +16691,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_inclu_JetY           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_JetSDmass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_JetTau32       ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetPredictedHist()   ->Write();*/
     predDist_Puppi_SR_dRapIn_0btag_DijetMass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_HT             ->GetPredictedHist()   ->Write();
@@ -16704,8 +16699,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_0btag_JetP           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_JetPt          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_JetY           ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetPredictedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_maxbdisc       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_DijetMass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_DijetMassMod   ->GetPredictedHist()   ->Write();
@@ -16714,8 +16709,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_1btag_JetP           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_JetPt          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_JetY           ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetPredictedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_maxbdisc       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_DijetMass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_DijetMassMod   ->GetPredictedHist()   ->Write();
@@ -16724,10 +16719,10 @@ void looptree(
     predDist_Puppi_SR_dRapIn_2btag_JetP           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_JetPt          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_JetY           ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetPredictedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetPredictedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_maxbdisc       ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetPredictedHist()   ->Write();
+    /*predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_HT             ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_DeltaRap       ->GetPredictedHist()   ->Write();
@@ -16736,8 +16731,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_inclu_JetY           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_JetSDmass      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_JetTau32       ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetPredictedHist()   ->Write();
-    predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetPredictedHist()   ->Write();*/
+    /*predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Write();
     predDist_CHS_SB1_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Write();
     predDist_CHS_SB1_dRapHi_0btag_HT            ->GetPredictedHist()   ->Write();
     predDist_CHS_SB1_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Write();
@@ -16977,9 +16972,9 @@ void looptree(
     predDist_CHS_SB2_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Write();
     predDist_CHS_SB2_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Write();
     predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Write();
-    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Write();*/
 
-    predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Write();
+    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Write();
@@ -17219,13 +17214,13 @@ void looptree(
     predDist_Puppi_SB2_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB2_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB2_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Write();*/
 
 
 
     // ---------------------------------------------------------------------------
     // -- Write Observed histograms (double tagged)
-    predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetObservedHist()   ->Write();
+    /*predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetObservedHist()   ->Write();
     predDist_CHS_SR_dRapHi_0btag_DijetMassMod     ->GetObservedHist()   ->Write();
     predDist_CHS_SR_dRapHi_0btag_HT               ->GetObservedHist()   ->Write();
     predDist_CHS_SR_dRapHi_0btag_DeltaRap         ->GetObservedHist()   ->Write();
@@ -17344,7 +17339,8 @@ void looptree(
     predDist_CHS_SR_dRapIn_inclu_JetY             ->GetObservedHist()   ->Write();
     predDist_CHS_SR_dRapIn_inclu_JetSDmass        ->GetObservedHist()   ->Write();
     predDist_CHS_SR_dRapIn_inclu_JetTau32         ->GetObservedHist()   ->Write();
-    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetObservedHist()   ->Write();
+    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetObservedHist()   ->Write();*/
+
     predDist_Puppi_SR_dRapHi_0btag_DijetMass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetObservedHist()   ->Write();
@@ -17375,7 +17371,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_JetSDmass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetTau32       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_maxbdisc       ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetObservedHist()   ->Write();
+    /*predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_HT             ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_DeltaRap       ->GetObservedHist()   ->Write();
@@ -17384,7 +17380,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_inclu_JetY           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_JetSDmass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_JetTau32       ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetObservedHist()   ->Write();*/
     predDist_Puppi_SR_dRapLo_0btag_DijetMass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetObservedHist()   ->Write();
@@ -17415,7 +17411,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_JetSDmass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetTau32       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_maxbdisc       ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetObservedHist()   ->Write();
+    /*predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_HT             ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_DeltaRap       ->GetObservedHist()   ->Write();
@@ -17424,7 +17420,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_inclu_JetY           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_JetSDmass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_JetTau32       ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetObservedHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetObservedHist()   ->Write();*/
     predDist_Puppi_SR_dRapIn_0btag_DijetMass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_HT             ->GetObservedHist()   ->Write();
@@ -17432,8 +17428,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_0btag_JetP           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_JetPt          ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_JetY           ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetObservedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetObservedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_maxbdisc       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_DijetMass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_DijetMassMod   ->GetObservedHist()   ->Write();
@@ -17442,8 +17438,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_1btag_JetP           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_JetPt          ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_JetY           ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetObservedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetObservedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_maxbdisc       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_DijetMass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_DijetMassMod   ->GetObservedHist()   ->Write();
@@ -17452,10 +17448,10 @@ void looptree(
     predDist_Puppi_SR_dRapIn_2btag_JetP           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_JetPt          ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_JetY           ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetObservedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetObservedHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_maxbdisc       ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetObservedHist()   ->Write();
+    /*predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_HT             ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_DeltaRap       ->GetObservedHist()   ->Write();
@@ -17464,8 +17460,9 @@ void looptree(
     predDist_Puppi_SR_dRapIn_inclu_JetY           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_JetSDmass      ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_JetTau32       ->GetObservedHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetObservedHist()   ->Write();
-    predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetObservedHist()   ->Write();*/
+
+    /*predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Write();
     predDist_CHS_SB1_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Write();
     predDist_CHS_SB1_dRapHi_0btag_HT            ->GetObservedHist()   ->Write();
     predDist_CHS_SB1_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Write();
@@ -17705,9 +17702,9 @@ void looptree(
     predDist_CHS_SB2_dRapIn_inclu_JetY          ->GetObservedHist()   ->Write();
     predDist_CHS_SB2_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Write();
     predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Write();
-    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Write();*/
 
-   predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Write();
+    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Write();
@@ -17947,7 +17944,7 @@ void looptree(
     predDist_Puppi_SB2_dRapIn_inclu_JetY          ->GetObservedHist()   ->Write();
     predDist_Puppi_SB2_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB2_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Write();*/
 
 
 
@@ -17956,7 +17953,7 @@ void looptree(
 
     // ---------------------------------------------------------------------------
     // -- Write taggable histograms 
-    predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetTaggableHist()   ->Write();
+    /*predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetTaggableHist()   ->Write();
     predDist_CHS_SR_dRapHi_0btag_DijetMassMod     ->GetTaggableHist()   ->Write();
     predDist_CHS_SR_dRapHi_0btag_HT               ->GetTaggableHist()   ->Write();
     predDist_CHS_SR_dRapHi_0btag_DeltaRap         ->GetTaggableHist()   ->Write();
@@ -18075,7 +18072,8 @@ void looptree(
     predDist_CHS_SR_dRapIn_inclu_JetY             ->GetTaggableHist()   ->Write();
     predDist_CHS_SR_dRapIn_inclu_JetSDmass        ->GetTaggableHist()   ->Write();
     predDist_CHS_SR_dRapIn_inclu_JetTau32         ->GetTaggableHist()   ->Write();
-    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetTaggableHist()   ->Write();
+    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetTaggableHist()   ->Write();*/
+
     predDist_Puppi_SR_dRapHi_0btag_DijetMass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetTaggableHist()   ->Write();
@@ -18106,7 +18104,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_JetSDmass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetTau32       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_maxbdisc       ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetTaggableHist()   ->Write();
+    /*predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_HT             ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_DeltaRap       ->GetTaggableHist()   ->Write();
@@ -18115,7 +18113,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_inclu_JetY           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_JetSDmass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_inclu_JetTau32       ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetTaggableHist()   ->Write();*/
     predDist_Puppi_SR_dRapLo_0btag_DijetMass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetTaggableHist()   ->Write();
@@ -18146,7 +18144,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_JetSDmass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetTau32       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_maxbdisc       ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetTaggableHist()   ->Write();
+    /*predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_HT             ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_DeltaRap       ->GetTaggableHist()   ->Write();
@@ -18155,7 +18153,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_inclu_JetY           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_JetSDmass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_inclu_JetTau32       ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetTaggableHist()   ->Write();*/
     predDist_Puppi_SR_dRapIn_0btag_DijetMass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_HT             ->GetTaggableHist()   ->Write();
@@ -18163,8 +18161,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_0btag_JetP           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_JetPt          ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_JetY           ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetTaggableHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_0btag_maxbdisc       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_DijetMass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_DijetMassMod   ->GetTaggableHist()   ->Write();
@@ -18173,8 +18171,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_1btag_JetP           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_JetPt          ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_JetY           ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetTaggableHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_1btag_maxbdisc       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_DijetMass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_DijetMassMod   ->GetTaggableHist()   ->Write();
@@ -18183,10 +18181,10 @@ void looptree(
     predDist_Puppi_SR_dRapIn_2btag_JetP           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_JetPt          ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_JetY           ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetTaggableHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetTaggableHist()   ->Write();
+    //predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_2btag_maxbdisc       ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetTaggableHist()   ->Write();
+    /*predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_HT             ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_DeltaRap       ->GetTaggableHist()   ->Write();
@@ -18195,8 +18193,9 @@ void looptree(
     predDist_Puppi_SR_dRapIn_inclu_JetY           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_JetSDmass      ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapIn_inclu_JetTau32       ->GetTaggableHist()   ->Write();
-    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetTaggableHist()   ->Write();
-    predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetTaggableHist()   ->Write();
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetTaggableHist()   ->Write();*/
+
+    /*predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetTaggableHist()   ->Write();
     predDist_CHS_SB1_dRapHi_0btag_DijetMassMod  ->GetTaggableHist()   ->Write();
     predDist_CHS_SB1_dRapHi_0btag_HT            ->GetTaggableHist()   ->Write();
     predDist_CHS_SB1_dRapHi_0btag_DeltaRap      ->GetTaggableHist()   ->Write();
@@ -18315,7 +18314,7 @@ void looptree(
     predDist_CHS_SB1_dRapIn_inclu_JetY          ->GetTaggableHist()   ->Write();
     predDist_CHS_SB1_dRapIn_inclu_JetSDmass     ->GetTaggableHist()   ->Write();
     predDist_CHS_SB1_dRapIn_inclu_JetTau32      ->GetTaggableHist()   ->Write();
-    predDist_CHS_SB1_dRapIn_inclu_maxbdisc      ->GetTaggableHist()   ->Write();
+    predDist_CHS_SB1_dRapIn_inclu_maxbdisc      ->GetTaggableHist()   ->Write();*/
 
     // ---------------------------------------------------------------------------
     // -- Write additional test histograms
@@ -18349,7 +18348,7 @@ void looptree(
 
     Out->Close();
 
-    predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetPredictedHist()   ->Delete();
+    /*predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetPredictedHist()   ->Delete();
     predDist_CHS_SR_dRapHi_0btag_DijetMassMod     ->GetPredictedHist()   ->Delete();
     predDist_CHS_SR_dRapHi_0btag_HT               ->GetPredictedHist()   ->Delete();
     predDist_CHS_SR_dRapHi_0btag_DeltaRap         ->GetPredictedHist()   ->Delete();
@@ -18468,7 +18467,8 @@ void looptree(
     predDist_CHS_SR_dRapIn_inclu_JetY             ->GetPredictedHist()   ->Delete();
     predDist_CHS_SR_dRapIn_inclu_JetSDmass        ->GetPredictedHist()   ->Delete();
     predDist_CHS_SR_dRapIn_inclu_JetTau32         ->GetPredictedHist()   ->Delete();
-    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetPredictedHist()   ->Delete();*/
+
     predDist_Puppi_SR_dRapHi_0btag_DijetMass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetPredictedHist()   ->Delete();
@@ -18499,7 +18499,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_JetSDmass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetTau32       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_maxbdisc       ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetPredictedHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_HT             ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_DeltaRap       ->GetPredictedHist()   ->Delete();
@@ -18508,7 +18508,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_inclu_JetY           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_JetSDmass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_JetTau32       ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetPredictedHist()   ->Delete();*/
     predDist_Puppi_SR_dRapLo_0btag_DijetMass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetPredictedHist()   ->Delete();
@@ -18539,7 +18539,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_JetSDmass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetTau32       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_maxbdisc       ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetPredictedHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_HT             ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_DeltaRap       ->GetPredictedHist()   ->Delete();
@@ -18548,7 +18548,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_inclu_JetY           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_JetSDmass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_JetTau32       ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetPredictedHist()   ->Delete();*/
     predDist_Puppi_SR_dRapIn_0btag_DijetMass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_HT             ->GetPredictedHist()   ->Delete();
@@ -18556,8 +18556,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_0btag_JetP           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_JetPt          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_JetY           ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_maxbdisc       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_DijetMass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
@@ -18566,8 +18566,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_1btag_JetP           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_JetPt          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_JetY           ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_maxbdisc       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_DijetMass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
@@ -18576,10 +18576,10 @@ void looptree(
     predDist_Puppi_SR_dRapIn_2btag_JetP           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_JetPt          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_JetY           ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetPredictedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetPredictedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_maxbdisc       ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetPredictedHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_HT             ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_DeltaRap       ->GetPredictedHist()   ->Delete();
@@ -18588,8 +18588,9 @@ void looptree(
     predDist_Puppi_SR_dRapIn_inclu_JetY           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_JetSDmass      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_JetTau32       ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetPredictedHist()   ->Delete();
-    predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetPredictedHist()   ->Delete();*/
+
+    /*predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
     predDist_CHS_SB1_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
     predDist_CHS_SB1_dRapHi_0btag_HT            ->GetPredictedHist()   ->Delete();
     predDist_CHS_SB1_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
@@ -18829,9 +18830,9 @@ void looptree(
     predDist_CHS_SB2_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Delete();
     predDist_CHS_SB2_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
     predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
-    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();*/
 
-    predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
@@ -19071,13 +19072,13 @@ void looptree(
     predDist_Puppi_SB2_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB2_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB2_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();*/
 
 
 
     // ---------------------------------------------------------------------------
     // -- Delete Observed histograms (double tagged)
-    predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetObservedHist()   ->Delete();
+    /*predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetObservedHist()   ->Delete();
     predDist_CHS_SR_dRapHi_0btag_DijetMassMod     ->GetObservedHist()   ->Delete();
     predDist_CHS_SR_dRapHi_0btag_HT               ->GetObservedHist()   ->Delete();
     predDist_CHS_SR_dRapHi_0btag_DeltaRap         ->GetObservedHist()   ->Delete();
@@ -19196,7 +19197,8 @@ void looptree(
     predDist_CHS_SR_dRapIn_inclu_JetY             ->GetObservedHist()   ->Delete();
     predDist_CHS_SR_dRapIn_inclu_JetSDmass        ->GetObservedHist()   ->Delete();
     predDist_CHS_SR_dRapIn_inclu_JetTau32         ->GetObservedHist()   ->Delete();
-    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetObservedHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetObservedHist()   ->Delete();*/
+
     predDist_Puppi_SR_dRapHi_0btag_DijetMass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetObservedHist()   ->Delete();
@@ -19227,7 +19229,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_JetSDmass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetTau32       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_maxbdisc       ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetObservedHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_HT             ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_DeltaRap       ->GetObservedHist()   ->Delete();
@@ -19236,7 +19238,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_inclu_JetY           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_JetSDmass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_JetTau32       ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetObservedHist()   ->Delete();*/
     predDist_Puppi_SR_dRapLo_0btag_DijetMass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetObservedHist()   ->Delete();
@@ -19267,7 +19269,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_JetSDmass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetTau32       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_maxbdisc       ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetObservedHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_HT             ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_DeltaRap       ->GetObservedHist()   ->Delete();
@@ -19276,7 +19278,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_inclu_JetY           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_JetSDmass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_JetTau32       ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetObservedHist()   ->Delete();*/
     predDist_Puppi_SR_dRapIn_0btag_DijetMass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_HT             ->GetObservedHist()   ->Delete();
@@ -19284,8 +19286,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_0btag_JetP           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_JetPt          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_JetY           ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetObservedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_maxbdisc       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_DijetMass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_DijetMassMod   ->GetObservedHist()   ->Delete();
@@ -19294,8 +19296,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_1btag_JetP           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_JetPt          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_JetY           ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetObservedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_maxbdisc       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_DijetMass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_DijetMassMod   ->GetObservedHist()   ->Delete();
@@ -19304,10 +19306,10 @@ void looptree(
     predDist_Puppi_SR_dRapIn_2btag_JetP           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_JetPt          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_JetY           ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetObservedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetObservedHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_maxbdisc       ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetObservedHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_HT             ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_DeltaRap       ->GetObservedHist()   ->Delete();
@@ -19316,8 +19318,9 @@ void looptree(
     predDist_Puppi_SR_dRapIn_inclu_JetY           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_JetSDmass      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_JetTau32       ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetObservedHist()   ->Delete();
-    predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetObservedHist()   ->Delete();*/
+
+    /*predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
     predDist_CHS_SB1_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
     predDist_CHS_SB1_dRapHi_0btag_HT            ->GetObservedHist()   ->Delete();
     predDist_CHS_SB1_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
@@ -19557,9 +19560,9 @@ void looptree(
     predDist_CHS_SB2_dRapIn_inclu_JetY          ->GetObservedHist()   ->Delete();
     predDist_CHS_SB2_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
     predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Delete();
-    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();*/
 
-   predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
@@ -19799,7 +19802,7 @@ void looptree(
     predDist_Puppi_SB2_dRapIn_inclu_JetY          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB2_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB2_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();*/
 
 
 
@@ -19808,7 +19811,7 @@ void looptree(
 
     // ---------------------------------------------------------------------------
     // -- Delete taggable histograms 
-    predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetTaggableHist()   ->Delete();
+    /*predDist_CHS_SR_dRapHi_0btag_DijetMass        ->GetTaggableHist()   ->Delete();
     predDist_CHS_SR_dRapHi_0btag_DijetMassMod     ->GetTaggableHist()   ->Delete();
     predDist_CHS_SR_dRapHi_0btag_HT               ->GetTaggableHist()   ->Delete();
     predDist_CHS_SR_dRapHi_0btag_DeltaRap         ->GetTaggableHist()   ->Delete();
@@ -19927,7 +19930,8 @@ void looptree(
     predDist_CHS_SR_dRapIn_inclu_JetY             ->GetTaggableHist()   ->Delete();
     predDist_CHS_SR_dRapIn_inclu_JetSDmass        ->GetTaggableHist()   ->Delete();
     predDist_CHS_SR_dRapIn_inclu_JetTau32         ->GetTaggableHist()   ->Delete();
-    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SR_dRapIn_inclu_maxbdisc         ->GetTaggableHist()   ->Delete();*/
+
     predDist_Puppi_SR_dRapHi_0btag_DijetMass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetTaggableHist()   ->Delete();
@@ -19958,7 +19962,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_JetSDmass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetTau32       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_maxbdisc       ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetTaggableHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapHi_inclu_DijetMass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_HT             ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_DeltaRap       ->GetTaggableHist()   ->Delete();
@@ -19967,7 +19971,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_inclu_JetY           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_JetSDmass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_inclu_JetTau32       ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_inclu_maxbdisc       ->GetTaggableHist()   ->Delete();*/
     predDist_Puppi_SR_dRapLo_0btag_DijetMass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetTaggableHist()   ->Delete();
@@ -19998,7 +20002,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_JetSDmass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetTau32       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_maxbdisc       ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetTaggableHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapLo_inclu_DijetMass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_HT             ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_DeltaRap       ->GetTaggableHist()   ->Delete();
@@ -20007,7 +20011,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_inclu_JetY           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_JetSDmass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_inclu_JetTau32       ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_inclu_maxbdisc       ->GetTaggableHist()   ->Delete();*/
     predDist_Puppi_SR_dRapIn_0btag_DijetMass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_HT             ->GetTaggableHist()   ->Delete();
@@ -20015,8 +20019,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_0btag_JetP           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_JetPt          ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_JetY           ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_0btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_0btag_JetTau32       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_0btag_maxbdisc       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_DijetMass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
@@ -20025,8 +20029,8 @@ void looptree(
     predDist_Puppi_SR_dRapIn_1btag_JetP           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_JetPt          ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_JetY           ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_1btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+    //predDist_Puppi_SR_dRapIn_1btag_JetTau32       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_1btag_maxbdisc       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_DijetMass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
@@ -20035,10 +20039,10 @@ void looptree(
     predDist_Puppi_SR_dRapIn_2btag_JetP           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_JetPt          ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_2btag_JetY           ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetTaggableHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapIn_2btag_JetSDmass      ->GetTaggableHist()   ->Delete();
+      predDist_Puppi_SR_dRapIn_2btag_JetTau32       ->GetTaggableHist()   ->Delete();*/
     predDist_Puppi_SR_dRapIn_2btag_maxbdisc       ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetTaggableHist()   ->Delete();
+    /*predDist_Puppi_SR_dRapIn_inclu_DijetMass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_HT             ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_DeltaRap       ->GetTaggableHist()   ->Delete();
@@ -20047,8 +20051,9 @@ void looptree(
     predDist_Puppi_SR_dRapIn_inclu_JetY           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_JetSDmass      ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapIn_inclu_JetTau32       ->GetTaggableHist()   ->Delete();
-    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetTaggableHist()   ->Delete();
-    predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapIn_inclu_maxbdisc       ->GetTaggableHist()   ->Delete();*/
+
+    /*predDist_CHS_SB1_dRapHi_0btag_DijetMass     ->GetTaggableHist()   ->Delete();
     predDist_CHS_SB1_dRapHi_0btag_DijetMassMod  ->GetTaggableHist()   ->Delete();
     predDist_CHS_SB1_dRapHi_0btag_HT            ->GetTaggableHist()   ->Delete();
     predDist_CHS_SB1_dRapHi_0btag_DeltaRap      ->GetTaggableHist()   ->Delete();
@@ -20167,7 +20172,7 @@ void looptree(
     predDist_CHS_SB1_dRapIn_inclu_JetY          ->GetTaggableHist()   ->Delete();
     predDist_CHS_SB1_dRapIn_inclu_JetSDmass     ->GetTaggableHist()   ->Delete();
     predDist_CHS_SB1_dRapIn_inclu_JetTau32      ->GetTaggableHist()   ->Delete();
-    predDist_CHS_SB1_dRapIn_inclu_maxbdisc      ->GetTaggableHist()   ->Delete();
+    predDist_CHS_SB1_dRapIn_inclu_maxbdisc      ->GetTaggableHist()   ->Delete();*/
 
   }
 

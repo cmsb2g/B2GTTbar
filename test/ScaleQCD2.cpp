@@ -74,12 +74,13 @@ void runHT(vector<string> histnames, int type, string datelabel){
   if (type == 3) typelabel = "histsModMass";
   if (type == 4) typelabel = "histsKinemat";
 
-  string outname = typelabel+"_"+datelabel+"_b2gtreeV5_QCD_HTscaled.root";
-  if (type == 4)  outname = typelabel+"_2D_"+datelabel+"_b2gtreeV5_QCD_HTscaled.root";
+  string outname = "runs/" + typelabel+"_"+datelabel+"_b2gtreeV5_QCD_HTscaled.root";
+  if (type == 4)  outname = "runs/" + typelabel+"_2D_"+datelabel+"_b2gtreeV5_QCD_HTscaled.root";
   TFile *out = new TFile(outname.c_str(),"RECREATE");
 
   double lumi = 1;
-  string file_location = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_26_patch2/src/Analysis/B2GTTbar/test/runs/";///Users/jdolen/Nobackup/B2G2016/V5/runs/";
+  string file_location = "/uscms/home/camclean/nobackup/B2G2016/CMSSW_8_0_26/src/Analysis/B2GTTbar/test/runs/";
+  //string file_location = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_26_patch2/src/Analysis/B2GTTbar/test/runs/";///Users/jdolen/Nobackup/B2G2016/V5/runs/";
   // string file_location = "/Users/jdolen/NoBackup/B2G2016/V5/runs/";//"/Users/jdolen/Code/GitHub/B2GTTbar/test/runs/";
 
   // string s1 = typelabel+"_"+datelabel+"b2gtreeV5_QCD_HT300to500_RunIISummer16MiniAODv2_all.root";
@@ -251,13 +252,14 @@ void runPt(vector<string> histnames, int type, string datelabel){
   if (type == 4) typelabel = "histsKinemat";
 
 
-  string outname = typelabel+"_"+datelabel+"_b2gtreeV5_QCD_Ptscaled.root";
-  if (type == 4)  outname = typelabel+"_2D_"+datelabel+"_b2gtreeV5_QCD_Ptscaled.root";
+  string outname = "runs/" + typelabel+"_"+datelabel+"_b2gtreeV5_QCD_Ptscaled.root";
+  if (type == 4)  outname = "runs/" + typelabel+"_2D_"+datelabel+"_b2gtreeV5_QCD_Ptscaled.root";
 
   TFile *out = new TFile(outname.c_str(),"RECREATE");
 
   double lumi = 1;
-  string file_location = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_26_patch2/src/Analysis/B2GTTbar/test/runs/";///Users/jdolen/Nobackup/B2G2016/V5/runs/";
+  string file_location = "/uscms/home/camclean/nobackup/B2G2016/CMSSW_8_0_26/src/Analysis/B2GTTbar/test/runs/";
+  //string file_location = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_26_patch2/src/Analysis/B2GTTbar/test/runs/";///Users/jdolen/Nobackup/B2G2016/V5/runs/";
   // string file_location = "/Users/jdolen/NoBackup/B2G2016/V5/runs/";//"/Users/jdolen/Code/GitHub/B2GTTbar/test/runs/";
 
 
@@ -4163,7 +4165,7 @@ void run(int j, string datelabel){   // j== 0 kinematic, 1 mistag, 2 bkgd est, 3
 
   }
 
-  runPt(histnames, j, datelabel);
+  //runPt(histnames, j, datelabel);
   runHT(histnames, j, datelabel);
   cout<<"exit"<<endl;
   return;

@@ -1,3 +1,29 @@
+#include <cstdlib>
+#include "TClonesArray.h"
+#include "TLorentzVector.h"
+#include "TH1.h"
+#include "TH2.h"
+#include "TH3.h"
+#include "TFile.h"
+#include "TF1.h"
+#include <iostream>
+#include <fstream>
+#include <ostream>
+#include "TChain.h"
+#include "TLatex.h"
+#include "THStack.h"
+#include "TCanvas.h"
+#include "TGraph.h"
+#include "TGraphAsymmErrors.h"
+#include "TLegend.h"
+#include "TColor.h"
+#include "TStyle.h"
+#include "TPaveLabel.h"
+#include "TPaveText.h"
+#include "TString.h"
+#include <vector>
+#include <algorithm>
+#include "TROOT.h"
 #include "tdrstyle.C"
 #include "CMS_lumi.C"
 
@@ -14,7 +40,7 @@ double roundToSignificantFigures(double num, int n) {
   return shifted/magnitude;
 }
 
-void plotLimit_80X(int signal = 0, bool expectedOnly = 1, string workingPoint="ht950_pt400_WPB", string date="20170512"){
+void plotLimit_80X(int signal = 0, bool expectedOnly = 1, string dateLabel = "ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WPB_alt40_alt260_bM_PUw_TTw"){
 //signal: 0 = ZPN, 1 = ZPW, 2 = ZPXW, 3 = RSG  
 
 setTDRStyle();
@@ -88,12 +114,14 @@ TGraph *theory = new TGraph();
    theory->SetPoint(6, 3500, 1.3*0.05452);
    //theory->SetPoint(11, 3750, 1.3*);                                   
    theory->SetPoint(7, 4000, 1.3*0.02807);
+   theory->SetPoint(8, 4500, 1.3*0.01603);
+   theory->SetPoint(9, 5000, 1.3*0.009095);
  }
 
- string filename = Form("Limits/limits_2016_narrow_%s_%s.txt",workingPoint.c_str(),date.c_str());
- if (signal == 1) filename= Form("Limits/limits_2016_wide_%s_%s.txt",workingPoint.c_str(),date.c_str());
- if (signal == 2) filename= Form("Limits/limits_2016_extrawide_%s_%s.txt",workingPoint.c_str(),date.c_str());
- if (signal == 3) filename= Form("Limits/limits_2016_rsgluon_%s_%s.txt",workingPoint.c_str(),date.c_str());
+ string filename = Form("Limits/limits_narrow_%s.txt",dateLabel.c_str());
+ if (signal == 1) filename= Form("Limits/limits_wide_%s.txt",dateLabel.c_str());
+ if (signal == 2) filename= Form("Limits/limits_extrawide_%s.txt",dateLabel.c_str());
+ if (signal == 3) filename= Form("Limits/limits_RSGluon_%s.txt",dateLabel.c_str());
 
 ifstream infile(filename);
 
@@ -236,19 +264,193 @@ double max = 200000.0; //band_exp2->GetHistogram()->GetMaximum()*50;
   canvas->SetLogy(1);
 
   if (signal == 0){
-    canvas->Print(Form("Limits/ZPN_%s_%s_limit.pdf",workingPoint.c_str(),date.c_str()));
+    canvas->Print(Form("Limits/ZPN_%s_limit.pdf",dateLabel.c_str()));
     //canvas->Print(Form("Limits/ZPN_limit.root");
   }
   else if (signal == 1){
-    canvas->Print(Form("Limits/ZPW_%s_%s_limit.pdf",workingPoint.c_str(),date.c_str()));
+    canvas->Print(Form("Limits/ZPW_%s_limit.pdf",dateLabel.c_str()));
     //canvas->Print(Form("Limits/ZPW_limit.root");
   }
   else if (signal == 2){
-    canvas->Print(Form("Limits/ZPXW_%s_%s_limit.pdf",workingPoint.c_str(),date.c_str()));
+    canvas->Print(Form("Limits/ZPXW_%s_limit.pdf",dateLabel.c_str()));
     //canvas->Print(Form("Limits/ZPXW_limit.root");
   }
   else if (signal == 3){
-    canvas->Print(Form("Limits/RSG_%s_%s_limit.pdf",workingPoint.c_str(),date.c_str()));
+    canvas->Print(Form("Limits/RSG_%s_limit.pdf",dateLabel.c_str()));
+    //canvas->Print(Form("Limits/RSG_limit.root");
+  }
+}
+
+void plotLimitCompare_80X(int signal = 0, bool expectedOnly = 1, string dateLabel = "ApplybTagSFbySubjetPuppiEffTest20170625"){
+//signal: 0 = ZPN, 1 = ZPW, 2 = ZPXW, 3 = RSG  
+
+setTDRStyle();
+
+//gROOT->SetStyle("Plain");
+gStyle->SetOptStat(0000000000); //this clears all the boxes and crap
+gStyle->SetLegendBorderSize(1);
+
+ vector <string> tauWPs;
+ vector <string> btagWPs;
+ vector <Color_t> histColorVec;
+
+ tauWPs.push_back("WPA");
+ tauWPs.push_back("WPB");
+ tauWPs.push_back("WPC");
+
+ btagWPs.push_back("bL");
+ btagWPs.push_back("bM");
+
+ histColorVec.push_back(kBlack);
+ histColorVec.push_back(kRed);
+ histColorVec.push_back(kGreen+2);
+ histColorVec.push_back(kBlue);
+ histColorVec.push_back(kMagenta+3);
+ histColorVec.push_back(kOrange-3);
+
+ int i_histColorVec = 0;
+
+ TGraph * limit_exp[histColorVec.size()];
+ for (unsigned int h = 0; h < histColorVec.size(); h++){
+   limit_exp[h] = new TGraph();
+ }
+     
+
+ double max = 200.0; //band_exp2->GetHistogram()->GetMaximum()*50;
+ TCanvas *canvas = new TCanvas("limit set ZPN","limit set ZPN", 500,500);
+
+ //Legend
+ CMS_lumi(canvas, 4, 10);
+
+ float t = canvas->GetTopMargin();
+ float r = canvas->GetRightMargin();
+
+ TLegend *l = new TLegend(0.51,0.63,0.99-r,0.99-t);
+ 
+ //loop over working points
+ for (unsigned int i_tauWPs=0;i_tauWPs<tauWPs.size();i_tauWPs++){
+   for (unsigned int i_btagWPs=0;i_btagWPs<btagWPs.size();i_btagWPs++){
+     string filename = Form("Limits/limits_narrow_%s_ht950_pt400_%s_alt40_alt260_%s_PUw_TTw.txt",dateLabel.c_str(),tauWPs[i_tauWPs].c_str(),btagWPs[i_btagWPs].c_str());
+     if (signal == 1) filename= Form("Limits/limits_wide_%s_ht950_pt400_%s_alt40_alt260_%s_PUw_TTw.txt",dateLabel.c_str(),tauWPs[i_tauWPs].c_str(),btagWPs[i_btagWPs].c_str());
+     if (signal == 2) filename= Form("Limits/limits_extrawide_%s_ht950_pt400_%s_alt40_alt260_%s_PUw_TTw.txt",dateLabel.c_str(),tauWPs[i_tauWPs].c_str(),btagWPs[i_btagWPs].c_str());
+     if (signal == 3) filename= Form("Limits/limits_RSGluon_%s_ht950_pt400_%s_alt40_alt260_%s_PUw_TTw.txt",dateLabel.c_str(),tauWPs[i_tauWPs].c_str(),btagWPs[i_btagWPs].c_str());
+
+     ifstream infile(filename);
+
+     double mass, exp, obs, up1, up2, dn1, dn2;
+     int point = 0;
+
+     while (!infile.eof()){
+
+       //infile >> mass >> exp >>  dn2 >> up2 >> dn1 >> up1;
+       //obs = exp;	
+
+       if (expectedOnly) infile >> mass >> exp >>  dn2 >> up2 >> dn1 >> up1;
+       else infile >> mass >> obs >> exp >>  dn2 >> up2 >> dn1 >> up1;
+
+       double sf = 1.0;
+       if (mass == 2500) sf = 0.01;
+       if (mass == 3000) sf = 0.001;
+       if (mass == 3500) sf = 0.0001;
+       if (mass == 4000) sf = 0.0001;
+       if (mass == 4500) sf = 0.0001;
+       if (mass == 5000) sf = 0.0001;
+
+       if (expectedOnly) cout << mass << " & " <<roundToSignificantFigures(sf*dn2,2)<<" & "<<roundToSignificantFigures(sf*dn1,2)<<" & textbf{"<<roundToSignificantFigures(sf*exp,2)<< "} & "<<roundToSignificantFigures(sf*up1,2)<<" & "<<roundToSignificantFigures(sf*up2,2)<<" # " << endl;
+
+       else cout << mass << " & textbf{" <<roundToSignificantFigures(sf*obs,2)<< "} & "<<roundToSignificantFigures(sf*dn2,2)<<" & "<<roundToSignificantFigures(sf*dn1,2)<< " & textbf{"<<roundToSignificantFigures(sf*exp,2)<<"} & "<<roundToSignificantFigures(sf*up1,2)<<" & "<<roundToSignificantFigures(sf*up2,2)<<" # " << endl;
+
+       limit_exp[i_histColorVec]->SetPoint(point, mass, exp*sf);
+       point++;
+
+     }
+     
+     limit_exp[i_histColorVec]->SetLineWidth(2);
+     limit_exp[i_histColorVec]->SetMaximum(max);
+     limit_exp[i_histColorVec]->SetMinimum(0.001);
+     limit_exp[i_histColorVec]->SetLineColor(histColorVec[i_histColorVec]);
+
+     cout << i_histColorVec << endl;
+
+     if (i_histColorVec==0){
+       limit_exp[i_histColorVec]->Draw("AL");
+
+       if (signal == 0){
+	 limit_exp[i_histColorVec]->GetXaxis()->SetTitle("M_{Z'} [GeV]");
+	 limit_exp[i_histColorVec]->GetYaxis()->SetTitle("95% CL Limit on #sigma_{Z'} #times B(Z'#rightarrowt#bar{t}) [pb]");
+       }
+       else if (signal == 1){
+	 limit_exp[i_histColorVec]->GetXaxis()->SetTitle("M_{Z'} [GeV]");
+	 limit_exp[i_histColorVec]->GetYaxis()->SetTitle("95% CL Limit on #sigma_{Z'} #times B(Z'#rightarrowt#bar{t}) [pb]");
+       }
+       else if (signal == 2){
+	 limit_exp[i_histColorVec]->GetXaxis()->SetTitle("M_{Z'} [GeV]");
+	 limit_exp[i_histColorVec]->GetYaxis()->SetTitle("95% CL Limit on #sigma_{Z'} #times B(Z'#rightarrowt#bar{t}) [pb]");
+       }
+       else if (signal == 3){
+	 limit_exp[i_histColorVec]->GetXaxis()->SetTitle("M_{g_{KK}} [GeV]");
+	 limit_exp[i_histColorVec]->GetYaxis()->SetTitle("95% CL Limit on #sigma_{g_{KK}} #times B(g_{KK}#rightarrowt#bar{t}) [pb]");
+       }
+       //limit_exp[i_histColorVec]->GetYaxis()->SetTitleOffset(1.2);
+       cout<<limit_exp[i_histColorVec]->GetYaxis()->GetTitleSize()<<endl;
+       cout<<limit_exp[i_histColorVec]->GetXaxis()->GetTitleSize()<<endl;
+       limit_exp[i_histColorVec]->GetYaxis()->SetRangeUser(0.01,2000);
+     }//end if histColorVec is 0
+     else limit_exp[i_histColorVec]->Draw("Lsame");
+
+     l->AddEntry(limit_exp[i_histColorVec],Form("Expected: %s, %s",tauWPs[i_tauWPs].c_str(),btagWPs[i_btagWPs].c_str()), "L");
+     i_histColorVec++;
+
+   }//end btag WP loop
+ }//end tau32 WP loop
+
+ if (signal == 0){
+   l->AddEntry((TObject*)0, "Z' 1% Width (NLO)", "");
+ }
+ else if (signal == 1){
+   l->AddEntry((TObject*)0, "Z' 10% Width (NLO)", "");
+ }
+ else if (signal == 2){
+   l->AddEntry((TObject*)0, "Z' 30% Width (NLO)", "");
+ }
+ else if (signal == 3){
+   l->AddEntry((TObject*)0, "RS Gluon (LO #times 1.3)", "");
+ }
+
+ l->SetFillColor(0);
+ l->SetLineColor(0);
+ l->SetTextSize(0.04);
+ l->SetTextFont(42);
+ l->Draw();
+
+ CMS_lumi(canvas, 4, 10);
+
+  //TLatex * label = new TLatex();
+  //label->SetNDC();
+  //label->DrawLatex(0.2,0.86,"CMS Preliminary, 19.7 fb^{-1}");
+  //label->DrawLatex(0.2,0.80,"#sqrt{s} = 8 TeV");
+  //label->DrawLatex(0.6,0.80, Form("BR(b'#rightarrow %s) = 1", channel.Data()));
+  //label->DrawLatex(0.55,0.80, "BR(b'#rightarrow tW) = 0.5");
+  //label->DrawLatex(0.55,0.74, "BR(b'#rightarrow bH) = 0.25");
+  //label->DrawLatex(0.55,0.68, "BR(b'#rightarrow bZ) = 0.25");
+  //label->DrawLatex(0.2,0.74, lepton.Data());
+
+  canvas->SetLogy(1);
+
+  if (signal == 0){
+    canvas->Print(Form("Limits/ZPN_%s_ht950_pt400_alt40_alt260_PUw_TTw_limitsCompareWPs.pdf",dateLabel.c_str()));
+    //canvas->Print(Form("Limits/ZPN_limit.root");
+  }
+  else if (signal == 1){
+    canvas->Print(Form("Limits/ZPW_%s_ht950_pt400_alt40_alt260_PUw_TTw_limitsCompareWPs.pdf",dateLabel.c_str()));
+    //canvas->Print(Form("Limits/ZPW_limit.root");
+  }
+  else if (signal == 2){
+    canvas->Print(Form("Limits/ZPXW_%s_ht950_pt400_alt40_alt260_PUw_TTw_limitsCompareWPs.pdf",dateLabel.c_str()));
+    //canvas->Print(Form("Limits/ZPXW_limit.root");
+  }
+  else if (signal == 3){
+    canvas->Print(Form("Limits/RSG_%s_ht950_pt400_alt40_alt260_PUw_TTw_limitsCompareWPs.pdf",dateLabel.c_str()));
     //canvas->Print(Form("Limits/RSG_limit.root");
   }
 }

@@ -29,7 +29,7 @@
 #include "QCDcrosssections.h"
 
 
-void plotter(string, string, string, string, string, string, string, int, float, float, string, string, string, bool);
+void plotter(string, string, string, string, string, string, string, int, float, float, string, string, string, bool, bool);
 
 void plot_topTag_WPeff(){
 	
@@ -47,30 +47,34 @@ void plot_topTag_WPeff(){
   vector<bool> plotpt;
   vector<string> extraCut;
   vector<string> samplePaveLabel;
-	
+  vector<bool> is76X; //if not, it's 80X
 
-    
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("300"); pt_cutsHigh.push_back("470");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("1 TeV Z', #Gamma = 1%");
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("470"); pt_cutsHigh.push_back("600"); plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("1.25 TeV Z', #Gamma = 1%");
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-2000_low_W-20_RunIISummer16MiniAODv2_all"); pt_cutsLow.push_back("600"); pt_cutsHigh.push_back("800");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("2 TeV Z', #Gamma = 1%");
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2_all");     pt_cutsLow.push_back("800"); pt_cutsHigh.push_back("1000");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("2 TeV Z', #Gamma = 1%");
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2_all");     pt_cutsLow.push_back("1000"); pt_cutsHigh.push_back("1400");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("2.5 TeV Z', #Gamma = 1%");
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("1000"); pt_cutsHigh.push_back("1400");  plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("3 TeV Z', #Gamma = 1%");
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-3000_W-300_RunIISummer16MiniAODv2");    pt_cutsLow.push_back("1000"); pt_cutsHigh.push_back("1400");  plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("3 TeV Z', #Gamma = 10%");
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-3500_W-35_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("1400"); pt_cutsHigh.push_back("1800");  plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("3.5 TeV Z', #Gamma = 1%");
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("1400"); pt_cutsHigh.push_back("1800");  plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("4 TeV Z', #Gamma = 1%");
-  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2");    pt_cutsLow.push_back("400"); pt_cutsHigh.push_back("2100");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("4 TeV Z', #Gamma = 10%");
+  //80X
+  /*file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("300"); pt_cutsHigh.push_back("470");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("1 TeV Z', #Gamma = 1%"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("470"); pt_cutsHigh.push_back("600"); plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("1.25 TeV Z', #Gamma = 1%"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-2000_low_W-20_RunIISummer16MiniAODv2_all"); pt_cutsLow.push_back("600"); pt_cutsHigh.push_back("800");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("2 TeV Z', #Gamma = 1%"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2_all");     pt_cutsLow.push_back("800"); pt_cutsHigh.push_back("1000");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("2 TeV Z', #Gamma = 1%"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2_all");     pt_cutsLow.push_back("1000"); pt_cutsHigh.push_back("1400");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("2.5 TeV Z', #Gamma = 1%"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("1000"); pt_cutsHigh.push_back("1400");  plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("3 TeV Z', #Gamma = 1%"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-3000_W-300_RunIISummer16MiniAODv2");    pt_cutsLow.push_back("1000"); pt_cutsHigh.push_back("1400");  plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("3 TeV Z', #Gamma = 10%"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-3500_W-35_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("1400"); pt_cutsHigh.push_back("1800");  plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("3.5 TeV Z', #Gamma = 1%"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2");     pt_cutsLow.push_back("1400"); pt_cutsHigh.push_back("1800");  plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("4 TeV Z', #Gamma = 1%"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2");    pt_cutsLow.push_back("400"); pt_cutsHigh.push_back("2100");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("4 TeV Z', #Gamma = 10%"); is76X.push_back(0);
 
   file_names.push_back("topTag_b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_orig_and_backup_missing2");    pt_cutsLow.push_back("300"); pt_cutsHigh.push_back("2100");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("t#bar{t}");
 
-  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2_withExt");      pt_cutsLow.push_back("300"); pt_cutsHigh.push_back("470"); plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD");
-  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_withExt");      pt_cutsLow.push_back("470"); pt_cutsHigh.push_back("600"); plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD");
-  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_600to800_pythia8_RunIISummer16MiniAODv2_withExt");      pt_cutsLow.push_back("600"); pt_cutsHigh.push_back("800");   plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD");
-  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2_withExt");     pt_cutsLow.push_back("800"); pt_cutsHigh.push_back("1000");   plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD");
-  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2_withExt");    pt_cutsLow.push_back("1000"); pt_cutsHigh.push_back("1400"); plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD");
-  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2_withExt");    pt_cutsLow.push_back("1400"); pt_cutsHigh.push_back("1800");  plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD");
-  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_300to2400_pythia8_RunIISummer16MiniAODv2_withExt");     pt_cutsLow.push_back("400"); pt_cutsHigh.push_back("2100");   plotpt.push_back(1); extraCut.push_back("weight_qcdSample"); samplePaveLabel.push_back("QCD");  
+  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2_withExt");      pt_cutsLow.push_back("300"); pt_cutsHigh.push_back("470"); plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_withExt");      pt_cutsLow.push_back("470"); pt_cutsHigh.push_back("600"); plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_600to800_pythia8_RunIISummer16MiniAODv2_withExt");      pt_cutsLow.push_back("600"); pt_cutsHigh.push_back("800");   plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD 80X"); is76X.push_back(0);*/
+  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2_withExt");     pt_cutsLow.push_back("800"); pt_cutsHigh.push_back("1000");   plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD 80X"); is76X.push_back(0);
+  /*file_names.push_back("topTag_b2gtreeV5_QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2_withExt");    pt_cutsLow.push_back("1000"); pt_cutsHigh.push_back("1400"); plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2_withExt");    pt_cutsLow.push_back("1400"); pt_cutsHigh.push_back("1800");  plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD"); is76X.push_back(0);
+  file_names.push_back("topTag_b2gtreeV5_QCD_Pt_300to2400_pythia8_RunIISummer16MiniAODv2_withExt");     pt_cutsLow.push_back("400"); pt_cutsHigh.push_back("2100");   plotpt.push_back(1); extraCut.push_back("weight_qcdSample"); samplePaveLabel.push_back("QCD"); is76X.push_back(0);  */
 
+  //76X
+  //file_names.push_back("ntop_x7b_zprime_m2000-tagging-weighted");     pt_cutsLow.push_back("800"); pt_cutsHigh.push_back("1000");   plotpt.push_back(1); extraCut.push_back("1"); samplePaveLabel.push_back("2 TeV Z', #Gamma = 1%"); is76X.push_back(1);
+  file_names.push_back("ntop_x7b_qcd_800_1000-tagging-weighted");     pt_cutsLow.push_back("800"); pt_cutsHigh.push_back("1000");   plotpt.push_back(0); extraCut.push_back("1"); samplePaveLabel.push_back("QCD 76X"); is76X.push_back(1);
+  
   for (unsigned int i=0; i< file_names.size(); i++ ){
     vector<string> xVars;
     vector<string> xVars_pretty;
@@ -80,26 +84,26 @@ void plot_topTag_WPeff(){
     vector <bool> jetVar;//plot ak8 variable
 
     xVars.push_back("npv"); xVars_pretty.push_back("Number of Pileup Vertices"); nbinsx.push_back(100); xmin.push_back(0); xmax.push_back(70);
-    xVars.push_back("eta"); xVars_pretty.push_back("#eta"); nbinsx.push_back(100); xmin.push_back(-2.5); xmax.push_back(2.5); jetVar.push_back(1);
+    //xVars.push_back("eta"); xVars_pretty.push_back("#eta"); nbinsx.push_back(100); xmin.push_back(-2.5); xmax.push_back(2.5); jetVar.push_back(1);
     if (plotpt[i]){ xVars.push_back("pt"); xVars_pretty.push_back("p_{T}"); nbinsx.push_back(45); xmin.push_back(300); xmax.push_back(2100); jetVar.push_back(1); }
     
     vector<string> WPtau32cut;
     vector<string> WPlabel;
     vector<string> WPfileLabel;
     
-    //WPtau32cut.push_back("0.40"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.40}{#varepsilon_{B} = 0.1%, #varepsilon_{S} = 14%}"); WPfileLabel.push_back("WP80X_800to1000_0p1EffBkg");
-    //WPtau32cut.push_back("0.46"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.46}{#varepsilon_{B} = 0.3%, #varepsilon_{S} = 25%}"); WPfileLabel.push_back("WP80X_800to1000_0p3EffBkg_WP76X_0p1EffBkg");
-    //WPtau32cut.push_back("0.54"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.54}{#varepsilon_{B} = 1%, #varepsilon_{S} = 43%}"); WPfileLabel.push_back("WP80X_800to1000_1pEffBkg_WP76X_0p3EffBkg");
+    WPtau32cut.push_back("0.40"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.40}{#varepsilon_{B} = 0.1%, #varepsilon_{S} = 14%}"); WPfileLabel.push_back("WP80X_800to1000_0p1EffBkg");
+    WPtau32cut.push_back("0.46"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.46}{#varepsilon_{B} = 0.3%, #varepsilon_{S} = 25%}"); WPfileLabel.push_back("WP80X_800to1000_0p3EffBkg_WP76X_0p1EffBkg");
+    WPtau32cut.push_back("0.54"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.54}{#varepsilon_{B} = 1%, #varepsilon_{S} = 43%}"); WPfileLabel.push_back("WP80X_800to1000_1pEffBkg_WP76X_0p3EffBkg");
     WPtau32cut.push_back("0.65"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.65}{#varepsilon_{B} = 3%, #varepsilon_{S} = 61%}"); WPfileLabel.push_back("WP80X_800to1000_3pEffBkg_WP76X_1pEffBkg");
     WPtau32cut.push_back("0.80"); WPlabel.push_back("#splitline{105 < m_{SD}^{PUPPI} < 210, #tau_{32}^{PUPPI} < 0.80}{#varepsilon_{B} = 10%, #varepsilon_{S} = 79%}"); WPfileLabel.push_back("WP80X_800to1000_10pEffBkg_WP76X_3pEffBkg");
 
     for (unsigned int j=0; j< xVars.size(); j++){
-      for (unsigned int k=0; k<WPtau32cut.size(); k++)	plotter(file_names[i], pt_cutsLow[i], pt_cutsHigh[i], extraCut[i], samplePaveLabel[i], xVars[j], xVars_pretty[j], nbinsx[j], xmin[j], xmax[j], WPtau32cut[k], WPlabel[k], WPfileLabel[k], 1);
+      for (unsigned int k=0; k<WPtau32cut.size(); k++)	plotter(file_names[i], pt_cutsLow[i], pt_cutsHigh[i], extraCut[i], samplePaveLabel[i], xVars[j], xVars_pretty[j], nbinsx[j], xmin[j], xmax[j], WPtau32cut[k], WPlabel[k], WPfileLabel[k], is76X[i], 1);
     }
   }
 }
 
-void plotter(string fileName, string ptBinLow, string ptBinHigh, string extraCut, string sampleLabel, string xAxisVar, string xAxisVar_pretty, int nbinsx, float xmin, float xmax, string tau32max, string tau32label, string tau32fileLabel, bool legswitch ){
+void plotter(string fileName, string ptBinLow, string ptBinHigh, string extraCut, string sampleLabel, string xAxisVar, string xAxisVar_pretty, int nbinsx, float xmin, float xmax, string tau32max, string tau32label, string tau32fileLabel, bool is76X, bool legswitch ){
   gStyle->SetOptStat(0);
   gROOT->UseCurrentStyle();
   gROOT->ForceStyle();
@@ -110,11 +114,26 @@ void plotter(string fileName, string ptBinLow, string ptBinHigh, string extraCut
   gROOT->SetBatch(); 
 
 
-  string dir = "topTagStudies/v5/";
+  string dir = "root://cmseos.fnal.gov//store/user/camclean/TopTagEfficiency/80X/v5/";
+  if (is76X) dir = "root://cmseos.fnal.gov//store/user/camclean/TopTaggingEfficiency/76X/";
   string in_end = ".root";
 
-  TFile *infile = new TFile(Form("%s%s%s",dir.c_str(),fileName.c_str(),in_end.c_str()),"READ");
+  TFile *infile = TFile::Open(Form("%s%s%s",dir.c_str(),fileName.c_str(),in_end.c_str()));
   TTree *T_topTag = (TTree*) infile->Get("tree_topTag");
+  if (is76X) T_topTag = (TTree*) infile->Get("tree");
+
+  //slightly different variable names between 76X and 80X
+  string puppiString = "Puppi";
+  string NsubjettinessVar = "(ak08Puppi_tau32)";
+  string btagVar = "ak08Puppisoftdropz10b00_btag";
+  string btagCut = "0.5426";
+
+  if (is76X) {
+    puppiString = "puppi";
+    NsubjettinessVar = "(ak08puppisoftdropz10b00_tau3/ak08puppisoftdropz10b00_tau2)";
+    btagVar = "ak08puppisoftdropz10b00forbtag_btag";
+    string btagCut = "0.46";
+  }
 
   cout << "Opened " << dir << fileName << in_end << endl;
 
@@ -156,14 +175,14 @@ void plotter(string fileName, string ptBinLow, string ptBinHigh, string extraCut
   }
 
   //gen numerator hists
-  T_topTag->Draw(Form("%s>>num_histgen",xAxisVar.c_str()),Form("(pt>%s&&pt<%s&&ak08Puppisoftdropz10b00_mass>105&&ak08Puppisoftdropz10b00_mass<210&&top_size<0.6&&ak08Puppi_tau32<%s)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),tau32max.c_str(),extraCut.c_str()));
-  T_topTag->Draw(Form("%s>>num_histgen_btag",xAxisVar.c_str()),Form("(pt>%s&&pt<%s&&ak08Puppisoftdropz10b00_mass>105&&ak08Puppisoftdropz10b00_mass<210&&top_size<0.6&&ak08Puppi_tau32<%s&&ak08Puppisoftdropz10b00_btag>0.8)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),tau32max.c_str(),extraCut.c_str()));
+  T_topTag->Draw(Form("%s>>num_histgen",xAxisVar.c_str()),Form("(pt>%s&&pt<%s&&ak08%ssoftdropz10b00_mass>105&&ak08%ssoftdropz10b00_mass<210&&top_size<0.6&&%s<%s&&%s>0.0)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),puppiString.c_str(),puppiString.c_str(),NsubjettinessVar.c_str(),tau32max.c_str(),NsubjettinessVar.c_str(),extraCut.c_str()));
+  T_topTag->Draw(Form("%s>>num_histgen_btag",xAxisVar.c_str()),Form("(pt>%s&&pt<%s&&ak08%ssoftdropz10b00_mass>105&&ak08%ssoftdropz10b00_mass<210&&top_size<0.6&&%s<%s&&%s>0.0&&%s>%s)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),puppiString.c_str(),puppiString.c_str(),NsubjettinessVar.c_str(),tau32max.c_str(),NsubjettinessVar.c_str(),btagVar.c_str(),btagCut.c_str(),extraCut.c_str()));
   
   num_histgen->Sumw2();
   num_histgen_btag->Sumw2();
 
   //gen denominator hist
-  T_topTag->Draw(Form("%s>>denom_histgen",xAxisVar.c_str()),Form("(pt>%s&&pt<%s&&top_size<0.6)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),extraCut.c_str()));
+  T_topTag->Draw(Form("%s>>denom_histgen",xAxisVar.c_str()),Form("(pt>%s&&pt<%s&&top_size<0.6&&%s>0.0)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),NsubjettinessVar.c_str(),extraCut.c_str()));
   
   denom_histgen->Sumw2();
 
@@ -174,14 +193,14 @@ void plotter(string fileName, string ptBinLow, string ptBinHigh, string extraCut
   //drawing jet eta or pt
   if ( foundNPV   == std::string::npos ) {
     //jet numerator hists
-    T_topTag->Draw(Form("ak08_%s>>num_histjet",xAxisVar.c_str()),Form("(ak08_pt>%s&&ak08_pt<%s&&ak08Puppisoftdropz10b00_mass>105&&ak08Puppisoftdropz10b00_mass<210&&top_size<0.6&&ak08Puppi_tau32<%s)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),tau32max.c_str(),extraCut.c_str()));
-    T_topTag->Draw(Form("ak08_%s>>num_histjet_btag",xAxisVar.c_str()),Form("(ak08_pt>%s&&ak08_pt<%s&&ak08Puppisoftdropz10b00_mass>105&&ak08Puppisoftdropz10b00_mass<210&&top_size<0.6&&ak08Puppi_tau32<%s&&ak08Puppisoftdropz10b00_btag>0.8)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),tau32max.c_str(),extraCut.c_str()));
+    T_topTag->Draw(Form("ak08_%s>>num_histjet",xAxisVar.c_str()),Form("(ak08_pt>%s&&ak08_pt<%s&&ak08%ssoftdropz10b00_mass>105&&ak08%ssoftdropz10b00_mass<210&&top_size<0.6&&%s<%s&&%s>0.0)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),puppiString.c_str(),puppiString.c_str(),NsubjettinessVar.c_str(),tau32max.c_str(),NsubjettinessVar.c_str(),extraCut.c_str()));
+    T_topTag->Draw(Form("ak08_%s>>num_histjet_btag",xAxisVar.c_str()),Form("(ak08_pt>%s&&ak08_pt<%s&&ak08%ssoftdropz10b00_mass>105&&ak08%ssoftdropz10b00_mass<210&&top_size<0.6&&%s<%s&&%s>0.0&&%s>%s)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),puppiString.c_str(),puppiString.c_str(),NsubjettinessVar.c_str(),tau32max.c_str(),NsubjettinessVar.c_str(),btagVar.c_str(),btagCut.c_str(),extraCut.c_str()));
   
     num_histjet->Sumw2();
     num_histjet_btag->Sumw2();
 
     //jet denominator hist
-    T_topTag->Draw(Form("ak08_%s>>denom_histjet",xAxisVar.c_str()),Form("(ak08_pt>%s&&ak08_pt<%s&&top_size<0.6)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),extraCut.c_str()));
+    T_topTag->Draw(Form("ak08_%s>>denom_histjet",xAxisVar.c_str()),Form("(ak08_pt>%s&&ak08_pt<%s&&top_size<0.6&&%s>0.0)*%s",ptCutLow.c_str(),ptCutHigh.c_str(),NsubjettinessVar.c_str(),extraCut.c_str()));
   
     denom_histjet->Sumw2();
 
@@ -219,13 +238,13 @@ void plotter(string fileName, string ptBinLow, string ptBinHigh, string extraCut
     TLegend *leg = new TLegend(leg1, leg2, leg3, leg4);
     if ( foundNPV   == std::string::npos ) {
       leg->AddEntry(num_histgen,Form("Parton %s",xAxisVar_pretty.c_str()),"lp");
-      leg->AddEntry(num_histgen_btag,Form("Parton %s (Medium b-tag)",xAxisVar_pretty.c_str()),"lp");
+      leg->AddEntry(num_histgen_btag,Form("Parton %s (Loose b-tag)",xAxisVar_pretty.c_str()),"lp");
       leg->AddEntry(num_histjet,Form("Reco %s",xAxisVar_pretty.c_str()),"lp");
-      leg->AddEntry(num_histjet_btag,Form("Reco %s (Medium b-tag)",xAxisVar_pretty.c_str()),"lp");
+      leg->AddEntry(num_histjet_btag,Form("Reco %s (Loose b-tag)",xAxisVar_pretty.c_str()),"lp");
     }
     else{
       leg->AddEntry(num_histgen,Form("%s",xAxisVar_pretty.c_str()),"lp");
-      leg->AddEntry(num_histgen_btag,Form("%s (Medium b-tag)",xAxisVar_pretty.c_str()),"lp");
+      leg->AddEntry(num_histgen_btag,Form("%s (Loose b-tag)",xAxisVar_pretty.c_str()),"lp");
     }
     leg->SetFillColor(0);
     leg->SetLineColor(0);
@@ -233,13 +252,13 @@ void plotter(string fileName, string ptBinLow, string ptBinHigh, string extraCut
     TLegend *peg = new TLegend(peg1, peg2, peg3, peg4);
     if ( foundNPV   == std::string::npos ) {
       peg->AddEntry(num_histgen,Form("Parton %s",xAxisVar_pretty.c_str()),"lp");
-      peg->AddEntry(num_histgen_btag,Form("Parton %s (Medium b-tag)",xAxisVar_pretty.c_str()),"lp");
+      peg->AddEntry(num_histgen_btag,Form("Parton %s (Loose b-tag)",xAxisVar_pretty.c_str()),"lp");
       peg->AddEntry(num_histjet,Form("Reco %s",xAxisVar_pretty.c_str()),"lp");
-      peg->AddEntry(num_histjet_btag,Form("Reco %s (Medium b-tag)",xAxisVar_pretty.c_str()),"lp");
+      peg->AddEntry(num_histjet_btag,Form("Reco %s (Loose b-tag)",xAxisVar_pretty.c_str()),"lp");
     }
     else{
       peg->AddEntry(num_histgen,Form("%s",xAxisVar_pretty.c_str()),"lp");
-      peg->AddEntry(num_histgen_btag,Form("%s (Medium b-tag)",xAxisVar_pretty.c_str()),"lp");
+      peg->AddEntry(num_histgen_btag,Form("%s (Loose b-tag)",xAxisVar_pretty.c_str()),"lp");
     }
     peg->SetFillColor(0);
     peg->SetLineColor(0);
@@ -286,5 +305,6 @@ void plotter(string fileName, string ptBinLow, string ptBinHigh, string extraCut
       tex->Draw();
     }
 
-    c1->SaveAs(Form("%splots/%s_%s_%s.pdf",dir.c_str(),fileName.c_str(),xAxisVar.c_str(),tau32fileLabel.c_str()));
+    if (!is76X) c1->SaveAs(Form("topTagStudies/v5/plots/%s_%s_%s_loosebtag.pdf",fileName.c_str(),xAxisVar.c_str(),tau32fileLabel.c_str()));
+    else c1->SaveAs(Form("topTagStudies/76X/plots/%s_%s_%s_loosebtag.pdf",fileName.c_str(),xAxisVar.c_str(),tau32fileLabel.c_str()));
 }
