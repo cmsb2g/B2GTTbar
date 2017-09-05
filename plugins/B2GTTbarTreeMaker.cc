@@ -196,6 +196,11 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       bool isttbar_         ;
       bool isRSG_           ;
       bool isRun2016F_      ;
+      bool isPhoton_         ;
+      bool isW_         ;
+      bool isZ_         ;
+      bool isDown_         ;
+
 
       std::vector<std::string>  jecPayloadsAK4chs_;
       std::vector<std::string>  jecPayloadsAK8chs_;
@@ -244,6 +249,9 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       // -- Triggers to be saved in tree
       std::vector<std::string> trigsToRun;
 
+
+
+  /*
   
       //
       //       d8888 888 888        888    888               888     88888888888                           
@@ -741,7 +749,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t DijetDeltaPhi                             ;           
       Float_t DijetDeltaRap                             ;           
       Float_t DiGenJetMass                              ;  
-      Int_t   CountLep                                  ;         
+  //
       Float_t GenTTmass                                 ;           
       Int_t   GenCountHadTop                            ;           
       Float_t HT                                        ;           
@@ -750,15 +758,15 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t HT_PtSmearNom                             ;           
       Float_t HT_PtSmearUp                              ;           
       Float_t HT_PtSmearDn                              ;           
-      Float_t Q2weight_CorrDn                           ;           
-      Float_t Q2weight_CorrUp                           ;           
-      Float_t NNPDF3weight_CorrDn                       ;           
-      Float_t NNPDF3weight_CorrUp                       ;           
+  //  Float_t Q2weight_CorrDn                           ;           
+  //  Float_t Q2weight_CorrUp                           ;           
+  //  Float_t NNPDF3weight_CorrDn                       ;           
+  //   Float_t NNPDF3weight_CorrUp                       ;           
       Int_t   AllHadRunNum                               ;           
       Int_t   AllHadLumiBlock                            ;           
       Int_t   AllHadEventNum                             ;    
 
-
+  */
 
       // 
       //  .d8888b.                         d8b        888                        888        88888888888                           
@@ -993,19 +1001,79 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t JetPuppiMatchedGenJetMass                   ;
 
       Int_t   JetGenMatched_TopHadronic              ;
-      Float_t JetGenMatched_TopPt                    ;
-      Float_t JetGenMatched_TopEta                   ;
-      Float_t JetGenMatched_TopPhi                   ;
-      Float_t JetGenMatched_TopMass                  ;
+      Float_t JetGenMatched_Top0Pt                    ;
+      Float_t JetGenMatched_Top0Eta                   ;
+      Float_t JetGenMatched_Top0Phi                   ;
+      Float_t JetGenMatched_Top0Mass                  ;
+      Float_t JetGenMatched_Top1Pt                    ;
+      Float_t JetGenMatched_Top1Eta                   ;
+      Float_t JetGenMatched_Top1Phi                   ;
+      Float_t JetGenMatched_Top1Mass                  ;
+
       Float_t JetGenMatched_bPt                      ;
-      Float_t JetGenMatched_WPt                      ;
-      Float_t JetGenMatched_WEta                     ;
-      Float_t JetGenMatched_WPhi                     ;
-      Float_t JetGenMatched_WMass                    ;
-      Float_t JetGenMatched_ZPt                      ;
-      Float_t JetGenMatched_ZEta                     ;
-      Float_t JetGenMatched_ZPhi                     ;
-      Float_t JetGenMatched_ZMass                    ;
+     
+
+      Int_t   JetGenMatched_WHadronic                 ;
+      Float_t JetGenMatched_W0Pt                      ;
+      Float_t JetGenMatched_W0Eta                     ;
+      Float_t JetGenMatched_W0Phi                     ;
+      Float_t JetGenMatched_W0Mass                    ;
+      Float_t JetGenMatched_W1Pt                      ;
+      Float_t JetGenMatched_W1Eta                     ;
+      Float_t JetGenMatched_W1Phi                     ;
+      Float_t JetGenMatched_W1Mass                    ;
+    
+      Int_t   JetGenMatched_ZHadronic                 ;
+      Float_t JetGenMatched_Z0Pt                      ;
+      Float_t JetGenMatched_Z0Eta                     ;
+      Float_t JetGenMatched_Z0Phi                     ;
+      Float_t JetGenMatched_Z0Mass                    ;
+      Float_t JetGenMatched_Z1Pt                      ;
+      Float_t JetGenMatched_Z1Eta                     ;
+      Float_t JetGenMatched_Z1Phi                     ;
+      Float_t JetGenMatched_Z1Mass                    ; 
+
+      Int_t   JetGenMatched_GammaHadronic                 ;
+      Float_t JetGenMatched_Gamma0Pt                      ;
+      Float_t JetGenMatched_Gamma0Eta                     ;
+      Float_t JetGenMatched_Gamma0Phi                     ;
+      Float_t JetGenMatched_Gamma0Mass                    ;     
+      Float_t JetGenMatched_Gamma1Pt                      ;
+      Float_t JetGenMatched_Gamma1Eta                     ;
+      Float_t JetGenMatched_Gamma1Phi                     ;
+      Float_t JetGenMatched_Gamma1Mass                    ;
+     
+
+      Int_t   JetGenMatched_dHadronic                     ;
+      Float_t JetGenMatched_qd1hardPt                      ;
+      Float_t JetGenMatched_qd1hardEta                     ;
+      Float_t JetGenMatched_qd1hardPhi                     ;
+      Float_t JetGenMatched_qd1hardMass                    ; 
+      Float_t JetGenMatched_qd2hardPt                      ;
+      Float_t JetGenMatched_qd2hardEta                     ;
+      Float_t JetGenMatched_qd2hardPhi                     ;
+      Float_t JetGenMatched_qd2hardMass                    ;
+    
+      Float_t JetGenMatched_q2hardPt                      ;
+      Float_t JetGenMatched_q2hardEta                     ;
+      Float_t JetGenMatched_q2hardPhi                     ;
+      Float_t JetGenMatched_q2hardMass                    ;     
+      Float_t JetGenMatched_q3hardPt                      ;
+      Float_t JetGenMatched_q3hardEta                     ;
+      Float_t JetGenMatched_q3hardPhi                     ;
+      Float_t JetGenMatched_q3hardMass                    ;     
+      Float_t JetGenMatched_q4hardPt                      ;
+      Float_t JetGenMatched_q4hardEta                     ;
+      Float_t JetGenMatched_q4hardPhi                     ;
+      Float_t JetGenMatched_q4hardMass                    ;     
+      Float_t JetGenMatched_q5hardPt                      ;
+      Float_t JetGenMatched_q5hardEta                     ;
+      Float_t JetGenMatched_q5hardPhi                     ;
+      Float_t JetGenMatched_q5hardMass                    ;     
+      Float_t JetGenMatched_q6hardPt                      ;
+      Float_t JetGenMatched_q6hardEta                     ;
+      Float_t JetGenMatched_q6hardPhi                     ;
+      Float_t JetGenMatched_q6hardMass                    ;
       Float_t JetGenMatched_Wd1Pt                    ;
       Float_t JetGenMatched_Wd2Pt                    ;
       Float_t JetGenMatched_Wd1ID                    ;
@@ -1072,7 +1140,8 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
 
       Float_t SemiLeptGenTTmass                      ;
-      Int_t   SemiLeptGenCountHadTop                 ;
+      Int_t   SemiLeptGenCountHadObj                 ;
+      Int_t   SemiLeptGenObjPDGID                 ;
 
       Float_t HTlep                                  ;
       Float_t ST                                     ;                
@@ -1091,29 +1160,30 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Int_t   SemiLeptEventNum                       ;
       Int_t   SemiLeptPassMETFilters                 ;       
         
-      Float_t AK4_dRminLep_Pt                             ;
-      Float_t AK4_dRminLep_Eta                            ;
-      Float_t AK4_dRminLep_Phi                            ;
-      Float_t AK4_dRminLep_Mass                           ;
-      Float_t AK4_dRminLep_Bdisc                          ;
-      Float_t AK4_dRminLep_dRlep                          ;
-      Float_t AK4_dRminLep_dRak8                          ;
-      Float_t AK4_dRminLep_PtSmear                        ;
-      Float_t AK4_dRminLep_PtSmearUp                      ;
-      Float_t AK4_dRminLep_PtSmearDn                      ;
-      Float_t AK4_dRminLep_PtUncorr                       ;
-      Float_t AK4_dRminLep_Corr                           ;
-      Float_t AK4_dRminLep_CorrUp                         ;
-      Float_t AK4_dRminLep_CorrDn                         ;
+      Float_t AK4_dRminLep0_Pt                             ;
+      Float_t AK4_dRminLep0_Eta                            ;
+      Float_t AK4_dRminLep0_Phi                            ;
+      Float_t AK4_dRminLep0_Mass                           ;
+      Float_t AK4_dRminLep0_Bdisc                          ;
+      Float_t AK4_dRminLep0_dRlep                          ;
+      Float_t AK4_dRminLep0_dRak8                          ;
+      Float_t AK4_dRminLep0_PtSmear                        ;
+      Float_t AK4_dRminLep0_PtSmearUp                      ;
+      Float_t AK4_dRminLep0_PtSmearDn                      ;
+      Float_t AK4_dRminLep0_PtUncorr                       ;
+      Float_t AK4_dRminLep0_Corr                           ;
+      Float_t AK4_dRminLep0_CorrUp                         ;
+      Float_t AK4_dRminLep0_CorrDn                         ;
        
 
       // Float_t AK4BtagdRminPt                         ;
       // Float_t AK4BtagdRminBdisc                      ;
       // Float_t AK4BtagdRminLep                        ;
-      Int_t   LepHemiContainsAK4BtagLoose            ;
-      Int_t   LepHemiContainsAK4BtagMedium           ;
-      Int_t   LepHemiContainsAK4BtagTight            ;
+      Int_t   Lep0HemiContainsAK4BtagLoose            ;
+      Int_t   Lep0HemiContainsAK4BtagMedium           ;
+      Int_t   Lep0HemiContainsAK4BtagTight            ;
 
+      Int_t   CountLep                                  ;
 
       Char_t  lep0flavor                             ;
       Char_t  lep1flavor                             ;
@@ -1125,29 +1195,53 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t LeptonPt1                               ;
       Float_t LeptonEta1                              ;
       Float_t LeptonMass1                             ;
-      Float_t PtRel                                  ;
-      Int_t   LeptonIsMu                             ;
-      Int_t   MuHighPt                                ;
-      Int_t   MuTight                                ;
-      Int_t   MuMedium                               ;
-      Float_t DeltaRJetLep                           ; 
-      Float_t DeltaPhiJetLep                         ; 
-      Float_t MuIso                                  ;
-      Float_t Elecron_absiso                         ;
-      Float_t Elecron_relIsoWithDBeta                ;
-      Float_t Elecron_absiso_EA                      ;
-      Float_t Elecron_relIsoWithEA                   ;
+    
+      Float_t PtRel0                                  ;
+      Float_t PtRel1                                  ;
+      Int_t   Lepton0IsMu                             ;
+      Int_t   Lepton1IsMu                             ;
+    
+      Int_t   Mu0HighPt                                ;
+      Int_t   Mu0Tight                                ;
+      Int_t   Mu0Medium                               ;
+      Float_t DeltaRJetLep0                           ; 
+      Float_t DeltaPhiJetLep0                         ; 
+      Float_t Mu0Iso                                  ;
+      Float_t Elecron0_absiso                         ;
+      Float_t Elecron0_relIsoWithDBeta                ;
+      Float_t Elecron0_absiso_EA                      ;
+      Float_t Elecron0_relIsoWithEA                   ;
 
-      Int_t Electron_iso_passHLTpre                  ;
-      Int_t Electron_iso_passLoose                   ;
-      Int_t Electron_iso_passMedium                  ;
-      Int_t Electron_iso_passTight                   ;
-      Int_t Electron_iso_passHEEP                    ;
-      Int_t Electron_noiso_passLoose                 ;
-      Int_t Electron_noiso_passMedium                ;
-      Int_t Electron_noiso_passTight                 ;
-      Int_t Electron_noiso_passHEEP                  ;
+      Int_t   Mu1HighPt                                ;
+      Int_t   Mu1Tight                                ;
+      Int_t   Mu1Medium                               ;
+      Float_t DeltaRJetLep1                           ;
+      Float_t DeltaPhiJetLep1                         ;
+      Float_t Mu1Iso                                  ;
+      Float_t Elecron1_absiso                         ;
+      Float_t Elecron1_relIsoWithDBeta                ;
+      Float_t Elecron1_absiso_EA                      ;
+      Float_t Elecron1_relIsoWithEA                   ;
 
+      Int_t Electron0_iso_passHLTpre                  ;
+      Int_t Electron0_iso_passLoose                   ;
+      Int_t Electron0_iso_passMedium                  ;
+      Int_t Electron0_iso_passTight                   ;
+      Int_t Electron0_iso_passHEEP                    ;
+      Int_t Electron0_noiso_passLoose                 ;
+      Int_t Electron0_noiso_passMedium                ;
+      Int_t Electron0_noiso_passTight                 ;
+      Int_t Electron0_noiso_passHEEP                  ;
+
+      Int_t Electron1_iso_passHLTpre                  ;
+      Int_t Electron1_iso_passLoose                   ;
+      Int_t Electron1_iso_passMedium                  ;
+      Int_t Electron1_iso_passTight                   ;
+      Int_t Electron1_iso_passHEEP                    ;
+      Int_t Electron1_noiso_passLoose                 ;
+      Int_t Electron1_noiso_passMedium                ;
+      Int_t Electron1_noiso_passTight                 ;
+      Int_t Electron1_noiso_passHEEP                  ;
 
 };
 
@@ -1196,6 +1290,12 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
     isttbar_         (iConfig.getParameter<bool>  ("isttbar")),
     isRSG_           (iConfig.getParameter<bool>  ("isRSG")),
     isRun2016F_      (iConfig.getParameter<bool>  ("isRun2016F")),
+    isPhoton_      (iConfig.getParameter<bool>  ("isPhoton")),   
+    isW_           (iConfig.getParameter<bool>  ("isW")),
+    isZ_           (iConfig.getParameter<bool>  ("isZ")),
+    isDown_           (iConfig.getParameter<bool>  ("isDown")),
+   
+
     jecPayloadsAK4chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4chs")),
     jecPayloadsAK8chs_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK8chs")),
     jecPayloadsAK4pup_ (iConfig.getParameter<std::vector<std::string> >  ("jecPayloadsAK4pup")),
@@ -1244,6 +1344,12 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
 
   // Single jet
   trigsToRun.push_back("HLT_CaloJet500_NoJetID_v");
+  // Added these triggers used in AN-16-150
+  trigsToRun.push_back("HLT_PFJet80_v");
+  trigsToRun.push_back("HLT_PFJet140_v");
+  trigsToRun.push_back("HLT_PFJet200_v");
+  trigsToRun.push_back("HLT_PFJet260_v");
+
   trigsToRun.push_back("HLT_PFJet320_v");
   trigsToRun.push_back("HLT_PFJet400_v");
   trigsToRun.push_back("HLT_PFJet450_v");
@@ -1285,8 +1391,8 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   trigsToRun.push_back("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165_v");
 
 
-
-
+  /*
+ 
   //
   //       d8888 888 888        888    888               888     88888888888                           
   //      d88888 888 888        888    888               888         888                               
@@ -1802,16 +1908,19 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("HT_CorrUp"                             , & HT_CorrUp                          ,    "HT_CorrUp/F"                               );                                  
   TreeAllHad->Branch("HT_PtSmearNom"                         , & HT_PtSmearNom                      ,    "HT_PtSmearNom/F"                           );                                     
   TreeAllHad->Branch("HT_PtSmearUp"                          , & HT_PtSmearUp                       ,    "HT_PtSmearUp/F"                            );                                     
-  TreeAllHad->Branch("HT_PtSmearDn"                          , & HT_PtSmearDn                       ,    "HT_PtSmearDn/F"                            );                                     
-  TreeAllHad->Branch("Q2weight_CorrDn"                       , & Q2weight_CorrDn                    ,    "Q2weight_CorrDn/F"                         );                                        
-  TreeAllHad->Branch("Q2weight_CorrUp"                       , & Q2weight_CorrUp                    ,    "Q2weight_CorrUp/F"                         );                                        
-  TreeAllHad->Branch("NNPDF3weight_CorrDn"                   , & NNPDF3weight_CorrDn                ,    "NNPDF3weight_CorrDn/F"                     );                                            
-  TreeAllHad->Branch("NNPDF3weight_CorrUp"                   , & NNPDF3weight_CorrUp                ,    "NNPDF3weight_CorrUp/F"                     );                                            
+  TreeAllHad->Branch("HT_PtSmearDn"                          , & HT_PtSmearDn                       ,    "HT_PtSmearDn/F"  );
+		     //TreeAllHad->Branch("Q2weight_CorrDn"                       , & Q2weight_CorrDn                    ,    "Q2weight_CorrDn/F"                         );                                        
+		     //TreeAllHad->Branch("Q2weight_CorrUp"                       , & Q2weight_CorrUp                    ,    "Q2weight_CorrUp/F"                         );                                        
+		     // TreeAllHad->Branch("NNPDF3weight_CorrDn"                   , & NNPDF3weight_CorrDn                ,    "NNPDF3weight_CorrDn/F"                     );                                            
+		     // TreeAllHad->Branch("NNPDF3weight_CorrUp"                   , & NNPDF3weight_CorrUp                ,    "NNPDF3weight_CorrUp/F"                     );                                            
   TreeAllHad->Branch("AllHadRunNum"                          , & AllHadRunNum                       ,    "AllHadRunNum/I"                            );                                     
   TreeAllHad->Branch("AllHadLumiBlock"                       , & AllHadLumiBlock                    ,    "AllHadLumiBlock/I"                         );                                        
   TreeAllHad->Branch("AllHadEventNum"                        , & AllHadEventNum                     ,    "AllHadEventNum/I"                          );                                       
   
   std::cout<<"Setup all-had event tree"<<std::endl;
+
+  */
+
 
   // 
   //  .d8888b.                         d8b        888                        888        88888888888                           
@@ -2056,19 +2165,84 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("JetPuppiMatchedGenJetMass"            , & JetPuppiMatchedGenJetMass         ,    "JetPuppiMatchedGenJetMass/F"              ); 
                            
   TreeSemiLept->Branch("JetGenMatched_TopHadronic"            , & JetGenMatched_TopHadronic         ,    "JetGenMatched_TopHadronic/I"              );      
-  TreeSemiLept->Branch("JetGenMatched_TopPt"                  , & JetGenMatched_TopPt               ,    "JetGenMatched_TopPt/F"                    );      
-  TreeSemiLept->Branch("JetGenMatched_TopEta"                 , & JetGenMatched_TopEta              ,    "JetGenMatched_TopEta/F"                   );      
-  TreeSemiLept->Branch("JetGenMatched_TopPhi"                 , & JetGenMatched_TopPhi              ,    "JetGenMatched_TopPhi/F"                   );      
-  TreeSemiLept->Branch("JetGenMatched_TopMass"                , & JetGenMatched_TopMass             ,    "JetGenMatched_TopMass/F"                  );      
-  TreeSemiLept->Branch("JetGenMatched_bPt"                    , & JetGenMatched_bPt                 ,    "JetGenMatched_bPt/F"                      );      
-  TreeSemiLept->Branch("JetGenMatched_WPt"                    , & JetGenMatched_WPt                 ,    "JetGenMatched_WPt/F"                      ); 
-  TreeSemiLept->Branch("JetGenMatched_WEta"                   , & JetGenMatched_WEta                ,    "JetGenMatched_WEta/F"                     );
-  TreeSemiLept->Branch("JetGenMatched_WPhi"                   , & JetGenMatched_WPhi                ,    "JetGenMatched_WPhi/F"                     );
-  TreeSemiLept->Branch("JetGenMatched_WMass"                  , & JetGenMatched_WMass               ,    "JetGenMatched_WMass/F"                    );
-  TreeSemiLept->Branch("JetGenMatched_ZPt"                    , & JetGenMatched_ZPt                 ,    "JetGenMatched_ZPt/F"                      ); 
-  TreeSemiLept->Branch("JetGenMatched_ZEta"                   , & JetGenMatched_ZEta                ,    "JetGenMatched_ZEta/F"                     );
-  TreeSemiLept->Branch("JetGenMatched_ZPhi"                   , & JetGenMatched_ZPhi                ,    "JetGenMatched_ZPhi/F"                     );
-  TreeSemiLept->Branch("JetGenMatched_ZMass"                  , & JetGenMatched_ZMass               ,    "JetGenMatched_ZMass/F"                    );     
+  TreeSemiLept->Branch("JetGenMatched_Top0Pt"                  , & JetGenMatched_Top0Pt               ,    "JetGenMatched_Top0Pt/F"                    );      
+  TreeSemiLept->Branch("JetGenMatched_Top0Eta"                 , & JetGenMatched_Top0Eta              ,    "JetGenMatched_Top0Eta/F"                   );      
+  TreeSemiLept->Branch("JetGenMatched_Top0Phi"                 , & JetGenMatched_Top0Phi              ,    "JetGenMatched_Top0Phi/F"                   );      
+  TreeSemiLept->Branch("JetGenMatched_Top0Mass"                , & JetGenMatched_Top0Mass             ,    "JetGenMatched_Top0Mass/F"                  );      
+ 
+  TreeSemiLept->Branch("JetGenMatched_Top1Pt"                  , & JetGenMatched_Top1Pt               ,    "JetGenMatched_Top1Pt/F"                    );
+  TreeSemiLept->Branch("JetGenMatched_Top1Eta"                 , & JetGenMatched_Top1Eta              ,    "JetGenMatched_Top1Eta/F"                   );      
+  TreeSemiLept->Branch("JetGenMatched_Top1Phi"                 , & JetGenMatched_Top1Phi              ,    "JetGenMatched_Top1Phi/F"                   );
+  TreeSemiLept->Branch("JetGenMatched_Top1Mass"                , & JetGenMatched_Top1Mass             ,    "JetGenMatched_Top1Mass/F"                  );
+  
+  TreeSemiLept->Branch("JetGenMatched_bPt"                    , & JetGenMatched_bPt                 ,    "JetGenMatched_bPt/F"                      );
+
+  TreeSemiLept->Branch("JetGenMatched_WHadronic"            , & JetGenMatched_WHadronic         ,    "JetGenMatched_WHadronic/I"              );
+  TreeSemiLept->Branch("JetGenMatched_W0Pt"                    , & JetGenMatched_W0Pt                 ,    "JetGenMatched_W0Pt/F"                      ); 
+  TreeSemiLept->Branch("JetGenMatched_W0Eta"                   , & JetGenMatched_W0Eta                ,    "JetGenMatched_W0Eta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_W0Phi"                   , & JetGenMatched_W0Phi                ,    "JetGenMatched_W0Phi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_W0Mass"                  , & JetGenMatched_W0Mass               ,    "JetGenMatched_W0Mass/F"                    );
+
+  TreeSemiLept->Branch("JetGenMatched_W1Pt"                    , & JetGenMatched_W1Pt                 ,    "JetGenMatched_W1Pt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_W1Eta"                   , & JetGenMatched_W1Eta                ,    "JetGenMatched_WEta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_W1Phi"                   , & JetGenMatched_W1Phi                ,    "JetGenMatched_W1Phi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_W1Mass"                  , & JetGenMatched_W1Mass               ,    "JetGenMatched_W1Mass/F"                    );
+ 
+  TreeSemiLept->Branch("JetGenMatched_ZHadronic"            , & JetGenMatched_ZHadronic         ,    "JetGenMatched_ZHadronic/I"              );
+  TreeSemiLept->Branch("JetGenMatched_Z0Pt"                    , & JetGenMatched_Z0Pt                 ,    "JetGenMatched_Z0Pt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_Z0Eta"                   , & JetGenMatched_Z0Eta                ,    "JetGenMatched_Z0Eta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_Z0Phi"                   , & JetGenMatched_Z0Phi                ,    "JetGenMatched_Z0Phi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_Z0Mass"                  , & JetGenMatched_Z0Mass               ,    "JetGenMatched_Z0Mass/F"                    );
+
+  TreeSemiLept->Branch("JetGenMatched_Z1Pt"                    , & JetGenMatched_Z1Pt                 ,    "JetGenMatched_Z1Pt/F"                      ); 
+  TreeSemiLept->Branch("JetGenMatched_Z1Eta"                   , & JetGenMatched_Z1Eta                ,    "JetGenMatched_Z1Eta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_Z1Phi"                   , & JetGenMatched_Z1Phi                ,    "JetGenMatched_Z1Phi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_Z1Mass"                  , & JetGenMatched_Z1Mass               ,    "JetGenMatched_Z1Mass/F"                    );     
+ 
+  TreeSemiLept->Branch("JetGenMatched_GammaHadronic"            , & JetGenMatched_GammaHadronic         ,    "JetGenMatched_GammaHadronic/I"              );
+  TreeSemiLept->Branch("JetGenMatched_Gamma0Pt"                    , & JetGenMatched_Gamma0Pt                 ,    "JetGenMatched_Gamma0Pt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_Gamma0Eta"                   , & JetGenMatched_Gamma0Eta                ,    "JetGenMatched_Gamma0Eta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_Gamma0Phi"                   , & JetGenMatched_Gamma0Phi                ,    "JetGenMatched_Gamma0Phi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_Gamma0Mass"                  , & JetGenMatched_Gamma0Mass               ,    "JetGenMatched_Gamma0Mass/F"                    );
+ 
+  TreeSemiLept->Branch("JetGenMatched_Gamma1Pt"                    , & JetGenMatched_Gamma1Pt                 ,    "JetGenMatched_Gamma1Pt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_Gamma1Eta"                   , & JetGenMatched_Gamma1Eta                ,    "JetGenMatched_Gamma1Eta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_Gamma1Phi"                   , & JetGenMatched_Gamma1Phi                ,    "JetGenMatched_Gamma1Phi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_Gamma1Mass"                  , & JetGenMatched_Gamma1Mass               ,    "JetGenMatched_Gamma1Mass/F"                    );
+
+
+  TreeSemiLept->Branch("JetGenMatched_dHadronic"            , & JetGenMatched_dHadronic         ,    "JetGenMatched_dHadronic/I"              );
+  TreeSemiLept->Branch("JetGenMatched_qd1hardPt"                    , & JetGenMatched_qd1hardPt                 ,    "JetGenMatched_qd1hardPt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_qd1hardEta"                   , & JetGenMatched_qd1hardEta                ,    "JetGenMatched_qd1hardEta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_qd1hardPhi"                   , & JetGenMatched_qd1hardPhi                ,    "JetGenMatched_qd1hardPhi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_qd1hardMass"                  , & JetGenMatched_qd1hardMass               ,    "JetGenMatched_qd1hardMass/F"                    );
+ 
+
+  TreeSemiLept->Branch("JetGenMatched_qd2hardPt"                    , & JetGenMatched_qd2hardPt                 ,    "JetGenMatched_qd2hardPt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_qd2hardEta"                   , & JetGenMatched_qd2hardEta                ,    "JetGenMatched_qd2hardEta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_qd2hardPhi"                   , & JetGenMatched_qd2hardPhi                ,    "JetGenMatched_qd2hardPhi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_qd2hardMass"                  , & JetGenMatched_qd2hardMass               ,    "JetGenMatched_qd2hardMass/F"                    );
+
+  TreeSemiLept->Branch("JetGenMatched_q3hardPt"                    , & JetGenMatched_q3hardPt                 ,    "JetGenMatched_q3hardPt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_q3hardEta"                   , & JetGenMatched_q3hardEta                ,    "JetGenMatched_q3hardEta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_q3hardPhi"                   , & JetGenMatched_q3hardPhi                ,    "JetGenMatched_q3hardPhi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_q3hardMass"                  , & JetGenMatched_q3hardMass               ,    "JetGenMatched_q3hardMass/F"                    );
+
+  TreeSemiLept->Branch("JetGenMatched_q4hardPt"                    , & JetGenMatched_q4hardPt                 ,    "JetGenMatched_q4hardPt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_q4hardEta"                   , & JetGenMatched_q4hardEta                ,    "JetGenMatched_q4hardEta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_q4hardPhi"                   , & JetGenMatched_q4hardPhi                ,    "JetGenMatched_q4hardPhi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_q4hardMass"                  , & JetGenMatched_q4hardMass               ,    "JetGenMatched_q4hardMass/F"                    );
+
+  TreeSemiLept->Branch("JetGenMatched_q5hardPt"                    , & JetGenMatched_q5hardPt                 ,    "JetGenMatched_q5hardPt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_q5hardEta"                   , & JetGenMatched_q5hardEta                ,    "JetGenMatched_q5hardEta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_q5hardPhi"                   , & JetGenMatched_q5hardPhi                ,    "JetGenMatched_q5hardPhi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_q5hardMass"                  , & JetGenMatched_q5hardMass               ,    "JetGenMatched_q5hardMass/F"                    );
+
+  TreeSemiLept->Branch("JetGenMatched_q6hardPt"                    , & JetGenMatched_q6hardPt                 ,    "JetGenMatched_q6hardPt/F"                      );
+  TreeSemiLept->Branch("JetGenMatched_q6hardEta"                   , & JetGenMatched_q6hardEta                ,    "JetGenMatched_q6hardEta/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_q6hardPhi"                   , & JetGenMatched_q6hardPhi                ,    "JetGenMatched_q6hardPhi/F"                     );
+  TreeSemiLept->Branch("JetGenMatched_q6hardMass"                  , & JetGenMatched_q6hardMass               ,    "JetGenMatched_q6hardMass/F"                    );
+
   TreeSemiLept->Branch("JetGenMatched_Wd1Pt"                  , & JetGenMatched_Wd1Pt               ,    "JetGenMatched_Wd1Pt/F"                    );      
   TreeSemiLept->Branch("JetGenMatched_Wd2Pt"                  , & JetGenMatched_Wd2Pt               ,    "JetGenMatched_Wd2Pt/F"                    );      
   TreeSemiLept->Branch("JetGenMatched_Wd1ID"                  , & JetGenMatched_Wd1ID               ,    "JetGenMatched_Wd1ID/F"                    );      
@@ -2133,11 +2307,10 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptPUweight_MBup"                , & SemiLeptPUweight_MBup             , "SemiLeptPUweight_MBup/F"            );
   TreeSemiLept->Branch("SemiLeptPUweight_MBdn"                , & SemiLeptPUweight_MBdn             , "SemiLeptPUweight_MBdn/F"            );
        
-  
-
   TreeSemiLept->Branch("SemiLeptGenTTmass"                    , & SemiLeptGenTTmass                 , "SemiLeptGenTTmass/F"              );
-  TreeSemiLept->Branch("SemiLeptGenCountHadTop"               , & SemiLeptGenCountHadTop            , "SemiLeptGenCountHadTop/I"         );
-  
+  TreeSemiLept->Branch("SemiLeptGenCountHadObj"               , & SemiLeptGenCountHadObj            , "SemiLeptGenCountHadObj/I"         );
+  TreeSemiLept->Branch("SemiLeptGenObjPDGID"                  , & SemiLeptGenObjPDGID               , "SemiLeptGenObjPDGID/F"                     );
+
   TreeSemiLept->Branch("HTlep"                                , & HTlep                             , "HTlep/F"                  );
   TreeSemiLept->Branch("ST"                                   , & ST                                , "ST/F"                     );
   TreeSemiLept->Branch("ST_CorrDn"                            , & ST_CorrDn                         , "ST_CorrDn/F"              );
@@ -2155,29 +2328,29 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptEventNum"                     , & SemiLeptEventNum                  , "SemiLeptEventNum/I"               );
   TreeSemiLept->Branch("SemiLeptPassMETFilters"               , & SemiLeptPassMETFilters            , "SemiLeptPassMETFilters/I"         );
  
-  TreeSemiLept->Branch("AK4_dRminLep_Pt"                           , & AK4_dRminLep_Pt                        , "AK4_dRminLep_Pt/F"                     );  
-  TreeSemiLept->Branch("AK4_dRminLep_Eta"                          , & AK4_dRminLep_Eta                       , "AK4_dRminLep_Eta/F"                    );  
-  TreeSemiLept->Branch("AK4_dRminLep_Phi"                          , & AK4_dRminLep_Phi                       , "AK4_dRminLep_Phi/F"                    );  
-  TreeSemiLept->Branch("AK4_dRminLep_Mass"                         , & AK4_dRminLep_Mass                      , "AK4_dRminLep_Mass/F"                   );  
-  TreeSemiLept->Branch("AK4_dRminLep_Bdisc"                        , & AK4_dRminLep_Bdisc                     , "AK4_dRminLep_Bdisc/F"                  );  
-  TreeSemiLept->Branch("AK4_dRminLep_dRlep"                        , & AK4_dRminLep_dRlep                     , "AK4_dRminLep_dRlep/F"                  );  
-  TreeSemiLept->Branch("AK4_dRminLep_dRak8"                        , & AK4_dRminLep_dRak8                     , "AK4_dRminLep_dRak8/F"                  );  
-  TreeSemiLept->Branch("AK4_dRminLep_PtSmear"                      , & AK4_dRminLep_PtSmear                   , "AK4_dRminLep_PtSmear/F"   );
-  TreeSemiLept->Branch("AK4_dRminLep_PtSmearUp"                    , & AK4_dRminLep_PtSmearUp                 , "AK4_dRminLep_PtSmearUp/F" );
-  TreeSemiLept->Branch("AK4_dRminLep_PtSmearDn"                    , & AK4_dRminLep_PtSmearDn                 , "AK4_dRminLep_PtSmearDn/F" );
-  TreeSemiLept->Branch("AK4_dRminLep_PtUncorr"                     , & AK4_dRminLep_PtUncorr                  , "AK4_dRminLep_PtUncorr/F"  );
-  TreeSemiLept->Branch("AK4_dRminLep_Corr"                         , & AK4_dRminLep_Corr                      , "AK4_dRminLep_Corr/F"    );                
-  TreeSemiLept->Branch("AK4_dRminLep_CorrUp"                       , & AK4_dRminLep_CorrUp                    , "AK4_dRminLep_CorrUp/F"  );                 
-  TreeSemiLept->Branch("AK4_dRminLep_CorrDn"                       , & AK4_dRminLep_CorrDn                    , "AK4_dRminLep_CorrDn/F"  );                  
-
-
-
+  TreeSemiLept->Branch("AK4_dRminLep0_Pt"                           , & AK4_dRminLep0_Pt                        , "AK4_dRminLep0_Pt/F"                     );  
+  TreeSemiLept->Branch("AK4_dRminLep0_Eta"                          , & AK4_dRminLep0_Eta                       , "AK4_dRminLep0_Eta/F"                    );  
+  TreeSemiLept->Branch("AK4_dRminLep0_Phi"                          , & AK4_dRminLep0_Phi                       , "AK4_dRminLep0_Phi/F"                    );  
+  TreeSemiLept->Branch("AK4_dRminLep0_Mass"                         , & AK4_dRminLep0_Mass                      , "AK4_dRminLep0_Mass/F"                   );  
+  TreeSemiLept->Branch("AK4_dRminLep0_Bdisc"                        , & AK4_dRminLep0_Bdisc                     , "AK4_dRminLep0_Bdisc/F"                  );  
+  TreeSemiLept->Branch("AK4_dRminLep0_dRlep"                        , & AK4_dRminLep0_dRlep                     , "AK4_dRminLep0_dRlep/F"                  );  
+  TreeSemiLept->Branch("AK4_dRminLep0_dRak8"                        , & AK4_dRminLep0_dRak8                     , "AK4_dRminLep0_dRak8/F"                  );  
+  TreeSemiLept->Branch("AK4_dRminLep0_PtSmear"                      , & AK4_dRminLep0_PtSmear                   , "AK4_dRminLep0_PtSmear/F"   );
+  TreeSemiLept->Branch("AK4_dRminLep0_PtSmearUp"                    , & AK4_dRminLep0_PtSmearUp                 , "AK4_dRminLep0_PtSmearUp/F" );
+  TreeSemiLept->Branch("AK4_dRminLep0_PtSmearDn"                    , & AK4_dRminLep0_PtSmearDn                 , "AK4_dRminLep0_PtSmearDn/F" );
+  TreeSemiLept->Branch("AK4_dRminLep0_PtUncorr"                     , & AK4_dRminLep0_PtUncorr                  , "AK4_dRminLep0_PtUncorr/F"  );
+  TreeSemiLept->Branch("AK4_dRminLep0_Corr"                         , & AK4_dRminLep0_Corr                      , "AK4_dRminLep0_Corr/F"    );                
+  TreeSemiLept->Branch("AK4_dRminLep0_CorrUp"                       , & AK4_dRminLep0_CorrUp                    , "AK4_dRminLep0_CorrUp/F"  );                 
+  TreeSemiLept->Branch("AK4_dRminLep0_CorrDn"                       , & AK4_dRminLep0_CorrDn                    , "AK4_dRminLep0_CorrDn/F"  );                  
   // TreeSemiLept->Branch("AK4BtagdRminPt"                       , & AK4BtagdRminPt                    , "AK4BtagdRminPt/F"                 );  
   // TreeSemiLept->Branch("AK4BtagdRminBdisc"                    , & AK4BtagdRminBdisc                 , "AK4BtagdRminBdisc/F"              );  
   // TreeSemiLept->Branch("AK4BtagdRminLep"                      , & AK4BtagdRminLep                   , "AK4BtagdRminLep/F"                );  
-  TreeSemiLept->Branch("LepHemiContainsAK4BtagLoose"          , & LepHemiContainsAK4BtagLoose       , "LepHemiContainsAK4BtagLoose/I"    );  
-  TreeSemiLept->Branch("LepHemiContainsAK4BtagMedium"         , & LepHemiContainsAK4BtagMedium      , "LepHemiContainsAK4BtagMedium/I"   );  
-  TreeSemiLept->Branch("LepHemiContainsAK4BtagTight"          , & LepHemiContainsAK4BtagTight       , "LepHemiContainsAK4BtagTight/I"    );  
+  TreeSemiLept->Branch("Lep0HemiContainsAK4BtagLoose"          , & Lep0HemiContainsAK4BtagLoose       , "Lep0HemiContainsAK4BtagLoose/I"    );  
+  TreeSemiLept->Branch("Lep0HemiContainsAK4BtagMedium"         , & Lep0HemiContainsAK4BtagMedium      , "Lep0HemiContainsAK4BtagMedium/I"   );  
+  TreeSemiLept->Branch("Lep0HemiContainsAK4BtagTight"          , & Lep0HemiContainsAK4BtagTight       , "Lep0HemiContainsAK4BtagTight/I"    );  
+
+  TreeSemiLept->Branch("CountLep"                              , & CountLep                           ,    "CountLep/I"                  );
+
 
   TreeSemiLept->Branch("lep0flavor"                            , &  lep0flavor                        , "lep0flavor/B"                      ); 
   TreeSemiLept->Branch("lep1flavor"                            , &  lep1flavor                        , "lep1flavor/B"                      ); 
@@ -2189,30 +2362,54 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("LeptonPt1"                             , &  LeptonPt1                         , "LeptonPt1/F"                       ); 
   TreeSemiLept->Branch("LeptonEta1"                            , &  LeptonEta1                        , "LeptonEta1/F"                      ); 
   TreeSemiLept->Branch("LeptonMass1"                           , &  LeptonMass1                       , "LeptonMass1/F"                     ); 
-  TreeSemiLept->Branch("PtRel"                                , &  PtRel                            , "PtRel/F"                          ); 
-  TreeSemiLept->Branch("LeptonIsMu"                           , &  LeptonIsMu                       , "LeptonIsMu/I"                     ); 
-  TreeSemiLept->Branch("MuMedium"                             , &  MuMedium                         , "MuMedium/I"                       ); 
-  TreeSemiLept->Branch("MuTight"                              , &  MuTight                          , "MuTight/I"                        ); 
-  TreeSemiLept->Branch("MuHighPt"                             , &  MuHighPt                         , "MuHighPt/I"                       ); 
-  TreeSemiLept->Branch("DeltaRJetLep"                         , &  DeltaRJetLep                     , "DeltaRJetLep/F"                   ); 
-  TreeSemiLept->Branch("DeltaPhiJetLep"                       , &  DeltaPhiJetLep                   , "DeltaPhiJetLep/F"                 ); 
   
+  TreeSemiLept->Branch("PtRel0"                                , &  PtRel0                            , "PtRel0/F"                          ); 
+  TreeSemiLept->Branch("Lepton0IsMu"                           , &  Lepton0IsMu                       , "Lepton0IsMu/I"                     ); 
+  TreeSemiLept->Branch("Mu0Medium"                             , &  Mu0Medium                         , "Mu0Medium/I"                       ); 
+  TreeSemiLept->Branch("Mu0Tight"                              , &  Mu0Tight                          , "Mu0Tight/I"                        ); 
+  TreeSemiLept->Branch("Mu0HighPt"                             , &  Mu0HighPt                         , "MuH0ighPt/I"                       ); 
+  TreeSemiLept->Branch("DeltaRJetLep0"                         , &  DeltaRJetLep0                     , "DeltaRJetLep0/F"                   ); 
+  TreeSemiLept->Branch("DeltaPhiJetLep0"                       , &  DeltaPhiJetLep0                   , "DeltaPhiJetLep0/F"                 ); 
+  
+  TreeSemiLept->Branch("PtRel1"                                , &  PtRel1                            , "PtRel1/F"                          );
+  TreeSemiLept->Branch("Lepton1IsMu"                           , &  Lepton1IsMu                       , "Lepton1IsMu/I"                     );
+  TreeSemiLept->Branch("Mu1Medium"                             , &  Mu1Medium                         , "Mu1Medium/I"                       );
+  TreeSemiLept->Branch("Mu1Tight"                              , &  Mu1Tight                          , "Mu1Tight/I"                        );
+  TreeSemiLept->Branch("Mu1HighPt"                             , &  Mu1HighPt                         , "Mu1HighPt/I"                       );
+  TreeSemiLept->Branch("DeltaRJetLep1"                         , &  DeltaRJetLep1                     , "DeltaRJetLep1/F"                   );
+  TreeSemiLept->Branch("DeltaPhiJetLep1"                       , &  DeltaPhiJetLep1                   , "DeltaPhiJetLep1/F"                 );
 
-  TreeSemiLept->Branch("MuIso"                                , &  MuIso                            , "MuIso/F"                          ); 
-  TreeSemiLept->Branch("Elecron_absiso"                       , &  Elecron_absiso                   , "Elecron_absiso/F"                 ); 
-  TreeSemiLept->Branch("Elecron_relIsoWithDBeta"              , &  Elecron_relIsoWithDBeta          , "Elecron_relIsoWithDBeta/F"        ); 
-  TreeSemiLept->Branch("Elecron_absiso_EA"                    , &  Elecron_absiso_EA                , "Elecron_absiso_EA/F"              ); 
-  TreeSemiLept->Branch("Elecron_relIsoWithEA"                 , &  Elecron_relIsoWithEA             , "Elecron_relIsoWithEA/F"           ); 
+  TreeSemiLept->Branch("Mu0Iso"                                , &  Mu0Iso                            , "Mu0Iso/F"                          ); 
+  TreeSemiLept->Branch("Elecron0_absiso"                       , &  Elecron0_absiso                   , "Elecron0_absiso/F"                 ); 
+  TreeSemiLept->Branch("Elecron0_relIsoWithDBeta"              , &  Elecron0_relIsoWithDBeta          , "Elecron0_relIsoWithDBeta/F"        ); 
+  TreeSemiLept->Branch("Elecron0_absiso_EA"                    , &  Elecron0_absiso_EA                , "Elecron0_absiso_EA/F"              ); 
+  TreeSemiLept->Branch("Elecron0_relIsoWithEA"                 , &  Elecron0_relIsoWithEA             , "Elecron0_relIsoWithEA/F"           ); 
  
-  TreeSemiLept->Branch("Electron_iso_passHLTpre"      , & Electron_iso_passHLTpre   , "Electron_iso_passHLTpre/I"    );
-  TreeSemiLept->Branch("Electron_iso_passLoose"       , & Electron_iso_passLoose    , "Electron_iso_passLoose/I"     );
-  TreeSemiLept->Branch("Electron_iso_passMedium"      , & Electron_iso_passMedium   , "Electron_iso_passMedium/I"    );
-  TreeSemiLept->Branch("Electron_iso_passTight"       , & Electron_iso_passTight    , "Electron_iso_passTight/I"     );
-  TreeSemiLept->Branch("Electron_iso_passHEEP"        , & Electron_iso_passHEEP     , "Electron_iso_passHEEP/I"      );
-  TreeSemiLept->Branch("Electron_noiso_passLoose"     , & Electron_noiso_passLoose  , "Electron_noiso_passLoose/I"   );
-  TreeSemiLept->Branch("Electron_noiso_passMedium"    , & Electron_noiso_passMedium , "Electron_noiso_passMedium/I"  );
-  TreeSemiLept->Branch("Electron_noiso_passTight"     , & Electron_noiso_passTight  , "Electron_noiso_passTight/I"   );
-  TreeSemiLept->Branch("Electron_noiso_passHEEP"      , & Electron_noiso_passHEEP   , "Electron_noiso_passHEEP/I"    );
+  TreeSemiLept->Branch("Electron0_iso_passHLTpre"      , & Electron0_iso_passHLTpre   , "Electron0_iso_passHLTpre/I"    );
+  TreeSemiLept->Branch("Electron0_iso_passLoose"       , & Electron0_iso_passLoose    , "Electron0_iso_passLoose/I"     );
+  TreeSemiLept->Branch("Electron0_iso_passMedium"      , & Electron0_iso_passMedium   , "Electron0_iso_passMedium/I"    );
+  TreeSemiLept->Branch("Electron0_iso_passTight"       , & Electron0_iso_passTight    , "Electron0_iso_passTight/I"     );
+  TreeSemiLept->Branch("Electron0_iso_passHEEP"        , & Electron0_iso_passHEEP     , "Electron0_iso_passHEEP/I"      );
+  TreeSemiLept->Branch("Electron0_noiso_passLoose"     , & Electron0_noiso_passLoose  , "Electron0_noiso_passLoose/I"   );
+  TreeSemiLept->Branch("Electron0_noiso_passMedium"    , & Electron0_noiso_passMedium , "Electron0_noiso_passMedium/I"  );
+  TreeSemiLept->Branch("Electron0_noiso_passTight"     , & Electron0_noiso_passTight  , "Electron0_noiso_passTight/I"   );
+  TreeSemiLept->Branch("Electron0_noiso_passHEEP"      , & Electron0_noiso_passHEEP   , "Electron0_noiso_passHEEP/I"    );
+
+  TreeSemiLept->Branch("Mu1Iso"                                , &  Mu1Iso                            , "Mu1Iso/F"                          );
+  TreeSemiLept->Branch("Elecron1_absiso"                       , &  Elecron1_absiso                   , "Elecron1_absiso/F"                 );
+  TreeSemiLept->Branch("Elecron1_relIsoWithDBeta"              , &  Elecron1_relIsoWithDBeta          , "Elecron1_relIsoWithDBeta/F"        );
+  TreeSemiLept->Branch("Elecron1_absiso_EA"                    , &  Elecron1_absiso_EA                , "Elecron1_absiso_EA/F"              );
+  TreeSemiLept->Branch("Elecron1_relIsoWithEA"                 , &  Elecron1_relIsoWithEA             , "Elecron1_relIsoWithEA/F"           );
+
+  TreeSemiLept->Branch("Electron1_iso_passHLTpre"      , & Electron1_iso_passHLTpre   , "Electron1_iso_passHLTpre/I"    );
+  TreeSemiLept->Branch("Electron1_iso_passLoose"       , & Electron1_iso_passLoose    , "Electron1_iso_passLoose/I"     );
+  TreeSemiLept->Branch("Electron1_iso_passMedium"      , & Electron1_iso_passMedium   , "Electron1_iso_passMedium/I"    );
+  TreeSemiLept->Branch("Electron1_iso_passTight"       , & Electron1_iso_passTight    , "Electron1_iso_passTight/I"     );
+  TreeSemiLept->Branch("Electron1_iso_passHEEP"        , & Electron1_iso_passHEEP     , "Electron1_iso_passHEEP/I"      );
+  TreeSemiLept->Branch("Electron1_noiso_passLoose"     , & Electron1_noiso_passLoose  , "Electron1_noiso_passLoose/I"   );
+  TreeSemiLept->Branch("Electron1_noiso_passMedium"    , & Electron1_noiso_passMedium , "Electron1_noiso_passMedium/I"  );
+  TreeSemiLept->Branch("Electron1_noiso_passTight"     , & Electron1_noiso_passTight  , "Electron1_noiso_passTight/I"   );
+  TreeSemiLept->Branch("Electron1_noiso_passHEEP"      , & Electron1_noiso_passHEEP   , "Electron1_noiso_passHEEP/I"    ); 
  
 
   std::cout<<"Setup semi-lept tree"<<std::endl;
@@ -2261,10 +2458,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   //    "Y8888P88 8888888888 888    Y888     888        "Y888888 888      "Y888 888  "Y8888P 888  "Y8888   88888P' 
   //                                                                                                               
                                                                                                                                                                                                                         
-  bool top1hadronic=false;
-  bool top2hadronic=false;
-  bool top1leptonic=false;
-  bool top2leptonic=false;
+  // bool top1hadronic=false;
+  // bool top2hadronic=false;
+  // bool top1leptonic=false;
+  //bool top2leptonic=false;
 
   TLorentzVector t1_p4;
   TLorentzVector t2_p4;
@@ -2274,10 +2471,44 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   TLorentzVector b2_p4;
   TLorentzVector W1_p4;
   TLorentzVector W2_p4;
-  TLorentzVector Wp_p4;
-  TLorentzVector Wm_p4;
+  TLorentzVector Wp1_p4;
+  TLorentzVector Wp2_p4;
+  TLorentzVector Wm1_p4;
+  TLorentzVector Wm2_p4;
   TLorentzVector Z1_p4;
   TLorentzVector Z2_p4;
+  TLorentzVector Gamma1_p4;
+  TLorentzVector Gamma2_p4;
+  TLorentzVector qd1hard_p4;// d quark 1
+  TLorentzVector qd2hard_p4;// d quark 2                                                        
+
+  TLorentzVector q2hard_p4;// u quark
+  TLorentzVector q3hard_p4;// s quark
+  TLorentzVector q4hard_p4;// c quark
+  TLorentzVector q5hard_p4;// b quark
+  TLorentzVector q6hard_p4;// t quark                                                           
+
+  TLorentzVector qa1hard_p4;// anti d quark                                                     
+                                                                    
+  TLorentzVector qa2hard_p4;// anti u quark                                                                                                                                                   
+  TLorentzVector qa3hard_p4;// anti s quark                                                                                                                                                   
+  TLorentzVector qa4hard_p4;// anti c quark                                                                                                                                                   
+  TLorentzVector qa5hard_p4;// anti b quark 
+ 
+  TLorentzVector qa6hard_p4;// anti t quark                                                      
+
+  TLorentzVector hardest_parton_hardScatterOutgoing_p4;                                                                                                     
+  TLorentzVector second_hardest_parton_hardScatterOutgoing_p4;   
+  double hardest_parton_hardScatterOutgoing_pt        = 0;                                                                                                  
+  double second_hardest_parton_hardScatterOutgoing_pt = 0;                                                                                                  
+                                                                                                                                                          
+  int parton1id = 0;                                                                                                                                       
+  int parton2id = 0;  
+  //bool GenTruth_allhadronic = false;                                                                                                                       
+  // bool GenTruth_semileptonic = false;                                                                                                                      
+  int count_gen_truth_hadronic_obj = 0;      
+  /*
+  //TLorentzVector q6hard_p4; this is the top quark
   TLorentzVector W1d1_p4;
   TLorentzVector W1d2_p4;
   TLorentzVector W2d1_p4;
@@ -2303,6 +2534,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   bool GenTruth_semileptonic = false;
   int count_gen_truth_hadronic_top = 0;
 
+  
   double deltaR_t1_t2       = 99 ;
   double deltaR_t1_b1       = 99 ;
   double deltaR_t1_W1       = 99 ;
@@ -2331,21 +2563,32 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   double max_deltaR_Wparton_t2 = -1;
   double max_deltaR_Wparton_W1 = -1;
   double max_deltaR_Wparton_W2 = -1;
+  */
 
-  double counttop = 0;
+  int objPDGID = 0;
+  if(isttbar_ )objPDGID = 6;
+  if(isPhoton_ )objPDGID = 22;
+  if(isW_ )objPDGID = 23;
+  if(isZ_ )objPDGID = 24;
+  if(isDown_ )objPDGID = 1;
+
+
+  double countObj = 0;
   if (!iEvent.isRealData() and runGenLoop_) {
     Handle<edm::View<reco::GenParticle> > genpart;
     iEvent.getByToken(prunedGenToken_,genpart);  
 
     // Classify the event based on the number of top quarks
     for(size_t i=0; i<genpart->size();i++){
-      if (fabs((*genpart)[i].pdgId())==6 && (*genpart)[i].status()<30 && (*genpart)[i].status()>=20) counttop++;  // Z' events: status 22 = top from Z', status 52 with 2 daughters = the top that decays (after radiating a bunch of times)
+      if (fabs((*genpart)[i].pdgId())==objPDGID && (*genpart)[i].status()<30 && (*genpart)[i].status()>=20) countObj++;  // Z' events: status 22 = top from Z', status 52 with 2 daughters = the top that decays (after radiating a bunch of times)
     }
-    if (verboseGen_) cout<<"counttop "<<counttop<<endl;
+    if (verboseGen_) cout<<"countObj : "<<countObj<< "  objPDGID : " << objPDGID <<endl;
    
     // Loop over all pruned gen particles and find the 4-vectors of the top, W, B, W duaghters
-    double countW = 0;
-    double countb = 0;
+    // double countW = 0;
+    //double countb = 0;
+   
+    count_gen_truth_hadronic_obj = countObj ;
     for(size_t i=0; i<genpart->size();i++){
       int id        = (*genpart)[i].pdgId();
       int status    = (*genpart)[i].status();
@@ -2354,14 +2597,14 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       double py     = (*genpart)[i].py();
       double pz     = (*genpart)[i].pz();
       double e      = (*genpart)[i].energy();
-      double m      = (*genpart)[i].mass();
+      //double m      = (*genpart)[i].mass();
       double pt     = (*genpart)[i].pt();
       double eta    = (*genpart)[i].eta();
       double phi    = (*genpart)[i].phi();
       //double nmothers = (*genpart)[i].numberOfMothers() ;
-
+     
       // Find the particles from the hard scatter (for QCD samples)
-      if (status==23 && counttop==0){
+      if (status==23 && countObj==0){
         if (pt>hardest_parton_hardScatterOutgoing_pt){
           second_hardest_parton_hardScatterOutgoing_pt = hardest_parton_hardScatterOutgoing_pt;
           second_hardest_parton_hardScatterOutgoing_p4 = hardest_parton_hardScatterOutgoing_p4;
@@ -2369,20 +2612,83 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           hardest_parton_hardScatterOutgoing_p4.SetPxPyPzE( px, py, pz, e );
           parton1id = id;
           if (verboseGen_) cout<<"---------- pt>hardest_parton_hardScatterOutgoing_pt - parton1id = "<<parton1id<<endl;
+
+	  //if (parton1id == 22 ) {
+	    // Gamma1_p4.SetPxPyPzE( px, py, pz, e );
+	    //if (verboseGen_) cout<<"..Photon 1 : "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+	    //}
+
+
         }
         else if (pt>second_hardest_parton_hardScatterOutgoing_pt){
           second_hardest_parton_hardScatterOutgoing_pt = pt;
           second_hardest_parton_hardScatterOutgoing_p4.SetPxPyPzE( px, py, pz, e ); 
           parton2id = id;
           if (verboseGen_) cout<<"---------- pt>second_hardest_parton_hardScatterOutgoing_pt - parton2id = "<<parton2id<<endl;
+
+
+	  //  if (parton2id == 22 ) {
+	  // Gamma2_p4.SetPxPyPzE( px, py, pz, e );
+	  // if (verboseGen_) cout<<"..Photon 2 :  "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton2id = "<<parton2id<<endl;
+	  // }
         }
+	// Get the Gen Quarks from hard scatter                                                                                                                                               
+	/*
+	if ( id==1  ) {
+	  q1hard_p4.SetPxPyPzE( px, py, pz, e );
+	  parton1id = id;
+	  if (verboseGen_) cout<<"..Down Quark "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+	}
+	if ( id==2  ) {
+	  q2hard_p4.SetPxPyPzE( px, py, pz, e );
+	  parton1id = id;
+	  if (verboseGen_) cout<<"..Up Quark "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+	}
+	// TO-DO : add S C B quarks and require all be from hard scatter . Also add all of them and the photon to the TTree.                                                                        
+
+	// Get the Gen Photons                                                                                                                                                                 
+
+      if ( id==1   ) {
+	qd1hard_p4.SetPxPyPzE( px, py, pz, e );
+	parton1id = id;
+	if (verboseGen_) cout<<"..Down Quark "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
       }
+      if ( id==2   ) {
+	q2hard_p4.SetPxPyPzE( px, py, pz, e );
+	parton1id = id;
+	if (verboseGen_) cout<<"..Up Quark "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+      }
+      // TO-DO : add S C B quarks and require all be from hard scatter . Also add all of them and the photon to the TTree.                                                               
+      */
+                                                                                       
+
+      } // end if countObj == 2 and hard scatter                                                 
+
+
+      /*
       // Find the the resonance mass for Z'
       if (id>1000000 && status == 22) 
       {
         Resonance_p4.SetPxPyPzE( px, py, pz, e ); 
         if (verboseGen_) cout<<".Resonant particle with mass "<<m<<endl; // RSGWW id = 5100039, Z' id = 6000047
       }
+      */
+      if (verboseGen_) cout<<".. Inside Gen Loop.. "<<endl; 
+      // Get Gen Photons 
+      if (id == 22 && verboseGen_ ) cout<<"..Gen Parton is Photon.. "<<endl;
+      if (id == 22 && status ==23  ) {
+	if (verboseGen_) cout<<"..Gen Parton is Photon from hard scatter.. "<<endl;
+        if (Gamma1_p4.Perp()<= 1.0 ){
+	Gamma1_p4.SetPxPyPzE( px, py, pz, e );
+	if (verboseGen_) cout<<"..Photon 1 : "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+      }
+        if (Gamma1_p4.Perp()>= 1.0 && Gamma2_p4.Perp()<= 1.0 && phi != Gamma1_p4.Phi()  ){
+	  Gamma2_p4.SetPxPyPzE( px, py, pz, e );
+	  if (verboseGen_) cout<<"..Photon 2 : "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+	}
+
+      }
+
       // Get tops from hard subprocess (for ttbar samples)
       if (id==6 && status<30 && status>=20) {
         t1_p4.SetPxPyPzE( px, py, pz, e ); 
@@ -2394,27 +2700,46 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         parton2id = id;
         if (verboseGen_) cout<<"..atop (hard)"<<endl;//" with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton2id = "<<parton2id<<endl;
       }
+      // Get the Gen W bosons
       if (id==24 && status<30 && status>=20) {
-        Wp_p4.SetPxPyPzE( px, py, pz, e ); 
+        Wp1_p4.SetPxPyPzE( px, py, pz, e ); 
         parton1id = id;
         if (verboseGen_) cout<<"..Wplus (hard)"<<endl;//" with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
       }
       if (id==-24 && status<30 && status>=20) {
-        Wm_p4.SetPxPyPzE( px, py, pz, e ); 
+        Wm1_p4.SetPxPyPzE( px, py, pz, e ); 
         parton2id = id;
         if (verboseGen_) cout<<"..Wminus (hard)"<<endl;//" with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton2id = "<<parton2id<<endl;
       }
-      if (id==23 && status<30 && status>=20) {
+      // Get the Gen Z bosons 
+     if (id==23 ) {
         Z1_p4.SetPxPyPzE( px, py, pz, e ); 
         parton1id = id;
-        if (verboseGen_) cout<<"..Zboson (hard)"<<endl;//" with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+        if (verboseGen_) cout<<"..Zboson "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
       }
-      if (id==-23 && status<30 && status>=20) {
-        Z2_p4.SetPxPyPzE( px, py, pz, e ); 
-        parton2id = id;
-        if (verboseGen_) cout<<"..aZboson (hard)"<<endl;//" with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+      if (id==-23 ) {
+      Z2_p4.SetPxPyPzE( px, py, pz, e ); 
+      parton2id = id;
+      if (verboseGen_) cout<<"..aZboson "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
       }
 
+      // Get the Gen Quarks from hard scatter                                                                                                                                                                
+      //if ( id==1  ) {
+        //q1hard_p4.SetPxPyPzE( px, py, pz, e );
+	//	parton1id = id;
+        //if (verboseGen_) cout<<"..Down Quark "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+	// }
+      // if ( id==2  ) {
+        //q2hard_p4.SetPxPyPzE( px, py, pz, e );
+	//        parton1id = id;
+	// if (verboseGen_) cout<<"..Up Quark "<< " with pt "<<pt<<" status "<<status<<" ndau "<< ndau <<" pt "<<pt<<" eta "<<eta<<" phi "<<phi<<" parton1id = "<<parton1id<<endl;
+	// }
+      
+      // TO-DO : add S C B quarks and require all be from hard scatter . Also add all of them and the photon to the TTree.
+
+
+
+      /*
       // Get the tops which decay - record b and W information
       if (ndau==2 && id==6){
         finalt1_p4.SetPxPyPzE( px, py, pz, e ); 
@@ -2468,6 +2793,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     if (!top1hadronic && top2hadronic) { GenTruth_semileptonic = true; count_gen_truth_hadronic_top =1; }
 
     // Angles between particles
+   
     deltaR_t1_t2       = t1_p4  .DeltaR(t2_p4  );
     deltaR_t1_b1       = t1_p4  .DeltaR(b1_p4  );
     deltaR_t1_W1       = t1_p4  .DeltaR(W1_p4  );
@@ -2516,7 +2842,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     // max W parton deltaR from W2
     if ( deltaR_W2_W2d1 > max_deltaR_Wparton_W2 ) max_deltaR_Wparton_W2 = deltaR_W2_W2d1;
     if ( deltaR_W2_W2d2 > max_deltaR_Wparton_W2 ) max_deltaR_Wparton_W2 = deltaR_W2_W2d2;
-
+    
     if (verboseGen_)
     {
       cout<<"second_hardest_parton_hardScatterOutgoing_pt "<<second_hardest_parton_hardScatterOutgoing_pt      <<endl;                
@@ -2568,10 +2894,13 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       cout<<"deltaR_t2_W2d2     "<<deltaR_t2_W2d2    <<endl; 
       cout<<"max_deltaR_parton_t1 "<<max_deltaR_parton_t1<<endl;
       cout<<"max_deltaR_parton_t2 "<<max_deltaR_parton_t2<<endl;
-      cout<<"counttop "<<counttop<<" countW "<<countW<<" countb "<<countb<<endl;
+      cout<<"countObj "<<countObj<<" countW "<<countW<<" countb "<<countb<<endl;
     }
-  }
-  
+    */
+      //if (GenTruth_allhadronic)  cout<<"allhadronic"<<endl;                                                                                                  
+    //if (GenTruth_semileptonic) cout<<"semileptonic"<<endl;
+    }// end genParticle loop
+  } // end run gen loop and MC 
   // 
   // 888    888 888      88888888888 
   // 888    888 888          888     
@@ -2600,9 +2929,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   // AllHadTrigNames       ->clear();
   // SemiLeptTrigNames     ->clear();
-  AllHadTrigPrescales   ->clear();
+  //AllHadTrigPrescales   ->clear();
   SemiLeptTrigPrescales ->clear();
-  AllHadTrigPass        ->clear();
+  //AllHadTrigPass        ->clear();
   SemiLeptTrigPass      ->clear();
 
   const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
@@ -2639,9 +2968,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       trigAccept.push_back(pass);
       // AllHadTrigNames       ->push_back(name);
       // SemiLeptTrigNames     ->push_back(name);
-      AllHadTrigPrescales   ->push_back(prescale);
+      //AllHadTrigPrescales   ->push_back(prescale);
       SemiLeptTrigPrescales ->push_back(prescale);
-      AllHadTrigPass        ->push_back(pass);
+      //AllHadTrigPass        ->push_back(pass);
       SemiLeptTrigPass      ->push_back(pass);
       if (pass)  hltbit[counttrigs]=1;  
       counttrigs++;
@@ -2658,7 +2987,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     cout<<hltbit.to_string()<<endl;
   }
 
-  AllHadTrigAcceptBits   = hltbit.to_string();
+  //AllHadTrigAcceptBits   = hltbit.to_string();
   SemiLeptTrigAcceptBits = hltbit.to_string();
   
 
@@ -2912,7 +3241,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   double NNPDF3wgt_up = -999;
   double NNPDF3wgt_down = -999;
 
-  if (isZprime_ || isttbar_){
+  if (isZprime_ || isttbar_ || isPhoton_ || isW_ || isZ_ || isDown_ ){
     edm::Handle<LHEEventProduct> EvtHandle;
     iEvent.getByToken(lheSrc_, EvtHandle);
 
@@ -3093,6 +3422,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   bool mu0_isMedium=false;
   bool mu0_isHighPt = false;
   double mu0_iso04=0;
+  bool mu1_isTight=false;
+  bool mu1_isMedium=false;
+  bool mu1_isHighPt = false;
+  double mu1_iso04=0;
   int count_mu=0;
 
   std::vector<reco::CandidatePtr> muFootprint0, muFootprint1;
@@ -3101,9 +3434,6 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
       // use only loose muons 
       if (mu.pt() < 30 || !mu.isLooseMuon() || fabs( mu.eta() ) > 2.1) continue;
-      // use the leading muon only
-      if (count_mu==0){
-        mu0_p4.SetPtEtaPhiM( mu.pt(), mu.eta(), mu.phi(), mu.mass() );
 
         // Moriond 2017 short term instructions for medium muon ID
         //https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideMuonIdRun2
@@ -3119,14 +3449,10 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if      (iEvent.isRealData() && runNumber <= 278808) isMedium = isMediumBF;       // Data B-F
         else if (iEvent.isRealData() && runNumber  > 278808) isMedium = isMediumStandard; // Data G-H
         else isMedium = isMediumStandard;  // MC 
-        if ( isMedium ) mu0_isMedium = true;
-
-        // Tight ID
-        if ( mu.isTightMuon(PV) ) mu0_isTight = true;
+     
 
         // HighPt ID
         bool isHighPt = mu.isHighPtMuon(PV);
-        if ( isHighPt ) mu0_isHighPt = true;
 
         // https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Accessing_PF_Isolation_from_reco
         double sumChargedHadronPt = mu.pfIsolationR04().sumChargedHadronPt;
@@ -3135,7 +3461,16 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         double sumPUPt            = mu.pfIsolationR04().sumPUPt;
         double pt                 = mu.pt();
         double iso04 = (sumChargedHadronPt+TMath::Max(0.,sumNeutralHadronPt+sumPhotonPt-0.5*sumPUPt))/pt;
+
+      if (count_mu==0){
+        Lepton0IsMu  = 1  ;
+        mu0_p4.SetPtEtaPhiM( mu.pt(), mu.eta(), mu.phi(), mu.mass() );
+        if ( isMedium ) mu0_isMedium = true;
+
+        // Tight ID                                                                                                                                         
+        if ( mu.isTightMuon(PV) ) mu0_isTight = true;
         mu0_iso04 = iso04;
+        if ( isHighPt ) mu0_isHighPt = true;
 
         for (unsigned int i = 0, n = mu.numberOfSourceCandidatePtrs(); i < n; ++i) {
           muFootprint0.push_back(mu.sourceCandidatePtr(i));
@@ -3143,8 +3478,13 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         if (verbose_) cout<<"Muon pT "<<mu.pt()<<" iso04 "<<iso04<<" isMedium "<<mu0_isTight<<" isTight "<<mu0_isTight<<" isHighPt "<<mu0_isHighPt<<endl;
       } 
       else if (count_mu==1){
+        Lepton1IsMu  = 1; 
         mu1_p4.SetPtEtaPhiM( mu.pt(), mu.eta(), mu.phi(), mu.mass() );
-
+        if ( isMedium ) mu1_isMedium = true;
+        // Tight ID                                                                                                                                         
+        if ( mu.isTightMuon(PV) ) mu1_isTight = true;
+        if ( isHighPt ) mu1_isHighPt = true;
+	mu1_iso04 = iso04;
         for (unsigned int i = 0, n = mu.numberOfSourceCandidatePtrs(); i < n; ++i) {
           muFootprint1.push_back(mu.sourceCandidatePtr(i));
         }
@@ -3217,6 +3557,20 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   int el0_noiso_passMedium  = 0;
   int el0_noiso_passTight   = 0;
   int el0_noiso_passHEEP    = 0;
+
+  Float_t el1_absiso           =0;
+  Float_t el1_relIsoWithDBeta  =0;
+  Float_t el1_absiso_EA        =0;
+  Float_t el1_relIsoWithEA     =0;
+  int el1_iso_passHLTpre    = 0;
+  int el1_iso_passLoose     = 0;
+  int el1_iso_passMedium    = 0;
+  int el1_iso_passTight     = 0;
+  int el1_iso_passHEEP      = 0;
+  int el1_noiso_passLoose   = 0;
+  int el1_noiso_passMedium  = 0;
+  int el1_noiso_passTight   = 0;
+  int el1_noiso_passHEEP    = 0;
   int count_el=0;
 
   std::vector<reco::CandidatePtr> elFootprint0, elFootprint1;
@@ -3266,8 +3620,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     bool electronEvent = noiso_passLoose || noiso_passHEEP;
     if (electronEvent){
-      if (count_el==0){
-        if (verbose_) cout<<"Electron pT "<<el->pt()<<endl;
+      //if (count_el==0){
+	//  if (verbose_) cout<<"Electron pT "<<el->pt()<<endl;
 
         //calculate isolation variables    
         GsfElectron::PflowIsolationVariables pfIso = el->pfIsolationVariables();
@@ -3287,6 +3641,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         float absiso_EA = pfIso.sumChargedHadronPt + max(0.0 , pfIso.sumNeutralHadronEt + pfIso.sumPhotonEt - rho * effArea );
         float relIsoWithEA = absiso_EA/el->pt();
 
+      if (count_el==0){
+	if (verbose_) cout<<"Electron pT "<<el->pt()<<endl;
         el0_p4.SetPtEtaPhiM( el->pt(), el->eta(), el->phi(), el->mass() );
         el0_absiso           = absiso;
         el0_relIsoWithDBeta  = relIsoWithDBeta;
@@ -3309,6 +3665,21 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       } 
       else if (count_el==1){
         el1_p4.SetPtEtaPhiM( el->pt(), el->eta(), el->phi(), el->mass() );
+      
+        el1_absiso           = absiso;
+        el1_relIsoWithDBeta  = relIsoWithDBeta;
+        el1_absiso_EA        = absiso_EA;
+        el1_relIsoWithEA     = relIsoWithEA;
+
+        el1_iso_passHLTpre    = (int) iso_passHLTpre   ;
+        el1_iso_passLoose     = (int) iso_passLoose    ;
+        el1_iso_passMedium    = (int) iso_passMedium   ;
+        el1_iso_passTight     = (int) iso_passTight    ;
+        el1_iso_passHEEP      = (int) iso_passHEEP     ;
+        el1_noiso_passLoose   = (int) noiso_passLoose  ;
+        el1_noiso_passMedium  = (int) noiso_passMedium ;
+        el1_noiso_passTight   = (int) noiso_passTight  ;
+        el1_noiso_passHEEP    = (int) noiso_passHEEP   ;
 
         for (unsigned int i = 0, n = el->numberOfSourceCandidatePtrs(); i < n; ++i) {
           elFootprint1.push_back(el->sourceCandidatePtr(i));
@@ -3330,28 +3701,33 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     lep0_p4 = el0_p4;
     lep0flavor = 'e';
+    Lepton0IsMu = 0;
 
     if (el1_p4.Pt() > mu0_p4.Pt()) {
       lep1_p4 = el1_p4;
       lep1flavor = 'e';
+      Lepton1IsMu= 0;
     }
     else {
       lep1_p4 = mu0_p4;
       lep1flavor = 'm';
+      Lepton1IsMu= 1;
     }
   }
   else {
 
     lep0_p4 = mu0_p4;
     lep0flavor = 'm';
-
+    Lepton0IsMu= 1;
     if (mu1_p4.Pt() > el0_p4.Pt()) {
       lep1_p4 = mu1_p4;
       lep1flavor = 'm';
+      Lepton1IsMu= 1;
     }
     else {
       lep1_p4 = el0_p4;
       lep1flavor = 'e';
+      Lepton1IsMu= 0;
     }
   }
   if (lep0_p4.E() == 0) lep0flavor = 'x';
@@ -3846,14 +4222,14 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   TLorentzVector GenJetMatchedPuppi0;
   TLorentzVector GenJetMatchedPuppi1;
 
-
+  /*
   double closestAK8_to_Jet0_dR=99;
   double closestAK8_to_Jet1_dR=99;
   TLorentzVector closestAK8_to_Jet0_P4;
   TLorentzVector closestAK8_to_Jet1_P4;
   double closestAK8_to_Jet0_bdisc=-10;
   double closestAK8_to_Jet1_bdisc=-10;
-
+  */
 
   if (verbose_) cout<<"\nAK8 jet loop"<<endl;
 
@@ -3924,7 +4300,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     if(count_AK8CHS==0) AK8jet0_P4corr = jet_p4;
     if(count_AK8CHS==1) AK8jet1_P4corr = jet_p4;
-
+    
+    /*
     if(count_AK8CHS>1) {
       double DeltaR_Jet0  = AK8jet0_P4corr.DeltaR( jet_p4 );
       double DeltaR_Jet1  = AK8jet1_P4corr.DeltaR( jet_p4 );
@@ -3939,6 +4316,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         closestAK8_to_Jet1_bdisc = ijet.bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags"); ;
       }
     }
+    */
+
     // Only need 3rd jet and beyond to find jet 0 and jet1 nearest neighbors (above)
     if(count_AK8CHS>1) continue; 
 
@@ -4083,7 +4462,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     double tau3         = 99;
     double tau4         = 99;
     double prunedMass   = ijet.userFloat("ak8PFJetsCHSPrunedMass");
-    double softDropMass = ijet.userFloat("ak8PFJetsCHSSoftDropMass");
+    //double softDropMass = ijet.userFloat("ak8PFJetsCHSSoftDropMass");
     double trimmedMass  = -1;
 
     if (useToolbox_){
@@ -5116,6 +5495,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       pup_maxbdiscflav_parton = pup1_flav_parton;
     }  
 
+
+    /*
     //------------------------------------
     // Gen particle info
     //------------------------------------ 
@@ -5144,7 +5525,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     // Tree variables
     //------------------------------------ 
 
-    // Jet 0
+     
+   // Jet 0
     if (runAllHadTree_ && count_AK8CHS==0){
       if (verbose_) cout<<"Put jet 0 variables in allhad tree"<<endl;
       
@@ -5355,7 +5737,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
 
       if (!iEvent.isRealData() and runGenLoop_) {
-        if (counttop==2 && jet_matched_t1){
+        if (countObj==2 && jet_matched_t1){
           if (top1hadronic) Jet0GenMatched_TopHadronic         = 1     ;
           else Jet0GenMatched_TopHadronic                      = 0     ;
           Jet0GenMatched_TopPt               = t1_p4.Perp()                   ;
@@ -5393,7 +5775,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           Jet0GenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W1d1_p4) ;
           Jet0GenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W1d2_p4) ;
         }   
-        if (counttop==2 && jet_matched_t2){
+        if (countObj==2 && jet_matched_t2){
           if (top2hadronic) Jet0GenMatched_TopHadronic         = 1           ;
           else Jet0GenMatched_TopHadronic                      = 0           ;
           Jet0GenMatched_TopPt               = t2_p4.Perp()           ;
@@ -5431,7 +5813,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           Jet0GenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W2d1_p4) ;
           Jet0GenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W2d2_p4) ;
         }
-        if (counttop==0 && jet_matched_p1){
+        if (countObj==0 && jet_matched_p1){
           Jet0GenMatched_partonPt               = hardest_parton_hardScatterOutgoing_p4.Perp()           ;
           Jet0GenMatched_partonEta              = hardest_parton_hardScatterOutgoing_p4.Eta()            ;
           Jet0GenMatched_partonPhi              = hardest_parton_hardScatterOutgoing_p4.Phi()            ;
@@ -5439,7 +5821,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           Jet0GenMatched_partonID               = parton1id                                              ;
           Jet0GenMatched_DeltaRjetParton        = deltaR_jet_p1                                          ;
         }
-        if (counttop==0 && jet_matched_p2){
+        if (countObj==0 && jet_matched_p2){
           Jet0GenMatched_partonPt               = second_hardest_parton_hardScatterOutgoing_p4.Perp()    ;
           Jet0GenMatched_partonEta              = second_hardest_parton_hardScatterOutgoing_p4.Eta()     ;
           Jet0GenMatched_partonPhi              = second_hardest_parton_hardScatterOutgoing_p4.Phi()     ;
@@ -5663,7 +6045,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
 
       if (!iEvent.isRealData() and runGenLoop_) {
-        if (counttop==2 && jet_matched_t1){
+        if (countObj==2 && jet_matched_t1){
           Jet1GenMatched_TopHadronic         = (int) top1hadronic             ;
           Jet1GenMatched_TopPt               = t1_p4.Perp()                   ;
           Jet1GenMatched_TopEta              = t1_p4.Eta()                    ;
@@ -5700,7 +6082,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           Jet1GenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W1d1_p4) ;
           Jet1GenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W1d2_p4) ;
         }   
-        if (counttop==2 && jet_matched_t2){
+        if (countObj==2 && jet_matched_t2){
           Jet1GenMatched_TopHadronic         = (int) top2hadronic     ;
           Jet1GenMatched_TopPt               = t2_p4.Perp()           ;
           Jet1GenMatched_TopEta              = t2_p4.Eta()            ;
@@ -5737,7 +6119,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           Jet1GenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W2d1_p4) ;
           Jet1GenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W2d2_p4) ;
         }
-        if (counttop==0 && jet_matched_p1){
+        if (countObj==0 && jet_matched_p1){
           Jet1GenMatched_partonPt               = hardest_parton_hardScatterOutgoing_p4.Perp()           ;
           Jet1GenMatched_partonEta              = hardest_parton_hardScatterOutgoing_p4.Eta()            ;
           Jet1GenMatched_partonPhi              = hardest_parton_hardScatterOutgoing_p4.Phi()            ;
@@ -5745,7 +6127,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           Jet1GenMatched_partonID               = parton1id                                              ;
           Jet1GenMatched_DeltaRjetParton        = deltaR_jet_p1                                          ;
         }
-        if (counttop==0 && jet_matched_p2){
+        if (countObj==0 && jet_matched_p2){
           Jet1GenMatched_partonPt               = second_hardest_parton_hardScatterOutgoing_p4.Perp()    ;
           Jet1GenMatched_partonEta              = second_hardest_parton_hardScatterOutgoing_p4.Eta()     ;
           Jet1GenMatched_partonPhi              = second_hardest_parton_hardScatterOutgoing_p4.Phi()     ;
@@ -5756,6 +6138,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       }   
     } 
 
+    */
     //Chad
     if (runSemiLeptTree_) {
       v_AK8PuppiPt  ->push_back( puppi_pt );
@@ -5773,17 +6156,17 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     // Semilept Jet opposite lepton
     if (verbose_) cout<<"count_lep "<<count_lep<<endl;
-    if (runSemiLeptTree_ && count_lep >=1 ){
+    if (runSemiLeptTree_ && count_lep >=0 ){
       double deltaPhi_lep_jet = fabs( deltaPhi(corrJet.phi(), lep0_p4.Phi() )) ;
       if (verbose_) cout<<"  -> deltaPhi_lep_jet "<<deltaPhi_lep_jet<<endl;
       // AK8 jet should be in opposite hemisphere from lepton. If leading jet matches then use it. If it doensn't then check the second leading jet.
-      if ( ((count_AK8CHS==0&& deltaPhi_lep_jet >=3.14/2) || (count_AK8CHS==1&&deltaPhi_lep_jet >=3.14/2)) && count_fill_leptTree==0 ){
+      //if ( ((count_AK8CHS==0&& deltaPhi_lep_jet >=3.14/2) || (count_AK8CHS==1&&deltaPhi_lep_jet >=3.14/2)) && count_fill_leptTree==0 ){
         if (verbose_) cout<<"Put jet variables in semilept tree  -> count_AK8CHS "<<count_AK8CHS<<" count_fill_leptTree"<<count_fill_leptTree<<endl;
         count_fill_leptTree++;
         AK8jet_SemiLept_P4corr.SetPtEtaPhiM( corrJet.pt(), corrJet.eta(), corrJet.phi(), corrJet.mass() );
 
-        DeltaRJetLep                          = deltaR(corrJet.eta(), corrJet.phi(), lep0_p4.Eta(), lep0_p4.Phi() );
-        DeltaPhiJetLep                        = deltaPhi_lep_jet    ;
+        DeltaRJetLep0                          = deltaR(corrJet.eta(), corrJet.phi(), lep0_p4.Eta(), lep0_p4.Phi() );
+        DeltaPhiJetLep0                        = deltaPhi_lep_jet    ;
 
         // basic kinematic and ID variables
         JetPtRaw                              = uncorrJet.pt()      ;                 
@@ -5993,29 +6376,82 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
 
         if (!iEvent.isRealData() and runGenLoop_) {
-          if (counttop==2 && jet_matched_t1){
-            JetGenMatched_TopHadronic         = (int) top1hadronic             ;
-            JetGenMatched_TopPt               = t1_p4.Perp()                   ;
-            JetGenMatched_TopEta              = t1_p4.Eta()                    ;
-            JetGenMatched_TopPhi              = t1_p4.Phi()                    ;
-            JetGenMatched_TopMass             = t1_p4.M()                      ;
+          if (countObj==2 ) { //&& jet_matched_t1){
+            if (objPDGID==6) JetGenMatched_TopHadronic         = (int) count_gen_truth_hadronic_obj   ;
+            JetGenMatched_Top0Pt               = t1_p4.Perp()                   ;
+            JetGenMatched_Top0Eta              = t1_p4.Eta()                    ;
+            JetGenMatched_Top0Phi              = t1_p4.Phi()                    ;
+            JetGenMatched_Top0Mass             = t1_p4.M()                      ;
+            JetGenMatched_Top1Pt               = t2_p4.Perp()                   ;
+            JetGenMatched_Top1Eta              = t2_p4.Eta()                    ;
+            JetGenMatched_Top1Phi              = t2_p4.Phi()                    ;
+            JetGenMatched_Top1Mass             = t2_p4.M()                      ;
+        
             JetGenMatched_bPt                 = b1_p4.Perp()                   ;
-            JetGenMatched_WPt                 = Wp_p4.Perp()                   ;
-            JetGenMatched_WEta                = Wp_p4.Eta()                    ;
-            JetGenMatched_WPhi                = Wp_p4.Phi()                    ;
-            JetGenMatched_WMass               = Wp_p4.M()                      ;
-            JetGenMatched_ZPt                 = Z1_p4.Perp()                    ;
-            JetGenMatched_ZEta                = Z1_p4.Eta()                     ;
-            JetGenMatched_ZPhi                = Z1_p4.Phi()                     ;
-            JetGenMatched_ZMass               = Z1_p4.M()                       ;
+
+            if (objPDGID==24) JetGenMatched_WHadronic         = (int) count_gen_truth_hadronic_obj  ;    
+            JetGenMatched_W0Pt                 = Wp1_p4.Perp()                   ;
+            JetGenMatched_W0Eta                = Wp1_p4.Eta()                    ;
+            JetGenMatched_W0Phi                = Wp1_p4.Phi()                    ;
+            JetGenMatched_W0Mass               = Wp1_p4.M()                      ;
+	    JetGenMatched_W1Pt                 = Wp2_p4.Perp()                   ;
+            JetGenMatched_W1Eta                = Wp2_p4.Eta()                    ;
+            JetGenMatched_W1Phi                = Wp2_p4.Phi()                    ;
+            JetGenMatched_W1Mass               = Wp2_p4.M()                      ;
+
+            if (objPDGID==23) JetGenMatched_ZHadronic         = (int) count_gen_truth_hadronic_obj    ;
+            JetGenMatched_Z0Pt                 = Z1_p4.Perp()                    ;
+            JetGenMatched_Z0Eta                = Z1_p4.Eta()                     ;
+            JetGenMatched_Z0Phi                = Z1_p4.Phi()                     ;
+            JetGenMatched_Z0Mass               = Z1_p4.M()                       ;
+            JetGenMatched_Z1Pt                 = Z2_p4.Perp()                    ;
+            JetGenMatched_Z1Eta                = Z2_p4.Eta()                     ;
+            JetGenMatched_Z1Phi                = Z2_p4.Phi()                     ;
+            JetGenMatched_Z1Mass               = Z2_p4.M()                       ;
+       
+            if (objPDGID==22) JetGenMatched_GammaHadronic         = (int) count_gen_truth_hadronic_obj  ;
+            JetGenMatched_Gamma0Pt                 = Gamma1_p4.Perp()                    ;
+            JetGenMatched_Gamma0Eta                = Gamma1_p4.Eta()                     ;
+            JetGenMatched_Gamma0Phi                = Gamma1_p4.Phi()                     ;
+            JetGenMatched_Gamma0Mass               = Gamma1_p4.M()                       ;
+            JetGenMatched_Gamma1Pt                 = Gamma2_p4.Perp()                    ;
+            JetGenMatched_Gamma1Eta                = Gamma2_p4.Eta()                     ;
+            JetGenMatched_Gamma1Phi                = Gamma2_p4.Phi()                     ;
+            JetGenMatched_Gamma1Mass               = Gamma2_p4.M()                       ;
+           
+            if (objPDGID==1) JetGenMatched_dHadronic         = (int) count_gen_truth_hadronic_obj       ;
+            JetGenMatched_qd1hardPt                 = qd1hard_p4.Perp()                    ;
+            JetGenMatched_qd1hardEta                = qd1hard_p4.Eta()                     ;
+            JetGenMatched_qd1hardPhi                = qd1hard_p4.Phi()                     ;
+            JetGenMatched_qd1hardMass               = qd1hard_p4.M()                       ;
+            JetGenMatched_qd2hardPt                 = qd2hard_p4.Perp()                    ;
+            JetGenMatched_qd2hardEta                = qd2hard_p4.Eta()                     ;
+            JetGenMatched_qd2hardPhi                = qd2hard_p4.Phi()                     ;
+            JetGenMatched_qd2hardMass               = qd2hard_p4.M()                       ;
+           
+            JetGenMatched_q3hardPt                 = q3hard_p4.Perp()                    ;
+            JetGenMatched_q3hardEta                = q3hard_p4.Eta()                     ;
+            JetGenMatched_q3hardPhi                = q3hard_p4.Phi()                     ;
+            JetGenMatched_q3hardMass               = q3hard_p4.M()                       ;
+            JetGenMatched_q4hardPt                 = q4hard_p4.Perp()                    ;
+            JetGenMatched_q4hardEta                = q4hard_p4.Eta()                     ;
+            JetGenMatched_q4hardPhi                = q4hard_p4.Phi()                     ;
+            JetGenMatched_q4hardMass               = q4hard_p4.M()                       ;
+            JetGenMatched_q5hardPt                 = q5hard_p4.Perp()                    ;
+            JetGenMatched_q5hardEta                = q5hard_p4.Eta()                     ;
+            JetGenMatched_q5hardPhi                = q5hard_p4.Phi()                     ;
+            JetGenMatched_q5hardMass               = q5hard_p4.M()                       ; 
+            /*          
             JetGenMatched_Wd1Pt               = W1d1_p4.Perp()                 ;
             JetGenMatched_Wd1Pt               = W1d1_p4.Perp()                 ;
             JetGenMatched_Wd2Pt               = W1d2_p4.Perp()                 ;
             JetGenMatched_Wd1ID               = W1d1_id                        ;
             JetGenMatched_Wd2ID               = W1d2_id                        ;
+	   
             JetGenMatched_MaxDeltaRPartonTop  = max_deltaR_parton_t1           ;
             JetGenMatched_MaxDeltaRWPartonTop = max_deltaR_Wparton_t1          ;
             JetGenMatched_MaxDeltaRWPartonW   = max_deltaR_Wparton_W1          ;
+	              
             JetGenMatched_DeltaR_t_b          = deltaR_t1_b1                   ;
             JetGenMatched_DeltaR_t_W          = deltaR_t1_W1                   ;
             JetGenMatched_DeltaR_t_Wd1        = deltaR_t1_W1d1                 ;
@@ -6031,20 +6467,24 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
             JetGenMatched_DeltaR_jet_b        = jet_p4.DeltaR(b1_p4  )         ;
             JetGenMatched_DeltaR_jet_Wd1      = jet_p4.DeltaR(W1d1_p4)         ;
             JetGenMatched_DeltaR_jet_Wd2      = jet_p4.DeltaR(W1d2_p4)         ;
+	    
             JetGenMatched_DeltaR_pup0_b       = pup0_P4_L23res.DeltaR(b1_p4)   ;
             JetGenMatched_DeltaR_pup0_Wd1     = pup0_P4_L23res.DeltaR(W1d1_p4) ;
             JetGenMatched_DeltaR_pup0_Wd2     = pup0_P4_L23res.DeltaR(W1d2_p4) ;
             JetGenMatched_DeltaR_pup1_b       = pup1_P4_L23res.DeltaR(b1_p4)   ;
             JetGenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W1d1_p4) ;
             JetGenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W1d2_p4) ;
-
+            
             if (verbose_){
               cout<<"  JetGenMatched_DeltaR_pup0_b   "<<JetGenMatched_DeltaR_pup0_b  <<endl;
               cout<<"  JetGenMatched_DeltaR_pup0_Wd1 "<<JetGenMatched_DeltaR_pup0_Wd1<<endl;
               cout<<"  JetGenMatched_DeltaR_pup0_Wd2 "<<JetGenMatched_DeltaR_pup0_Wd2<<endl;
             }
-          }   
-          if (counttop==2 && jet_matched_t2){
+            */
+          }   // countObj==2
+	} // if MC and GenLoop On
+          /*
+          if (countObj==2 && jet_matched_t2){
             JetGenMatched_TopHadronic         = (int) top2hadronic     ;
             JetGenMatched_TopPt               = t2_p4.Perp()           ;
             JetGenMatched_TopEta              = t2_p4.Eta()            ;
@@ -6059,6 +6499,30 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
             JetGenMatched_ZEta                = Z2_p4.Eta()            ;
             JetGenMatched_ZPhi                = Z2_p4.Phi()            ;
             JetGenMatched_ZMass               = Z2_p4.M()              ;
+            JetGenMatched_GammaPt                 = Gamma1_p4.Perp()                    ;
+            JetGenMatched_GammaEta                = Gamma1_p4.Eta()                     ;
+            JetGenMatched_GammaPhi                = Gamma1_p4.Phi()                     ;
+            JetGenMatched_GammaMass               = Gamma1_p4.M()                       ;
+            JetGenMatched_q1hardPt                 = qa1hard_p4.Perp()                    ;
+            JetGenMatched_q1hardEta                = qa1hard_p4.Eta()                     ;
+            JetGenMatched_q1hardPhi                = qa1hard_p4.Phi()                     ;
+            JetGenMatched_q1hardMass               = qa1hard_p4.M()                       ;
+            JetGenMatched_q2hardPt                 = qa2hard_p4.Perp()                    ;
+            JetGenMatched_q2hardEta                = qa2hard_p4.Eta()                     ;
+            JetGenMatched_q2hardPhi                = qa2hard_p4.Phi()                     ;
+            JetGenMatched_q2hardMass               = qa2hard_p4.M()                       ;
+            JetGenMatched_q3hardPt                 = qa3hard_p4.Perp()                    ;
+            JetGenMatched_q3hardEta                = qa3hard_p4.Eta()                     ;
+            JetGenMatched_q3hardPhi                = qa3hard_p4.Phi()                     ;
+            JetGenMatched_q3hardMass               = qa3hard_p4.M()                       ;
+            JetGenMatched_q4hardPt                 = qa4hard_p4.Perp()                    ;
+            JetGenMatched_q4hardEta                = qa4hard_p4.Eta()                     ;
+            JetGenMatched_q4hardPhi                = qa4hard_p4.Phi()                     ;
+            JetGenMatched_q4hardMass               = qa4hard_p4.M()                       ;
+            JetGenMatched_q5hardPt                 = qa5hard_p4.Perp()                    ;
+            JetGenMatched_q5hardEta                = qa5hard_p4.Eta()                     ;
+            JetGenMatched_q5hardPhi                = qa5hard_p4.Phi()                     ;
+            JetGenMatched_q5hardMass               = qa5hard_p4.M()                       ;
             JetGenMatched_Wd1Pt               = W2d1_p4.Perp()         ;
             JetGenMatched_Wd2Pt               = W2d2_p4.Perp()         ;
             JetGenMatched_Wd1ID               = W2d1_id                ;
@@ -6088,28 +6552,96 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
             JetGenMatched_DeltaR_pup1_Wd1     = pup1_P4_L23res.DeltaR(W2d1_p4) ;
             JetGenMatched_DeltaR_pup1_Wd2     = pup1_P4_L23res.DeltaR(W2d2_p4) ;
           }
-          if (counttop==0 && jet_matched_p1){
+          if (countObj==0 && jet_matched_p1){
             JetGenMatched_partonPt               = hardest_parton_hardScatterOutgoing_p4.Perp()           ;
             JetGenMatched_partonEta              = hardest_parton_hardScatterOutgoing_p4.Eta()            ;
             JetGenMatched_partonPhi              = hardest_parton_hardScatterOutgoing_p4.Phi()            ;
             JetGenMatched_partonMass             = hardest_parton_hardScatterOutgoing_p4.M()              ;
             JetGenMatched_partonID               = parton1id                                              ;
             JetGenMatched_DeltaRjetParton        = deltaR_jet_p1                                          ;
+            JetGenMatched_WPt                 = Wp_p4.Perp()                   ;
+            JetGenMatched_WEta                = Wp_p4.Eta()                    ;
+            JetGenMatched_WPhi                = Wp_p4.Phi()                    ;
+            JetGenMatched_WMass               = Wp_p4.M()                      ;
+            JetGenMatched_ZPt                 = Z1_p4.Perp()                    ;
+            JetGenMatched_ZEta                = Z1_p4.Eta()                     ;
+            JetGenMatched_ZPhi                = Z1_p4.Phi()                     ;
+            JetGenMatched_ZMass               = Z1_p4.M()                       ;
+            JetGenMatched_GammaPt                 = Gamma1_p4.Perp()                    ;
+            JetGenMatched_GammaEta                = Gamma1_p4.Eta()                     ;
+            JetGenMatched_GammaPhi                = Gamma1_p4.Phi()                     ;
+            JetGenMatched_GammaMass               = Gamma1_p4.M()                       ;
+            JetGenMatched_q1hardPt                 = qd1hard_p4.Perp()                    ;
+            JetGenMatched_q1hardEta                = qd1hard_p4.Eta()                     ;
+            JetGenMatched_q1hardPhi                = qd1hard_p4.Phi()                     ;
+            JetGenMatched_q1hardMass               = qd1hard_p4.M()                       ;
+            JetGenMatched_q2hardPt                 = q2hard_p4.Perp()                    ;
+            JetGenMatched_q2hardEta                = q2hard_p4.Eta()                     ;
+            JetGenMatched_q2hardPhi                = q2hard_p4.Phi()                     ;
+            JetGenMatched_q2hardMass               = q2hard_p4.M()                       ;
+            JetGenMatched_q3hardPt                 = q3hard_p4.Perp()                    ;
+            JetGenMatched_q3hardEta                = q3hard_p4.Eta()                     ;
+            JetGenMatched_q3hardPhi                = q3hard_p4.Phi()                     ;
+            JetGenMatched_q3hardMass               = q3hard_p4.M()                       ;
+            JetGenMatched_q4hardPt                 = q4hard_p4.Perp()                    ;
+            JetGenMatched_q4hardEta                = q4hard_p4.Eta()                     ;
+            JetGenMatched_q4hardPhi                = q4hard_p4.Phi()                     ;
+            JetGenMatched_q4hardMass               = q4hard_p4.M()                       ;
+            JetGenMatched_q5hardPt                 = q5hard_p4.Perp()                    ;
+            JetGenMatched_q5hardEta                = q5hard_p4.Eta()                     ;
+            JetGenMatched_q5hardPhi                = q5hard_p4.Phi()                     ;
+            JetGenMatched_q5hardMass               = q5hard_p4.M()                       ;
           }
-          if (counttop==0 && jet_matched_p2){
+          if (countObj==0 && jet_matched_p2){
             JetGenMatched_partonPt               = second_hardest_parton_hardScatterOutgoing_p4.Perp()    ;
             JetGenMatched_partonEta              = second_hardest_parton_hardScatterOutgoing_p4.Eta()     ;
             JetGenMatched_partonPhi              = second_hardest_parton_hardScatterOutgoing_p4.Phi()     ;
             JetGenMatched_partonMass             = second_hardest_parton_hardScatterOutgoing_p4.M()       ;
             JetGenMatched_partonID               = parton2id                                              ;
             JetGenMatched_DeltaRjetParton        = deltaR_jet_p2                                          ;
+            JetGenMatched_W0Pt                 = Wm_p4.Perp()           ;
+            JetGenMatched_W0Eta                = Wm_p4.Eta()            ;
+            JetGenMatched_W0Phi                = Wm_p4.Phi()            ;
+            JetGenMatched_W0Mass               = Wm_p4.M()              ;
+            JetGenMatched_Z0Pt                 = Z2_p4.Perp()           ;
+            JetGenMatched_Z0Eta                = Z2_p4.Eta()            ;
+            JetGenMatched_Z0Phi                = Z2_p4.Phi()            ;
+            JetGenMatched_Z0Mass               = Z2_p4.M()              ;
+            JetGenMatched_Gamma0Pt                 = Gamma1_p4.Perp()                    ;
+            JetGenMatched_Gamma0Eta                = Gamma1_p4.Eta()                     ;
+            JetGenMatched_Gamma0Phi                = Gamma1_p4.Phi()                     ;
+            JetGenMatched_Gamma0Mass               = Gamma1_p4.M()                       ;
+            JetGenMatched_qd1hardPt                 = qa1hard_p4.Perp()                    ;
+            JetGenMatched_qd1hardEta                = qa1hard_p4.Eta()                     ;
+            JetGenMatched_qd1hardPhi                = qa1hard_p4.Phi()                     ;
+            JetGenMatched_qd1hardMass               = qa1hard_p4.M()                       ;
+            JetGenMatched_qd2hardPt                 = qa2hard_p4.Perp()                    ;
+            JetGenMatched_qd2hardEta                = qa2hard_p4.Eta()                     ;
+            JetGenMatched_qd2hardPhi                = qa2hard_p4.Phi()                     ;
+            JetGenMatched_qd2hardMass               = qa2hard_p4.M()                       ;
+            JetGenMatched_q3hardPt                 = qa3hard_p4.Perp()                    ;
+            JetGenMatched_q3hardEta                = qa3hard_p4.Eta()                     ;
+            JetGenMatched_q3hardPhi                = qa3hard_p4.Phi()                     ;
+            JetGenMatched_q3hardMass               = qa3hard_p4.M()                       ;
+            JetGenMatched_q4hardPt                 = qa4hard_p4.Perp()                    ;
+            JetGenMatched_q4hardEta                = qa4hard_p4.Eta()                     ;
+            JetGenMatched_q4hardPhi                = qa4hard_p4.Phi()                     ;
+            JetGenMatched_q4hardMass               = qa4hard_p4.M()                       ;
+            JetGenMatched_q5hardPt                 = qa5hard_p4.Perp()                    ;
+            JetGenMatched_q5hardEta                = qa5hard_p4.Eta()                     ;
+            JetGenMatched_q5hardPhi                = qa5hard_p4.Phi()                     ;
+            JetGenMatched_q5hardMass               = qa5hard_p4.M()                       ;
           }
-        }
-      } // end if this jet is opposite the lepton
-    }// end if event has 1 lepton
-    count_AK8CHS++;
-  }
+          */
+        
+	 }
+	//} // end if this jet is opposite the lepton
+	count_AK8CHS++; 
+   }// end if event has >=1 lepton
+  //  count_AK8CHS++;
+  // }
 
+  /*
 
   //
   //        d8888 888 888        888    888               888     88888888888                           
@@ -6210,7 +6742,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     } // end rapidity
   }
 
-
+*/
 
   // 
   //  .d8888b.                         d8b        888                        888        88888888888                           
@@ -6237,9 +6769,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   // WRITE TREE WITH BASELINE PT CUT AND ETA CUT
   //------------------------------------
   //  lep0_p4.Perp()>30 && met.pt() > 30 ){
-
+  if ( AK8jet_SemiLept_P4corr.Perp()>200 ) count_fill_leptTree++ ;
   if (verbose_) cout<<"count_fill_leptTree "<<count_fill_leptTree<<endl;
-  if (runSemiLeptTree_ && count_lep >=1 ){
+  if (runSemiLeptTree_ && count_lep >=0 ){
     h_cutflow_semilept   ->Fill(1.5);
 
     if ( AK8jet_SemiLept_P4corr.Perp()>200){
@@ -6306,7 +6838,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           SemiLeptPUweight_MBup        = puweightUp ;
           SemiLeptPUweight_MBdn        = puweightDn  ;
           SemiLeptGenTTmass            = (t1_p4+t2_p4).M() ; 
-          SemiLeptGenCountHadTop       = count_gen_truth_hadronic_top;            
+          SemiLeptGenCountHadObj       = count_gen_truth_hadronic_obj;            
+          SemiLeptGenObjPDGID          = objPDGID ;
           SemiLeptQ2weight_CorrDn      = Q2wgt_down ;              
           SemiLeptQ2weight_CorrUp      = Q2wgt_up ;              
           SemiLeptNNPDF3weight_CorrDn  = NNPDF3wgt_down ;              
@@ -6318,7 +6851,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           SemiLeptPUweight_MBup        = 1;
           SemiLeptPUweight_MBdn        = 1;
           SemiLeptGenTTmass            = 0;
-          SemiLeptGenCountHadTop       = 0;            
+          SemiLeptGenCountHadObj       = 0;
+          SemiLeptGenObjPDGID          = 0;            
           SemiLeptQ2weight_CorrDn      = 1;       
           SemiLeptQ2weight_CorrUp      = 1;     
           SemiLeptNNPDF3weight_CorrDn  = 1;           
@@ -6341,22 +6875,22 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         SemiLeptEventNum             = iEvent.id().event() ; 
         SemiLeptPassMETFilters       = (int) passMETfilters;              
 
-        AK4_dRminLep_Pt        = AK4_dRMinLep_p4.Perp() ;
-        AK4_dRminLep_Eta       = AK4_dRMinLep_p4.Eta()  ;
-        AK4_dRminLep_Phi       = AK4_dRMinLep_p4.Phi()  ;
-        AK4_dRminLep_Mass      = AK4_dRMinLep_p4.M()    ;
-        AK4_dRminLep_Bdisc     = AK4_dRMinLep_bdisc     ;
-        AK4_dRminLep_dRlep     = AK4_dRMinLep_deltaR    ;
-        AK4_dRminLep_dRak8     = AK4_dRMinLep_p4.DeltaR( AK8jet_SemiLept_P4corr  ) ;
+        AK4_dRminLep0_Pt        = AK4_dRMinLep_p4.Perp() ;
+        AK4_dRminLep0_Eta       = AK4_dRMinLep_p4.Eta()  ;
+        AK4_dRminLep0_Phi       = AK4_dRMinLep_p4.Phi()  ;
+        AK4_dRminLep0_Mass      = AK4_dRMinLep_p4.M()    ;
+        AK4_dRminLep0_Bdisc     = AK4_dRMinLep_bdisc     ;
+        AK4_dRminLep0_dRlep     = AK4_dRMinLep_deltaR    ;
+        AK4_dRminLep0_dRak8     = AK4_dRMinLep_p4.DeltaR( AK8jet_SemiLept_P4corr  ) ;
        
-        AK4_dRminLep_PtSmear   = AK4_dRMinLep_ptsmear    ;
-        AK4_dRminLep_PtSmearUp = AK4_dRMinLep_ptsmearUp  ;
-        AK4_dRminLep_PtSmearDn = AK4_dRMinLep_ptsmearDn  ;
-        AK4_dRminLep_PtUncorr  = AK4_dRMinLep_ptuncorr   ;
+        AK4_dRminLep0_PtSmear   = AK4_dRMinLep_ptsmear    ;
+        AK4_dRminLep0_PtSmearUp = AK4_dRMinLep_ptsmearUp  ;
+        AK4_dRminLep0_PtSmearDn = AK4_dRMinLep_ptsmearDn  ;
+        AK4_dRminLep0_PtUncorr  = AK4_dRMinLep_ptuncorr   ;
 
-        AK4_dRminLep_Corr      = AK4_dRMinLep_corr       ;
-        AK4_dRminLep_CorrUp    = AK4_dRMinLep_corrUp     ;
-        AK4_dRminLep_CorrDn    = AK4_dRMinLep_corrDn     ;
+        AK4_dRminLep0_Corr      = AK4_dRMinLep_corr       ;
+        AK4_dRminLep0_CorrUp    = AK4_dRMinLep_corrUp     ;
+        AK4_dRminLep0_CorrDn    = AK4_dRMinLep_corrDn     ;
 
         // Closest b-tagged jet to the lepton
         // I don't think we need this 
@@ -6364,9 +6898,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         // AK4BtagdRminBdisc = AK4_btagged_dRMinLep_bdisc    ;
         // AK4BtagdRminLep   = AK4_btagged_dRMinLep          ;
        
-        LepHemiContainsAK4BtagLoose  = (int)  ak4_btag_loose;
-        LepHemiContainsAK4BtagMedium = (int)  ak4_btag_medium;
-        LepHemiContainsAK4BtagTight  = (int)  ak4_btag_tight;
+        Lep0HemiContainsAK4BtagLoose  = (int)  ak4_btag_loose;
+        Lep0HemiContainsAK4BtagMedium = (int)  ak4_btag_medium;
+        Lep0HemiContainsAK4BtagTight  = (int)  ak4_btag_tight;
 
         LeptonPhi0   = lep0_p4.Phi()  ; 
         LeptonPt0    = lep0_p4.Perp() ;  
@@ -6377,32 +6911,54 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         LeptonEta1   = lep1_p4.Eta()  ; 
         LeptonMass1  = lep1_p4.M() ;
 
+     
+	//  if      (count_mu==1 && count_el==0) LeptonIsMu  = 1  ; 
+        //else if (count_mu==0 && count_el==1) LeptonIsMu  = 0  ; 
+        //else                                 LeptonIsMu  = -1  ;
+     
+        PtRel0  = AK4_dRMinLep_p4.Perp( lep0_p4.Vect() );
+        Mu0Iso  = mu0_iso04;
 
-        if      (count_mu==1 && count_el==0) LeptonIsMu  = 1  ; 
-        else if (count_mu==0 && count_el==1) LeptonIsMu  = 0  ; 
-        else                                 LeptonIsMu  = -1  ;
+        Elecron0_absiso            = el0_absiso           ;  
+        Elecron0_relIsoWithDBeta   = el0_relIsoWithDBeta  ;  
+        Elecron0_absiso_EA         = el0_absiso_EA        ;  
+        Elecron0_relIsoWithEA      = el0_relIsoWithEA     ;  
 
-        PtRel  = AK4_dRMinLep_p4.Perp( lep0_p4.Vect() );
-        MuIso  = mu0_iso04;
+        Electron0_iso_passHLTpre   = el0_iso_passHLTpre  ;
+        Electron0_iso_passLoose    = el0_iso_passLoose   ;
+        Electron0_iso_passMedium   = el0_iso_passMedium  ;
+        Electron0_iso_passTight    = el0_iso_passTight   ;
+        Electron0_iso_passHEEP     = el0_iso_passHEEP    ;
+        Electron0_noiso_passLoose  = el0_noiso_passLoose ;
+        Electron0_noiso_passMedium = el0_noiso_passMedium;
+        Electron0_noiso_passTight  = el0_noiso_passTight ;
+        Electron0_noiso_passHEEP   = el0_noiso_passHEEP  ;
 
-        Elecron_absiso            = el0_absiso           ;  
-        Elecron_relIsoWithDBeta   = el0_relIsoWithDBeta  ;  
-        Elecron_absiso_EA         = el0_absiso_EA        ;  
-        Elecron_relIsoWithEA      = el0_relIsoWithEA     ;  
+        Mu0Medium = (int) mu0_isMedium   ;
+        Mu0Tight  = (int) mu0_isTight    ;
+        Mu0HighPt = (int) mu0_isHighPt   ;
 
-        Electron_iso_passHLTpre   = el0_iso_passHLTpre  ;
-        Electron_iso_passLoose    = el0_iso_passLoose   ;
-        Electron_iso_passMedium   = el0_iso_passMedium  ;
-        Electron_iso_passTight    = el0_iso_passTight   ;
-        Electron_iso_passHEEP     = el0_iso_passHEEP    ;
-        Electron_noiso_passLoose  = el0_noiso_passLoose ;
-        Electron_noiso_passMedium = el0_noiso_passMedium;
-        Electron_noiso_passTight  = el0_noiso_passTight ;
-        Electron_noiso_passHEEP   = el0_noiso_passHEEP  ;
+        PtRel1  = 0. ; //AK4_dRMinLep_p4.Perp( lep1_p4.Vect() );
+	Mu1Iso  = mu1_iso04;
 
-        MuMedium = (int) mu0_isMedium   ;
-        MuTight  = (int) mu0_isTight    ;
-        MuHighPt = (int) mu0_isHighPt   ;
+        Elecron1_absiso            = el1_absiso           ;
+        Elecron1_relIsoWithDBeta   = el1_relIsoWithDBeta  ;
+        Elecron1_absiso_EA         = el1_absiso_EA        ;
+        Elecron1_relIsoWithEA      = el1_relIsoWithEA     ;
+
+        Electron1_iso_passHLTpre   = el1_iso_passHLTpre  ;
+        Electron1_iso_passLoose    = el1_iso_passLoose   ;
+        Electron1_iso_passMedium   = el1_iso_passMedium  ;
+        Electron1_iso_passTight    = el1_iso_passTight   ;
+	Electron1_iso_passHEEP     = el1_iso_passHEEP    ;
+        Electron1_noiso_passLoose  = el1_noiso_passLoose ;
+        Electron1_noiso_passMedium = el1_noiso_passMedium;
+        Electron1_noiso_passTight  = el1_noiso_passTight ;
+	Electron1_noiso_passHEEP   = el1_noiso_passHEEP  ;
+
+        Mu1Medium = (int) mu1_isMedium   ;
+        Mu1Tight  = (int) mu1_isTight    ;
+        Mu1HighPt = (int) mu1_isHighPt   ;
 
         TreeSemiLept -> Fill();
       }// end rapidity selection
@@ -6417,7 +6973,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 }
 
 
-// ------------ method called once each job just before starting event loop  ------------
+// ------------ method called once each job just before starting event loop  ----------
 void 
 B2GTTbarTreeMaker::beginJob()
 {
