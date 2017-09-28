@@ -47,7 +47,7 @@ $CMSSW_RELEASE_BASE/config/toolbox/slc6_amd64_gcc530/tools/selected/fastjet-cont
     <info url="http://fastjet.hepforge.org/contrib/"/>
     <lib name="fastjetcontribfragile"/>
     <client>
-      <environment name="FASTJET_CONTRIB_BASE" default="/cvmfs/cms-ib.cern.ch/nweek-02491/slc6_amd64_gcc530/external/fastjet-contrib/1.026"/>
+      <environment name="FASTJET_CONTRIB_BASE" default="/cvmfs/cms.cern.ch/slc6_amd64_gcc530/external/fastjet-contrib/1.026"/>
       <environment name="LIBDIR" default="$FASTJET_CONTRIB_BASE/lib"/>
       <environment name="INCLUDE" default="$FASTJET_CONTRIB_BASE/include"/>
     </client>
