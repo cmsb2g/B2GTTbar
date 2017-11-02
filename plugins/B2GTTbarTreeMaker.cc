@@ -639,10 +639,13 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
       Char_t  lep0flavor                             ;
       Char_t  lep1flavor                             ;
+
+      Int_t   ChargeLep0                              ;      
       Float_t LeptonPhi0                              ;
       Float_t LeptonPt0                               ;
       Float_t LeptonEta0                              ;
       Float_t LeptonMass0                             ;
+      Int_t   ChargeLep1                              ;          
       Float_t LeptonPhi1                              ;
       Float_t LeptonPt1                               ;
       Float_t LeptonEta1                              ;
@@ -1243,6 +1246,8 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("Lep0HemiContainsAK4BtagTight"          , & Lep0HemiContainsAK4BtagTight       , "Lep0HemiContainsAK4BtagTight/I"    );  
 
   TreeSemiLept->Branch("CountLep"                              , & CountLep                           ,    "CountLep/I"                  );
+  TreeSemiLept->Branch("ChargeLep0"                              , & ChargeLep0                           ,    "ChargeLep0/I"                  );
+  TreeSemiLept->Branch("ChargeLep1"                              , & ChargeLep1                           ,    "ChargeLep1/I"                  );
 
 
   TreeSemiLept->Branch("lep0flavor"                            , &  lep0flavor                        , "lep0flavor/B"                      ); 
@@ -2149,7 +2154,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   bool mu1_isHighPt = false;
   double mu1_iso04=0;
   int count_mu=0;
-
+  //int chargeMu = 0;
   std::vector<reco::CandidatePtr> muFootprint0, muFootprint1;
 
   for (const pat::Muon &mu : *muons) {
@@ -2168,6 +2173,9 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
                           muon::segmentCompatibility(mu) > (goodGlob ? 0.303 : 0.451); 
         bool isMediumStandard = muon::isMediumMuon(mu);
         bool isMedium   = false;
+        //chargeMu = mu.charge();
+        if (verbose_) cout<<"Muon charge "<< mu.charge() <<endl; 
+
         if      (iEvent.isRealData() && runNumber <= 278808) isMedium = isMediumBF;       // Data B-F
         else if (iEvent.isRealData() && runNumber  > 278808) isMedium = isMediumStandard; // Data G-H
         else isMedium = isMediumStandard;  // MC 
@@ -2294,13 +2302,15 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   int el1_noiso_passTight   = 0;
   int el1_noiso_passHEEP    = 0;
   int count_el=0;
+  //int chargeEl = 0;
 
   std::vector<reco::CandidatePtr> elFootprint0, elFootprint1;
 
   for (size_t i = 0; i < electrons->size(); ++i){   
+    const pat::Electron& electron = electrons->at(i);  
     const auto el = electrons->ptrAt(i);          // easier if we use ptrs for the id
     if (el->pt() < 50 || fabs(el->eta())>2.4 ) continue;
-
+    //chargeEl = electron.charge();
     // electron ID
     vid::CutFlowResult full_cutflow_HLTpre = (*cutflow_eleId_HLTpre )[el];
     vid::CutFlowResult full_cutflow_Loose  = (*cutflow_eleId_Loose  )[el];
@@ -2350,6 +2360,8 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         float absiso = pfIso.sumChargedHadronPt + max(0.0 , pfIso.sumNeutralHadronEt + pfIso.sumPhotonEt - 0.5 * pfIso.sumPUPt );
         float relIsoWithDBeta = absiso/el->pt();
         float eta = el->eta();
+        
+
 
         float effArea = 0.;
         if(abs(eta)>0.0 && abs(eta)<=1.0) effArea = 0.1752;
@@ -2364,6 +2376,7 @@ B2GTTbarTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         float relIsoWithEA = absiso_EA/el->pt();
 
       if (count_el==0){
+      if (verbose_) cout<<"Electron charge "<< electron.charge() <<endl;      
 	if (verbose_) cout<<"Electron pT "<<el->pt()<<endl;
         el0_p4.SetPtEtaPhiM( el->pt(), el->eta(), el->phi(), el->mass() );
         el0_absiso           = absiso;
