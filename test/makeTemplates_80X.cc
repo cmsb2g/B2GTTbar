@@ -4,7 +4,7 @@
 //
 //root -l
 //.L makeTemplates_80X.cc
-//makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool ttReweighting = 1, string workingPoint = "ht950_pt400_WPB", string inFileDate = "20160512fullFix")
+//makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool ttReweighting = 1, bool forCombo = 0, string dateLabel = "ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WPB_alt40_alt260_bM_PUw")
 
 #include <cstdlib>
 #include "TClonesArray.h"
@@ -34,7 +34,7 @@
 using namespace std;
 using namespace names;
 
-int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool ttReweighting = 1, string workingPoint = "ht950_pt400_WPB", string inFileDate = "20160512fullFix"){
+int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool ttReweighting = 1, bool forCombo = 0, string dateLabel = "ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WPB_alt40_alt260_bM_PUw"){
 //signal: 0 = ZPN, 1 = ZPW, 2 = ZPXW, 3 = RSG
 
   gROOT->SetStyle("Plain");
@@ -44,10 +44,20 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
 
   int numProcs = names::NUM_PROCS;
 
-  string outFileDate  = "20170512";
-  string outEnd = Form("%s_%s",workingPoint.c_str(),outFileDate.c_str());
-  if (forTHETA) outEnd = Form("forTHETA_%s",outEnd.c_str());
-  if (postFit) outEnd = Form("postFit_%s",outEnd.c_str());
+  //determining working point
+  std::size_t foundWPA = dateLabel.find("WPA");//tau32 < 0.80
+  std::size_t foundWPB = dateLabel.find("WPB");//tau32 < 0.65
+  std::size_t foundWPC = dateLabel.find("WPC");//tau32 < 0.54
+
+  string dateLabel_TTw = Form("%s_TTw_",dateLabel.c_str());
+  string dateLabel_noTTw = Form("%s_noTTw_",dateLabel.c_str());
+
+  //naming output file
+  string outEnd = dateLabel_TTw;
+  if (!ttReweighting) outEnd = dateLabel_noTTw;
+  if (forTHETA) outEnd = Form("%sforTHETA",outEnd.c_str());
+  if (forCombo) outEnd = Form("%s_forCombo",outEnd.c_str());
+  if (postFit) outEnd = Form("%spostFit",outEnd.c_str());
 
   string file = Form("templates_narrow_%s.root", outEnd.c_str());//ZPN
   if (signal == 1) file = Form("templates_wide_%s.root", outEnd.c_str());
@@ -216,14 +226,14 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
   float QCDerr[nTagCats];
   float BKGerr[nTagCats];
   
-  TString dir = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/runs/histsBkgdEst_";
-  TString infileMiddle = "_alt40_alt260_bM_PUw_TTw_";
-  TString ttWeightSystMiddle = "_alt40_alt260_bM_PUw_noTTw_";
+  //TString dir = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/runs/histsBkgdEst_";
+  TString dir = "/uscms/home/camclean/nobackup/B2G2016/CMSSW_8_0_26/src/Analysis/B2GTTbar/test/runs/histsBkgdEst_";
+  TString infileBegin = dir + (TString) dateLabel_TTw;
+  TString ttWeightSystfileBegin = dir + (TString) dateLabel_noTTw;
   if (!ttReweighting){
-    infileMiddle = "_alt40_alt260_bM_PUw_noTTw_";
-    ttWeightSystMiddle = "_alt40_alt260_bM_PUw_TTw_";
+    infileBegin = dir + (TString) dateLabel_noTTw;
+    ttWeightSystfileBegin = dir + (TString) dateLabel_TTw;
   }
-  TString infileBegin = dir + inFileDate + "_" + workingPoint + infileMiddle;
   TString TTend = "_b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_orig_and_backup_missing2";
   TString sigEnd = "RunIISummer16MiniAODv2";
 
@@ -234,7 +244,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
   //files[names::QCDMC]         = inFileBegin + "nom_b2gtreeV5" + ???? + ".root";//FIX!!!!!s
   //files[names::QCDMC_SYST]    = files[names::QCDMC];
   files[names::TT]            = infileBegin + "nom" + TTend + ".root";
-  files[names::TT_WEIGHTSYST] = dir + inFileDate + "_" + workingPoint + ttWeightSystMiddle + "nom" + TTend + ".root";
+  files[names::TT_WEIGHTSYST] = ttWeightSystfileBegin + "nom" + TTend + ".root";
   files[names::TT_SUBTRACT]   = infileBegin + "nom" + TTend + ".root";
   files[names::TT_SUBTRACTSYST]   = infileBegin + "nom" + TTend + ".root";
   files[names::TT_JERUP]      = infileBegin + "jer_up" + TTend + ".root";
@@ -261,7 +271,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30]         = infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35]         = infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40]         = infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45]         = files[names::ZPN40];/////
+    files[names::ZPN45]         = infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50]         = infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
 
     systLabel = "jec";
@@ -273,7 +283,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_SCALEUP]         = files[names::ZPN40_SCALEUP];/////
+    files[names::ZPN45_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
     files[names::ZPN10_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-10_" + sigEnd + ".root";
     files[names::ZPN12p5_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1250_W-12p5_" + sigEnd + ".root";
@@ -283,7 +293,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_SCALEDN]         = files[names::ZPN40_SCALEDN];/////
+    files[names::ZPN45_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
   
     systLabel = "jer";
@@ -295,7 +305,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_JERUP]         = files[names::ZPN40_JERUP];/////
+    files[names::ZPN45_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
     files[names::ZPN10_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-10_" + sigEnd + ".root";
     files[names::ZPN12p5_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1250_W-12p5_" + sigEnd + ".root";
@@ -305,7 +315,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_JERDN]         = files[names::ZPN40_JERDN];/////
+    files[names::ZPN45_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
 
     systLabel = "pdf";
@@ -317,7 +327,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_PDFUP]         = files[names::ZPN40_PDFUP];/////
+    files[names::ZPN45_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
     files[names::ZPN10_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-10_" + sigEnd + ".root";
     files[names::ZPN12p5_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1250_W-12p5_" + sigEnd + ".root";
@@ -327,7 +337,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_PDFDN]         = files[names::ZPN40_PDFDN];/////
+    files[names::ZPN45_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
     
     systLabel = "bTag";
@@ -339,7 +349,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_BTAGUP]         = files[names::ZPN40_BTAGUP];/////
+    files[names::ZPN45_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
     files[names::ZPN10_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-10_" + sigEnd + ".root";
     files[names::ZPN12p5_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1250_W-12p5_" + sigEnd + ".root";
@@ -349,7 +359,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_BTAGDN]         = files[names::ZPN40_BTAGDN];/////
+    files[names::ZPN45_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
 
     systLabel = "PU";
@@ -361,7 +371,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_PUUP]         = files[names::ZPN40_PUUP];/////
+    files[names::ZPN45_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
     files[names::ZPN10_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-10_" + sigEnd + ".root";
     files[names::ZPN12p5_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1250_W-12p5_" + sigEnd + ".root";
@@ -371,7 +381,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-30_" + sigEnd + ".root";
     files[names::ZPN35_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3500_W-35_" + sigEnd + ".root";
     files[names::ZPN40_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-40_" + sigEnd + ".root";
-    files[names::ZPN45_PUDN]         = files[names::ZPN40_PUDN];/////
+    files[names::ZPN45_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4500_W-45_" + sigEnd + ".root";
     files[names::ZPN50_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-50_" + sigEnd + ".root";
   }//ZPN, signal = 0
   else if (signal == 1) {//ZPW                                                                                                                
@@ -502,9 +512,11 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN15] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";              
     files[names::ZPN20] = infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2500_W-750_" + sigEnd + ".root";              
-    files[names::ZPN30] = infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-1050_" + sigEnd + ".root";             
     files[names::ZPN40] = infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-1350_" + sigEnd + ".root";             
+    files[names::ZPN50] = infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
 
     systLabel = "jec";
     files[names::ZPN10_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
@@ -512,17 +524,21 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN15_SCALEUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";   
     files[names::ZPN20_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_SCALEUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2500_W-750_" + sigEnd + ".root";   
-    files[names::ZPN30_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_SCALEUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_SCALEUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-1050_" + sigEnd + ".root";  
     files[names::ZPN40_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_SCALEUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-1350_" + sigEnd + ".root";  
+    files[names::ZPN50_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
     files[names::ZPN10_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
     files[names::ZPN12p5_SCALEDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";
     files[names::ZPN15_SCALEDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";   
     files[names::ZPN20_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_SCALEDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2500_W-750_" + sigEnd + ".root";   
-    files[names::ZPN30_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_SCALEDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_SCALEDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-1050_" + sigEnd + ".root";  
     files[names::ZPN40_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_SCALEDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-1350_" + sigEnd + ".root";  
+    files[names::ZPN50_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
 
     systLabel = "jer";
     files[names::ZPN10_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
@@ -530,17 +546,21 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN15_JERUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";     
     files[names::ZPN20_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_JERUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2500_W-750_" + sigEnd + ".root";     
-    files[names::ZPN30_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_JERUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_JERUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-1050_" + sigEnd + ".root";    
     files[names::ZPN40_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_JERUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-1350_" + sigEnd + ".root";    
+    files[names::ZPN50_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
     files[names::ZPN10_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
     files[names::ZPN12p5_JERDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";   
     files[names::ZPN15_JERDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";     
     files[names::ZPN20_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_JERDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2500_W-750_" + sigEnd + ".root";     
-    files[names::ZPN30_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_JERDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_JERDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-1050_" + sigEnd + ".root";    
     files[names::ZPN40_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_JERDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-1350_" + sigEnd + ".root";    
+    files[names::ZPN50_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
 
     systLabel = "bTag";
     files[names::ZPN10_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
@@ -548,17 +568,21 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN15_BTAGUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";   
     files[names::ZPN20_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_BTAGUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2500_W-750_" + sigEnd + ".root";   
-    files[names::ZPN30_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_BTAGUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_BTAGUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-1050_" + sigEnd + ".root";  
     files[names::ZPN40_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_BTAGUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-1350_" + sigEnd + ".root";  
+    files[names::ZPN50_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
     files[names::ZPN10_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
     files[names::ZPN12p5_BTAGDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";
     files[names::ZPN15_BTAGDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";  
     files[names::ZPN20_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_BTAGDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2500_W-750_" + sigEnd + ".root";  
-    files[names::ZPN30_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_BTAGDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_BTAGDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-1050_" + sigEnd + ".root";  
     files[names::ZPN40_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_BTAGDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-1350_" + sigEnd + ".root";  
+    files[names::ZPN50_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
 
     systLabel = "pdf";
     files[names::ZPN10_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
@@ -566,17 +590,21 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN15_PDFUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";   
     files[names::ZPN20_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_PDFUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2500_W-750_" + sigEnd + ".root";   
-    files[names::ZPN30_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_PDFUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_PDFUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-1050_" + sigEnd + ".root";  
     files[names::ZPN40_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_PDFUP] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-1350_" + sigEnd + ".root";  
+    files[names::ZPN50_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
     files[names::ZPN10_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
     files[names::ZPN12p5_PDFDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root"; 
     files[names::ZPN15_PDFDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-1500_W-450_" + sigEnd + ".root";    
     files[names::ZPN20_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_PDFDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-2500_W-750_" + sigEnd + ".root";    
-    files[names::ZPN30_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_PDFDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_PDFDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-3500_W-1050_" + sigEnd + ".root"    
     files[names::ZPN40_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_PDFDN] = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_ZprimeToTT_M-4500_W-1350_" + sigEnd + ".root"    
+    files[names::ZPN50_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
     
     systLabel = "PU";
     files[names::ZPN10_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
@@ -584,17 +612,21 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN15_PUUP]  = files[names::ZPN10];
     files[names::ZPN20_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_PUUP]  = files[names::ZPN10];
-    files[names::ZPN30_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_PUUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_PUUP]  = files[names::ZPN10];
     files[names::ZPN40_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_PUUP]  = files[names::ZPN10];
+    files[names::ZPN50_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
     files[names::ZPN10_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-1000_W-300_" + sigEnd + ".root";
     files[names::ZPN12p5_PUDN]  = files[names::ZPN10];
     files[names::ZPN15_PUDN]  = files[names::ZPN10];
     files[names::ZPN20_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-2000_W-600_" + sigEnd + ".root";
     files[names::ZPN25_PUDN]  = files[names::ZPN10];
-    files[names::ZPN30_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
+    files[names::ZPN30_PUDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-3000_W-900_" + sigEnd + ".root";
     files[names::ZPN35_PUDN]  = files[names::ZPN10]; 
     files[names::ZPN40_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-4000_W-1200_" + sigEnd + ".root";
+    files[names::ZPN45_PUDN]  = files[names::ZPN10]; 
+    files[names::ZPN50_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_ZprimeToTT_M-5000_W-1500_" + sigEnd + ".root";
   }//ZPXW, signal = 2
   else if (signal == 3) {//RSG                                                                                                                
     files[names::ZPN10]         = infileBegin + systLabel + "_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
@@ -605,8 +637,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30]         = infileBegin + systLabel + "_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35]         = infileBegin + systLabel + "_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40]         = infileBegin + systLabel + "_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45]         = infileBegin + systLabel + "_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50]         = infileBegin + systLabel + "_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45]         = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50]         = files[names::ZPN10];//infileBegin + systLabel + "_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
 
     systLabel = "jec";
     files[names::ZPN10_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
@@ -617,8 +649,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_SCALEUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_SCALEUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_SCALEUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
     files[names::ZPN10_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
     files[names::ZPN12p5_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1250_" + sigEnd + ".root";
     files[names::ZPN15_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1500_" + sigEnd + ".root";
@@ -627,8 +659,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_SCALEDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_SCALEDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_SCALEDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
 
     systLabel = "jer";
     files[names::ZPN10_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
@@ -639,8 +671,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_JERUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_JERUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_JERUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
     files[names::ZPN10_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
     files[names::ZPN12p5_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1250_" + sigEnd + ".root";
     files[names::ZPN15_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1500_" + sigEnd + ".root";
@@ -649,8 +681,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_JERDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_JERDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_JERDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
 
     systLabel = "pdf";
     files[names::ZPN10_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
@@ -661,8 +693,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_PDFUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_PDFUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_PDFUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
     files[names::ZPN10_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
     files[names::ZPN12p5_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1250_" + sigEnd + ".root";
     files[names::ZPN15_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1500_" + sigEnd + ".root";
@@ -671,8 +703,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_PDFDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_PDFDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_PDFDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
 
     systLabel = "bTag";
     files[names::ZPN10_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
@@ -683,8 +715,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_BTAGUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_BTAGUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_BTAGUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
     files[names::ZPN10_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
     files[names::ZPN12p5_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1250_" + sigEnd + ".root";
     files[names::ZPN15_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1500_" + sigEnd + ".root";
@@ -693,8 +725,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_BTAGDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_BTAGDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_BTAGDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
     
     systLabel = "PU";
     files[names::ZPN10_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
@@ -705,8 +737,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_PUUP] = infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_PUUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_PUUP] = files[names::ZPN10];//infileBegin + systLabel + "_up_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
     files[names::ZPN10_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1000_" + sigEnd + ".root";
     files[names::ZPN12p5_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1250_" + sigEnd + ".root";
     files[names::ZPN15_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-1500_" + sigEnd + ".root";
@@ -715,8 +747,8 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN30_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3000_" + sigEnd + ".root";
     files[names::ZPN35_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";
     files[names::ZPN40_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";
-    files[names::ZPN45_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-3500_" + sigEnd + ".root";//////
-    files[names::ZPN50_PUDN] = infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4000_" + sigEnd + ".root";//////
+    files[names::ZPN45_PUDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-4500_" + sigEnd + ".root";//////
+    files[names::ZPN50_PUDN] = files[names::ZPN10];//infileBegin + systLabel + "_dn_b2gtreeV5_RSGluonToTT_M-5000_" + sigEnd + ".root";//////
   }//RSG, signal = 3
 
   int rebin_factor = 50;
@@ -736,7 +768,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
       histos[proc][3] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapHi_0btag_DijetMassMod_pred");
       histos[proc][4] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapHi_1btag_DijetMassMod_pred");
       histos[proc][5] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapHi_2btag_DijetMassMod_pred");
-      histos[proc][6] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapIn_inclu_DijetMassMod_pred");
+      //histos[proc][6] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapIn_inclu_DijetMassMod_pred");
     }
 
     //QCD and ttbar estimate w/o modmass
@@ -747,7 +779,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
       histos[proc][3] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapHi_0btag_DijetMass_pred");
       histos[proc][4] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapHi_1btag_DijetMass_pred");
       histos[proc][5] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapHi_2btag_DijetMass_pred");
-      histos[proc][6] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapIn_inclu_DijetMass_pred");
+      //histos[proc][6] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapIn_inclu_DijetMass_pred");
     }
     
     //signal, ttbar, data, and QCD MC for closure test systematic
@@ -758,7 +790,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
       histos[proc][3] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapHi_0btag_DijetMass");
       histos[proc][4] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapHi_1btag_DijetMass");
       histos[proc][5] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapHi_2btag_DijetMass");
-      histos[proc][6] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapIn_inclu_DijetMass");
+      //histos[proc][6] = (TH1F *) infile->Get("predDist_Puppi_SR_dRapIn_inclu_DijetMass");
     }
 
     cout << histos[proc][0]->Integral() << endl;
@@ -782,7 +814,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     histos[proc][3]->Rebin(10);
     histos[proc][4]->Rebin(10);
     histos[proc][5]->Rebin(10);
-    histos[proc][6]->Rebin(10);
+    //histos[proc][6]->Rebin(10);
 
     //}
     cout << histos[proc][0]->GetNbinsX() << endl;
@@ -797,7 +829,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
       histos[h][3]->Sumw2(kFALSE);
       histos[h][4]->Sumw2(kFALSE);
       histos[h][5]->Sumw2(kFALSE);
-      histos[h][6]->Sumw2(kFALSE);
+      //histos[h][6]->Sumw2(kFALSE);
     }
     else {
       histos[h][0]->Sumw2();
@@ -806,7 +838,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
       histos[h][3]->Sumw2();
       histos[h][4]->Sumw2();
       histos[h][5]->Sumw2();
-      histos[h][6]->Sumw2();
+      //histos[h][6]->Sumw2();
     }
   }
 
@@ -870,26 +902,29 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     N_Zp50 = 100000.;
   }
   
-  float kfactor = 0.9;
-  if (!ttReweighting) kfactor = 0.7;
+  float kfactor = 1.0;
+  /*float kfactor = 0.9;
+  float kfactor_tt_pt_weight_syst = 0.7;
+  if (!ttReweighting){ kfactor = 0.7; kfactor_tt_pt_weight_syst = 0.9;}*/
 
   float average_tt_pt_weight = 0.82;
   float average_tt_pt_weight_syst = 1.0;//for ttbar pt reweighting systematic
   if (!ttReweighting) { average_tt_pt_weight = 1.0; average_tt_pt_weight_syst = 0.82;}
 
   //tt scale factors - https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetTopTagging#13_TeV_working_points_CMSSW_8_0
-  std::size_t foundWPA  = workingPoint.find( "WPA"  ); //    Working point A  tau32 < 0.80    SF 1.07    +0.10 -0.04
-  std::size_t foundWPB  = workingPoint.find( "WPB"  ); //    Working point B  tau32 < 0.65    SF 1.09    +0.13 -0.05
-  std::size_t foundWPC  = workingPoint.find( "WPC"  ); //    Working point C  tau32 < 0.54    SF 1.09    +0.10 -0.05
+  //    Working point A  tau32 < 0.80    SF 1.07    +0.10 -0.04
+  //    Working point B  tau32 < 0.65    SF 1.09    +0.13 -0.05
+  //    Working point C  tau32 < 0.54    SF 1.09    +0.10 -0.05
 
   float ttSF     = 1.0;
-  if ( foundWPA   !=std::string::npos ) ttSF = 1.07;
-  if ( foundWPB   !=std::string::npos ) ttSF = 1.09;
-  if ( foundWPC   !=std::string::npos ) ttSF = 1.09;
+  if (!forCombo){
+    if ( foundWPA   !=std::string::npos ) ttSF = 1.07;
+    if ( foundWPB   !=std::string::npos ) ttSF = 1.09;
+    if ( foundWPC   !=std::string::npos ) ttSF = 1.09;
+  }
+  cout << dateLabel << " " << kfactor << " " << ttSF << " " << average_tt_pt_weight << endl;
 
-  cout << workingPoint << " " << kfactor << " " << ttSF << " " << average_tt_pt_weight << endl;
-
-  for (int tag = 0; tag < nTagCats; tag++) { 
+  for (int tag = 0; tag < (nTagCats - 1); tag++) { 
     cout<<"start of loop"<<endl;
     histos[names::QCD][tag]->SetMarkerSize(0);
     histos[names::TT_SCALEUP][tag] ->Scale( 831.76 * ttSF * ttSF * lumi * kfactor / ( nttbar * average_tt_pt_weight ) );
@@ -1156,11 +1191,14 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     float totalQCDErr = 0.0;
     float totalHistErr = 0.0;
     
-    float ttSF_up     = 1.0;
-    float ttSF_dn     = 1.0;
-    if ( foundWPA   !=std::string::npos ){ ttSF_up = 0.10; ttSF_dn = 0.04;} //    Working point A  tau32 < 0.80    SF 1.07    +0.10 -0.04
-    if ( foundWPB   !=std::string::npos ){ ttSF_up = 0.13; ttSF_dn = 0.05;} //    Working point B  tau32 < 0.65    SF 1.09    +0.13 -0.05
-    if ( foundWPC   !=std::string::npos ){ ttSF_up = 0.10; ttSF_dn = 0.05;} //    Working point C  tau32 < 0.54    SF 1.09    +0.10 -0.05
+    float ttSF_up     = 0.0;
+    float ttSF_dn     = 0.0;
+    
+    if (!forCombo){
+      if ( foundWPA   !=std::string::npos ){ ttSF_up = 0.10; ttSF_dn = 0.04;} //    Working point A  tau32 < 0.80    SF 1.07    +0.10 -0.04
+      if ( foundWPB   !=std::string::npos ){ ttSF_up = 0.13; ttSF_dn = 0.05;} //    Working point B  tau32 < 0.65    SF 1.09    +0.13 -0.05
+      if ( foundWPC   !=std::string::npos ){ ttSF_up = 0.10; ttSF_dn = 0.05;} //    Working point C  tau32 < 0.54    SF 1.09    +0.10 -0.05
+    }
 
     float lumiErr_top = 0.025;
     float xsErr_top = 0.08;
@@ -1517,116 +1555,116 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     if (signal != 2) histos[names::ZPN15][tag]->Write( Form("btag%d__Zprime1500", tag) );
     histos[names::ZPN20][tag]->Write( Form("btag%d__Zprime2000", tag) );
     if (signal != 2) histos[names::ZPN25][tag]->Write( Form("btag%d__Zprime2500", tag) );
-    histos[names::ZPN30][tag]->Write( Form("btag%d__Zprime3000", tag) );
+    if (signal != 2) histos[names::ZPN30][tag]->Write( Form("btag%d__Zprime3000", tag) );
     if (signal != 2) histos[names::ZPN35][tag]->Write( Form("btag%d__Zprime3500", tag) );  
     histos[names::ZPN40][tag]->Write( Form("btag%d__Zprime4000", tag) );  
-    if (signal == 1) histos[names::ZPN45][tag]->Write( Form("btag%d__Zprime4500", tag) );  
-    if (signal < 2) histos[names::ZPN50][tag]->Write( Form("btag%d__Zprime5000", tag) );  
+    if (signal < 2) histos[names::ZPN45][tag]->Write( Form("btag%d__Zprime4500", tag) );  
+    if (signal != 3) histos[names::ZPN50][tag]->Write( Form("btag%d__Zprime5000", tag) );  
  
     histos[names::ZPN10_SCALEUP][tag]->Write( Form("btag%d__Zprime1000__jec__up", tag));
     if (signal != 2) histos[names::ZPN12p5_SCALEUP][tag]->Write( Form("btag%d__Zprime1250__jec__up", tag));
     if (signal != 2) histos[names::ZPN15_SCALEUP][tag]->Write( Form("btag%d__Zprime1500__jec__up", tag) );
     histos[names::ZPN20_SCALEUP][tag]->Write( Form("btag%d__Zprime2000__jec__up", tag) );
     if (signal != 2) histos[names::ZPN25_SCALEUP][tag]->Write( Form("btag%d__Zprime2500__jec__up", tag) );
-    histos[names::ZPN30_SCALEUP][tag]->Write( Form("btag%d__Zprime3000__jec__up", tag) );
+    if (signal != 2) histos[names::ZPN30_SCALEUP][tag]->Write( Form("btag%d__Zprime3000__jec__up", tag) );
     if (signal != 2) histos[names::ZPN35_SCALEUP][tag]->Write( Form("btag%d__Zprime3500__jec__up", tag) ); 
     histos[names::ZPN40_SCALEUP][tag]->Write( Form("btag%d__Zprime4000__jec__up", tag) ); 
-    if (signal == 1) histos[names::ZPN45_SCALEUP][tag]->Write( Form("btag%d__Zprime4500__jec__up", tag) ); 
-    if (signal < 2) histos[names::ZPN50_SCALEUP][tag]->Write( Form("btag%d__Zprime5000__jec__up", tag) ); 
+    if (signal < 2) histos[names::ZPN45_SCALEUP][tag]->Write( Form("btag%d__Zprime4500__jec__up", tag) ); 
+    if (signal != 3) histos[names::ZPN50_SCALEUP][tag]->Write( Form("btag%d__Zprime5000__jec__up", tag) ); 
     histos[names::ZPN10_SCALEDN][tag]->Write( Form("btag%d__Zprime1000__jec__down", tag));
     if (signal != 2) histos[names::ZPN12p5_SCALEDN][tag]->Write( Form("btag%d__Zprime1250__jec__down", tag));
     if (signal != 2) histos[names::ZPN15_SCALEDN][tag]->Write( Form("btag%d__Zprime1500__jec__down", tag) );
     histos[names::ZPN20_SCALEDN][tag]->Write( Form("btag%d__Zprime2000__jec__down", tag) );
     if (signal != 2) histos[names::ZPN25_SCALEDN][tag]->Write( Form("btag%d__Zprime2500__jec__down", tag) );
-    histos[names::ZPN30_SCALEDN][tag]->Write( Form("btag%d__Zprime3000__jec__down", tag) );
+    if (signal != 2) histos[names::ZPN30_SCALEDN][tag]->Write( Form("btag%d__Zprime3000__jec__down", tag) );
     if (signal != 2) histos[names::ZPN35_SCALEDN][tag]->Write( Form("btag%d__Zprime3500__jec__down", tag) );  
     histos[names::ZPN40_SCALEDN][tag]->Write( Form("btag%d__Zprime4000__jec__down", tag) );  
-    if (signal == 1) histos[names::ZPN45_SCALEDN][tag]->Write( Form("btag%d__Zprime4500__jec__down", tag) );  
-    if (signal < 2) histos[names::ZPN50_SCALEDN][tag]->Write( Form("btag%d__Zprime5000__jec__down", tag) );  
+    if (signal < 2) histos[names::ZPN45_SCALEDN][tag]->Write( Form("btag%d__Zprime4500__jec__down", tag) );  
+    if (signal != 3) histos[names::ZPN50_SCALEDN][tag]->Write( Form("btag%d__Zprime5000__jec__down", tag) );  
   
     histos[names::ZPN10_JERUP][tag]->Write( Form("btag%d__Zprime1000__jer__up", tag));
     if (signal != 2) histos[names::ZPN12p5_JERUP][tag]->Write( Form("btag%d__Zprime1250__jer__up", tag));
     if (signal != 2) histos[names::ZPN15_JERUP][tag]->Write( Form("btag%d__Zprime1500__jer__up", tag) );
     histos[names::ZPN20_JERUP][tag]->Write( Form("btag%d__Zprime2000__jer__up", tag) );
     if (signal != 2) histos[names::ZPN25_JERUP][tag]->Write( Form("btag%d__Zprime2500__jer__up", tag) );
-    histos[names::ZPN30_JERUP][tag]->Write( Form("btag%d__Zprime3000__jer__up", tag) );
+    if (signal != 2) histos[names::ZPN30_JERUP][tag]->Write( Form("btag%d__Zprime3000__jer__up", tag) );
     if (signal != 2) histos[names::ZPN35_JERUP][tag]->Write( Form("btag%d__Zprime3500__jer__up", tag) ); 
     histos[names::ZPN40_JERUP][tag]->Write( Form("btag%d__Zprime4000__jer__up", tag) ); 
-    if (signal == 1) histos[names::ZPN45_JERUP][tag]->Write( Form("btag%d__Zprime4500__jer__up", tag) ); 
-    if (signal < 2) histos[names::ZPN50_JERUP][tag]->Write( Form("btag%d__Zprime5000__jer__up", tag) ); 
+    if (signal < 2) histos[names::ZPN45_JERUP][tag]->Write( Form("btag%d__Zprime4500__jer__up", tag) ); 
+    if (signal != 3) histos[names::ZPN50_JERUP][tag]->Write( Form("btag%d__Zprime5000__jer__up", tag) ); 
     histos[names::ZPN10_JERDN][tag]->Write( Form("btag%d__Zprime1000__jer__down", tag));
     if (signal != 2) histos[names::ZPN12p5_JERDN][tag]->Write( Form("btag%d__Zprime1250__jer__down", tag));
     if (signal != 2) histos[names::ZPN15_JERDN][tag]->Write( Form("btag%d__Zprime1500__jer__down", tag) );
     histos[names::ZPN20_JERDN][tag]->Write( Form("btag%d__Zprime2000__jer__down", tag) );
     if (signal != 2) histos[names::ZPN25_JERDN][tag]->Write( Form("btag%d__Zprime2500__jer__down", tag) );
-    histos[names::ZPN30_JERDN][tag]->Write( Form("btag%d__Zprime3000__jer__down", tag) );
+    if (signal != 2) histos[names::ZPN30_JERDN][tag]->Write( Form("btag%d__Zprime3000__jer__down", tag) );
     if (signal != 2) histos[names::ZPN35_JERDN][tag]->Write( Form("btag%d__Zprime3500__jer__down", tag) );  
     histos[names::ZPN40_JERDN][tag]->Write( Form("btag%d__Zprime4000__jer__down", tag) );  
-    if (signal == 1) histos[names::ZPN45_JERDN][tag]->Write( Form("btag%d__Zprime4500__jer__down", tag) );  
-    if (signal < 2) histos[names::ZPN50_JERDN][tag]->Write( Form("btag%d__Zprime5000__jer__down", tag) );  
+    if (signal < 2) histos[names::ZPN45_JERDN][tag]->Write( Form("btag%d__Zprime4500__jer__down", tag) );  
+    if (signal != 3) histos[names::ZPN50_JERDN][tag]->Write( Form("btag%d__Zprime5000__jer__down", tag) );  
 
     histos[names::ZPN10_PDFUP][tag]->Write( Form("btag%d__Zprime1000__pdf__up", tag));
     if (signal != 2) histos[names::ZPN12p5_PDFUP][tag]->Write( Form("btag%d__Zprime1250__pdf__up", tag));
     if (signal != 2) histos[names::ZPN15_PDFUP][tag]->Write( Form("btag%d__Zprime1500__pdf__up", tag) );
     histos[names::ZPN20_PDFUP][tag]->Write( Form("btag%d__Zprime2000__pdf__up", tag) );
     if (signal != 2) histos[names::ZPN25_PDFUP][tag]->Write( Form("btag%d__Zprime2500__pdf__up", tag) );
-    histos[names::ZPN30_PDFUP][tag]->Write( Form("btag%d__Zprime3000__pdf__up", tag) );
+    if (signal != 2) histos[names::ZPN30_PDFUP][tag]->Write( Form("btag%d__Zprime3000__pdf__up", tag) );
     if (signal != 2) histos[names::ZPN35_PDFUP][tag]->Write( Form("btag%d__Zprime3500__pdf__up", tag) ); 
     histos[names::ZPN40_PDFUP][tag]->Write( Form("btag%d__Zprime4000__pdf__up", tag) ); 
-    if (signal == 1) histos[names::ZPN45_PDFUP][tag]->Write( Form("btag%d__Zprime4500__pdf__up", tag) ); 
-    if (signal < 2) histos[names::ZPN50_PDFUP][tag]->Write( Form("btag%d__Zprime5000__pdf__up", tag) ); 
+    if (signal < 2) histos[names::ZPN45_PDFUP][tag]->Write( Form("btag%d__Zprime4500__pdf__up", tag) ); 
+    if (signal != 3) histos[names::ZPN50_PDFUP][tag]->Write( Form("btag%d__Zprime5000__pdf__up", tag) ); 
     histos[names::ZPN10_PDFDN][tag]->Write( Form("btag%d__Zprime1000__pdf__down", tag));
     if (signal != 2) histos[names::ZPN12p5_PDFDN][tag]->Write( Form("btag%d__Zprime1250__pdf__down", tag));
     if (signal != 2) histos[names::ZPN15_PDFDN][tag]->Write( Form("btag%d__Zprime1500__pdf__down", tag) );
     histos[names::ZPN20_PDFDN][tag]->Write( Form("btag%d__Zprime2000__pdf__down", tag) );
     if (signal != 2) histos[names::ZPN25_PDFDN][tag]->Write( Form("btag%d__Zprime2500__pdf__down", tag) );
-    histos[names::ZPN30_PDFDN][tag]->Write( Form("btag%d__Zprime3000__pdf__down", tag) );
+    if (signal != 2) histos[names::ZPN30_PDFDN][tag]->Write( Form("btag%d__Zprime3000__pdf__down", tag) );
     if (signal != 2) histos[names::ZPN35_PDFDN][tag]->Write( Form("btag%d__Zprime3500__pdf__down", tag) );  
     histos[names::ZPN40_PDFDN][tag]->Write( Form("btag%d__Zprime4000__pdf__down", tag) );  
-    if (signal == 1) histos[names::ZPN45_PDFDN][tag]->Write( Form("btag%d__Zprime4500__pdf__down", tag) );  
-    if (signal < 2) histos[names::ZPN50_PDFDN][tag]->Write( Form("btag%d__Zprime5000__pdf__down", tag) );  
+    if (signal < 2) histos[names::ZPN45_PDFDN][tag]->Write( Form("btag%d__Zprime4500__pdf__down", tag) );  
+    if (signal != 3) histos[names::ZPN50_PDFDN][tag]->Write( Form("btag%d__Zprime5000__pdf__down", tag) );  
 
     histos[names::ZPN10_BTAGUP][tag]->Write( Form("btag%d__Zprime1000__btag__up", tag));
     if (signal != 2) histos[names::ZPN12p5_BTAGUP][tag]->Write( Form("btag%d__Zprime1250__btag__up", tag));
     if (signal != 2) histos[names::ZPN15_BTAGUP][tag]->Write( Form("btag%d__Zprime1500__btag__up", tag) );
     histos[names::ZPN20_BTAGUP][tag]->Write( Form("btag%d__Zprime2000__btag__up", tag) );
     if (signal != 2) histos[names::ZPN25_BTAGUP][tag]->Write( Form("btag%d__Zprime2500__btag__up", tag) );
-    histos[names::ZPN30_BTAGUP][tag]->Write( Form("btag%d__Zprime3000__btag__up", tag) );
+    if (signal != 2) histos[names::ZPN30_BTAGUP][tag]->Write( Form("btag%d__Zprime3000__btag__up", tag) );
     if (signal != 2) histos[names::ZPN35_BTAGUP][tag]->Write( Form("btag%d__Zprime3500__btag__up", tag) ); 
     histos[names::ZPN40_BTAGUP][tag]->Write( Form("btag%d__Zprime4000__btag__up", tag) ); 
-    if (signal == 1) histos[names::ZPN45_BTAGUP][tag]->Write( Form("btag%d__Zprime4500__btag__up", tag) ); 
-    if (signal < 2) histos[names::ZPN50_BTAGUP][tag]->Write( Form("btag%d__Zprime5000__btag__up", tag) ); 
+    if (signal < 2) histos[names::ZPN45_BTAGUP][tag]->Write( Form("btag%d__Zprime4500__btag__up", tag) ); 
+    if (signal != 3) histos[names::ZPN50_BTAGUP][tag]->Write( Form("btag%d__Zprime5000__btag__up", tag) ); 
     histos[names::ZPN10_BTAGDN][tag]->Write( Form("btag%d__Zprime1000__btag__down", tag));
     if (signal != 2) histos[names::ZPN12p5_BTAGDN][tag]->Write( Form("btag%d__Zprime1250__btag__down", tag));
     if (signal != 2) histos[names::ZPN15_BTAGDN][tag]->Write( Form("btag%d__Zprime1500__btag__down", tag) );
     histos[names::ZPN20_BTAGDN][tag]->Write( Form("btag%d__Zprime2000__btag__down", tag) );
     if (signal != 2) histos[names::ZPN25_BTAGDN][tag]->Write( Form("btag%d__Zprime2500__btag__down", tag) );
-    histos[names::ZPN30_BTAGDN][tag]->Write( Form("btag%d__Zprime3000__btag__down", tag) );
+    if (signal != 2) histos[names::ZPN30_BTAGDN][tag]->Write( Form("btag%d__Zprime3000__btag__down", tag) );
     if (signal != 2) histos[names::ZPN35_BTAGDN][tag]->Write( Form("btag%d__Zprime3500__btag__down", tag) );  
     histos[names::ZPN40_BTAGDN][tag]->Write( Form("btag%d__Zprime4000__btag__down", tag) );  
-    if (signal == 1) histos[names::ZPN45_BTAGDN][tag]->Write( Form("btag%d__Zprime4500__btag__down", tag) );  
-    if (signal < 2) histos[names::ZPN50_BTAGDN][tag]->Write( Form("btag%d__Zprime5000__btag__down", tag) );  
+    if (signal < 2) histos[names::ZPN45_BTAGDN][tag]->Write( Form("btag%d__Zprime4500__btag__down", tag) );  
+    if (signal != 3) histos[names::ZPN50_BTAGDN][tag]->Write( Form("btag%d__Zprime5000__btag__down", tag) );  
     
     histos[names::ZPN10_PUUP][tag]->Write( Form("btag%d__Zprime1000__pileup__up", tag));
     if (signal != 2) histos[names::ZPN12p5_PUUP][tag]->Write( Form("btag%d__Zprime1250__pileup__up", tag));
     if (signal != 2) histos[names::ZPN15_PUUP][tag]->Write( Form("btag%d__Zprime1500__pileup__up", tag) );
     histos[names::ZPN20_PUUP][tag]->Write( Form("btag%d__Zprime2000__pileup__up", tag) );
     if (signal != 2) histos[names::ZPN25_PUUP][tag]->Write( Form("btag%d__Zprime2500__pileup__up", tag) );
-    histos[names::ZPN30_PUUP][tag]->Write( Form("btag%d__Zprime3000__pileup__up", tag) );
+    if (signal != 2) histos[names::ZPN30_PUUP][tag]->Write( Form("btag%d__Zprime3000__pileup__up", tag) );
     if (signal != 2) histos[names::ZPN35_PUUP][tag]->Write( Form("btag%d__Zprime3500__pileup__up", tag) ); 
     histos[names::ZPN40_PUUP][tag]->Write( Form("btag%d__Zprime4000__pileup__up", tag) ); 
-    if (signal == 1) histos[names::ZPN45_PUUP][tag]->Write( Form("btag%d__Zprime4500__pileup__up", tag) ); 
-    if (signal < 2) histos[names::ZPN50_PUUP][tag]->Write( Form("btag%d__Zprime5000__pileup__up", tag) ); 
+    if (signal < 2) histos[names::ZPN45_PUUP][tag]->Write( Form("btag%d__Zprime4500__pileup__up", tag) ); 
+    if (signal != 3) histos[names::ZPN50_PUUP][tag]->Write( Form("btag%d__Zprime5000__pileup__up", tag) ); 
     histos[names::ZPN10_PUDN][tag]->Write( Form("btag%d__Zprime1000__pileup__down", tag));
     if (signal != 2) histos[names::ZPN12p5_PUDN][tag]->Write( Form("btag%d__Zprime1250__pileup__down", tag));
     if (signal != 2) histos[names::ZPN15_PUDN][tag]->Write( Form("btag%d__Zprime1500__pileup__down", tag) );
     histos[names::ZPN20_PUDN][tag]->Write( Form("btag%d__Zprime2000__pileup__down", tag) );
     if (signal != 2) histos[names::ZPN25_PUDN][tag]->Write( Form("btag%d__Zprime2500__pileup__down", tag) );
-    histos[names::ZPN30_PUDN][tag]->Write( Form("btag%d__Zprime3000__pileup__down", tag) );
+    if (signal != 2) histos[names::ZPN30_PUDN][tag]->Write( Form("btag%d__Zprime3000__pileup__down", tag) );
     if (signal != 2) histos[names::ZPN35_PUDN][tag]->Write( Form("btag%d__Zprime3500__pileup__down", tag) );  
     histos[names::ZPN40_PUDN][tag]->Write( Form("btag%d__Zprime4000__pileup__down", tag) );  
-    if (signal == 1) histos[names::ZPN45_PUDN][tag]->Write( Form("btag%d__Zprime4500__pileup__down", tag) );  
-    if (signal < 2) histos[names::ZPN50_PUDN][tag]->Write( Form("btag%d__Zprime5000__pileup__down", tag) );  
+    if (signal < 2) histos[names::ZPN45_PUDN][tag]->Write( Form("btag%d__Zprime4500__pileup__down", tag) );  
+    if (signal != 3) histos[names::ZPN50_PUDN][tag]->Write( Form("btag%d__Zprime5000__pileup__down", tag) );  
 
   }  
 
