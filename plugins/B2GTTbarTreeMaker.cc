@@ -751,7 +751,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t NNPDF3weight_CorrUp                       ;           
       Int_t   AllHadRunNum                               ;           
       Int_t   AllHadLumiBlock                            ;           
-      Int_t   AllHadEventNum                             ;    
+      Long_t   AllHadEventNum                             ;    
 
 
 
@@ -1047,7 +1047,7 @@ class B2GTTbarTreeMaker : public edm::one::EDAnalyzer<edm::one::SharedResources>
       Float_t SemiLeptNNPDF3weight_CorrUp            ;
       Int_t   SemiLeptRunNum                         ;
       Int_t   SemiLeptLumiBlock                      ;
-      Int_t   SemiLeptEventNum                       ;
+      Long_t   SemiLeptEventNum                       ;
       Int_t   SemiLeptPassMETFilters                 ;       
         
       Float_t AK4_dRminLep_Pt                             ;
@@ -1760,7 +1760,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeAllHad->Branch("NNPDF3weight_CorrUp"                   , & NNPDF3weight_CorrUp                ,    "NNPDF3weight_CorrUp/F"                     );                                            
   TreeAllHad->Branch("AllHadRunNum"                          , & AllHadRunNum                       ,    "AllHadRunNum/I"                            );                                     
   TreeAllHad->Branch("AllHadLumiBlock"                       , & AllHadLumiBlock                    ,    "AllHadLumiBlock/I"                         );                                        
-  TreeAllHad->Branch("AllHadEventNum"                        , & AllHadEventNum                     ,    "AllHadEventNum/I"                          );                                       
+  TreeAllHad->Branch("AllHadEventNum"                        , & AllHadEventNum                     ,    "AllHadEventNum/L"                          );                                       
   
   std::cout<<"Setup all-had event tree"<<std::endl;
 
@@ -2068,7 +2068,7 @@ B2GTTbarTreeMaker::B2GTTbarTreeMaker(const edm::ParameterSet& iConfig):
   TreeSemiLept->Branch("SemiLeptNNPDF3weight_CorrUp"          , & SemiLeptNNPDF3weight_CorrUp       , "SemiLeptNNPDF3weight_CorrUp/F"    );
   TreeSemiLept->Branch("SemiLeptRunNum"                       , & SemiLeptRunNum                    , "SemiLeptRunNum/I"                 );
   TreeSemiLept->Branch("SemiLeptLumiBlock"                    , & SemiLeptLumiBlock                 , "SemiLeptLumiBlock/I"              );
-  TreeSemiLept->Branch("SemiLeptEventNum"                     , & SemiLeptEventNum                  , "SemiLeptEventNum/I"               );
+  TreeSemiLept->Branch("SemiLeptEventNum"                     , & SemiLeptEventNum                  , "SemiLeptEventNum/L"               );
   TreeSemiLept->Branch("SemiLeptPassMETFilters"               , & SemiLeptPassMETFilters            , "SemiLeptPassMETFilters/I"         );
  
   TreeSemiLept->Branch("AK4_dRminLep_Pt"                           , & AK4_dRminLep_Pt                        , "AK4_dRminLep_Pt/F"                     );  
