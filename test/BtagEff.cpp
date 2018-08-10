@@ -1,11 +1,63 @@
-void plotAndCalcEff(string, string);
+void plotAndCalcEff(string, string, string);
 
 void BtagEff(){
-  //plotAndCalcEff("bTagPuppiEffMeasurement20170623","M");
+  //plotAndCalcEff("QCD_Ptscaled","bTagPuppiEffMeasurement20170623","M");
   //plotAndCalcEff("bTagPuppiEffMeasurement20170623","L");
-  plotAndCalcEff("bTagEffMeasurement20170613","M");
+  //plotAndCalcEff("TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20171004","M");
+  
+  //Z' narrow
+  /*plotAndCalcEff("ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20171004","M");
+    plotAndCalcEff("ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20171004","M");      */
+  //plotAndCalcEff("ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all","bTagPuppiEffMeasurement20171004","M");
+  /*plotAndCalcEff("ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-3500_W-35_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-4500_W-45_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-5000_W-50_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");*/
+  //plotAndCalcEff("ZprimeToTT_M-6000_W-60_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-6500_W-65_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-7000_W-70_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+
+  // wide
+  /*plotAndCalcEff("ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-1250_W-125_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-1500_W-150_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-2000_W-200_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-2500_W-250_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-3000_W-300_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-3500_W-350_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-4500_W-450_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");*/
+  plotAndCalcEff("ZprimeToTT_M-6000_W-600_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-6500_W-650_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-7000_W-700_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+
+  // very wide
+  /*plotAndCalcEff("ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-2000_W-600_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-3000_W-900_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-4000_W-1200_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-5000_W-1500_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20171004","M");*/
+  // plotAndCalcEff("ZprimeToTT_M-6000_W-1800_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  // plotAndCalcEff("ZprimeToTT_M-6500_W-1950_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  // plotAndCalcEff("ZprimeToTT_M-7000_W-2100_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+
+  //RSG
+  /*plotAndCalcEff("RSGluonToTT_M-1000_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("RSGluonToTT_M-1250_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("RSGluonToTT_M-1500_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("RSGluonToTT_M-2000_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("RSGluonToTT_M-2500_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("RSGluonToTT_M-3000_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("RSGluonToTT_M-3500_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("RSGluonToTT_M-4000_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("RSGluonToTT_M-4500_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("RSGluonToTT_M-5000_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");*/
 }
-void plotAndCalcEff(string saveLabel, string bWP){
+void plotAndCalcEff(string sample, string saveLabel, string bWP){
 
     gROOT->SetBatch(); 
 
@@ -52,28 +104,29 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	//gStyle->SetMarkerStyle(20);
 
 	//For the fit/function:
-	gStyle->SetOptFit(1);
+	/*gStyle->SetOptFit(1);
 	gStyle->SetFitFormat("5.4g");
 	gStyle->SetFuncColor(2);
 	gStyle->SetFuncStyle(1);
-	gStyle->SetFuncWidth(1);
+	gStyle->SetFuncWidth(1);*/
 
 	//For the date:
-	gStyle->SetOptDate(0);
+	//gStyle->SetOptDate(0);
 	// gStyle->SetDateX(Float_t x = 0.01);
 	// gStyle->SetDateY(Float_t y = 0.01);
 
 	// For the statistics box:
-	gStyle->SetOptFile(0);
+	gStyle->SetOptStat(0000000000); //this clears all the boxes and crap
+	//gStyle->SetOptFile(0);
 	// gStyle->SetOptStat(111111); // To display the mean and RMS:   SetOptStat("mr");
-	gStyle->SetStatColor(kWhite);
+	/*gStyle->SetStatColor(kWhite);
 	gStyle->SetStatFont(42);
 	gStyle->SetStatFontSize(0.025);
 	gStyle->SetStatTextColor(1);
 	gStyle->SetStatFormat("6.4g");
 	gStyle->SetStatBorderSize(1);
 	gStyle->SetStatH(0.1);
-	gStyle->SetStatW(0.15);
+	gStyle->SetStatW(0.15);*/
 	// gStyle->SetStatStyle(Style_t style = 1001);
 	// gStyle->SetStatX(Float_t x = 0);
 	// gStyle->SetStatY(Float_t y = 0);
@@ -143,17 +196,19 @@ void plotAndCalcEff(string saveLabel, string bWP){
 
 
 	//gStyle->SetLegendFont(42);
-	gStyle->SetOptStat(0);
 	gROOT->UseCurrentStyle();
 	gROOT->ForceStyle();
 
 	TCanvas *c1 = new TCanvas("c1","",900,700);
 
 
-	TFile * OutFile       = new TFile(     Form("BtagEff_b%s_%s.root", bWP.c_str(), saveLabel.c_str())       , "RECREATE");
+	TFile * OutFile       = new TFile(     Form("BtagEff_%s_b%s_%s.root", sample.c_str(), bWP.c_str(), saveLabel.c_str())       , "RECREATE");
 
-	TFile * InFile        = new TFile( Form("runs/histsKinemat_%s_ht950_pt400_WPB_alt40_alt260_b%s_PUw_noTTw_nom_b2gtreeV5_QCD_Ptscaled.root", saveLabel.c_str(), bWP.c_str())      );
-	TFile * InFile2D        = new TFile( Form("runs/histsKinemat_2D_%s_ht950_pt400_WPB_alt40_alt260_b%s_PUw_noTTw_nom_b2gtreeV5_QCD_Ptscaled.root", saveLabel.c_str(), bWP.c_str())      );
+	TFile * InFile        = new TFile( Form("runs/histsKinemat_%s_ht950_pt400_WPB_alt40_alt260_b%s_PUw_noTTw_nom_b2gtreeV5_%s.root", saveLabel.c_str(), bWP.c_str(), sample.c_str())      );
+
+	std::size_t foundQCD    = sample.find( "QCD"    );
+	TFile * InFile2D = InFile;
+	if ( foundQCD    !=std::string::npos ) TFile * InFile2D        = new TFile( Form("runs/histsKinemat_2D_%s_ht950_pt400_WPB_alt40_alt260_b%s_PUw_noTTw_nom_b2gtreeV5_%s.root", saveLabel.c_str(), bWP.c_str(), sample.c_str())      );
 
 ///Users/jdolen/NoBackup/B2G2016/V5/runs/
  	//----------------------------------------------------------------------------------------------------------------------------
@@ -162,10 +217,10 @@ void plotAndCalcEff(string saveLabel, string bWP){
 
 	TH1D * aaa1_numer = (TH1D*) InFile->Get(  "h_AfterBtag_Inclusive_Jet0Pt"   );
 	TH1D * aaa1_denom = (TH1D*) InFile->Get( "h_BeforeBtag_Inclusive_Jet0Pt"   );
-	cout<<aaa1_numer  ->Integral() <<endl;
-	cout<<aaa1_denom  ->Integral() <<endl;
-	cout<<aaa1_numer  ->GetEntries() <<endl;
-	cout<<aaa1_denom  ->GetEntries() <<endl;
+	//cout<<aaa1_numer  ->Integral() <<endl;
+	//cout<<aaa1_denom  ->Integral() <<endl;
+	//cout<<aaa1_numer  ->GetEntries() <<endl;
+	//cout<<aaa1_denom  ->GetEntries() <<endl;
 	aaa1_numer  ->Sumw2();
 	aaa1_denom  ->Sumw2();
 	aaa1_numer  ->Rebin(50);
@@ -273,7 +328,7 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	aaa7_numer ->Draw("same");
 	aaa8_numer ->Draw("same");
 
-	cout<<"Draw hadron rate vs pT"<<endl;
+	//cout<<"Draw hadron rate vs pT"<<endl;
 
 	aaa8_numer->SetTitle(";Jet 0 p_{T} [GeV];b-tag rate");
 	aaa8_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -293,8 +348,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	legA->SetLineColor(0);
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0Pt_hadron.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0Pt_hadron.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
 
 	aaa4_numer->SetTitle(";Jet 0 p_{T} [GeV];b-tag rate");
 	aaa4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -316,8 +371,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	legB->SetLineColor(0);
 	legB->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Pt_parton.pdf", bWP.c_str(), saveLabel.c_str()));
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Pt_parton.png", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0Pt_parton.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0Pt_parton.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -433,7 +488,7 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	bbb7_numer ->Draw("same");
 	bbb8_numer ->Draw("same");
 
-	cout<<"Draw hadron rate vs P"<<endl;
+	//cout<<"Draw hadron rate vs P"<<endl;
 
 
 	bbb8_numer->SetTitle(";Jet 0 momentum [GeV];b-tag rate");
@@ -446,8 +501,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0P_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0P_hadron.png", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0P_hadron.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0P_hadron.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
 
 	bbb4_numer->SetTitle(";Jet 0 momentum [GeV];b-tag rate");
 	bbb4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -461,8 +516,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 
 	legB->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0P_parton.pdf", bWP.c_str(), saveLabel.c_str()));
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0P_parton.png", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0P_parton.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0P_parton.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -577,7 +632,7 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	ccc7_numer ->Draw("same");
 	ccc8_numer ->Draw("same");
 
-	cout<<"Draw hadron rate vs rapidity"<<endl;
+	//cout<<"Draw hadron rate vs rapidity"<<endl;
 
 
 	ccc8_numer->SetTitle(";Jet 0 rapidity [GeV];b-tag rate");
@@ -590,8 +645,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Rap_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Rap_hadron.png", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0Rap_hadron.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0Rap_hadron.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
 
 	ccc4_numer->SetTitle(";Jet 0 rapidity [GeV];b-tag rate");
 	ccc4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -605,8 +660,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 
 	legB->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Rap_parton.pdf", bWP.c_str(), saveLabel.c_str()));
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0Rap_parton.png", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0Rap_parton.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0Rap_parton.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -653,29 +708,35 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	// eee5_denom  ->Rebin(50);
 	// eee5_numer->Divide(eee5_numer, eee5_denom,1,1,"B");
 
-	cout<<"debug1"<<endl;
+	//cout<<"debug1"<<endl;
 	TH1D * eee6_numer = (TH1D*) InFile->Get(  "h_AfterBtag_lightHad_Jet0_SubjetMaxB_Pt"   );
 	TH1D * eee6_denom = (TH1D*) InFile->Get( "h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Pt"   );
 	eee6_numer  ->Sumw2();
 	eee6_denom  ->Sumw2();
-	cout<<"debug1"<<endl;eee6_numer  ->Rebin(50);
-	cout<<"debug2"<<endl;eee6_denom  ->Rebin(50);
+	//cout<<"debug1"<<endl;
+	eee6_numer  ->Rebin(50);
+	//cout<<"debug2"<<endl;
+	eee6_denom  ->Rebin(50);
 	eee6_numer->Divide(eee6_numer, eee6_denom,1,1,"B");
 
 	TH1D * eee7_numer = (TH1D*) InFile->Get(  "h_AfterBtag_cHad_Jet0_SubjetMaxB_Pt"   );
 	TH1D * eee7_denom = (TH1D*) InFile->Get( "h_BeforeBtag_cHad_Jet0_SubjetMaxB_Pt"   );
 	eee7_numer  ->Sumw2();
 	eee7_denom  ->Sumw2();
-	cout<<"debug3"<<endl;eee7_numer  ->Rebin(50);
-	cout<<"debug4"<<endl;eee7_denom  ->Rebin(50);
+	//cout<<"debug3"<<endl;
+	eee7_numer  ->Rebin(50);
+	//cout<<"debug4"<<endl;
+	eee7_denom  ->Rebin(50);
 	eee7_numer->Divide(eee7_numer, eee7_denom,1,1,"B");
 
 	TH1D * eee8_numer = (TH1D*) InFile->Get(  "h_AfterBtag_bHad_Jet0_SubjetMaxB_Pt"   );
 	TH1D * eee8_denom = (TH1D*) InFile->Get( "h_BeforeBtag_bHad_Jet0_SubjetMaxB_Pt"   );
 	eee8_numer  ->Sumw2();
 	eee8_denom  ->Sumw2();
-	cout<<"debug5"<<endl;eee8_numer  ->Rebin(50);
-	cout<<"debug6"<<endl;eee8_denom  ->Rebin(50);
+	//cout<<"debug5"<<endl;
+	eee8_numer  ->Rebin(50);
+	//cout<<"debug6"<<endl;
+	eee8_denom  ->Rebin(50);
 	eee8_numer->Divide(eee8_numer, eee8_denom,1,1,"B");
 
 	// eee1_numer ->SetName("btag_rate_inclusive_Jet0_SubjetMaxB_Pt");
@@ -723,7 +784,7 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	// eee7_numer ->Draw("same");
 	// eee8_numer ->Draw("same");
 
-	cout<<"Draw hadron rate vs subjetpT"<<endl;
+	//cout<<"Draw hadron rate vs subjetpT"<<endl;
 
 	eee8_numer->SetTitle(";Jet 0 max b-disc subjet pT [GeV];b-tag rate");
 	eee8_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -736,8 +797,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_SubjetMaxB_Pt_hadron.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_SubjetMaxB_Pt_hadron.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
 
 	// eee4_numer->SetTitle(";Jet 0 p_{T} [GeV];b-tag rate");
 	// eee4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -758,8 +819,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	// leg->SetLineColor(0);
 	// leg->Draw("same");
 
-	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Pt_parton.pdf", bWP.c_str(), saveLabel.c_str()));
-	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Pt_parton.png", bWP.c_str(), saveLabel.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_SubjetMaxB_Pt_parton.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_SubjetMaxB_Pt_parton.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -809,24 +870,30 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	TH1D * fff6_denom = (TH1D*) InFile->Get( "h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta"   );
 	fff6_numer  ->Sumw2();
 	fff6_denom  ->Sumw2();
-	cout<<"debug7"<<endl;fff6_numer  ->Rebin(5);
-	cout<<"debug8"<<endl;fff6_denom  ->Rebin(5);
+	//cout<<"debug7"<<endl;
+	fff6_numer  ->Rebin(5);
+	//cout<<"debug8"<<endl;
+	fff6_denom  ->Rebin(5);
 	fff6_numer->Divide(fff6_numer, fff6_denom,1,1,"B");
 
 	TH1D * fff7_numer = (TH1D*) InFile->Get(  "h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta"   );
 	TH1D * fff7_denom = (TH1D*) InFile->Get( "h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta"   );
 	fff7_numer  ->Sumw2();
 	fff7_denom  ->Sumw2();
-	cout<<"debug9"<<endl;fff7_numer  ->Rebin(5);
-	cout<<"debug10"<<endl;fff7_denom  ->Rebin(5);
+	//cout<<"debug9"<<endl;
+	fff7_numer  ->Rebin(5);
+	//cout<<"debug10"<<endl;
+	fff7_denom  ->Rebin(5);
 	fff7_numer->Divide(fff7_numer, fff7_denom,1,1,"B");
 
 	TH1D * fff8_numer = (TH1D*) InFile->Get(  "h_AfterBtag_bHad_Jet0_SubjetMaxB_Eta"   );
 	TH1D * fff8_denom = (TH1D*) InFile->Get( "h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta"   );
 	fff8_numer  ->Sumw2();
 	fff8_denom  ->Sumw2();
-	cout<<"debug11"<<endl;fff8_numer  ->Rebin(5);
-	cout<<"debug12"<<endl;fff8_denom  ->Rebin(5);
+	//cout<<"debug11"<<endl;
+	fff8_numer  ->Rebin(5);
+	//cout<<"debug12"<<endl;
+	fff8_denom  ->Rebin(5);
 	fff8_numer->Divide(fff8_numer, fff8_denom,1,1,"B");
 
 	// fff1_numer ->SetName("btag_rate_inclusive_Jet0_SubjetMaxB_Eta");
@@ -874,7 +941,7 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	// fff7_numer ->Draw("same");
 	// fff8_numer ->Draw("same");
 
-	cout<<"Draw hadron rate vs subjet eta"<<endl;
+	//cout<<"Draw hadron rate vs subjet eta"<<endl;
 
 	fff8_numer->SetTitle(";Jet 0 max b-disc subjet #eta;b-tag rate");
 	fff8_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -887,8 +954,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Eta_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Eta_hadron.png", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_SubjetMaxB_Eta_hadron.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_SubjetMaxB_Eta_hadron.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
 
 	// fff4_numer->SetTitle(";Jet 0 p_{T} [GeV];b-tag rate");
 	// fff4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -909,8 +976,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	// leg->SetLineColor(0);
 	// leg->Draw("same");
 
-	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Eta_parton.pdf", bWP.c_str(), saveLabel.c_str()));
-	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_SubjetMaxB_Eta_parton.png", bWP.c_str(), saveLabel.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_SubjetMaxB_Eta_parton.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_SubjetMaxB_Eta_parton.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
 
@@ -960,24 +1027,30 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	TH1D * ggg6_denom = (TH1D*) InFile->Get( "h_BeforeBtag_lightHad_Jet0_DeltaRsubjets"   );
 	ggg6_numer  ->Sumw2();
 	ggg6_denom  ->Sumw2();
-	cout<<"debug13"<<endl;ggg6_numer  ->Rebin(5);
-	cout<<"debug14"<<endl;ggg6_denom  ->Rebin(5);
+	//cout<<"debug13"<<endl;
+	ggg6_numer  ->Rebin(5);
+	//cout<<"debug14"<<endl
+	;ggg6_denom  ->Rebin(5);
 	ggg6_numer->Divide(ggg6_numer, ggg6_denom,1,1,"B");
 
 	TH1D * ggg7_numer = (TH1D*) InFile->Get(  "h_AfterBtag_cHad_Jet0_DeltaRsubjets"   );
 	TH1D * ggg7_denom = (TH1D*) InFile->Get( "h_BeforeBtag_cHad_Jet0_DeltaRsubjets"   );
 	ggg7_numer  ->Sumw2();
 	ggg7_denom  ->Sumw2();
-	cout<<"debug15"<<endl;ggg7_numer  ->Rebin(5);
-	cout<<"debug16"<<endl;ggg7_denom  ->Rebin(5);
+	//cout<<"debug15"<<endl;
+	ggg7_numer  ->Rebin(5);
+	//cout<<"debug16"<<endl;
+	ggg7_denom  ->Rebin(5);
 	ggg7_numer->Divide(ggg7_numer, ggg7_denom,1,1,"B");
 
 	TH1D * ggg8_numer = (TH1D*) InFile->Get(  "h_AfterBtag_bHad_Jet0_DeltaRsubjets"   );
 	TH1D * ggg8_denom = (TH1D*) InFile->Get( "h_BeforeBtag_bHad_Jet0_DeltaRsubjets"   );
 	ggg8_numer  ->Sumw2();
 	ggg8_denom  ->Sumw2();
-	cout<<"debug17"<<endl;ggg8_numer  ->Rebin(5);
-	cout<<"debug18"<<endl;ggg8_denom  ->Rebin(5);
+	//cout<<"debug17"<<endl;
+	ggg8_numer  ->Rebin(5);
+	//cout<<"debug18"<<endl;
+	ggg8_denom  ->Rebin(5);
 	ggg8_numer->Divide(ggg8_numer, ggg8_denom,1,1,"B");
 
 	// ggg1_numer ->SetName("btag_rate_inclusive_Jet0_DeltaRsubjets");
@@ -1025,7 +1098,7 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	// ggg7_numer ->Draw("same");
 	// ggg8_numer ->Draw("same");
 
-	cout<<"Draw hadron rate vs DeltaR"<<endl;
+	//cout<<"Draw hadron rate vs DeltaR"<<endl;
 
 
 	ggg8_numer->SetTitle(";Jet 0 #DeltaR(subjet 0, subjet 1);b-tag rate");
@@ -1039,8 +1112,8 @@ void plotAndCalcEff(string saveLabel, string bWP){
 
 	legA->Draw("same");
 
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_DeltaRsubjets_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
-	c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_DeltaRsubjets_hadron.png", bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_DeltaRsubjets_hadron.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_DeltaRsubjets_hadron.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
 
 	// ggg4_numer->SetTitle(";Jet 0 p_{T} [GeV];b-tag rate");
 	// ggg4_numer->GetYaxis()->SetRangeUser(0,1.0);
@@ -1061,32 +1134,32 @@ void plotAndCalcEff(string saveLabel, string bWP){
 	// leg->SetLineColor(0);
 	// leg->Draw("same");
 
-	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_DeltaRsubjets_parton.pdf", bWP.c_str(), saveLabel.c_str()));
-	// c1->SaveAs(Form("plots/btagEff_b%s_%s_rate_Jet0_DeltaRsubjets_parton.png", bWP.c_str(), saveLabel.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_DeltaRsubjets_parton.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	// c1->SaveAs(Form("plots/btagEff_%s_b%s_%s_rate_Jet0_DeltaRsubjets_parton.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
  
  	//----------------------------------------------------------------------------------------------------------------------------
  	//----------------------------------------------------------------------------------------------------------------------------
-	cout<<"Draw hadron rate 2D"<<endl;
-
+	//cout<<"Draw hadron rate 2D"<<endl;
 
 	TH2D * hhh6_numer = (TH2D*) InFile2D->Get(  "h_AfterBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugA"<<endl;
 	TH2D * hhh6_denom = (TH2D*) InFile2D->Get( "h_BeforeBtag_lightHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugB"<<endl;
 	hhh6_numer  ->Sumw2(); cout<<"debugA"<<endl;
 	hhh6_denom  ->Sumw2(); cout<<"debugB"<<endl;
-	// hhh6_numer  ->RebinY(50);                            cout<<"debugC"<<endl;      
-	// hhh6_denom  ->RebinY(50);                            cout<<"debugC"<<endl;      
-	// hhh6_numer  ->RebinX(10);                            cout<<"debugC"<<endl;      
-	// hhh6_denom  ->RebinX(10);                            cout<<"debugC"<<endl;      
+	hhh6_numer  ->RebinY(2);                            cout<<"debugC"<<endl;      
+	hhh6_denom  ->RebinY(2);                            cout<<"debugC"<<endl;      
+	hhh6_numer  ->RebinX(4);                            cout<<"debugC"<<endl;      
+	hhh6_denom  ->RebinX(4);                            cout<<"debugC"<<endl;      
 	hhh6_numer->Divide(hhh6_numer, hhh6_denom,1,1,"B");  cout<<"debugC"<<endl;                                
+
 
 	TH2D * hhh7_numer = (TH2D*) InFile2D->Get(  "h_AfterBtag_cHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugD"<<endl;
 	TH2D * hhh7_denom = (TH2D*) InFile2D->Get( "h_BeforeBtag_cHad_Jet0_SubjetMaxB_Eta_Pt"   ); cout<<"debugE"<<endl;
 	hhh7_numer  ->Sumw2();
 	hhh7_denom  ->Sumw2();
-	// hhh7_numer  ->RebinY(50);                            cout<<"debugF"<<endl;   
-	// hhh7_denom  ->RebinY(50);                            cout<<"debugF"<<endl;   
-	// hhh7_numer  ->RebinX(10);                            cout<<"debugF"<<endl;   
-	// hhh7_denom  ->RebinX(10);                            cout<<"debugF"<<endl;   
+	hhh7_numer  ->RebinY(2);                            cout<<"debugF"<<endl;   
+	hhh7_denom  ->RebinY(2);                            cout<<"debugF"<<endl;   
+	hhh7_numer  ->RebinX(4);                            cout<<"debugF"<<endl;   
+	hhh7_denom  ->RebinX(4);                            cout<<"debugF"<<endl;   
 	hhh7_numer->Divide(hhh7_numer, hhh7_denom,1,1,"B");  cout<<"debugF"<<endl;                             
 cout<<"debug"<<endl;
 
@@ -1094,10 +1167,10 @@ cout<<"debug"<<endl;
 	TH2D * hhh8_denom = (TH2D*) InFile2D->Get( "h_BeforeBtag_bHad_Jet0_SubjetMaxB_Eta_Pt"   );
 	hhh8_numer  ->Sumw2();
 	hhh8_denom  ->Sumw2();
-	// hhh8_numer  ->RebinY(50);
-	// hhh8_denom  ->RebinY(50);
-	// hhh8_numer  ->RebinX(10);
-	// hhh8_denom  ->RebinX(10);
+	hhh8_numer  ->RebinY(2);
+	hhh8_denom  ->RebinY(2);
+	hhh8_numer  ->RebinX(4);
+	hhh8_denom  ->RebinX(4);
 	hhh8_numer->Divide(hhh8_numer, hhh8_denom,1,1,"B");
 
 	// hhh1_numer ->SetName("btag_rate_inclusive_Jet0_SubjetMaxB_Eta");
@@ -1144,19 +1217,19 @@ cout<<"debug"<<endl;
 					hhh8_numer->SetStats(0);
 
 	hhh6_numer->SetTitle("b-tag rate - light hadron;max b-disc subjet #eta;max b-disc subjet pT [GeV]");
-	hhh6_numer->Draw("COLZTEXT");
-	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
-	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
+	hhh6_numer->Draw("COLZ");
+	c2->SaveAs(Form("plots/btagEff_%s_b%s_%s_h2_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c2->SaveAs(Form("plots/btagEff_%s_b%s_%s_h2_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
 
 	hhh7_numer->SetTitle("b-tag rate - c hadron;max b-disc subjet #eta;max b-disc subjet pT [GeV]");
-	hhh7_numer->Draw("COLZTEXT");
-	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_cHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
-	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_cHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
+	hhh7_numer->Draw("COLZ");
+	c2->SaveAs(Form("plots/btagEff_%s_b%s_%s_h2_rate_cHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c2->SaveAs(Form("plots/btagEff_%s_b%s_%s_h2_rate_cHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
 
 	hhh8_numer->SetTitle("b-tag rate - b hadron;max b-disc subjet #eta;max b-disc subjet pT [GeV]");
-	hhh8_numer->Draw("COLZTEXT");
-	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_bHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", bWP.c_str(), saveLabel.c_str()));
-	c2->SaveAs(Form("plots/btagEff_b%s_%s_h2_rate_bHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", bWP.c_str(), saveLabel.c_str()));
+	hhh8_numer->Draw("COLZ");
+	c2->SaveAs(Form("plots/btagEff_%s_b%s_%s_h2_rate_bHad_Jet0_SubjetMaxB_Eta_Pt_hadron.pdf", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
+	c2->SaveAs(Form("plots/btagEff_%s_b%s_%s_h2_rate_bHad_Jet0_SubjetMaxB_Eta_Pt_hadron.png", sample.c_str(), bWP.c_str(), saveLabel.c_str()));
 
 
  	//----------------------------------------------------------------------------------------------------------------------------

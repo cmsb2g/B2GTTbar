@@ -1,6 +1,6 @@
 // root[] .L LoopTreeAllHad_TreeV5_Ana.cpp++
-// root[] run("BCD","20161206addHist",true,true,false,false)  // dataset, savelabel, runKinematic, runAntiTag, runbkgdEst, ttreweight
-// void run(string dataset_shortname = "none", string savelabel = "", bool runKinematic=false, bool runAntiTag=true, bool runbkgdEst=true, bool ttreweight=false   )
+// root[] run("BCD","20161206addHist",true,true,false,false,false,"M")  // dataset, savelabel, runKinematic, runAntiTag, runbkgdEst, ttreweight, runSystematics, btag WP
+//void run(string dataset_shortname = "none", string savelabel = "", bool runKinematic=false, bool runAntiTag=true, bool runbkgdEst=true, bool ttreweight=false, bool runSystematics=false, string s_btagWP="M"   )
 // SEE https://twiki.cern.ch/twiki/bin/view/CMS/B2GZprimeAllHadronicBoostedRunIIDetails2016 for full instructions
 
 #include <vector>
@@ -114,7 +114,8 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
 
   if (savelabel=="") {cout<<"please provide a unique label for the savefile. example: run(\"BCD\",\"20161201addHist\")"<<endl; return;}
 
-  string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/";
+  string folder_input_tree = "root://cmseos.fnal.gov//store/user/camclean/B2G2016/V5/";
+  //string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/";
   string folder_mistag     = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_26_patch2/src/Analysis/B2GTTbar/test/";
   string folder_modMass    = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_26_patch2/src/Analysis/B2GTTbar/test/runs/";
   
@@ -124,64 +125,64 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
 
   //--- JetHT B-H
   if ( foundB   !=std::string::npos ){
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0000.root");                           file_type.push_back(0);                      
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0001.root");                           file_type.push_back(0);                      
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0002.root");                           file_type.push_back(0);                      
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0003.root");                           file_type.push_back(0);                      
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0004.root");                           file_type.push_back(0);                      
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0005.root");                           file_type.push_back(0);                      
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0006.root");                           file_type.push_back(0);                      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0000");                           file_type.push_back(0);                      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0001");                           file_type.push_back(0);                      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0002");                           file_type.push_back(0);                      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0003");                           file_type.push_back(0);                      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0004");                           file_type.push_back(0);                      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0005");                           file_type.push_back(0);                      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016B_03Feb2017_ver2_v2_JSONfinal_try2_0006");                           file_type.push_back(0);                      
   }
   if ( foundC   !=std::string::npos ){
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0000.root");                                     file_type.push_back(0); 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0001.root");                                     file_type.push_back(0); 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0002.root");                                     file_type.push_back(0); 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0003.root");                                     file_type.push_back(0); 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0000");                                     file_type.push_back(0); 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0001");                                     file_type.push_back(0); 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0002");                                     file_type.push_back(0); 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016C_03Feb2017_v1_JSONfinal_0003");                                     file_type.push_back(0); 
   }
   if ( foundD   !=std::string::npos ){
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0000.root");                                     file_type.push_back(0);                 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0001.root");                                     file_type.push_back(0);                 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0002.root");                                     file_type.push_back(0);                 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0003.root");                                     file_type.push_back(0);                 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0004.root");                                     file_type.push_back(0);                 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0005.root");                                     file_type.push_back(0);                 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0000");                                     file_type.push_back(0);                 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0001");                                     file_type.push_back(0);                 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0002");                                     file_type.push_back(0);                 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0003");                                     file_type.push_back(0);                 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0004");                                     file_type.push_back(0);                 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016D_03Feb2017_v1_JSONfinal_0005");                                     file_type.push_back(0);                 
   }
   if ( foundE   !=std::string::npos ){
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2oldalsogoodmissing1_0000.root");             file_type.push_back(0); 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2oldalsogoodmissing1_0001.root");             file_type.push_back(0); 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2oldalsogoodmissing1_0002.root");             file_type.push_back(0); 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2oldalsogoodmissing1_0003.root");             file_type.push_back(0); 
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2oldalsogoodmissing1_0004.root");             file_type.push_back(0); 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2_0000");             file_type.push_back(0); 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2_0001");             file_type.push_back(0); 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2_0002");             file_type.push_back(0); 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2_0003");             file_type.push_back(0); 
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016E_03Feb2017_v1_JSONfinal_try2_0004");             file_type.push_back(0); 
   }                
   if ( foundF   !=std::string::npos ){
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0000.root");                                file_type.push_back(0);      
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0001.root");                                file_type.push_back(0);      
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0002.root");                                file_type.push_back(0);      
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0003.root");                                file_type.push_back(0);      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0000");                                file_type.push_back(0);      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0001");                                file_type.push_back(0);      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0002");                                file_type.push_back(0);      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016F_03Feb2017_v1_JSONfinal_try2_0003");                                file_type.push_back(0);      
   }                             
   if ( foundG   !=std::string::npos ){
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0000.root");                                     file_type.push_back(0);            
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0001.root");                                     file_type.push_back(0);            
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0002.root");                                     file_type.push_back(0);            
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0003.root");                                     file_type.push_back(0);            
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0004.root");                                     file_type.push_back(0);            
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0005.root");                                     file_type.push_back(0);            
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0006.root");                                     file_type.push_back(0);            
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0007.root");                                     file_type.push_back(0);            
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0008.root");                                     file_type.push_back(0);            
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0000");                                     file_type.push_back(0);            
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0001");                                     file_type.push_back(0);            
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0002");                                     file_type.push_back(0);            
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0003");                                     file_type.push_back(0);            
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0004");                                     file_type.push_back(0);            
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0005");                                     file_type.push_back(0);            
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0006");                                     file_type.push_back(0);            
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0007");                                     file_type.push_back(0);            
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016G_03Feb2017_v1_JSONfinal_0008");                                     file_type.push_back(0);            
   }
   if ( foundH   !=std::string::npos ){            
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0000.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0001.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0002.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0003.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0004.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0005.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0006.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0007.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0008.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0009.root");                                file_type.push_back(0);               
-    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver3_v1_JSONfinal_try2_all.root");                            file_type.push_back(0);      
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0000");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0001");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0002");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0003");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0004");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0005");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0006");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0007");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0008");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver2_v1_JSONfinal_0009");                                file_type.push_back(0);               
+    file_name_tree.push_back("crab_b2gtreeV5_JetHT_Run2016H_03Feb2017_ver3_v1_JSONfinal_try2_all");                            file_type.push_back(0);      
   }                           
   //--- QCD HT binned
   if ( foundQ1   !=std::string::npos ){      
@@ -192,22 +193,22 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     // mistag_file_QCD_2btag    = mistag_file_QCD1_2btag;        
     // modmass_file_QCD         = modmass_file_QCD1;        
   
-    // file_name_tree.push_back("b2gtreeV4_QCD_HT100to200_RunIISummer16MiniAODv2_try2.root");                                       file_type.push_back(1);                               
-    // file_name_tree.push_back("b2gtreeV4_QCD_HT200to300_RunIISummer16MiniAODv2_try2.root");                                       file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_HT300to500_RunIISummer16MiniAODv2_all.root");                                           file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_HT500to700_RunIISummer16MiniAODv2.root");                                               file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_HT700to1000_RunIISummer16MiniAODv2.root");                                              file_type.push_back(1);                           
-    file_name_tree.push_back("b2gtreeV5_QCD_HT1000to1500_RunIISummer16MiniAODv2_try2_all.root");                                    file_type.push_back(1);                            
-    file_name_tree.push_back("b2gtreeV5_QCD_HT1500to2000_RunIISummer16MiniAODv2_all.root");                                         file_type.push_back(1);                                 
-    file_name_tree.push_back("b2gtreeV5_QCD_HT2000toInf_RunIISummer16MiniAODv2.root");                                              file_type.push_back(1);                           
+    // file_name_tree.push_back("b2gtreeV4_QCD_HT100to200_RunIISummer16MiniAODv2_try2");                                       file_type.push_back(1);                               
+    // file_name_tree.push_back("b2gtreeV4_QCD_HT200to300_RunIISummer16MiniAODv2_try2");                                       file_type.push_back(1);                               
+    file_name_tree.push_back("b2gtreeV5_QCD_HT300to500_RunIISummer16MiniAODv2_all");                                           file_type.push_back(1);                               
+    file_name_tree.push_back("b2gtreeV5_QCD_HT500to700_RunIISummer16MiniAODv2");                                               file_type.push_back(1);                               
+    file_name_tree.push_back("b2gtreeV5_QCD_HT700to1000_RunIISummer16MiniAODv2");                                              file_type.push_back(1);                           
+    file_name_tree.push_back("b2gtreeV5_QCD_HT1000to1500_RunIISummer16MiniAODv2_try2_all");                                    file_type.push_back(1);                            
+    file_name_tree.push_back("b2gtreeV5_QCD_HT1500to2000_RunIISummer16MiniAODv2_all");                                         file_type.push_back(1);                                 
+    file_name_tree.push_back("b2gtreeV5_QCD_HT2000toInf_RunIISummer16MiniAODv2");                                              file_type.push_back(1);                           
   
-    file_name_tree.push_back("b2gtreeV5_QCD_HT200to300_RunIISummer16MiniAODv2_ext1.root");                                          file_type.push_back(1);                           
-    file_name_tree.push_back("b2gtreeV5_QCD_HT300to500_RunIISummer16MiniAODv2_ext1.root");                                          file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_HT500to700_RunIISummer16MiniAODv2_ext1_try2.root");                                     file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_HT700to1000_RunIISummer16MiniAODv2_ext1_missing230.root");                              file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_HT1000to1500_RunIISummer16MiniAODv2_ext1.root");                                        file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_HT1500to2000_RunIISummer16MiniAODv2_ext1.root");                                        file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_HT2000toInf_RunIISummer16MiniAODv2_ext1.root");                                         file_type.push_back(1);  
+    file_name_tree.push_back("b2gtreeV5_QCD_HT200to300_RunIISummer16MiniAODv2_ext1");                                          file_type.push_back(1);                           
+    file_name_tree.push_back("b2gtreeV5_QCD_HT300to500_RunIISummer16MiniAODv2_ext1");                                          file_type.push_back(1);  
+    file_name_tree.push_back("b2gtreeV5_QCD_HT500to700_RunIISummer16MiniAODv2_ext1_try2");                                     file_type.push_back(1);  
+    file_name_tree.push_back("b2gtreeV5_QCD_HT700to1000_RunIISummer16MiniAODv2_ext1_missing230");                              file_type.push_back(1);  
+    file_name_tree.push_back("b2gtreeV5_QCD_HT1000to1500_RunIISummer16MiniAODv2_ext1");                                        file_type.push_back(1);  
+    file_name_tree.push_back("b2gtreeV5_QCD_HT1500to2000_RunIISummer16MiniAODv2_ext1");                                        file_type.push_back(1);  
+    file_name_tree.push_back("b2gtreeV5_QCD_HT2000toInf_RunIISummer16MiniAODv2_ext1");                                         file_type.push_back(1);  
 
   }
     //--- QCD2 pt binned
@@ -219,104 +220,114 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     // mistag_file_QCD_2btag    = mistag_file_QCD2_2btag;        
     // modmass_file_QCD         = modmass_file_QCD2;        
 
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_120to170_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_170to300_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_try2.root");                                 file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_600to800_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2_try3.root");                                file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_1800to2400_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_2400to3200_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_3200toInf_pythia8_RunIISummer16MiniAODv2_try3.root");                                file_type.push_back(1);
+    //file_name_tree.push_back("QCD_Pt_120to170_pythia8_RunIISummer16MiniAODv2");                                      file_type.push_back(1);                               
+    //file_name_tree.push_back("QCD_Pt_170to300_pythia8_RunIISummer16MiniAODv2");                                      file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2");                                      file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_try2");                                 file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_600to800_pythia8_RunIISummer16MiniAODv2");                                      file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2");                                file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2");                                    file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2");                                    file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_1800to2400_pythia8_RunIISummer16MiniAODv2");                                    file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_2400to3200_pythia8_RunIISummer16MiniAODv2");                                    file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_3200toInf_pythia8_RunIISummer16MiniAODv2_try3");                                file_type.push_back(1);
 
     // extension and backup QCD Pt binned samples
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2_ext1.root");                                 file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_backup.root");                               file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_600to800_pythia8_RunIISummer16MiniAODv2_ext1.root");                                 file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2_ext1.root");                                file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2_ext1.root");                               file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2_ext1.root");                               file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_1800to2400_pythia8_RunIISummer16MiniAODv2_ext1.root");                               file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_2400to3200_pythia8_RunIISummer16MiniAODv2_ext1.root");                               file_type.push_back(1);  
+    file_name_tree.push_back("QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2_ext1");                                 file_type.push_back(1);  
+    file_name_tree.push_back("QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_backup");                               file_type.push_back(1);                               
+    file_name_tree.push_back("QCD_Pt_600to800_pythia8_RunIISummer16MiniAODv2_ext1");                                 file_type.push_back(1);  
+    file_name_tree.push_back("QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2_ext1");                                file_type.push_back(1);  
+    file_name_tree.push_back("QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2_ext1");                               file_type.push_back(1);  
+    file_name_tree.push_back("QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2_ext1");                               file_type.push_back(1);  
+    file_name_tree.push_back("QCD_Pt_1800to2400_pythia8_RunIISummer16MiniAODv2_ext1");                               file_type.push_back(1);  
+    file_name_tree.push_back("QCD_Pt_2400to3200_pythia8_RunIISummer16MiniAODv2_ext1");                               file_type.push_back(1);  
   }
 
 
   //--- TTbar 
   if ( foundTT   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_orig_and_backup_missing2.root");   file_type.push_back(2);     
+    file_name_tree.push_back("TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_orig_and_backup_missing2");   file_type.push_back(2);     
   }
 
   //--- TTbar 
   if ( foundT2   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV5_TT_TuneEE5C_13TeV_powheg_herwigpp_RunIISummer16MiniAODv2_all.root");   file_type.push_back(2);     
-    file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_hdampDOWN.root");   file_type.push_back(2);     
-    file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_hdampUP.root");   file_type.push_back(2);     
+    file_name_tree.push_back("TT_TuneEE5C_13TeV_powheg_herwigpp_RunIISummer16MiniAODv2_all");   file_type.push_back(2);     
+    file_name_tree.push_back("TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_hdampDOWN");   file_type.push_back(2);     
+    file_name_tree.push_back("TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_hdampUP");   file_type.push_back(2);     
   }
 
   //--- ZPrime 
   if ( foundZP   !=std::string::npos ){  
     
     // narrow                
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);  
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2.root ");                 file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3500_W-35_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-45_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-50_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    /*file_name_tree.push_back("ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2");                  file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2");                file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all");                  file_type.push_back(3);
+    file_name_tree.push_back("ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2");                  file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2");                  file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-3500_W-35_RunIISummer16MiniAODv2");                  file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2");                  file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-4500_W-45_RunIISummer16MiniAODv2");                  file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-5000_W-50_RunIISummer16MiniAODv2");                  file_type.push_back(3);*/
+    //file_name_tree.push_back("ZprimeToTT_M-6000_W-60_RunIISummer16MiniAODv2");                  file_type.push_back(3);
+    file_name_tree.push_back("ZprimeToTT_M-6500_W-65_RunIISummer16MiniAODv2");                  file_type.push_back(3);
+    file_name_tree.push_back("ZprimeToTT_M-7000_W-70_RunIISummer16MiniAODv2");                  file_type.push_back(3);
     
     // wide
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-125_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-150_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-200_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2500_W-250_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-300_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3500_W-350_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-450_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);
+    /*file_name_tree.push_back("ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-1250_W-125_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-1500_W-150_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-2000_W-200_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-2500_W-250_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-3000_W-300_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-3500_W-350_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-4500_W-450_RunIISummer16MiniAODv2");                 file_type.push_back(3); 
+    file_name_tree.push_back("ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2");                 file_type.push_back(3);*/
+    file_name_tree.push_back("ZprimeToTT_M-6000_W-600_RunIISummer16MiniAODv2");                  file_type.push_back(3);
+    file_name_tree.push_back("ZprimeToTT_M-6500_W-650_RunIISummer16MiniAODv2");                  file_type.push_back(3);
+    file_name_tree.push_back("ZprimeToTT_M-7000_W-700_RunIISummer16MiniAODv2");                  file_type.push_back(3);
 
     // very wide
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-600_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-1200_RunIISummer16MiniAODv2.root");                file_type.push_back(3); 
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-1500_RunIISummer16MiniAODv2.root");                file_type.push_back(3); 
+    /*file_name_tree.push_back("ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2");                 file_type.push_back(3); 
+    file_name_tree.push_back("ZprimeToTT_M-2000_W-600_RunIISummer16MiniAODv2");                 file_type.push_back(3);
+    file_name_tree.push_back("ZprimeToTT_M-3000_W-900_RunIISummer16MiniAODv2");                 file_type.push_back(3); 
+    file_name_tree.push_back("ZprimeToTT_M-4000_W-1200_RunIISummer16MiniAODv2");                file_type.push_back(3); 
+    file_name_tree.push_back("ZprimeToTT_M-5000_W-1500_RunIISummer16MiniAODv2");                file_type.push_back(3);*/
+    // file_name_tree.push_back("ZprimeToTT_M-6000_W-1800_RunIISummer16MiniAODv2");                  file_type.push_back(3);
+    // file_name_tree.push_back("ZprimeToTT_M-6500_W-1950_RunIISummer16MiniAODv2");                  file_type.push_back(3);
+    // file_name_tree.push_back("ZprimeToTT_M-7000_W-2100_RunIISummer16MiniAODv2");                  file_type.push_back(3);
 
     // amcatnlo
-    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-1000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
-    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-2000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
-    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-3000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
-    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-4000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);    
+    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-1000_amcatnlo_RunIISummer16MiniAODv2_reHLT");  file_type.push_back(3);   
+    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-2000_amcatnlo_RunIISummer16MiniAODv2_reHLT");  file_type.push_back(3);   
+    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-3000_amcatnlo_RunIISummer16MiniAODv2_reHLT");  file_type.push_back(3);   
+    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-4000_amcatnlo_RunIISummer16MiniAODv2_reHLT");  file_type.push_back(3);    */
   }  
-
+    
    //--- RS 
   if ( foundRS   !=std::string::npos ){                    
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-1000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-1250_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-1500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-2000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-2500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-3000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-3500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-4000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);     
-    //file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-4500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);
-    //file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-5000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);     
+    file_name_tree.push_back("RSGluonToTT_M-1000_RunIISummer16MiniAODv2");                   file_type.push_back(3);   
+    file_name_tree.push_back("RSGluonToTT_M-1250_RunIISummer16MiniAODv2");                   file_type.push_back(3);   
+    file_name_tree.push_back("RSGluonToTT_M-1500_RunIISummer16MiniAODv2");                   file_type.push_back(3);   
+    file_name_tree.push_back("RSGluonToTT_M-2000_RunIISummer16MiniAODv2");                   file_type.push_back(3);   
+    file_name_tree.push_back("RSGluonToTT_M-2500_RunIISummer16MiniAODv2");                   file_type.push_back(3);   
+    file_name_tree.push_back("RSGluonToTT_M-3000_RunIISummer16MiniAODv2");                   file_type.push_back(3);   
+    file_name_tree.push_back("RSGluonToTT_M-3500_RunIISummer16MiniAODv2");                   file_type.push_back(3);   
+    file_name_tree.push_back("RSGluonToTT_M-4000_RunIISummer16MiniAODv2");                   file_type.push_back(3);     
+    file_name_tree.push_back("RSGluonToTT_M-4500_RunIISummer16MiniAODv2");                   file_type.push_back(3);
+    file_name_tree.push_back("RSGluonToTT_M-5000_RunIISummer16MiniAODv2");                   file_type.push_back(3);     
   }  
 
   //--- test 
   if ( foundTest   !=std::string::npos ){                  
-    // file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all.root");              file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-4500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);     
-    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-5000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
+    // file_name_tree.push_back("ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all");              file_type.push_back(3);   
+    file_name_tree.push_back("RSGluonToTT_M-4500_RunIISummer16MiniAODv2");                   file_type.push_back(3);     
+    file_name_tree.push_back("RSGluonToTT_M-5000_RunIISummer16MiniAODv2");                   file_type.push_back(3);   
     }
   if ( foundZP4   !=std::string::npos ){                  
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
+    file_name_tree.push_back("ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2");                 file_type.push_back(3);   
   }
 
   // ---- run options ---- 
@@ -334,9 +345,9 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
   // ---- Tau32 working point ----
   vector<double> taucut;
   vector<string> wplabel;
-  taucut.push_back(0.80);    wplabel.push_back("A");       
+  //taucut.push_back(0.80);    wplabel.push_back("A");       
   taucut.push_back(0.65);    wplabel.push_back("B");    
-  taucut.push_back(0.54);    wplabel.push_back("C");       
+  //taucut.push_back(0.54);    wplabel.push_back("C");       
   // taucut.push_back(0.46);    wplabel.push_back("D");       
 
   // ---- Jet pT cut ----
@@ -382,8 +393,10 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     vsyst.push_back(-5) ;  //systType = "q2_dn"   ;
     vsyst.push_back( 6) ;  //systType = "PU_up"   ;
     vsyst.push_back(-6) ;  //systType = "PU_dn"   ;
+    vsyst.push_back( 7) ;  //systType = "bMistag_up"   ;
+    vsyst.push_back(-7) ;  //systType = "bMistag_dn"   ;
   }
-  // vsyst.push_back( 7) ;  //systType = "JMRsmear_wjet_nom"   ;
+  // vsyst.push_back( 8) ;  //systType = "JMRsmear_wjet_nom"   ;
 
   // This is now an input to the function
   // vector<string> btagWP;
@@ -418,21 +431,21 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
 
         if (ptcut[ipt]==400 && htcut[iht] == 950){
 // 20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw
-          mistag_file_data_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw"+"_data_subtract_ttbar.root"; 
-          mistag_file_data_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw"+"_data_subtract_ttbar.root"; 
-          mistag_file_data_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WPB_alt40_alt260_bM_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
+          mistag_file_data_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbar.root"; 
 
           mistag_file_data_0btag_ttw   = folder_mistag + "MistagRate_"+"0btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
           mistag_file_data_1btag_ttw   = folder_mistag + "MistagRate_"+"1btagtail_"+"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
           mistag_file_data_2btag_ttw   = folder_mistag + "MistagRate_"+"2btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_data_subtract_ttbarw.root"; 
 
-          mistag_file_QCD1_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
-          mistag_file_QCD1_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
-          mistag_file_QCD1_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+          mistag_file_QCD1_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+          mistag_file_QCD1_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
+          mistag_file_QCD1_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDHT.root"              ; 
 
-          mistag_file_QCD2_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
-          mistag_file_QCD2_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ;
-          mistag_file_QCD2_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"20160524full_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
+          mistag_file_QCD2_0btag       = folder_mistag + "MistagRate_"+"0btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
+          mistag_file_QCD2_1btag       = folder_mistag + "MistagRate_"+"1btagtail_"+"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ;
+          mistag_file_QCD2_2btag       = folder_mistag + "MistagRate_"+"2btag_"    +"ApplybTagSFbySubjetPuppiEffTest20170625_ht950_pt400_WP"+wplabel[itau]+"_alt40_alt260_b"+s_btagWP+"_PUw"+"_QCDPt.root"              ; 
         }
         else if (ptcut[ipt]==500 && htcut[iht] == 1000){
 
@@ -473,12 +486,12 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
           }
         }
         else  {
-          if (ttreweight){
+          if (ttreweight || (foundTT !=std::string::npos) ){//FIX
             mistag_file_0btag = mistag_file_data_0btag_ttw;
             mistag_file_1btag = mistag_file_data_1btag_ttw;
             mistag_file_2btag = mistag_file_data_2btag_ttw;
           }
-          if (!ttreweight){
+          else {
             mistag_file_0btag = mistag_file_data_0btag;
             mistag_file_1btag = mistag_file_data_1btag;
             mistag_file_2btag = mistag_file_data_2btag;
@@ -542,7 +555,7 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
                 do_PUreweighting     , // bool do PUreweighting    ?
                 do_HTreweighting     , // bool do HTreweighting    ?
                 ttreweight           , // bool do ttbarReweighting ?
-                vsyst[isyst]         , // int Systematics: 0 = nom , 1/-1 = jec_up/dn , 2/-2 = jer_up/dn , 3/-3 = btag_up/btag , 4/-4 = pdf_up/dn , 5/-5 = q2_up/dn , 6/-6 = PU_up/dn 
+                vsyst[isyst]         , // int Systematics: 0 = nom , 1/-1 = jec_up/dn , 2/-2 = jer_up/dn , 3/-3 = btag_up/btag , 4/-4 = pdf_up/dn , 5/-5 = q2_up/dn , 6/-6 = PU_up/dn, 7/-7 = bmistag_up/bmistag
                 -1                   , // int Nevents (set to -1 for all events)
                 false                  // bool verbose
             );
@@ -639,13 +652,25 @@ void looptree(
   // input b-tag efficiency histograms
   cout<<"get mistag histograms"<<endl;
   TFile * Fbtag ;
-  if (btagWP=="M") Fbtag            = new TFile("BtagPuppiEff_bM_bTagPuppiEffMeasurement20170623.root"); 
-  if (btagWP=="L") Fbtag            = new TFile("BtagPuppiEff_bL_bTagPuppiEffMeasurement20170623.root"); 
+  //if (btagWP=="M") Fbtag            = new TFile("BtagPuppiEff_bM_bTagPuppiEffMeasurement20170623.root"); 
+  //if (btagWP=="L") Fbtag            = new TFile("BtagPuppiEff_bL_bTagPuppiEffMeasurement20170623.root"); 
+  //Fbtag = new TFile(Form("BtagEff_%s_b%s_bTagPuppiEffMeasurement20170623.root",input_file.c_str(),btagWP.c_str()));
+  if (!isData){
+    if (isTTMC) Fbtag = new TFile("BtagEff_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_bM_bTagPuppiEffMeasurement20171004.root"); 
+    else if (isQCDMC) Fbtag = new TFile("BtagEff_QCD_Ptscaled_bM_bTagPuppiEffMeasurement20170623.root");
+    else Fbtag = new TFile(Form("BtagEff_%s_b%s_bTagPuppiEffMeasurement20170623.root",input_file.c_str(),btagWP.c_str()));
+  }
+  //Fbtag = new TFile("BtagEff_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_bM_bTagPuppiEffMeasurement20171004.root");
 
-  TH2D * btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt  = (TH2D *) Fbtag->Get("btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt");
-  TH2D * btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt      = (TH2D *) Fbtag->Get("btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt");
-  TH2D * btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt      = (TH2D *) Fbtag->Get("btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt");
+  TH2D * btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt;
+  TH2D * btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt; 
+  TH2D * btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt;
 
+  if (!isData){
+    btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt  = (TH2D *) Fbtag->Get("btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt");
+    btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt      = (TH2D *) Fbtag->Get("btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt");
+    btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt      = (TH2D *) Fbtag->Get("btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt");
+  }
 
 
   //Syst: nom = 0, jerDn = -2; jecDn = -1; jecNom = 0; jecUp = +1; jerUp = +2; bTagUp = +3; bTagDn = -3; pdfUp = +4; pdfDn = -4; q2Up = +5; q2Dn = -5; puUp = +6; puDN = -6
@@ -663,12 +688,15 @@ void looptree(
   else if (Syst == -5) systType = "q2_dn"   ;
   else if (Syst ==  6) systType = "PU_up"   ;
   else if (Syst == -6) systType = "PU_dn"   ;
-  else if (Syst ==  7) systType = "JMRsmear_wjet_nom"   ;
+  else if (Syst ==  7) systType = "bMistag_up"   ;
+  else if (Syst == -7) systType = "bMistag_dn"   ;
+  //else if (Syst ==  8) systType = "JMRsmear_wjet_nom"   ;
 
-  // Get intput file
-  string file_name =  input_folder+input_file;
+  // Get input file
+  string file_name =  Form("%sb2gtreeV5_%s.root",input_folder.c_str(),input_file.c_str());
+  if (isData) file_name =  Form("%s%s.root",input_folder.c_str(),input_file.c_str());
   cout<<"opening "<<file_name<<endl;
-  TFile *F1   = new TFile(file_name.c_str() );
+  TFile *F1   = TFile::Open(file_name.c_str() );
 
   // Get Tree entries
   Int_t   PassMETFilters                            ;
@@ -2305,23 +2333,23 @@ void looptree(
 
 
     // mistag rate for alt PUPPI tag definition
-    /*h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
+    h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     = (TH1D *) Fmistag1->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
-    h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
+    //h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
 
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     = (TH1D *) Fmistag1->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
-    h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
+    //h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
 
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag     = (TH1D *) Fmistag1->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
-    h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
+    //h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
 
     // mistag rate for alt2 PUPPI tag definition
-    h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
+    /*h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     = (TH1D *) Fmistag0->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_0btag");
     h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     = (TH1D *) Fmistag1->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_1btag");
     h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     = (TH1D *) Fmistag2->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag");
     h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     = (TH1D *) Fmistag0->Get("h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclusive");
@@ -5185,6 +5213,7 @@ void looptree(
   PredictedDistribution * predDist_Puppi_SR_dRapHi_0btag_DijetMassMod                ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_0btag_HT                          ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_0btag_DeltaRap                    ;
+  PredictedDistribution * predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2             ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_0btag_JetP                        ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_0btag_JetPt                       ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_0btag_JetY                        ;
@@ -5196,6 +5225,7 @@ void looptree(
   PredictedDistribution * predDist_Puppi_SR_dRapHi_1btag_DijetMassMod                ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_1btag_HT                          ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_1btag_DeltaRap                    ;
+  PredictedDistribution * predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2                    ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_1btag_JetP                        ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_1btag_JetPt                       ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_1btag_JetY                        ;
@@ -5207,6 +5237,7 @@ void looptree(
   PredictedDistribution * predDist_Puppi_SR_dRapHi_2btag_DijetMassMod                ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_2btag_HT                          ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_2btag_DeltaRap                    ;
+  PredictedDistribution * predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2                    ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_2btag_JetP                        ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_2btag_JetPt                       ;
   PredictedDistribution * predDist_Puppi_SR_dRapHi_2btag_JetY                        ;
@@ -5233,6 +5264,7 @@ void looptree(
   PredictedDistribution * predDist_Puppi_SR_dRapLo_0btag_DijetMassMod                ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_0btag_HT                          ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_0btag_DeltaRap                    ;
+  PredictedDistribution * predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2                    ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_0btag_JetP                        ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_0btag_JetPt                       ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_0btag_JetY                        ;
@@ -5244,6 +5276,7 @@ void looptree(
   PredictedDistribution * predDist_Puppi_SR_dRapLo_1btag_DijetMassMod                ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_1btag_HT                          ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_1btag_DeltaRap                    ;
+  PredictedDistribution * predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2                    ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_1btag_JetP                        ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_1btag_JetPt                       ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_1btag_JetY                        ;
@@ -5255,6 +5288,7 @@ void looptree(
   PredictedDistribution * predDist_Puppi_SR_dRapLo_2btag_DijetMassMod                ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_2btag_HT                          ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_2btag_DeltaRap                    ;
+  PredictedDistribution * predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2                    ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_2btag_JetP                        ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_2btag_JetPt                       ;
   PredictedDistribution * predDist_Puppi_SR_dRapLo_2btag_JetY                        ;
@@ -5318,6 +5352,7 @@ void looptree(
   PredictedDistribution * predDist_Puppi_SR_dRapIn_inclu_JetSDmass                   ;
   PredictedDistribution * predDist_Puppi_SR_dRapIn_inclu_JetTau32                    ;
   PredictedDistribution * predDist_Puppi_SR_dRapIn_inclu_maxbdisc                    ;
+
  
 
 
@@ -6047,6 +6082,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SR_dRapHi_0btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SR_dRapHi_0btag_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SR_dRapHi_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SR_dRapHi_0btag_DeltaRap"     , "",  500, 0,     5);
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2"     , "",  500, 0,     5);
     predDist_Puppi_SR_dRapHi_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SR_dRapHi_0btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SR_dRapHi_0btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SR_dRapHi_0btag_JetY"         , "",  300,-3,     3);
@@ -6058,6 +6094,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_SR_dRapHi_1btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_1btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_SR_dRapHi_1btag_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SR_dRapHi_1btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_SR_dRapHi_1btag_DeltaRap"     , "",  500, 0,     5);
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2"     , "",  500, 0,     5);
     predDist_Puppi_SR_dRapHi_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_SR_dRapHi_1btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_SR_dRapHi_1btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_1btag     ,  "predDist_Puppi_SR_dRapHi_1btag_JetY"         , "",  300,-3,     3);
@@ -6069,6 +6106,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SR_dRapHi_2btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_2btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SR_dRapHi_2btag_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SR_dRapHi_2btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SR_dRapHi_2btag_DeltaRap"     , "",  500, 0,     5);
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2"     , "",  500, 0,     5);
     predDist_Puppi_SR_dRapHi_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SR_dRapHi_2btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SR_dRapHi_2btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapHi_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SR_dRapHi_2btag_JetY"         , "",  300,-3,     3);
@@ -6093,6 +6131,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_SR_dRapLo_0btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_0btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_SR_dRapLo_0btag_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SR_dRapLo_0btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_SR_dRapLo_0btag_DeltaRap"     , "",  500, 0,     5);
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2"     , "",  500, 0,     5);
     predDist_Puppi_SR_dRapLo_0btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_SR_dRapLo_0btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_0btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_SR_dRapLo_0btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_0btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_0btag     ,  "predDist_Puppi_SR_dRapLo_0btag_JetY"         , "",  300,-3,     3);
@@ -6104,6 +6143,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_SR_dRapLo_1btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_1btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_SR_dRapLo_1btag_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SR_dRapLo_1btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_SR_dRapLo_1btag_DeltaRap"     , "",  500, 0,     5);
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2"     , "",  500, 0,     5);
     predDist_Puppi_SR_dRapLo_1btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_SR_dRapLo_1btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_1btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_SR_dRapLo_1btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_1btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_1btag     ,  "predDist_Puppi_SR_dRapLo_1btag_JetY"         , "",  300,-3,     3);
@@ -6115,6 +6155,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SR_dRapLo_2btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_2btag_HT             = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SR_dRapLo_2btag_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SR_dRapLo_2btag_DeltaRap       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SR_dRapLo_2btag_DeltaRap"     , "",  500, 0,     5);
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2       = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2"     , "",  500, 0,     5);
     predDist_Puppi_SR_dRapLo_2btag_JetP           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SR_dRapLo_2btag_JetP"         , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_2btag_JetPt          = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SR_dRapLo_2btag_JetPt"        , "",  900, 0,  9000);
     predDist_Puppi_SR_dRapLo_2btag_JetY           = new PredictedDistribution( h_mistag_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SR_dRapLo_2btag_JetY"         , "",  300,-3,     3);
@@ -6193,7 +6234,7 @@ void looptree(
     // --- Alternative tag definition for closure test - Puppi
     // -- dRapHi
     // - 0btag
-    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
+    predDist_Puppi_SB1_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapHi_0btag_HT             = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB1_dRapHi_0btag_DeltaRap"     , "",  500, 0,     5);
@@ -6226,7 +6267,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_2btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SB1_dRapHi_2btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SB1_dRapHi_2btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_2btag     ,  "predDist_Puppi_SB1_dRapHi_2btag_maxbdisc"     , "",  200, 0,     1);
     // - btag inclusive
-    predDist_Puppi_SB1_dRapHi_inclu_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_DijetMass"    , "",  900, 0,  9000);
+    /*predDist_Puppi_SB1_dRapHi_inclu_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_DijetMass"    , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapHi_inclu_HT             = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SB1_dRapHi_inclu_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_DeltaRap"     , "",  500, 0,     5);
@@ -6235,7 +6276,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_inclu_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_JetY"         , "",  300,-3,     3);
     predDist_Puppi_SB1_dRapHi_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SB1_dRapHi_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_JetTau32"     , "",  200, 0,     1);
-    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);
+    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_inclu     ,  "predDist_Puppi_SB1_dRapHi_inclu_maxbdisc"     , "",  200, 0,     1);*/
 
     // -- dRapLo
     // - 0btag
@@ -6272,7 +6313,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_2btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SB1_dRapLo_2btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SB1_dRapLo_2btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_2btag     ,  "predDist_Puppi_SB1_dRapLo_2btag_maxbdisc"     , "",  200, 0,     1);
     // - btag inclusive
-    predDist_Puppi_SB1_dRapLo_inclu_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_DijetMass"    , "",  900, 0,  9000);
+    /*predDist_Puppi_SB1_dRapLo_inclu_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_DijetMass"    , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapLo_inclu_HT             = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SB1_dRapLo_inclu_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_DeltaRap"     , "",  500, 0,     5);
@@ -6281,7 +6322,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_inclu_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_JetY"         , "",  300,-3,     3);
     predDist_Puppi_SB1_dRapLo_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SB1_dRapLo_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_JetTau32"     , "",  200, 0,     1);
-    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);
+    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapLo_inclu     ,  "predDist_Puppi_SB1_dRapLo_inclu_maxbdisc"     , "",  200, 0,     1);*/
 
     // -- dRapIn
     // - 0btag
@@ -6318,7 +6359,7 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_2btag_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SB1_dRapIn_2btag_JetTau32"     , "",  200, 0,     1);
     predDist_Puppi_SB1_dRapIn_2btag_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_2btag     ,  "predDist_Puppi_SB1_dRapIn_2btag_maxbdisc"     , "",  200, 0,     1);
     // - btag inclusive
-    predDist_Puppi_SB1_dRapIn_inclu_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_DijetMass"    , "",  900, 0,  9000);
+    /*predDist_Puppi_SB1_dRapIn_inclu_DijetMass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_DijetMass"    , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod   = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SB1_dRapIn_inclu_HT             = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SB1_dRapIn_inclu_DeltaRap       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_DeltaRap"     , "",  500, 0,     5);
@@ -6327,14 +6368,14 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_inclu_JetY           = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_JetY"         , "",  300,-3,     3);
     predDist_Puppi_SB1_dRapIn_inclu_JetSDmass      = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_JetSDmass"    , "",  700, 0,   700);
     predDist_Puppi_SB1_dRapIn_inclu_JetTau32       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_JetTau32"     , "",  200, 0,     1);
-    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);
+    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc       = new PredictedDistribution( h_mistag_alt_AntiTagPuppi_TagMassSDTau32_jetP_dRapIn_inclu     ,  "predDist_Puppi_SB1_dRapIn_inclu_maxbdisc"     , "",  200, 0,     1);*/
    
 
 
     // --- Alternative tag definition 2 for closur test - Puppi
     // -- dRapHi
     // - 0btag
-    predDist_Puppi_SB2_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB2_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
+    /*predDist_Puppi_SB2_dRapHi_0btag_DijetMass      = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB2_dRapHi_0btag_DijetMass"    , "",  900, 0,  9000);
     predDist_Puppi_SB2_dRapHi_0btag_DijetMassMod   = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB2_dRapHi_0btag_DijetMassMod" , "",  900, 0,  9000);
     predDist_Puppi_SB2_dRapHi_0btag_HT             = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB2_dRapHi_0btag_HT"           , "", 1000, 0, 10000);
     predDist_Puppi_SB2_dRapHi_0btag_DeltaRap       = new PredictedDistribution( h_mistag_alt2_AntiTagPuppi_TagMassSDTau32_jetP_dRapHi_0btag     ,  "predDist_Puppi_SB2_dRapHi_0btag_DeltaRap"     , "",  500, 0,     5);
@@ -6658,7 +6699,7 @@ void looptree(
         ht = HT_PtSmearDn;
       }
       // experiment with additional JMR smearing
-      else if (Syst == 7 ){
+      else if (Syst == 8 ){
 
 
         jet0_ptsmear                = Jet0PtSmearFactor  ;
@@ -7121,7 +7162,7 @@ void looptree(
 
     */
 
-    // New method: Upgrade/downgralde both subjets in each jet based on the b-tag SF
+    // New method: Upgrade/downgrade both subjets in each jet based on the b-tag SF
    
     double j0_s0_btag_sf = 1.0;
     double j0_s1_btag_sf = 1.0;
@@ -7135,6 +7176,7 @@ void looptree(
 
     if (!isData){
 
+      if (verbose_) cout<< "b-tagging!!" <<endl;
 
       // -- Get b-tag efficiency (used by applySF if the btag SF is greater than 1)
       int j0_s0_binx   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetXaxis()->FindBin( Jet0PuppiSDsubjet0eta );
@@ -7145,6 +7187,8 @@ void looptree(
       int j1_s0_biny   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetYaxis()->FindBin( Jet1PuppiSDsubjet0pt  );
       int j1_s1_binx   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetXaxis()->FindBin( Jet1PuppiSDsubjet1eta );
       int j1_s1_biny   = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt->GetYaxis()->FindBin( Jet1PuppiSDsubjet1pt  );
+
+      if (verbose_) cout << "b-tag rates acquired!" <<endl;
 
       if      (fabs(Jet0PuppiSDsubjet0flavHadron)==5)   j0_s0_btag_effic = btag_rate_bHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j0_s0_binx, j0_s0_biny );
       else if (fabs(Jet0PuppiSDsubjet0flavHadron)==4 )  j0_s0_btag_effic = btag_rate_cHad_Jet0_SubjetMaxB_Eta_Pt         ->GetBinContent( j0_s0_binx, j0_s0_biny );
@@ -7163,44 +7207,82 @@ void looptree(
       else                                              j1_s1_btag_effic = btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt     ->GetBinContent( j1_s1_binx, j1_s1_biny );                                    
 
 
-      // -- get b-tag SF
+      // -- get b-tag SF for b,c or b-mistag SF for udsg                                                                                         
+      //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco: "SFlight is mostly uncorrelated to SFc and SFb, while SFc is conservatively taken as correlated to SFb. When varying SFb by +/- 1 sigma, one has to vary SFc by +/- 1 sigma simultaneously. SFlight can be independently varied by +/-1 sigma and the resulting uncertainty added in quadrature to that of SFc and SFb. The SF +/- 1 sigma are obtained by retrieving the "up" and "down" values as usual." 
+
       //   NOTE: When using the eval_auto_bounds function from the BTagCalibration tool, the function now automatically double the uncertainty when above the measured subjet pt range
       //   (SFlight: pt 20-1000 GeV, SFb(c) pt 30-450 GeV)
 
-      // b-tag SF scale up
+      // b-tag SF scale up (b,c)
       if (Syst ==  3) {
         if      ( fabs(Jet0PuppiSDsubjet0flavHadron)==5 )  j0_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
         else if ( fabs(Jet0PuppiSDsubjet0flavHadron)==4 )  j0_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
-        else                                               j0_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else                                               j0_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
         
         if      ( fabs(Jet0PuppiSDsubjet1flavHadron)==5 )  j0_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
         else if ( fabs(Jet0PuppiSDsubjet1flavHadron)==4 )  j0_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
-        else                                               j0_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );    
+        else                                               j0_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );    
      
         if      ( fabs(Jet1PuppiSDsubjet0flavHadron)==5 )  j1_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
         else if ( fabs(Jet1PuppiSDsubjet0flavHadron)==4 )  j1_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
-        else                                               j1_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else                                               j1_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
         
         if      ( fabs(Jet1PuppiSDsubjet1flavHadron)==5 )  j1_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
         else if ( fabs(Jet1PuppiSDsubjet1flavHadron)==4 )  j1_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
-        else                                               j1_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );  
+        else                                               j1_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );  
       }
-      // b-tag SF scale down
+      // b-tag SF scale down (b,c)
       else if (Syst ==  -3) {
         if      ( fabs(Jet0PuppiSDsubjet0flavHadron)==5 )  j0_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
         else if ( fabs(Jet0PuppiSDsubjet0flavHadron)==4 )  j0_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
-        else                                               j0_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else                                               j0_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
         
         if      ( fabs(Jet0PuppiSDsubjet1flavHadron)==5 )  j0_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
         else if ( fabs(Jet0PuppiSDsubjet1flavHadron)==4 )  j0_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
-        else                                               j0_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );    
+        else                                               j0_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );    
       
         if      ( fabs(Jet1PuppiSDsubjet0flavHadron)==5 )  j1_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
         else if ( fabs(Jet1PuppiSDsubjet0flavHadron)==4 )  j1_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
-        else                                               j1_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else                                               j1_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
         
         if      ( fabs(Jet1PuppiSDsubjet1flavHadron)==5 )  j1_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
         else if ( fabs(Jet1PuppiSDsubjet1flavHadron)==4 )  j1_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else                                               j1_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );    
+      }
+      // b-mistag SF scale up (udsg)
+      else if (Syst ==  7) {
+        if      ( fabs(Jet0PuppiSDsubjet0flavHadron)==5 )  j0_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else if ( fabs(Jet0PuppiSDsubjet0flavHadron)==4 )  j0_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else                                               j0_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet0PuppiSDsubjet1flavHadron)==5 )  j0_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else if ( fabs(Jet0PuppiSDsubjet1flavHadron)==4 )  j0_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else                                               j0_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );    
+     
+        if      ( fabs(Jet1PuppiSDsubjet0flavHadron)==5 )  j1_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else if ( fabs(Jet1PuppiSDsubjet0flavHadron)==4 )  j1_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else                                               j1_s0_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet1PuppiSDsubjet1flavHadron)==5 )  j1_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else if ( fabs(Jet1PuppiSDsubjet1flavHadron)==4 )  j1_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else                                               j1_s1_btag_sf = reader.eval_auto_bounds( "up" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );  
+      }
+      // b-mistag SF scale down (udsg)
+      else if (Syst ==  -7) {
+        if      ( fabs(Jet0PuppiSDsubjet0flavHadron)==5 )  j0_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else if ( fabs(Jet0PuppiSDsubjet0flavHadron)==4 )  j0_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        else                                               j0_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet0eta , Jet0PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet0PuppiSDsubjet1flavHadron)==5 )  j0_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else if ( fabs(Jet0PuppiSDsubjet1flavHadron)==4 )  j0_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );
+        else                                               j0_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet0PuppiSDsubjet1eta , Jet0PuppiSDsubjet1pt  );    
+      
+        if      ( fabs(Jet1PuppiSDsubjet0flavHadron)==5 )  j1_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else if ( fabs(Jet1PuppiSDsubjet0flavHadron)==4 )  j1_s0_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        else                                               j1_s0_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet0eta , Jet1PuppiSDsubjet0pt  );
+        
+        if      ( fabs(Jet1PuppiSDsubjet1flavHadron)==5 )  j1_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_B    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
+        else if ( fabs(Jet1PuppiSDsubjet1flavHadron)==4 )  j1_s1_btag_sf = reader.eval_auto_bounds( "central" , BTagEntry::FLAV_C    , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );
         else                                               j1_s1_btag_sf = reader.eval_auto_bounds( "down" , BTagEntry::FLAV_UDSG , Jet1PuppiSDsubjet1eta , Jet1PuppiSDsubjet1pt  );    
       }
       // nominal b-tag SF
@@ -10898,6 +10980,7 @@ void looptree(
               predDist_Puppi_SR_dRapHi_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_t, evWeight );
               predDist_Puppi_SR_dRapHi_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapHi_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
@@ -10912,6 +10995,7 @@ void looptree(
               predDist_Puppi_SR_dRapHi_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_t, evWeight );
               predDist_Puppi_SR_dRapHi_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapHi_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
@@ -10926,6 +11010,7 @@ void looptree(
               predDist_Puppi_SR_dRapHi_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_t, evWeight );
               predDist_Puppi_SR_dRapHi_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapHi_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
@@ -10955,6 +11040,7 @@ void looptree(
               predDist_Puppi_SR_dRapLo_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_t, evWeight );
               predDist_Puppi_SR_dRapLo_0btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapLo_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_0btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_0btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_0btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
@@ -10969,6 +11055,7 @@ void looptree(
               predDist_Puppi_SR_dRapLo_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_t, evWeight );
               predDist_Puppi_SR_dRapLo_1btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapLo_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_1btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_1btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_1btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
@@ -10983,6 +11070,7 @@ void looptree(
               predDist_Puppi_SR_dRapLo_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_t, evWeight );
               predDist_Puppi_SR_dRapLo_2btag_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapLo_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_2btag_JetP            ->Accumulate(             jet1P4.P(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_2btag_JetPt           ->Accumulate(          jet1P4.Perp(), jet1P4.P(), j1_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_2btag_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_t, evWeight ); 
@@ -11342,10 +11430,10 @@ void looptree(
 	  } // end if alternative tag (sideband) jet 0 tagged */
 
         // ---- Closure test - alternative tag definition 1 (Puppi)
-        /*if (j0_puptag_alt_t){
+        if (j0_puptag_alt_t){
           // --- dRapIn
           // -- btag inclusive
-          predDist_Puppi_SB1_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_alt_t, evWeight );
+          /*predDist_Puppi_SB1_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_alt_t, evWeight );
           predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_alt_jet1, jet1P4.P(), j1_puptag_alt_t, evWeight );
           predDist_Puppi_SB1_dRapIn_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_alt_t, evWeight );        
           predDist_Puppi_SB1_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_alt_t, evWeight ); 
@@ -11354,7 +11442,7 @@ void looptree(
           predDist_Puppi_SB1_dRapIn_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_alt_t, evWeight ); 
           predDist_Puppi_SB1_dRapIn_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_alt_t, evWeight );
           predDist_Puppi_SB1_dRapIn_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_alt_t, evWeight );
-          predDist_Puppi_SB1_dRapIn_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_alt_t, evWeight );
+          predDist_Puppi_SB1_dRapIn_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_alt_t, evWeight );*/
         
           // -- 0btag       
           if (!j0_puptag_b && !j1_puptag_b){
@@ -11402,7 +11490,7 @@ void looptree(
           if (DijetDeltaRap >= 1){
 
             // -- btag inclusive
-            predDist_Puppi_SB1_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_alt_t, evWeight );
+            /*predDist_Puppi_SB1_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapHi_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_alt_t, evWeight );        
             predDist_Puppi_SB1_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_alt_t, evWeight ); 
@@ -11411,7 +11499,7 @@ void looptree(
             predDist_Puppi_SB1_dRapHi_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_alt_t, evWeight ); 
             predDist_Puppi_SB1_dRapHi_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapHi_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_alt_t, evWeight );
-            predDist_Puppi_SB1_dRapHi_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_alt_t, evWeight );
+            predDist_Puppi_SB1_dRapHi_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_alt_t, evWeight );*/
             
             // -- 0btag       
             if (!j0_puptag_b && !j1_puptag_b){
@@ -11459,7 +11547,7 @@ void looptree(
           if (DijetDeltaRap < 1){
             
             // -- btag inclusive
-            predDist_Puppi_SB1_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_alt_t, evWeight );
+            /*predDist_Puppi_SB1_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet1, jet1P4.P(), j1_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapLo_inclu_HT              ->Accumulate(                     ht, jet1P4.P(), j1_puptag_alt_t, evWeight );        
             predDist_Puppi_SB1_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet1P4.P(), j1_puptag_alt_t, evWeight ); 
@@ -11468,7 +11556,7 @@ void looptree(
             predDist_Puppi_SB1_dRapLo_inclu_JetY            ->Accumulate(      jet1P4.Rapidity(), jet1P4.P(), j1_puptag_alt_t, evWeight ); 
             predDist_Puppi_SB1_dRapLo_inclu_JetSDmass       ->Accumulate(           puppi1sdmass, jet1P4.P(), j1_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapLo_inclu_JetTau32        ->Accumulate(         Jet1PuppiTau32, jet1P4.P(), j1_puptag_alt_t, evWeight );
-            predDist_Puppi_SB1_dRapLo_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_alt_t, evWeight );
+            predDist_Puppi_SB1_dRapLo_inclu_maxbdisc        ->Accumulate(    Jet1PuppiSDmaxbdisc, jet1P4.P(), j1_puptag_alt_t, evWeight );*/
             
             // -- 0btag       
             if (!j0_puptag_b && !j1_puptag_b){
@@ -11515,7 +11603,7 @@ void looptree(
         } // end if puppi jet 0 tagged
 
         // ---- Closure test - alternative tag definition 1 (Puppi)
-        if (j0_puptag_alt2_t){
+        /*if (j0_puptag_alt2_t){
           // --- dRapIn
           // -- btag inclusive
           predDist_Puppi_SB2_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet1P4.P(), j1_puptag_alt2_t, evWeight );
@@ -11946,6 +12034,7 @@ void looptree(
               predDist_Puppi_SR_dRapHi_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet0, jet0P4.P(), j0_puptag_t, evWeight );
               predDist_Puppi_SR_dRapHi_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapHi_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
@@ -11960,6 +12049,7 @@ void looptree(
               predDist_Puppi_SR_dRapHi_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet0, jet0P4.P(), j0_puptag_t, evWeight );
               predDist_Puppi_SR_dRapHi_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapHi_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
@@ -11974,6 +12064,7 @@ void looptree(
               predDist_Puppi_SR_dRapHi_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet0, jet0P4.P(), j0_puptag_t, evWeight );
               predDist_Puppi_SR_dRapHi_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapHi_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapHi_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
@@ -12003,6 +12094,7 @@ void looptree(
               predDist_Puppi_SR_dRapLo_0btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet0, jet0P4.P(), j0_puptag_t, evWeight );
               predDist_Puppi_SR_dRapLo_0btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapLo_0btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_0btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_0btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_0btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
@@ -12017,6 +12109,7 @@ void looptree(
               predDist_Puppi_SR_dRapLo_1btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet0, jet0P4.P(), j0_puptag_t, evWeight );
               predDist_Puppi_SR_dRapLo_1btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapLo_1btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_1btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_1btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_1btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
@@ -12031,6 +12124,7 @@ void looptree(
               predDist_Puppi_SR_dRapLo_2btag_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_jet0, jet0P4.P(), j0_puptag_t, evWeight );
               predDist_Puppi_SR_dRapLo_2btag_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_t, evWeight );        
               predDist_Puppi_SR_dRapLo_2btag_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
+              if (dijetMass>2000) predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_2btag_JetP            ->Accumulate(             jet0P4.P(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_2btag_JetPt           ->Accumulate(          jet0P4.Perp(), jet0P4.P(), j0_puptag_t, evWeight ); 
               predDist_Puppi_SR_dRapLo_2btag_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_t, evWeight ); 
@@ -12390,11 +12484,11 @@ void looptree(
 	  } // end if alternative tag (sideband) jet 1 tagged*/
 
         // ---- Closure test - alternative tag definition 1 (Puppi)
-        /*if (j1_puptag_alt_t){
+        if (j1_puptag_alt_t){
 
           // --- dRapIn
           // -- btag inclusive
-          predDist_Puppi_SB1_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_alt_t, evWeight );
+          /*predDist_Puppi_SB1_dRapIn_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_alt_t, evWeight );
           predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_alt_jet0, jet0P4.P(), j0_puptag_alt_t, evWeight );
           predDist_Puppi_SB1_dRapIn_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_alt_t, evWeight );        
           predDist_Puppi_SB1_dRapIn_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_alt_t, evWeight ); 
@@ -12403,7 +12497,7 @@ void looptree(
           predDist_Puppi_SB1_dRapIn_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_alt_t, evWeight ); 
           predDist_Puppi_SB1_dRapIn_inclu_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_puptag_alt_t, evWeight );
           predDist_Puppi_SB1_dRapIn_inclu_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_puptag_alt_t, evWeight );
-          predDist_Puppi_SB1_dRapIn_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_puptag_alt_t, evWeight );
+          predDist_Puppi_SB1_dRapIn_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_puptag_alt_t, evWeight );*/
           
           // -- 0btag       
           if (!j0_puptag_b && !j1_puptag_b){
@@ -12451,7 +12545,7 @@ void looptree(
           if (DijetDeltaRap >= 1){
 
             // -- btag inclusive
-            predDist_Puppi_SB1_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_alt_t, evWeight );
+            /*predDist_Puppi_SB1_dRapHi_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_alt_jet0, jet0P4.P(), j0_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapHi_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_alt_t, evWeight );        
             predDist_Puppi_SB1_dRapHi_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_alt_t, evWeight ); 
@@ -12460,7 +12554,7 @@ void looptree(
             predDist_Puppi_SB1_dRapHi_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_alt_t, evWeight ); 
             predDist_Puppi_SB1_dRapHi_inclu_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapHi_inclu_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_puptag_alt_t, evWeight );
-            predDist_Puppi_SB1_dRapHi_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_puptag_alt_t, evWeight );
+            predDist_Puppi_SB1_dRapHi_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_puptag_alt_t, evWeight );*/
             
             // -- 0btag       
             if (!j0_puptag_b && !j1_puptag_b){
@@ -12508,7 +12602,7 @@ void looptree(
           if (DijetDeltaRap < 1){
             
             // -- btag inclusive
-            predDist_Puppi_SB1_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_alt_t, evWeight );
+            /*predDist_Puppi_SB1_dRapLo_inclu_DijetMass       ->Accumulate(              dijetMass, jet0P4.P(), j0_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod    ->Accumulate( dijetMass_modMass_puppi_alt_jet0, jet0P4.P(), j0_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapLo_inclu_HT              ->Accumulate(                     ht, jet0P4.P(), j0_puptag_alt_t, evWeight );        
             predDist_Puppi_SB1_dRapLo_inclu_DeltaRap        ->Accumulate(          DijetDeltaRap, jet0P4.P(), j0_puptag_alt_t, evWeight ); 
@@ -12517,7 +12611,7 @@ void looptree(
             predDist_Puppi_SB1_dRapLo_inclu_JetY            ->Accumulate(      jet0P4.Rapidity(), jet0P4.P(), j0_puptag_alt_t, evWeight ); 
             predDist_Puppi_SB1_dRapLo_inclu_JetSDmass       ->Accumulate(             jet0sdmass, jet0P4.P(), j0_puptag_alt_t, evWeight );
             predDist_Puppi_SB1_dRapLo_inclu_JetTau32        ->Accumulate(              Jet0Tau32, jet0P4.P(), j0_puptag_alt_t, evWeight );
-            predDist_Puppi_SB1_dRapLo_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_puptag_alt_t, evWeight );
+            predDist_Puppi_SB1_dRapLo_inclu_maxbdisc        ->Accumulate(         Jet0SDmaxbdisc, jet0P4.P(), j0_puptag_alt_t, evWeight );*/
             
             // -- 0btag       
             if (!j0_puptag_b && !j1_puptag_b){
@@ -12564,7 +12658,7 @@ void looptree(
         } // end if alternative puptag (sideband) jet 1 puptagged
 
         // ---- Closure test - alternative tag definition 2 (Puppi)
-        if (j1_puptag_alt2_t){
+        /*if (j1_puptag_alt2_t){
 
           // --- dRapIn
           // -- btag inclusive
@@ -12820,10 +12914,10 @@ void looptree(
 
   // "Jetpt"+minAK8Pt_string+"HT"+minHT_string+
   // "Jetpt"+minAK8Pt_string+"HT"+minHT_string+
-  string out_filename_antitag    = "runs/histsAntiTag_"+savelabel+"_ht"+minHT_string+"_pt"+minAK8Pt_string+"_WP"+toptagWPlabel+"_alt"+alttagSDwindowLo_string+"_alt"+alt2tagSDwindowHi_string+"_b"+btagWP+PUstring+TTwstring+"_"+systType+"_"+input_file;
-  string out_filename_kinematic  = "runs/histsKinemat_"+savelabel+"_ht"+minHT_string+"_pt"+minAK8Pt_string+"_WP"+toptagWPlabel+"_alt"+alttagSDwindowLo_string+"_alt"+alt2tagSDwindowHi_string+"_b"+btagWP+PUstring+TTwstring+"_"+systType+"_"+input_file;
-  string out_filename_bkgdEst    = "runs/histsBkgdEst_"+savelabel+"_ht"+minHT_string+"_pt"+minAK8Pt_string+"_WP"+toptagWPlabel+"_alt"+alttagSDwindowLo_string+"_alt"+alt2tagSDwindowHi_string+"_b"+btagWP+PUstring+TTwstring+"_"+systType+"_"+input_file;
-  string out_filename_modMass    = "runs/histsModMass_"+savelabel+"_ht"+minHT_string+"_pt"+minAK8Pt_string+"_WP"+toptagWPlabel+"_alt"+alttagSDwindowLo_string+"_alt"+alt2tagSDwindowHi_string+"_b"+btagWP+PUstring+TTwstring+"_"+systType+"_"+input_file;
+  string out_filename_antitag    = "runs/histsAntiTag_"+savelabel+"_ht"+minHT_string+"_pt"+minAK8Pt_string+"_WP"+toptagWPlabel+"_alt"+alttagSDwindowLo_string+"_alt"+alt2tagSDwindowHi_string+"_b"+btagWP+PUstring+TTwstring+"_"+systType+"_"+input_file+".root";
+  string out_filename_kinematic  = "runs/histsKinemat_"+savelabel+"_ht"+minHT_string+"_pt"+minAK8Pt_string+"_WP"+toptagWPlabel+"_alt"+alttagSDwindowLo_string+"_alt"+alt2tagSDwindowHi_string+"_b"+btagWP+PUstring+TTwstring+"_"+systType+"_"+input_file+".root";
+  string out_filename_bkgdEst    = "runs/histsBkgdEst_"+savelabel+"_ht"+minHT_string+"_pt"+minAK8Pt_string+"_WP"+toptagWPlabel+"_alt"+alttagSDwindowLo_string+"_alt"+alt2tagSDwindowHi_string+"_b"+btagWP+PUstring+TTwstring+"_"+systType+"_"+input_file+".root";
+  string out_filename_modMass    = "runs/histsModMass_"+savelabel+"_ht"+minHT_string+"_pt"+minAK8Pt_string+"_WP"+toptagWPlabel+"_alt"+alttagSDwindowLo_string+"_alt"+alt2tagSDwindowHi_string+"_b"+btagWP+PUstring+TTwstring+"_"+systType+"_"+input_file+".root";
 
 
   // anti-tag and probe
@@ -16483,7 +16577,7 @@ void looptree(
     // h_mttMass_tagMassSDTau32_dRapLo_0btag            ->Write();
 
     cout<<"Creating OutFile: "<<out_filename_bkgdEst<<endl;
-    TFile * Out = new TFile(out_filename_bkgdEst.c_str(), "NEW");// "RECREATE");
+    TFile * Out = new TFile(out_filename_bkgdEst.c_str(), "RECREATE"); ///"NEW");
     Out->cd();
 
 
@@ -16616,6 +16710,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_JetP           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_JetPt          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_JetY           ->GetPredictedHist()   ->Write();
@@ -16626,6 +16721,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_HT             ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_JetP           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_JetPt          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_JetY           ->GetPredictedHist()   ->Write();
@@ -16636,6 +16732,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_HT             ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetP           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetPt          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetY           ->GetPredictedHist()   ->Write();
@@ -16656,6 +16753,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_JetP           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_JetPt          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_JetY           ->GetPredictedHist()   ->Write();
@@ -16666,6 +16764,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_HT             ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_JetP           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_JetPt          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_JetY           ->GetPredictedHist()   ->Write();
@@ -16676,6 +16775,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_HT             ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_DeltaRap       ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetP           ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetPt          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetY           ->GetPredictedHist()   ->Write();
@@ -16974,7 +17074,7 @@ void looptree(
     predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Write();
     predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Write();*/
 
-    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Write();
@@ -17004,7 +17104,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_2btag_JetSDmass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_2btag_JetTau32      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_2btag_maxbdisc      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetPredictedHist()   ->Write();
+    /*predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod  ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_HT            ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_DeltaRap      ->GetPredictedHist()   ->Write();
@@ -17013,7 +17113,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_inclu_JetY          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_JetSDmass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_JetTau32      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetPredictedHist()   ->Write();*/
     predDist_Puppi_SB1_dRapLo_0btag_DijetMass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_0btag_DijetMassMod  ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_0btag_HT            ->GetPredictedHist()   ->Write();
@@ -17044,7 +17144,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_2btag_JetSDmass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_2btag_JetTau32      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_2btag_maxbdisc      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetPredictedHist()   ->Write();
+    /*predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod  ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_HT            ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_DeltaRap      ->GetPredictedHist()   ->Write();
@@ -17053,7 +17153,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_inclu_JetY          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_JetSDmass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_JetTau32      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetPredictedHist()   ->Write();*/
     predDist_Puppi_SB1_dRapIn_0btag_DijetMass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_0btag_DijetMassMod  ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_0btag_HT            ->GetPredictedHist()   ->Write();
@@ -17084,7 +17184,7 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_2btag_JetSDmass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_2btag_JetTau32      ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_2btag_maxbdisc      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetPredictedHist()   ->Write();
+    /*predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod  ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_HT            ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_DeltaRap      ->GetPredictedHist()   ->Write();
@@ -17093,9 +17193,9 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Write();
-    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Write();
+    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Write();*/
 
-    predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Write();
+    /*predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB2_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB2_dRapHi_0btag_HT            ->GetPredictedHist()   ->Write();
     predDist_Puppi_SB2_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Write();
@@ -17345,6 +17445,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_JetP           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_JetPt          ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_JetY           ->GetObservedHist()   ->Write();
@@ -17355,6 +17456,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_HT             ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_JetP           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_JetPt          ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_JetY           ->GetObservedHist()   ->Write();
@@ -17365,6 +17467,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_HT             ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetP           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetPt          ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetY           ->GetObservedHist()   ->Write();
@@ -17385,6 +17488,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_JetP           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_JetPt          ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_JetY           ->GetObservedHist()   ->Write();
@@ -17395,6 +17499,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_HT             ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_JetP           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_JetPt          ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_JetY           ->GetObservedHist()   ->Write();
@@ -17405,6 +17510,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_HT             ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_DeltaRap       ->GetObservedHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetP           ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetPt          ->GetObservedHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetY           ->GetObservedHist()   ->Write();
@@ -17704,7 +17810,7 @@ void looptree(
     predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Write();
     predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Write();*/
 
-    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Write();
+    predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Write();
@@ -17734,7 +17840,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_2btag_JetSDmass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_2btag_JetTau32      ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_2btag_maxbdisc      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetObservedHist()   ->Write();
+    /*predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod  ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_HT            ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_DeltaRap      ->GetObservedHist()   ->Write();
@@ -17743,7 +17849,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_inclu_JetY          ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_JetSDmass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapHi_inclu_JetTau32      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetObservedHist()   ->Write();*/
     predDist_Puppi_SB1_dRapLo_0btag_DijetMass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_0btag_DijetMassMod  ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_0btag_HT            ->GetObservedHist()   ->Write();
@@ -17774,7 +17880,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_2btag_JetSDmass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_2btag_JetTau32      ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_2btag_maxbdisc      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetObservedHist()   ->Write();
+    /*predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod  ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_HT            ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_DeltaRap      ->GetObservedHist()   ->Write();
@@ -17783,7 +17889,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_inclu_JetY          ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_JetSDmass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapLo_inclu_JetTau32      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetObservedHist()   ->Write();*/
     predDist_Puppi_SB1_dRapIn_0btag_DijetMass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_0btag_DijetMassMod  ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_0btag_HT            ->GetObservedHist()   ->Write();
@@ -17814,7 +17920,7 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_2btag_JetSDmass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_2btag_JetTau32      ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_2btag_maxbdisc      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetObservedHist()   ->Write();
+    /*predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod  ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_HT            ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_DeltaRap      ->GetObservedHist()   ->Write();
@@ -17823,9 +17929,9 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_inclu_JetY          ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB1_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Write();
-    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Write();
+    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Write();*/
 
-    predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Write();
+    /*predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Write();
     predDist_Puppi_SB2_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Write();
     predDist_Puppi_SB2_dRapHi_0btag_HT            ->GetObservedHist()   ->Write();
     predDist_Puppi_SB2_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Write();
@@ -18078,6 +18184,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_JetP           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_JetPt          ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_0btag_JetY           ->GetTaggableHist()   ->Write();
@@ -18088,6 +18195,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_HT             ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_JetP           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_JetPt          ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_1btag_JetY           ->GetTaggableHist()   ->Write();
@@ -18098,6 +18206,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_HT             ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetP           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetPt          ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapHi_2btag_JetY           ->GetTaggableHist()   ->Write();
@@ -18118,6 +18227,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_JetP           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_JetPt          ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_0btag_JetY           ->GetTaggableHist()   ->Write();
@@ -18128,6 +18238,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_HT             ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_JetP           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_JetPt          ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_1btag_JetY           ->GetTaggableHist()   ->Write();
@@ -18138,6 +18249,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_HT             ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_DeltaRap       ->GetTaggableHist()   ->Write();
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetP           ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetPt          ->GetTaggableHist()   ->Write();
     predDist_Puppi_SR_dRapLo_2btag_JetY           ->GetTaggableHist()   ->Write();
@@ -18473,6 +18585,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_JetP           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_JetPt          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_JetY           ->GetPredictedHist()   ->Delete();
@@ -18483,6 +18596,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_HT             ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_JetP           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_JetPt          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_JetY           ->GetPredictedHist()   ->Delete();
@@ -18493,6 +18607,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_HT             ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetP           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetPt          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetY           ->GetPredictedHist()   ->Delete();
@@ -18513,6 +18628,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_JetP           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_JetPt          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_JetY           ->GetPredictedHist()   ->Delete();
@@ -18523,6 +18639,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_HT             ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_JetP           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_JetPt          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_JetY           ->GetPredictedHist()   ->Delete();
@@ -18533,6 +18650,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_HT             ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_DeltaRap       ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2       ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetP           ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetPt          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetY           ->GetPredictedHist()   ->Delete();
@@ -18832,7 +18950,7 @@ void looptree(
     predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
     predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();*/
 
-    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
@@ -18862,7 +18980,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    /*predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_HT            ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
@@ -18871,7 +18989,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_inclu_JetY          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();*/
     predDist_Puppi_SB1_dRapLo_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_0btag_HT            ->GetPredictedHist()   ->Delete();
@@ -18902,7 +19020,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    /*predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_HT            ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
@@ -18911,7 +19029,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_inclu_JetY          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();*/
     predDist_Puppi_SB1_dRapIn_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_0btag_HT            ->GetPredictedHist()   ->Delete();
@@ -18942,7 +19060,7 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_2btag_JetSDmass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_2btag_JetTau32      ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_2btag_maxbdisc      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
+    /*predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod  ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_HT            ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_DeltaRap      ->GetPredictedHist()   ->Delete();
@@ -18951,9 +19069,9 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_inclu_JetY          ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_JetSDmass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_JetTau32      ->GetPredictedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetPredictedHist()   ->Delete();*/
 
-    predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
+    /*predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB2_dRapHi_0btag_DijetMassMod  ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB2_dRapHi_0btag_HT            ->GetPredictedHist()   ->Delete();
     predDist_Puppi_SB2_dRapHi_0btag_DeltaRap      ->GetPredictedHist()   ->Delete();
@@ -19203,6 +19321,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_JetP           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_JetPt          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_JetY           ->GetObservedHist()   ->Delete();
@@ -19213,6 +19332,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_HT             ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_JetP           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_JetPt          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_JetY           ->GetObservedHist()   ->Delete();
@@ -19223,6 +19343,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_HT             ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetP           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetPt          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetY           ->GetObservedHist()   ->Delete();
@@ -19243,6 +19364,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_JetP           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_JetPt          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_JetY           ->GetObservedHist()   ->Delete();
@@ -19253,6 +19375,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_HT             ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_JetP           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_JetPt          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_JetY           ->GetObservedHist()   ->Delete();
@@ -19263,6 +19386,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_HT             ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_DeltaRap       ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2       ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetP           ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetPt          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetY           ->GetObservedHist()   ->Delete();
@@ -19562,7 +19686,7 @@ void looptree(
     predDist_CHS_SB2_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Delete();
     predDist_CHS_SB2_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();*/
 
-    /*predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_HT            ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
@@ -19592,7 +19716,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_2btag_JetTau32      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    /*predDist_Puppi_SB1_dRapHi_inclu_DijetMass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_HT            ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
@@ -19601,7 +19725,7 @@ void looptree(
     predDist_Puppi_SB1_dRapHi_inclu_JetY          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapHi_inclu_JetTau32      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapHi_inclu_maxbdisc      ->GetObservedHist()   ->Delete();*/
     predDist_Puppi_SB1_dRapLo_0btag_DijetMass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_0btag_HT            ->GetObservedHist()   ->Delete();
@@ -19632,7 +19756,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_2btag_JetTau32      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    /*predDist_Puppi_SB1_dRapLo_inclu_DijetMass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_HT            ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
@@ -19641,7 +19765,7 @@ void looptree(
     predDist_Puppi_SB1_dRapLo_inclu_JetY          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapLo_inclu_JetTau32      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapLo_inclu_maxbdisc      ->GetObservedHist()   ->Delete();*/
     predDist_Puppi_SB1_dRapIn_0btag_DijetMass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_0btag_HT            ->GetObservedHist()   ->Delete();
@@ -19672,7 +19796,7 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_2btag_JetSDmass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_2btag_JetTau32      ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_2btag_maxbdisc      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetObservedHist()   ->Delete();
+    /*predDist_Puppi_SB1_dRapIn_inclu_DijetMass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_DijetMassMod  ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_HT            ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_DeltaRap      ->GetObservedHist()   ->Delete();
@@ -19681,9 +19805,9 @@ void looptree(
     predDist_Puppi_SB1_dRapIn_inclu_JetY          ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_JetSDmass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB1_dRapIn_inclu_JetTau32      ->GetObservedHist()   ->Delete();
-    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();
+    predDist_Puppi_SB1_dRapIn_inclu_maxbdisc      ->GetObservedHist()   ->Delete();*/
 
-    predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
+    /*predDist_Puppi_SB2_dRapHi_0btag_DijetMass     ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB2_dRapHi_0btag_DijetMassMod  ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB2_dRapHi_0btag_HT            ->GetObservedHist()   ->Delete();
     predDist_Puppi_SB2_dRapHi_0btag_DeltaRap      ->GetObservedHist()   ->Delete();
@@ -19936,6 +20060,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_0btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_HT             ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_0btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_JetP           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_JetPt          ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_0btag_JetY           ->GetTaggableHist()   ->Delete();
@@ -19946,6 +20071,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_1btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_HT             ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_1btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_JetP           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_JetPt          ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_1btag_JetY           ->GetTaggableHist()   ->Delete();
@@ -19956,6 +20082,7 @@ void looptree(
     predDist_Puppi_SR_dRapHi_2btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_HT             ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapHi_2btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetP           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetPt          ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapHi_2btag_JetY           ->GetTaggableHist()   ->Delete();
@@ -19976,6 +20103,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_0btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_HT             ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_0btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_JetP           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_JetPt          ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_0btag_JetY           ->GetTaggableHist()   ->Delete();
@@ -19986,6 +20114,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_1btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_HT             ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_1btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_JetP           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_JetPt          ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_1btag_JetY           ->GetTaggableHist()   ->Delete();
@@ -19996,6 +20125,7 @@ void looptree(
     predDist_Puppi_SR_dRapLo_2btag_DijetMassMod   ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_HT             ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_DeltaRap       ->GetTaggableHist()   ->Delete();
+    predDist_Puppi_SR_dRapLo_2btag_DeltaRap_mTTgt2       ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetP           ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetPt          ->GetTaggableHist()   ->Delete();
     predDist_Puppi_SR_dRapLo_2btag_JetY           ->GetTaggableHist()   ->Delete();
@@ -20179,7 +20309,7 @@ void looptree(
   // Make ModMass File
   if ( ( isQCDMC||isData ) && run_antitag){
     cout<<"Making new ModMass file"<<endl;
-    // string modMassOutName = "runs/run"+savelabel+"/ModMass_Jetpt600HT1000_"+savelabel+"_"+input_file;
+    // string modMassOutName = "runs/run"+savelabel+"/ModMass_Jetpt600HT1000_"+savelabel+"_"+input_file+".root";
     
     TFile * ModMassOut = new TFile(out_filename_modMass.c_str(),"RECREATE");
     ModMassOut->cd();

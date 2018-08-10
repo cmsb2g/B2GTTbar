@@ -112,7 +112,8 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
 
   if (savelabel=="") {cout<<"please provide a unique label for the savefile. example: run(\"BCD\",\"20161201addHist\")"<<endl; return;}
 
-  string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/";
+  //string folder_input_tree = "/uscmst1b_scratch/lpc1/lpcphys/jdolen/B2G2016/V5/";
+  string folder_input_tree = "root://cmseos.fnal.gov//store/user/camclean/B2G2016/V5/";
   string folder_mistag     = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_26_patch2/src/Analysis/B2GTTbar/test/";
   string folder_modMass    = "/uscms_data/d2/jdolen/B2G2016/CMSSW_8_0_26_patch2/src/Analysis/B2GTTbar/test/runs/";
   
@@ -218,11 +219,11 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     // modmass_file_QCD         = modmass_file_QCD2;        
 
     /*file_name_tree.push_back("b2gtreeV5_QCD_Pt_120to170_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_170to300_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
+      file_name_tree.push_back("b2gtreeV5_QCD_Pt_170to300_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               */
+    /*file_name_tree.push_back("b2gtreeV5_QCD_Pt_300to470_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_470to600_pythia8_RunIISummer16MiniAODv2_try2.root");                                 file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_600to800_pythia8_RunIISummer16MiniAODv2.root");                                      file_type.push_back(1);                               
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2_try3.root");                                file_type.push_back(1);                               
+    file_name_tree.push_back("b2gtreeV5_QCD_Pt_800to1000_pythia8_RunIISummer16MiniAODv2.root");                                file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_1800to2400_pythia8_RunIISummer16MiniAODv2.root");                                    file_type.push_back(1);                               
@@ -237,31 +238,35 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_1000to1400_pythia8_RunIISummer16MiniAODv2_ext1.root");                               file_type.push_back(1);  
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_1400to1800_pythia8_RunIISummer16MiniAODv2_ext1.root");                               file_type.push_back(1);  
     file_name_tree.push_back("b2gtreeV5_QCD_Pt_1800to2400_pythia8_RunIISummer16MiniAODv2_ext1.root");                               file_type.push_back(1);  
-    file_name_tree.push_back("b2gtreeV5_QCD_Pt_2400to3200_pythia8_RunIISummer16MiniAODv2_ext1.root");                               file_type.push_back(1);  
+    file_name_tree.push_back("b2gtreeV5_QCD_Pt_2400to3200_pythia8_RunIISummer16MiniAODv2_ext1.root");                               file_type.push_back(1); 
   }
 
 
   //--- TTbar 
   if ( foundTT   !=std::string::npos ){            
-    file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_orig_and_backup_missing2.root");   file_type.push_back(2);     
+    file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2.root");   file_type.push_back(2);     
+    //file_name_tree.push_back("b2gtreeV5_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_RunIISummer16MiniAODv2_orig_and_backup_missing2.root");   file_type.push_back(2);     
   }
   //--- ZPrime 
   if ( foundZP   !=std::string::npos ){  
     
     // narrow                
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    /*    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+	  file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
+	  file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2.root ");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3500_W-35_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-45_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-50_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-50_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   */
+    //file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6000_W-60_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6500_W-65_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-7000_W-70_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     
     // wide
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
+    /*file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-125_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-150_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-200_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
@@ -270,19 +275,26 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3500_W-350_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-450_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);*/
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6000_W-600_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6500_W-650_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-7000_W-700_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
 
     // very wide
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
+    /*file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-600_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-1200_RunIISummer16MiniAODv2.root");                file_type.push_back(3); 
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-1500_RunIISummer16MiniAODv2.root");                file_type.push_back(3); 
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-900_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-1200_RunIISummer16MiniAODv2.root");                file_type.push_back(3);
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-1500_RunIISummer16MiniAODv2.root");                file_type.push_back(3); */
+    // file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6000_W-1800_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    // file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6500_W-1950_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    // file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-7000_W-2100_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
 
     // amcatnlo
     // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-1000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
     // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-2000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
     // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-3000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
-    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-4000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);    
+    // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-4000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);    */
   }  
 
    //--- RS 
@@ -295,6 +307,8 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-3000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-3500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-4000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);     
+    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-4500_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);     
+    file_name_tree.push_back("b2gtreeV5_RSGluonToTT_M-5000_RunIISummer16MiniAODv2.root");                   file_type.push_back(3);     
   }  
 
   //--- test 
@@ -625,7 +639,7 @@ void looptree(
   // input b-tag efficiency histograms
   cout<<"get mistag histograms"<<endl;
   TFile * Fbtag ;
-  if (btagWP=="M") Fbtag            = new TFile("BtagEff_WPB_bM.root"); 
+  if (btagWP=="M") Fbtag            = new TFile("BtagPuppiEff_bM_bTagPuppiEffMeasurement20170623.root"); 
   if (btagWP=="L") Fbtag            = new TFile("BtagEff_bL.root"); 
 
   TH2D * btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt  = (TH2D *) Fbtag->Get("btag_rate_lightHad_Jet0_SubjetMaxB_Eta_Pt");
@@ -651,10 +665,10 @@ void looptree(
   else if (Syst == -6) systType = "PU_dn"   ;
   else if (Syst ==  7) systType = "JMRsmear_wjet_nom"   ;
 
-  // Get intput file
+  // Get input file
   string file_name =  input_folder+input_file;
   cout<<"opening "<<file_name<<endl;
-  TFile *F1   = new TFile(file_name.c_str() );
+  TFile *F1   = TFile::Open(file_name.c_str() );
 
   // Get Tree entries
   Int_t   PassMETFilters                            ;
@@ -18291,6 +18305,9 @@ void looptree_trig(
   
   Out->Close();
 }
+
+
+
 
 
 
