@@ -1194,7 +1194,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
   }
 
   //data luminosity
-  float lumi = 140000; //35922;
+  float lumi = 35922;
   
   //Number of sample events
   float nttbar = 77229341 + 78006311;
