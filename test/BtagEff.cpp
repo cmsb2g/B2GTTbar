@@ -1,4 +1,4 @@
-void plotAndCalcEff(string, string, string);
+void plotAndCalcEff(string, string, string); //void plotAndCalcEff(string sample, string saveLabel, string bWP)
 
 void BtagEff(){
   //plotAndCalcEff("QCD_Ptscaled","bTagPuppiEffMeasurement20170623","M");
@@ -16,9 +16,9 @@ void BtagEff(){
   plotAndCalcEff("ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
   plotAndCalcEff("ZprimeToTT_M-4500_W-45_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
   plotAndCalcEff("ZprimeToTT_M-5000_W-50_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");*/
-  //plotAndCalcEff("ZprimeToTT_M-6000_W-60_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
-  plotAndCalcEff("ZprimeToTT_M-6500_W-65_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
-  plotAndCalcEff("ZprimeToTT_M-7000_W-70_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-6000_W-60_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  //plotAndCalcEff("ZprimeToTT_M-6500_W-65_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  //plotAndCalcEff("ZprimeToTT_M-7000_W-70_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
 
   // wide
   /*plotAndCalcEff("ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
@@ -30,10 +30,10 @@ void BtagEff(){
   plotAndCalcEff("ZprimeToTT_M-3500_W-350_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
   plotAndCalcEff("ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
   plotAndCalcEff("ZprimeToTT_M-4500_W-450_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
-  plotAndCalcEff("ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");*/
+  plotAndCalcEff("ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
   plotAndCalcEff("ZprimeToTT_M-6000_W-600_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
   plotAndCalcEff("ZprimeToTT_M-6500_W-650_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
-  plotAndCalcEff("ZprimeToTT_M-7000_W-700_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-7000_W-700_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");*/
 
   // very wide
   /*plotAndCalcEff("ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
@@ -41,9 +41,9 @@ void BtagEff(){
   plotAndCalcEff("ZprimeToTT_M-3000_W-900_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
   plotAndCalcEff("ZprimeToTT_M-4000_W-1200_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
   plotAndCalcEff("ZprimeToTT_M-5000_W-1500_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20171004","M");*/
-  // plotAndCalcEff("ZprimeToTT_M-6000_W-1800_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
-  // plotAndCalcEff("ZprimeToTT_M-6500_W-1950_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
-  // plotAndCalcEff("ZprimeToTT_M-7000_W-2100_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-6000_W-1800_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-6500_W-1950_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
+  plotAndCalcEff("ZprimeToTT_M-7000_W-2100_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");
 
   //RSG
   /*plotAndCalcEff("RSGluonToTT_M-1000_RunIISummer16MiniAODv2","bTagPuppiEffMeasurement20170623","M");

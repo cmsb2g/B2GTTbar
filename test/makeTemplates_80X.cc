@@ -349,7 +349,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40]         = infileBegin + systLabel + "_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45]         = infileBegin + systLabel + "_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50]         = infileBegin + systLabel + "_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60]         = ZP6plusFileBegin + systLabel + "_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65]         = ZP6plusFileBegin + systLabel + "_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70]         = ZP6plusFileBegin + systLabel + "_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -364,7 +364,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_SCALEUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_SCALEUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_SCALEUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_SCALEUP]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_SCALEUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_SCALEUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_SCALEUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -378,7 +378,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_SCALEDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_SCALEDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_SCALEDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_SCALEDN]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_SCALEDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_SCALEDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_SCALEDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
   
@@ -393,7 +393,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_JERUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_JERUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_JERUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_JERUP]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_JERUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_JERUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_JERUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -407,7 +407,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_JERDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_JERDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_JERDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_JERDN]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_JERDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_JERDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_JERDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -422,7 +422,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_PDFUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_PDFUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_PDFUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_PDFUP]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_PDFUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_PDFUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_PDFUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -436,7 +436,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_PDFDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_PDFDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_PDFDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_PDFDN]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_PDFDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_PDFDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_PDFDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
     
@@ -451,7 +451,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_BTAGUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_BTAGUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_BTAGUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_BTAGUP]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_BTAGUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_BTAGUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_BTAGUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -465,7 +465,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_BTAGDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_BTAGDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_BTAGDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_BTAGDN]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_BTAGDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_BTAGDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_BTAGDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -480,7 +480,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_BMISTAGUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_BMISTAGUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_BMISTAGUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_BMISTAGUP]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_BMISTAGUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_BMISTAGUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_BMISTAGUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -494,7 +494,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_BMISTAGDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_BMISTAGDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_BMISTAGDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_BMISTAGDN]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_BMISTAGDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_BMISTAGDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_BMISTAGDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -509,7 +509,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_PUUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_PUUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_PUUP] = infileBegin + systLabel + "_up_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_PUUP]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_PUUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_PUUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_PUUP]         = ZP6plusFileBegin + systLabel + "_up_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
 
@@ -523,7 +523,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     files[names::ZPN40_PUDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4000_W-40_" + sigEnd; //+ ".root";
     files[names::ZPN45_PUDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-4500_W-45_" + sigEnd; //+ ".root";
     files[names::ZPN50_PUDN] = infileBegin + systLabel + "_dn_ZprimeToTT_M-5000_W-50_" + sigEnd; //+ ".root";
-    files[names::ZPN60_PUDN]         = files[names::ZPN50]; //ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
+    files[names::ZPN60_PUDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6000_W-60_" + sigEnd + ".root";
     files[names::ZPN65_PUDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-6500_W-65_" + sigEnd + ".root";
     files[names::ZPN70_PUDN]         = ZP6plusFileBegin + systLabel + "_dn_ZprimeToTT_M-7000_W-70_" + sigEnd + ".root";
   }//ZPN, signal = 0
@@ -1210,7 +1210,7 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
   float N_Zp40 = 107914.; 
   float N_Zp45 = 100306.;
   float N_Zp50 = 112042.;
-  float N_Zp60 = 93777.;
+  float N_Zp60 = 101612.;
   float N_Zp65 = 99576.;
   float N_Zp70 = 96206.;
  
@@ -1243,9 +1243,9 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     N_Zp40 = 88039.; 
     //N_Zp45 = .;
     N_Zp50 = 91038.;
-    N_Zp60 = 82789.;
-    N_Zp65 = 88454.;
-    N_Zp70 = 94755.;
+    N_Zp60 = 89335.;
+    N_Zp65 = 93070.;
+    N_Zp70 = 96406.;
   }
 
   //RS Gluon
@@ -1316,6 +1316,9 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     histos[names::ZPN40][tag]->Scale( 1. * ttSF * ttSF * lumi / N_Zp40 );
     histos[names::ZPN45][tag]->Scale( 1. * ttSF * ttSF * lumi / N_Zp45 );
     histos[names::ZPN50][tag]->Scale( 1. * ttSF * ttSF * lumi / N_Zp50 );
+    histos[names::ZPN60][tag]->Scale( 1. * ttSF * ttSF * lumi / N_Zp60 );
+    histos[names::ZPN65][tag]->Scale( 1. * ttSF * ttSF * lumi / N_Zp65 );
+    histos[names::ZPN70][tag]->Scale( 1. * ttSF * ttSF * lumi / N_Zp70 );
     histos[names::ZPN10_SCALEUP][tag]->Scale( 1. * ttSF * ttSF * lumi / N_Zp10 );
     histos[names::ZPN12p5_SCALEUP][tag]->Scale( 1. * ttSF * ttSF * lumi / N_Zp12 );
     histos[names::ZPN15_SCALEUP][tag]->Scale( 1. * ttSF * ttSF * lumi / N_Zp15 );
@@ -1500,11 +1503,11 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
 
       int nBinsOriginal = h_background->GetNbinsX();
       int nBinsNew = 1.;
-      float lastBinLowEdge =  7000.;
+      float lastBinLowEdge = 9000.;
       float totalBinContent = 0.0;
       float totalStatErr = 0.0;
 
-      //calculating the number of new bins; x_min = 900
+      //calculating the number of new bins; x_min = 800 (i.e. bin 9)
       for (int i_bin = 0; i_bin < (nBinsOriginal-9); i_bin++){
 	int j_bin = nBinsOriginal - i_bin;
 	float statErr = h_background->GetBinError(j_bin);
@@ -1531,11 +1534,11 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
 
       cout << "New Bin Count: " << nBinsNew << endl;
 
-      //setting the bin array; x_min = 900
+      //setting the bin array; x_min = 800
       Double_t xbins[nBinsNew+1];
-      xbins[0]=800.0;
-      xbins[nBinsNew]=7000.;
-      lastBinLowEdge = 7000.;
+      xbins[0]=800.0;//starting plots at m_jj = 800 GeV
+      xbins[nBinsNew]= 9000.;
+      lastBinLowEdge = 9000.;
       totalBinContent = 0.0;
       totalStatErr = 0.0;
       int binCount = 0;
@@ -2041,186 +2044,194 @@ int makeTemplates_80X(int signal = 0, bool forTHETA = 1, bool postFit = 0, bool 
     histos[names::TT_Q2DN][tag]->Write( Form("btag%d__ttbar__q2__down", tag) );
     
     histos[names::ZPN10][tag]->Write( Form("btag%d__Zprime1000", tag));
-    if (signal != 2) histos[names::ZPN12p5][tag]->Write( Form("btag%d__Zprime1250", tag));
-    if (signal != 2) histos[names::ZPN15][tag]->Write( Form("btag%d__Zprime1500", tag) );
     histos[names::ZPN20][tag]->Write( Form("btag%d__Zprime2000", tag) );
-    if (signal != 2) histos[names::ZPN25][tag]->Write( Form("btag%d__Zprime2500", tag) );
     histos[names::ZPN30][tag]->Write( Form("btag%d__Zprime3000", tag) );
-    if (signal != 2) histos[names::ZPN35][tag]->Write( Form("btag%d__Zprime3500", tag) );  
     histos[names::ZPN40][tag]->Write( Form("btag%d__Zprime4000", tag) );  
-    if (signal != 2) histos[names::ZPN45][tag]->Write( Form("btag%d__Zprime4500", tag) );  
-    histos[names::ZPN50][tag]->Write( Form("btag%d__Zprime5000", tag) );  
-    histos[names::ZPN40][tag]->Write( Form("btag%d__Zprime4000", tag) );  
-    if (signal != 2) histos[names::ZPN45][tag]->Write( Form("btag%d__Zprime4500", tag) );  
     histos[names::ZPN50][tag]->Write( Form("btag%d__Zprime5000", tag) );  
  
     histos[names::ZPN10_SCALEUP][tag]->Write( Form("btag%d__Zprime1000__jec__up", tag));
-    if (signal != 2) histos[names::ZPN12p5_SCALEUP][tag]->Write( Form("btag%d__Zprime1250__jec__up", tag));
-    if (signal != 2) histos[names::ZPN15_SCALEUP][tag]->Write( Form("btag%d__Zprime1500__jec__up", tag) );
     histos[names::ZPN20_SCALEUP][tag]->Write( Form("btag%d__Zprime2000__jec__up", tag) );
-    if (signal != 2) histos[names::ZPN25_SCALEUP][tag]->Write( Form("btag%d__Zprime2500__jec__up", tag) );
     histos[names::ZPN30_SCALEUP][tag]->Write( Form("btag%d__Zprime3000__jec__up", tag) );
-    if (signal != 2) histos[names::ZPN35_SCALEUP][tag]->Write( Form("btag%d__Zprime3500__jec__up", tag) ); 
     histos[names::ZPN40_SCALEUP][tag]->Write( Form("btag%d__Zprime4000__jec__up", tag) ); 
-    if (signal != 2) histos[names::ZPN45_SCALEUP][tag]->Write( Form("btag%d__Zprime4500__jec__up", tag) ); 
     histos[names::ZPN50_SCALEUP][tag]->Write( Form("btag%d__Zprime5000__jec__up", tag) ); 
     histos[names::ZPN10_SCALEDN][tag]->Write( Form("btag%d__Zprime1000__jec__down", tag));
-    if (signal != 2) histos[names::ZPN12p5_SCALEDN][tag]->Write( Form("btag%d__Zprime1250__jec__down", tag));
-    if (signal != 2) histos[names::ZPN15_SCALEDN][tag]->Write( Form("btag%d__Zprime1500__jec__down", tag) );
     histos[names::ZPN20_SCALEDN][tag]->Write( Form("btag%d__Zprime2000__jec__down", tag) );
-    if (signal != 2) histos[names::ZPN25_SCALEDN][tag]->Write( Form("btag%d__Zprime2500__jec__down", tag) );
     histos[names::ZPN30_SCALEDN][tag]->Write( Form("btag%d__Zprime3000__jec__down", tag) );
-    if (signal != 2) histos[names::ZPN35_SCALEDN][tag]->Write( Form("btag%d__Zprime3500__jec__down", tag) );  
     histos[names::ZPN40_SCALEDN][tag]->Write( Form("btag%d__Zprime4000__jec__down", tag) );  
-    if (signal != 2) histos[names::ZPN45_SCALEDN][tag]->Write( Form("btag%d__Zprime4500__jec__down", tag) );  
     histos[names::ZPN50_SCALEDN][tag]->Write( Form("btag%d__Zprime5000__jec__down", tag) );  
   
     histos[names::ZPN10_JERUP][tag]->Write( Form("btag%d__Zprime1000__jer__up", tag));
-    if (signal != 2) histos[names::ZPN12p5_JERUP][tag]->Write( Form("btag%d__Zprime1250__jer__up", tag));
-    if (signal != 2) histos[names::ZPN15_JERUP][tag]->Write( Form("btag%d__Zprime1500__jer__up", tag) );
     histos[names::ZPN20_JERUP][tag]->Write( Form("btag%d__Zprime2000__jer__up", tag) );
-    if (signal != 2) histos[names::ZPN25_JERUP][tag]->Write( Form("btag%d__Zprime2500__jer__up", tag) );
     histos[names::ZPN30_JERUP][tag]->Write( Form("btag%d__Zprime3000__jer__up", tag) );
-    if (signal != 2) histos[names::ZPN35_JERUP][tag]->Write( Form("btag%d__Zprime3500__jer__up", tag) ); 
     histos[names::ZPN40_JERUP][tag]->Write( Form("btag%d__Zprime4000__jer__up", tag) ); 
-    if (signal != 2) histos[names::ZPN45_JERUP][tag]->Write( Form("btag%d__Zprime4500__jer__up", tag) ); 
     histos[names::ZPN50_JERUP][tag]->Write( Form("btag%d__Zprime5000__jer__up", tag) ); 
     histos[names::ZPN10_JERDN][tag]->Write( Form("btag%d__Zprime1000__jer__down", tag));
-    if (signal != 2) histos[names::ZPN12p5_JERDN][tag]->Write( Form("btag%d__Zprime1250__jer__down", tag));
-    if (signal != 2) histos[names::ZPN15_JERDN][tag]->Write( Form("btag%d__Zprime1500__jer__down", tag) );
     histos[names::ZPN20_JERDN][tag]->Write( Form("btag%d__Zprime2000__jer__down", tag) );
-    if (signal != 2) histos[names::ZPN25_JERDN][tag]->Write( Form("btag%d__Zprime2500__jer__down", tag) );
     histos[names::ZPN30_JERDN][tag]->Write( Form("btag%d__Zprime3000__jer__down", tag) );
-    if (signal != 2) histos[names::ZPN35_JERDN][tag]->Write( Form("btag%d__Zprime3500__jer__down", tag) );  
     histos[names::ZPN40_JERDN][tag]->Write( Form("btag%d__Zprime4000__jer__down", tag) );  
-    if (signal != 2) histos[names::ZPN45_JERDN][tag]->Write( Form("btag%d__Zprime4500__jer__down", tag) );  
     histos[names::ZPN50_JERDN][tag]->Write( Form("btag%d__Zprime5000__jer__down", tag) );  
 
     histos[names::ZPN10_PDFUP][tag]->Write( Form("btag%d__Zprime1000__pdf__up", tag));
-    if (signal != 2) histos[names::ZPN12p5_PDFUP][tag]->Write( Form("btag%d__Zprime1250__pdf__up", tag));
-    if (signal != 2) histos[names::ZPN15_PDFUP][tag]->Write( Form("btag%d__Zprime1500__pdf__up", tag) );
     histos[names::ZPN20_PDFUP][tag]->Write( Form("btag%d__Zprime2000__pdf__up", tag) );
-    if (signal != 2) histos[names::ZPN25_PDFUP][tag]->Write( Form("btag%d__Zprime2500__pdf__up", tag) );
     histos[names::ZPN30_PDFUP][tag]->Write( Form("btag%d__Zprime3000__pdf__up", tag) );
-    if (signal != 2) histos[names::ZPN35_PDFUP][tag]->Write( Form("btag%d__Zprime3500__pdf__up", tag) ); 
     histos[names::ZPN40_PDFUP][tag]->Write( Form("btag%d__Zprime4000__pdf__up", tag) ); 
-    if (signal != 2) histos[names::ZPN45_PDFUP][tag]->Write( Form("btag%d__Zprime4500__pdf__up", tag) ); 
     histos[names::ZPN50_PDFUP][tag]->Write( Form("btag%d__Zprime5000__pdf__up", tag) ); 
     histos[names::ZPN10_PDFDN][tag]->Write( Form("btag%d__Zprime1000__pdf__down", tag));
-    if (signal != 2) histos[names::ZPN12p5_PDFDN][tag]->Write( Form("btag%d__Zprime1250__pdf__down", tag));
-    if (signal != 2) histos[names::ZPN15_PDFDN][tag]->Write( Form("btag%d__Zprime1500__pdf__down", tag) );
     histos[names::ZPN20_PDFDN][tag]->Write( Form("btag%d__Zprime2000__pdf__down", tag) );
-    if (signal != 2) histos[names::ZPN25_PDFDN][tag]->Write( Form("btag%d__Zprime2500__pdf__down", tag) );
     histos[names::ZPN30_PDFDN][tag]->Write( Form("btag%d__Zprime3000__pdf__down", tag) );
-    if (signal != 2) histos[names::ZPN35_PDFDN][tag]->Write( Form("btag%d__Zprime3500__pdf__down", tag) );  
     histos[names::ZPN40_PDFDN][tag]->Write( Form("btag%d__Zprime4000__pdf__down", tag) );  
-    if (signal != 2) histos[names::ZPN45_PDFDN][tag]->Write( Form("btag%d__Zprime4500__pdf__down", tag) );  
     histos[names::ZPN50_PDFDN][tag]->Write( Form("btag%d__Zprime5000__pdf__down", tag) );  
 
     histos[names::ZPN10_BTAGUP][tag]->Write( Form("btag%d__Zprime1000__btag__up", tag));
-    if (signal != 2) histos[names::ZPN12p5_BTAGUP][tag]->Write( Form("btag%d__Zprime1250__btag__up", tag));
-    if (signal != 2) histos[names::ZPN15_BTAGUP][tag]->Write( Form("btag%d__Zprime1500__btag__up", tag) );
     histos[names::ZPN20_BTAGUP][tag]->Write( Form("btag%d__Zprime2000__btag__up", tag) );
-    if (signal != 2) histos[names::ZPN25_BTAGUP][tag]->Write( Form("btag%d__Zprime2500__btag__up", tag) );
     histos[names::ZPN30_BTAGUP][tag]->Write( Form("btag%d__Zprime3000__btag__up", tag) );
-    if (signal != 2) histos[names::ZPN35_BTAGUP][tag]->Write( Form("btag%d__Zprime3500__btag__up", tag) ); 
     histos[names::ZPN40_BTAGUP][tag]->Write( Form("btag%d__Zprime4000__btag__up", tag) ); 
-    if (signal != 2) histos[names::ZPN45_BTAGUP][tag]->Write( Form("btag%d__Zprime4500__btag__up", tag) ); 
     histos[names::ZPN50_BTAGUP][tag]->Write( Form("btag%d__Zprime5000__btag__up", tag) ); 
     histos[names::ZPN10_BTAGDN][tag]->Write( Form("btag%d__Zprime1000__btag__down", tag));
-    if (signal != 2) histos[names::ZPN12p5_BTAGDN][tag]->Write( Form("btag%d__Zprime1250__btag__down", tag));
-    if (signal != 2) histos[names::ZPN15_BTAGDN][tag]->Write( Form("btag%d__Zprime1500__btag__down", tag) );
     histos[names::ZPN20_BTAGDN][tag]->Write( Form("btag%d__Zprime2000__btag__down", tag) );
-    if (signal != 2) histos[names::ZPN25_BTAGDN][tag]->Write( Form("btag%d__Zprime2500__btag__down", tag) );
     histos[names::ZPN30_BTAGDN][tag]->Write( Form("btag%d__Zprime3000__btag__down", tag) );
-    if (signal != 2) histos[names::ZPN35_BTAGDN][tag]->Write( Form("btag%d__Zprime3500__btag__down", tag) );
     histos[names::ZPN40_BTAGDN][tag]->Write( Form("btag%d__Zprime4000__btag__down", tag) );  
-    if (signal != 2) histos[names::ZPN45_BTAGDN][tag]->Write( Form("btag%d__Zprime4500__btag__down", tag) );
     histos[names::ZPN50_BTAGDN][tag]->Write( Form("btag%d__Zprime5000__btag__down", tag) );  
 
     histos[names::ZPN10_BMISTAGUP][tag]->Write( Form("btag%d__Zprime1000__bmistag__up", tag));
-    if (signal != 2) histos[names::ZPN12p5_BMISTAGUP][tag]->Write( Form("btag%d__Zprime1250__bmistag__up", tag));
-    if (signal != 2) histos[names::ZPN15_BMISTAGUP][tag]->Write( Form("btag%d__Zprime1500__bmistag__up", tag) );
     histos[names::ZPN20_BMISTAGUP][tag]->Write( Form("btag%d__Zprime2000__bmistag__up", tag) );
-    if (signal != 2) histos[names::ZPN25_BMISTAGUP][tag]->Write( Form("btag%d__Zprime2500__bmistag__up", tag) );
     histos[names::ZPN30_BMISTAGUP][tag]->Write( Form("btag%d__Zprime3000__bmistag__up", tag) );
-    if (signal != 2) histos[names::ZPN35_BMISTAGUP][tag]->Write( Form("btag%d__Zprime3500__bmistag__up", tag) ); 
     histos[names::ZPN40_BMISTAGUP][tag]->Write( Form("btag%d__Zprime4000__bmistag__up", tag) ); 
-    if (signal != 2) histos[names::ZPN45_BMISTAGUP][tag]->Write( Form("btag%d__Zprime4500__bmistag__up", tag) ); 
     histos[names::ZPN50_BMISTAGUP][tag]->Write( Form("btag%d__Zprime5000__bmistag__up", tag) ); 
     histos[names::ZPN10_BMISTAGDN][tag]->Write( Form("btag%d__Zprime1000__bmistag__down", tag));
-    if (signal != 2) histos[names::ZPN12p5_BMISTAGDN][tag]->Write( Form("btag%d__Zprime1250__bmistag__down", tag));
-    if (signal != 2) histos[names::ZPN15_BMISTAGDN][tag]->Write( Form("btag%d__Zprime1500__bmistag__down", tag) );
     histos[names::ZPN20_BMISTAGDN][tag]->Write( Form("btag%d__Zprime2000__bmistag__down", tag) );
-    if (signal != 2) histos[names::ZPN25_BMISTAGDN][tag]->Write( Form("btag%d__Zprime2500__bmistag__down", tag) );
     histos[names::ZPN30_BMISTAGDN][tag]->Write( Form("btag%d__Zprime3000__bmistag__down", tag) );
-    if (signal != 2) histos[names::ZPN35_BMISTAGDN][tag]->Write( Form("btag%d__Zprime3500__bmistag__down", tag) );
     histos[names::ZPN40_BMISTAGDN][tag]->Write( Form("btag%d__Zprime4000__bmistag__down", tag) );  
-    if (signal != 2) histos[names::ZPN45_BMISTAGDN][tag]->Write( Form("btag%d__Zprime4500__bmistag__down", tag) );
     histos[names::ZPN50_BMISTAGDN][tag]->Write( Form("btag%d__Zprime5000__bmistag__down", tag) );  
     
     histos[names::ZPN10_PUUP][tag]->Write( Form("btag%d__Zprime1000__pileup__up", tag));
-    if (signal != 2) histos[names::ZPN12p5_PUUP][tag]->Write( Form("btag%d__Zprime1250__pileup__up", tag));
-    if (signal != 2) histos[names::ZPN15_PUUP][tag]->Write( Form("btag%d__Zprime1500__pileup__up", tag) );
     histos[names::ZPN20_PUUP][tag]->Write( Form("btag%d__Zprime2000__pileup__up", tag) );
-    if (signal != 2) histos[names::ZPN25_PUUP][tag]->Write( Form("btag%d__Zprime2500__pileup__up", tag) );
     histos[names::ZPN30_PUUP][tag]->Write( Form("btag%d__Zprime3000__pileup__up", tag) );
-    if (signal != 2) histos[names::ZPN35_PUUP][tag]->Write( Form("btag%d__Zprime3500__pileup__up", tag) ); 
     histos[names::ZPN40_PUUP][tag]->Write( Form("btag%d__Zprime4000__pileup__up", tag) ); 
-    if (signal != 2) histos[names::ZPN45_PUUP][tag]->Write( Form("btag%d__Zprime4500__pileup__up", tag) ); 
     histos[names::ZPN50_PUUP][tag]->Write( Form("btag%d__Zprime5000__pileup__up", tag) ); 
     histos[names::ZPN10_PUDN][tag]->Write( Form("btag%d__Zprime1000__pileup__down", tag));
-    if (signal != 2) histos[names::ZPN12p5_PUDN][tag]->Write( Form("btag%d__Zprime1250__pileup__down", tag));
-    if (signal != 2) histos[names::ZPN15_PUDN][tag]->Write( Form("btag%d__Zprime1500__pileup__down", tag) );
     histos[names::ZPN20_PUDN][tag]->Write( Form("btag%d__Zprime2000__pileup__down", tag) );
-    if (signal != 2) histos[names::ZPN25_PUDN][tag]->Write( Form("btag%d__Zprime2500__pileup__down", tag) );
     histos[names::ZPN30_PUDN][tag]->Write( Form("btag%d__Zprime3000__pileup__down", tag) );
-    if (signal != 2) histos[names::ZPN35_PUDN][tag]->Write( Form("btag%d__Zprime3500__pileup__down", tag) );  
     histos[names::ZPN40_PUDN][tag]->Write( Form("btag%d__Zprime4000__pileup__down", tag) );  
-    if (signal != 2) histos[names::ZPN45_PUDN][tag]->Write( Form("btag%d__Zprime4500__pileup__down", tag) );  
     histos[names::ZPN50_PUDN][tag]->Write( Form("btag%d__Zprime5000__pileup__down", tag) );  
 
-    if (signal == 1) histos[names::ZPN60][tag]->Write( Form("btag%d__Zprime6000", tag) );
-    if (signal == 1) histos[names::ZPN60_SCALEUP][tag]->Write( Form("btag%d__Zprime6000__jec__up", tag) );
-    if (signal == 1) histos[names::ZPN60_SCALEDN][tag]->Write( Form("btag%d__Zprime6000__jec__down", tag) );
-    if (signal == 1) histos[names::ZPN60_JERUP][tag]->Write( Form("btag%d__Zprime6000__jer__up", tag) );
-    if (signal == 1) histos[names::ZPN60_JERDN][tag]->Write( Form("btag%d__Zprime6000__jer__down", tag) );
-    if (signal == 1) histos[names::ZPN60_PDFUP][tag]->Write( Form("btag%d__Zprime6000__pdf__up", tag) );
-    if (signal == 1) histos[names::ZPN60_PDFDN][tag]->Write( Form("btag%d__Zprime6000__pdf__down", tag) );
-    if (signal == 1) histos[names::ZPN60_BTAGUP][tag]->Write( Form("btag%d__Zprime6000__btag__up", tag) );
-    if (signal == 1) histos[names::ZPN60_BTAGDN][tag]->Write( Form("btag%d__Zprime6000__btag__down", tag) );
-    if (signal == 1) histos[names::ZPN60_BMISTAGUP][tag]->Write( Form("btag%d__Zprime6000__bmistag__up", tag) );
-    if (signal == 1) histos[names::ZPN60_BMISTAGDN][tag]->Write( Form("btag%d__Zprime6000__bmistag__down", tag) );
-    if (signal == 1) histos[names::ZPN60_PUUP][tag]->Write( Form("btag%d__Zprime6000__pileup__up", tag) );
-    if (signal == 1) histos[names::ZPN60_PUDN][tag]->Write( Form("btag%d__Zprime6000__pileup__down", tag) );
+    if (signal != 2){//don't have these samples for extra-wide Z'
+      histos[names::ZPN12p5][tag]->Write( Form("btag%d__Zprime1250", tag));
+      histos[names::ZPN15][tag]->Write( Form("btag%d__Zprime1500", tag) );
+      histos[names::ZPN25][tag]->Write( Form("btag%d__Zprime2500", tag) );
+      histos[names::ZPN35][tag]->Write( Form("btag%d__Zprime3500", tag) );  
+      histos[names::ZPN45][tag]->Write( Form("btag%d__Zprime4500", tag) );  
 
-    if (signal < 3) histos[names::ZPN65][tag]->Write( Form("btag%d__Zprime6500", tag) );
-    if (signal < 3) histos[names::ZPN65_SCALEUP][tag]->Write( Form("btag%d__Zprime6500__jec__up", tag) );
-    if (signal < 3) histos[names::ZPN65_SCALEDN][tag]->Write( Form("btag%d__Zprime6500__jec__down", tag) );
-    if (signal < 3) histos[names::ZPN65_JERUP][tag]->Write( Form("btag%d__Zprime6500__jer__up", tag) );
-    if (signal < 3) histos[names::ZPN65_JERDN][tag]->Write( Form("btag%d__Zprime6500__jer__down", tag) );
-    if (signal < 3) histos[names::ZPN65_PDFUP][tag]->Write( Form("btag%d__Zprime6500__pdf__up", tag) );
-    if (signal < 3) histos[names::ZPN65_PDFDN][tag]->Write( Form("btag%d__Zprime6500__pdf__down", tag) );
-    if (signal < 3) histos[names::ZPN65_BTAGUP][tag]->Write( Form("btag%d__Zprime6500__btag__up", tag) );
-    if (signal < 3) histos[names::ZPN65_BTAGDN][tag]->Write( Form("btag%d__Zprime6500__btag__down", tag) );
-    if (signal < 3) histos[names::ZPN65_BMISTAGUP][tag]->Write( Form("btag%d__Zprime6500__bmistag__up", tag) );
-    if (signal < 3) histos[names::ZPN65_BMISTAGDN][tag]->Write( Form("btag%d__Zprime6500__bmistag__down", tag) );
-    if (signal < 3) histos[names::ZPN65_PUUP][tag]->Write( Form("btag%d__Zprime6500__pileup__up", tag) );
-    if (signal < 3) histos[names::ZPN65_PUDN][tag]->Write( Form("btag%d__Zprime6500__pileup__down", tag) );
+      histos[names::ZPN12p5_SCALEUP][tag]->Write( Form("btag%d__Zprime1250__jec__up", tag));
+      histos[names::ZPN15_SCALEUP][tag]->Write( Form("btag%d__Zprime1500__jec__up", tag) );
+      histos[names::ZPN25_SCALEUP][tag]->Write( Form("btag%d__Zprime2500__jec__up", tag) );
+      histos[names::ZPN35_SCALEUP][tag]->Write( Form("btag%d__Zprime3500__jec__up", tag) ); 
+      histos[names::ZPN45_SCALEUP][tag]->Write( Form("btag%d__Zprime4500__jec__up", tag) ); 
+      histos[names::ZPN12p5_SCALEDN][tag]->Write( Form("btag%d__Zprime1250__jec__down", tag));
+      histos[names::ZPN15_SCALEDN][tag]->Write( Form("btag%d__Zprime1500__jec__down", tag) );
+      histos[names::ZPN25_SCALEDN][tag]->Write( Form("btag%d__Zprime2500__jec__down", tag) );
+      histos[names::ZPN35_SCALEDN][tag]->Write( Form("btag%d__Zprime3500__jec__down", tag) );  
+      histos[names::ZPN45_SCALEDN][tag]->Write( Form("btag%d__Zprime4500__jec__down", tag) );  
 
-    if (signal < 3) histos[names::ZPN70][tag]->Write( Form("btag%d__Zprime7000", tag) );
-    if (signal < 3) histos[names::ZPN70_SCALEUP][tag]->Write( Form("btag%d__Zprime7000__jec__up", tag) );
-    if (signal < 3) histos[names::ZPN70_SCALEDN][tag]->Write( Form("btag%d__Zprime7000__jec__down", tag) );
-    if (signal < 3) histos[names::ZPN70_JERUP][tag]->Write( Form("btag%d__Zprime7000__jer__up", tag) );
-    if (signal < 3) histos[names::ZPN70_JERDN][tag]->Write( Form("btag%d__Zprime7000__jer__down", tag) );
-    if (signal < 3) histos[names::ZPN70_PDFUP][tag]->Write( Form("btag%d__Zprime7000__pdf__up", tag) );
-    if (signal < 3) histos[names::ZPN70_PDFDN][tag]->Write( Form("btag%d__Zprime7000__pdf__down", tag) );
-    if (signal < 3) histos[names::ZPN70_BTAGUP][tag]->Write( Form("btag%d__Zprime7000__btag__up", tag) );
-    if (signal < 3) histos[names::ZPN70_BTAGDN][tag]->Write( Form("btag%d__Zprime7000__btag__down", tag) );
-    if (signal < 3) histos[names::ZPN70_BMISTAGUP][tag]->Write( Form("btag%d__Zprime7000__bmistag__up", tag) );
-    if (signal < 3) histos[names::ZPN70_BMISTAGDN][tag]->Write( Form("btag%d__Zprime7000__bmistag__down", tag) );
-    if (signal < 3) histos[names::ZPN70_PUUP][tag]->Write( Form("btag%d__Zprime7000__pileup__up", tag) );
-    if (signal < 3) histos[names::ZPN70_PUDN][tag]->Write( Form("btag%d__Zprime7000__pileup__down", tag) );
+      histos[names::ZPN12p5_JERUP][tag]->Write( Form("btag%d__Zprime1250__jer__up", tag));
+      histos[names::ZPN15_JERUP][tag]->Write( Form("btag%d__Zprime1500__jer__up", tag) );
+      histos[names::ZPN25_JERUP][tag]->Write( Form("btag%d__Zprime2500__jer__up", tag) );
+      histos[names::ZPN35_JERUP][tag]->Write( Form("btag%d__Zprime3500__jer__up", tag) ); 
+      histos[names::ZPN45_JERUP][tag]->Write( Form("btag%d__Zprime4500__jer__up", tag) ); 
+      histos[names::ZPN12p5_JERDN][tag]->Write( Form("btag%d__Zprime1250__jer__down", tag));
+      histos[names::ZPN15_JERDN][tag]->Write( Form("btag%d__Zprime1500__jer__down", tag) );
+      histos[names::ZPN25_JERDN][tag]->Write( Form("btag%d__Zprime2500__jer__down", tag) );
+      histos[names::ZPN35_JERDN][tag]->Write( Form("btag%d__Zprime3500__jer__down", tag) );  
+      histos[names::ZPN45_JERDN][tag]->Write( Form("btag%d__Zprime4500__jer__down", tag) );  
+
+      histos[names::ZPN12p5_PDFUP][tag]->Write( Form("btag%d__Zprime1250__pdf__up", tag));
+      histos[names::ZPN15_PDFUP][tag]->Write( Form("btag%d__Zprime1500__pdf__up", tag) );
+      histos[names::ZPN25_PDFUP][tag]->Write( Form("btag%d__Zprime2500__pdf__up", tag) );
+      histos[names::ZPN35_PDFUP][tag]->Write( Form("btag%d__Zprime3500__pdf__up", tag) ); 
+      histos[names::ZPN45_PDFUP][tag]->Write( Form("btag%d__Zprime4500__pdf__up", tag) ); 
+      histos[names::ZPN12p5_PDFDN][tag]->Write( Form("btag%d__Zprime1250__pdf__down", tag));
+      histos[names::ZPN15_PDFDN][tag]->Write( Form("btag%d__Zprime1500__pdf__down", tag) );
+      histos[names::ZPN25_PDFDN][tag]->Write( Form("btag%d__Zprime2500__pdf__down", tag) );
+      histos[names::ZPN35_PDFDN][tag]->Write( Form("btag%d__Zprime3500__pdf__down", tag) );  
+      histos[names::ZPN45_PDFDN][tag]->Write( Form("btag%d__Zprime4500__pdf__down", tag) );  
+
+      histos[names::ZPN12p5_BTAGUP][tag]->Write( Form("btag%d__Zprime1250__btag__up", tag));
+      histos[names::ZPN15_BTAGUP][tag]->Write( Form("btag%d__Zprime1500__btag__up", tag) );
+      histos[names::ZPN25_BTAGUP][tag]->Write( Form("btag%d__Zprime2500__btag__up", tag) );
+      histos[names::ZPN35_BTAGUP][tag]->Write( Form("btag%d__Zprime3500__btag__up", tag) ); 
+      histos[names::ZPN45_BTAGUP][tag]->Write( Form("btag%d__Zprime4500__btag__up", tag) ); 
+      histos[names::ZPN12p5_BTAGDN][tag]->Write( Form("btag%d__Zprime1250__btag__down", tag));
+      histos[names::ZPN15_BTAGDN][tag]->Write( Form("btag%d__Zprime1500__btag__down", tag) );
+      histos[names::ZPN25_BTAGDN][tag]->Write( Form("btag%d__Zprime2500__btag__down", tag) );
+      histos[names::ZPN35_BTAGDN][tag]->Write( Form("btag%d__Zprime3500__btag__down", tag) );
+      histos[names::ZPN45_BTAGDN][tag]->Write( Form("btag%d__Zprime4500__btag__down", tag) );
+
+      histos[names::ZPN12p5_BMISTAGUP][tag]->Write( Form("btag%d__Zprime1250__bmistag__up", tag));
+      histos[names::ZPN15_BMISTAGUP][tag]->Write( Form("btag%d__Zprime1500__bmistag__up", tag) );
+      histos[names::ZPN25_BMISTAGUP][tag]->Write( Form("btag%d__Zprime2500__bmistag__up", tag) );
+      histos[names::ZPN35_BMISTAGUP][tag]->Write( Form("btag%d__Zprime3500__bmistag__up", tag) ); 
+      histos[names::ZPN45_BMISTAGUP][tag]->Write( Form("btag%d__Zprime4500__bmistag__up", tag) ); 
+      histos[names::ZPN12p5_BMISTAGDN][tag]->Write( Form("btag%d__Zprime1250__bmistag__down", tag));
+      histos[names::ZPN15_BMISTAGDN][tag]->Write( Form("btag%d__Zprime1500__bmistag__down", tag) );
+      histos[names::ZPN25_BMISTAGDN][tag]->Write( Form("btag%d__Zprime2500__bmistag__down", tag) );
+      histos[names::ZPN35_BMISTAGDN][tag]->Write( Form("btag%d__Zprime3500__bmistag__down", tag) );
+      histos[names::ZPN45_BMISTAGDN][tag]->Write( Form("btag%d__Zprime4500__bmistag__down", tag) );
+
+      histos[names::ZPN12p5_PUUP][tag]->Write( Form("btag%d__Zprime1250__pileup__up", tag));
+      histos[names::ZPN15_PUUP][tag]->Write( Form("btag%d__Zprime1500__pileup__up", tag) );
+      histos[names::ZPN25_PUUP][tag]->Write( Form("btag%d__Zprime2500__pileup__up", tag) );
+      histos[names::ZPN35_PUUP][tag]->Write( Form("btag%d__Zprime3500__pileup__up", tag) ); 
+      histos[names::ZPN45_PUUP][tag]->Write( Form("btag%d__Zprime4500__pileup__up", tag) ); 
+      histos[names::ZPN12p5_PUDN][tag]->Write( Form("btag%d__Zprime1250__pileup__down", tag));
+      histos[names::ZPN15_PUDN][tag]->Write( Form("btag%d__Zprime1500__pileup__down", tag) );
+      histos[names::ZPN25_PUDN][tag]->Write( Form("btag%d__Zprime2500__pileup__down", tag) );
+      histos[names::ZPN35_PUDN][tag]->Write( Form("btag%d__Zprime3500__pileup__down", tag) );  
+      histos[names::ZPN45_PUDN][tag]->Write( Form("btag%d__Zprime4500__pileup__down", tag) );  
+    }
+
+    if (signal < 3){//don't have these samples for RS Gluon
+      histos[names::ZPN60][tag]->Write( Form("btag%d__Zprime6000", tag) );
+      histos[names::ZPN60_SCALEUP][tag]->Write( Form("btag%d__Zprime6000__jec__up", tag) );
+      histos[names::ZPN60_SCALEDN][tag]->Write( Form("btag%d__Zprime6000__jec__down", tag) );
+      histos[names::ZPN60_JERUP][tag]->Write( Form("btag%d__Zprime6000__jer__up", tag) );
+      histos[names::ZPN60_JERDN][tag]->Write( Form("btag%d__Zprime6000__jer__down", tag) );
+      histos[names::ZPN60_PDFUP][tag]->Write( Form("btag%d__Zprime6000__pdf__up", tag) );
+      histos[names::ZPN60_PDFDN][tag]->Write( Form("btag%d__Zprime6000__pdf__down", tag) );
+      histos[names::ZPN60_BTAGUP][tag]->Write( Form("btag%d__Zprime6000__btag__up", tag) );
+      histos[names::ZPN60_BTAGDN][tag]->Write( Form("btag%d__Zprime6000__btag__down", tag) );
+      histos[names::ZPN60_BMISTAGUP][tag]->Write( Form("btag%d__Zprime6000__bmistag__up", tag) );
+      histos[names::ZPN60_BMISTAGDN][tag]->Write( Form("btag%d__Zprime6000__bmistag__down", tag) );
+      histos[names::ZPN60_PUUP][tag]->Write( Form("btag%d__Zprime6000__pileup__up", tag) );
+      histos[names::ZPN60_PUDN][tag]->Write( Form("btag%d__Zprime6000__pileup__down", tag) );
+
+      histos[names::ZPN65][tag]->Write( Form("btag%d__Zprime6500", tag) );
+      histos[names::ZPN65_SCALEUP][tag]->Write( Form("btag%d__Zprime6500__jec__up", tag) );
+      histos[names::ZPN65_SCALEDN][tag]->Write( Form("btag%d__Zprime6500__jec__down", tag) );
+      histos[names::ZPN65_JERUP][tag]->Write( Form("btag%d__Zprime6500__jer__up", tag) );
+      histos[names::ZPN65_JERDN][tag]->Write( Form("btag%d__Zprime6500__jer__down", tag) );
+      histos[names::ZPN65_PDFUP][tag]->Write( Form("btag%d__Zprime6500__pdf__up", tag) );
+      histos[names::ZPN65_PDFDN][tag]->Write( Form("btag%d__Zprime6500__pdf__down", tag) );
+      histos[names::ZPN65_BTAGUP][tag]->Write( Form("btag%d__Zprime6500__btag__up", tag) );
+      histos[names::ZPN65_BTAGDN][tag]->Write( Form("btag%d__Zprime6500__btag__down", tag) );
+      histos[names::ZPN65_BMISTAGUP][tag]->Write( Form("btag%d__Zprime6500__bmistag__up", tag) );
+      histos[names::ZPN65_BMISTAGDN][tag]->Write( Form("btag%d__Zprime6500__bmistag__down", tag) );
+      histos[names::ZPN65_PUUP][tag]->Write( Form("btag%d__Zprime6500__pileup__up", tag) );
+      histos[names::ZPN65_PUDN][tag]->Write( Form("btag%d__Zprime6500__pileup__down", tag) );
+
+      histos[names::ZPN70][tag]->Write( Form("btag%d__Zprime7000", tag) );
+      histos[names::ZPN70_SCALEUP][tag]->Write( Form("btag%d__Zprime7000__jec__up", tag) );
+      histos[names::ZPN70_SCALEDN][tag]->Write( Form("btag%d__Zprime7000__jec__down", tag) );
+      histos[names::ZPN70_JERUP][tag]->Write( Form("btag%d__Zprime7000__jer__up", tag) );
+      histos[names::ZPN70_JERDN][tag]->Write( Form("btag%d__Zprime7000__jer__down", tag) );
+      histos[names::ZPN70_PDFUP][tag]->Write( Form("btag%d__Zprime7000__pdf__up", tag) );
+      histos[names::ZPN70_PDFDN][tag]->Write( Form("btag%d__Zprime7000__pdf__down", tag) );
+      histos[names::ZPN70_BTAGUP][tag]->Write( Form("btag%d__Zprime7000__btag__up", tag) );
+      histos[names::ZPN70_BTAGDN][tag]->Write( Form("btag%d__Zprime7000__btag__down", tag) );
+      histos[names::ZPN70_BMISTAGUP][tag]->Write( Form("btag%d__Zprime7000__bmistag__up", tag) );
+      histos[names::ZPN70_BMISTAGDN][tag]->Write( Form("btag%d__Zprime7000__bmistag__down", tag) );
+      histos[names::ZPN70_PUUP][tag]->Write( Form("btag%d__Zprime7000__pileup__up", tag) );
+      histos[names::ZPN70_PUDN][tag]->Write( Form("btag%d__Zprime7000__pileup__down", tag) );
+    }
   }  
 
   //yields tables for AN

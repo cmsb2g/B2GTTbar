@@ -1,0 +1,1 @@
+sed -i ':a;N;$!ba;s/\#\ x\;\ y\;\ band\ 0\ low\;\ band\ 0\ high\;\ band\ 1\ low\;\ band\ 1\ high\n//g' Limits/limits_*.txt

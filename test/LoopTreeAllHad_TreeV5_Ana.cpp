@@ -251,9 +251,9 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
   if ( foundZP   !=std::string::npos ){  
     
     // narrow                
-    /*    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-	  file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
-	  file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-10_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-12p5_RunIISummer16MiniAODv2.root");                file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-15_RunIISummer16MiniAODv2_all.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-20_RunIISummer16MiniAODv2.root ");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2500_W-25_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-30_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
@@ -261,12 +261,12 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-40_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-45_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-50_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   */
-    //file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6000_W-60_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6000_W-60_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6500_W-65_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-7000_W-70_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+      file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-7000_W-70_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     
     // wide
-    /*file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-100_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1250_W-125_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1500_W-150_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-200_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
@@ -275,20 +275,20 @@ void run(string dataset_shortname = "none", string savelabel = "", bool runKinem
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3500_W-350_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-400_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4500_W-450_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);*/
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-500_RunIISummer16MiniAODv2.root");                 file_type.push_back(3);
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6000_W-600_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6500_W-650_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-7000_W-700_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
 
     // very wide
-    /*file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-1000_W-300_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-2000_W-600_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-3000_W-900_RunIISummer16MiniAODv2.root");                 file_type.push_back(3); 
     file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-4000_W-1200_RunIISummer16MiniAODv2.root");                file_type.push_back(3);
-    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-1500_RunIISummer16MiniAODv2.root");                file_type.push_back(3); */
-    // file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6000_W-1800_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    // file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6500_W-1950_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
-    // file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-7000_W-2100_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-5000_W-1500_RunIISummer16MiniAODv2.root");                file_type.push_back(3); 
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6000_W-1800_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-6500_W-1950_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
+    file_name_tree.push_back("b2gtreeV5_ZprimeToTT_M-7000_W-2100_RunIISummer16MiniAODv2.root");                  file_type.push_back(3);   
 
     // amcatnlo
     // file_name_tree.push_back("b2gtreeV4_ZprimeToTTJet_M-1000_amcatnlo_RunIISummer16MiniAODv2_reHLT.root");  file_type.push_back(3);   
